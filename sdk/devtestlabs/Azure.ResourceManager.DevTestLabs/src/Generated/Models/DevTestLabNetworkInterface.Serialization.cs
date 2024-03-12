@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkId != null)
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (DnsName != null)
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (RdpAuthority != null)
+            if (Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (SshAuthority != null)
+            if (Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (SharedPublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualNetworkId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> dnsName = default;
-            Optional<string> rdpAuthority = default;
-            Optional<string> sshAuthority = default;
-            Optional<SharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
+            ResourceIdentifier virtualNetworkId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier publicIPAddressId = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string dnsName = default;
+            string rdpAuthority = default;
+            string sshAuthority = default;
+            SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +191,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabNetworkInterface(
-                virtualNetworkId.Value,
-                subnetId.Value,
-                publicIPAddressId.Value,
-                publicIPAddress.Value,
-                privateIPAddress.Value,
-                dnsName.Value,
-                rdpAuthority.Value,
-                sshAuthority.Value,
-                sharedPublicIPAddressConfiguration.Value,
+                virtualNetworkId,
+                subnetId,
+                publicIPAddressId,
+                publicIPAddress,
+                privateIPAddress,
+                dnsName,
+                rdpAuthority,
+                sshAuthority,
+                sharedPublicIPAddressConfiguration,
                 serializedAdditionalRawData);
         }
 

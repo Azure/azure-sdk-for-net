@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (BlobUri != null)
+            if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<string> sasToken = default;
+            Uri blobUri = default;
+            string sasToken = default;
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, blobUri.Value, sasToken.Value);
+            return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, blobUri, sasToken);
         }
 
         BinaryData IPersistableModel<ExportJobDetails>.Write(ModelReaderWriterOptions options)

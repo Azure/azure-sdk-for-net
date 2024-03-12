@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (SchemaVersion != null)
+            if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (RunbookDefinition != null)
+            if (Optional.IsDefined(RunbookDefinition))
             {
                 writer.WritePropertyName("runbookDefinition"u8);
                 writer.WriteStringValue(RunbookDefinition);
             }
-            if (RunbookType.HasValue)
+            if (Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> schemaVersion = default;
-            Optional<string> runbookDefinition = default;
-            Optional<GraphRunbookType> runbookType = default;
+            string schemaVersion = default;
+            string runbookDefinition = default;
+            GraphRunbookType? runbookType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Optional.ToNullable(runbookType), serializedAdditionalRawData);
+            return new RawGraphicalRunbookContent(schemaVersion, runbookDefinition, runbookType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RawGraphicalRunbookContent>.Write(ModelReaderWriterOptions options)

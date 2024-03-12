@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Automation
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,49 +67,49 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (LastModifiedBy != null)
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<AutomationPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndArray();
             }
-            if (IsPublicNetworkAccessAllowed.HasValue)
+            if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteBooleanValue(IsPublicNetworkAccessAllowed.Value);
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (AutomationHybridServiceUri != null)
+            if (Optional.IsDefined(AutomationHybridServiceUri))
             {
                 writer.WritePropertyName("automationHybridServiceUrl"u8);
                 writer.WriteStringValue(AutomationHybridServiceUri.AbsoluteUri);
@@ -173,25 +173,25 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomationSku> sku = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
+            SystemData systemData = default;
+            AutomationSku sku = default;
+            string lastModifiedBy = default;
+            AutomationAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
+            AutomationEncryptionProperties encryption = default;
             IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<Uri> automationHybridServiceUrl = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            Uri automationHybridServiceUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,22 +375,22 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 identity,
-                sku.Value,
-                lastModifiedBy.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
-                encryption.Value,
+                sku,
+                lastModifiedBy,
+                state,
+                creationTime,
+                lastModifiedTime,
+                description,
+                encryption,
                 privateEndpointConnections ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(disableLocalAuth),
-                automationHybridServiceUrl.Value,
+                publicNetworkAccess,
+                disableLocalAuth,
+                automationHybridServiceUrl,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ScaleType != null)
+            if (options.Format != "W" && Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> scaleType = default;
-            Optional<int> @default = default;
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
+            string scaleType = default;
+            int? @default = default;
+            int? minimum = default;
+            int? maximum = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointCapacity(scaleType.Value, Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), serializedAdditionalRawData);
+            return new StreamingEndpointCapacity(scaleType, @default, minimum, maximum, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointCapacity>.Write(ModelReaderWriterOptions options)

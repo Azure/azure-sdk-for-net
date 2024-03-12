@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (SchemaUri != null)
+            if (Optional.IsDefined(SchemaUri))
             {
                 writer.WritePropertyName("schemaUrl"u8);
                 writer.WriteStringValue(SchemaUri.AbsoluteUri);
             }
-            if (IsInDefaultSet.HasValue)
+            if (Optional.IsDefined(IsInDefaultSet))
             {
                 writer.WritePropertyName("isInDefaultSet"u8);
                 writer.WriteBooleanValue(IsInDefaultSet.Value);
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> schemaUri = default;
-            Optional<bool> isInDefaultSet = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            Uri schemaUri = default;
+            bool? isInDefaultSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +195,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                schemaUri.Value,
-                Optional.ToNullable(isInDefaultSet),
+                systemData,
+                displayName,
+                description,
+                schemaUri,
+                isInDefaultSet,
                 serializedAdditionalRawData);
         }
 

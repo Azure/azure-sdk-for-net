@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -19,9 +20,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<QueryResultType> type = default;
+            QueryResultType? type = default;
             IReadOnlyList<object> items = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -60,7 +61,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new QueryResult(Optional.ToNullable(type), items ?? new ChangeTrackingList<object>(), continuationToken.Value);
+            return new QueryResult(type, items ?? new ChangeTrackingList<object>(), continuationToken);
         }
     }
 }

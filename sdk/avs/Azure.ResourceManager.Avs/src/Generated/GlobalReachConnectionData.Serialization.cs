@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AddressPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (options.Format != "W" && CircuitConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {
                 writer.WritePropertyName("circuitConnectionStatus"u8);
                 writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
             }
-            if (PeerExpressRouteCircuit != null)
+            if (Optional.IsDefined(PeerExpressRouteCircuit))
             {
                 writer.WritePropertyName("peerExpressRouteCircuit"u8);
                 writer.WriteStringValue(PeerExpressRouteCircuit);
             }
-            if (ExpressRouteId != null)
+            if (Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GlobalReachConnectionProvisioningState> provisioningState = default;
-            Optional<string> addressPrefix = default;
-            Optional<string> authorizationKey = default;
-            Optional<GlobalReachConnectionStatus> circuitConnectionStatus = default;
-            Optional<ResourceIdentifier> peerExpressRouteCircuit = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
+            SystemData systemData = default;
+            GlobalReachConnectionProvisioningState? provisioningState = default;
+            string addressPrefix = default;
+            string authorizationKey = default;
+            GlobalReachConnectionStatus? circuitConnectionStatus = default;
+            ResourceIdentifier peerExpressRouteCircuit = default;
+            ResourceIdentifier expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                addressPrefix.Value,
-                authorizationKey.Value,
-                Optional.ToNullable(circuitConnectionStatus),
-                peerExpressRouteCircuit.Value,
-                expressRouteId.Value,
+                systemData,
+                provisioningState,
+                addressPrefix,
+                authorizationKey,
+                circuitConnectionStatus,
+                peerExpressRouteCircuit,
+                expressRouteId,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
-            if (MachineId != null)
+            if (Optional.IsDefined(MachineId))
             {
                 writer.WritePropertyName("machineId"u8);
                 writer.WriteStringValue(MachineId);
             }
-            if (BiosId != null)
+            if (Optional.IsDefined(BiosId))
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteObjectValue(AuthenticationIdentityContent);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
             writer.WriteObjectValue(ResourceAccessIdentityContent);
-            if (DataPlaneAuthenticationIdentityContent != null)
+            if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
                 writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string machineName = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
+            string machineId = default;
+            string biosId = default;
             IdentityProviderContent authenticationIdentityContent = default;
             IdentityProviderContent resourceAccessIdentityContent = default;
-            Optional<IdentityProviderContent> dataPlaneAuthenticationIdentityContent = default;
+            IdentityProviderContent dataPlaneAuthenticationIdentityContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,11 +138,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryAddRecoveryServicesProviderProperties(
                 machineName,
-                machineId.Value,
-                biosId.Value,
+                machineId,
+                biosId,
                 authenticationIdentityContent,
                 resourceAccessIdentityContent,
-                dataPlaneAuthenticationIdentityContent.Value,
+                dataPlaneAuthenticationIdentityContent,
                 serializedAdditionalRawData);
         }
 

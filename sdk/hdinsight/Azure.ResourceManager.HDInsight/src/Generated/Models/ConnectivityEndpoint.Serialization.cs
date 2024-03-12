@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -27,27 +28,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (EndpointLocation != null)
+            if (Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> protocol = default;
-            Optional<string> location = default;
-            Optional<int> port = default;
-            Optional<IPAddress> privateIPAddress = default;
+            string name = default;
+            string protocol = default;
+            string location = default;
+            int? port = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,11 +140,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectivityEndpoint(
-                name.Value,
-                protocol.Value,
-                location.Value,
-                Optional.ToNullable(port),
-                privateIPAddress.Value,
+                name,
+                protocol,
+                location,
+                port,
+                privateIPAddress,
                 serializedAdditionalRawData);
         }
 

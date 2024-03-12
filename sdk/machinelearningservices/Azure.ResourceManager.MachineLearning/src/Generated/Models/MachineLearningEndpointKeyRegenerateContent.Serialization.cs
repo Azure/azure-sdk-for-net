@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (KeyValue != null)
+            if (Optional.IsDefined(KeyValue))
             {
                 if (KeyValue != null)
                 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningKeyType keyType = default;
-            Optional<string> keyValue = default;
+            string keyValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue.Value, serializedAdditionalRawData);
+            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEndpointKeyRegenerateContent>.Write(ModelReaderWriterOptions options)

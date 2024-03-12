@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +48,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Platform != null)
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (GlobalValidation != null)
+            if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
                 writer.WriteObjectValue(GlobalValidation);
             }
-            if (IdentityProviders != null)
+            if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
                 writer.WriteObjectValue(IdentityProviders);
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (HttpSettings != null)
+            if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
@@ -118,16 +119,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AuthPlatform> platform = default;
-            Optional<GlobalValidation> globalValidation = default;
-            Optional<AppServiceIdentityProviders> identityProviders = default;
-            Optional<WebAppLoginInfo> login = default;
-            Optional<AppServiceHttpSettings> httpSettings = default;
+            SystemData systemData = default;
+            AuthPlatform platform = default;
+            GlobalValidation globalValidation = default;
+            AppServiceIdentityProviders identityProviders = default;
+            WebAppLoginInfo login = default;
+            AppServiceHttpSettings httpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,13 +229,13 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                platform.Value,
-                globalValidation.Value,
-                identityProviders.Value,
-                login.Value,
-                httpSettings.Value,
-                kind.Value,
+                systemData,
+                platform,
+                globalValidation,
+                identityProviders,
+                login,
+                httpSettings,
+                kind,
                 serializedAdditionalRawData);
         }
 

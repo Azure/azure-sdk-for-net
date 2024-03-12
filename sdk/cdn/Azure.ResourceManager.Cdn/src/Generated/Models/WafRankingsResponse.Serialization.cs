@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DateTimeBegin.HasValue)
+            if (Optional.IsDefined(DateTimeBegin))
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (DateTimeEnd.HasValue)
+            if (Optional.IsDefined(DateTimeEnd))
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (!(Groups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<WafRankingsResponseDataItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
+            DateTimeOffset? dateTimeBegin = default;
+            DateTimeOffset? dateTimeEnd = default;
             IReadOnlyList<string> groups = default;
             IReadOnlyList<WafRankingsResponseDataItem> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), groups ?? new ChangeTrackingList<string>(), data ?? new ChangeTrackingList<WafRankingsResponseDataItem>(), serializedAdditionalRawData);
+            return new WafRankingsResponse(dateTimeBegin, dateTimeEnd, groups ?? new ChangeTrackingList<string>(), data ?? new ChangeTrackingList<WafRankingsResponseDataItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafRankingsResponse>.Write(ModelReaderWriterOptions options)

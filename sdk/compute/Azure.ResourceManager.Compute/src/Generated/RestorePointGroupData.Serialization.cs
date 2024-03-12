@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && RestorePointGroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(RestorePointGroupId))
             {
                 writer.WritePropertyName("restorePointCollectionId"u8);
                 writer.WriteStringValue(RestorePointGroupId);
             }
-            if (options.Format != "W" && !(RestorePoints is ChangeTrackingList<RestorePointData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RestorePoints))
             {
                 writer.WritePropertyName("restorePoints"u8);
                 writer.WriteStartArray();
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RestorePointGroupSource> source = default;
-            Optional<string> provisioningState = default;
-            Optional<string> restorePointGroupId = default;
+            SystemData systemData = default;
+            RestorePointGroupSource source = default;
+            string provisioningState = default;
+            string restorePointGroupId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                source.Value,
-                provisioningState.Value,
-                restorePointGroupId.Value,
+                source,
+                provisioningState,
+                restorePointGroupId,
                 restorePoints ?? new ChangeTrackingList<RestorePointData>(),
                 serializedAdditionalRawData);
         }

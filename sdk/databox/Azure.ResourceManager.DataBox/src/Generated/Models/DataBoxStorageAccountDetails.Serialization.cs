@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StorageAccountId);
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (SharePassword != null)
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ResourceIdentifier storageAccountId = default;
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            string sharePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword.Value, serializedAdditionalRawData, storageAccountId);
+            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword, serializedAdditionalRawData, storageAccountId);
         }
 
         BinaryData IPersistableModel<DataBoxStorageAccountDetails>.Write(ModelReaderWriterOptions options)

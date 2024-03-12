@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (PrivateLinkScopeResourceId != null)
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
-            if (HttpProxyConfig != null)
+            if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
-            if (ProvisioningAction.HasValue)
+            if (Optional.IsDefined(ProvisioningAction))
             {
                 writer.WritePropertyName("provisioningAction"u8);
                 writer.WriteStringValue(ProvisioningAction.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && CustomResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<VmInstanceGuestCredential> credentials = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<GuestAgentProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> customResourceName = default;
+            SystemData systemData = default;
+            string uuid = default;
+            VmInstanceGuestCredential credentials = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            GuestAgentProvisioningAction? provisioningAction = default;
+            string status = default;
+            string customResourceName = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                uuid.Value,
-                credentials.Value,
-                privateLinkScopeResourceId.Value,
-                httpProxyConfig.Value,
-                Optional.ToNullable(provisioningAction),
-                status.Value,
-                customResourceName.Value,
+                systemData,
+                uuid,
+                credentials,
+                privateLinkScopeResourceId,
+                httpProxyConfig,
+                provisioningAction,
+                status,
+                customResourceName,
                 statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

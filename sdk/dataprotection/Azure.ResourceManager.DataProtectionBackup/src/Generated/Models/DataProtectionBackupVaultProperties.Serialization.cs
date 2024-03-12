@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (MonitoringSettings != null)
+            if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceMoveState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceMoveState))
             {
                 writer.WritePropertyName("resourceMoveState"u8);
                 writer.WriteStringValue(ResourceMoveState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceMoveDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
                 writer.WriteObjectValue(ResourceMoveDetails);
             }
-            if (SecuritySettings != null)
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
@@ -58,22 +59,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && IsVaultProtectedByResourceGuard.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
             {
                 writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
                 writer.WriteBooleanValue(IsVaultProtectedByResourceGuard.Value);
             }
-            if (FeatureSettings != null)
+            if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);
             }
-            if (options.Format != "W" && SecureScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());
             }
-            if (!(ReplicatedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicatedRegions))
             {
                 writer.WritePropertyName("replicatedRegions"u8);
                 writer.WriteStartArray();
@@ -121,15 +122,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<MonitoringSettings> monitoringSettings = default;
-            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Optional<BackupVaultResourceMoveState> resourceMoveState = default;
-            Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
-            Optional<BackupVaultSecuritySettings> securitySettings = default;
+            MonitoringSettings monitoringSettings = default;
+            DataProtectionBackupProvisioningState? provisioningState = default;
+            BackupVaultResourceMoveState? resourceMoveState = default;
+            BackupVaultResourceMoveDetails resourceMoveDetails = default;
+            BackupVaultSecuritySettings securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
-            Optional<bool> isVaultProtectedByResourceGuard = default;
-            Optional<BackupVaultFeatureSettings> featureSettings = default;
-            Optional<BackupVaultSecureScoreLevel> secureScore = default;
+            bool? isVaultProtectedByResourceGuard = default;
+            BackupVaultFeatureSettings featureSettings = default;
+            BackupVaultSecureScoreLevel? secureScore = default;
             IList<AzureLocation> replicatedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -238,15 +239,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataProtectionBackupVaultProperties(
-                monitoringSettings.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceMoveState),
-                resourceMoveDetails.Value,
-                securitySettings.Value,
+                monitoringSettings,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
                 storageSettings,
-                Optional.ToNullable(isVaultProtectedByResourceGuard),
-                featureSettings.Value,
-                Optional.ToNullable(secureScore),
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
                 replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 serializedAdditionalRawData);
         }

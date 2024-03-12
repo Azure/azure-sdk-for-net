@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (EnableRotationToLatestKeyVersion.HasValue)
+            if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), serializedAdditionalRawData);
+            return new StorageCacheEncryptionSettings(keyEncryptionKey, rotationToLatestKeyVersionEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheEncryptionSettings>.Write(ModelReaderWriterOptions options)

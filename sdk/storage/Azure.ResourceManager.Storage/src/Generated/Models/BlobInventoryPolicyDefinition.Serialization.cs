@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobInventoryPolicyFilter> filters = default;
+            BlobInventoryPolicyFilter filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BlobInventoryPolicyDefinition(
-                filters.Value,
+                filters,
                 format,
                 schedule,
                 objectType,

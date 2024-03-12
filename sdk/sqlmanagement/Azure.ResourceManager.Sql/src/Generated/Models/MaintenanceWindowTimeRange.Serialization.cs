@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
-            Optional<TimeSpan> duration = default;
+            SqlDayOfWeek? dayOfWeek = default;
+            string startTime = default;
+            TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration), serializedAdditionalRawData);
+            return new MaintenanceWindowTimeRange(dayOfWeek, startTime, duration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowTimeRange>.Write(ModelReaderWriterOptions options)

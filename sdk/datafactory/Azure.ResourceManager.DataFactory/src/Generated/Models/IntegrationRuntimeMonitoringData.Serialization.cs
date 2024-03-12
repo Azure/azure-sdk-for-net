@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Nodes is ChangeTrackingList<IntegrationRuntimeNodeMonitoringData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeMonitoringData(name.Value, nodes ?? new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>(), serializedAdditionalRawData);
+            return new IntegrationRuntimeMonitoringData(name, nodes ?? new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeMonitoringData>.Write(ModelReaderWriterOptions options)

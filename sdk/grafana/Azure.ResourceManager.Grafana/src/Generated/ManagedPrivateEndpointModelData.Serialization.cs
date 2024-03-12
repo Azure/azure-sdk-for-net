@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Grafana
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.Grafana
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (PrivateLinkResourceRegion != null)
+            if (Optional.IsDefined(PrivateLinkResourceRegion))
             {
                 writer.WritePropertyName("privateLinkResourceRegion"u8);
                 writer.WriteStringValue(PrivateLinkResourceRegion);
             }
-            if (!(GroupIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.Grafana
                 }
                 writer.WriteEndArray();
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (options.Format != "W" && ConnectionState != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (PrivateLinkServiceUri != null)
+            if (Optional.IsDefined(PrivateLinkServiceUri))
             {
                 writer.WritePropertyName("privateLinkServiceUrl"u8);
                 writer.WriteStringValue(PrivateLinkServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && PrivateLinkServicePrivateIP != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServicePrivateIP))
             {
                 writer.WritePropertyName("privateLinkServicePrivateIP"u8);
                 writer.WriteStringValue(PrivateLinkServicePrivateIP);
@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.Grafana
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GrafanaProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkResourceRegion = default;
+            SystemData systemData = default;
+            GrafanaProvisioningState? provisioningState = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkResourceRegion = default;
             IList<string> groupIds = default;
-            Optional<string> requestMessage = default;
-            Optional<ManagedPrivateEndpointConnectionState> connectionState = default;
-            Optional<Uri> privateLinkServiceUrl = default;
-            Optional<string> privateLinkServicePrivateIP = default;
+            string requestMessage = default;
+            ManagedPrivateEndpointConnectionState connectionState = default;
+            Uri privateLinkServiceUrl = default;
+            string privateLinkServicePrivateIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,17 +295,17 @@ namespace Azure.ResourceManager.Grafana
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                privateLinkResourceId.Value,
-                privateLinkResourceRegion.Value,
+                provisioningState,
+                privateLinkResourceId,
+                privateLinkResourceRegion,
                 groupIds ?? new ChangeTrackingList<string>(),
-                requestMessage.Value,
-                connectionState.Value,
-                privateLinkServiceUrl.Value,
-                privateLinkServicePrivateIP.Value,
+                requestMessage,
+                connectionState,
+                privateLinkServiceUrl,
+                privateLinkServicePrivateIP,
                 serializedAdditionalRawData);
         }
 

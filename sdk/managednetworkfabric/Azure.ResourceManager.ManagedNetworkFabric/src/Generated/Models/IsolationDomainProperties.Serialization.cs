@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Encapsulation.HasValue)
+            if (Optional.IsDefined(Encapsulation))
             {
                 writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (!(NeighborGroupIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NeighborGroupIds))
             {
                 writer.WritePropertyName("neighborGroupIds"u8);
                 writer.WriteStartArray();
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IsolationDomainEncapsulationType> encapsulation = default;
+            IsolationDomainEncapsulationType? encapsulation = default;
             IList<ResourceIdentifier> neighborGroupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IsolationDomainProperties(Optional.ToNullable(encapsulation), neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new IsolationDomainProperties(encapsulation, neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IsolationDomainProperties>.Write(ModelReaderWriterOptions options)

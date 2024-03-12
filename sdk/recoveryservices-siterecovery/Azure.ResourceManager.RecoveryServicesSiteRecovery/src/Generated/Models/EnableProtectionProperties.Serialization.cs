@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (ProtectableItemId != null)
+            if (Optional.IsDefined(ProtectableItemId))
             {
                 writer.WritePropertyName("protectableItemId"u8);
                 writer.WriteStringValue(ProtectableItemId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ResourceIdentifier> protectableItemId = default;
-            Optional<EnableProtectionProviderSpecificContent> providerSpecificDetails = default;
+            ResourceIdentifier policyId = default;
+            ResourceIdentifier protectableItemId = default;
+            EnableProtectionProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnableProtectionProperties(policyId.Value, protectableItemId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new EnableProtectionProperties(policyId, protectableItemId, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnableProtectionProperties>.Write(ModelReaderWriterOptions options)

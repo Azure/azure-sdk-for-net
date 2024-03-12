@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (SummaryMessage != null)
+            if (Optional.IsDefined(SummaryMessage))
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (PossibleCauses != null)
+            if (Optional.IsDefined(PossibleCauses))
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (RecommendedAction != null)
+            if (Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (Severity != null)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (UpdatedTimeStamp.HasValue)
+            if (Optional.IsDefined(UpdatedTimeStamp))
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
                 writer.WriteStringValue(UpdatedTimeStamp.Value, "O");
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> code = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> updatedTimeStamp = default;
+            long? id = default;
+            string code = default;
+            string summaryMessage = default;
+            string runAsAccountId = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string severity = default;
+            DateTimeOffset? updatedTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +183,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SpringBootSiteError(
-                Optional.ToNullable(id),
-                code.Value,
-                summaryMessage.Value,
-                runAsAccountId.Value,
-                message.Value,
-                possibleCauses.Value,
-                recommendedAction.Value,
-                severity.Value,
-                Optional.ToNullable(updatedTimeStamp),
+                id,
+                code,
+                summaryMessage,
+                runAsAccountId,
+                message,
+                possibleCauses,
+                recommendedAction,
+                severity,
+                updatedTimeStamp,
                 serializedAdditionalRawData);
         }
 

@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
@@ -79,8 +79,8 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<string> payload = default;
+            string text = default;
+            string payload = default;
             string name = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,7 +113,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateQuickAction(name, kind, serializedAdditionalRawData, text.Value, payload.Value);
+            return new MessageTemplateQuickAction(name, kind, serializedAdditionalRawData, text, payload);
         }
 
         BinaryData IPersistableModel<MessageTemplateQuickAction>.Write(ModelReaderWriterOptions options)

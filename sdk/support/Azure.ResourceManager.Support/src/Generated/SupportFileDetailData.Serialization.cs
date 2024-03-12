@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ChunkSize.HasValue)
+            if (Optional.IsDefined(ChunkSize))
             {
                 writer.WritePropertyName("chunkSize"u8);
                 writer.WriteNumberValue(ChunkSize.Value);
             }
-            if (FileSize.HasValue)
+            if (Optional.IsDefined(FileSize))
             {
                 writer.WritePropertyName("fileSize"u8);
                 writer.WriteNumberValue(FileSize.Value);
             }
-            if (NumberOfChunks.HasValue)
+            if (Optional.IsDefined(NumberOfChunks))
             {
                 writer.WritePropertyName("numberOfChunks"u8);
                 writer.WriteNumberValue(NumberOfChunks.Value);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<float> chunkSize = default;
-            Optional<float> fileSize = default;
-            Optional<float> numberOfChunks = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdOn = default;
+            int? chunkSize = default;
+            int? fileSize = default;
+            int? numberOfChunks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            chunkSize = property0.Value.GetSingle();
+                            chunkSize = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("fileSize"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            fileSize = property0.Value.GetSingle();
+                            fileSize = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("numberOfChunks"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            numberOfChunks = property0.Value.GetSingle();
+                            numberOfChunks = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(chunkSize),
-                Optional.ToNullable(fileSize),
-                Optional.ToNullable(numberOfChunks),
+                systemData,
+                createdOn,
+                chunkSize,
+                fileSize,
+                numberOfChunks,
                 serializedAdditionalRawData);
         }
 

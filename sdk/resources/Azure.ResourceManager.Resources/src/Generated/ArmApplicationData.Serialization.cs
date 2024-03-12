@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,24 +78,24 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ManagedResourceGroupId != null)
+            if (Optional.IsDefined(ManagedResourceGroupId))
             {
                 writer.WritePropertyName("managedResourceGroupId"u8);
                 writer.WriteStringValue(ManagedResourceGroupId);
             }
-            if (ApplicationDefinitionId != null)
+            if (Optional.IsDefined(ApplicationDefinitionId))
             {
                 writer.WritePropertyName("applicationDefinitionId"u8);
                 writer.WriteStringValue(ApplicationDefinitionId);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (options.Format != "W" && Outputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -119,27 +119,27 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && BillingDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingDetails))
             {
                 writer.WritePropertyName("billingDetails"u8);
                 writer.WriteObjectValue(BillingDetails);
             }
-            if (JitAccessPolicy != null)
+            if (Optional.IsDefined(JitAccessPolicy))
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
                 writer.WriteObjectValue(JitAccessPolicy);
             }
-            if (options.Format != "W" && PublisherTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
             {
                 writer.WritePropertyName("publisherTenantId"u8);
                 writer.WriteStringValue(PublisherTenantId.Value);
             }
-            if (options.Format != "W" && !(Authorizations is ChangeTrackingList<ArmApplicationAuthorization> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -149,22 +149,22 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ManagementMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagementMode))
             {
                 writer.WritePropertyName("managementMode"u8);
                 writer.WriteStringValue(ManagementMode.Value.ToString());
             }
-            if (options.Format != "W" && CustomerSupport != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomerSupport))
             {
                 writer.WritePropertyName("customerSupport"u8);
                 writer.WriteObjectValue(CustomerSupport);
             }
-            if (options.Format != "W" && SupportUris != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportUris))
             {
                 writer.WritePropertyName("supportUrls"u8);
                 writer.WriteObjectValue(SupportUris);
             }
-            if (options.Format != "W" && !(Artifacts is ChangeTrackingList<ArmApplicationArtifact> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && UpdatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
@@ -223,32 +223,32 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ArmPlan> plan = default;
+            ArmPlan plan = default;
             string kind = default;
-            Optional<ArmApplicationManagedIdentity> identity = default;
-            Optional<string> managedBy = default;
-            Optional<ArmApplicationSku> sku = default;
+            ArmApplicationManagedIdentity identity = default;
+            string managedBy = default;
+            ArmApplicationSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> managedResourceGroupId = default;
-            Optional<ResourceIdentifier> applicationDefinitionId = default;
-            Optional<BinaryData> parameters = default;
-            Optional<BinaryData> outputs = default;
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<ArmApplicationBillingDetails> billingDetails = default;
-            Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
-            Optional<Guid> publisherTenantId = default;
+            SystemData systemData = default;
+            ResourceIdentifier managedResourceGroupId = default;
+            ResourceIdentifier applicationDefinitionId = default;
+            BinaryData parameters = default;
+            BinaryData outputs = default;
+            ResourcesProvisioningState? provisioningState = default;
+            ArmApplicationBillingDetails billingDetails = default;
+            ArmApplicationJitAccessPolicy jitAccessPolicy = default;
+            Guid? publisherTenantId = default;
             IReadOnlyList<ArmApplicationAuthorization> authorizations = default;
-            Optional<ArmApplicationManagementMode> managementMode = default;
-            Optional<ArmApplicationPackageContact> customerSupport = default;
-            Optional<ArmApplicationPackageSupportUris> supportUris = default;
+            ArmApplicationManagementMode? managementMode = default;
+            ArmApplicationPackageContact customerSupport = default;
+            ArmApplicationPackageSupportUris supportUris = default;
             IReadOnlyList<ArmApplicationArtifact> artifacts = default;
-            Optional<ArmApplicationDetails> createdBy = default;
-            Optional<ArmApplicationDetails> updatedBy = default;
+            ArmApplicationDetails createdBy = default;
+            ArmApplicationDetails updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -500,30 +500,30 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
-                sku.Value,
+                managedBy,
+                sku,
                 serializedAdditionalRawData,
                 plan,
                 kind,
-                identity.Value,
-                managedResourceGroupId.Value,
-                applicationDefinitionId.Value,
-                parameters.Value,
-                outputs.Value,
-                Optional.ToNullable(provisioningState),
-                billingDetails.Value,
-                jitAccessPolicy.Value,
-                Optional.ToNullable(publisherTenantId),
+                identity,
+                managedResourceGroupId,
+                applicationDefinitionId,
+                parameters,
+                outputs,
+                provisioningState,
+                billingDetails,
+                jitAccessPolicy,
+                publisherTenantId,
                 authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
-                Optional.ToNullable(managementMode),
-                customerSupport.Value,
-                supportUris.Value,
+                managementMode,
+                customerSupport,
+                supportUris,
                 artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(),
-                createdBy.Value,
-                updatedBy.Value);
+                createdBy,
+                updatedBy);
         }
 
         BinaryData IPersistableModel<ArmApplicationData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ProviderType.HasValue)
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (!(Claims is ChangeTrackingList<OpenAuthenticationPolicyClaim> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<OpenAuthenticationProviderType> type = default;
+            OpenAuthenticationProviderType? type = default;
             IList<OpenAuthenticationPolicyClaim> claims = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenAuthenticationAccessPolicy(Optional.ToNullable(type), claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>(), serializedAdditionalRawData);
+            return new OpenAuthenticationAccessPolicy(type, claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAuthenticationAccessPolicy>.Write(ModelReaderWriterOptions options)

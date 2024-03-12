@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (SeedManagedDiskId != null)
+            if (Optional.IsDefined(SeedManagedDiskId))
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (ReplicaDiskType != null)
+            if (Optional.IsDefined(ReplicaDiskType))
             {
                 writer.WritePropertyName("replicaDiskType"u8);
                 writer.WriteStringValue(ReplicaDiskType);
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<string> replicaDiskType = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            string diskId = default;
+            string seedManagedDiskId = default;
+            string replicaDiskType = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureManagedDiskDetails(diskId.Value, seedManagedDiskId.Value, replicaDiskType.Value, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new HyperVReplicaAzureManagedDiskDetails(diskId, seedManagedDiskId, replicaDiskType, diskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.Write(ModelReaderWriterOptions options)

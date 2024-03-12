@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalWorkspaceStorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalWorkspaceStorageAccounts))
             {
                 writer.WritePropertyName("additionalWorkspaceStorageAccounts"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultWorkspaceResourceGroup != null)
+            if (Optional.IsDefined(DefaultWorkspaceResourceGroup))
             {
                 writer.WritePropertyName("defaultWorkspaceResourceGroup"u8);
                 writer.WriteStringValue(DefaultWorkspaceResourceGroup);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<string> additionalWorkspaceStorageAccounts = default;
-            Optional<string> defaultWorkspaceResourceGroup = default;
+            string defaultWorkspaceResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceHubConfig(additionalWorkspaceStorageAccounts ?? new ChangeTrackingList<string>(), defaultWorkspaceResourceGroup.Value, serializedAdditionalRawData);
+            return new WorkspaceHubConfig(additionalWorkspaceStorageAccounts ?? new ChangeTrackingList<string>(), defaultWorkspaceResourceGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceHubConfig>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,84 +60,84 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ReservationOrderId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (options.Format != "W" && ReservationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (options.Format != "W" && SkuName != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (options.Format != "W" && ReservedHours.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReservedHours))
             {
                 writer.WritePropertyName("reservedHours"u8);
                 writer.WriteNumberValue(ReservedHours.Value);
             }
-            if (options.Format != "W" && UseOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UseOn))
             {
                 writer.WritePropertyName("usageDate"u8);
                 writer.WriteStringValue(UseOn.Value, "O");
             }
-            if (options.Format != "W" && UsedHours.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedHours))
             {
                 writer.WritePropertyName("usedHours"u8);
                 writer.WriteNumberValue(UsedHours.Value);
             }
-            if (options.Format != "W" && MinUtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinUtilizationPercentage))
             {
                 writer.WritePropertyName("minUtilizationPercentage"u8);
                 writer.WriteNumberValue(MinUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && AvgUtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvgUtilizationPercentage))
             {
                 writer.WritePropertyName("avgUtilizationPercentage"u8);
                 writer.WriteNumberValue(AvgUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && MaxUtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxUtilizationPercentage))
             {
                 writer.WritePropertyName("maxUtilizationPercentage"u8);
                 writer.WriteNumberValue(MaxUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && PurchasedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurchasedQuantity))
             {
                 writer.WritePropertyName("purchasedQuantity"u8);
                 writer.WriteNumberValue(PurchasedQuantity.Value);
             }
-            if (options.Format != "W" && RemainingQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RemainingQuantity))
             {
                 writer.WritePropertyName("remainingQuantity"u8);
                 writer.WriteNumberValue(RemainingQuantity.Value);
             }
-            if (options.Format != "W" && TotalReservedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalReservedQuantity))
             {
                 writer.WritePropertyName("totalReservedQuantity"u8);
                 writer.WriteNumberValue(TotalReservedQuantity.Value);
             }
-            if (options.Format != "W" && UsedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedQuantity))
             {
                 writer.WritePropertyName("usedQuantity"u8);
                 writer.WriteNumberValue(UsedQuantity.Value);
             }
-            if (options.Format != "W" && UtilizedPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UtilizedPercentage))
             {
                 writer.WritePropertyName("utilizedPercentage"u8);
                 writer.WriteNumberValue(UtilizedPercentage.Value);
@@ -180,27 +181,27 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationId = default;
-            Optional<string> skuName = default;
-            Optional<decimal> reservedHours = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> usedHours = default;
-            Optional<decimal> minUtilizationPercentage = default;
-            Optional<decimal> avgUtilizationPercentage = default;
-            Optional<decimal> maxUtilizationPercentage = default;
-            Optional<string> kind = default;
-            Optional<decimal> purchasedQuantity = default;
-            Optional<decimal> remainingQuantity = default;
-            Optional<decimal> totalReservedQuantity = default;
-            Optional<decimal> usedQuantity = default;
-            Optional<decimal> utilizedPercentage = default;
+            SystemData systemData = default;
+            string reservationOrderId = default;
+            string reservationId = default;
+            string skuName = default;
+            decimal? reservedHours = default;
+            DateTimeOffset? usageDate = default;
+            decimal? usedHours = default;
+            decimal? minUtilizationPercentage = default;
+            decimal? avgUtilizationPercentage = default;
+            decimal? maxUtilizationPercentage = default;
+            string kind = default;
+            decimal? purchasedQuantity = default;
+            decimal? remainingQuantity = default;
+            decimal? totalReservedQuantity = default;
+            decimal? usedQuantity = default;
+            decimal? utilizedPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -393,23 +394,23 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                reservationOrderId.Value,
-                reservationId.Value,
-                skuName.Value,
-                Optional.ToNullable(reservedHours),
-                Optional.ToNullable(usageDate),
-                Optional.ToNullable(usedHours),
-                Optional.ToNullable(minUtilizationPercentage),
-                Optional.ToNullable(avgUtilizationPercentage),
-                Optional.ToNullable(maxUtilizationPercentage),
-                kind.Value,
-                Optional.ToNullable(purchasedQuantity),
-                Optional.ToNullable(remainingQuantity),
-                Optional.ToNullable(totalReservedQuantity),
-                Optional.ToNullable(usedQuantity),
-                Optional.ToNullable(utilizedPercentage),
-                Optional.ToNullable(etag),
+                systemData,
+                reservationOrderId,
+                reservationId,
+                skuName,
+                reservedHours,
+                usageDate,
+                usedHours,
+                minUtilizationPercentage,
+                avgUtilizationPercentage,
+                maxUtilizationPercentage,
+                kind,
+                purchasedQuantity,
+                remainingQuantity,
+                totalReservedQuantity,
+                usedQuantity,
+                utilizedPercentage,
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

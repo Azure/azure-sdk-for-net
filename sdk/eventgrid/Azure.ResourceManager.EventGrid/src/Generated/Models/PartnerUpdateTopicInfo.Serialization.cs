@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (EventTypeInfo != null)
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerUpdateTopicInfo(eventTypeInfo.Value, serializedAdditionalRawData);
+            return new PartnerUpdateTopicInfo(eventTypeInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerUpdateTopicInfo>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FunctionAppId != null)
+            if (Optional.IsDefined(FunctionAppId))
             {
                 writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
-            if (ScriptRootPathHref != null)
+            if (Optional.IsDefined(ScriptRootPathHref))
             {
                 writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
-            if (ScriptHref != null)
+            if (Optional.IsDefined(ScriptHref))
             {
                 writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
-            if (ConfigHref != null)
+            if (Optional.IsDefined(ConfigHref))
             {
                 writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
-            if (TestDataHref != null)
+            if (Optional.IsDefined(TestDataHref))
             {
                 writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
-            if (SecretsFileHref != null)
+            if (Optional.IsDefined(SecretsFileHref))
             {
                 writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Config != null)
+            if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                 }
 #endif
             }
-            if (!(Files is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (TestData != null)
+            if (Optional.IsDefined(TestData))
             {
                 writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
-            if (InvokeUrlTemplate != null)
+            if (Optional.IsDefined(InvokeUrlTemplate))
             {
                 writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (IsDisabled.HasValue)
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
@@ -171,24 +171,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> functionAppId = default;
-            Optional<string> scriptRootPathHref = default;
-            Optional<string> scriptHref = default;
-            Optional<string> configHref = default;
-            Optional<string> testDataHref = default;
-            Optional<string> secretsFileHref = default;
-            Optional<string> href = default;
-            Optional<BinaryData> config = default;
+            SystemData systemData = default;
+            string functionAppId = default;
+            string scriptRootPathHref = default;
+            string scriptHref = default;
+            string configHref = default;
+            string testDataHref = default;
+            string secretsFileHref = default;
+            string href = default;
+            BinaryData config = default;
             IDictionary<string, string> files = default;
-            Optional<string> testData = default;
-            Optional<string> invokeUrlTemplate = default;
-            Optional<string> language = default;
-            Optional<bool> isDisabled = default;
+            string testData = default;
+            string invokeUrlTemplate = default;
+            string language = default;
+            bool? isDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,21 +326,21 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                functionAppId.Value,
-                scriptRootPathHref.Value,
-                scriptHref.Value,
-                configHref.Value,
-                testDataHref.Value,
-                secretsFileHref.Value,
-                href.Value,
-                config.Value,
+                systemData,
+                functionAppId,
+                scriptRootPathHref,
+                scriptHref,
+                configHref,
+                testDataHref,
+                secretsFileHref,
+                href,
+                config,
                 files ?? new ChangeTrackingDictionary<string, string>(),
-                testData.Value,
-                invokeUrlTemplate.Value,
-                language.Value,
-                Optional.ToNullable(isDisabled),
-                kind.Value,
+                testData,
+                invokeUrlTemplate,
+                language,
+                isDisabled,
+                kind,
                 serializedAdditionalRawData);
         }
 

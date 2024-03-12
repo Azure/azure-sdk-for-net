@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && MinCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastSkuUpdate = default;
-            Optional<long> minCapacity = default;
+            DateTimeOffset? lastSkuUpdate = default;
+            long? minCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsCapacityReservationProperties(Optional.ToNullable(lastSkuUpdate), Optional.ToNullable(minCapacity), serializedAdditionalRawData);
+            return new OperationalInsightsCapacityReservationProperties(lastSkuUpdate, minCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsCapacityReservationProperties>.Write(ModelReaderWriterOptions options)

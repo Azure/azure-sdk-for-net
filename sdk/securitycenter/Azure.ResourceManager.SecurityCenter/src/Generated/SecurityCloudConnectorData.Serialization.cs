@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HybridComputeSettings != null)
+            if (Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
                 writer.WriteObjectValue(HybridComputeSettings);
             }
-            if (AuthenticationDetails != null)
+            if (Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
                 writer.WriteObjectValue(AuthenticationDetails);
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeSettingsProperties> hybridComputeSettings = default;
-            Optional<AuthenticationDetailsProperties> authenticationDetails = default;
+            SystemData systemData = default;
+            HybridComputeSettingsProperties hybridComputeSettings = default;
+            AuthenticationDetailsProperties authenticationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                hybridComputeSettings.Value,
-                authenticationDetails.Value,
+                systemData,
+                hybridComputeSettings,
+                authenticationDetails,
                 serializedAdditionalRawData);
         }
 

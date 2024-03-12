@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,22 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerCaseTerms.HasValue)
+            if (Optional.IsDefined(LowerCaseTerms))
             {
                 writer.WritePropertyName("lowercase"u8);
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (FlagsInternal != null)
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -54,9 +55,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> lowercase = default;
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
+            bool? lowercase = default;
+            string pattern = default;
+            string flags = default;
             IList<string> stopwords = default;
             string odataType = default;
             string name = default;
@@ -109,9 +110,9 @@ namespace Azure.Search.Documents.Indexes.Models
             return new PatternAnalyzer(
                 odataType,
                 name,
-                Optional.ToNullable(lowercase),
-                pattern.Value,
-                flags.Value,
+                lowercase,
+                pattern,
+                flags,
                 stopwords ?? new ChangeTrackingList<string>());
         }
     }

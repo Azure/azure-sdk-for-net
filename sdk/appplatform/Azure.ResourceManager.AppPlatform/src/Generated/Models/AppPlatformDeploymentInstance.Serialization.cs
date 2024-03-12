@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && DiscoveryStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DiscoveryStatus))
             {
                 writer.WritePropertyName("discoveryStatus"u8);
                 writer.WriteStringValue(DiscoveryStatus);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Zone != null)
+            if (options.Format != "W" && Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<string> reason = default;
-            Optional<string> discoveryStatus = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> zone = default;
+            string name = default;
+            string status = default;
+            string reason = default;
+            string discoveryStatus = default;
+            DateTimeOffset? startTime = default;
+            string zone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformDeploymentInstance(
-                name.Value,
-                status.Value,
-                reason.Value,
-                discoveryStatus.Value,
-                Optional.ToNullable(startTime),
-                zone.Value,
+                name,
+                status,
+                reason,
+                discoveryStatus,
+                startTime,
+                zone,
                 serializedAdditionalRawData);
         }
 

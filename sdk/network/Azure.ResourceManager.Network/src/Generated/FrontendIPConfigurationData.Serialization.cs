@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(InboundNatRules is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRules))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InboundNatPools is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatPools))
             {
                 writer.WritePropertyName("inboundNatPools"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(OutboundRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundRules))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -101,42 +101,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (PrivateIPAddressVersion.HasValue)
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 writer.WriteObjectValue(PublicIPAddress);
             }
-            if (PublicIPPrefix != null)
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (GatewayLoadBalancer != null)
+            if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
                 JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IList<string> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IReadOnlyList<WritableSubResource> inboundNatRules = default;
             IReadOnlyList<WritableSubResource> inboundNatPools = default;
             IReadOnlyList<WritableSubResource> outboundRules = default;
             IReadOnlyList<WritableSubResource> loadBalancingRules = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<NetworkIPVersion> privateIPAddressVersion = default;
-            Optional<SubnetData> subnet = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<WritableSubResource> gatewayLoadBalancer = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            NetworkIPVersion? privateIPAddressVersion = default;
+            SubnetData subnet = default;
+            PublicIPAddressData publicIPAddress = default;
+            WritableSubResource publicIPPrefix = default;
+            WritableSubResource gatewayLoadBalancer = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -390,24 +390,24 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontendIPConfigurationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
                 inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
                 outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
                 loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
-                privateIPAddress.Value,
-                Optional.ToNullable(privateIPAllocationMethod),
-                Optional.ToNullable(privateIPAddressVersion),
-                subnet.Value,
-                publicIPAddress.Value,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                privateIPAddressVersion,
+                subnet,
+                publicIPAddress,
                 publicIPPrefix,
                 gatewayLoadBalancer,
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<FrontendIPConfigurationData>.Write(ModelReaderWriterOptions options)

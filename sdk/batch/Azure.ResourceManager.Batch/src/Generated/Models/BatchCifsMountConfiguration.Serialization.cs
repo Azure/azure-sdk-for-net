@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (MountOptions != null)
+            if (Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
             string userName = default;
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 userName,
                 source,
                 relativeMountPath,
-                mountOptions.Value,
+                mountOptions,
                 password,
                 serializedAdditionalRawData);
         }

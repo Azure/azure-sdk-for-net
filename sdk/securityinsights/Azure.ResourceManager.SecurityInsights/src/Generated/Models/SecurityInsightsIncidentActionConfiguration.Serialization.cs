@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (ClassificationReason.HasValue)
+            if (Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (ClassificationComment != null)
+            if (Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            SecurityInsightsIncidentStatus? status = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
             IList<SecurityInsightsIncidentLabel> labels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -186,12 +187,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsIncidentActionConfiguration(
-                Optional.ToNullable(severity),
-                Optional.ToNullable(status),
-                Optional.ToNullable(classification),
-                Optional.ToNullable(classificationReason),
-                classificationComment.Value,
-                owner.Value,
+                severity,
+                status,
+                classification,
+                classificationReason,
+                classificationComment,
+                owner,
                 labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
                 serializedAdditionalRawData);
         }

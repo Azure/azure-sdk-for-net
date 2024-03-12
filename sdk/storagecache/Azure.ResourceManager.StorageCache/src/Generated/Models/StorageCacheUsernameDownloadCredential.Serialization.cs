@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (BindDistinguishedName != null)
+            if (Optional.IsDefined(BindDistinguishedName))
             {
                 writer.WritePropertyName("bindDn"u8);
                 writer.WriteStringValue(BindDistinguishedName);
             }
-            if (BindPassword != null)
+            if (Optional.IsDefined(BindPassword))
             {
                 writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> bindDn = default;
-            Optional<string> bindPassword = default;
+            string bindDn = default;
+            string bindPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsernameDownloadCredential(bindDn.Value, bindPassword.Value, serializedAdditionalRawData);
+            return new StorageCacheUsernameDownloadCredential(bindDn, bindPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsernameDownloadCredential>.Write(ModelReaderWriterOptions options)

@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualRouterAsn.HasValue)
+            if (Optional.IsDefined(VirtualRouterAsn))
             {
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (!(VirtualRouterIPs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (HostedSubnet != null)
+            if (Optional.IsDefined(HostedSubnet))
             {
                 writer.WritePropertyName("hostedSubnet"u8);
                 JsonSerializer.Serialize(writer, HostedSubnet);
             }
-            if (HostedGateway != null)
+            if (Optional.IsDefined(HostedGateway))
             {
                 writer.WritePropertyName("hostedGateway"u8);
                 JsonSerializer.Serialize(writer, HostedGateway);
             }
-            if (options.Format != "W" && !(Peerings is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Peerings))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -146,18 +146,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<long> virtualRouterAsn = default;
+            long? virtualRouterAsn = default;
             IList<string> virtualRouterIPs = default;
-            Optional<WritableSubResource> hostedSubnet = default;
-            Optional<WritableSubResource> hostedGateway = default;
+            WritableSubResource hostedSubnet = default;
+            WritableSubResource hostedGateway = default;
             IReadOnlyList<WritableSubResource> peerings = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualRouterData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(virtualRouterAsn),
+                etag,
+                virtualRouterAsn,
                 virtualRouterIPs ?? new ChangeTrackingList<string>(),
                 hostedSubnet,
                 hostedGateway,
                 peerings ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VirtualRouterData>.Write(ModelReaderWriterOptions options)

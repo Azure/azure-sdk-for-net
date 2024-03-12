@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComputerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<HybridComputeWindowsConfiguration> windowsConfiguration = default;
-            Optional<HybridComputeLinuxConfiguration> linuxConfiguration = default;
+            string computerName = default;
+            HybridComputeWindowsConfiguration windowsConfiguration = default;
+            HybridComputeLinuxConfiguration linuxConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeOSProfile(computerName.Value, windowsConfiguration.Value, linuxConfiguration.Value, serializedAdditionalRawData);
+            return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeOSProfile>.Write(ModelReaderWriterOptions options)

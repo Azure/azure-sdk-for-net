@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskUri != null)
+            if (Optional.IsDefined(DiskUri))
             {
                 writer.WritePropertyName("diskUri"u8);
                 writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
-            if (RecoveryAzureStorageAccountId != null)
+            if (Optional.IsDefined(RecoveryAzureStorageAccountId))
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryAzureStorageAccountId);
             }
-            if (PrimaryDiskAzureStorageAccountId != null)
+            if (Optional.IsDefined(PrimaryDiskAzureStorageAccountId))
             {
                 writer.WritePropertyName("primaryDiskAzureStorageAccountId"u8);
                 writer.WriteStringValue(PrimaryDiskAzureStorageAccountId);
             }
-            if (RecoveryDiskUri != null)
+            if (Optional.IsDefined(RecoveryDiskUri))
             {
                 writer.WritePropertyName("recoveryDiskUri"u8);
                 writer.WriteStringValue(RecoveryDiskUri.AbsoluteUri);
             }
-            if (DiskName != null)
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (DiskCapacityInBytes.HasValue)
+            if (Optional.IsDefined(DiskCapacityInBytes))
             {
                 writer.WritePropertyName("diskCapacityInBytes"u8);
                 writer.WriteNumberValue(DiskCapacityInBytes.Value);
             }
-            if (PrimaryStagingAzureStorageAccountId != null)
+            if (Optional.IsDefined(PrimaryStagingAzureStorageAccountId))
             {
                 writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
                 writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
             }
-            if (DiskType != null)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (IsResyncRequired.HasValue)
+            if (Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (MonitoringPercentageCompletion.HasValue)
+            if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
                 writer.WritePropertyName("monitoringPercentageCompletion"u8);
                 writer.WriteNumberValue(MonitoringPercentageCompletion.Value);
             }
-            if (MonitoringJobType != null)
+            if (Optional.IsDefined(MonitoringJobType))
             {
                 writer.WritePropertyName("monitoringJobType"u8);
                 writer.WriteStringValue(MonitoringJobType);
             }
-            if (DataPendingInStagingStorageAccountInMB.HasValue)
+            if (Optional.IsDefined(DataPendingInStagingStorageAccountInMB))
             {
                 writer.WritePropertyName("dataPendingInStagingStorageAccountInMB"u8);
                 writer.WriteNumberValue(DataPendingInStagingStorageAccountInMB.Value);
             }
-            if (DataPendingAtSourceAgentInMB.HasValue)
+            if (Optional.IsDefined(DataPendingAtSourceAgentInMB))
             {
                 writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
                 writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
             }
-            if (DiskState != null)
+            if (Optional.IsDefined(DiskState))
             {
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (!(AllowedDiskLevelOperation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();
@@ -106,42 +107,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsDiskEncrypted.HasValue)
+            if (Optional.IsDefined(IsDiskEncrypted))
             {
                 writer.WritePropertyName("isDiskEncrypted"u8);
                 writer.WriteBooleanValue(IsDiskEncrypted.Value);
             }
-            if (SecretIdentifier != null)
+            if (Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (DekKeyVaultArmId != null)
+            if (Optional.IsDefined(DekKeyVaultArmId))
             {
                 writer.WritePropertyName("dekKeyVaultArmId"u8);
                 writer.WriteStringValue(DekKeyVaultArmId);
             }
-            if (IsDiskKeyEncrypted.HasValue)
+            if (Optional.IsDefined(IsDiskKeyEncrypted))
             {
                 writer.WritePropertyName("isDiskKeyEncrypted"u8);
                 writer.WriteBooleanValue(IsDiskKeyEncrypted.Value);
             }
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (KekKeyVaultArmId != null)
+            if (Optional.IsDefined(KekKeyVaultArmId))
             {
                 writer.WritePropertyName("kekKeyVaultArmId"u8);
                 writer.WriteStringValue(KekKeyVaultArmId);
             }
-            if (FailoverDiskName != null)
+            if (Optional.IsDefined(FailoverDiskName))
             {
                 writer.WritePropertyName("failoverDiskName"u8);
                 writer.WriteStringValue(FailoverDiskName);
             }
-            if (TfoDiskName != null)
+            if (Optional.IsDefined(TfoDiskName))
             {
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
@@ -184,29 +185,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Uri> diskUri = default;
-            Optional<ResourceIdentifier> recoveryAzureStorageAccountId = default;
-            Optional<ResourceIdentifier> primaryDiskAzureStorageAccountId = default;
-            Optional<Uri> recoveryDiskUri = default;
-            Optional<string> diskName = default;
-            Optional<long> diskCapacityInBytes = default;
-            Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
-            Optional<string> diskType = default;
-            Optional<bool> resyncRequired = default;
-            Optional<int> monitoringPercentageCompletion = default;
-            Optional<string> monitoringJobType = default;
-            Optional<double> dataPendingInStagingStorageAccountInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> diskState = default;
+            Uri diskUri = default;
+            ResourceIdentifier recoveryAzureStorageAccountId = default;
+            ResourceIdentifier primaryDiskAzureStorageAccountId = default;
+            Uri recoveryDiskUri = default;
+            string diskName = default;
+            long? diskCapacityInBytes = default;
+            ResourceIdentifier primaryStagingAzureStorageAccountId = default;
+            string diskType = default;
+            bool? resyncRequired = default;
+            int? monitoringPercentageCompletion = default;
+            string monitoringJobType = default;
+            double? dataPendingInStagingStorageAccountInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string diskState = default;
             IReadOnlyList<string> allowedDiskLevelOperation = default;
-            Optional<bool> isDiskEncrypted = default;
-            Optional<string> secretIdentifier = default;
-            Optional<ResourceIdentifier> dekKeyVaultArmId = default;
-            Optional<bool> isDiskKeyEncrypted = default;
-            Optional<string> keyIdentifier = default;
-            Optional<ResourceIdentifier> kekKeyVaultArmId = default;
-            Optional<string> failoverDiskName = default;
-            Optional<string> tfoDiskName = default;
+            bool? isDiskEncrypted = default;
+            string secretIdentifier = default;
+            ResourceIdentifier dekKeyVaultArmId = default;
+            bool? isDiskKeyEncrypted = default;
+            string keyIdentifier = default;
+            ResourceIdentifier kekKeyVaultArmId = default;
+            string failoverDiskName = default;
+            string tfoDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -398,29 +399,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new A2AProtectedDiskDetails(
-                diskUri.Value,
-                recoveryAzureStorageAccountId.Value,
-                primaryDiskAzureStorageAccountId.Value,
-                recoveryDiskUri.Value,
-                diskName.Value,
-                Optional.ToNullable(diskCapacityInBytes),
-                primaryStagingAzureStorageAccountId.Value,
-                diskType.Value,
-                Optional.ToNullable(resyncRequired),
-                Optional.ToNullable(monitoringPercentageCompletion),
-                monitoringJobType.Value,
-                Optional.ToNullable(dataPendingInStagingStorageAccountInMB),
-                Optional.ToNullable(dataPendingAtSourceAgentInMB),
-                diskState.Value,
+                diskUri,
+                recoveryAzureStorageAccountId,
+                primaryDiskAzureStorageAccountId,
+                recoveryDiskUri,
+                diskName,
+                diskCapacityInBytes,
+                primaryStagingAzureStorageAccountId,
+                diskType,
+                resyncRequired,
+                monitoringPercentageCompletion,
+                monitoringJobType,
+                dataPendingInStagingStorageAccountInMB,
+                dataPendingAtSourceAgentInMB,
+                diskState,
                 allowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isDiskEncrypted),
-                secretIdentifier.Value,
-                dekKeyVaultArmId.Value,
-                Optional.ToNullable(isDiskKeyEncrypted),
-                keyIdentifier.Value,
-                kekKeyVaultArmId.Value,
-                failoverDiskName.Value,
-                tfoDiskName.Value,
+                isDiskEncrypted,
+                secretIdentifier,
+                dekKeyVaultArmId,
+                isDiskKeyEncrypted,
+                keyIdentifier,
+                kekKeyVaultArmId,
+                failoverDiskName,
+                tfoDiskName,
                 serializedAdditionalRawData);
         }
 

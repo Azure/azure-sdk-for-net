@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ExecutionState.HasValue)
+            if (Optional.IsDefined(ExecutionState))
             {
                 writer.WritePropertyName("executionState"u8);
                 writer.WriteStringValue(ExecutionState.Value.ToString());
             }
-            if (ExecutionMessage != null)
+            if (Optional.IsDefined(ExecutionMessage))
             {
                 writer.WritePropertyName("executionMessage"u8);
                 writer.WriteStringValue(ExecutionMessage);
             }
-            if (ExitCode.HasValue)
+            if (Optional.IsDefined(ExitCode))
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ExecutionState> executionState = default;
-            Optional<string> executionMessage = default;
-            Optional<int> exitCode = default;
-            Optional<string> output = default;
-            Optional<string> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            ExecutionState? executionState = default;
+            string executionMessage = default;
+            int? exitCode = default;
+            string output = default;
+            string error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,13 +194,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineRunCommandInstanceView(
-                Optional.ToNullable(executionState),
-                executionMessage.Value,
-                Optional.ToNullable(exitCode),
-                output.Value,
-                error.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                executionState,
+                executionMessage,
+                exitCode,
+                output,
+                error,
+                startTime,
+                endTime,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 serializedAdditionalRawData);
         }

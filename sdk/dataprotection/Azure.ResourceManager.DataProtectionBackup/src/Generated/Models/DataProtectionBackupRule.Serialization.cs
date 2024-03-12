@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (BackupParameters != null)
+            if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
                 writer.WriteObjectValue(BackupParameters);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            DataProtectionBackupSettingsBase backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 name,
                 objectType,
                 serializedAdditionalRawData,
-                backupParameters.Value,
+                backupParameters,
                 dataStore,
                 trigger);
         }

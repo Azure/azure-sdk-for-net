@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (CurrentTimeStamp.HasValue)
+            if (Optional.IsDefined(CurrentTimeStamp))
             {
                 writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
-            if (PreviousTimeStamp.HasValue)
+            if (Optional.IsDefined(PreviousTimeStamp))
             {
                 writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
-            if (CurrentCpuStats != null)
+            if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
-            if (PreviousCpuStats != null)
+            if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
-            if (MemoryStats != null)
+            if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Eth0 != null)
+            if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> currentTimeStamp = default;
-            Optional<DateTimeOffset> previousTimeStamp = default;
-            Optional<ContainerCpuStatistics> currentCpuStats = default;
-            Optional<ContainerCpuStatistics> previousCpuStats = default;
-            Optional<ContainerMemoryStatistics> memoryStats = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            DateTimeOffset? currentTimeStamp = default;
+            DateTimeOffset? previousTimeStamp = default;
+            ContainerCpuStatistics currentCpuStats = default;
+            ContainerCpuStatistics previousCpuStats = default;
+            ContainerMemoryStatistics memoryStats = default;
+            string name = default;
+            string id = default;
+            ContainerNetworkInterfaceStatistics eth0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +188,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerInfo(
-                Optional.ToNullable(currentTimeStamp),
-                Optional.ToNullable(previousTimeStamp),
-                currentCpuStats.Value,
-                previousCpuStats.Value,
-                memoryStats.Value,
-                name.Value,
-                id.Value,
-                eth0.Value,
+                currentTimeStamp,
+                previousTimeStamp,
+                currentCpuStats,
+                previousCpuStats,
+                memoryStats,
+                name,
+                id,
+                eth0,
                 serializedAdditionalRawData);
         }
 

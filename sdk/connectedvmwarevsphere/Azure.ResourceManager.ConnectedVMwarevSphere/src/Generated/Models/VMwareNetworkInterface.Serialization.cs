@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -46,42 +47,42 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (NetworkId != null)
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (NicType.HasValue)
+            if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (PowerOnBoot.HasValue)
+            if (Optional.IsDefined(PowerOnBoot))
             {
                 writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
-            if (options.Format != "W" && NetworkMoRefId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkMoRefId))
             {
                 writer.WritePropertyName("networkMoRefId"u8);
                 writer.WriteStringValue(NetworkMoRefId);
             }
-            if (options.Format != "W" && NetworkMoName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkMoName))
             {
                 writer.WritePropertyName("networkMoName"u8);
                 writer.WriteStringValue(NetworkMoName);
             }
-            if (DeviceKey.HasValue)
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (IPSettings != null)
+            if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
                 writer.WriteObjectValue(IPSettings);
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
+            string name = default;
+            string label = default;
             IReadOnlyList<string> ipAddresses = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkId = default;
-            Optional<VMwareNicType> nicType = default;
-            Optional<PowerOnBootOption> powerOnBoot = default;
-            Optional<string> networkMoRefId = default;
-            Optional<string> networkMoName = default;
-            Optional<int> deviceKey = default;
-            Optional<NicIPSettings> ipSettings = default;
+            string macAddress = default;
+            string networkId = default;
+            VMwareNicType? nicType = default;
+            PowerOnBootOption? powerOnBoot = default;
+            string networkMoRefId = default;
+            string networkMoName = default;
+            int? deviceKey = default;
+            NicIPSettings ipSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,17 +227,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareNetworkInterface(
-                name.Value,
-                label.Value,
+                name,
+                label,
                 ipAddresses ?? new ChangeTrackingList<string>(),
-                macAddress.Value,
-                networkId.Value,
-                Optional.ToNullable(nicType),
-                Optional.ToNullable(powerOnBoot),
-                networkMoRefId.Value,
-                networkMoName.Value,
-                Optional.ToNullable(deviceKey),
-                ipSettings.Value,
+                macAddress,
+                networkId,
+                nicType,
+                powerOnBoot,
+                networkMoRefId,
+                networkMoName,
+                deviceKey,
+                ipSettings,
                 serializedAdditionalRawData);
         }
 

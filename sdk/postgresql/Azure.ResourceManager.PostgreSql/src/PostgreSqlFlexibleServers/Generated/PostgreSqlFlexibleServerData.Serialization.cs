@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,104 +67,104 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorLogin != null)
+            if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (options.Format != "W" && MinorVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(MinorVersion))
             {
                 writer.WritePropertyName("minorVersion"u8);
                 writer.WriteStringValue(MinorVersion);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (Storage != null)
+            if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
             }
-            if (AuthConfig != null)
+            if (Optional.IsDefined(AuthConfig))
             {
                 writer.WritePropertyName("authConfig"u8);
                 writer.WriteObjectValue(AuthConfig);
             }
-            if (DataEncryption != null)
+            if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
                 writer.WriteObjectValue(DataEncryption);
             }
-            if (Backup != null)
+            if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network);
             }
-            if (HighAvailability != null)
+            if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
                 writer.WriteObjectValue(HighAvailability);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (SourceServerResourceId != null)
+            if (Optional.IsDefined(SourceServerResourceId))
             {
                 writer.WritePropertyName("sourceServerResourceId"u8);
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (PointInTimeUtc.HasValue)
+            if (Optional.IsDefined(PointInTimeUtc))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUtc.Value, "O");
             }
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (ReplicationRole.HasValue)
+            if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicaCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicaCapacity))
             {
                 writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -207,33 +208,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Optional<PostgreSqlFlexibleServerSku> sku = default;
-            Optional<PostgreSqlFlexibleServerUserAssignedIdentity> identity = default;
+            PostgreSqlFlexibleServerSku sku = default;
+            PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<PostgreSqlFlexibleServerVersion> version = default;
-            Optional<string> minorVersion = default;
-            Optional<PostgreSqlFlexibleServerState> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<PostgreSqlFlexibleServerStorage> storage = default;
-            Optional<PostgreSqlFlexibleServerAuthConfig> authConfig = default;
-            Optional<PostgreSqlFlexibleServerDataEncryption> dataEncryption = default;
-            Optional<PostgreSqlFlexibleServerBackupProperties> backup = default;
-            Optional<PostgreSqlFlexibleServerNetwork> network = default;
-            Optional<PostgreSqlFlexibleServerHighAvailability> highAvailability = default;
-            Optional<PostgreSqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
-            Optional<ResourceIdentifier> sourceServerResourceId = default;
-            Optional<DateTimeOffset> pointInTimeUTC = default;
-            Optional<string> availabilityZone = default;
-            Optional<PostgreSqlFlexibleServerReplicationRole> replicationRole = default;
-            Optional<int> replicaCapacity = default;
-            Optional<PostgreSqlFlexibleServerCreateMode> createMode = default;
+            SystemData systemData = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            PostgreSqlFlexibleServerVersion? version = default;
+            string minorVersion = default;
+            PostgreSqlFlexibleServerState? state = default;
+            string fullyQualifiedDomainName = default;
+            PostgreSqlFlexibleServerStorage storage = default;
+            PostgreSqlFlexibleServerAuthConfig authConfig = default;
+            PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
+            PostgreSqlFlexibleServerNetwork network = default;
+            PostgreSqlFlexibleServerHighAvailability highAvailability = default;
+            PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
+            ResourceIdentifier sourceServerResourceId = default;
+            DateTimeOffset? pointInTimeUTC = default;
+            string availabilityZone = default;
+            PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
+            int? replicaCapacity = default;
+            PostgreSqlFlexibleServerCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -472,30 +473,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                identity.Value,
-                administratorLogin.Value,
-                administratorLoginPassword.Value,
-                Optional.ToNullable(version),
-                minorVersion.Value,
-                Optional.ToNullable(state),
-                fullyQualifiedDomainName.Value,
-                storage.Value,
-                authConfig.Value,
-                dataEncryption.Value,
-                backup.Value,
-                network.Value,
-                highAvailability.Value,
-                maintenanceWindow.Value,
-                sourceServerResourceId.Value,
-                Optional.ToNullable(pointInTimeUTC),
-                availabilityZone.Value,
-                Optional.ToNullable(replicationRole),
-                Optional.ToNullable(replicaCapacity),
-                Optional.ToNullable(createMode),
+                sku,
+                identity,
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                minorVersion,
+                state,
+                fullyQualifiedDomainName,
+                storage,
+                authConfig,
+                dataEncryption,
+                backup,
+                network,
+                highAvailability,
+                maintenanceWindow,
+                sourceServerResourceId,
+                pointInTimeUTC,
+                availabilityZone,
+                replicationRole,
+                replicaCapacity,
+                createMode,
                 serializedAdditionalRawData);
         }
 

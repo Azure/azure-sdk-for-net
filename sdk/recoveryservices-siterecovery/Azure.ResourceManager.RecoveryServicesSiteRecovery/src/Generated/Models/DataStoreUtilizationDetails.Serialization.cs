@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalSnapshotsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsSupported))
             {
                 writer.WritePropertyName("totalSnapshotsSupported"u8);
                 writer.WriteNumberValue(TotalSnapshotsSupported.Value);
             }
-            if (options.Format != "W" && TotalSnapshotsCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsCreated))
             {
                 writer.WritePropertyName("totalSnapshotsCreated"u8);
                 writer.WriteNumberValue(TotalSnapshotsCreated.Value);
             }
-            if (options.Format != "W" && DataStoreName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataStoreName))
             {
                 writer.WritePropertyName("dataStoreName"u8);
                 writer.WriteStringValue(DataStoreName);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<long> totalSnapshotsSupported = default;
-            Optional<long> totalSnapshotsCreated = default;
-            Optional<string> dataStoreName = default;
+            long? totalSnapshotsSupported = default;
+            long? totalSnapshotsCreated = default;
+            string dataStoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataStoreUtilizationDetails(Optional.ToNullable(totalSnapshotsSupported), Optional.ToNullable(totalSnapshotsCreated), dataStoreName.Value, serializedAdditionalRawData);
+            return new DataStoreUtilizationDetails(totalSnapshotsSupported, totalSnapshotsCreated, dataStoreName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataStoreUtilizationDetails>.Write(ModelReaderWriterOptions options)

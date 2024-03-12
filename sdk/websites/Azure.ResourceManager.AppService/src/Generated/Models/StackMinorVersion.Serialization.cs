@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayVersion != null)
+            if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (IsRemoteDebuggingEnabled.HasValue)
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isRemoteDebuggingEnabled = default;
+            string displayVersion = default;
+            string runtimeVersion = default;
+            bool? isDefault = default;
+            bool? isRemoteDebuggingEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled), serializedAdditionalRawData);
+            return new StackMinorVersion(displayVersion, runtimeVersion, isDefault, isRemoteDebuggingEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StackMinorVersion>.Write(ModelReaderWriterOptions options)

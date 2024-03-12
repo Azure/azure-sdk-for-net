@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (PreferredEmail != null)
+            if (Optional.IsDefined(PreferredEmail))
             {
                 writer.WritePropertyName("preferredEmail"u8);
                 writer.WriteStringValue(PreferredEmail);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<string> preferredEmail = default;
+            string preferredEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentUserProfile(preferredEmail.Value, serializedAdditionalRawData);
+            return new NginxDeploymentUserProfile(preferredEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUserProfile>.Write(ModelReaderWriterOptions options)

@@ -82,10 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupShortTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupShortTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();

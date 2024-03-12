@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ODataContext != null)
+            if (Optional.IsDefined(ODataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (ODataCount.HasValue)
+            if (Optional.IsDefined(ODataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(ODataCount.Value);
             }
-            if (ODataNextLink != null)
+            if (Optional.IsDefined(ODataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(ODataNextLink);
             }
-            if (!(Value is ChangeTrackingList<PolicyEvent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            string odataContext = default;
+            int? odataCount = default;
+            string odataNextLink = default;
             IReadOnlyList<PolicyEvent> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEventsQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, value ?? new ChangeTrackingList<PolicyEvent>(), serializedAdditionalRawData);
+            return new PolicyEventsQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEventsQueryResults>.Write(ModelReaderWriterOptions options)

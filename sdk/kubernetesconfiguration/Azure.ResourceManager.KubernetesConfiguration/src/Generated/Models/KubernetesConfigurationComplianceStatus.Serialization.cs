@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComplianceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (LastConfigAppliedOn.HasValue)
+            if (Optional.IsDefined(LastConfigAppliedOn))
             {
                 writer.WritePropertyName("lastConfigApplied"u8);
                 writer.WriteStringValue(LastConfigAppliedOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (MessageLevel.HasValue)
+            if (Optional.IsDefined(MessageLevel))
             {
                 writer.WritePropertyName("messageLevel"u8);
                 writer.WriteStringValue(MessageLevel.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<KubernetesConfigurationComplianceStateType> complianceState = default;
-            Optional<DateTimeOffset> lastConfigApplied = default;
-            Optional<string> message = default;
-            Optional<KubernetesConfigurationMesageLevel> messageLevel = default;
+            KubernetesConfigurationComplianceStateType? complianceState = default;
+            DateTimeOffset? lastConfigApplied = default;
+            string message = default;
+            KubernetesConfigurationMesageLevel? messageLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesConfigurationComplianceStatus(Optional.ToNullable(complianceState), Optional.ToNullable(lastConfigApplied), message.Value, Optional.ToNullable(messageLevel), serializedAdditionalRawData);
+            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigApplied, message, messageLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesConfigurationComplianceStatus>.Write(ModelReaderWriterOptions options)

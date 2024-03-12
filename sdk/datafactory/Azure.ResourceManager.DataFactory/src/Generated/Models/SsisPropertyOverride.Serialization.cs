@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             JsonSerializer.Serialize(writer, Value);
-            if (IsSensitive.HasValue)
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> value = default;
-            Optional<bool> isSensitive = default;
+            bool? isSensitive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive), serializedAdditionalRawData);
+            return new SsisPropertyOverride(value, isSensitive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisPropertyOverride>.Write(ModelReaderWriterOptions options)

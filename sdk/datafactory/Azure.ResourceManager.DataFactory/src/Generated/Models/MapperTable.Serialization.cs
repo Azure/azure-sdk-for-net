@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Schema is ChangeTrackingList<MapperTableSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DslConnectorProperties))
             {
                 writer.WritePropertyName("dslConnectorProperties"u8);
                 writer.WriteStartArray();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IList<MapperTableSchema> schema = default;
             IList<MapperDslConnectorProperties> dslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperTable(name.Value, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
+            return new MapperTable(name, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperTable>.Write(ModelReaderWriterOptions options)

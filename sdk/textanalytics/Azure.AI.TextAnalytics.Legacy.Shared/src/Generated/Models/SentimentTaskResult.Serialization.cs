@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<SentimentResponse> results = default;
+            SentimentResponse results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -31,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentimentTaskResult(results.Value);
+            return new SentimentTaskResult(results);
         }
     }
 }

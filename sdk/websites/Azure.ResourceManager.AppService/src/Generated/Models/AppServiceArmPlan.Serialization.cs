@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (PromotionCode != null)
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string name = default;
+            string publisher = default;
+            string product = default;
+            string promotionCode = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceArmPlan(
-                name.Value,
-                publisher.Value,
-                product.Value,
-                promotionCode.Value,
-                version.Value,
+                name,
+                publisher,
+                product,
+                promotionCode,
+                version,
                 serializedAdditionalRawData);
         }
 

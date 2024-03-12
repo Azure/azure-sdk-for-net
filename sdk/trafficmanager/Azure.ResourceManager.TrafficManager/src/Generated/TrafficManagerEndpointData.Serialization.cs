@@ -27,59 +27,59 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (EndpointStatus.HasValue)
+            if (Optional.IsDefined(EndpointStatus))
             {
                 writer.WritePropertyName("endpointStatus"u8);
                 writer.WriteStringValue(EndpointStatus.Value.ToString());
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (EndpointLocation != null)
+            if (Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("endpointLocation"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (EndpointMonitorStatus.HasValue)
+            if (Optional.IsDefined(EndpointMonitorStatus))
             {
                 writer.WritePropertyName("endpointMonitorStatus"u8);
                 writer.WriteStringValue(EndpointMonitorStatus.Value.ToString());
             }
-            if (MinChildEndpoints.HasValue)
+            if (Optional.IsDefined(MinChildEndpoints))
             {
                 if (MinChildEndpoints != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.TrafficManager
                     writer.WriteNull("minChildEndpoints");
                 }
             }
-            if (MinChildEndpointsIPv4.HasValue)
+            if (Optional.IsDefined(MinChildEndpointsIPv4))
             {
                 if (MinChildEndpointsIPv4 != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.TrafficManager
                     writer.WriteNull("minChildEndpointsIPv4");
                 }
             }
-            if (MinChildEndpointsIPv6.HasValue)
+            if (Optional.IsDefined(MinChildEndpointsIPv6))
             {
                 if (MinChildEndpointsIPv6 != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.TrafficManager
                     writer.WriteNull("minChildEndpointsIPv6");
                 }
             }
-            if (!(GeoMapping is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GeoMapping))
             {
                 writer.WritePropertyName("geoMapping"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subnets is ChangeTrackingList<TrafficManagerEndpointSubnetInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomHeaders is ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (AlwaysServe.HasValue)
+            if (Optional.IsDefined(AlwaysServe))
             {
                 writer.WritePropertyName("alwaysServe"u8);
                 writer.WriteStringValue(AlwaysServe.Value.ToString());
@@ -189,23 +189,23 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> target = default;
-            Optional<TrafficManagerEndpointStatus> endpointStatus = default;
-            Optional<long> weight = default;
-            Optional<long> priority = default;
-            Optional<string> endpointLocation = default;
-            Optional<TrafficManagerEndpointMonitorStatus> endpointMonitorStatus = default;
-            Optional<long?> minChildEndpoints = default;
-            Optional<long?> minChildEndpointsIPv4 = default;
-            Optional<long?> minChildEndpointsIPv6 = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceIdentifier targetResourceId = default;
+            string target = default;
+            TrafficManagerEndpointStatus? endpointStatus = default;
+            long? weight = default;
+            long? priority = default;
+            string endpointLocation = default;
+            TrafficManagerEndpointMonitorStatus? endpointMonitorStatus = default;
+            long? minChildEndpoints = default;
+            long? minChildEndpointsIPv4 = default;
+            long? minChildEndpointsIPv6 = default;
             IList<string> geoMapping = default;
             IList<TrafficManagerEndpointSubnetInfo> subnets = default;
             IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders = default;
-            Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
+            TrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -388,24 +388,24 @@ namespace Azure.ResourceManager.TrafficManager
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TrafficManagerEndpointData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                targetResourceId.Value,
-                target.Value,
-                Optional.ToNullable(endpointStatus),
-                Optional.ToNullable(weight),
-                Optional.ToNullable(priority),
-                endpointLocation.Value,
-                Optional.ToNullable(endpointMonitorStatus),
-                Optional.ToNullable(minChildEndpoints),
-                Optional.ToNullable(minChildEndpointsIPv4),
-                Optional.ToNullable(minChildEndpointsIPv6),
+                targetResourceId,
+                target,
+                endpointStatus,
+                weight,
+                priority,
+                endpointLocation,
+                endpointMonitorStatus,
+                minChildEndpoints,
+                minChildEndpointsIPv4,
+                minChildEndpointsIPv6,
                 geoMapping ?? new ChangeTrackingList<string>(),
                 subnets ?? new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>(),
                 customHeaders ?? new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>(),
-                Optional.ToNullable(alwaysServe));
+                alwaysServe);
         }
 
         BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CallsCount.HasValue)
+            if (Optional.IsDefined(CallsCount))
             {
                 writer.WritePropertyName("callsCount"u8);
                 writer.WriteNumberValue(CallsCount.Value);
             }
-            if (KbTransferred.HasValue)
+            if (Optional.IsDefined(KbTransferred))
             {
                 writer.WritePropertyName("kbTransferred"u8);
                 writer.WriteNumberValue(KbTransferred.Value);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> callsCount = default;
-            Optional<double> kbTransferred = default;
+            int? callsCount = default;
+            double? kbTransferred = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCounterValueUpdateContent(Optional.ToNullable(callsCount), Optional.ToNullable(kbTransferred), serializedAdditionalRawData);
+            return new QuotaCounterValueUpdateContent(callsCount, kbTransferred, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCounterValueUpdateContent>.Write(ModelReaderWriterOptions options)

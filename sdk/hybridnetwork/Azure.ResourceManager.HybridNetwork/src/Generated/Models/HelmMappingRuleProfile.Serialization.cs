@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ReleaseNamespace != null)
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
             }
-            if (ReleaseName != null)
+            if (Optional.IsDefined(ReleaseName))
             {
                 writer.WritePropertyName("releaseName"u8);
                 writer.WriteStringValue(ReleaseName);
             }
-            if (HelmPackageVersion != null)
+            if (Optional.IsDefined(HelmPackageVersion))
             {
                 writer.WritePropertyName("helmPackageVersion"u8);
                 writer.WriteStringValue(HelmPackageVersion);
             }
-            if (Values != null)
+            if (Optional.IsDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> releaseNamespace = default;
-            Optional<string> releaseName = default;
-            Optional<string> helmPackageVersion = default;
-            Optional<string> values = default;
-            Optional<HelmMappingRuleProfileConfig> options0 = default;
+            string releaseNamespace = default;
+            string releaseName = default;
+            string helmPackageVersion = default;
+            string values = default;
+            HelmMappingRuleProfileConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HelmMappingRuleProfile(
-                releaseNamespace.Value,
-                releaseName.Value,
-                helmPackageVersion.Value,
-                values.Value,
-                options0.Value,
+                releaseNamespace,
+                releaseName,
+                helmPackageVersion,
+                values,
+                options0,
                 serializedAdditionalRawData);
         }
 

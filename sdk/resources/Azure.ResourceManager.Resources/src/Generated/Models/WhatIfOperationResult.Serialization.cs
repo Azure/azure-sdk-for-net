@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Changes is ChangeTrackingList<WhatIfChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Changes))
             {
                 writer.WritePropertyName("changes"u8);
                 writer.WriteStartArray();
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
+            string status = default;
+            ResponseError error = default;
             IReadOnlyList<WhatIfChange> changes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfOperationResult(status.Value, error.Value, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
+            return new WhatIfOperationResult(status, error, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfOperationResult>.Write(ModelReaderWriterOptions options)

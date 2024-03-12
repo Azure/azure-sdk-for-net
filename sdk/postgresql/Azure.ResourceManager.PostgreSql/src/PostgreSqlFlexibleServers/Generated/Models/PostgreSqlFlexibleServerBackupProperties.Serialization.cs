@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (BackupRetentionDays.HasValue)
+            if (Optional.IsDefined(BackupRetentionDays))
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (GeoRedundantBackup.HasValue)
+            if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<PostgreSqlFlexibleServerGeoRedundantBackupEnum> geoRedundantBackup = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            int? backupRetentionDays = default;
+            PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default;
+            DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerBackupProperties(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupProperties>.Write(ModelReaderWriterOptions options)

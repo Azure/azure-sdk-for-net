@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (DataPlaneUri != null)
+            if (Optional.IsDefined(DataPlaneUri))
             {
                 writer.WritePropertyName("dataPlaneUrl"u8);
                 writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryDataPlaneUserAccessPolicy> policy = default;
-            Optional<string> accessToken = default;
-            Optional<Uri> dataPlaneUrl = default;
+            DataFactoryDataPlaneUserAccessPolicy policy = default;
+            string accessToken = default;
+            Uri dataPlaneUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataPlaneAccessPolicyResult(policy.Value, accessToken.Value, dataPlaneUrl.Value, serializedAdditionalRawData);
+            return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (SasUrlSettingName != null)
+            if (Optional.IsDefined(SasUrlSettingName))
             {
                 writer.WritePropertyName("sasUrlSettingName"u8);
                 writer.WriteStringValue(SasUrlSettingName);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> sasUrlSettingName = default;
+            string sasUrlSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBlobStorageTokenStore(sasUrlSettingName.Value, serializedAdditionalRawData);
+            return new AppServiceBlobStorageTokenStore(sasUrlSettingName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBlobStorageTokenStore>.Write(ModelReaderWriterOptions options)

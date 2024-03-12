@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,34 +27,34 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ProbeAction != null)
+            if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
                 writer.WriteObjectValue(ProbeAction);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
-            if (InitialDelayInSeconds.HasValue)
+            if (Optional.IsDefined(InitialDelayInSeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (PeriodInSeconds.HasValue)
+            if (Optional.IsDefined(PeriodInSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppInstanceProbeAction> probeAction = default;
+            AppInstanceProbeAction probeAction = default;
             bool disableProbe = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? timeoutSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,13 +174,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppInstanceProbe(
-                probeAction.Value,
+                probeAction,
                 disableProbe,
-                Optional.ToNullable(initialDelaySeconds),
-                Optional.ToNullable(periodSeconds),
-                Optional.ToNullable(timeoutSeconds),
-                Optional.ToNullable(failureThreshold),
-                Optional.ToNullable(successThreshold),
+                initialDelaySeconds,
+                periodSeconds,
+                timeoutSeconds,
+                failureThreshold,
+                successThreshold,
                 serializedAdditionalRawData);
         }
 

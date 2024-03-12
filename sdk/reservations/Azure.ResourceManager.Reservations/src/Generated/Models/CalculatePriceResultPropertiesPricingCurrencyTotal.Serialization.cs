@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<float> amount = default;
+            string currencyCode = default;
+            float? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculatePriceResultPropertiesPricingCurrencyTotal(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData);
+            return new CalculatePriceResultPropertiesPricingCurrencyTotal(currencyCode, amount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculatePriceResultPropertiesPricingCurrencyTotal>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,64 +50,64 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SoftDeletePeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (HotCachePeriod.HasValue)
+            if (Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (options.Format != "W" && Statistics != null)
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            if (options.Format != "W" && LeaderClusterResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
                 writer.WritePropertyName("leaderClusterResourceId"u8);
                 writer.WriteStringValue(LeaderClusterResourceId);
             }
-            if (options.Format != "W" && AttachedDatabaseConfigurationName != null)
+            if (options.Format != "W" && Optional.IsDefined(AttachedDatabaseConfigurationName))
             {
                 writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
                 writer.WriteStringValue(AttachedDatabaseConfigurationName);
             }
-            if (options.Format != "W" && PrincipalsModificationKind.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalsModificationKind))
             {
                 writer.WritePropertyName("principalsModificationKind"u8);
                 writer.WriteStringValue(PrincipalsModificationKind.Value.ToString());
             }
-            if (options.Format != "W" && TableLevelSharingProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
-            if (options.Format != "W" && OriginalDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
                 writer.WritePropertyName("originalDatabaseName"u8);
                 writer.WriteStringValue(OriginalDatabaseName);
             }
-            if (options.Format != "W" && DatabaseShareOrigin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
                 writer.WritePropertyName("databaseShareOrigin"u8);
                 writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());
             }
-            if (options.Format != "W" && SuspensionDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
                 writer.WriteObjectValue(SuspensionDetails);
@@ -150,23 +151,23 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<string> leaderClusterResourceId = default;
-            Optional<string> attachedDatabaseConfigurationName = default;
-            Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<string> originalDatabaseName = default;
-            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
-            Optional<SuspensionDetails> suspensionDetails = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            string leaderClusterResourceId = default;
+            string attachedDatabaseConfigurationName = default;
+            KustoDatabasePrincipalsModificationKind? principalsModificationKind = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
+            string originalDatabaseName = default;
+            KustoDatabaseShareOrigin? databaseShareOrigin = default;
+            SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,21 +319,21 @@ namespace Azure.ResourceManager.Kusto.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(softDeletePeriod),
-                Optional.ToNullable(hotCachePeriod),
-                statistics.Value,
-                leaderClusterResourceId.Value,
-                attachedDatabaseConfigurationName.Value,
-                Optional.ToNullable(principalsModificationKind),
-                tableLevelSharingProperties.Value,
-                originalDatabaseName.Value,
-                Optional.ToNullable(databaseShareOrigin),
-                suspensionDetails.Value);
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                leaderClusterResourceId,
+                attachedDatabaseConfigurationName,
+                principalsModificationKind,
+                tableLevelSharingProperties,
+                originalDatabaseName,
+                databaseShareOrigin,
+                suspensionDetails);
         }
 
         BinaryData IPersistableModel<KustoReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)

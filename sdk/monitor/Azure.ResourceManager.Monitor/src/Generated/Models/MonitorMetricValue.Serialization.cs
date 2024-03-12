@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("timeStamp"u8);
             writer.WriteStringValue(TimeStamp, "O");
-            if (Average.HasValue)
+            if (Optional.IsDefined(Average))
             {
                 writer.WritePropertyName("average"u8);
                 writer.WriteNumberValue(Average.Value);
             }
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             DateTimeOffset timeStamp = default;
-            Optional<double> average = default;
-            Optional<double> minimum = default;
-            Optional<double> maximum = default;
-            Optional<double> total = default;
-            Optional<double> count = default;
+            double? average = default;
+            double? minimum = default;
+            double? maximum = default;
+            double? total = default;
+            double? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,11 +160,11 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorMetricValue(
                 timeStamp,
-                Optional.ToNullable(average),
-                Optional.ToNullable(minimum),
-                Optional.ToNullable(maximum),
-                Optional.ToNullable(total),
-                Optional.ToNullable(count),
+                average,
+                minimum,
+                maximum,
+                total,
+                count,
                 serializedAdditionalRawData);
         }
 

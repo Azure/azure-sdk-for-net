@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (MinExecutors.HasValue)
+            if (Optional.IsDefined(MinExecutors))
             {
                 writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
-            if (MaxExecutors.HasValue)
+            if (Optional.IsDefined(MaxExecutors))
             {
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> minExecutors = default;
-            Optional<int> maxExecutors = default;
+            bool? enabled = default;
+            int? minExecutors = default;
+            int? maxExecutors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDynamicExecutorAllocation(Optional.ToNullable(enabled), Optional.ToNullable(minExecutors), Optional.ToNullable(maxExecutors), serializedAdditionalRawData);
+            return new SynapseDynamicExecutorAllocation(enabled, minExecutors, maxExecutors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDynamicExecutorAllocation>.Write(ModelReaderWriterOptions options)

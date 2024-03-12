@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
-            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpdateTriggerToken != null)
+            if (Optional.IsDefined(UpdateTriggerToken))
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> contextPath = default;
-            Optional<string> file = default;
+            string contextPath = default;
+            string file = default;
             IList<ContainerRegistryRunArgument> arguments = default;
-            Optional<string> target = default;
+            string target = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
-            Optional<string> updateTriggerToken = default;
+            string updateTriggerToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,12 +170,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryOverrideTaskStepProperties(
-                contextPath.Value,
-                file.Value,
+                contextPath,
+                file,
                 arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
-                target.Value,
+                target,
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
-                updateTriggerToken.Value,
+                updateTriggerToken,
                 serializedAdditionalRawData);
         }
 

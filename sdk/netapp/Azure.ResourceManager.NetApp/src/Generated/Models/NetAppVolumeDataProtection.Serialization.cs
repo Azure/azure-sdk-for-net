@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,17 +27,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Replication != null)
+            if (Optional.IsDefined(Backup))
+            {
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup);
+            }
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (VolumeRelocation != null)
+            if (Optional.IsDefined(VolumeRelocation))
             {
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);
@@ -79,13 +85,23 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<NetAppReplicationObject> replication = default;
-            Optional<VolumeSnapshotProperties> snapshot = default;
-            Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
+            NetAppVolumeBackupConfiguration backup = default;
+            NetAppReplicationObject replication = default;
+            VolumeSnapshotProperties snapshot = default;
+            NetAppVolumeRelocationProperties volumeRelocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("backup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeDataProtection(replication.Value, snapshot.Value, volumeRelocation.Value, serializedAdditionalRawData);
+            return new NetAppVolumeDataProtection(backup, replication, snapshot, volumeRelocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeDataProtection>.Write(ModelReaderWriterOptions options)

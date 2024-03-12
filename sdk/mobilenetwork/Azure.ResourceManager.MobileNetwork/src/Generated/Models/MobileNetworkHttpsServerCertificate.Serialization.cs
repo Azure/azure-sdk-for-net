@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
-            if (options.Format != "W" && Provisioning != null)
+            if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
                 writer.WriteObjectValue(Provisioning);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             Uri certificateUrl = default;
-            Optional<MobileNetworkCertificateProvisioning> provisioning = default;
+            MobileNetworkCertificateProvisioning provisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkHttpsServerCertificate(certificateUrl, provisioning.Value, serializedAdditionalRawData);
+            return new MobileNetworkHttpsServerCertificate(certificateUrl, provisioning, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkHttpsServerCertificate>.Write(ModelReaderWriterOptions options)

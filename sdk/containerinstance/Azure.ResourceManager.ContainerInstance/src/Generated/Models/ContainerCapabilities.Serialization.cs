@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && OSType != null)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && IPAddressType != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType);
             }
-            if (options.Format != "W" && Gpu != null)
+            if (options.Format != "W" && Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteStringValue(Gpu);
             }
-            if (options.Format != "W" && Capabilities != null)
+            if (options.Format != "W" && Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> osType = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> ipAddressType = default;
-            Optional<string> gpu = default;
-            Optional<ContainerSupportedCapabilities> capabilities = default;
+            string resourceType = default;
+            string osType = default;
+            AzureLocation? location = default;
+            string ipAddressType = default;
+            string gpu = default;
+            ContainerSupportedCapabilities capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,12 +150,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerCapabilities(
-                resourceType.Value,
-                osType.Value,
-                Optional.ToNullable(location),
-                ipAddressType.Value,
-                gpu.Value,
-                capabilities.Value,
+                resourceType,
+                osType,
+                location,
+                ipAddressType,
+                gpu,
+                capabilities,
                 serializedAdditionalRawData);
         }
 

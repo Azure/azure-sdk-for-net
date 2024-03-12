@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ArrayValueSeparator != null)
+            if (Optional.IsDefined(ArrayValueSeparator))
             {
                 writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
-            if (!(EnumValidValues is ChangeTrackingList<ProfileEnumValidValuesFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnumValidValues))
             {
                 writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
@@ -45,62 +46,62 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("fieldType"u8);
             writer.WriteStringValue(FieldType);
-            if (IsArray.HasValue)
+            if (Optional.IsDefined(IsArray))
             {
                 writer.WritePropertyName("isArray"u8);
                 writer.WriteBooleanValue(IsArray.Value);
             }
-            if (IsEnum.HasValue)
+            if (Optional.IsDefined(IsEnum))
             {
                 writer.WritePropertyName("isEnum"u8);
                 writer.WriteBooleanValue(IsEnum.Value);
             }
-            if (IsFlagEnum.HasValue)
+            if (Optional.IsDefined(IsFlagEnum))
             {
                 writer.WritePropertyName("isFlagEnum"u8);
                 writer.WriteBooleanValue(IsFlagEnum.Value);
             }
-            if (IsImage.HasValue)
+            if (Optional.IsDefined(IsImage))
             {
                 writer.WritePropertyName("isImage"u8);
                 writer.WriteBooleanValue(IsImage.Value);
             }
-            if (IsLocalizedString.HasValue)
+            if (Optional.IsDefined(IsLocalizedString))
             {
                 writer.WritePropertyName("isLocalizedString"u8);
                 writer.WriteBooleanValue(IsLocalizedString.Value);
             }
-            if (IsName.HasValue)
+            if (Optional.IsDefined(IsName))
             {
                 writer.WritePropertyName("isName"u8);
                 writer.WriteBooleanValue(IsName.Value);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (PropertyId != null)
+            if (Optional.IsDefined(PropertyId))
             {
                 writer.WritePropertyName("propertyId"u8);
                 writer.WriteStringValue(PropertyId);
             }
-            if (SchemaItemPropLink != null)
+            if (Optional.IsDefined(SchemaItemPropLink))
             {
                 writer.WritePropertyName("schemaItemPropLink"u8);
                 writer.WriteStringValue(SchemaItemPropLink);
             }
-            if (MaxLength.HasValue)
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
-            if (IsAvailableInGraph.HasValue)
+            if (Optional.IsDefined(IsAvailableInGraph))
             {
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
-            if (options.Format != "W" && !(DataSourcePrecedenceRules is ChangeTrackingList<DataSourcePrecedence> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
             {
                 writer.WritePropertyName("dataSourcePrecedenceRules"u8);
                 writer.WriteStartArray();
@@ -148,21 +149,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> arrayValueSeparator = default;
+            string arrayValueSeparator = default;
             IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
-            Optional<bool> isArray = default;
-            Optional<bool> isEnum = default;
-            Optional<bool> isFlagEnum = default;
-            Optional<bool> isImage = default;
-            Optional<bool> isLocalizedString = default;
-            Optional<bool> isName = default;
-            Optional<bool> isRequired = default;
-            Optional<string> propertyId = default;
-            Optional<string> schemaItemPropLink = default;
-            Optional<int> maxLength = default;
-            Optional<bool> isAvailableInGraph = default;
+            bool? isArray = default;
+            bool? isEnum = default;
+            bool? isFlagEnum = default;
+            bool? isImage = default;
+            bool? isLocalizedString = default;
+            bool? isName = default;
+            bool? isRequired = default;
+            string propertyId = default;
+            string schemaItemPropLink = default;
+            int? maxLength = default;
+            bool? isAvailableInGraph = default;
             IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -309,21 +310,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PropertyDefinition(
-                arrayValueSeparator.Value,
+                arrayValueSeparator,
                 enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
                 fieldName,
                 fieldType,
-                Optional.ToNullable(isArray),
-                Optional.ToNullable(isEnum),
-                Optional.ToNullable(isFlagEnum),
-                Optional.ToNullable(isImage),
-                Optional.ToNullable(isLocalizedString),
-                Optional.ToNullable(isName),
-                Optional.ToNullable(isRequired),
-                propertyId.Value,
-                schemaItemPropLink.Value,
-                Optional.ToNullable(maxLength),
-                Optional.ToNullable(isAvailableInGraph),
+                isArray,
+                isEnum,
+                isFlagEnum,
+                isImage,
+                isLocalizedString,
+                isName,
+                isRequired,
+                propertyId,
+                schemaItemPropLink,
+                maxLength,
+                isAvailableInGraph,
                 dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (DueOn.HasValue)
+            if (Optional.IsDefined(DueOn))
             {
                 writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
-            if (PayOn.HasValue)
+            if (Optional.IsDefined(PayOn))
             {
                 writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
-            if (PricingCurrencyTotal != null)
+            if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ExtendedStatusInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
                 writer.WriteObjectValue(ExtendedStatusInfo);
             }
-            if (BillingAccount != null)
+            if (Optional.IsDefined(BillingAccount))
             {
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<BillingBenefitsPrice> billingCurrencyTotal = default;
-            Optional<BillingBenefitsPaymentStatus> status = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<string> billingAccount = default;
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            BillingBenefitsPrice pricingCurrencyTotal = default;
+            BillingBenefitsPrice billingCurrencyTotal = default;
+            BillingBenefitsPaymentStatus? status = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
+            string billingAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,13 +177,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SavingsPlanOrderPaymentDetail(
-                Optional.ToNullable(dueDate),
-                Optional.ToNullable(paymentDate),
-                pricingCurrencyTotal.Value,
-                billingCurrencyTotal.Value,
-                Optional.ToNullable(status),
-                extendedStatusInfo.Value,
-                billingAccount.Value,
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                status,
+                extendedStatusInfo,
+                billingAccount,
                 serializedAdditionalRawData);
         }
 

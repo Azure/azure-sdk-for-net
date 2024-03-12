@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (CloudId != null)
+            if (Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId);
             }
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> cloudId = default;
-            Optional<string> ingestionKey = default;
+            string cloudId = default;
+            string ingestionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmIngestionDetailsResponse(cloudId.Value, ingestionKey.Value, serializedAdditionalRawData);
+            return new VmIngestionDetailsResponse(cloudId, ingestionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmIngestionDetailsResponse>.Write(ModelReaderWriterOptions options)

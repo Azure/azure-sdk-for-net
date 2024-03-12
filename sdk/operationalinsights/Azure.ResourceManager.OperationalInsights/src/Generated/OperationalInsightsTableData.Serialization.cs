@@ -43,69 +43,69 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (TotalRetentionInDays.HasValue)
+            if (Optional.IsDefined(TotalRetentionInDays))
             {
                 writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
-            if (options.Format != "W" && ArchiveRetentionInDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ArchiveRetentionInDays))
             {
                 writer.WritePropertyName("archiveRetentionInDays"u8);
                 writer.WriteNumberValue(ArchiveRetentionInDays.Value);
             }
-            if (SearchResults != null)
+            if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteObjectValue(SearchResults);
             }
-            if (RestoredLogs != null)
+            if (Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
-            if (options.Format != "W" && ResultStatistics != null)
+            if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
             {
                 writer.WritePropertyName("resultStatistics"u8);
                 writer.WriteObjectValue(ResultStatistics);
             }
-            if (Plan.HasValue)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
-            if (options.Format != "W" && LastPlanModifiedDate != null)
+            if (options.Format != "W" && Optional.IsDefined(LastPlanModifiedDate))
             {
                 writer.WritePropertyName("lastPlanModifiedDate"u8);
                 writer.WriteStringValue(LastPlanModifiedDate);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && IsRetentionInDaysAsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRetentionInDaysAsDefault))
             {
                 writer.WritePropertyName("retentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsRetentionInDaysAsDefault.Value);
             }
-            if (options.Format != "W" && IsTotalRetentionInDaysAsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTotalRetentionInDaysAsDefault))
             {
                 writer.WritePropertyName("totalRetentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsTotalRetentionInDaysAsDefault.Value);
@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> retentionInDays = default;
-            Optional<int> totalRetentionInDays = default;
-            Optional<int> archiveRetentionInDays = default;
-            Optional<OperationalInsightsTableSearchResults> searchResults = default;
-            Optional<OperationalInsightsTableRestoredLogs> restoredLogs = default;
-            Optional<OperationalInsightsTableResultStatistics> resultStatistics = default;
-            Optional<OperationalInsightsTablePlan> plan = default;
-            Optional<string> lastPlanModifiedDate = default;
-            Optional<OperationalInsightsSchema> schema = default;
-            Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
-            Optional<bool> retentionInDaysAsDefault = default;
-            Optional<bool> totalRetentionInDaysAsDefault = default;
+            SystemData systemData = default;
+            int? retentionInDays = default;
+            int? totalRetentionInDays = default;
+            int? archiveRetentionInDays = default;
+            OperationalInsightsTableSearchResults searchResults = default;
+            OperationalInsightsTableRestoredLogs restoredLogs = default;
+            OperationalInsightsTableResultStatistics resultStatistics = default;
+            OperationalInsightsTablePlan? plan = default;
+            string lastPlanModifiedDate = default;
+            OperationalInsightsSchema schema = default;
+            OperationalInsightsTableProvisioningState? provisioningState = default;
+            bool? retentionInDaysAsDefault = default;
+            bool? totalRetentionInDaysAsDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -319,19 +319,19 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(retentionInDays),
-                Optional.ToNullable(totalRetentionInDays),
-                Optional.ToNullable(archiveRetentionInDays),
-                searchResults.Value,
-                restoredLogs.Value,
-                resultStatistics.Value,
-                Optional.ToNullable(plan),
-                lastPlanModifiedDate.Value,
-                schema.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(retentionInDaysAsDefault),
-                Optional.ToNullable(totalRetentionInDaysAsDefault),
+                systemData,
+                retentionInDays,
+                totalRetentionInDays,
+                archiveRetentionInDays,
+                searchResults,
+                restoredLogs,
+                resultStatistics,
+                plan,
+                lastPlanModifiedDate,
+                schema,
+                provisioningState,
+                retentionInDaysAsDefault,
+                totalRetentionInDaysAsDefault,
                 serializedAdditionalRawData);
         }
 

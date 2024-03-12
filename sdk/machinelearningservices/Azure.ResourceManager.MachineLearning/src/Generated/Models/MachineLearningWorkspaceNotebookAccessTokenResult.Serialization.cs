@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccessToken != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (options.Format != "W" && ExpiresIn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresIn))
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpiresIn.Value);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && NotebookResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(NotebookResourceId))
             {
                 writer.WritePropertyName("notebookResourceId"u8);
                 writer.WriteStringValue(NotebookResourceId);
             }
-            if (options.Format != "W" && PublicDns != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicDns))
             {
                 writer.WritePropertyName("publicDns"u8);
                 writer.WriteStringValue(PublicDns);
             }
-            if (options.Format != "W" && RefreshToken != null)
+            if (options.Format != "W" && Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && TokenType != null)
+            if (options.Format != "W" && Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<int> expiresIn = default;
-            Optional<string> hostName = default;
-            Optional<string> notebookResourceId = default;
-            Optional<string> publicDns = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<string> tokenType = default;
+            string accessToken = default;
+            int? expiresIn = default;
+            string hostName = default;
+            string notebookResourceId = default;
+            string publicDns = default;
+            string refreshToken = default;
+            string scope = default;
+            string tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +168,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningWorkspaceNotebookAccessTokenResult(
-                accessToken.Value,
-                Optional.ToNullable(expiresIn),
-                hostName.Value,
-                notebookResourceId.Value,
-                publicDns.Value,
-                refreshToken.Value,
-                scope.Value,
-                tokenType.Value,
+                accessToken,
+                expiresIn,
+                hostName,
+                notebookResourceId,
+                publicDns,
+                refreshToken,
+                scope,
+                tokenType,
                 serializedAdditionalRawData);
         }
 

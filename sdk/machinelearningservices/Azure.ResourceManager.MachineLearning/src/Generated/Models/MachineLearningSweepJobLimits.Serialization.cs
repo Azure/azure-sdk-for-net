@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 if (MaxConcurrentTrials != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxConcurrentTrials");
                 }
             }
-            if (MaxTotalTrials.HasValue)
+            if (Optional.IsDefined(MaxTotalTrials))
             {
                 if (MaxTotalTrials != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxTotalTrials");
                 }
             }
-            if (TrialTimeout.HasValue)
+            if (Optional.IsDefined(TrialTimeout))
             {
                 if (TrialTimeout != null)
                 {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> maxConcurrentTrials = default;
-            Optional<int?> maxTotalTrials = default;
-            Optional<TimeSpan?> trialTimeout = default;
+            int? maxConcurrentTrials = default;
+            int? maxTotalTrials = default;
+            TimeSpan? trialTimeout = default;
             JobLimitsType jobLimitsType = default;
-            Optional<TimeSpan?> timeout = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,11 +177,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningSweepJobLimits(
                 jobLimitsType,
-                Optional.ToNullable(timeout),
+                timeout,
                 serializedAdditionalRawData,
-                Optional.ToNullable(maxConcurrentTrials),
-                Optional.ToNullable(maxTotalTrials),
-                Optional.ToNullable(trialTimeout));
+                maxConcurrentTrials,
+                maxTotalTrials,
+                trialTimeout);
         }
 
         BinaryData IPersistableModel<MachineLearningSweepJobLimits>.Write(ModelReaderWriterOptions options)

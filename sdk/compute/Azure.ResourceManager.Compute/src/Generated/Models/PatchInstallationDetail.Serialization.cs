@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PatchId != null)
+            if (options.Format != "W" && Optional.IsDefined(PatchId))
             {
                 writer.WritePropertyName("patchId"u8);
                 writer.WriteStringValue(PatchId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && KbId != null)
+            if (options.Format != "W" && Optional.IsDefined(KbId))
             {
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstallationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstallationState))
             {
                 writer.WritePropertyName("installationState"u8);
                 writer.WriteStringValue(InstallationState.Value.ToString());
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> patchId = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> kbId = default;
+            string patchId = default;
+            string name = default;
+            string version = default;
+            string kbId = default;
             IReadOnlyList<string> classifications = default;
-            Optional<PatchInstallationState> installationState = default;
+            PatchInstallationState? installationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PatchInstallationDetail(
-                patchId.Value,
-                name.Value,
-                version.Value,
-                kbId.Value,
+                patchId,
+                name,
+                version,
+                kbId,
                 classifications ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(installationState),
+                installationState,
                 serializedAdditionalRawData);
         }
 

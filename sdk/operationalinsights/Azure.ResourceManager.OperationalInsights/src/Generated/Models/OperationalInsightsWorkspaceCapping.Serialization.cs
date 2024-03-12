@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (DailyQuotaInGB.HasValue)
+            if (Optional.IsDefined(DailyQuotaInGB))
             {
                 writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
-            if (options.Format != "W" && QuotaNextResetTime != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaNextResetTime))
             {
                 writer.WritePropertyName("quotaNextResetTime"u8);
                 writer.WriteStringValue(QuotaNextResetTime);
             }
-            if (options.Format != "W" && DataIngestionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataIngestionStatus))
             {
                 writer.WritePropertyName("dataIngestionStatus"u8);
                 writer.WriteStringValue(DataIngestionStatus.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<double> dailyQuotaGb = default;
-            Optional<string> quotaNextResetTime = default;
-            Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
+            double? dailyQuotaGb = default;
+            string quotaNextResetTime = default;
+            OperationalInsightsDataIngestionStatus? dataIngestionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceCapping(Optional.ToNullable(dailyQuotaGb), quotaNextResetTime.Value, Optional.ToNullable(dataIngestionStatus), serializedAdditionalRawData);
+            return new OperationalInsightsWorkspaceCapping(dailyQuotaGb, quotaNextResetTime, dataIngestionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceCapping>.Write(ModelReaderWriterOptions options)

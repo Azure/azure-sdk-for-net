@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Primary != null)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteStringValue(Primary);
             }
-            if (Secondary != null)
+            if (Optional.IsDefined(Secondary))
             {
                 writer.WritePropertyName("secondary"u8);
                 writer.WriteStringValue(Secondary);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            string primary = default;
+            string secondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentRegistrationKeys(primary.Value, secondary.Value, serializedAdditionalRawData);
+            return new AgentRegistrationKeys(primary, secondary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentRegistrationKeys>.Write(ModelReaderWriterOptions options)

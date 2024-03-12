@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && PrimaryAggregationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (options.Format != "W" && ResourceUriString != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<SqlMetricAvailability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlMetricName> name = default;
-            Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<string> resourceUri = default;
-            Optional<SqlMetricDefinitionUnitType> unit = default;
+            SqlMetricName name = default;
+            SqlMetricPrimaryAggregationType? primaryAggregationType = default;
+            string resourceUri = default;
+            SqlMetricDefinitionUnitType? unit = default;
             IReadOnlyList<SqlMetricAvailability> metricAvailabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,10 +157,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlMetricDefinition(
-                name.Value,
-                Optional.ToNullable(primaryAggregationType),
-                resourceUri.Value,
-                Optional.ToNullable(unit),
+                name,
+                primaryAggregationType,
+                resourceUri,
+                unit,
                 metricAvailabilities ?? new ChangeTrackingList<SqlMetricAvailability>(),
                 serializedAdditionalRawData);
         }

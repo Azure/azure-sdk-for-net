@@ -43,66 +43,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (ImportRoutePolicyId != null)
+            if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (ExportRoutePolicyId != null)
+            if (Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (options.Format != "W" && NetworkToNetworkInterconnectId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkToNetworkInterconnectId))
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
-            if (OptionBProperties != null)
+            if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (OptionAProperties != null)
+            if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<ResourceIdentifier> importRoutePolicyId = default;
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<ImportRoutePolicy> importRoutePolicy = default;
-            Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
+            SystemData systemData = default;
+            string annotation = default;
+            ResourceIdentifier importRoutePolicyId = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
+            ResourceIdentifier networkToNetworkInterconnectId = default;
             PeeringOption peeringOption = default;
-            Optional<L3OptionBProperties> optionBProperties = default;
-            Optional<ExternalNetworkOptionAProperties> optionAProperties = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            L3OptionBProperties optionBProperties = default;
+            ExternalNetworkOptionAProperties optionAProperties = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,19 +312,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
-                annotation.Value,
-                importRoutePolicyId.Value,
-                exportRoutePolicyId.Value,
-                importRoutePolicy.Value,
-                exportRoutePolicy.Value,
-                networkToNetworkInterconnectId.Value,
+                systemData,
+                annotation,
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                networkToNetworkInterconnectId,
                 peeringOption,
-                optionBProperties.Value,
-                optionAProperties.Value,
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                optionBProperties,
+                optionAProperties,
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && AccessEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
                 writer.WriteStringValue(AccessEndpoint);
             }
-            if (EndpointsConfiguration != null)
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (AccessControl != null)
+            if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (IntegrationAccount != null)
+            if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
                 writer.WriteObjectValue(IntegrationAccount);
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
 #if NET6_0_OR_GREATER
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, LogicWorkflowParameterInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> version = default;
-            Optional<string> accessEndpoint = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<FlowAccessControlConfiguration> accessControl = default;
-            Optional<LogicSku> sku = default;
-            Optional<LogicResourceReference> integrationAccount = default;
-            Optional<BinaryData> definition = default;
+            SystemData systemData = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            string version = default;
+            string accessEndpoint = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            FlowAccessControlConfiguration accessControl = default;
+            LogicSku sku = default;
+            LogicResourceReference integrationAccount = default;
+            BinaryData definition = default;
             IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -367,20 +367,20 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                Optional.ToNullable(state),
-                version.Value,
-                accessEndpoint.Value,
-                endpointsConfiguration.Value,
-                accessControl.Value,
-                sku.Value,
-                integrationAccount.Value,
-                definition.Value,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                definition,
                 parameters ?? new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (SequenceNumber.HasValue)
+            if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (!(MatchConditions is ChangeTrackingList<AccessControlListMatchCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<AccessControlListAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -99,9 +100,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<AccessControlListMatchCondition> matchConditions = default;
             IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,9 +167,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AccessControlListMatchConfiguration(
-                matchConfigurationName.Value,
-                Optional.ToNullable(sequenceNumber),
-                Optional.ToNullable(ipAddressType),
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
                 matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(),
                 actions ?? new ChangeTrackingList<AccessControlListAction>(),
                 serializedAdditionalRawData);

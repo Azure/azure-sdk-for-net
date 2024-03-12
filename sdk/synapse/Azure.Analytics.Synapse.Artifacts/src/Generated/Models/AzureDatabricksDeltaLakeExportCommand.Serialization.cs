@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteObjectValue(DateFormat);
             }
-            if (TimestampFormat != null)
+            if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 writer.WriteObjectValue(TimestampFormat);
@@ -45,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> dateFormat = default;
-            Optional<object> timestampFormat = default;
+            object dateFormat = default;
+            object timestampFormat = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat.Value, timestampFormat.Value);
+            return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
 
         internal partial class AzureDatabricksDeltaLakeExportCommandConverter : JsonConverter<AzureDatabricksDeltaLakeExportCommand>

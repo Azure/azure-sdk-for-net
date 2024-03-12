@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(EventOn, "O");
             writer.WritePropertyName("recordType"u8);
             writer.WriteStringValue(RecordType.ToString());
-            if (Record != null)
+            if (Optional.IsDefined(Record))
             {
                 writer.WritePropertyName("record"u8);
 #if NET6_0_OR_GREATER
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountEventLevel eventLevel = default;
             DateTimeOffset eventTime = default;
             IntegrationAccountTrackingRecordType recordType = default;
-            Optional<BinaryData> record = default;
-            Optional<IntegrationAccountTrackingEventErrorInfo> error = default;
+            BinaryData record = default;
+            IntegrationAccountTrackingEventErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,8 +140,8 @@ namespace Azure.ResourceManager.Logic.Models
                 eventLevel,
                 eventTime,
                 recordType,
-                record.Value,
-                error.Value,
+                record,
+                error,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (UploadUri != null)
+            if (Optional.IsDefined(UploadUri))
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Uri> uploadUrl = default;
-            Optional<string> relativePath = default;
+            Uri uploadUrl = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceUploadDefinition(uploadUrl.Value, relativePath.Value, serializedAdditionalRawData);
+            return new SourceUploadDefinition(uploadUrl, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceUploadDefinition>.Write(ModelReaderWriterOptions options)

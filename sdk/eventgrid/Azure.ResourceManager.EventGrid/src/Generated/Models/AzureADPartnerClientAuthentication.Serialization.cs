@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(ClientAuthenticationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AzureActiveDirectoryTenantId != null)
+            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId);
             }
-            if (AzureActiveDirectoryApplicationIdOrUri != null)
+            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             PartnerClientAuthenticationType clientAuthenticationType = default;
-            Optional<string> azureActiveDirectoryTenantId = default;
-            Optional<Uri> azureActiveDirectoryApplicationIdOrUri = default;
+            string azureActiveDirectoryTenantId = default;
+            Uri azureActiveDirectoryApplicationIdOrUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureADPartnerClientAuthentication(clientAuthenticationType, serializedAdditionalRawData, azureActiveDirectoryTenantId.Value, azureActiveDirectoryApplicationIdOrUri.Value);
+            return new AzureADPartnerClientAuthentication(clientAuthenticationType, serializedAdditionalRawData, azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri);
         }
 
         BinaryData IPersistableModel<AzureADPartnerClientAuthentication>.Write(ModelReaderWriterOptions options)

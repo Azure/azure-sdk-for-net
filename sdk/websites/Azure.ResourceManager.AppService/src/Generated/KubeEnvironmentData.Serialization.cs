@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,49 +67,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && DeploymentErrors != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (IsInternalLoadBalancerEnabled.HasValue)
+            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled"u8);
                 writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (StaticIP != null)
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP);
             }
-            if (ArcConfiguration != null)
+            if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
                 writer.WriteObjectValue(ArcConfiguration);
             }
-            if (AppLogsConfiguration != null)
+            if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (AksResourceId != null)
+            if (Optional.IsDefined(AksResourceId))
             {
                 writer.WritePropertyName("aksResourceID"u8);
                 writer.WriteStringValue(AksResourceId);
@@ -153,22 +153,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<ResourceIdentifier> aksResourceId = default;
+            SystemData systemData = default;
+            KubeEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            bool? internalLoadBalancerEnabled = default;
+            string defaultDomain = default;
+            string staticIP = default;
+            ArcConfiguration arcConfiguration = default;
+            AppLogsConfiguration appLogsConfiguration = default;
+            ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,19 +312,19 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                Optional.ToNullable(provisioningState),
-                deploymentErrors.Value,
-                Optional.ToNullable(internalLoadBalancerEnabled),
-                defaultDomain.Value,
-                staticIP.Value,
-                arcConfiguration.Value,
-                appLogsConfiguration.Value,
-                aksResourceId.Value,
-                kind.Value,
+                provisioningState,
+                deploymentErrors,
+                internalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
                 serializedAdditionalRawData);
         }
 

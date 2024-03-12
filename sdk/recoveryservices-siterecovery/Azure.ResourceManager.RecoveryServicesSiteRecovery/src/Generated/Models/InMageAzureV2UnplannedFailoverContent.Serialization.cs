@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (OSUpgradeVersion != null)
+            if (Optional.IsDefined(OSUpgradeVersion))
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<string> osUpgradeVersion = default;
+            ResourceIdentifier recoveryPointId = default;
+            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2UnplannedFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId.Value, osUpgradeVersion.Value);
+            return new InMageAzureV2UnplannedFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId, osUpgradeVersion);
         }
 
         BinaryData IPersistableModel<InMageAzureV2UnplannedFailoverContent>.Write(ModelReaderWriterOptions options)

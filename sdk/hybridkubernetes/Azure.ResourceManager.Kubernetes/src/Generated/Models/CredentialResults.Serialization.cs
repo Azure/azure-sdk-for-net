@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HybridConnectionConfig != null)
+            if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
                 writer.WriteObjectValue(HybridConnectionConfig);
             }
-            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<CredentialResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Optional<HybridConnectionConfig> hybridConnectionConfig = default;
+            HybridConnectionConfig hybridConnectionConfig = default;
             IReadOnlyList<CredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CredentialResults(hybridConnectionConfig.Value, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
+            return new CredentialResults(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialResults>.Write(ModelReaderWriterOptions options)

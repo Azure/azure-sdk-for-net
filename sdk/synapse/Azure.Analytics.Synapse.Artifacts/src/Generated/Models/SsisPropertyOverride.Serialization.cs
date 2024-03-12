@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (IsSensitive.HasValue)
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object value = default;
-            Optional<bool> isSensitive = default;
+            bool? isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive));
+            return new SsisPropertyOverride(value, isSensitive);
         }
 
         internal partial class SsisPropertyOverrideConverter : JsonConverter<SsisPropertyOverride>

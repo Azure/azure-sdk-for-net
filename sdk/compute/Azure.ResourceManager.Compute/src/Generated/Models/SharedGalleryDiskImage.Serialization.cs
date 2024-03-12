@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> diskSizeGB = default;
-            Optional<SharedGalleryHostCaching> hostCaching = default;
+            int? diskSizeGB = default;
+            SharedGalleryHostCaching? hostCaching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), serializedAdditionalRawData);
+            return new SharedGalleryDiskImage(diskSizeGB, hostCaching, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedGalleryDiskImage>.Write(ModelReaderWriterOptions options)

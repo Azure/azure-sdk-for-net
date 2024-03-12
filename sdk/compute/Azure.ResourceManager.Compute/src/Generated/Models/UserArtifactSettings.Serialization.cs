@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PackageFileName != null)
+            if (Optional.IsDefined(PackageFileName))
             {
                 writer.WritePropertyName("packageFileName"u8);
                 writer.WriteStringValue(PackageFileName);
             }
-            if (ConfigFileName != null)
+            if (Optional.IsDefined(ConfigFileName))
             {
                 writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> packageFileName = default;
-            Optional<string> configFileName = default;
+            string packageFileName = default;
+            string configFileName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserArtifactSettings(packageFileName.Value, configFileName.Value, serializedAdditionalRawData);
+            return new UserArtifactSettings(packageFileName, configFileName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactSettings>.Write(ModelReaderWriterOptions options)

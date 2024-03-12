@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplianceVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplianceVersion))
             {
                 writer.WritePropertyName("applianceVersion"u8);
                 writer.WriteStringValue(ApplianceVersion);
             }
-            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<ApplianceSupportedVersion> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> applianceVersion = default;
+            string applianceVersion = default;
             IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options)

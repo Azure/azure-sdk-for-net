@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (ApiKeyOnly != null)
+            if (Optional.IsDefined(ApiKeyOnly))
             {
                 writer.WritePropertyName("apiKeyOnly"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
 #endif
             }
-            if (AadOrApiKey != null)
+            if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
                 writer.WriteObjectValue(AadOrApiKey);
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<BinaryData> apiKeyOnly = default;
-            Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
+            BinaryData apiKeyOnly = default;
+            DataPlaneAadOrApiKeyAuthOption aadOrApiKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly.Value, aadOrApiKey.Value, serializedAdditionalRawData);
+            return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly, aadOrApiKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.Write(ModelReaderWriterOptions options)

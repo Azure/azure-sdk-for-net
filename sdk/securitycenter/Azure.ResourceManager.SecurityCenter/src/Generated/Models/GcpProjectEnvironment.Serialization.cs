@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (OrganizationalData != null)
+            if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            if (ProjectDetails != null)
+            if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
                 writer.WriteObjectValue(ProjectDetails);
             }
-            if (ScanInterval.HasValue)
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scanInterval"u8);
                 writer.WriteNumberValue(ScanInterval.Value);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<GcpOrganizationalInfo> organizationalData = default;
-            Optional<GcpProjectDetails> projectDetails = default;
-            Optional<long> scanInterval = default;
+            GcpOrganizationalInfo organizationalData = default;
+            GcpProjectDetails projectDetails = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, projectDetails.Value, Optional.ToNullable(scanInterval));
+            return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData, projectDetails, scanInterval);
         }
 
         BinaryData IPersistableModel<GcpProjectEnvironment>.Write(ModelReaderWriterOptions options)

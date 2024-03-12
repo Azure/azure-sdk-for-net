@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,12 +16,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerBound.HasValue)
+            if (Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (UpperBound.HasValue)
+            if (Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);
@@ -38,8 +39,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lowerBound = default;
-            Optional<double> upperBound = default;
+            double? lowerBound = default;
+            double? upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +74,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
         }
     }
 }

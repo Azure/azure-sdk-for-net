@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AssessedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessedOn))
             {
                 writer.WritePropertyName("assessmentTimestampUtcDate"u8);
                 writer.WriteStringValue(AssessedOn.Value, "O");
             }
-            if (options.Format != "W" && ResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceCount))
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (options.Format != "W" && !(AssessmentResult is ChangeTrackingList<ComplianceSegment> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentResult))
             {
                 writer.WritePropertyName("assessmentResult"u8);
                 writer.WriteStartArray();
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> assessmentTimestampUtcDate = default;
-            Optional<int> resourceCount = default;
+            SystemData systemData = default;
+            DateTimeOffset? assessmentTimestampUtcDate = default;
+            int? resourceCount = default;
             IReadOnlyList<ComplianceSegment> assessmentResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(assessmentTimestampUtcDate),
-                Optional.ToNullable(resourceCount),
+                systemData,
+                assessmentTimestampUtcDate,
+                resourceCount,
                 assessmentResult ?? new ChangeTrackingList<ComplianceSegment>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Audience != null)
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (AadAuthority != null)
+            if (Optional.IsDefined(AadAuthority))
             {
                 writer.WritePropertyName("aadAuthority"u8);
                 writer.WriteStringValue(AadAuthority);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> applicationId = default;
-            Optional<string> objectId = default;
-            Optional<string> audience = default;
-            Optional<string> aadAuthority = default;
+            Guid? tenantId = default;
+            string applicationId = default;
+            string objectId = default;
+            string audience = default;
+            string aadAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IdentityProviderDetails(
-                Optional.ToNullable(tenantId),
-                applicationId.Value,
-                objectId.Value,
-                audience.Value,
-                aadAuthority.Value,
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
                 serializedAdditionalRawData);
         }
 

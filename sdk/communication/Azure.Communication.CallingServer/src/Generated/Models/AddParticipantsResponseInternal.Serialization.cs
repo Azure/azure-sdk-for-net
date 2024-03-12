@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -20,7 +19,7 @@ namespace Azure.Communication.CallingServer
                 return null;
             }
             IReadOnlyList<AcsCallParticipantInternal> participants = default;
-            Optional<string> operationContext = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participants"u8))
@@ -43,7 +42,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsResponseInternal(participants ?? new ChangeTrackingList<AcsCallParticipantInternal>(), operationContext.Value);
+            return new AddParticipantsResponseInternal(participants ?? new ChangeTrackingList<AcsCallParticipantInternal>(), operationContext);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (!(EncryptionSettings is ChangeTrackingList<EncryptionSettingsElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptionSettingsVersion != null)
+            if (Optional.IsDefined(EncryptionSettingsVersion))
             {
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             bool enabled = default;
             IList<EncryptionSettingsElement> encryptionSettings = default;
-            Optional<string> encryptionSettingsVersion = default;
+            string encryptionSettingsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionSettingsGroup(enabled, encryptionSettings ?? new ChangeTrackingList<EncryptionSettingsElement>(), encryptionSettingsVersion.Value, serializedAdditionalRawData);
+            return new EncryptionSettingsGroup(enabled, encryptionSettings ?? new ChangeTrackingList<EncryptionSettingsElement>(), encryptionSettingsVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionSettingsGroup>.Write(ModelReaderWriterOptions options)

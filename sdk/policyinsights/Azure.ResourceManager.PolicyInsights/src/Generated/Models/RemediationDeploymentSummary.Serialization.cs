@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDeployments))
             {
                 writer.WritePropertyName("totalDeployments"u8);
                 writer.WriteNumberValue(TotalDeployments.Value);
             }
-            if (options.Format != "W" && SuccessfulDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfulDeployments))
             {
                 writer.WritePropertyName("successfulDeployments"u8);
                 writer.WriteNumberValue(SuccessfulDeployments.Value);
             }
-            if (options.Format != "W" && FailedDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedDeployments))
             {
                 writer.WritePropertyName("failedDeployments"u8);
                 writer.WriteNumberValue(FailedDeployments.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<int> totalDeployments = default;
-            Optional<int> successfulDeployments = default;
-            Optional<int> failedDeployments = default;
+            int? totalDeployments = default;
+            int? successfulDeployments = default;
+            int? failedDeployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeploymentSummary(Optional.ToNullable(totalDeployments), Optional.ToNullable(successfulDeployments), Optional.ToNullable(failedDeployments), serializedAdditionalRawData);
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeploymentSummary>.Write(ModelReaderWriterOptions options)

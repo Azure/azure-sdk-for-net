@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IReadOnlyList<DocumentFilterConjunctionGroupInfo> documentFilterGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentStreamInfo(id.Value, documentFilterGroups ?? new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>());
+            return new DocumentStreamInfo(id, documentFilterGroups ?? new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>());
         }
     }
 }

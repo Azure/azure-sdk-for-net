@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ScheduleFrequencyInMins.HasValue)
+            if (Optional.IsDefined(ScheduleFrequencyInMins))
             {
                 writer.WritePropertyName("scheduleFrequencyInMins"u8);
                 writer.WriteNumberValue(ScheduleFrequencyInMins.Value);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> scheduleFrequencyInMins = default;
+            int? scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleFrequencyInMins));
+            return new LogSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, scheduleFrequencyInMins);
         }
 
         BinaryData IPersistableModel<LogSchedulePolicy>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (IncludedPackageClassifications.HasValue)
+            if (Optional.IsDefined(IncludedPackageClassifications))
             {
                 writer.WritePropertyName("includedPackageClassifications"u8);
                 writer.WriteStringValue(IncludedPackageClassifications.Value.ToString());
             }
-            if (!(ExcludedPackageNameMasks is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPackageNameMasks))
             {
                 writer.WritePropertyName("excludedPackageNameMasks"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedPackageNameMasks is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedPackageNameMasks))
             {
                 writer.WritePropertyName("includedPackageNameMasks"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RebootSetting != null)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<LinuxUpdateClassification> includedPackageClassifications = default;
+            LinuxUpdateClassification? includedPackageClassifications = default;
             IList<string> excludedPackageNameMasks = default;
             IList<string> includedPackageNameMasks = default;
-            Optional<string> rebootSetting = default;
+            string rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), excludedPackageNameMasks ?? new ChangeTrackingList<string>(), includedPackageNameMasks ?? new ChangeTrackingList<string>(), rebootSetting.Value, serializedAdditionalRawData);
+            return new LinuxUpdateConfigurationProperties(includedPackageClassifications, excludedPackageNameMasks ?? new ChangeTrackingList<string>(), includedPackageNameMasks ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

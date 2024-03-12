@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (MaxCoresAllowed.HasValue)
+            if (Optional.IsDefined(MaxCoresAllowed))
             {
                 writer.WritePropertyName("maxCoresAllowed"u8);
                 writer.WriteNumberValue(MaxCoresAllowed.Value);
             }
-            if (!(RegionalQuotas is ChangeTrackingList<RegionalQuotaCapability> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegionalQuotas))
             {
                 writer.WritePropertyName("regionalQuotas"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> coresUsed = default;
-            Optional<long> maxCoresAllowed = default;
+            long? coresUsed = default;
+            long? maxCoresAllowed = default;
             IReadOnlyList<RegionalQuotaCapability> regionalQuotas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCapability(Optional.ToNullable(coresUsed), Optional.ToNullable(maxCoresAllowed), regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
+            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas ?? new ChangeTrackingList<RegionalQuotaCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCapability>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ScheduledOn.HasValue)
+            if (Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledDateTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduledDateTime = default;
+            DateTimeOffset? scheduledDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDeliveryInfo(Optional.ToNullable(scheduledDateTime), serializedAdditionalRawData);
+            return new JobDeliveryInfo(scheduledDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDeliveryInfo>.Write(ModelReaderWriterOptions options)

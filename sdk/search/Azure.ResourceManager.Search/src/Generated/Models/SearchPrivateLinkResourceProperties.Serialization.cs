@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ShareablePrivateLinkResourceTypes is ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
+            string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
             IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes = default;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchPrivateLinkResourceProperties(groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>(), serializedAdditionalRawData);
+            return new SearchPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

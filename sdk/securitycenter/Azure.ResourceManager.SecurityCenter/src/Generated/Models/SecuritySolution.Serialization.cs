@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecurityFamily.HasValue)
+            if (Optional.IsDefined(SecurityFamily))
             {
                 writer.WritePropertyName("securityFamily"u8);
                 writer.WriteStringValue(SecurityFamily.Value.ToString());
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (ProtectionStatus != null)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityFamily> securityFamily = default;
-            Optional<SecurityFamilyProvisioningState> provisioningState = default;
-            Optional<string> template = default;
-            Optional<string> protectionStatus = default;
+            SystemData systemData = default;
+            SecurityFamily? securityFamily = default;
+            SecurityFamilyProvisioningState? provisioningState = default;
+            string template = default;
+            string protectionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,12 +210,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(securityFamily),
-                Optional.ToNullable(provisioningState),
-                template.Value,
-                protectionStatus.Value,
-                Optional.ToNullable(location),
+                systemData,
+                securityFamily,
+                provisioningState,
+                template,
+                protectionStatus,
+                location,
                 serializedAdditionalRawData);
         }
 

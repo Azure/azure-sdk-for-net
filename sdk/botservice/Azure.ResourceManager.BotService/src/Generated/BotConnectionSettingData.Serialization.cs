@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.BotService
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.BotService
                     writer.WriteNull("kind");
                 }
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BotService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BotService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.BotService
             {
                 return null;
             }
-            Optional<BotConnectionSettingProperties> properties = default;
-            Optional<BotServiceSku> sku = default;
-            Optional<BotServiceKind?> kind = default;
-            Optional<ETag> etag = default;
+            BotConnectionSettingProperties properties = default;
+            BotServiceSku sku = default;
+            BotServiceKind? kind = default;
+            ETag? etag = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,13 +256,13 @@ namespace Azure.ResourceManager.BotService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties.Value,
-                sku.Value,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(etag),
+                properties,
+                sku,
+                kind,
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (OutputType.HasValue)
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (SubscriptionId.HasValue)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (SchemaName != null)
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobStepOutputType> type = default;
-            Optional<Guid> subscriptionId = default;
-            Optional<string> resourceGroupName = default;
+            JobStepOutputType? type = default;
+            Guid? subscriptionId = default;
+            string resourceGroupName = default;
             string serverName = default;
             string databaseName = default;
-            Optional<string> schemaName = default;
+            string schemaName = default;
             string tableName = default;
             string credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JobStepOutput(
-                Optional.ToNullable(type),
-                Optional.ToNullable(subscriptionId),
-                resourceGroupName.Value,
+                type,
+                subscriptionId,
+                resourceGroupName,
                 serverName,
                 databaseName,
-                schemaName.Value,
+                schemaName,
                 tableName,
                 credential,
                 serializedAdditionalRawData);

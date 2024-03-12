@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && CopyLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyLogLink))
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStringValue(CopyLogLink);
             }
-            if (options.Format != "W" && CopyVerboseLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyVerboseLogLink))
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStringValue(CopyVerboseLogLink);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> copyLogLink = default;
-            Optional<string> copyVerboseLogLink = default;
+            string accountName = default;
+            string copyLogLink = default;
+            string copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, copyLogLink.Value, copyVerboseLogLink.Value);
+            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName, copyLogLink, copyVerboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)

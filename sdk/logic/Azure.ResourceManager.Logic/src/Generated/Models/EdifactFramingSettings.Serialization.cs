@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceCodeListDirectoryVersion != null)
+            if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
             {
                 writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
-            if (CharacterEncoding != null)
+            if (Optional.IsDefined(CharacterEncoding))
             {
                 writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);
@@ -92,8 +93,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> serviceCodeListDirectoryVersion = default;
-            Optional<string> characterEncoding = default;
+            string serviceCodeListDirectoryVersion = default;
+            string characterEncoding = default;
             int protocolVersion = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
@@ -169,8 +170,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdifactFramingSettings(
-                serviceCodeListDirectoryVersion.Value,
-                characterEncoding.Value,
+                serviceCodeListDirectoryVersion,
+                characterEncoding,
                 protocolVersion,
                 dataElementSeparator,
                 componentSeparator,

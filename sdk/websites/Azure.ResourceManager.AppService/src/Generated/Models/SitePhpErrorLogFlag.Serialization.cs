@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LocalLogErrors != null)
+            if (Optional.IsDefined(LocalLogErrors))
             {
                 writer.WritePropertyName("localLogErrors"u8);
                 writer.WriteStringValue(LocalLogErrors);
             }
-            if (MasterLogErrors != null)
+            if (Optional.IsDefined(MasterLogErrors))
             {
                 writer.WritePropertyName("masterLogErrors"u8);
                 writer.WriteStringValue(MasterLogErrors);
             }
-            if (LocalLogErrorsMaxLength != null)
+            if (Optional.IsDefined(LocalLogErrorsMaxLength))
             {
                 writer.WritePropertyName("localLogErrorsMaxLength"u8);
                 writer.WriteStringValue(LocalLogErrorsMaxLength);
             }
-            if (MasterLogErrorsMaxLength != null)
+            if (Optional.IsDefined(MasterLogErrorsMaxLength))
             {
                 writer.WritePropertyName("masterLogErrorsMaxLength"u8);
                 writer.WriteStringValue(MasterLogErrorsMaxLength);
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> localLogErrors = default;
-            Optional<string> masterLogErrors = default;
-            Optional<string> localLogErrorsMaxLength = default;
-            Optional<string> masterLogErrorsMaxLength = default;
+            SystemData systemData = default;
+            string localLogErrors = default;
+            string masterLogErrors = default;
+            string localLogErrorsMaxLength = default;
+            string masterLogErrorsMaxLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,12 +198,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                localLogErrors.Value,
-                masterLogErrors.Value,
-                localLogErrorsMaxLength.Value,
-                masterLogErrorsMaxLength.Value,
-                kind.Value,
+                systemData,
+                localLogErrors,
+                masterLogErrors,
+                localLogErrorsMaxLength,
+                masterLogErrorsMaxLength,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (CommandLine != null)
+            if (Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (!(ResourceFiles is ChangeTrackingList<BatchResourceFile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceFiles))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EnvironmentSettings is ChangeTrackingList<BatchEnvironmentSetting> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentSettings))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
@@ -51,22 +52,22 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserIdentity != null)
+            if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteObjectValue(UserIdentity);
             }
-            if (MaxTaskRetryCount.HasValue)
+            if (Optional.IsDefined(MaxTaskRetryCount))
             {
                 writer.WritePropertyName("maxTaskRetryCount"u8);
                 writer.WriteNumberValue(MaxTaskRetryCount.Value);
             }
-            if (WaitForSuccess.HasValue)
+            if (Optional.IsDefined(WaitForSuccess))
             {
                 writer.WritePropertyName("waitForSuccess"u8);
                 writer.WriteBooleanValue(WaitForSuccess.Value);
             }
-            if (ContainerSettings != null)
+            if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> commandLine = default;
+            string commandLine = default;
             IList<BatchResourceFile> resourceFiles = default;
             IList<BatchEnvironmentSetting> environmentSettings = default;
-            Optional<BatchUserIdentity> userIdentity = default;
-            Optional<int> maxTaskRetryCount = default;
-            Optional<bool> waitForSuccess = default;
-            Optional<BatchTaskContainerSettings> containerSettings = default;
+            BatchUserIdentity userIdentity = default;
+            int? maxTaskRetryCount = default;
+            bool? waitForSuccess = default;
+            BatchTaskContainerSettings containerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,13 +197,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BatchAccountPoolStartTask(
-                commandLine.Value,
+                commandLine,
                 resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(),
                 environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(),
-                userIdentity.Value,
-                Optional.ToNullable(maxTaskRetryCount),
-                Optional.ToNullable(waitForSuccess),
-                containerSettings.Value,
+                userIdentity,
+                maxTaskRetryCount,
+                waitForSuccess,
+                containerSettings,
                 serializedAdditionalRawData);
         }
 

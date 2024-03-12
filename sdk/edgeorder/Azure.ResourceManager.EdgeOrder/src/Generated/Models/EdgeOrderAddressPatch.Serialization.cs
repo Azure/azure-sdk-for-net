@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (ContactDetails != null)
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<EdgeOrderShippingAddress> shippingAddress = default;
-            Optional<EdgeOrderAddressContactDetails> contactDetails = default;
+            EdgeOrderShippingAddress shippingAddress = default;
+            EdgeOrderAddressContactDetails contactDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), shippingAddress.Value, contactDetails.Value, serializedAdditionalRawData);
+            return new EdgeOrderAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), shippingAddress, contactDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressPatch>.Write(ModelReaderWriterOptions options)

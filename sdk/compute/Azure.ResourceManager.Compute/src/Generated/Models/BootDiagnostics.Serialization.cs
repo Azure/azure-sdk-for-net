@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<Uri> storageUri = default;
+            bool? enabled = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BootDiagnostics(Optional.ToNullable(enabled), storageUri.Value, serializedAdditionalRawData);
+            return new BootDiagnostics(enabled, storageUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BootDiagnostics>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (AttachNewDataDiskOptions != null)
+            if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
                 writer.WriteObjectValue(AttachNewDataDiskOptions);
             }
-            if (ExistingLabDiskId != null)
+            if (Optional.IsDefined(ExistingLabDiskId))
             {
                 writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
-            Optional<ResourceIdentifier> existingLabDiskId = default;
-            Optional<DevTestLabHostCachingOption> hostCaching = default;
+            AttachNewDataDiskDetails attachNewDataDiskOptions = default;
+            ResourceIdentifier existingLabDiskId = default;
+            DevTestLabHostCachingOption? hostCaching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions.Value, existingLabDiskId.Value, Optional.ToNullable(hostCaching), serializedAdditionalRawData);
+            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions, existingLabDiskId, hostCaching, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDataDiskProperties>.Write(ModelReaderWriterOptions options)

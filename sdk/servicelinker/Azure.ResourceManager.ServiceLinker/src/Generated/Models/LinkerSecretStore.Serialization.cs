@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 if (KeyVaultId != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
+            ResourceIdentifier keyVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerSecretStore(keyVaultId.Value, serializedAdditionalRawData);
+            return new LinkerSecretStore(keyVaultId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerSecretStore>.Write(ModelReaderWriterOptions options)

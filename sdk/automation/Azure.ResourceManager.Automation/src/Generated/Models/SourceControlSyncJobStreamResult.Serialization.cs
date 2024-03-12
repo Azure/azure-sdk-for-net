@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceControlSyncJobStreamId != null)
+            if (Optional.IsDefined(SourceControlSyncJobStreamId))
             {
                 writer.WritePropertyName("sourceControlSyncJobStreamId"u8);
                 writer.WriteStringValue(SourceControlSyncJobStreamId);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Time.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Time))
             {
                 if (Time != null)
                 {
@@ -55,17 +56,17 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("time");
                 }
             }
-            if (StreamType.HasValue)
+            if (Optional.IsDefined(StreamType))
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());
             }
-            if (StreamText != null)
+            if (Optional.IsDefined(StreamText))
             {
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (!(Value is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();
@@ -127,12 +128,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobStreamId = default;
-            Optional<string> summary = default;
-            Optional<DateTimeOffset?> time = default;
-            Optional<SourceControlStreamType> streamType = default;
-            Optional<string> streamText = default;
+            ResourceIdentifier id = default;
+            string sourceControlSyncJobStreamId = default;
+            string summary = default;
+            DateTimeOffset? time = default;
+            SourceControlStreamType? streamType = default;
+            string streamText = default;
             IReadOnlyDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -221,12 +222,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SourceControlSyncJobStreamResult(
-                id.Value,
-                sourceControlSyncJobStreamId.Value,
-                summary.Value,
-                Optional.ToNullable(time),
-                Optional.ToNullable(streamType),
-                streamText.Value,
+                id,
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
+                streamText,
                 value ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }

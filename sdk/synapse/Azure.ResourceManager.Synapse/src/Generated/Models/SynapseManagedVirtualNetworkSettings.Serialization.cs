@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (PreventDataExfiltration.HasValue)
+            if (Optional.IsDefined(PreventDataExfiltration))
             {
                 writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
-            if (EnableLinkedAccessCheckOnTargetResource.HasValue)
+            if (Optional.IsDefined(EnableLinkedAccessCheckOnTargetResource))
             {
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(EnableLinkedAccessCheckOnTargetResource.Value);
             }
-            if (!(AllowedAadTenantIdsForLinking is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> preventDataExfiltration = default;
-            Optional<bool> linkedAccessCheckOnTargetResource = default;
+            bool? preventDataExfiltration = default;
+            bool? linkedAccessCheckOnTargetResource = default;
             IList<string> allowedAadTenantIdsForLinking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SynapseManagedVirtualNetworkSettings(preventDataExfiltration, linkedAccessCheckOnTargetResource, allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseManagedVirtualNetworkSettings>.Write(ModelReaderWriterOptions options)

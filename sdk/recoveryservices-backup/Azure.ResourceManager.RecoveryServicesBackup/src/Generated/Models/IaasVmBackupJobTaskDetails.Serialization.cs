@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TaskId != null)
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (InstanceId != null)
+            if (Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ProgressPercentage.HasValue)
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (TaskExecutionDetails != null)
+            if (Optional.IsDefined(TaskExecutionDetails))
             {
                 writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> instanceId = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> status = default;
-            Optional<double> progressPercentage = default;
-            Optional<string> taskExecutionDetails = default;
+            string taskId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string instanceId = default;
+            TimeSpan? duration = default;
+            string status = default;
+            double? progressPercentage = default;
+            string taskExecutionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,14 +180,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IaasVmBackupJobTaskDetails(
-                taskId.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                instanceId.Value,
-                Optional.ToNullable(duration),
-                status.Value,
-                Optional.ToNullable(progressPercentage),
-                taskExecutionDetails.Value,
+                taskId,
+                startTime,
+                endTime,
+                instanceId,
+                duration,
+                status,
+                progressPercentage,
+                taskExecutionDetails,
                 serializedAdditionalRawData);
         }
 

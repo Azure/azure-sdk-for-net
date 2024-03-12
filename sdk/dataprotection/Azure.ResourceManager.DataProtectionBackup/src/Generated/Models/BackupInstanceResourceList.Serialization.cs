@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DataProtectionBackupInstanceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IReadOnlyList<DataProtectionBackupInstanceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstanceResourceList(value ?? new ChangeTrackingList<DataProtectionBackupInstanceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new BackupInstanceResourceList(value ?? new ChangeTrackingList<DataProtectionBackupInstanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstanceResourceList>.Write(ModelReaderWriterOptions options)

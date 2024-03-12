@@ -59,22 +59,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
         internal Assistant(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-            if (tools == null)
-            {
-                throw new ArgumentNullException(nameof(tools));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(tools, nameof(tools));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             CreatedAt = createdAt;

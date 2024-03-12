@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceUsageId != null)
+            if (Optional.IsDefined(ResourceUsageId))
             {
                 writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> resourceUsageId = default;
+            string resourceUsageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationBillingDetails(resourceUsageId.Value, serializedAdditionalRawData);
+            return new ArmApplicationBillingDetails(resourceUsageId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationBillingDetails>.Write(ModelReaderWriterOptions options)

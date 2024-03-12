@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (FilterData != null)
+            if (Optional.IsDefined(FilterData))
             {
                 writer.WritePropertyName("filterData"u8);
                 writer.WriteStringValue(FilterData);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> filterData = default;
+            string filterData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnPacketCaptureStartContent(filterData.Value, serializedAdditionalRawData);
+            return new VpnPacketCaptureStartContent(filterData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnPacketCaptureStartContent>.Write(ModelReaderWriterOptions options)

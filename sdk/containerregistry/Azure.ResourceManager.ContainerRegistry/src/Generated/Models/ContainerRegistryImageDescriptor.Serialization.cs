@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Registry != null)
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
-            if (Repository != null)
+            if (Optional.IsDefined(Repository))
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> registry = default;
-            Optional<string> repository = default;
-            Optional<string> tag = default;
-            Optional<string> digest = default;
+            string registry = default;
+            string repository = default;
+            string tag = default;
+            string digest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImageDescriptor(registry.Value, repository.Value, tag.Value, digest.Value, serializedAdditionalRawData);
+            return new ContainerRegistryImageDescriptor(registry, repository, tag, digest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImageDescriptor>.Write(ModelReaderWriterOptions options)

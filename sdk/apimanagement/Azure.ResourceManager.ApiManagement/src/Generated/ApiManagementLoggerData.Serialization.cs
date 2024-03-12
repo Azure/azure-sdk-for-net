@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LoggerType.HasValue)
+            if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (IsBuffered.HasValue)
+            if (Optional.IsDefined(IsBuffered))
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LoggerType> loggerType = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            LoggerType? loggerType = default;
+            string description = default;
             IDictionary<string, string> credentials = default;
-            Optional<bool> isBuffered = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            bool? isBuffered = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(loggerType),
-                description.Value,
+                systemData,
+                loggerType,
+                description,
                 credentials ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(isBuffered),
-                resourceId.Value,
+                isBuffered,
+                resourceId,
                 serializedAdditionalRawData);
         }
 

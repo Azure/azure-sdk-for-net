@@ -15,34 +15,34 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InterruptPrompt.HasValue)
+            if (Optional.IsDefined(InterruptPrompt))
             {
                 writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
-            if (InitialSilenceTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
             {
                 writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (SpeechLanguage != null)
+            if (Optional.IsDefined(SpeechLanguage))
             {
                 writer.WritePropertyName("speechLanguage"u8);
                 writer.WriteStringValue(SpeechLanguage);
             }
-            if (SpeechRecognitionModelEndpointId != null)
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
             {
                 writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
                 writer.WriteStringValue(SpeechRecognitionModelEndpointId);
             }
-            if (DtmfOptions != null)
+            if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
-            if (!(Choices is ChangeTrackingList<RecognitionChoice> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Choices))
             {
                 writer.WritePropertyName("choices"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (SpeechOptions != null)
+            if (Optional.IsDefined(SpeechOptions))
             {
                 writer.WritePropertyName("speechOptions"u8);
                 writer.WriteObjectValue(SpeechOptions);

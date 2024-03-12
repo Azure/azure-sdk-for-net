@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
             writer.WriteObjectValue(AdminCredentials);
-            if (SourceServerUsername != null)
+            if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
                 writer.WriteStringValue(SourceServerUsername);
             }
-            if (TargetServerUsername != null)
+            if (Optional.IsDefined(TargetServerUsername))
             {
                 writer.WritePropertyName("targetServerUsername"u8);
                 writer.WriteStringValue(TargetServerUsername);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationAdminCredentials adminCredentials = default;
-            Optional<string> sourceServerUsername = default;
-            Optional<string> targetServerUsername = default;
+            string sourceServerUsername = default;
+            string targetServerUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername.Value, targetServerUsername.Value, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername, targetServerUsername, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationSecretParameters>.Write(ModelReaderWriterOptions options)

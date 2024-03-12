@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroupId != null)
+            if (Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> managementGroupId = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<ResourceIdentifier> resourceGroupId = default;
-            Optional<string> displayName = default;
+            Guid? tenantId = default;
+            ResourceIdentifier managementGroupId = default;
+            ResourceIdentifier subscriptionId = default;
+            ResourceIdentifier resourceGroupId = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BillingBenefitsAppliedScopeProperties(
-                Optional.ToNullable(tenantId),
-                managementGroupId.Value,
-                subscriptionId.Value,
-                resourceGroupId.Value,
-                displayName.Value,
+                tenantId,
+                managementGroupId,
+                subscriptionId,
+                resourceGroupId,
+                displayName,
                 serializedAdditionalRawData);
         }
 

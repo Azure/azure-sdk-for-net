@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && WaitDurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WaitDurationInSeconds))
             {
                 writer.WritePropertyName("waitDurationInSeconds"u8);
                 writer.WriteNumberValue(WaitDurationInSeconds.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<int> waitDurationInSeconds = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            int? waitDurationInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetWaitStatus(status.Value, Optional.ToNullable(waitDurationInSeconds), serializedAdditionalRawData);
+            return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetWaitStatus>.Write(ModelReaderWriterOptions options)

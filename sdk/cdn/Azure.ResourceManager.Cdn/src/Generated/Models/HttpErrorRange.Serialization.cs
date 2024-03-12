@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Begin.HasValue)
+            if (Optional.IsDefined(Begin))
             {
                 writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
-            if (End.HasValue)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<int> begin = default;
-            Optional<int> end = default;
+            int? begin = default;
+            int? end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpErrorRange(Optional.ToNullable(begin), Optional.ToNullable(end), serializedAdditionalRawData);
+            return new HttpErrorRange(begin, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpErrorRange>.Write(ModelReaderWriterOptions options)

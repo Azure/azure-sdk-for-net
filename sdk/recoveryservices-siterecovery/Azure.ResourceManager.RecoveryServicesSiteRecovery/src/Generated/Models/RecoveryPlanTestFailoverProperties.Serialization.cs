@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FailoverDirection.ToString());
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType);
-            if (NetworkId != null)
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             PossibleOperationsDirection failoverDirection = default;
             string networkType = default;
-            Optional<ResourceIdentifier> networkId = default;
+            ResourceIdentifier networkId = default;
             IList<RecoveryPlanProviderSpecificFailoverContent> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanTestFailoverProperties(failoverDirection, networkType, networkId.Value, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
+            return new RecoveryPlanTestFailoverProperties(failoverDirection, networkType, networkId, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPlanTestFailoverProperties>.Write(ModelReaderWriterOptions options)

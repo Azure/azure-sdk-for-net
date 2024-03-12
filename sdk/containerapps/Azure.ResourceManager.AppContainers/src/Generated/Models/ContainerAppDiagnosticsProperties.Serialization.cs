@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(Dataset is ChangeTrackingList<ContainerAppDiagnosticsDataApiResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (DataProviderMetadata != null)
+            if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
                 writer.WriteObjectValue(DataProviderMetadata);
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppDiagnosticsMetadata> metadata = default;
+            ContainerAppDiagnosticsMetadata metadata = default;
             IList<ContainerAppDiagnosticsDataApiResult> dataset = default;
-            Optional<ContainerAppDiagnosticsStatus> status = default;
-            Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
+            ContainerAppDiagnosticsStatus status = default;
+            ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsProperties(metadata.Value, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status.Value, dataProviderMetadata.Value, serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsProperties(metadata, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status, dataProviderMetadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsProperties>.Write(ModelReaderWriterOptions options)

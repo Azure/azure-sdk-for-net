@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IsManagerEmailNotificationDisabled.HasValue)
+            if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableManagerEmailNotification"u8);
                 writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
-            if (IsOwnerEmailNotificationDisabled.HasValue)
+            if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> disableManagerEmailNotification = default;
-            Optional<bool> disableOwnerEmailNotification = default;
+            bool? disableManagerEmailNotification = default;
+            bool? disableOwnerEmailNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceEmailNotification(Optional.ToNullable(disableManagerEmailNotification), Optional.ToNullable(disableOwnerEmailNotification), serializedAdditionalRawData);
+            return new GovernanceEmailNotification(disableManagerEmailNotification, disableOwnerEmailNotification, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceEmailNotification>.Write(ModelReaderWriterOptions options)

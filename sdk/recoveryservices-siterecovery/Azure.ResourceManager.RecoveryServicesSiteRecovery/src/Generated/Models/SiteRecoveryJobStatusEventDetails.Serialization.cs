@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobFriendlyName != null)
+            if (Optional.IsDefined(JobFriendlyName))
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (JobStatus != null)
+            if (Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (AffectedObjectType != null)
+            if (Optional.IsDefined(AffectedObjectType))
             {
                 writer.WritePropertyName("affectedObjectType"u8);
                 writer.WriteStringValue(AffectedObjectType);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobFriendlyName = default;
-            Optional<string> jobStatus = default;
-            Optional<string> affectedObjectType = default;
+            ResourceIdentifier jobId = default;
+            string jobFriendlyName = default;
+            string jobStatus = default;
+            string affectedObjectType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,10 +134,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryJobStatusEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                jobId.Value,
-                jobFriendlyName.Value,
-                jobStatus.Value,
-                affectedObjectType.Value);
+                jobId,
+                jobFriendlyName,
+                jobStatus,
+                affectedObjectType);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobStatusEventDetails>.Write(ModelReaderWriterOptions options)

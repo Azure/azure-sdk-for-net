@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,22 +51,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (EnablePurgeProtection.HasValue)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AppConfigurationSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            AppConfigurationSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> enablePurgeProtection = default;
+            AppConfigurationStoreEncryptionProperties encryption = default;
+            bool? disableLocalAuth = default;
+            AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? enablePurgeProtection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,12 +209,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppConfigurationStorePatch(
                 identity,
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                encryption.Value,
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(enablePurgeProtection),
+                encryption,
+                disableLocalAuth,
+                publicNetworkAccess,
+                enablePurgeProtection,
                 serializedAdditionalRawData);
         }
 

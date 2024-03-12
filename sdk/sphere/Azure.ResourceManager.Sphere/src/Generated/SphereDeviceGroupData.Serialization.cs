@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (OSFeedType.HasValue)
+            if (Optional.IsDefined(OSFeedType))
             {
                 writer.WritePropertyName("osFeedType"u8);
                 writer.WriteStringValue(OSFeedType.Value.ToString());
             }
-            if (UpdatePolicy.HasValue)
+            if (Optional.IsDefined(UpdatePolicy))
             {
                 writer.WritePropertyName("updatePolicy"u8);
                 writer.WriteStringValue(UpdatePolicy.Value.ToString());
             }
-            if (AllowCrashDumpsCollection.HasValue)
+            if (Optional.IsDefined(AllowCrashDumpsCollection))
             {
                 writer.WritePropertyName("allowCrashDumpsCollection"u8);
                 writer.WriteStringValue(AllowCrashDumpsCollection.Value.ToString());
             }
-            if (RegionalDataBoundary.HasValue)
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
-            if (options.Format != "W" && HasDeployment.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasDeployment))
             {
                 writer.WritePropertyName("hasDeployment"u8);
                 writer.WriteBooleanValue(HasDeployment.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<SphereOSFeedType> osFeedType = default;
-            Optional<SphereUpdatePolicy> updatePolicy = default;
-            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
-            Optional<bool> hasDeployment = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
+            bool? hasDeployment = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Sphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(osFeedType),
-                Optional.ToNullable(updatePolicy),
-                Optional.ToNullable(allowCrashDumpsCollection),
-                Optional.ToNullable(regionalDataBoundary),
-                Optional.ToNullable(hasDeployment),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
+                hasDeployment,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

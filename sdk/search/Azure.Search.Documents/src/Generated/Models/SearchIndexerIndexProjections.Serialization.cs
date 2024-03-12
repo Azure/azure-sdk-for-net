@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -38,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<SearchIndexerIndexProjectionSelector> selectors = default;
-            Optional<SearchIndexerIndexProjectionsParameters> parameters = default;
+            SearchIndexerIndexProjectionsParameters parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectors"u8))
@@ -61,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerIndexProjections(selectors, parameters.Value);
+            return new SearchIndexerIndexProjections(selectors, parameters);
         }
     }
 }

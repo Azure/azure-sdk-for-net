@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Elements is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
@@ -54,12 +54,12 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (!(Footnotes is ChangeTrackingList<DocumentFootnote> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Footnotes))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IReadOnlyList<string> elements = default;
-            Optional<DocumentCaption> caption = default;
+            DocumentCaption caption = default;
             IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.AI.DocumentIntelligence
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans,
                 elements ?? new ChangeTrackingList<string>(),
-                caption.Value,
+                caption,
                 footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
                 serializedAdditionalRawData);
         }

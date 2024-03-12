@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeploymentId != null)
+            if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (!(DeployedImages is ChangeTrackingList<SphereImageData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DeployedImages))
             {
                 writer.WritePropertyName("deployedImages"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Sphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DeploymentDateUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentDateUtc))
             {
                 writer.WritePropertyName("deploymentDateUtc"u8);
                 writer.WriteStringValue(DeploymentDateUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deploymentId = default;
+            SystemData systemData = default;
+            string deploymentId = default;
             IList<SphereImageData> deployedImages = default;
-            Optional<DateTimeOffset> deploymentDateUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            DateTimeOffset? deploymentDateUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Sphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                deploymentId.Value,
+                systemData,
+                deploymentId,
                 deployedImages ?? new ChangeTrackingList<SphereImageData>(),
-                Optional.ToNullable(deploymentDateUtc),
-                Optional.ToNullable(provisioningState),
+                deploymentDateUtc,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

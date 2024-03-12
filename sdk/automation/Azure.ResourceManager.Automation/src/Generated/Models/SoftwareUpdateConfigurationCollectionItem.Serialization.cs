@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,54 +27,54 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (UpdateConfiguration != null)
+            if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
                 writer.WriteObjectValue(UpdateConfiguration);
             }
-            if (Tasks != null)
+            if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteObjectValue(Tasks);
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (NextRunOn.HasValue)
+            if (Optional.IsDefined(NextRunOn))
             {
                 if (NextRunOn != null)
                 {
@@ -124,16 +125,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<AutomationScheduleFrequency> frequency = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset?> nextRun = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
+            AutomationScheduleFrequency? frequency = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string provisioningState = default;
+            DateTimeOffset? nextRun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,16 +241,16 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SoftwareUpdateConfigurationCollectionItem(
-                name.Value,
-                id.Value,
-                updateConfiguration.Value,
-                tasks.Value,
-                Optional.ToNullable(frequency),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                provisioningState.Value,
-                Optional.ToNullable(nextRun),
+                name,
+                id,
+                updateConfiguration,
+                tasks,
+                frequency,
+                startTime,
+                creationTime,
+                lastModifiedTime,
+                provisioningState,
+                nextRun,
                 serializedAdditionalRawData);
         }
 

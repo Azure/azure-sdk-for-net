@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (PromotionCode != null)
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -69,8 +70,8 @@ namespace Azure.ResourceManager.Models
             string name = default;
             string publisher = default;
             string product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string promotionCode = default;
+            string version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new ArmPlan(name, publisher, product, promotionCode.Value, version.Value);
+            return new ArmPlan(name, publisher, product, promotionCode, version);
         }
 
         BinaryData IPersistableModel<ArmPlan>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -44,24 +45,24 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -136,12 +137,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
             IList<string> dependsOn = default;
             BinaryData template = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,14 +243,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 dependsOn ?? new ChangeTrackingList<string>(),
                 template,
-                resourceGroup.Value,
+                resourceGroup,
                 parameters);
         }
 

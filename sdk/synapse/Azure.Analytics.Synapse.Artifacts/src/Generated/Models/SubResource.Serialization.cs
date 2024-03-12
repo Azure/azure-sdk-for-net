@@ -27,10 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SubResource(id.Value, name.Value, type.Value, etag.Value);
+            return new SubResource(id, name, type, etag);
         }
 
         internal partial class SubResourceConverter : JsonConverter<SubResource>

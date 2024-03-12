@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (LocalPreference.HasValue)
+            if (Optional.IsDefined(LocalPreference))
             {
                 writer.WritePropertyName("localPreference"u8);
                 writer.WriteNumberValue(LocalPreference.Value);
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (IPCommunityProperties != null)
+            if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
                 writer.WriteObjectValue(IPCommunityProperties);
             }
-            if (IPExtendedCommunityProperties != null)
+            if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
                 writer.WriteObjectValue(IPExtendedCommunityProperties);
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> localPreference = default;
+            long? localPreference = default;
             RoutePolicyActionType actionType = default;
-            Optional<ActionIPCommunityProperties> ipCommunityProperties = default;
-            Optional<ActionIPExtendedCommunityProperties> ipExtendedCommunityProperties = default;
+            ActionIPCommunityProperties ipCommunityProperties = default;
+            ActionIPExtendedCommunityProperties ipExtendedCommunityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatementActionProperties(Optional.ToNullable(localPreference), actionType, ipCommunityProperties.Value, ipExtendedCommunityProperties.Value, serializedAdditionalRawData);
+            return new StatementActionProperties(localPreference, actionType, ipCommunityProperties, ipExtendedCommunityProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatementActionProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(ResourceName);
             }
-            if (ResourceTypeName.HasValue)
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName.Value.ToString());
             }
-            if (options.Format != "W" && QuotaPeriod != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            int? limit = default;
+            int? currentValue = default;
+            string unit = default;
+            ReservationResourceName name = default;
+            ResourceTypeName? resourceType = default;
+            string quotaPeriod = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QuotaProperties(
-                Optional.ToNullable(limit),
-                Optional.ToNullable(currentValue),
-                unit.Value,
-                name.Value,
-                Optional.ToNullable(resourceType),
-                quotaPeriod.Value,
-                properties.Value,
+                limit,
+                currentValue,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                properties,
                 serializedAdditionalRawData);
         }
 

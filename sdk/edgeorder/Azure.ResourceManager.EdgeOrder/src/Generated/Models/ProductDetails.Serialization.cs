@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayInfo != null)
+            if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && ProductDoubleEncryptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProductDoubleEncryptionStatus))
             {
                 writer.WritePropertyName("productDoubleEncryptionStatus"u8);
                 writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(DeviceDetails is ChangeTrackingList<EdgeOrderProductDeviceDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
             {
                 writer.WritePropertyName("deviceDetails"u8);
                 writer.WriteStartArray();
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<ProductDisplayInfo> displayInfo = default;
+            ProductDisplayInfo displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
-            Optional<int> count = default;
-            Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
+            int? count = default;
+            DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
             IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,10 +154,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductDetails(
-                displayInfo.Value,
+                displayInfo,
                 hierarchyInformation,
-                Optional.ToNullable(count),
-                Optional.ToNullable(productDoubleEncryptionStatus),
+                count,
+                productDoubleEncryptionStatus,
                 deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
                 serializedAdditionalRawData);
         }

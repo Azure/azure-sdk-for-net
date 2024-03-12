@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(FileShareName);
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             ResourceIdentifier storageAccountResourceId = default;
             string fileShareName = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureStorageSmbFileShareEndpointProperties(
                 endpointType,
-                description.Value,
-                Optional.ToNullable(provisioningState),
+                description,
+                provisioningState,
                 serializedAdditionalRawData,
                 storageAccountResourceId,
                 fileShareName);

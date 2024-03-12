@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TriggerRunId != null)
+            if (options.Format != "W" && Optional.IsDefined(TriggerRunId))
             {
                 writer.WritePropertyName("triggerRunId"u8);
                 writer.WriteStringValue(TriggerRunId);
             }
-            if (options.Format != "W" && TriggerName != null)
+            if (options.Format != "W" && Optional.IsDefined(TriggerName))
             {
                 writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (options.Format != "W" && TriggerType != null)
+            if (options.Format != "W" && Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType);
             }
-            if (options.Format != "W" && TriggerRunTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TriggerRunTimestamp))
             {
                 writer.WritePropertyName("triggerRunTimestamp"u8);
                 writer.WriteStringValue(TriggerRunTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(TriggeredPipelines is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TriggeredPipelines))
             {
                 writer.WritePropertyName("triggeredPipelines"u8);
                 writer.WriteStartObject();
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(RunDimension is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RunDimension))
             {
                 writer.WritePropertyName("runDimension"u8);
                 writer.WriteStartObject();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(DependencyStatus is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DependencyStatus))
             {
                 writer.WritePropertyName("dependencyStatus"u8);
                 writer.WriteStartObject();
@@ -147,12 +148,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> triggerRunId = default;
-            Optional<string> triggerName = default;
-            Optional<string> triggerType = default;
-            Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Optional<DataFactoryTriggerRunStatus> status = default;
-            Optional<string> message = default;
+            string triggerRunId = default;
+            string triggerName = default;
+            string triggerType = default;
+            DateTimeOffset? triggerRunTimestamp = default;
+            DataFactoryTriggerRunStatus? status = default;
+            string message = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> triggeredPipelines = default;
             IReadOnlyDictionary<string, string> runDimension = default;
@@ -266,12 +267,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryTriggerRun(
-                triggerRunId.Value,
-                triggerName.Value,
-                triggerType.Value,
-                Optional.ToNullable(triggerRunTimestamp),
-                Optional.ToNullable(status),
-                message.Value,
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
                 runDimension ?? new ChangeTrackingDictionary<string, string>(),

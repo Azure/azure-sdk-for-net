@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -30,19 +31,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
-            if (BindingSelector != null)
+            if (Optional.IsDefined(BindingSelector))
             {
                 writer.WritePropertyName("bindingSelector"u8);
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string name = default;
             string @namespace = default;
-            Optional<string> bindingSelector = default;
+            string bindingSelector = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
-            Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
+            ManagedClusterPodIdentityProvisioningState? provisioningState = default;
+            ManagedClusterPodIdentityProvisioningInfo provisioningInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,10 +143,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterPodIdentity(
                 name,
                 @namespace,
-                bindingSelector.Value,
+                bindingSelector,
                 identity,
-                Optional.ToNullable(provisioningState),
-                provisioningInfo.Value,
+                provisioningState,
+                provisioningInfo,
                 serializedAdditionalRawData);
         }
 

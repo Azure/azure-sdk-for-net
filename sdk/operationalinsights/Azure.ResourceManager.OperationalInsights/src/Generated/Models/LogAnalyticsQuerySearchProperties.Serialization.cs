@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Related != null)
+            if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<LogAnalyticsQuerySearchRelatedMetadata> related = default;
+            LogAnalyticsQuerySearchRelatedMetadata related = default;
             IDictionary<string, IList<string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQuerySearchProperties(related.Value, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
+            return new LogAnalyticsQuerySearchProperties(related, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQuerySearchProperties>.Write(ModelReaderWriterOptions options)

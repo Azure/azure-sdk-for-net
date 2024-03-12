@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
-            if (!(DisksToInclude is ChangeTrackingList<InMageRcmDiskContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -38,76 +39,76 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DisksDefault != null)
+            if (Optional.IsDefined(DisksDefault))
             {
                 writer.WritePropertyName("disksDefault"u8);
                 writer.WriteObjectValue(DisksDefault);
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
-            if (TargetNetworkId != null)
+            if (Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (TestNetworkId != null)
+            if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TargetVmName != null)
+            if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (TargetVmSize != null)
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (TargetAvailabilitySetId != null)
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (TargetBootDiagnosticsStorageAccountId != null)
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
             writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
-            if (MultiVmGroupName != null)
+            if (Optional.IsDefined(MultiVmGroupName))
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
@@ -154,22 +155,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string fabricDiscoveryMachineId = default;
             IList<InMageRcmDiskContent> disksToInclude = default;
-            Optional<InMageRcmDisksDefaultContent> disksDefault = default;
+            InMageRcmDisksDefaultContent disksDefault = default;
             ResourceIdentifier targetResourceGroupId = default;
-            Optional<ResourceIdentifier> targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> runAsAccountId = default;
+            ResourceIdentifier targetNetworkId = default;
+            ResourceIdentifier testNetworkId = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            string targetVmName = default;
+            string targetVmSize = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            string runAsAccountId = default;
             Guid processServerId = default;
-            Optional<string> multiVmGroupName = default;
+            string multiVmGroupName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -318,22 +319,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData,
                 fabricDiscoveryMachineId,
                 disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>(),
-                disksDefault.Value,
+                disksDefault,
                 targetResourceGroupId,
-                targetNetworkId.Value,
-                testNetworkId.Value,
-                targetSubnetName.Value,
-                testSubnetName.Value,
-                targetVmName.Value,
-                targetVmSize.Value,
-                Optional.ToNullable(licenseType),
-                targetAvailabilitySetId.Value,
-                targetAvailabilityZone.Value,
-                targetProximityPlacementGroupId.Value,
-                targetBootDiagnosticsStorageAccountId.Value,
-                runAsAccountId.Value,
+                targetNetworkId,
+                testNetworkId,
+                targetSubnetName,
+                testSubnetName,
+                targetVmName,
+                targetVmSize,
+                licenseType,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                targetBootDiagnosticsStorageAccountId,
+                runAsAccountId,
                 processServerId,
-                multiVmGroupName.Value);
+                multiVmGroupName);
         }
 
         BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options)

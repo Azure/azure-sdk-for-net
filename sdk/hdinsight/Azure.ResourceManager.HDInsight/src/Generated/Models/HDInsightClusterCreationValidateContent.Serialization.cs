@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -27,32 +28,32 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ClusterCreateRequestValidationParametersType != null)
+            if (Optional.IsDefined(ClusterCreateRequestValidationParametersType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ClusterCreateRequestValidationParametersType);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (FetchAaddsResource.HasValue)
+            if (Optional.IsDefined(FetchAaddsResource))
             {
                 writer.WritePropertyName("fetchAaddsResource"u8);
                 writer.WriteBooleanValue(FetchAaddsResource.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -73,12 +74,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -121,15 +122,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> fetchAaddsResource = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            string type = default;
+            Guid? tenantId = default;
+            bool? fetchAaddsResource = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
-            Optional<HDInsightClusterCreateOrUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            HDInsightClusterCreateOrUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,16 +225,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightClusterCreationValidateContent(
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 zones ?? new ChangeTrackingList<string>(),
-                properties.Value,
+                properties,
                 identity,
                 serializedAdditionalRawData,
-                name.Value,
-                type.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(fetchAaddsResource));
+                name,
+                type,
+                tenantId,
+                fetchAaddsResource);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateContent>.Write(ModelReaderWriterOptions options)

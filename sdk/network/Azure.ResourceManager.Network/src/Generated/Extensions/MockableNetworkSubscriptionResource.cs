@@ -1117,14 +1117,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            if (predefinedPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(predefinedPolicyName));
-            }
-            if (predefinedPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predefinedPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
             using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
@@ -1167,14 +1160,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            if (predefinedPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(predefinedPolicyName));
-            }
-            if (predefinedPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(predefinedPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
 
             using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
             scope.Start();
@@ -1557,10 +1543,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            if (domainNameLabel == null)
-            {
-                throw new ArgumentNullException(nameof(domainNameLabel));
-            }
+            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
 
             using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
             scope.Start();
@@ -1603,10 +1586,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            if (domainNameLabel == null)
-            {
-                throw new ArgumentNullException(nameof(domainNameLabel));
-            }
+            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
 
             using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
             scope.Start();
@@ -2356,10 +2336,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LoadBalancerClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
@@ -2406,10 +2383,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LoadBalancerClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddressesLoadBalancer");
             scope.Start();
@@ -3048,10 +3022,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            if (checkPrivateLinkServiceVisibilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(checkPrivateLinkServiceVisibilityRequest));
-            }
+            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();
@@ -3094,10 +3065,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            if (checkPrivateLinkServiceVisibilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(checkPrivateLinkServiceVisibilityRequest));
-            }
+            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkService");
             scope.Start();

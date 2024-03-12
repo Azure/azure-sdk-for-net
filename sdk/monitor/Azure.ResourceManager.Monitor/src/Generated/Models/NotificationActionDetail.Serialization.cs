@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (MechanismType != null)
+            if (Optional.IsDefined(MechanismType))
             {
                 writer.WritePropertyName("MechanismType"u8);
                 writer.WriteStringValue(MechanismType);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("Status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (SubState != null)
+            if (Optional.IsDefined(SubState))
             {
                 writer.WritePropertyName("SubState"u8);
                 writer.WriteStringValue(SubState);
             }
-            if (SendOn.HasValue)
+            if (Optional.IsDefined(SendOn))
             {
                 writer.WritePropertyName("SendTime"u8);
                 writer.WriteStringValue(SendOn.Value, "O");
             }
-            if (Detail != null)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("Detail"u8);
                 writer.WriteStringValue(Detail);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> mechanismType = default;
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<string> subState = default;
-            Optional<DateTimeOffset> sendTime = default;
-            Optional<string> detail = default;
+            string mechanismType = default;
+            string name = default;
+            string status = default;
+            string subState = default;
+            DateTimeOffset? sendTime = default;
+            string detail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NotificationActionDetail(
-                mechanismType.Value,
-                name.Value,
-                status.Value,
-                subState.Value,
-                Optional.ToNullable(sendTime),
-                detail.Value,
+                mechanismType,
+                name,
+                status,
+                subState,
+                sendTime,
+                detail,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Prefix != null)
+            if (options.Format != "W" && Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && NextHop != null)
+            if (options.Format != "W" && Optional.IsDefined(NextHop))
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (options.Format != "W" && AsPath != null)
+            if (options.Format != "W" && Optional.IsDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
             }
-            if (options.Format != "W" && OriginAsValidationState != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginAsValidationState))
             {
                 writer.WritePropertyName("originAsValidationState"u8);
                 writer.WriteStringValue(OriginAsValidationState);
             }
-            if (options.Format != "W" && RpkiValidationState != null)
+            if (options.Format != "W" && Optional.IsDefined(RpkiValidationState))
             {
                 writer.WritePropertyName("rpkiValidationState"u8);
                 writer.WriteStringValue(RpkiValidationState);
             }
-            if (options.Format != "W" && TrustAnchor != null)
+            if (options.Format != "W" && Optional.IsDefined(TrustAnchor))
             {
                 writer.WritePropertyName("trustAnchor"u8);
                 writer.WriteStringValue(TrustAnchor);
             }
-            if (options.Format != "W" && ReceivedTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(ReceivedTimestamp))
             {
                 writer.WritePropertyName("receivedTimestamp"u8);
                 writer.WriteStringValue(ReceivedTimestamp);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> nextHop = default;
-            Optional<string> asPath = default;
-            Optional<string> originAsValidationState = default;
-            Optional<string> rpkiValidationState = default;
-            Optional<string> trustAnchor = default;
-            Optional<string> receivedTimestamp = default;
+            string prefix = default;
+            string nextHop = default;
+            string asPath = default;
+            string originAsValidationState = default;
+            string rpkiValidationState = default;
+            string trustAnchor = default;
+            string receivedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,13 +153,13 @@ namespace Azure.ResourceManager.Peering.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeeringReceivedRoute(
-                prefix.Value,
-                nextHop.Value,
-                asPath.Value,
-                originAsValidationState.Value,
-                rpkiValidationState.Value,
-                trustAnchor.Value,
-                receivedTimestamp.Value,
+                prefix,
+                nextHop,
+                asPath,
+                originAsValidationState,
+                rpkiValidationState,
+                trustAnchor,
+                receivedTimestamp,
                 serializedAdditionalRawData);
         }
 

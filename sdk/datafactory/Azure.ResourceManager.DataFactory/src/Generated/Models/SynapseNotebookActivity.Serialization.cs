@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -80,12 +81,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("notebook"u8);
             writer.WriteObjectValue(Notebook);
-            if (SparkPool != null)
+            if (Optional.IsDefined(SparkPool))
             {
                 writer.WritePropertyName("sparkPool"u8);
                 writer.WriteObjectValue(SparkPool);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, NotebookParameter> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ExecutorSize != null)
+            if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
                 JsonSerializer.Serialize(writer, ExecutorSize);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
 #if NET6_0_OR_GREATER
@@ -113,27 +114,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (DriverSize != null)
+            if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 JsonSerializer.Serialize(writer, DriverSize);
             }
-            if (NumExecutors != null)
+            if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 JsonSerializer.Serialize(writer, NumExecutors);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (!(SparkConfig is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -192,24 +193,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             SynapseNotebookReference notebook = default;
-            Optional<BigDataPoolParametrizationReference> sparkPool = default;
+            BigDataPoolParametrizationReference sparkPool = default;
             IDictionary<string, NotebookParameter> parameters = default;
-            Optional<DataFactoryElement<string>> executorSize = default;
-            Optional<BinaryData> conf = default;
-            Optional<DataFactoryElement<string>> driverSize = default;
-            Optional<DataFactoryElement<int>> numExecutors = default;
-            Optional<DataFactorySparkConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            DataFactoryElement<string> executorSize = default;
+            BinaryData conf = default;
+            DataFactoryElement<string> driverSize = default;
+            DataFactoryElement<int> numExecutors = default;
+            DataFactorySparkConfigurationType? configurationType = default;
+            SparkConfigurationParametrizationReference targetSparkConfiguration = default;
             IDictionary<string, BinaryData> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -415,23 +416,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SynapseNotebookActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 notebook,
-                sparkPool.Value,
+                sparkPool,
                 parameters ?? new ChangeTrackingDictionary<string, NotebookParameter>(),
-                executorSize.Value,
-                conf.Value,
-                driverSize.Value,
-                numExecutors.Value,
-                Optional.ToNullable(configurationType),
-                targetSparkConfiguration.Value,
+                executorSize,
+                conf,
+                driverSize,
+                numExecutors,
+                configurationType,
+                targetSparkConfiguration,
                 sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (MatchingRecordsCount.HasValue)
+            if (Optional.IsDefined(MatchingRecordsCount))
             {
                 writer.WritePropertyName("matchingRecordsCount"u8);
                 writer.WriteNumberValue(MatchingRecordsCount.Value);
             }
-            if (!(Signatures is ChangeTrackingList<IdpsSignatureResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Signatures))
             {
                 writer.WritePropertyName("signatures"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> matchingRecordsCount = default;
+            long? matchingRecordsCount = default;
             IReadOnlyList<IdpsSignatureResult> signatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureListResult(Optional.ToNullable(matchingRecordsCount), signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
+            return new IdpsSignatureListResult(matchingRecordsCount, signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureListResult>.Write(ModelReaderWriterOptions options)

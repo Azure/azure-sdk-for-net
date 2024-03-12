@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,29 +16,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerBound.HasValue)
+            if (Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lower"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (UpperBound.HasValue)
+            if (Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upper"u8);
                 writer.WriteNumberValue(UpperBound.Value);
             }
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (MeasureType.HasValue)
+            if (Optional.IsDefined(MeasureType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MeasureType.Value.ToString());
             }
-            if (CompanionMetricId != null)
+            if (Optional.IsDefined(CompanionMetricId))
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(CompanionMetricId);
             }
-            if (ShouldAlertIfDataPointMissing.HasValue)
+            if (Optional.IsDefined(ShouldAlertIfDataPointMissing))
             {
                 writer.WritePropertyName("triggerForMissing"u8);
                 writer.WriteBooleanValue(ShouldAlertIfDataPointMissing.Value);
@@ -51,12 +52,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lower = default;
-            Optional<double> upper = default;
+            double? lower = default;
+            double? upper = default;
             BoundaryDirection direction = default;
-            Optional<BoundaryMeasureType> type = default;
-            Optional<string> metricId = default;
-            Optional<bool> triggerForMissing = default;
+            BoundaryMeasureType? type = default;
+            string metricId = default;
+            bool? triggerForMissing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lower"u8))
@@ -107,12 +108,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new MetricBoundaryCondition(
-                Optional.ToNullable(lower),
-                Optional.ToNullable(upper),
+                lower,
+                upper,
                 direction,
-                Optional.ToNullable(type),
-                metricId.Value,
-                Optional.ToNullable(triggerForMissing));
+                type,
+                metricId,
+                triggerForMissing);
         }
     }
 }

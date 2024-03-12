@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(OutboundNetworkDependencies is ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundNetworkDependencies))
             {
                 writer.WritePropertyName("outboundNetworkDependencies"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutboundNetworkHealth != null)
+            if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
                 writer.WriteObjectValue(OutboundNetworkHealth);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
+            IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth.Value, networkDependencyHealthState, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth, networkDependencyHealthState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSubnetNetworkHealth>.Write(ModelReaderWriterOptions options)

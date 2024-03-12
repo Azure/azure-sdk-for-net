@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 if (AccountName != null)
                 {
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("accountName");
                 }
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 if (AccountKey != null)
                 {
@@ -75,8 +76,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
+            string accountName = default;
+            string accountKey = default;
             string fileSystemName = default;
             string directoryTemplate = default;
             string fileTemplate = default;
@@ -133,7 +134,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
+            return new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ParallelCopyType != null)
+            if (options.Format != "W" && Optional.IsDefined(ParallelCopyType))
             {
                 writer.WritePropertyName("parallelCopyType"u8);
                 writer.WriteStringValue(ParallelCopyType);
             }
-            if (options.Format != "W" && UsedParallelCopies.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedParallelCopies))
             {
                 writer.WritePropertyName("usedParallelCopies"u8);
                 writer.WriteNumberValue(UsedParallelCopies.Value);
             }
-            if (options.Format != "W" && DataRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataRead))
             {
                 writer.WritePropertyName("dataRead"u8);
                 writer.WriteNumberValue(DataRead.Value);
             }
-            if (options.Format != "W" && DataWritten.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataWritten))
             {
                 writer.WritePropertyName("dataWritten"u8);
                 writer.WriteNumberValue(DataWritten.Value);
             }
-            if (options.Format != "W" && RowsRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsRead))
             {
                 writer.WritePropertyName("rowsRead"u8);
                 writer.WriteNumberValue(RowsRead.Value);
             }
-            if (options.Format != "W" && RowsCopied.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
             {
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && CopyStart.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyStart))
             {
                 writer.WritePropertyName("copyStart"u8);
                 writer.WriteStringValue(CopyStart.Value, "O");
             }
-            if (options.Format != "W" && CopyThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
             {
                 writer.WritePropertyName("copyThroughput"u8);
                 writer.WriteNumberValue(CopyThroughput.Value);
             }
-            if (options.Format != "W" && CopyDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
             {
                 writer.WritePropertyName("copyDuration"u8);
                 writer.WriteNumberValue(CopyDuration.Value);
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> status = default;
-            Optional<string> parallelCopyType = default;
-            Optional<int> usedParallelCopies = default;
-            Optional<long> dataRead = default;
-            Optional<long> dataWritten = default;
-            Optional<long> rowsRead = default;
-            Optional<long> rowsCopied = default;
-            Optional<DateTimeOffset> copyStart = default;
-            Optional<double> copyThroughput = default;
-            Optional<int> copyDuration = default;
+            string tableName = default;
+            string status = default;
+            string parallelCopyType = default;
+            int? usedParallelCopies = default;
+            long? dataRead = default;
+            long? dataWritten = default;
+            long? rowsRead = default;
+            long? rowsCopied = default;
+            DateTimeOffset? copyStart = default;
+            double? copyThroughput = default;
+            int? copyDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,17 +229,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CopyProgressDetails(
-                tableName.Value,
-                status.Value,
-                parallelCopyType.Value,
-                Optional.ToNullable(usedParallelCopies),
-                Optional.ToNullable(dataRead),
-                Optional.ToNullable(dataWritten),
-                Optional.ToNullable(rowsRead),
-                Optional.ToNullable(rowsCopied),
-                Optional.ToNullable(copyStart),
-                Optional.ToNullable(copyThroughput),
-                Optional.ToNullable(copyDuration),
+                tableName,
+                status,
+                parallelCopyType,
+                usedParallelCopies,
+                dataRead,
+                dataWritten,
+                rowsRead,
+                rowsCopied,
+                copyStart,
+                copyThroughput,
+                copyDuration,
                 serializedAdditionalRawData);
         }
 

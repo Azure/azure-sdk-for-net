@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (WorkspaceRepositoryConfigurationType != null)
+            if (Optional.IsDefined(WorkspaceRepositoryConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceRepositoryConfigurationType);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (RepositoryName != null)
+            if (Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (CollaborationBranch != null)
+            if (Optional.IsDefined(CollaborationBranch))
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (RootFolder != null)
+            if (Optional.IsDefined(RootFolder))
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> hostName = default;
-            Optional<string> accountName = default;
-            Optional<string> projectName = default;
-            Optional<string> repositoryName = default;
-            Optional<string> collaborationBranch = default;
-            Optional<string> rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<Guid> tenantId = default;
+            string type = default;
+            string hostName = default;
+            string accountName = default;
+            string projectName = default;
+            string repositoryName = default;
+            string collaborationBranch = default;
+            string rootFolder = default;
+            string lastCommitId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,15 +179,15 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SynapseWorkspaceRepositoryConfiguration(
-                type.Value,
-                hostName.Value,
-                accountName.Value,
-                projectName.Value,
-                repositoryName.Value,
-                collaborationBranch.Value,
-                rootFolder.Value,
-                lastCommitId.Value,
-                Optional.ToNullable(tenantId),
+                type,
+                hostName,
+                accountName,
+                projectName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (DetectorDefinition != null)
+            if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (!(Metrics is ChangeTrackingList<DiagnosticMetricSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DetectorMetaData != null)
+            if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
                 writer.WriteObjectValue(DetectorMetaData);
@@ -109,11 +110,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
+            string source = default;
+            DetectorDefinition detectorDefinition = default;
             IList<DiagnosticMetricSet> metrics = default;
             IList<IList<AppServiceNameValuePair>> data = default;
-            Optional<DetectorMetadata> detectorMetaData = default;
+            DetectorMetadata detectorMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,11 +189,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AnalysisDetectorEvidences(
-                source.Value,
-                detectorDefinition.Value,
+                source,
+                detectorDefinition,
                 metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
                 data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
-                detectorMetaData.Value,
+                detectorMetaData,
                 serializedAdditionalRawData);
         }
 

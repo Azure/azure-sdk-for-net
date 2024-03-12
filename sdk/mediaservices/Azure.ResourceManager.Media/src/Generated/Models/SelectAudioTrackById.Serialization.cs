@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
-            if (ChannelMapping.HasValue)
+            if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             long trackId = default;
-            Optional<ChannelMapping> channelMapping = default;
+            ChannelMapping? channelMapping = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelectAudioTrackById(odataType, serializedAdditionalRawData, Optional.ToNullable(channelMapping), trackId);
+            return new SelectAudioTrackById(odataType, serializedAdditionalRawData, channelMapping, trackId);
         }
 
         BinaryData IPersistableModel<SelectAudioTrackById>.Write(ModelReaderWriterOptions options)

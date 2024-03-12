@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Subscription != null)
+            if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
                 JsonSerializer.Serialize(writer, Subscription);
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> subscription = default;
+            WritableSubResource subscription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

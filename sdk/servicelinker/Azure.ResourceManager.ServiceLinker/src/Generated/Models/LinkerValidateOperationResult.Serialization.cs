@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 if (Status != null)
                 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkerName != null)
+            if (Optional.IsDefined(LinkerName))
             {
                 if (LinkerName != null)
                 {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("linkerName");
                 }
             }
-            if (IsConnectionAvailable.HasValue)
+            if (Optional.IsDefined(IsConnectionAvailable))
             {
                 if (IsConnectionAvailable != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("isConnectionAvailable");
                 }
             }
-            if (ReportStartOn.HasValue)
+            if (Optional.IsDefined(ReportStartOn))
             {
                 if (ReportStartOn != null)
                 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("reportStartTimeUtc");
                 }
             }
-            if (ReportEndOn.HasValue)
+            if (Optional.IsDefined(ReportEndOn))
             {
                 if (ReportEndOn != null)
                 {
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("reportEndTimeUtc");
                 }
             }
-            if (SourceId != null)
+            if (Optional.IsDefined(SourceId))
             {
                 if (SourceId != null)
                 {
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("sourceId");
                 }
             }
-            if (TargetId != null)
+            if (Optional.IsDefined(TargetId))
             {
                 if (TargetId != null)
                 {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("targetId");
                 }
             }
-            if (AuthType.HasValue)
+            if (Optional.IsDefined(AuthType))
             {
                 if (AuthType != null)
                 {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("authType");
                 }
             }
-            if (!(ValidationDetail is ChangeTrackingList<LinkerValidationResultItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationDetail))
             {
                 if (ValidationDetail != null)
                 {
@@ -192,15 +193,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> status = default;
-            Optional<string> linkerName = default;
-            Optional<bool?> isConnectionAvailable = default;
-            Optional<DateTimeOffset?> reportStartTimeUtc = default;
-            Optional<DateTimeOffset?> reportEndTimeUtc = default;
-            Optional<ResourceIdentifier> sourceId = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<LinkerAuthType?> authType = default;
+            ResourceIdentifier resourceId = default;
+            string status = default;
+            string linkerName = default;
+            bool? isConnectionAvailable = default;
+            DateTimeOffset? reportStartTimeUtc = default;
+            DateTimeOffset? reportEndTimeUtc = default;
+            ResourceIdentifier sourceId = default;
+            ResourceIdentifier targetId = default;
+            LinkerAuthType? authType = default;
             IReadOnlyList<LinkerValidationResultItemInfo> validationDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -330,15 +331,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinkerValidateOperationResult(
-                resourceId.Value,
-                status.Value,
-                linkerName.Value,
-                Optional.ToNullable(isConnectionAvailable),
-                Optional.ToNullable(reportStartTimeUtc),
-                Optional.ToNullable(reportEndTimeUtc),
-                sourceId.Value,
-                targetId.Value,
-                Optional.ToNullable(authType),
+                resourceId,
+                status,
+                linkerName,
+                isConnectionAvailable,
+                reportStartTimeUtc,
+                reportEndTimeUtc,
+                sourceId,
+                targetId,
+                authType,
                 validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(),
                 serializedAdditionalRawData);
         }

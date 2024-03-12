@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (AutoBlobContainerName != null)
+            if (Optional.IsDefined(AutoBlobContainerName))
             {
                 writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoBlobContainerName);
             }
-            if (BlobContainerUri != null)
+            if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
-            if (HttpUri != null)
+            if (Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
                 writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
-            if (BlobPrefix != null)
+            if (Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (FileMode != null)
+            if (Optional.IsDefined(FileMode))
             {
                 writer.WritePropertyName("fileMode"u8);
                 writer.WriteStringValue(FileMode);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> autoStorageContainerName = default;
-            Optional<Uri> storageContainerUrl = default;
-            Optional<Uri> httpUrl = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> filePath = default;
-            Optional<string> fileMode = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string autoStorageContainerName = default;
+            Uri storageContainerUrl = default;
+            Uri httpUrl = default;
+            string blobPrefix = default;
+            string filePath = default;
+            string fileMode = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +165,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BatchResourceFile(
-                autoStorageContainerName.Value,
-                storageContainerUrl.Value,
-                httpUrl.Value,
-                blobPrefix.Value,
-                filePath.Value,
-                fileMode.Value,
-                identityReference.Value,
+                autoStorageContainerName,
+                storageContainerUrl,
+                httpUrl,
+                blobPrefix,
+                filePath,
+                fileMode,
+                identityReference,
                 serializedAdditionalRawData);
         }
 

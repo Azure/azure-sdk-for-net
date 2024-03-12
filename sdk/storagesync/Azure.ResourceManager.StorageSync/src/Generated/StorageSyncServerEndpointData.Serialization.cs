@@ -43,109 +43,109 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerLocalPath != null)
+            if (Optional.IsDefined(ServerLocalPath))
             {
                 writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
-            if (CloudTiering.HasValue)
+            if (Optional.IsDefined(CloudTiering))
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (VolumeFreeSpacePercent.HasValue)
+            if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (TierFilesOlderThanDays.HasValue)
+            if (Optional.IsDefined(TierFilesOlderThanDays))
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ServerResourceId != null)
+            if (Optional.IsDefined(ServerResourceId))
             {
                 writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && LastWorkflowId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (options.Format != "W" && LastOperationName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (options.Format != "W" && SyncStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteObjectValue(SyncStatus);
             }
-            if (OfflineDataTransfer.HasValue)
+            if (Optional.IsDefined(OfflineDataTransfer))
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (options.Format != "W" && OfflineDataTransferStorageAccountResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStorageAccountResourceId))
             {
                 writer.WritePropertyName("offlineDataTransferStorageAccountResourceId"u8);
                 writer.WriteStringValue(OfflineDataTransferStorageAccountResourceId);
             }
-            if (options.Format != "W" && OfflineDataTransferStorageAccountTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStorageAccountTenantId))
             {
                 writer.WritePropertyName("offlineDataTransferStorageAccountTenantId"u8);
                 writer.WriteStringValue(OfflineDataTransferStorageAccountTenantId.Value);
             }
-            if (OfflineDataTransferShareName != null)
+            if (Optional.IsDefined(OfflineDataTransferShareName))
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (options.Format != "W" && CloudTieringStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudTieringStatus))
             {
                 writer.WritePropertyName("cloudTieringStatus"u8);
                 writer.WriteObjectValue(CloudTieringStatus);
             }
-            if (options.Format != "W" && RecallStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(RecallStatus))
             {
                 writer.WritePropertyName("recallStatus"u8);
                 writer.WriteObjectValue(RecallStatus);
             }
-            if (InitialDownloadPolicy.HasValue)
+            if (Optional.IsDefined(InitialDownloadPolicy))
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
-            if (LocalCacheMode.HasValue)
+            if (Optional.IsDefined(LocalCacheMode))
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
-            if (InitialUploadPolicy.HasValue)
+            if (Optional.IsDefined(InitialUploadPolicy))
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
@@ -192,27 +192,27 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverLocalPath = default;
-            Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<int> volumeFreeSpacePercent = default;
-            Optional<int> tierFilesOlderThanDays = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> serverResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<ServerEndpointSyncStatus> syncStatus = default;
-            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
-            Optional<ResourceIdentifier> offlineDataTransferStorageAccountResourceId = default;
-            Optional<Guid> offlineDataTransferStorageAccountTenantId = default;
-            Optional<string> offlineDataTransferShareName = default;
-            Optional<ServerEndpointCloudTieringStatus> cloudTieringStatus = default;
-            Optional<ServerEndpointRecallStatus> recallStatus = default;
-            Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
-            Optional<LocalCacheMode> localCacheMode = default;
-            Optional<InitialUploadPolicy> initialUploadPolicy = default;
-            Optional<string> serverName = default;
+            SystemData systemData = default;
+            string serverLocalPath = default;
+            StorageSyncFeatureStatus? cloudTiering = default;
+            int? volumeFreeSpacePercent = default;
+            int? tierFilesOlderThanDays = default;
+            string friendlyName = default;
+            ResourceIdentifier serverResourceId = default;
+            string provisioningState = default;
+            string lastWorkflowId = default;
+            string lastOperationName = default;
+            ServerEndpointSyncStatus syncStatus = default;
+            StorageSyncFeatureStatus? offlineDataTransfer = default;
+            ResourceIdentifier offlineDataTransferStorageAccountResourceId = default;
+            Guid? offlineDataTransferStorageAccountTenantId = default;
+            string offlineDataTransferShareName = default;
+            ServerEndpointCloudTieringStatus cloudTieringStatus = default;
+            ServerEndpointRecallStatus recallStatus = default;
+            InitialDownloadPolicy? initialDownloadPolicy = default;
+            LocalCacheMode? localCacheMode = default;
+            InitialUploadPolicy? initialUploadPolicy = default;
+            string serverName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,27 +415,27 @@ namespace Azure.ResourceManager.StorageSync
                 id,
                 name,
                 type,
-                systemData.Value,
-                serverLocalPath.Value,
-                Optional.ToNullable(cloudTiering),
-                Optional.ToNullable(volumeFreeSpacePercent),
-                Optional.ToNullable(tierFilesOlderThanDays),
-                friendlyName.Value,
-                serverResourceId.Value,
-                provisioningState.Value,
-                lastWorkflowId.Value,
-                lastOperationName.Value,
-                syncStatus.Value,
-                Optional.ToNullable(offlineDataTransfer),
-                offlineDataTransferStorageAccountResourceId.Value,
-                Optional.ToNullable(offlineDataTransferStorageAccountTenantId),
-                offlineDataTransferShareName.Value,
-                cloudTieringStatus.Value,
-                recallStatus.Value,
-                Optional.ToNullable(initialDownloadPolicy),
-                Optional.ToNullable(localCacheMode),
-                Optional.ToNullable(initialUploadPolicy),
-                serverName.Value,
+                systemData,
+                serverLocalPath,
+                cloudTiering,
+                volumeFreeSpacePercent,
+                tierFilesOlderThanDays,
+                friendlyName,
+                serverResourceId,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                syncStatus,
+                offlineDataTransfer,
+                offlineDataTransferStorageAccountResourceId,
+                offlineDataTransferStorageAccountTenantId,
+                offlineDataTransferShareName,
+                cloudTieringStatus,
+                recallStatus,
+                initialDownloadPolicy,
+                localCacheMode,
+                initialUploadPolicy,
+                serverName,
                 serializedAdditionalRawData);
         }
 

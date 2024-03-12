@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<UnencryptedCredentials> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IReadOnlyList<UnencryptedCredentials> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink.Value, serializedAdditionalRawData);
+            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnencryptedCredentialsList>.Write(ModelReaderWriterOptions options)

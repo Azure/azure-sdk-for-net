@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveLocation != null)
+            if (Optional.IsDefined(ActiveLocation))
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation);
             }
-            if (!(Locations is ChangeTrackingList<DataCollectionRuleBcdrLocationSpec> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> activeLocation = default;
+            string activeLocation = default;
             IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, locations ?? new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>(), serializedAdditionalRawData);
+            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation, locations ?? new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleBcdrFailoverConfigurationSpec>.Write(ModelReaderWriterOptions options)

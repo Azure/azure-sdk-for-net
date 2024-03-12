@@ -31,22 +31,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(System);
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (SemanticType != null)
+            if (Optional.IsDefined(SemanticType))
             {
                 writer.WritePropertyName("semanticType"u8);
                 writer.WriteStringValue(SemanticType);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
@@ -91,10 +91,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             string system = default;
             string code = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> semanticType = default;
-            Optional<string> category = default;
+            string name = default;
+            string value = default;
+            string semanticType = default;
+            string category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,10 +138,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             return new ExtendedClinicalCodedElement(
                 system,
                 code,
-                name.Value,
-                value.Value,
-                semanticType.Value,
-                category.Value,
+                name,
+                value,
+                semanticType,
+                category,
                 serializedAdditionalRawData);
         }
 

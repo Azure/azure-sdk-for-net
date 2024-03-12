@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceType> type = default;
-            Optional<PolicySignaturesOverridesForIdpsProperties> properties = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            ResourceType? type = default;
+            PolicySignaturesOverridesForIdpsProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySignaturesOverridesForIdpsData(name.Value, id.Value, Optional.ToNullable(type), properties.Value, serializedAdditionalRawData);
+            return new PolicySignaturesOverridesForIdpsData(name, id, type, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options)

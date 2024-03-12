@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Quota != null)
+            if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> tier = default;
-            Optional<int> count = default;
-            Optional<CommitmentQuota> quota = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> endDate = default;
+            string tier = default;
+            int? count = default;
+            CommitmentQuota quota = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommitmentPeriod(
-                tier.Value,
-                Optional.ToNullable(count),
-                quota.Value,
-                Optional.ToNullable(startDate),
-                Optional.ToNullable(endDate),
+                tier,
+                count,
+                quota,
+                startDate,
+                endDate,
                 serializedAdditionalRawData);
         }
 

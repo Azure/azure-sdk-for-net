@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (LastOutputEventOn.HasValue)
+            if (Optional.IsDefined(LastOutputEventOn))
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastOutputEventTime = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            DateTimeOffset? lastOutputEventTime = default;
+            DateTimeOffset? lastUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastOutputEventTimestamp(Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
+            return new LastOutputEventTimestamp(lastOutputEventTime, lastUpdateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastOutputEventTimestamp>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (LoadBalancerId != null)
+            if (Optional.IsDefined(LoadBalancerId))
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (PublicIPId != null)
+            if (Optional.IsDefined(PublicIPId))
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<ResourceIdentifier> loadBalancerId = default;
-            Optional<ResourceIdentifier> publicIPId = default;
+            ResourceIdentifier subnetId = default;
+            ResourceIdentifier loadBalancerId = default;
+            ResourceIdentifier publicIPId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabNetworkProfile(subnetId.Value, loadBalancerId.Value, publicIPId.Value, serializedAdditionalRawData);
+            return new LabNetworkProfile(subnetId, loadBalancerId, publicIPId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabNetworkProfile>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
@@ -59,24 +59,24 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (OSSku.HasValue)
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeLabels))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (!(NodeTaints is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeTaints))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -97,47 +97,47 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (MaxCount.HasValue)
+            if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (MinCount.HasValue)
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (EnableAutoScaling.HasValue)
+            if (Optional.IsDefined(EnableAutoScaling))
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
-            if (MaxPods.HasValue)
+            if (Optional.IsDefined(MaxPods))
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -182,24 +182,24 @@ namespace Azure.ResourceManager.HybridContainerService
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
+            HybridContainerServiceExtendedLocation extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> ossku = default;
+            SystemData systemData = default;
+            HybridContainerServiceOSType? osType = default;
+            HybridContainerServiceOSSku? ossku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<int> maxPods = default;
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<AgentPoolProvisioningStatus> status = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            int? maxPods = default;
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            AgentPoolProvisioningStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -392,22 +392,22 @@ namespace Azure.ResourceManager.HybridContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                extendedLocation.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(ossku),
+                extendedLocation,
+                osType,
+                ossku,
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxCount),
-                Optional.ToNullable(minCount),
-                Optional.ToNullable(enableAutoScaling),
-                Optional.ToNullable(maxPods),
-                Optional.ToNullable(count),
-                vmSize.Value,
-                kubernetesVersion.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
+                count,
+                vmSize,
+                kubernetesVersion,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

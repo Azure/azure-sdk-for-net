@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> quality = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? quality = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JpgLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData, Optional.ToNullable(quality));
+            return new JpgLayer(width, height, label, serializedAdditionalRawData, quality);
         }
 
         BinaryData IPersistableModel<JpgLayer>.Write(ModelReaderWriterOptions options)

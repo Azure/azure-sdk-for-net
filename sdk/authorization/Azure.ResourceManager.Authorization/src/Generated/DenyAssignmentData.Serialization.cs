@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DenyAssignmentName != null)
+            if (Optional.IsDefined(DenyAssignmentName))
             {
                 writer.WritePropertyName("denyAssignmentName"u8);
                 writer.WriteStringValue(DenyAssignmentName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Permissions is ChangeTrackingList<DenyAssignmentPermission> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (IsAppliedToChildScopes.HasValue)
+            if (Optional.IsDefined(IsAppliedToChildScopes))
             {
                 writer.WritePropertyName("doNotApplyToChildScopes"u8);
                 writer.WriteBooleanValue(IsAppliedToChildScopes.Value);
             }
-            if (!(Principals is ChangeTrackingList<RoleManagementPrincipal> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Principals))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludePrincipals is ChangeTrackingList<RoleManagementPrincipal> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludePrincipals))
             {
                 writer.WritePropertyName("excludePrincipals"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (IsSystemProtected.HasValue)
+            if (Optional.IsDefined(IsSystemProtected))
             {
                 writer.WritePropertyName("isSystemProtected"u8);
                 writer.WriteBooleanValue(IsSystemProtected.Value);
@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> denyAssignmentName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string denyAssignmentName = default;
+            string description = default;
             IReadOnlyList<DenyAssignmentPermission> permissions = default;
-            Optional<string> scope = default;
-            Optional<bool> doNotApplyToChildScopes = default;
+            string scope = default;
+            bool? doNotApplyToChildScopes = default;
             IReadOnlyList<RoleManagementPrincipal> principals = default;
             IReadOnlyList<RoleManagementPrincipal> excludePrincipals = default;
-            Optional<bool> isSystemProtected = default;
+            bool? isSystemProtected = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,15 +281,15 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                denyAssignmentName.Value,
-                description.Value,
+                systemData,
+                denyAssignmentName,
+                description,
                 permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
-                scope.Value,
-                Optional.ToNullable(doNotApplyToChildScopes),
+                scope,
+                doNotApplyToChildScopes,
                 principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
                 excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
-                Optional.ToNullable(isSystemProtected),
+                isSystemProtected,
                 serializedAdditionalRawData);
         }
 

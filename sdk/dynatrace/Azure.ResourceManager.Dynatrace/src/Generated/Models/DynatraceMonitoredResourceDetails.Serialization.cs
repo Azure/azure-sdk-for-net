@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingMetricsStatus.HasValue)
+            if (Optional.IsDefined(SendingMetricsStatus))
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteStringValue(SendingMetricsStatus.Value.ToString());
             }
-            if (ReasonForMetricsStatus != null)
+            if (Optional.IsDefined(ReasonForMetricsStatus))
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (SendingLogsStatus.HasValue)
+            if (Optional.IsDefined(SendingLogsStatus))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogsStatus.Value.ToString());
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<MetricsSendingStatus> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<LogsSendingStatus> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            ResourceIdentifier id = default;
+            MetricsSendingStatus? sendingMetrics = default;
+            string reasonForMetricsStatus = default;
+            LogsSendingStatus? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DynatraceMonitoredResourceDetails(
-                id.Value,
-                Optional.ToNullable(sendingMetrics),
-                reasonForMetricsStatus.Value,
-                Optional.ToNullable(sendingLogs),
-                reasonForLogsStatus.Value,
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
                 serializedAdditionalRawData);
         }
 

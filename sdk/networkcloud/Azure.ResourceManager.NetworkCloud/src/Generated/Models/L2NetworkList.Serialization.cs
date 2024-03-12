@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<NetworkCloudL2NetworkData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudL2NetworkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L2NetworkList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudL2NetworkData>(), serializedAdditionalRawData);
+            return new L2NetworkList(nextLink, value ?? new ChangeTrackingList<NetworkCloudL2NetworkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L2NetworkList>.Write(ModelReaderWriterOptions options)

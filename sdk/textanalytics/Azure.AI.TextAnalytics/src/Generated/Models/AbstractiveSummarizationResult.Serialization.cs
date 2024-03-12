@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Statistics != null)
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             IList<AbstractiveSummaryDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationResult(documents, errors, statistics.Value, modelVersion);
+            return new AbstractiveSummarizationResult(documents, errors, statistics, modelVersion);
         }
     }
 }

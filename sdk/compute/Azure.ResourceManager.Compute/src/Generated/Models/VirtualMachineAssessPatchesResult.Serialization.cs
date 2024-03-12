@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && AssessmentActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
             {
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId);
             }
-            if (options.Format != "W" && RebootPending.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(RebootPending.Value);
             }
-            if (options.Format != "W" && CriticalAndSecurityPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CriticalAndSecurityPatchCount))
             {
                 writer.WritePropertyName("criticalAndSecurityPatchCount"u8);
                 writer.WriteNumberValue(CriticalAndSecurityPatchCount.Value);
             }
-            if (options.Format != "W" && OtherPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OtherPatchCount))
             {
                 writer.WritePropertyName("otherPatchCount"u8);
                 writer.WriteNumberValue(OtherPatchCount.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && !(AvailablePatches is ChangeTrackingList<VirtualMachineSoftwarePatchProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailablePatches))
             {
                 writer.WritePropertyName("availablePatches"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<int> criticalAndSecurityPatchCount = default;
-            Optional<int> otherPatchCount = default;
-            Optional<DateTimeOffset> startDateTime = default;
+            PatchOperationStatus? status = default;
+            string assessmentActivityId = default;
+            bool? rebootPending = default;
+            int? criticalAndSecurityPatchCount = default;
+            int? otherPatchCount = default;
+            DateTimeOffset? startDateTime = default;
             IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches = default;
-            Optional<ComputeApiError> error = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineAssessPatchesResult(
-                Optional.ToNullable(status),
-                assessmentActivityId.Value,
-                Optional.ToNullable(rebootPending),
-                Optional.ToNullable(criticalAndSecurityPatchCount),
-                Optional.ToNullable(otherPatchCount),
-                Optional.ToNullable(startDateTime),
+                status,
+                assessmentActivityId,
+                rebootPending,
+                criticalAndSecurityPatchCount,
+                otherPatchCount,
+                startDateTime,
                 availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(),
-                error.Value,
+                error,
                 serializedAdditionalRawData);
         }
 

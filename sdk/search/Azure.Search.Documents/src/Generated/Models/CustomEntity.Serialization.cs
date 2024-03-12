@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -30,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 if (Type != null)
                 {
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("type");
                 }
             }
-            if (Subtype != null)
+            if (Optional.IsDefined(Subtype))
             {
                 if (Subtype != null)
                 {
@@ -54,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("subtype");
                 }
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 if (Id != null)
                 {
@@ -66,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("id");
                 }
             }
-            if (CaseSensitive.HasValue)
+            if (Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
@@ -78,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (AccentSensitive.HasValue)
+            if (Optional.IsDefined(AccentSensitive))
             {
                 if (AccentSensitive != null)
                 {
@@ -90,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (FuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(FuzzyEditDistance))
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -102,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("fuzzyEditDistance");
                 }
             }
-            if (DefaultCaseSensitive.HasValue)
+            if (Optional.IsDefined(DefaultCaseSensitive))
             {
                 if (DefaultCaseSensitive != null)
                 {
@@ -114,7 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultCaseSensitive");
                 }
             }
-            if (DefaultAccentSensitive.HasValue)
+            if (Optional.IsDefined(DefaultAccentSensitive))
             {
                 if (DefaultAccentSensitive != null)
                 {
@@ -126,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultAccentSensitive");
                 }
             }
-            if (DefaultFuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(DefaultFuzzyEditDistance))
             {
                 if (DefaultFuzzyEditDistance != null)
                 {
@@ -138,7 +139,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFuzzyEditDistance");
                 }
             }
-            if (!(Aliases is ChangeTrackingList<CustomEntityAlias> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 if (Aliases != null)
                 {
@@ -165,16 +166,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<string> type = default;
-            Optional<string> subtype = default;
-            Optional<string> id = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
-            Optional<bool?> defaultCaseSensitive = default;
-            Optional<bool?> defaultAccentSensitive = default;
-            Optional<int?> defaultFuzzyEditDistance = default;
+            string description = default;
+            string type = default;
+            string subtype = default;
+            string id = default;
+            bool? caseSensitive = default;
+            bool? accentSensitive = default;
+            int? fuzzyEditDistance = default;
+            bool? defaultCaseSensitive = default;
+            bool? defaultAccentSensitive = default;
+            int? defaultFuzzyEditDistance = default;
             IList<CustomEntityAlias> aliases = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -301,16 +302,16 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new CustomEntity(
                 name,
-                description.Value,
-                type.Value,
-                subtype.Value,
-                id.Value,
-                Optional.ToNullable(caseSensitive),
-                Optional.ToNullable(accentSensitive),
-                Optional.ToNullable(fuzzyEditDistance),
-                Optional.ToNullable(defaultCaseSensitive),
-                Optional.ToNullable(defaultAccentSensitive),
-                Optional.ToNullable(defaultFuzzyEditDistance),
+                description,
+                type,
+                subtype,
+                id,
+                caseSensitive,
+                accentSensitive,
+                fuzzyEditDistance,
+                defaultCaseSensitive,
+                defaultAccentSensitive,
+                defaultFuzzyEditDistance,
                 aliases ?? new ChangeTrackingList<CustomEntityAlias>());
         }
     }

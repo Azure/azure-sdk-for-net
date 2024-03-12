@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PlatformUpdateDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PlatformUpdateDomain))
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (options.Format != "W" && PlatformFaultDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (options.Format != "W" && PrivateId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateId))
             {
                 writer.WritePropertyName("privateId"u8);
                 writer.WriteStringValue(PrivateId);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<ResourceInstanceViewStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> platformUpdateDomain = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<string> privateId = default;
+            int? platformUpdateDomain = default;
+            int? platformFaultDomain = default;
+            string privateId = default;
             IReadOnlyList<ResourceInstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
+            return new RoleInstanceView(platformUpdateDomain, platformFaultDomain, privateId, statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleInstanceView>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
+            ResourceType? resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity, serializedAdditionalRawData);
+            return new IotHubSkuDescription(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuDescription>.Write(ModelReaderWriterOptions options)

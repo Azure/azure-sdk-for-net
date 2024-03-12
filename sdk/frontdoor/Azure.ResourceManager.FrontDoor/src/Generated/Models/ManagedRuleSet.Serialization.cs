@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (RuleSetAction.HasValue)
+            if (Optional.IsDefined(RuleSetAction))
             {
                 writer.WritePropertyName("ruleSetAction"u8);
                 writer.WriteStringValue(RuleSetAction.Value.ToString());
             }
-            if (!(Exclusions is ChangeTrackingList<ManagedRuleExclusion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ManagedRuleSetActionType> ruleSetAction = default;
+            ManagedRuleSetActionType? ruleSetAction = default;
             IList<ManagedRuleExclusion> exclusions = default;
             IList<ManagedRuleGroupOverride> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ManagedRuleSet(
                 ruleSetType,
                 ruleSetVersion,
-                Optional.ToNullable(ruleSetAction),
+                ruleSetAction,
                 exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(),
                 ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(),
                 serializedAdditionalRawData);

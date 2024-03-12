@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FlushConnection.HasValue)
+            if (Optional.IsDefined(FlushConnection))
             {
                 writer.WritePropertyName("flushConnection"u8);
                 writer.WriteBooleanValue(FlushConnection.Value);
             }
-            if (!(SecurityRules is ChangeTrackingList<SecurityRuleData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SecurityRules))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(DefaultSecurityRules is ChangeTrackingList<SecurityRuleData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultSecurityRules))
             {
                 writer.WritePropertyName("defaultSecurityRules"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Subnets is ChangeTrackingList<SubnetData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(FlowLogs is ChangeTrackingList<FlowLogData> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FlowLogs))
             {
                 writer.WritePropertyName("flowLogs"u8);
                 writer.WriteStartArray();
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<bool> flushConnection = default;
+            bool? flushConnection = default;
             IList<SecurityRuleData> securityRules = default;
             IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             IReadOnlyList<SubnetData> subnets = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -359,21 +359,21 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkSecurityGroupData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(flushConnection),
+                etag,
+                flushConnection,
                 securityRules ?? new ChangeTrackingList<SecurityRuleData>(),
                 defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(),
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 subnets ?? new ChangeTrackingList<SubnetData>(),
                 flowLogs ?? new ChangeTrackingList<FlowLogData>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options)

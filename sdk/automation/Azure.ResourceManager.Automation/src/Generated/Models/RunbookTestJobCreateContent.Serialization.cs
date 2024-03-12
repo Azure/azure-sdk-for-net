@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             IDictionary<string, string> parameters = default;
-            Optional<string> runOn = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunbookTestJobCreateContent(parameters ?? new ChangeTrackingDictionary<string, string>(), runOn.Value, serializedAdditionalRawData);
+            return new RunbookTestJobCreateContent(parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunbookTestJobCreateContent>.Write(ModelReaderWriterOptions options)

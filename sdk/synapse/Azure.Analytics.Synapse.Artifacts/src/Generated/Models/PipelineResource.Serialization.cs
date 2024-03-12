@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Activities is ChangeTrackingList<Activity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Variables is ChangeTrackingDictionary<string, VariableSpecification> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -58,12 +59,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Concurrency.HasValue)
+            if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RunDimensions is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -94,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -114,18 +115,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> description = default;
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            string description = default;
             IList<Activity> activities = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IDictionary<string, VariableSpecification> variables = default;
-            Optional<int> concurrency = default;
+            int? concurrency = default;
             IList<object> annotations = default;
             IDictionary<string, object> runDimensions = default;
-            Optional<PipelineFolder> folder = default;
+            PipelineFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -273,18 +274,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineResource(
-                id.Value,
-                name.Value,
-                type.Value,
-                etag.Value,
-                description.Value,
+                id,
+                name,
+                type,
+                etag,
+                description,
                 activities ?? new ChangeTrackingList<Activity>(),
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(),
-                Optional.ToNullable(concurrency),
+                concurrency,
                 annotations ?? new ChangeTrackingList<object>(),
                 runDimensions ?? new ChangeTrackingDictionary<string, object>(),
-                folder.Value,
+                folder,
                 additionalProperties);
         }
 

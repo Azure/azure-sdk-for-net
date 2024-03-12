@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && SupportedIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && SupportedMemoryPerVcoreMb.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVcoreMb))
             {
                 writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
             }
-            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
             {
                 writer.WritePropertyName("supportedZones"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedHaMode is ChangeTrackingList<PostgreSqlFlexibleServerHAMode> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHaMode))
             {
                 writer.WritePropertyName("supportedHaMode"u8);
                 writer.WriteStartArray();
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> vCores = default;
-            Optional<int> supportedIops = default;
-            Optional<long> supportedMemoryPerVcoreMb = default;
+            string name = default;
+            int? vCores = default;
+            int? supportedIops = default;
+            long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
             IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,13 +208,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerSkuCapability(
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData,
-                name.Value,
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(supportedIops),
-                Optional.ToNullable(supportedMemoryPerVcoreMb),
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
                 supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>());
         }

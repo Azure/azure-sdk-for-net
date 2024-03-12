@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (CatalogOptions != null)
+            if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Coordinator != null)
+            if (Optional.IsDefined(Coordinator))
             {
                 writer.WritePropertyName("coordinator"u8);
                 writer.WriteObjectValue(Coordinator);
             }
-            if (UserPluginsSpec != null)
+            if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
             }
-            if (UserTelemetrySpec != null)
+            if (Optional.IsDefined(UserTelemetrySpec))
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
                 writer.WriteObjectValue(UserTelemetrySpec);
             }
-            if (Worker != null)
+            if (Optional.IsDefined(Worker))
             {
                 writer.WritePropertyName("worker"u8);
                 writer.WriteObjectValue(Worker);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<CatalogOptions> catalogOptions = default;
-            Optional<TrinoCoordinator> coordinator = default;
-            Optional<TrinoUserPluginListResult> userPluginsSpec = default;
-            Optional<TrinoUserTelemetry> userTelemetrySpec = default;
-            Optional<TrinoWorker> worker = default;
+            CatalogOptions catalogOptions = default;
+            TrinoCoordinator coordinator = default;
+            TrinoUserPluginListResult userPluginsSpec = default;
+            TrinoUserTelemetry userTelemetrySpec = default;
+            TrinoWorker worker = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TrinoProfile(
-                catalogOptions.Value,
-                coordinator.Value,
-                userPluginsSpec.Value,
-                userTelemetrySpec.Value,
-                worker.Value,
+                catalogOptions,
+                coordinator,
+                userPluginsSpec,
+                userTelemetrySpec,
+                worker,
                 serializedAdditionalRawData);
         }
 

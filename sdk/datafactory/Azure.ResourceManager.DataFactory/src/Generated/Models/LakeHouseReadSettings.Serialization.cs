@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,59 +28,59 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (WildcardFolderPath != null)
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (WildcardFileName != null)
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (FileListPath != null)
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (DeleteFilesAfterCompletion != null)
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (ModifiedDatetimeStart != null)
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (ModifiedDatetimeEnd != null)
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -119,18 +120,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> recursive = default;
-            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
-            Optional<DataFactoryElement<string>> wildcardFileName = default;
-            Optional<DataFactoryElement<string>> fileListPath = default;
-            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
-            Optional<DataFactoryElement<string>> partitionRootPath = default;
-            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
+            DataFactoryElement<bool> recursive = default;
+            DataFactoryElement<string> wildcardFolderPath = default;
+            DataFactoryElement<string> wildcardFileName = default;
+            DataFactoryElement<string> fileListPath = default;
+            DataFactoryElement<bool> enablePartitionDiscovery = default;
+            DataFactoryElement<string> partitionRootPath = default;
+            DataFactoryElement<bool> deleteFilesAfterCompletion = default;
+            DataFactoryElement<string> modifiedDatetimeStart = default;
+            DataFactoryElement<string> modifiedDatetimeEnd = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,18 +245,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new LakeHouseReadSettings(
                 type,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                recursive.Value,
-                wildcardFolderPath.Value,
-                wildcardFileName.Value,
-                fileListPath.Value,
-                enablePartitionDiscovery.Value,
-                partitionRootPath.Value,
-                deleteFilesAfterCompletion.Value,
-                modifiedDatetimeStart.Value,
-                modifiedDatetimeEnd.Value);
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                fileListPath,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd);
         }
 
         BinaryData IPersistableModel<LakeHouseReadSettings>.Write(ModelReaderWriterOptions options)

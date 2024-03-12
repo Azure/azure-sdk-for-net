@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Algorithm.HasValue)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
-            if (!(ParameterNameOverride is ChangeTrackingList<UriSigningParamIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ParameterNameOverride))
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             UriSigningActionType typeName = default;
-            Optional<UriSigningAlgorithm> algorithm = default;
+            UriSigningAlgorithm? algorithm = default;
             IList<UriSigningParamIdentifier> parameterNameOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriSigningActionProperties(typeName, Optional.ToNullable(algorithm), parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>(), serializedAdditionalRawData);
+            return new UriSigningActionProperties(typeName, algorithm, parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriSigningActionProperties>.Write(ModelReaderWriterOptions options)

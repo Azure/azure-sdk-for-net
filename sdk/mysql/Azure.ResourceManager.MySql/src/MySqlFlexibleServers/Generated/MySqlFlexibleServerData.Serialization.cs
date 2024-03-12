@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,94 +67,94 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorLogin != null)
+            if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (SourceServerResourceId != null)
+            if (Optional.IsDefined(SourceServerResourceId))
             {
                 writer.WritePropertyName("sourceServerResourceId"u8);
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (ReplicationRole.HasValue)
+            if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicaCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicaCapacity))
             {
                 writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
             }
-            if (DataEncryption != null)
+            if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
                 writer.WriteObjectValue(DataEncryption);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (Storage != null)
+            if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
             }
-            if (Backup != null)
+            if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
-            if (HighAvailability != null)
+            if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
                 writer.WriteObjectValue(HighAvailability);
             }
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (ImportSourceProperties != null)
+            if (Optional.IsDefined(ImportSourceProperties))
             {
                 writer.WritePropertyName("importSourceProperties"u8);
                 writer.WriteObjectValue(ImportSourceProperties);
@@ -212,33 +213,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlFlexibleServerSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MySqlFlexibleServerSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<MySqlFlexibleServerVersion> version = default;
-            Optional<string> availabilityZone = default;
-            Optional<MySqlFlexibleServerCreateMode> createMode = default;
-            Optional<ResourceIdentifier> sourceServerResourceId = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<MySqlFlexibleServerReplicationRole> replicationRole = default;
-            Optional<int> replicaCapacity = default;
-            Optional<MySqlFlexibleServerDataEncryption> dataEncryption = default;
-            Optional<MySqlFlexibleServerState> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<MySqlFlexibleServerStorage> storage = default;
-            Optional<MySqlFlexibleServerBackupProperties> backup = default;
-            Optional<MySqlFlexibleServerHighAvailability> highAvailability = default;
-            Optional<MySqlFlexibleServerNetwork> network = default;
+            SystemData systemData = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            MySqlFlexibleServerVersion? version = default;
+            string availabilityZone = default;
+            MySqlFlexibleServerCreateMode? createMode = default;
+            ResourceIdentifier sourceServerResourceId = default;
+            DateTimeOffset? restorePointInTime = default;
+            MySqlFlexibleServerReplicationRole? replicationRole = default;
+            int? replicaCapacity = default;
+            MySqlFlexibleServerDataEncryption dataEncryption = default;
+            MySqlFlexibleServerState? state = default;
+            string fullyQualifiedDomainName = default;
+            MySqlFlexibleServerStorage storage = default;
+            MySqlFlexibleServerBackupProperties backup = default;
+            MySqlFlexibleServerHighAvailability highAvailability = default;
+            MySqlFlexibleServerNetwork network = default;
             IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<MySqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
-            Optional<ImportSourceProperties> importSourceProperties = default;
+            MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
+            ImportSourceProperties importSourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -486,30 +487,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                administratorLogin.Value,
-                administratorLoginPassword.Value,
-                Optional.ToNullable(version),
-                availabilityZone.Value,
-                Optional.ToNullable(createMode),
-                sourceServerResourceId.Value,
-                Optional.ToNullable(restorePointInTime),
-                Optional.ToNullable(replicationRole),
-                Optional.ToNullable(replicaCapacity),
-                dataEncryption.Value,
-                Optional.ToNullable(state),
-                fullyQualifiedDomainName.Value,
-                storage.Value,
-                backup.Value,
-                highAvailability.Value,
-                network.Value,
+                sku,
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                availabilityZone,
+                createMode,
+                sourceServerResourceId,
+                restorePointInTime,
+                replicationRole,
+                replicaCapacity,
+                dataEncryption,
+                state,
+                fullyQualifiedDomainName,
+                storage,
+                backup,
+                highAvailability,
+                network,
                 privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>(),
-                maintenanceWindow.Value,
-                importSourceProperties.Value,
+                maintenanceWindow,
+                importSourceProperties,
                 serializedAdditionalRawData);
         }
 

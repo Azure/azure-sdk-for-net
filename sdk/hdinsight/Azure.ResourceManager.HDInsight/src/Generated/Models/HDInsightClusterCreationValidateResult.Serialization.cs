@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(ValidationErrors is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationWarnings is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationWarnings))
             {
                 writer.WritePropertyName("validationWarnings"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EstimatedCreationDuration.HasValue)
+            if (Optional.IsDefined(EstimatedCreationDuration))
             {
                 writer.WritePropertyName("estimatedCreationDuration"u8);
                 writer.WriteStringValue(EstimatedCreationDuration.Value, "P");
             }
-            if (!(AaddsResourcesDetails is ChangeTrackingList<HDInsightClusterAaddsDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AaddsResourcesDetails))
             {
                 writer.WritePropertyName("aaddsResourcesDetails"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors = default;
             IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings = default;
-            Optional<TimeSpan> estimatedCreationDuration = default;
+            TimeSpan? estimatedCreationDuration = default;
             IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreationValidateResult(validationErrors ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), validationWarnings ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), Optional.ToNullable(estimatedCreationDuration), aaddsResourcesDetails ?? new ChangeTrackingList<HDInsightClusterAaddsDetail>(), serializedAdditionalRawData);
+            return new HDInsightClusterCreationValidateResult(validationErrors ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), validationWarnings ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), estimatedCreationDuration, aaddsResourcesDetails ?? new ChangeTrackingList<HDInsightClusterAaddsDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateResult>.Write(ModelReaderWriterOptions options)

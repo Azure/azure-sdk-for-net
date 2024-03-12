@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (CustomLicenseAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customLicenseAcquisitionUriTemplate = default;
+            string customLicenseAcquisitionUriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUriTemplate.Value, serializedAdditionalRawData);
+            return new StreamingPolicyWidevineConfiguration(customLicenseAcquisitionUriTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyWidevineConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && SizeMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeMB))
             {
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);
             }
-            if (options.Format != "W" && !(DatabaseFiles is ChangeTrackingList<DatabaseFileInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseFiles))
             {
                 writer.WritePropertyName("databaseFiles"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CompatibilityLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && DatabaseState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseState))
             {
                 writer.WritePropertyName("databaseState"u8);
                 writer.WriteStringValue(DatabaseState.Value.ToString());
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<double> sizeMB = default;
+            string name = default;
+            double? sizeMB = default;
             IReadOnlyList<DatabaseFileInfo> databaseFiles = default;
-            Optional<DatabaseCompatLevel> compatibilityLevel = default;
-            Optional<DatabaseState> databaseState = default;
-            Optional<string> id = default;
+            DatabaseCompatLevel? compatibilityLevel = default;
+            DatabaseState? databaseState = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,14 +176,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                name.Value,
-                Optional.ToNullable(sizeMB),
+                name,
+                sizeMB,
                 databaseFiles ?? new ChangeTrackingList<DatabaseFileInfo>(),
-                Optional.ToNullable(compatibilityLevel),
-                Optional.ToNullable(databaseState));
+                compatibilityLevel,
+                databaseState);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

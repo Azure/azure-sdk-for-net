@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (BigDataPool != null)
+            if (Optional.IsDefined(BigDataPool))
             {
                 if (BigDataPool != null)
                 {
@@ -36,12 +37,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (SessionProperties != null)
+            if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
@@ -66,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -92,15 +93,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<BigDataPoolReference> bigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<NotebookSessionProperties> sessionProperties = default;
+            string description = default;
+            BigDataPoolReference bigDataPool = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            NotebookSessionProperties sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
-            Optional<NotebookFolder> folder = default;
+            NotebookFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -178,15 +179,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Notebook(
-                description.Value,
-                bigDataPool.Value,
-                targetSparkConfiguration.Value,
-                sessionProperties.Value,
+                description,
+                bigDataPool,
+                targetSparkConfiguration,
+                sessionProperties,
                 metadata,
                 nbformat,
                 nbformatMinor,
                 cells,
-                folder.Value,
+                folder,
                 additionalProperties);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<VirtualMachineScaleSetScaleInRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ForceDeletion.HasValue)
+            if (Optional.IsDefined(ForceDeletion))
             {
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<VirtualMachineScaleSetScaleInRule> rules = default;
-            Optional<bool> forceDeletion = default;
+            bool? forceDeletion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleInPolicy>.Write(ModelReaderWriterOptions options)

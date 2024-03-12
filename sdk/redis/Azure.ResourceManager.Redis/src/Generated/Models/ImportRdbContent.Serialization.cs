@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PreferredDataArchiveAuthMethod != null)
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (StorageSubscriptionId != null)
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<string> format = default;
+            string format = default;
             IList<string> files = default;
-            Optional<string> preferredDataArchiveAuthMethod = default;
-            Optional<string> storageSubscriptionId = default;
+            string preferredDataArchiveAuthMethod = default;
+            string storageSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportRdbContent(format.Value, files, preferredDataArchiveAuthMethod.Value, storageSubscriptionId.Value, serializedAdditionalRawData);
+            return new ImportRdbContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportRdbContent>.Write(ModelReaderWriterOptions options)

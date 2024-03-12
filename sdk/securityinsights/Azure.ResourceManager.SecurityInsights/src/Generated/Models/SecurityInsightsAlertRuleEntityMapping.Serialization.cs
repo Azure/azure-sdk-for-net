@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToString());
             }
-            if (!(FieldMappings is ChangeTrackingList<SecurityInsightsFieldMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
+            SecurityInsightsAlertRuleEntityMappingType? entityType = default;
             IList<SecurityInsightsFieldMapping> fieldMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertRuleEntityMapping(Optional.ToNullable(entityType), fieldMappings ?? new ChangeTrackingList<SecurityInsightsFieldMapping>(), serializedAdditionalRawData);
+            return new SecurityInsightsAlertRuleEntityMapping(entityType, fieldMappings ?? new ChangeTrackingList<SecurityInsightsFieldMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleEntityMapping>.Write(ModelReaderWriterOptions options)

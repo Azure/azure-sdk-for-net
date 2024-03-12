@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
         public ChatCompletionsFunctionToolDefinition(FunctionDefinition function)
         {
-            if (function == null)
-            {
-                throw new ArgumentNullException(nameof(function));
-            }
+            Argument.AssertNotNull(function, nameof(function));
 
             Type = "function";
             Function = function;

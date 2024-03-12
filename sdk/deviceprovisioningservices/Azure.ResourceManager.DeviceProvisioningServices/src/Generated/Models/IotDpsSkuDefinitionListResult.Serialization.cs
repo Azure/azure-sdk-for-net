@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DeviceProvisioningServicesSkuDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 return null;
             }
             IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotDpsSkuDefinitionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>(), nextLink.Value, serializedAdditionalRawData);
+            return new IotDpsSkuDefinitionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotDpsSkuDefinitionListResult>.Write(ModelReaderWriterOptions options)

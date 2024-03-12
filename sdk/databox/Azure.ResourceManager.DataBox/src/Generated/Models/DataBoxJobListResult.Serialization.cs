@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DataBoxJobData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IReadOnlyList<DataBoxJobData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobListResult(value ?? new ChangeTrackingList<DataBoxJobData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DataBoxJobListResult(value ?? new ChangeTrackingList<DataBoxJobData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobListResult>.Write(ModelReaderWriterOptions options)

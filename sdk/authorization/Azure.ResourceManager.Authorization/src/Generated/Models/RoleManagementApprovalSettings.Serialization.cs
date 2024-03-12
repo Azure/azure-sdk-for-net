@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (IsApprovalRequired.HasValue)
+            if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (IsApprovalRequiredForExtension.HasValue)
+            if (Optional.IsDefined(IsApprovalRequiredForExtension))
             {
                 writer.WritePropertyName("isApprovalRequiredForExtension"u8);
                 writer.WriteBooleanValue(IsApprovalRequiredForExtension.Value);
             }
-            if (IsRequestorJustificationRequired.HasValue)
+            if (Optional.IsDefined(IsRequestorJustificationRequired))
             {
                 writer.WritePropertyName("isRequestorJustificationRequired"u8);
                 writer.WriteBooleanValue(IsRequestorJustificationRequired.Value);
             }
-            if (ApprovalMode.HasValue)
+            if (Optional.IsDefined(ApprovalMode))
             {
                 writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
-            if (!(ApprovalStages is ChangeTrackingList<RoleManagementApprovalStage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApprovalStages))
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isApprovalRequired = default;
-            Optional<bool> isApprovalRequiredForExtension = default;
-            Optional<bool> isRequestorJustificationRequired = default;
-            Optional<RoleManagementApprovalMode> approvalMode = default;
+            bool? isApprovalRequired = default;
+            bool? isApprovalRequiredForExtension = default;
+            bool? isRequestorJustificationRequired = default;
+            RoleManagementApprovalMode? approvalMode = default;
             IList<RoleManagementApprovalStage> approvalStages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,10 +161,10 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleManagementApprovalSettings(
-                Optional.ToNullable(isApprovalRequired),
-                Optional.ToNullable(isApprovalRequiredForExtension),
-                Optional.ToNullable(isRequestorJustificationRequired),
-                Optional.ToNullable(approvalMode),
+                isApprovalRequired,
+                isApprovalRequiredForExtension,
+                isRequestorJustificationRequired,
+                approvalMode,
                 approvalStages ?? new ChangeTrackingList<RoleManagementApprovalStage>(),
                 serializedAdditionalRawData);
         }

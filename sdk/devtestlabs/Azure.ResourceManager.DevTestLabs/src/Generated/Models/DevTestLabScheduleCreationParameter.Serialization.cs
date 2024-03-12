@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,42 +50,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (TaskType != null)
+            if (Optional.IsDefined(TaskType))
             {
                 writer.WritePropertyName("taskType"u8);
                 writer.WriteStringValue(TaskType);
             }
-            if (WeeklyRecurrence != null)
+            if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
                 writer.WriteObjectValue(WeeklyRecurrence);
             }
-            if (DailyRecurrence != null)
+            if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
                 writer.WriteObjectValue(DailyRecurrence);
             }
-            if (HourlyRecurrence != null)
+            if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
                 writer.WriteObjectValue(HourlyRecurrence);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (NotificationSettings != null)
+            if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
                 writer.WriteObjectValue(NotificationSettings);
             }
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
@@ -128,17 +129,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<string> taskType = default;
-            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
-            Optional<DayDetails> dailyRecurrence = default;
-            Optional<HourDetails> hourlyRecurrence = default;
-            Optional<string> timeZoneId = default;
-            Optional<DevTestLabNotificationSettings> notificationSettings = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            DevTestLabEnableStatus? status = default;
+            string taskType = default;
+            DevTestLabWeekDetails weeklyRecurrence = default;
+            DayDetails dailyRecurrence = default;
+            HourDetails hourlyRecurrence = default;
+            string timeZoneId = default;
+            DevTestLabNotificationSettings notificationSettings = default;
+            ResourceIdentifier targetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,17 +255,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabScheduleCreationParameter(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(status),
-                taskType.Value,
-                weeklyRecurrence.Value,
-                dailyRecurrence.Value,
-                hourlyRecurrence.Value,
-                timeZoneId.Value,
-                notificationSettings.Value,
-                targetResourceId.Value,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrence,
+                hourlyRecurrence,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
                 serializedAdditionalRawData);
         }
 

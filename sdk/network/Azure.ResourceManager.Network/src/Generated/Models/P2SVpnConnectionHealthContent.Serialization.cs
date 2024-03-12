@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(VpnUserNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
                 writer.WritePropertyName("vpnUserNamesFilter"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputBlobSasUri != null)
+            if (Optional.IsDefined(OutputBlobSasUri))
             {
                 writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<string> vpnUserNamesFilter = default;
-            Optional<Uri> outputBlobSasUrl = default;
+            Uri outputBlobSasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SVpnConnectionHealthContent(vpnUserNamesFilter ?? new ChangeTrackingList<string>(), outputBlobSasUrl.Value, serializedAdditionalRawData);
+            return new P2SVpnConnectionHealthContent(vpnUserNamesFilter ?? new ChangeTrackingList<string>(), outputBlobSasUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<P2SVpnConnectionHealthContent>.Write(ModelReaderWriterOptions options)

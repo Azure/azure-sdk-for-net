@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ImmutableSubscriptionId != null)
+            if (Optional.IsDefined(ImmutableSubscriptionId))
             {
                 writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
-            if (ImmutableResourceId != null)
+            if (Optional.IsDefined(ImmutableResourceId))
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
-            if (VnetTrafficTag != null)
+            if (Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> immutableSubscriptionId = default;
-            Optional<ResourceIdentifier> immutableResourceId = default;
-            Optional<string> vnetTrafficTag = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            string immutableSubscriptionId = default;
+            ResourceIdentifier immutableResourceId = default;
+            string vnetTrafficTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DeviceUpdatePrivateEndpointUpdate(
-                id.Value,
-                Optional.ToNullable(location),
-                immutableSubscriptionId.Value,
-                immutableResourceId.Value,
-                vnetTrafficTag.Value,
+                id,
+                location,
+                immutableSubscriptionId,
+                immutableResourceId,
+                vnetTrafficTag,
                 serializedAdditionalRawData);
         }
 

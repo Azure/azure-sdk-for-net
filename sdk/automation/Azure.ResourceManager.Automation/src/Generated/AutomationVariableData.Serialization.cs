@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (IsEncrypted.HasValue)
+            if (Optional.IsDefined(IsEncrypted))
             {
                 if (IsEncrypted != null)
                 {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("isEncrypted");
                 }
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<bool?> isEncrypted = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string value = default;
+            bool? isEncrypted = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                value.Value,
-                Optional.ToNullable(isEncrypted),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
+                systemData,
+                value,
+                isEncrypted,
+                creationTime,
+                lastModifiedTime,
+                description,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Passwords is ChangeTrackingList<MachineLearningPasswordDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Passwords))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Username != null)
+            if (options.Format != "W" && Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<MachineLearningPasswordDetail> passwords = default;
-            Optional<string> username = default;
+            string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerRegistryCredentials(Optional.ToNullable(location), passwords ?? new ChangeTrackingList<MachineLearningPasswordDetail>(), username.Value, serializedAdditionalRawData);
+            return new MachineLearningContainerRegistryCredentials(location, passwords ?? new ChangeTrackingList<MachineLearningPasswordDetail>(), username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

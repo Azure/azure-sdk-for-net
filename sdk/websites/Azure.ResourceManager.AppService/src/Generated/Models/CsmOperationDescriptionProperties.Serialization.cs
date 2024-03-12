@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceSpecification != null)
+            if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
                 writer.WriteObjectValue(ServiceSpecification);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ServiceSpecification> serviceSpecification = default;
+            ServiceSpecification serviceSpecification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmOperationDescriptionProperties(serviceSpecification.Value, serializedAdditionalRawData);
+            return new CsmOperationDescriptionProperties(serviceSpecification, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmOperationDescriptionProperties>.Write(ModelReaderWriterOptions options)

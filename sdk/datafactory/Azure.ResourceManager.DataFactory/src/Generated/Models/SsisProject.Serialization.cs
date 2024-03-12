@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (FolderId.HasValue)
+            if (Optional.IsDefined(FolderId))
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (!(EnvironmentRefs is ChangeTrackingList<SsisEnvironmentReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentRefs))
             {
                 writer.WritePropertyName("environmentRefs"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingList<SsisParameterInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -58,17 +59,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> version = default;
+            long? folderId = default;
+            long? version = default;
             IReadOnlyList<SsisEnvironmentReference> environmentRefs = default;
             IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,12 +202,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SsisProject(
                 type,
-                Optional.ToNullable(id),
-                name.Value,
-                description.Value,
+                id,
+                name,
+                description,
                 serializedAdditionalRawData,
-                Optional.ToNullable(folderId),
-                Optional.ToNullable(version),
+                folderId,
+                version,
                 environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>(),
                 parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }

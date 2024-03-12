@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -28,34 +29,34 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (NetBiosDomainName != null)
+            if (Optional.IsDefined(NetBiosDomainName))
             {
                 writer.WritePropertyName("netBiosDomainName"u8);
                 writer.WriteStringValue(NetBiosDomainName);
             }
-            if (ForestName != null)
+            if (Optional.IsDefined(ForestName))
             {
                 writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
             writer.WritePropertyName("domainGuid"u8);
             writer.WriteStringValue(DomainGuid);
-            if (DomainSid != null)
+            if (Optional.IsDefined(DomainSid))
             {
                 writer.WritePropertyName("domainSid"u8);
                 writer.WriteStringValue(DomainSid);
             }
-            if (AzureStorageSid != null)
+            if (Optional.IsDefined(AzureStorageSid))
             {
                 writer.WritePropertyName("azureStorageSid"u8);
                 writer.WriteStringValue(AzureStorageSid);
             }
-            if (SamAccountName != null)
+            if (Optional.IsDefined(SamAccountName))
             {
                 writer.WritePropertyName("samAccountName"u8);
                 writer.WriteStringValue(SamAccountName);
             }
-            if (AccountType.HasValue)
+            if (Optional.IsDefined(AccountType))
             {
                 writer.WritePropertyName("accountType"u8);
                 writer.WriteStringValue(AccountType.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string domainName = default;
-            Optional<string> netBiosDomainName = default;
-            Optional<string> forestName = default;
+            string netBiosDomainName = default;
+            string forestName = default;
             Guid domainGuid = default;
-            Optional<string> domainSid = default;
-            Optional<string> azureStorageSid = default;
-            Optional<string> samAccountName = default;
-            Optional<ActiveDirectoryAccountType> accountType = default;
+            string domainSid = default;
+            string azureStorageSid = default;
+            string samAccountName = default;
+            ActiveDirectoryAccountType? accountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,13 +163,13 @@ namespace Azure.ResourceManager.Storage.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageActiveDirectoryProperties(
                 domainName,
-                netBiosDomainName.Value,
-                forestName.Value,
+                netBiosDomainName,
+                forestName,
                 domainGuid,
-                domainSid.Value,
-                azureStorageSid.Value,
-                samAccountName.Value,
-                Optional.ToNullable(accountType),
+                domainSid,
+                azureStorageSid,
+                samAccountName,
+                accountType,
                 serializedAdditionalRawData);
         }
 

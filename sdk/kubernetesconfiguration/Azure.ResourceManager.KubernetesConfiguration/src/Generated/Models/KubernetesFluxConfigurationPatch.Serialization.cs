@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceKind.HasValue)
+            if (Optional.IsDefined(SourceKind))
             {
                 if (SourceKind != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sourceKind");
                 }
             }
-            if (Suspend.HasValue)
+            if (Optional.IsDefined(Suspend))
             {
                 if (Suspend != null)
                 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("suspend");
                 }
             }
-            if (GitRepository != null)
+            if (Optional.IsDefined(GitRepository))
             {
                 if (GitRepository != null)
                 {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Bucket != null)
+            if (Optional.IsDefined(Bucket))
             {
                 if (Bucket != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucket");
                 }
             }
-            if (AzureBlob != null)
+            if (Optional.IsDefined(AzureBlob))
             {
                 if (AzureBlob != null)
                 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (!(Kustomizations is ChangeTrackingDictionary<string, KustomizationUpdateContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Kustomizations))
             {
                 if (Kustomizations != null)
                 {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -163,11 +164,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<KubernetesConfigurationSourceKind?> sourceKind = default;
-            Optional<bool?> suspend = default;
-            Optional<KubernetesGitRepositoryUpdateContent> gitRepository = default;
-            Optional<KubernetesBucketUpdateContent> bucket = default;
-            Optional<KubernetesAzureBlobUpdateContent> azureBlob = default;
+            KubernetesConfigurationSourceKind? sourceKind = default;
+            bool? suspend = default;
+            KubernetesGitRepositoryUpdateContent gitRepository = default;
+            KubernetesBucketUpdateContent bucket = default;
+            KubernetesAzureBlobUpdateContent azureBlob = default;
             IDictionary<string, KustomizationUpdateContent> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -273,11 +274,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesFluxConfigurationPatch(
-                Optional.ToNullable(sourceKind),
-                Optional.ToNullable(suspend),
-                gitRepository.Value,
-                bucket.Value,
-                azureBlob.Value,
+                sourceKind,
+                suspend,
+                gitRepository,
+                bucket,
+                azureBlob,
                 kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

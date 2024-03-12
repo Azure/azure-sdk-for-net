@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizedIPRanges != null)
+            if (Optional.IsDefined(AuthorizedIPRanges))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStringValue(AuthorizedIPRanges);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> authorizedIPRanges = default;
+            string authorizedIPRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterVmAccessProfile(authorizedIPRanges.Value, serializedAdditionalRawData);
+            return new ClusterVmAccessProfile(authorizedIPRanges, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterVmAccessProfile>.Write(ModelReaderWriterOptions options)

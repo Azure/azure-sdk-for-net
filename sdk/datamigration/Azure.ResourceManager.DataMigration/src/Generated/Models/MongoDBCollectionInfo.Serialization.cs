@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -34,14 +35,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteBooleanValue(IsSystemCollection);
             writer.WritePropertyName("isView"u8);
             writer.WriteBooleanValue(IsView);
-            if (ShardKey != null)
+            if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
-            if (ViewOf != null)
+            if (Optional.IsDefined(ViewOf))
             {
                 writer.WritePropertyName("viewOf"u8);
                 writer.WriteStringValue(ViewOf);
@@ -98,9 +99,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool isCapped = default;
             bool isSystemCollection = default;
             bool isView = default;
-            Optional<MongoDBShardKeyInfo> shardKey = default;
+            MongoDBShardKeyInfo shardKey = default;
             bool supportsSharding = default;
-            Optional<string> viewOf = default;
+            string viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;
@@ -191,9 +192,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 isCapped,
                 isSystemCollection,
                 isView,
-                shardKey.Value,
+                shardKey,
                 supportsSharding,
-                viewOf.Value);
+                viewOf);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 if (JobId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> path = default;
+            ResourceIdentifier jobId = default;
+            string path = default;
             ReferenceType referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId.Value, path.Value);
+            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId, path);
         }
 
         BinaryData IPersistableModel<MachineLearningOutputPathAssetReference>.Write(ModelReaderWriterOptions options)

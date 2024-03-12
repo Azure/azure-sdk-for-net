@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,24 +49,24 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectivityTopology.HasValue)
+            if (Optional.IsDefined(ConnectivityTopology))
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hubs))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DeleteExistingPeering.HasValue)
+            if (Optional.IsDefined(DeleteExistingPeering))
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -145,19 +145,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
+            SystemData systemData = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
             IList<ConnectivityHub> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
+            GlobalMeshSupportFlag? isGlobal = default;
             IList<ConnectivityGroupItem> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,16 +295,16 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(connectivityTopology),
+                systemData,
+                description,
+                connectivityTopology,
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
-                Optional.ToNullable(isGlobal),
+                isGlobal,
                 appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deleteExistingPeering),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(etag),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                etag,
                 serializedAdditionalRawData);
         }
 

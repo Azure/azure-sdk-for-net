@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SubnetId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && !(ChildResources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildResources))
             {
                 writer.WritePropertyName("childResources"u8);
                 writer.WriteStartArray();
@@ -99,8 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> version = default;
+            ResourceIdentifier subnetId = default;
+            string version = default;
             IReadOnlyList<string> childResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), subnetId.Value, version.Value, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), subnetId, version, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualClusterPatch>.Write(ModelReaderWriterOptions options)

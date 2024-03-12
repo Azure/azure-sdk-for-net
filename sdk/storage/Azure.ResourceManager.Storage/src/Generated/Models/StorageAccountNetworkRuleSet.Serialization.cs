@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Bypass.HasValue)
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (!(ResourceAccessRules is ChangeTrackingList<StorageAccountResourceAccessRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceAccessRules))
             {
                 writer.WritePropertyName("resourceAccessRules"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<StorageAccountVirtualNetworkRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPRules is ChangeTrackingList<StorageAccountIPRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageNetworkBypass> bypass = default;
+            StorageNetworkBypass? bypass = default;
             IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
             IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
             IList<StorageAccountIPRule> ipRules = default;
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageAccountNetworkRuleSet(
-                Optional.ToNullable(bypass),
+                bypass,
                 resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
                 virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
                 ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),

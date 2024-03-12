@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (AzureResourceId != null)
+            if (Optional.IsDefined(AzureResourceId))
             {
                 writer.WritePropertyName("azureResourceId"u8);
                 writer.WriteStringValue(AzureResourceId);
             }
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
-            Optional<string> organizationId = default;
-            Optional<NewRelicPlanDetails> planData = default;
+            ResourceIdentifier azureResourceId = default;
+            string organizationId = default;
+            NewRelicPlanDetails planData = default;
             string userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicSwitchBillingContent(azureResourceId.Value, organizationId.Value, planData.Value, userEmail, serializedAdditionalRawData);
+            return new NewRelicSwitchBillingContent(azureResourceId, organizationId, planData, userEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicSwitchBillingContent>.Write(ModelReaderWriterOptions options)

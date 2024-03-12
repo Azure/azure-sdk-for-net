@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkTapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkTapName, NetworkTapData data, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkTapResource> CreateOrUpdate(WaitUntil waitUntil, string networkTapName, NetworkTapData data, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual async Task<Response<NetworkTapResource>> GetAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual Response<NetworkTapResource> Get(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkTapResource>> GetIfExistsAsync(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkTapName"/> is null. </exception>
         public virtual NullableResponse<NetworkTapResource> GetIfExists(string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (networkTapName == null)
-            {
-                throw new ArgumentNullException(nameof(networkTapName));
-            }
-            if (networkTapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkTapName));
-            }
+            Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapCollection.GetIfExists");
             scope.Start();

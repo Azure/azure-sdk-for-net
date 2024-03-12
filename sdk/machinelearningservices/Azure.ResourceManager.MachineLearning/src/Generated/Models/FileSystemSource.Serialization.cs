@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Connection != null)
+            if (Optional.IsDefined(Connection))
             {
                 if (Connection != null)
                 {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> connection = default;
+            string path = default;
+            string connection = default;
             DataImportSourceType sourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemSource(connection.Value, sourceType, serializedAdditionalRawData, path.Value);
+            return new FileSystemSource(connection, sourceType, serializedAdditionalRawData, path);
         }
 
         BinaryData IPersistableModel<FileSystemSource>.Write(ModelReaderWriterOptions options)

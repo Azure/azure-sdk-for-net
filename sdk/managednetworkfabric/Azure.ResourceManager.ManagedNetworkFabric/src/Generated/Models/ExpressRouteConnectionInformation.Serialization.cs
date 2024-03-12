@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
-            if (ExpressRouteAuthorizationKey != null)
+            if (Optional.IsDefined(ExpressRouteAuthorizationKey))
             {
                 writer.WritePropertyName("expressRouteAuthorizationKey"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationKey);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier expressRouteCircuitId = default;
-            Optional<string> expressRouteAuthorizationKey = default;
+            string expressRouteAuthorizationKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteConnectionInformation(expressRouteCircuitId, expressRouteAuthorizationKey.Value, serializedAdditionalRawData);
+            return new ExpressRouteConnectionInformation(expressRouteCircuitId, expressRouteAuthorizationKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteConnectionInformation>.Write(ModelReaderWriterOptions options)

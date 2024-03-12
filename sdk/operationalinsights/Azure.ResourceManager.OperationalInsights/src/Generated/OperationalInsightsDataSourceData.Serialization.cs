@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 return null;
             }
             BinaryData properties = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             OperationalInsightsDataSourceKind kind = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 properties,
-                Optional.ToNullable(etag),
+                etag,
                 kind,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

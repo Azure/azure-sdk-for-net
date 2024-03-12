@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +45,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (VCores.HasValue)
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (options.Format != "W" && DnsZone != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("dnsZone"u8);
                 writer.WriteStringValue(DnsZone);
             }
-            if (MaintenanceConfigurationId != null)
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<int> vCores = default;
-            Optional<InstancePoolLicenseType> licenseType = default;
-            Optional<string> dnsZone = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            ResourceIdentifier subnetId = default;
+            int? vCores = default;
+            InstancePoolLicenseType? licenseType = default;
+            string dnsZone = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,13 +203,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InstancePoolPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                subnetId.Value,
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(licenseType),
-                dnsZone.Value,
-                maintenanceConfigurationId.Value,
+                subnetId,
+                vCores,
+                licenseType,
+                dnsZone,
+                maintenanceConfigurationId,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> displayStatus = default;
-            Optional<KubernetesClusterExtensionStatusLevel> level = default;
-            Optional<string> message = default;
-            Optional<string> time = default;
+            string code = default;
+            string displayStatus = default;
+            KubernetesClusterExtensionStatusLevel? level = default;
+            string message = default;
+            string time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterExtensionStatus(
-                code.Value,
-                displayStatus.Value,
-                Optional.ToNullable(level),
-                message.Value,
-                time.Value,
+                code,
+                displayStatus,
+                level,
+                message,
+                time,
                 serializedAdditionalRawData);
         }
 

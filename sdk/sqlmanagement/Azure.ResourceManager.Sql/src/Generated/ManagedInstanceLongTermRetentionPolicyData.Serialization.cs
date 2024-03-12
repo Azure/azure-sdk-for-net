@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WeeklyRetention != null)
+            if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
                 writer.WriteStringValue(WeeklyRetention);
             }
-            if (MonthlyRetention != null)
+            if (Optional.IsDefined(MonthlyRetention))
             {
                 writer.WritePropertyName("monthlyRetention"u8);
                 writer.WriteStringValue(MonthlyRetention);
             }
-            if (YearlyRetention != null)
+            if (Optional.IsDefined(YearlyRetention))
             {
                 writer.WritePropertyName("yearlyRetention"u8);
                 writer.WriteStringValue(YearlyRetention);
             }
-            if (WeekOfYear.HasValue)
+            if (Optional.IsDefined(WeekOfYear))
             {
                 writer.WritePropertyName("weekOfYear"u8);
                 writer.WriteNumberValue(WeekOfYear.Value);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> weeklyRetention = default;
-            Optional<string> monthlyRetention = default;
-            Optional<string> yearlyRetention = default;
-            Optional<int> weekOfYear = default;
+            SystemData systemData = default;
+            string weeklyRetention = default;
+            string monthlyRetention = default;
+            string yearlyRetention = default;
+            int? weekOfYear = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                weeklyRetention.Value,
-                monthlyRetention.Value,
-                yearlyRetention.Value,
-                Optional.ToNullable(weekOfYear),
+                systemData,
+                weeklyRetention,
+                monthlyRetention,
+                yearlyRetention,
+                weekOfYear,
                 serializedAdditionalRawData);
         }
 

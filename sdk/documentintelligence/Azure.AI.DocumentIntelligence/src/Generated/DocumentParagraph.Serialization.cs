@@ -27,14 +27,14 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<ParagraphRole> role = default;
+            ParagraphRole? role = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -141,7 +141,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentParagraph(Optional.ToNullable(role), content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, serializedAdditionalRawData);
+            return new DocumentParagraph(role, content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentParagraph>.Write(ModelReaderWriterOptions options)

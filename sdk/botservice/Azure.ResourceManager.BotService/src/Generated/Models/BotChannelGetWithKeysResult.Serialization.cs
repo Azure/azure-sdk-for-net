@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -28,42 +29,42 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Setting != null)
+            if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Setting);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (EntityTag != null)
+            if (Optional.IsDefined(EntityTag))
             {
                 writer.WritePropertyName("entityTag"u8);
                 writer.WriteStringValue(EntityTag);
             }
-            if (ChangedTime != null)
+            if (Optional.IsDefined(ChangedTime))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedTime);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -75,12 +76,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -161,22 +162,22 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<BotChannelProperties> resource = default;
-            Optional<BotChannelSettings> setting = default;
-            Optional<string> provisioningState = default;
-            Optional<string> entityTag = default;
-            Optional<string> changedTime = default;
-            Optional<BotChannelProperties> properties = default;
-            Optional<BotServiceSku> sku = default;
-            Optional<BotServiceKind?> kind = default;
-            Optional<ETag> etag = default;
+            BotChannelProperties resource = default;
+            BotChannelSettings setting = default;
+            string provisioningState = default;
+            string entityTag = default;
+            string changedTime = default;
+            BotChannelProperties properties = default;
+            BotServiceSku sku = default;
+            BotServiceKind? kind = default;
+            ETag? etag = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,18 +319,18 @@ namespace Azure.ResourceManager.BotService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                resource.Value,
-                setting.Value,
-                provisioningState.Value,
-                entityTag.Value,
-                changedTime.Value,
-                properties.Value,
-                sku.Value,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(etag),
+                resource,
+                setting,
+                provisioningState,
+                entityTag,
+                changedTime,
+                properties,
+                sku,
+                kind,
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

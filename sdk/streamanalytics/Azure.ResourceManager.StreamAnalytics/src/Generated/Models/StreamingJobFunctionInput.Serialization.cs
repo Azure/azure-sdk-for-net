@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (IsConfigurationParameter.HasValue)
+            if (Optional.IsDefined(IsConfigurationParameter))
             {
                 if (IsConfigurationParameter != null)
                 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> dataType = default;
-            Optional<bool?> isConfigurationParameter = default;
+            string dataType = default;
+            bool? isConfigurationParameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobFunctionInput(dataType.Value, Optional.ToNullable(isConfigurationParameter), serializedAdditionalRawData);
+            return new StreamingJobFunctionInput(dataType, isConfigurationParameter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionInput>.Write(ModelReaderWriterOptions options)

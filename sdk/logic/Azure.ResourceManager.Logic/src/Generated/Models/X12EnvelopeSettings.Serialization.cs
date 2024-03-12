@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (FunctionalGroupId != null)
+            if (Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
@@ -65,12 +66,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(TransactionSetControlNumberUpperBound);
             writer.WritePropertyName("rolloverTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
-            if (TransactionSetControlNumberPrefix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (TransactionSetControlNumberSuffix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Models
             int interchangeControlNumberUpperBound = default;
             bool rolloverInterchangeControlNumber = default;
             bool enableDefaultGroupHeaders = default;
-            Optional<string> functionalGroupId = default;
+            string functionalGroupId = default;
             int groupControlNumberLowerBound = default;
             int groupControlNumberUpperBound = default;
             bool rolloverGroupControlNumber = default;
@@ -139,8 +140,8 @@ namespace Azure.ResourceManager.Logic.Models
             int transactionSetControlNumberLowerBound = default;
             int transactionSetControlNumberUpperBound = default;
             bool rolloverTransactionSetControlNumber = default;
-            Optional<string> transactionSetControlNumberPrefix = default;
-            Optional<string> transactionSetControlNumberSuffix = default;
+            string transactionSetControlNumberPrefix = default;
+            string transactionSetControlNumberSuffix = default;
             bool overwriteExistingTransactionSetControlNumber = default;
             X12DateFormat groupHeaderDateFormat = default;
             X12TimeFormat groupHeaderTimeFormat = default;
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Logic.Models
                 interchangeControlNumberUpperBound,
                 rolloverInterchangeControlNumber,
                 enableDefaultGroupHeaders,
-                functionalGroupId.Value,
+                functionalGroupId,
                 groupControlNumberLowerBound,
                 groupControlNumberUpperBound,
                 rolloverGroupControlNumber,
@@ -294,8 +295,8 @@ namespace Azure.ResourceManager.Logic.Models
                 transactionSetControlNumberLowerBound,
                 transactionSetControlNumberUpperBound,
                 rolloverTransactionSetControlNumber,
-                transactionSetControlNumberPrefix.Value,
-                transactionSetControlNumberSuffix.Value,
+                transactionSetControlNumberPrefix,
+                transactionSetControlNumberSuffix,
                 overwriteExistingTransactionSetControlNumber,
                 groupHeaderDateFormat,
                 groupHeaderTimeFormat,

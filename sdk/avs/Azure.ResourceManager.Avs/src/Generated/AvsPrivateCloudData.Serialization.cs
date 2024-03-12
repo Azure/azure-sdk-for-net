@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Avs
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ManagementCluster != null)
+            if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
-            if (Internet.HasValue)
+            if (Optional.IsDefined(Internet))
             {
                 writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
-            if (!(IdentitySources is ChangeTrackingList<SingleSignOnIdentitySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IdentitySources))
             {
                 writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Availability != null)
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(ExtendedNetworkBlocks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
                 writer.WritePropertyName("extendedNetworkBlocks"u8);
                 writer.WriteStartArray();
@@ -110,62 +110,62 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Circuit != null)
+            if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
                 writer.WriteObjectValue(Circuit);
             }
-            if (options.Format != "W" && Endpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
-            if (NetworkBlock != null)
+            if (Optional.IsDefined(NetworkBlock))
             {
                 writer.WritePropertyName("networkBlock"u8);
                 writer.WriteStringValue(NetworkBlock);
             }
-            if (options.Format != "W" && ManagementNetwork != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementNetwork))
             {
                 writer.WritePropertyName("managementNetwork"u8);
                 writer.WriteStringValue(ManagementNetwork);
             }
-            if (options.Format != "W" && ProvisioningNetwork != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningNetwork))
             {
                 writer.WritePropertyName("provisioningNetwork"u8);
                 writer.WriteStringValue(ProvisioningNetwork);
             }
-            if (options.Format != "W" && VMotionNetwork != null)
+            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
             {
                 writer.WritePropertyName("vmotionNetwork"u8);
                 writer.WriteStringValue(VMotionNetwork);
             }
-            if (VCenterPassword != null)
+            if (Optional.IsDefined(VCenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword"u8);
                 writer.WriteStringValue(VCenterPassword);
             }
-            if (NsxtPassword != null)
+            if (Optional.IsDefined(NsxtPassword))
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && VCenterCertificateThumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
             {
                 writer.WritePropertyName("vcenterCertificateThumbprint"u8);
                 writer.WriteStringValue(VCenterCertificateThumbprint);
             }
-            if (options.Format != "W" && NsxtCertificateThumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
             {
                 writer.WritePropertyName("nsxtCertificateThumbprint"u8);
                 writer.WriteStringValue(NsxtCertificateThumbprint);
             }
-            if (options.Format != "W" && !(ExternalCloudLinks is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalCloudLinks))
             {
                 writer.WritePropertyName("externalCloudLinks"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (SecondaryCircuit != null)
+            if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
                 writer.WriteObjectValue(SecondaryCircuit);
             }
-            if (options.Format != "W" && NsxPublicIPQuotaRaised.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
             {
                 writer.WritePropertyName("nsxPublicIpQuotaRaised"u8);
                 writer.WriteStringValue(NsxPublicIPQuotaRaised.Value.ToString());
@@ -230,33 +230,33 @@ namespace Azure.ResourceManager.Avs
                 return null;
             }
             AvsSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsManagementCluster> managementCluster = default;
-            Optional<InternetConnectivityState> internet = default;
+            SystemData systemData = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
             IList<SingleSignOnIdentitySource> identitySources = default;
-            Optional<PrivateCloudAvailabilityProperties> availability = default;
-            Optional<CustomerManagedEncryption> encryption = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
-            Optional<AvsPrivateCloudProvisioningState> provisioningState = default;
-            Optional<ExpressRouteCircuit> circuit = default;
-            Optional<AvsPrivateCloudEndpoints> endpoints = default;
-            Optional<string> networkBlock = default;
-            Optional<string> managementNetwork = default;
-            Optional<string> provisioningNetwork = default;
-            Optional<string> vmotionNetwork = default;
-            Optional<string> vcenterPassword = default;
-            Optional<string> nsxtPassword = default;
-            Optional<string> vcenterCertificateThumbprint = default;
-            Optional<string> nsxtCertificateThumbprint = default;
+            AvsPrivateCloudProvisioningState? provisioningState = default;
+            ExpressRouteCircuit circuit = default;
+            AvsPrivateCloudEndpoints endpoints = default;
+            string networkBlock = default;
+            string managementNetwork = default;
+            string provisioningNetwork = default;
+            string vmotionNetwork = default;
+            string vcenterPassword = default;
+            string nsxtPassword = default;
+            string vcenterCertificateThumbprint = default;
+            string nsxtCertificateThumbprint = default;
             IReadOnlyList<ResourceIdentifier> externalCloudLinks = default;
-            Optional<ExpressRouteCircuit> secondaryCircuit = default;
-            Optional<NsxPublicIPQuotaRaisedEnum> nsxPublicIPQuotaRaised = default;
+            ExpressRouteCircuit secondaryCircuit = default;
+            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -510,31 +510,31 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
                 identity,
-                managementCluster.Value,
-                Optional.ToNullable(internet),
+                managementCluster,
+                internet,
                 identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
-                availability.Value,
-                encryption.Value,
+                availability,
+                encryption,
                 extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState),
-                circuit.Value,
-                endpoints.Value,
-                networkBlock.Value,
-                managementNetwork.Value,
-                provisioningNetwork.Value,
-                vmotionNetwork.Value,
-                vcenterPassword.Value,
-                nsxtPassword.Value,
-                vcenterCertificateThumbprint.Value,
-                nsxtCertificateThumbprint.Value,
+                provisioningState,
+                circuit,
+                endpoints,
+                networkBlock,
+                managementNetwork,
+                provisioningNetwork,
+                vmotionNetwork,
+                vcenterPassword,
+                nsxtPassword,
+                vcenterCertificateThumbprint,
+                nsxtCertificateThumbprint,
                 externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(),
-                secondaryCircuit.Value,
-                Optional.ToNullable(nsxPublicIPQuotaRaised),
+                secondaryCircuit,
+                nsxPublicIPQuotaRaised,
                 serializedAdditionalRawData);
         }
 

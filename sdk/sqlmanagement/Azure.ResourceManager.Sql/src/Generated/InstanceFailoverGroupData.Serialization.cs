@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecondaryType.HasValue)
+            if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (ReadWriteEndpoint != null)
+            if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (ReadOnlyEndpoint != null)
+            if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (options.Format != "W" && ReplicationRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (!(PartnerRegions is ChangeTrackingList<PartnerRegionInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PartnerRegions))
             {
                 writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (!(ManagedInstancePairs is ChangeTrackingList<ManagedInstancePairInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedInstancePairs))
             {
                 writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GeoSecondaryInstanceType> secondaryType = default;
-            Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
+            SystemData systemData = default;
+            GeoSecondaryInstanceType? secondaryType = default;
+            InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            InstanceFailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
             IList<PartnerRegionInfo> partnerRegions = default;
             IList<ManagedInstancePairInfo> managedInstancePairs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(secondaryType),
-                readWriteEndpoint.Value,
-                readOnlyEndpoint.Value,
-                Optional.ToNullable(replicationRole),
-                replicationState.Value,
+                systemData,
+                secondaryType,
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
                 partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>(),
                 managedInstancePairs ?? new ChangeTrackingList<ManagedInstancePairInfo>(),
                 serializedAdditionalRawData);

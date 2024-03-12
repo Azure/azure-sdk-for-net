@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (ParentCheckpointId != null)
+            if (Optional.IsDefined(ParentCheckpointId))
             {
                 writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
-            if (CheckpointId != null)
+            if (Optional.IsDefined(CheckpointId))
             {
                 writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> parentCheckpointId = default;
-            Optional<string> checkpointId = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string parentCheckpointId = default;
+            string checkpointId = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Checkpoint(parentCheckpointId.Value, checkpointId.Value, name.Value, description.Value, serializedAdditionalRawData);
+            return new Checkpoint(parentCheckpointId, checkpointId, name, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Checkpoint>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,26 +27,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (RateLimitDurationInMinutes.HasValue)
+            if (Optional.IsDefined(RateLimitDurationInMinutes))
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
                 writer.WriteNumberValue(RateLimitDurationInMinutes.Value);
             }
-            if (RateLimitThreshold.HasValue)
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int priority = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            CustomRuleEnabledState? enabledState = default;
             WebApplicationRuleType ruleType = default;
-            Optional<int> rateLimitDurationInMinutes = default;
-            Optional<int> rateLimitThreshold = default;
+            int? rateLimitDurationInMinutes = default;
+            int? rateLimitThreshold = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebApplicationCustomRule(
-                name.Value,
+                name,
                 priority,
-                Optional.ToNullable(enabledState),
+                enabledState,
                 ruleType,
-                Optional.ToNullable(rateLimitDurationInMinutes),
-                Optional.ToNullable(rateLimitThreshold),
+                rateLimitDurationInMinutes,
+                rateLimitThreshold,
                 matchConditions,
                 action,
                 serializedAdditionalRawData);

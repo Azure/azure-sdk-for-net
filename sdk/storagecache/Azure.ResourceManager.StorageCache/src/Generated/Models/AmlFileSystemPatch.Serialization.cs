@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (RootSquashSettings != null)
+            if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
                 writer.WriteObjectValue(RootSquashSettings);
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
-            Optional<AmlFileSystemUpdatePropertiesMaintenanceWindow> maintenanceWindow = default;
-            Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
+            AmlFileSystemEncryptionSettings encryptionSettings = default;
+            AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow = default;
+            AmlFileSystemRootSquashSettings rootSquashSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), encryptionSettings.Value, maintenanceWindow.Value, rootSquashSettings.Value, serializedAdditionalRawData);
+            return new AmlFileSystemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), encryptionSettings, maintenanceWindow, rootSquashSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPatch>.Write(ModelReaderWriterOptions options)

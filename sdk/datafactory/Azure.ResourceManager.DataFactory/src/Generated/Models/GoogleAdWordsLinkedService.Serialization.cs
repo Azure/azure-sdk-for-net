@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -86,77 +87,77 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (ClientCustomerId != null)
+            if (Optional.IsDefined(ClientCustomerId))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
                 JsonSerializer.Serialize(writer, ClientCustomerId);
             }
-            if (DeveloperToken != null)
+            if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
                 JsonSerializer.Serialize(writer, DeveloperToken);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 JsonSerializer.Serialize(writer, RefreshToken);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 JsonSerializer.Serialize(writer, Email);
             }
-            if (KeyFilePath != null)
+            if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
                 JsonSerializer.Serialize(writer, KeyFilePath);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 JsonSerializer.Serialize(writer, TrustedCertPath);
             }
-            if (UseSystemTrustStore != null)
+            if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
-            if (PrivateKey != null)
+            if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 JsonSerializer.Serialize(writer, PrivateKey);
             }
-            if (LoginCustomerId != null)
+            if (Optional.IsDefined(LoginCustomerId))
             {
                 writer.WritePropertyName("loginCustomerID"u8);
                 JsonSerializer.Serialize(writer, LoginCustomerId);
             }
-            if (GoogleAdsApiVersion != null)
+            if (Optional.IsDefined(GoogleAdsApiVersion))
             {
                 writer.WritePropertyName("googleAdsApiVersion"u8);
                 JsonSerializer.Serialize(writer, GoogleAdsApiVersion);
             }
-            if (SupportLegacyDataTypes != null)
+            if (Optional.IsDefined(SupportLegacyDataTypes))
             {
                 writer.WritePropertyName("supportLegacyDataTypes"u8);
                 JsonSerializer.Serialize(writer, SupportLegacyDataTypes);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -198,26 +199,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<BinaryData> connectionProperties = default;
-            Optional<DataFactoryElement<string>> clientCustomerId = default;
-            Optional<DataFactorySecretBaseDefinition> developerToken = default;
-            Optional<GoogleAdWordsAuthenticationType> authenticationType = default;
-            Optional<DataFactorySecretBaseDefinition> refreshToken = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactorySecretBaseDefinition> clientSecret = default;
-            Optional<DataFactoryElement<string>> email = default;
-            Optional<DataFactoryElement<string>> keyFilePath = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactorySecretBaseDefinition> privateKey = default;
-            Optional<DataFactoryElement<string>> loginCustomerId = default;
-            Optional<DataFactoryElement<string>> googleAdsApiVersion = default;
-            Optional<DataFactoryElement<bool>> supportLegacyDataTypes = default;
-            Optional<string> encryptedCredential = default;
+            BinaryData connectionProperties = default;
+            DataFactoryElement<string> clientCustomerId = default;
+            DataFactorySecretBaseDefinition developerToken = default;
+            GoogleAdWordsAuthenticationType? authenticationType = default;
+            DataFactorySecretBaseDefinition refreshToken = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactoryElement<string> email = default;
+            DataFactoryElement<string> keyFilePath = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactorySecretBaseDefinition privateKey = default;
+            DataFactoryElement<string> loginCustomerId = default;
+            DataFactoryElement<string> googleAdsApiVersion = default;
+            DataFactoryElement<bool> supportLegacyDataTypes = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -433,27 +434,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                connectionProperties.Value,
-                clientCustomerId.Value,
+                connectionProperties,
+                clientCustomerId,
                 developerToken,
-                Optional.ToNullable(authenticationType),
+                authenticationType,
                 refreshToken,
-                clientId.Value,
+                clientId,
                 clientSecret,
-                email.Value,
-                keyFilePath.Value,
-                trustedCertPath.Value,
-                useSystemTrustStore.Value,
+                email,
+                keyFilePath,
+                trustedCertPath,
+                useSystemTrustStore,
                 privateKey,
-                loginCustomerId.Value,
-                googleAdsApiVersion.Value,
-                supportLegacyDataTypes.Value,
-                encryptedCredential.Value);
+                loginCustomerId,
+                googleAdsApiVersion,
+                supportLegacyDataTypes,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<GoogleAdWordsLinkedService>.Write(ModelReaderWriterOptions options)

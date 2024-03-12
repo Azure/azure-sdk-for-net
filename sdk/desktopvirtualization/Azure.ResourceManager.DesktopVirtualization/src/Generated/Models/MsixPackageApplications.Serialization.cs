@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AppUserModelId != null)
+            if (Optional.IsDefined(AppUserModelId))
             {
                 writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (IconImageName != null)
+            if (Optional.IsDefined(IconImageName))
             {
                 writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
-            if (RawIcon != null)
+            if (Optional.IsDefined(RawIcon))
             {
                 writer.WritePropertyName("rawIcon"u8);
 #if NET6_0_OR_GREATER
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
 #endif
             }
-            if (RawPng != null)
+            if (Optional.IsDefined(RawPng))
             {
                 writer.WritePropertyName("rawPng"u8);
 #if NET6_0_OR_GREATER
@@ -113,13 +114,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> description = default;
-            Optional<string> appUserModelId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> iconImageName = default;
-            Optional<BinaryData> rawIcon = default;
-            Optional<BinaryData> rawPng = default;
+            string appId = default;
+            string description = default;
+            string appUserModelId = default;
+            string friendlyName = default;
+            string iconImageName = default;
+            BinaryData rawIcon = default;
+            BinaryData rawPng = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,13 +175,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MsixPackageApplications(
-                appId.Value,
-                description.Value,
-                appUserModelId.Value,
-                friendlyName.Value,
-                iconImageName.Value,
-                rawIcon.Value,
-                rawPng.Value,
+                appId,
+                description,
+                appUserModelId,
+                friendlyName,
+                iconImageName,
+                rawIcon,
+                rawPng,
                 serializedAdditionalRawData);
         }
 

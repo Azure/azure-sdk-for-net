@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CapacityLimit.HasValue)
+            if (Optional.IsDefined(CapacityLimit))
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<AutoScaleVCoreSku> sku = default;
+            AutoScaleVCoreSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<int> capacityLimit = default;
+            int? capacityLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCorePatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(capacityLimit), serializedAdditionalRawData);
+            return new AutoScaleVCorePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), capacityLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleVCorePatch>.Write(ModelReaderWriterOptions options)

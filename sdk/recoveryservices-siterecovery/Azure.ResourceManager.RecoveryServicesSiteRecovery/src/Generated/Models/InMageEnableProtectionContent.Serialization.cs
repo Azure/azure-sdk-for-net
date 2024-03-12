@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (VmFriendlyName != null)
+            if (Optional.IsDefined(VmFriendlyName))
             {
                 writer.WritePropertyName("vmFriendlyName"u8);
                 writer.WriteStringValue(VmFriendlyName);
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(MultiVmGroupId);
             writer.WritePropertyName("multiVmGroupName"u8);
             writer.WriteStringValue(MultiVmGroupName);
-            if (DatastoreName != null)
+            if (Optional.IsDefined(DatastoreName))
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (DiskExclusionContent != null)
+            if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
-            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -106,15 +107,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmFriendlyName = default;
+            string vmFriendlyName = default;
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             string multiVmGroupId = default;
             string multiVmGroupName = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -198,15 +199,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageEnableProtectionContent(
                 instanceType,
                 serializedAdditionalRawData,
-                vmFriendlyName.Value,
+                vmFriendlyName,
                 masterTargetId,
                 processServerId,
                 retentionDrive,
-                runAsAccountId.Value,
+                runAsAccountId,
                 multiVmGroupId,
                 multiVmGroupName,
-                datastoreName.Value,
-                diskExclusionContent.Value,
+                datastoreName,
+                diskExclusionContent,
                 disksToInclude ?? new ChangeTrackingList<string>());
         }
 

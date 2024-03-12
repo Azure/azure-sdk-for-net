@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MonitoringStatus.HasValue)
+            if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (DatadogOrganizationProperties != null)
+            if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
                 writer.WriteObjectValue(DatadogOrganizationProperties);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (options.Format != "W" && LiftrResourceCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && LiftrResourcePreference.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DatadogOrganizationProperties datadogOrganizationProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(monitoringStatus),
-                Optional.ToNullable(marketplaceSubscriptionStatus),
-                datadogOrganizationProperties.Value,
-                userInfo.Value,
-                Optional.ToNullable(liftrResourceCategory),
-                Optional.ToNullable(liftrResourcePreference),
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Request != null)
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Response != null)
+            if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowRequest> request = default;
-            Optional<LogicWorkflowResponse> response = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowRequest request = default;
+            LogicWorkflowResponse response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRequestHistoryProperties(Optional.ToNullable(startTime), Optional.ToNullable(endTime), request.Value, response.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRequestHistoryProperties(startTime, endTime, request, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRequestHistoryProperties>.Write(ModelReaderWriterOptions options)

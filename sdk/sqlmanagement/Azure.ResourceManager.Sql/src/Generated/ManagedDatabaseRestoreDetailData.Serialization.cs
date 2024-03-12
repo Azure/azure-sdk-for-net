@@ -43,104 +43,104 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RestoreType != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestoreType);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && BlockReason != null)
+            if (options.Format != "W" && Optional.IsDefined(BlockReason))
             {
                 writer.WritePropertyName("blockReason"u8);
                 writer.WriteStringValue(BlockReason);
             }
-            if (options.Format != "W" && LastUploadedFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileName))
             {
                 writer.WritePropertyName("lastUploadedFileName"u8);
                 writer.WriteStringValue(LastUploadedFileName);
             }
-            if (options.Format != "W" && LastUploadedFileOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileOn))
             {
                 writer.WritePropertyName("lastUploadedFileTime"u8);
                 writer.WriteStringValue(LastUploadedFileOn.Value, "O");
             }
-            if (options.Format != "W" && LastRestoredFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileName))
             {
                 writer.WritePropertyName("lastRestoredFileName"u8);
                 writer.WriteStringValue(LastRestoredFileName);
             }
-            if (options.Format != "W" && LastRestoredFileOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileOn))
             {
                 writer.WritePropertyName("lastRestoredFileTime"u8);
                 writer.WriteStringValue(LastRestoredFileOn.Value, "O");
             }
-            if (options.Format != "W" && CompletedPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompletedPercent))
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(CompletedPercent.Value);
             }
-            if (options.Format != "W" && CurrentRestoredSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoredSizeInMB))
             {
                 writer.WritePropertyName("currentRestoredSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestoredSizeInMB.Value);
             }
-            if (options.Format != "W" && CurrentRestorePlanSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestorePlanSizeInMB))
             {
                 writer.WritePropertyName("currentRestorePlanSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestorePlanSizeInMB.Value);
             }
-            if (options.Format != "W" && CurrentBackupType != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentBackupType))
             {
                 writer.WritePropertyName("currentBackupType"u8);
                 writer.WriteStringValue(CurrentBackupType);
             }
-            if (options.Format != "W" && CurrentRestoringFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFileName))
             {
                 writer.WritePropertyName("currentRestoringFileName"u8);
                 writer.WriteStringValue(CurrentRestoringFileName);
             }
-            if (options.Format != "W" && NumberOfFilesFound.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesFound))
             {
                 writer.WritePropertyName("numberOfFilesDetected"u8);
                 writer.WriteNumberValue(NumberOfFilesFound.Value);
             }
-            if (options.Format != "W" && NumberOfFilesQueued.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesQueued))
             {
                 writer.WritePropertyName("numberOfFilesQueued"u8);
                 writer.WriteNumberValue(NumberOfFilesQueued.Value);
             }
-            if (options.Format != "W" && NumberOfFilesSkipped.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesSkipped))
             {
                 writer.WritePropertyName("numberOfFilesSkipped"u8);
                 writer.WriteNumberValue(NumberOfFilesSkipped.Value);
             }
-            if (options.Format != "W" && NumberOfFilesRestoring.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestoring))
             {
                 writer.WritePropertyName("numberOfFilesRestoring"u8);
                 writer.WriteNumberValue(NumberOfFilesRestoring.Value);
             }
-            if (options.Format != "W" && NumberOfFilesRestored.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestored))
             {
                 writer.WritePropertyName("numberOfFilesRestored"u8);
                 writer.WriteNumberValue(NumberOfFilesRestored.Value);
             }
-            if (options.Format != "W" && NumberOfFilesUnrestorable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesUnrestorable))
             {
                 writer.WritePropertyName("numberOfFilesUnrestorable"u8);
                 writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
             }
-            if (options.Format != "W" && !(FullBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FullBackupSets))
             {
                 writer.WritePropertyName("fullBackupSets"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(DiffBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DiffBackupSets))
             {
                 writer.WritePropertyName("diffBackupSets"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LogBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LogBackupSets))
             {
                 writer.WritePropertyName("logBackupSets"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(UnrestorableFileList is ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UnrestorableFileList))
             {
                 writer.WritePropertyName("unrestorableFiles"u8);
                 writer.WriteStartArray();
@@ -222,25 +222,25 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> type0 = default;
-            Optional<string> status = default;
-            Optional<string> blockReason = default;
-            Optional<string> lastUploadedFileName = default;
-            Optional<DateTimeOffset> lastUploadedFileTime = default;
-            Optional<string> lastRestoredFileName = default;
-            Optional<DateTimeOffset> lastRestoredFileTime = default;
-            Optional<int> percentCompleted = default;
-            Optional<int> currentRestoredSizeMB = default;
-            Optional<int> currentRestorePlanSizeMB = default;
-            Optional<string> currentBackupType = default;
-            Optional<string> currentRestoringFileName = default;
-            Optional<int> numberOfFilesDetected = default;
-            Optional<int> numberOfFilesQueued = default;
-            Optional<int> numberOfFilesSkipped = default;
-            Optional<int> numberOfFilesRestoring = default;
-            Optional<int> numberOfFilesRestored = default;
-            Optional<int> numberOfFilesUnrestorable = default;
+            SystemData systemData = default;
+            string type0 = default;
+            string status = default;
+            string blockReason = default;
+            string lastUploadedFileName = default;
+            DateTimeOffset? lastUploadedFileTime = default;
+            string lastRestoredFileName = default;
+            DateTimeOffset? lastRestoredFileTime = default;
+            int? percentCompleted = default;
+            int? currentRestoredSizeMB = default;
+            int? currentRestorePlanSizeMB = default;
+            string currentBackupType = default;
+            string currentRestoringFileName = default;
+            int? numberOfFilesDetected = default;
+            int? numberOfFilesQueued = default;
+            int? numberOfFilesSkipped = default;
+            int? numberOfFilesRestoring = default;
+            int? numberOfFilesRestored = default;
+            int? numberOfFilesUnrestorable = default;
             IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = default;
             IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = default;
             IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = default;
@@ -485,25 +485,25 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                type0.Value,
-                status.Value,
-                blockReason.Value,
-                lastUploadedFileName.Value,
-                Optional.ToNullable(lastUploadedFileTime),
-                lastRestoredFileName.Value,
-                Optional.ToNullable(lastRestoredFileTime),
-                Optional.ToNullable(percentCompleted),
-                Optional.ToNullable(currentRestoredSizeMB),
-                Optional.ToNullable(currentRestorePlanSizeMB),
-                currentBackupType.Value,
-                currentRestoringFileName.Value,
-                Optional.ToNullable(numberOfFilesDetected),
-                Optional.ToNullable(numberOfFilesQueued),
-                Optional.ToNullable(numberOfFilesSkipped),
-                Optional.ToNullable(numberOfFilesRestoring),
-                Optional.ToNullable(numberOfFilesRestored),
-                Optional.ToNullable(numberOfFilesUnrestorable),
+                systemData,
+                type0,
+                status,
+                blockReason,
+                lastUploadedFileName,
+                lastUploadedFileTime,
+                lastRestoredFileName,
+                lastRestoredFileTime,
+                percentCompleted,
+                currentRestoredSizeMB,
+                currentRestorePlanSizeMB,
+                currentBackupType,
+                currentRestoringFileName,
+                numberOfFilesDetected,
+                numberOfFilesQueued,
+                numberOfFilesSkipped,
+                numberOfFilesRestoring,
+                numberOfFilesRestored,
+                numberOfFilesUnrestorable,
                 fullBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
                 diffBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
                 logBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),

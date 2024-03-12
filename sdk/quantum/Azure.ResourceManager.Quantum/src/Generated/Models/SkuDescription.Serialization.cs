@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RestrictedAccessUri != null)
+            if (Optional.IsDefined(RestrictedAccessUri))
             {
                 writer.WritePropertyName("restrictedAccessUri"u8);
                 writer.WriteStringValue(RestrictedAccessUri.AbsoluteUri);
             }
-            if (AutoAdd.HasValue)
+            if (Optional.IsDefined(AutoAdd))
             {
                 writer.WritePropertyName("autoAdd"u8);
                 writer.WriteBooleanValue(AutoAdd.Value);
             }
-            if (!(Targets is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(QuotaDimensions))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PricingDetails is ChangeTrackingList<PricingDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PricingDetails))
             {
                 writer.WritePropertyName("pricingDetails"u8);
                 writer.WriteStartArray();
@@ -124,12 +125,12 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> description = default;
-            Optional<Uri> restrictedAccessUri = default;
-            Optional<bool> autoAdd = default;
+            string id = default;
+            string name = default;
+            string version = default;
+            string description = default;
+            Uri restrictedAccessUri = default;
+            bool? autoAdd = default;
             IReadOnlyList<string> targets = default;
             IReadOnlyList<QuotaDimension> quotaDimensions = default;
             IReadOnlyList<PricingDetail> pricingDetails = default;
@@ -224,12 +225,12 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SkuDescription(
-                id.Value,
-                name.Value,
-                version.Value,
-                description.Value,
-                restrictedAccessUri.Value,
-                Optional.ToNullable(autoAdd),
+                id,
+                name,
+                version,
+                description,
+                restrictedAccessUri,
+                autoAdd,
                 targets ?? new ChangeTrackingList<string>(),
                 quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
                 pricingDetails ?? new ChangeTrackingList<PricingDetail>(),

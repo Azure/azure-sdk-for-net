@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointID"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoverOn.HasValue)
+            if (Optional.IsDefined(RecoverOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoverOn.Value, "O");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
+            string recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
+            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoveryPointTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreJobRecoveryPointDetails>.Write(ModelReaderWriterOptions options)

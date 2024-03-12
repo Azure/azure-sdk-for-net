@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalFunctionDefinition(name, description.Value, parameters, serializedAdditionalRawData);
+            return new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalFunctionDefinition>.Write(ModelReaderWriterOptions options)

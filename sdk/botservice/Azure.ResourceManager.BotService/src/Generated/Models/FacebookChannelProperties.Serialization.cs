@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VerifyToken != null)
+            if (options.Format != "W" && Optional.IsDefined(VerifyToken))
             {
                 writer.WritePropertyName("verifyToken"u8);
                 writer.WriteStringValue(VerifyToken);
             }
-            if (!(Pages is ChangeTrackingList<FacebookPage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pages))
             {
                 writer.WritePropertyName("pages"u8);
                 writer.WriteStartArray();
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (AppSecret != null)
+            if (Optional.IsDefined(AppSecret))
             {
                 writer.WritePropertyName("appSecret"u8);
                 writer.WriteStringValue(AppSecret);
             }
-            if (options.Format != "W" && CallbackUri != null)
+            if (options.Format != "W" && Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUrl"u8);
                 writer.WriteStringValue(CallbackUri.AbsoluteUri);
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> verifyToken = default;
+            string verifyToken = default;
             IList<FacebookPage> pages = default;
             string appId = default;
-            Optional<string> appSecret = default;
-            Optional<Uri> callbackUrl = default;
+            string appSecret = default;
+            Uri callbackUrl = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,11 +154,11 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FacebookChannelProperties(
-                verifyToken.Value,
+                verifyToken,
                 pages ?? new ChangeTrackingList<FacebookPage>(),
                 appId,
-                appSecret.Value,
-                callbackUrl.Value,
+                appSecret,
+                callbackUrl,
                 isEnabled,
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (ValuePath != null)
+            if (Optional.IsDefined(ValuePath))
             {
                 writer.WritePropertyName("valuePath"u8);
                 writer.WriteStringValue(ValuePath);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -97,8 +98,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> valuePath = default;
+            string operationId = default;
+            string valuePath = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicSchema(operationId.Value, valuePath.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicSchema(operationId, valuePath, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicSchema>.Write(ModelReaderWriterOptions options)

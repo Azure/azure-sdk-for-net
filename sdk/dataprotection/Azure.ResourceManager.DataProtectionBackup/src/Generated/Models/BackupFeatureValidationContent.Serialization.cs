@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FeatureType.HasValue)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
-            if (FeatureName != null)
+            if (Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
-            Optional<string> featureName = default;
+            BackupSupportedFeatureType? featureType = default;
+            string featureName = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFeatureValidationContent(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), featureName.Value);
+            return new BackupFeatureValidationContent(objectType, serializedAdditionalRawData, featureType, featureName);
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationContent>.Write(ModelReaderWriterOptions options)

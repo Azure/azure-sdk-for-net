@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Sd != null)
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             int sst = default;
-            Optional<string> sd = default;
+            string sd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Snssai(sst, sd.Value, serializedAdditionalRawData);
+            return new Snssai(sst, sd, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Snssai>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiscoveryScopeErrorSummaries is ChangeTrackingList<SpringBootSiteErrorSummaryModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiscoveryScopeErrorSummaries))
             {
                 writer.WritePropertyName("discoveryScopeErrorSummaries"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             IList<SpringBootSiteErrorSummaryModel> discoveryScopeErrorSummaries = default;
             IList<SpringBootSiteError> errors = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteErrorSummariesProperties(discoveryScopeErrorSummaries ?? new ChangeTrackingList<SpringBootSiteErrorSummaryModel>(), errors ?? new ChangeTrackingList<SpringBootSiteError>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootSiteErrorSummariesProperties(discoveryScopeErrorSummaries ?? new ChangeTrackingList<SpringBootSiteErrorSummaryModel>(), errors ?? new ChangeTrackingList<SpringBootSiteError>(), provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteErrorSummariesProperties>.Write(ModelReaderWriterOptions options)

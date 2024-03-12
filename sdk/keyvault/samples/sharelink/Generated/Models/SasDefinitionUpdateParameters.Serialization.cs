@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -15,27 +16,27 @@ namespace Azure.Security.KeyVault.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TemplateUri != null)
+            if (Optional.IsDefined(TemplateUri))
             {
                 writer.WritePropertyName("templateUri"u8);
                 writer.WriteStringValue(TemplateUri);
             }
-            if (SasType.HasValue)
+            if (Optional.IsDefined(SasType))
             {
                 writer.WritePropertyName("sasType"u8);
                 writer.WriteStringValue(SasType.Value.ToString());
             }
-            if (ValidityPeriod != null)
+            if (Optional.IsDefined(ValidityPeriod))
             {
                 writer.WritePropertyName("validityPeriod"u8);
                 writer.WriteStringValue(ValidityPeriod);
             }
-            if (SasDefinitionAttributes != null)
+            if (Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(SasDefinitionAttributes);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

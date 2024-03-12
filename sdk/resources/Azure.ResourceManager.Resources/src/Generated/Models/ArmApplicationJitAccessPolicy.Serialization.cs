@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
-            if (JitApprovalMode.HasValue)
+            if (Optional.IsDefined(JitApprovalMode))
             {
                 writer.WritePropertyName("jitApprovalMode"u8);
                 writer.WriteStringValue(JitApprovalMode.Value.ToString());
             }
-            if (!(JitApprovers is ChangeTrackingList<JitApprover> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(JitApprovers))
             {
                 writer.WritePropertyName("jitApprovers"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaximumJitAccessDuration.HasValue)
+            if (Optional.IsDefined(MaximumJitAccessDuration))
             {
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             bool jitAccessEnabled = default;
-            Optional<JitApprovalMode> jitApprovalMode = default;
+            JitApprovalMode? jitApprovalMode = default;
             IList<JitApprover> jitApprovers = default;
-            Optional<TimeSpan> maximumJitAccessDuration = default;
+            TimeSpan? maximumJitAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), jitApprovers ?? new ChangeTrackingList<JitApprover>(), Optional.ToNullable(maximumJitAccessDuration), serializedAdditionalRawData);
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)

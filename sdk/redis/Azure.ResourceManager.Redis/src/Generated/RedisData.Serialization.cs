@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,39 +73,39 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RedisConfiguration != null)
+            if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
                 writer.WriteObjectValue(RedisConfiguration);
             }
-            if (RedisVersion != null)
+            if (Optional.IsDefined(RedisVersion))
             {
                 writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
-            if (EnableNonSslPort.HasValue)
+            if (Optional.IsDefined(EnableNonSslPort))
             {
                 writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
-            if (ReplicasPerMaster.HasValue)
+            if (Optional.IsDefined(ReplicasPerMaster))
             {
                 writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
-            if (ReplicasPerPrimary.HasValue)
+            if (Optional.IsDefined(ReplicasPerPrimary))
             {
                 writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
-            if (!(TenantSettings is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TenantSettings))
             {
                 writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
@@ -116,59 +116,59 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndObject();
             }
-            if (ShardCount.HasValue)
+            if (Optional.IsDefined(ShardCount))
             {
                 writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (UpdateChannel.HasValue)
+            if (Optional.IsDefined(UpdateChannel))
             {
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (StaticIP != null)
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIP"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && SslPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SslPort))
             {
                 writer.WritePropertyName("sslPort"u8);
                 writer.WriteNumberValue(SslPort.Value);
             }
-            if (options.Format != "W" && AccessKeys != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessKeys))
             {
                 if (AccessKeys != null)
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Redis
                     writer.WriteNull("accessKeys");
                 }
             }
-            if (options.Format != "W" && !(LinkedServers is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedServers))
             {
                 writer.WritePropertyName("linkedServers"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Instances is ChangeTrackingList<RedisInstanceDetails> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<RedisPrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -250,31 +250,31 @@ namespace Azure.ResourceManager.Redis
                 return null;
             }
             IList<string> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RedisCommonConfiguration> redisConfiguration = default;
-            Optional<string> redisVersion = default;
-            Optional<bool> enableNonSslPort = default;
-            Optional<int> replicasPerMaster = default;
-            Optional<int> replicasPerPrimary = default;
+            SystemData systemData = default;
+            RedisCommonConfiguration redisConfiguration = default;
+            string redisVersion = default;
+            bool? enableNonSslPort = default;
+            int? replicasPerMaster = default;
+            int? replicasPerPrimary = default;
             IDictionary<string, string> tenantSettings = default;
-            Optional<int> shardCount = default;
-            Optional<RedisTlsVersion> minimumTlsVersion = default;
-            Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<UpdateChannel> updateChannel = default;
+            int? shardCount = default;
+            RedisTlsVersion? minimumTlsVersion = default;
+            RedisPublicNetworkAccess? publicNetworkAccess = default;
+            UpdateChannel? updateChannel = default;
             RedisSku sku = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<RedisProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<int> port = default;
-            Optional<int> sslPort = default;
-            Optional<RedisAccessKeys> accessKeys = default;
+            ResourceIdentifier subnetId = default;
+            IPAddress staticIP = default;
+            RedisProvisioningState? provisioningState = default;
+            string hostName = default;
+            int? port = default;
+            int? sslPort = default;
+            RedisAccessKeys accessKeys = default;
             IReadOnlyList<SubResource> linkedServers = default;
             IReadOnlyList<RedisInstanceDetails> instances = default;
             IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -568,29 +568,29 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
-                redisConfiguration.Value,
-                redisVersion.Value,
-                Optional.ToNullable(enableNonSslPort),
-                Optional.ToNullable(replicasPerMaster),
-                Optional.ToNullable(replicasPerPrimary),
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
                 tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(shardCount),
-                Optional.ToNullable(minimumTlsVersion),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(updateChannel),
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
                 sku,
-                subnetId.Value,
-                staticIP.Value,
-                Optional.ToNullable(provisioningState),
-                hostName.Value,
-                Optional.ToNullable(port),
-                Optional.ToNullable(sslPort),
-                accessKeys.Value,
+                subnetId,
+                staticIP,
+                provisioningState,
+                hostName,
+                port,
+                sslPort,
+                accessKeys,
                 linkedServers ?? new ChangeTrackingList<SubResource>(),
                 instances ?? new ChangeTrackingList<RedisInstanceDetails>(),
                 privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(),

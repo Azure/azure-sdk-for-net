@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ActivityParameterType != null)
+            if (Optional.IsDefined(ActivityParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActivityParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (IsDynamic.HasValue)
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (CanTakeValueFromPipeline.HasValue)
+            if (Optional.IsDefined(CanTakeValueFromPipeline))
             {
                 writer.WritePropertyName("valueFromPipeline"u8);
                 writer.WriteBooleanValue(CanTakeValueFromPipeline.Value);
             }
-            if (CanTakeValueFromPipelineByPropertyName.HasValue)
+            if (Optional.IsDefined(CanTakeValueFromPipelineByPropertyName))
             {
                 writer.WritePropertyName("valueFromPipelineByPropertyName"u8);
                 writer.WriteBooleanValue(CanTakeValueFromPipelineByPropertyName.Value);
             }
-            if (CanTakeValueValueFromRemainingArguments.HasValue)
+            if (Optional.IsDefined(CanTakeValueValueFromRemainingArguments))
             {
                 writer.WritePropertyName("valueFromRemainingArguments"u8);
                 writer.WriteBooleanValue(CanTakeValueValueFromRemainingArguments.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(ValidationSet is ChangeTrackingList<AutomationActivityParameterValidationSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationSet))
             {
                 writer.WritePropertyName("validationSet"u8);
                 writer.WriteStartArray();
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<bool> isDynamic = default;
-            Optional<long> position = default;
-            Optional<bool> valueFromPipeline = default;
-            Optional<bool> valueFromPipelineByPropertyName = default;
-            Optional<bool> valueFromRemainingArguments = default;
-            Optional<string> description = default;
+            string name = default;
+            string type = default;
+            bool? isMandatory = default;
+            bool? isDynamic = default;
+            long? position = default;
+            bool? valueFromPipeline = default;
+            bool? valueFromPipelineByPropertyName = default;
+            bool? valueFromRemainingArguments = default;
+            string description = default;
             IReadOnlyList<AutomationActivityParameterValidationSet> validationSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,15 +224,15 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationActivityParameterDefinition(
-                name.Value,
-                type.Value,
-                Optional.ToNullable(isMandatory),
-                Optional.ToNullable(isDynamic),
-                Optional.ToNullable(position),
-                Optional.ToNullable(valueFromPipeline),
-                Optional.ToNullable(valueFromPipelineByPropertyName),
-                Optional.ToNullable(valueFromRemainingArguments),
-                description.Value,
+                name,
+                type,
+                isMandatory,
+                isDynamic,
+                position,
+                valueFromPipeline,
+                valueFromPipelineByPropertyName,
+                valueFromRemainingArguments,
+                description,
                 validationSet ?? new ChangeTrackingList<AutomationActivityParameterValidationSet>(),
                 serializedAdditionalRawData);
         }

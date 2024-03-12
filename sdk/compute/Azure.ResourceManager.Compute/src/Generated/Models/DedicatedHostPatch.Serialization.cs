@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,22 +46,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformFaultDomain.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (AutoReplaceOnFailure.HasValue)
+            if (Optional.IsDefined(AutoReplaceOnFailure))
             {
                 writer.WritePropertyName("autoReplaceOnFailure"u8);
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
-            if (options.Format != "W" && HostId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (options.Format != "W" && !(VirtualMachines is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -70,27 +71,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOn))
             {
                 writer.WritePropertyName("provisioningTime"u8);
                 writer.WriteStringValue(ProvisioningOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
@@ -134,17 +135,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
+            ComputeSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<bool> autoReplaceOnFailure = default;
-            Optional<string> hostId = default;
+            int? platformFaultDomain = default;
+            bool? autoReplaceOnFailure = default;
+            string hostId = default;
             IReadOnlyList<SubResource> virtualMachines = default;
-            Optional<DedicatedHostLicenseType> licenseType = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DedicatedHostInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            DedicatedHostLicenseType? licenseType = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            DedicatedHostInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,16 +272,16 @@ namespace Azure.ResourceManager.Compute.Models
             return new DedicatedHostPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                sku.Value,
-                Optional.ToNullable(platformFaultDomain),
-                Optional.ToNullable(autoReplaceOnFailure),
-                hostId.Value,
+                sku,
+                platformFaultDomain,
+                autoReplaceOnFailure,
+                hostId,
                 virtualMachines ?? new ChangeTrackingList<SubResource>(),
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(provisioningTime),
-                provisioningState.Value,
-                instanceView.Value,
-                Optional.ToNullable(timeCreated));
+                licenseType,
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated);
         }
 
         BinaryData IPersistableModel<DedicatedHostPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (FileSpecType != null)
+            if (Optional.IsDefined(FileSpecType))
             {
                 writer.WritePropertyName("fileSpecType"u8);
                 writer.WriteStringValue(FileSpecType);
             }
-            if (TargetFolderPath != null)
+            if (Optional.IsDefined(TargetFolderPath))
             {
                 writer.WritePropertyName("targetFolderPath"u8);
                 writer.WriteStringValue(TargetFolderPath);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> fileSpecType = default;
-            Optional<string> targetFolderPath = default;
+            string path = default;
+            string fileSpecType = default;
+            string targetFolderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreFileSpecs(path.Value, fileSpecType.Value, targetFolderPath.Value, serializedAdditionalRawData);
+            return new RestoreFileSpecs(path, fileSpecType, targetFolderPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreFileSpecs>.Write(ModelReaderWriterOptions options)

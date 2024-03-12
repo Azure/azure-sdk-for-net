@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string containerName = default;
-            Optional<Uri> endpointUrl = default;
+            Uri endpointUrl = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBlobDataTransferDataSourceSink(component, serializedAdditionalRawData, containerName, endpointUrl.Value);
+            return new AzureBlobDataTransferDataSourceSink(component, serializedAdditionalRawData, containerName, endpointUrl);
         }
 
         BinaryData IPersistableModel<AzureBlobDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)

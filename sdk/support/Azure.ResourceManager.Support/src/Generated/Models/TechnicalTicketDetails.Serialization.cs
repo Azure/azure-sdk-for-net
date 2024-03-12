@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TechnicalTicketDetails(resourceId.Value, serializedAdditionalRawData);
+            return new TechnicalTicketDetails(resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TechnicalTicketDetails>.Write(ModelReaderWriterOptions options)

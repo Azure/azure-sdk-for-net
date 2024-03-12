@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Instance != null)
+            if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteStringValue(Instance);
             }
-            if (!(DimensionFilter is ChangeTrackingList<DataBoxEdgeMetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalDimensions is ChangeTrackingList<DataBoxEdgeMetricDimension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDimensions))
             {
                 writer.WritePropertyName("additionalDimensions"u8);
                 writer.WriteStartArray();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string name = default;
-            Optional<string> instance = default;
+            string instance = default;
             IList<DataBoxEdgeMetricDimension> dimensionFilter = default;
             IList<DataBoxEdgeMetricDimension> additionalDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricCounter(name, instance.Value, dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), serializedAdditionalRawData);
+            return new DataBoxEdgeMetricCounter(name, instance, dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricCounter>.Write(ModelReaderWriterOptions options)

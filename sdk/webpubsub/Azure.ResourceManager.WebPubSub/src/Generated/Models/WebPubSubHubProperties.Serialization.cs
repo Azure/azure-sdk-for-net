@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (!(EventHandlers is ChangeTrackingList<WebPubSubEventHandler> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHandlers))
             {
                 writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AnonymousConnectPolicy != null)
+            if (Optional.IsDefined(AnonymousConnectPolicy))
             {
                 writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IList<WebPubSubEventHandler> eventHandlers = default;
-            Optional<string> anonymousConnectPolicy = default;
+            string anonymousConnectPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy.Value, serializedAdditionalRawData);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubProperties>.Write(ModelReaderWriterOptions options)

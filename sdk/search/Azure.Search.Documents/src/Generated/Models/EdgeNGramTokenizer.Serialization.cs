@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MinGram.HasValue)
+            if (Optional.IsDefined(MinGram))
             {
                 writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (MaxGram.HasValue)
+            if (Optional.IsDefined(MaxGram))
             {
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (!(TokenChars is ChangeTrackingList<TokenCharacterKind> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenChars))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();
@@ -49,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> minGram = default;
-            Optional<int> maxGram = default;
+            int? minGram = default;
+            int? maxGram = default;
             IList<TokenCharacterKind> tokenChars = default;
             string odataType = default;
             string name = default;
@@ -99,7 +100,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EdgeNGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), tokenChars ?? new ChangeTrackingList<TokenCharacterKind>());
+            return new EdgeNGramTokenizer(odataType, name, minGram, maxGram, tokenChars ?? new ChangeTrackingList<TokenCharacterKind>());
         }
     }
 }

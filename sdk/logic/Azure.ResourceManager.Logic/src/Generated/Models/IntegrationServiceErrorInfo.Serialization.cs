@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (!(Details is ChangeTrackingList<IntegrationServiceErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InnerError != null)
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innerError"u8);
 #if NET6_0_OR_GREATER
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationServiceErrorCode code = default;
             string message = default;
             IReadOnlyList<IntegrationServiceErrorInfo> details = default;
-            Optional<BinaryData> innerError = default;
+            BinaryData innerError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceErrorInfo(code, message, details ?? new ChangeTrackingList<IntegrationServiceErrorInfo>(), innerError.Value, serializedAdditionalRawData);
+            return new IntegrationServiceErrorInfo(code, message, details ?? new ChangeTrackingList<IntegrationServiceErrorInfo>(), innerError, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceErrorInfo>.Write(ModelReaderWriterOptions options)

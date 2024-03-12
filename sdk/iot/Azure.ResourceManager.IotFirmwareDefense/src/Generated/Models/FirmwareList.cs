@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -50,14 +49,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         internal FirmwareList()
         {
-            Value = new ChangeTrackingList<FirmwareData>();
+            Value = new ChangeTrackingList<IotFirmwareData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         /// <param name="value"> The list of firmwares. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareList(IReadOnlyList<FirmwareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareList(IReadOnlyList<IotFirmwareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of firmwares. </summary>
-        public IReadOnlyList<FirmwareData> Value { get; }
+        public IReadOnlyList<IotFirmwareData> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && NamePropertiesName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && !(ConnectionParameters is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionParameters))
             {
                 writer.WritePropertyName("connectionParameters"u8);
                 writer.WriteStartObject();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (options.Format != "W" && !(RuntimeUris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
             {
                 writer.WritePropertyName("runtimeUrls"u8);
                 writer.WriteStartArray();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && GeneralInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
             {
                 writer.WritePropertyName("generalInformation"u8);
                 writer.WriteObjectValue(GeneralInformation);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -126,42 +126,42 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BackendService != null)
+            if (options.Format != "W" && Optional.IsDefined(BackendService))
             {
                 writer.WritePropertyName("backendService"u8);
                 writer.WriteObjectValue(BackendService);
             }
-            if (options.Format != "W" && Policies != null)
+            if (options.Format != "W" && Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
-            if (options.Format != "W" && ApiDefinitionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
             {
                 writer.WritePropertyName("apiDefinitionUrl"u8);
                 writer.WriteStringValue(ApiDefinitionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ApiDefinitions != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
             {
                 writer.WritePropertyName("apiDefinitions"u8);
                 writer.WriteObjectValue(ApiDefinitions);
             }
-            if (IntegrationServiceEnvironment != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Category.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (DeploymentParameters != null)
+            if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);
@@ -210,21 +210,21 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
+            SystemData systemData = default;
+            string name0 = default;
             IReadOnlyDictionary<string, BinaryData> connectionParameters = default;
-            Optional<LogicApiResourceMetadata> metadata = default;
+            LogicApiResourceMetadata metadata = default;
             IReadOnlyList<Uri> runtimeUrls = default;
-            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
+            LogicApiResourceGeneralInformation generalInformation = default;
             IReadOnlyList<string> capabilities = default;
-            Optional<LogicApiResourceBackendService> backendService = default;
-            Optional<LogicApiResourcePolicies> policies = default;
-            Optional<Uri> apiDefinitionUrl = default;
-            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicApiTier> category = default;
-            Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            LogicApiResourceBackendService backendService = default;
+            LogicApiResourcePolicies policies = default;
+            Uri apiDefinitionUrl = default;
+            LogicApiResourceDefinitions apiDefinitions = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicApiTier? category = default;
+            IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -445,23 +445,23 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                name0.Value,
+                name0,
                 connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                metadata.Value,
+                metadata,
                 runtimeUrls ?? new ChangeTrackingList<Uri>(),
-                generalInformation.Value,
+                generalInformation,
                 capabilities ?? new ChangeTrackingList<string>(),
-                backendService.Value,
-                policies.Value,
-                apiDefinitionUrl.Value,
-                apiDefinitions.Value,
-                integrationServiceEnvironment.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(category),
-                deploymentParameters.Value,
+                backendService,
+                policies,
+                apiDefinitionUrl,
+                apiDefinitions,
+                integrationServiceEnvironment,
+                provisioningState,
+                category,
+                deploymentParameters,
                 serializedAdditionalRawData);
         }
 

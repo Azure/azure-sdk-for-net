@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (AllowPermanentDelete.HasValue)
+            if (Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WritePropertyName("allowPermanentDelete"u8);
                 writer.WriteBooleanValue(AllowPermanentDelete.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> days = default;
-            Optional<bool> allowPermanentDelete = default;
+            bool? enabled = default;
+            int? days = default;
+            bool? allowPermanentDelete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeleteRetentionPolicy(Optional.ToNullable(enabled), Optional.ToNullable(days), Optional.ToNullable(allowPermanentDelete), serializedAdditionalRawData);
+            return new DeleteRetentionPolicy(enabled, days, allowPermanentDelete, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeleteRetentionPolicy>.Write(ModelReaderWriterOptions options)

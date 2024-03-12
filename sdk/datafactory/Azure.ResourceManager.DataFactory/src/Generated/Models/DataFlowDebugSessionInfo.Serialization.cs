@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (DataFlowName != null)
+            if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (IntegrationRuntimeName != null)
+            if (Optional.IsDefined(IntegrationRuntimeName))
             {
                 writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);
             }
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLiveInMinutes"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (LastActivityOn.HasValue)
+            if (Optional.IsDefined(LastActivityOn))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
@@ -106,15 +107,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> dataFlowName = default;
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> nodeCount = default;
-            Optional<string> integrationRuntimeName = default;
-            Optional<Guid> sessionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> timeToLiveInMinutes = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
+            string dataFlowName = default;
+            string computeType = default;
+            int? coreCount = default;
+            int? nodeCount = default;
+            string integrationRuntimeName = default;
+            Guid? sessionId = default;
+            DateTimeOffset? startTime = default;
+            int? timeToLiveInMinutes = default;
+            DateTimeOffset? lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,15 +193,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowDebugSessionInfo(
-                dataFlowName.Value,
-                computeType.Value,
-                Optional.ToNullable(coreCount),
-                Optional.ToNullable(nodeCount),
-                integrationRuntimeName.Value,
-                Optional.ToNullable(sessionId),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(timeToLiveInMinutes),
-                Optional.ToNullable(lastActivityTime),
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
                 additionalProperties);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (MetadataEndpoint != null)
+            if (Optional.IsDefined(MetadataEndpoint))
             {
                 writer.WritePropertyName("metadataEndpoint"u8);
                 writer.WriteStringValue(MetadataEndpoint);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> metadataEndpoint = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            string displayName = default;
+            string description = default;
+            string metadataEndpoint = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,11 +146,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiManagementOpenIdConnectProviderPatch(
-                displayName.Value,
-                description.Value,
-                metadataEndpoint.Value,
-                clientId.Value,
-                clientSecret.Value,
+                displayName,
+                description,
+                metadataEndpoint,
+                clientId,
+                clientSecret,
                 serializedAdditionalRawData);
         }
 

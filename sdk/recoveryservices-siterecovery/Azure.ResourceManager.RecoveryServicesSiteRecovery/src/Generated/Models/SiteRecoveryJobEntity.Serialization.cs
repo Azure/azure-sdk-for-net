@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobFriendlyName != null)
+            if (Optional.IsDefined(JobFriendlyName))
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (TargetObjectId != null)
+            if (Optional.IsDefined(TargetObjectId))
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
             }
-            if (TargetObjectName != null)
+            if (Optional.IsDefined(TargetObjectName))
             {
                 writer.WritePropertyName("targetObjectName"u8);
                 writer.WriteStringValue(TargetObjectName);
             }
-            if (TargetInstanceType != null)
+            if (Optional.IsDefined(TargetInstanceType))
             {
                 writer.WritePropertyName("targetInstanceType"u8);
                 writer.WriteStringValue(TargetInstanceType);
             }
-            if (JobScenarioName != null)
+            if (Optional.IsDefined(JobScenarioName))
             {
                 writer.WritePropertyName("jobScenarioName"u8);
                 writer.WriteStringValue(JobScenarioName);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobFriendlyName = default;
-            Optional<string> targetObjectId = default;
-            Optional<string> targetObjectName = default;
-            Optional<string> targetInstanceType = default;
-            Optional<string> jobScenarioName = default;
+            ResourceIdentifier jobId = default;
+            string jobFriendlyName = default;
+            string targetObjectId = default;
+            string targetObjectName = default;
+            string targetInstanceType = default;
+            string jobScenarioName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryJobEntity(
-                jobId.Value,
-                jobFriendlyName.Value,
-                targetObjectId.Value,
-                targetObjectName.Value,
-                targetInstanceType.Value,
-                jobScenarioName.Value,
+                jobId,
+                jobFriendlyName,
+                targetObjectId,
+                targetObjectName,
+                targetInstanceType,
+                jobScenarioName,
                 serializedAdditionalRawData);
         }
 

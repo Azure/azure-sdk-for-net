@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -34,22 +35,22 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
             writer.WriteObjectValue(EndPoint);
-            if (ModulationConfiguration != null)
+            if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
                 writer.WriteStringValue(ModulationConfiguration);
             }
-            if (DemodulationConfiguration != null)
+            if (Optional.IsDefined(DemodulationConfiguration))
             {
                 writer.WritePropertyName("demodulationConfiguration"u8);
                 writer.WriteStringValue(DemodulationConfiguration);
             }
-            if (EncodingConfiguration != null)
+            if (Optional.IsDefined(EncodingConfiguration))
             {
                 writer.WritePropertyName("encodingConfiguration"u8);
                 writer.WriteStringValue(EncodingConfiguration);
             }
-            if (DecodingConfiguration != null)
+            if (Optional.IsDefined(DecodingConfiguration))
             {
                 writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.Orbital.Models
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
             OrbitalContactEndpoint endPoint = default;
-            Optional<string> modulationConfiguration = default;
-            Optional<string> demodulationConfiguration = default;
-            Optional<string> encodingConfiguration = default;
-            Optional<string> decodingConfiguration = default;
+            string modulationConfiguration = default;
+            string demodulationConfiguration = default;
+            string encodingConfiguration = default;
+            string decodingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,10 +156,10 @@ namespace Azure.ResourceManager.Orbital.Models
                 centerFrequencyMHz,
                 bandwidthMHz,
                 endPoint,
-                modulationConfiguration.Value,
-                demodulationConfiguration.Value,
-                encodingConfiguration.Value,
-                decodingConfiguration.Value,
+                modulationConfiguration,
+                demodulationConfiguration,
+                encodingConfiguration,
+                decodingConfiguration,
                 serializedAdditionalRawData);
         }
 

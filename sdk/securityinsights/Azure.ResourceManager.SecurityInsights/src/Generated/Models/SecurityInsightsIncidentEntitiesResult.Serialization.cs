@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(Entities is ChangeTrackingList<SecurityInsightsEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MetaData is ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PerimeterGuid != null)
+            if (Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
                 writer.WriteStringValue(PerimeterGuid);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> perimeterGuid = default;
-            Optional<AzureLocation> location = default;
+            string id = default;
+            string perimeterGuid = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsNetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeter>.Write(ModelReaderWriterOptions options)

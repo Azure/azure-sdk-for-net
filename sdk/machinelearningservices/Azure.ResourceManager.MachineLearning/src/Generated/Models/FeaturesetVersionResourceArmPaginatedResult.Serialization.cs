@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<MachineLearningFeatureSetVersionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<MachineLearningFeatureSetVersionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeaturesetVersionResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningFeatureSetVersionData>(), serializedAdditionalRawData);
+            return new FeaturesetVersionResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningFeatureSetVersionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturesetVersionResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

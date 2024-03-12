@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryCloudServiceId != null)
+            if (Optional.IsDefined(RecoveryCloudServiceId))
             {
                 writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (!(ManagedDiskUpdateDetails is ChangeTrackingList<A2AVmManagedDiskUpdateDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedDiskUpdateDetails))
             {
                 writer.WritePropertyName("managedDiskUpdateDetails"u8);
                 writer.WriteStartArray();
@@ -46,32 +47,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryBootDiagStorageAccountId != null)
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
-            if (TfoAzureVmName != null)
+            if (Optional.IsDefined(TfoAzureVmName))
             {
                 writer.WritePropertyName("tfoAzureVMName"u8);
                 writer.WriteStringValue(TfoAzureVmName);
             }
-            if (RecoveryProximityPlacementGroupId != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
-            if (RecoveryVirtualMachineScaleSetId != null)
+            if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
             {
                 writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
             }
-            if (RecoveryCapacityReservationGroupId != null)
+            if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
             {
                 writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
@@ -116,15 +117,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryCloudServiceId = default;
-            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
+            string recoveryCloudServiceId = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
             IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default;
-            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Optional<string> tfoAzureVmName = default;
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
-            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
+            ResourceIdentifier recoveryBootDiagStorageAccountId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string tfoAzureVmName = default;
+            ResourceIdentifier recoveryProximityPlacementGroupId = default;
+            ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
+            ResourceIdentifier recoveryCapacityReservationGroupId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,15 +223,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AUpdateReplicationProtectedItemContent(
                 instanceType,
                 serializedAdditionalRawData,
-                recoveryCloudServiceId.Value,
-                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId,
+                recoveryResourceGroupId,
                 managedDiskUpdateDetails ?? new ChangeTrackingList<A2AVmManagedDiskUpdateDetails>(),
-                recoveryBootDiagStorageAccountId.Value,
-                diskEncryptionInfo.Value,
-                tfoAzureVmName.Value,
-                recoveryProximityPlacementGroupId.Value,
-                recoveryVirtualMachineScaleSetId.Value,
-                recoveryCapacityReservationGroupId.Value);
+                recoveryBootDiagStorageAccountId,
+                diskEncryptionInfo,
+                tfoAzureVmName,
+                recoveryProximityPlacementGroupId,
+                recoveryVirtualMachineScaleSetId,
+                recoveryCapacityReservationGroupId);
         }
 
         BinaryData IPersistableModel<A2AUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

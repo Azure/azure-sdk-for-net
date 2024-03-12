@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (GroupNickname != null)
+            if (Optional.IsDefined(GroupNickname))
             {
                 writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
-            if (!(LinkedDatabases is ChangeTrackingList<RedisEnterpriseLinkedDatabase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedDatabases))
             {
                 writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<string> groupNickname = default;
+            string groupNickname = default;
             IList<RedisEnterpriseLinkedDatabase> linkedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseGeoReplication(groupNickname, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.Write(ModelReaderWriterOptions options)

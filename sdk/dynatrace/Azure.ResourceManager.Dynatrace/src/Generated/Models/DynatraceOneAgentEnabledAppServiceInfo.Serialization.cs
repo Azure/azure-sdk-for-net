@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (MonitoringType.HasValue)
+            if (Optional.IsDefined(MonitoringType))
             {
                 writer.WritePropertyName("monitoringType"u8);
                 writer.WriteStringValue(MonitoringType.Value.ToString());
             }
-            if (AutoUpdateSetting.HasValue)
+            if (Optional.IsDefined(AutoUpdateSetting))
             {
                 writer.WritePropertyName("autoUpdateSetting"u8);
                 writer.WriteStringValue(AutoUpdateSetting.Value.ToString());
             }
-            if (UpdateStatus.HasValue)
+            if (Optional.IsDefined(UpdateStatus))
             {
                 writer.WritePropertyName("updateStatus"u8);
                 writer.WriteStringValue(UpdateStatus.Value.ToString());
             }
-            if (AvailabilityState.HasValue)
+            if (Optional.IsDefined(AvailabilityState))
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToString());
             }
-            if (LogModule.HasValue)
+            if (Optional.IsDefined(LogModule))
             {
                 writer.WritePropertyName("logModule"u8);
                 writer.WriteStringValue(LogModule.Value.ToString());
             }
-            if (HostGroup != null)
+            if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
                 writer.WriteStringValue(HostGroup);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> version = default;
-            Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
-            Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
-            Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
-            Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
-            Optional<DynatraceLogModuleState> logModule = default;
-            Optional<string> hostGroup = default;
-            Optional<string> hostName = default;
+            ResourceIdentifier resourceId = default;
+            string version = default;
+            DynatraceOneAgentMonitoringType? monitoringType = default;
+            DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting = default;
+            DynatraceOneAgentUpdateStatus? updateStatus = default;
+            DynatraceOneAgentAvailabilityState? availabilityState = default;
+            DynatraceLogModuleState? logModule = default;
+            string hostGroup = default;
+            string hostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,15 +199,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DynatraceOneAgentEnabledAppServiceInfo(
-                resourceId.Value,
-                version.Value,
-                Optional.ToNullable(monitoringType),
-                Optional.ToNullable(autoUpdateSetting),
-                Optional.ToNullable(updateStatus),
-                Optional.ToNullable(availabilityState),
-                Optional.ToNullable(logModule),
-                hostGroup.Value,
-                hostName.Value,
+                resourceId,
+                version,
+                monitoringType,
+                autoUpdateSetting,
+                updateStatus,
+                availabilityState,
+                logModule,
+                hostGroup,
+                hostName,
                 serializedAdditionalRawData);
         }
 

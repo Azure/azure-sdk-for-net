@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId.Value);
             }
-            if (Assignment != null)
+            if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
                 writer.WriteObjectValue(Assignment);
             }
-            if (Vm != null)
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (!(Resources is ChangeTrackingList<AssignmentReportResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<Guid> reportId = default;
-            Optional<GuestConfigurationAssignmentInfo> assignment = default;
-            Optional<GuestConfigurationVmInfo> vm = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            ResourceIdentifier id = default;
+            Guid? reportId = default;
+            GuestConfigurationAssignmentInfo assignment = default;
+            GuestConfigurationVmInfo vm = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            GuestConfigurationAssignmentReportType? operationType = default;
             IList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,14 +221,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestConfigurationAssignmentReportInfo(
-                id.Value,
-                Optional.ToNullable(reportId),
-                assignment.Value,
-                vm.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(complianceStatus),
-                Optional.ToNullable(operationType),
+                id,
+                reportId,
+                assignment,
+                vm,
+                startTime,
+                endTime,
+                complianceStatus,
+                operationType,
                 resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
                 serializedAdditionalRawData);
         }

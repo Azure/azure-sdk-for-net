@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStringValue(HttpMethod.ToString());
             writer.WritePropertyName("serializedBody"u8);
             writer.WriteStringValue(SerializedBody);
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string relativePath = default;
             HttpMethod httpMethod = default;
             string serializedBody = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion.Value, serializedAdditionalRawData);
+            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestMetadata>.Write(ModelReaderWriterOptions options)

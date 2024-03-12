@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ClientRequestId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (!(Errors is ChangeTrackingList<ReplicationEligibilityResultErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
+            string clientRequestId = default;
             IReadOnlyList<ReplicationEligibilityResultErrorInfo> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultProperties(clientRequestId.Value, errors ?? new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>(), serializedAdditionalRawData);
+            return new ReplicationEligibilityResultProperties(clientRequestId, errors ?? new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultProperties>.Write(ModelReaderWriterOptions options)

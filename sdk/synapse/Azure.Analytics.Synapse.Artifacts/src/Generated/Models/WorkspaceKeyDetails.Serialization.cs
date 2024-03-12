@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (KeyVaultUrl != null)
+            if (Optional.IsDefined(KeyVaultUrl))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUrl);
@@ -37,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> keyVaultUrl = default;
+            string name = default;
+            string keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceKeyDetails(name.Value, keyVaultUrl.Value);
+            return new WorkspaceKeyDetails(name, keyVaultUrl);
         }
 
         internal partial class WorkspaceKeyDetailsConverter : JsonConverter<WorkspaceKeyDetails>

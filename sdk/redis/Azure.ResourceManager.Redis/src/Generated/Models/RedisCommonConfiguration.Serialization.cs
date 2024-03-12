@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -26,92 +27,92 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (IsRdbBackupEnabled.HasValue)
+            if (Optional.IsDefined(IsRdbBackupEnabled))
             {
                 writer.WritePropertyName("rdb-backup-enabled"u8);
                 writer.WriteBooleanValue(IsRdbBackupEnabled.Value);
             }
-            if (RdbBackupFrequency != null)
+            if (Optional.IsDefined(RdbBackupFrequency))
             {
                 writer.WritePropertyName("rdb-backup-frequency"u8);
                 writer.WriteStringValue(RdbBackupFrequency);
             }
-            if (RdbBackupMaxSnapshotCount.HasValue)
+            if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
                 WriteRdbBackupMaxSnapshotCount(writer);
             }
-            if (RdbStorageConnectionString != null)
+            if (Optional.IsDefined(RdbStorageConnectionString))
             {
                 writer.WritePropertyName("rdb-storage-connection-string"u8);
                 writer.WriteStringValue(RdbStorageConnectionString);
             }
-            if (IsAofBackupEnabled.HasValue)
+            if (Optional.IsDefined(IsAofBackupEnabled))
             {
                 writer.WritePropertyName("aof-backup-enabled"u8);
                 writer.WriteBooleanValue(IsAofBackupEnabled.Value);
             }
-            if (AofStorageConnectionString0 != null)
+            if (Optional.IsDefined(AofStorageConnectionString0))
             {
                 writer.WritePropertyName("aof-storage-connection-string-0"u8);
                 writer.WriteStringValue(AofStorageConnectionString0);
             }
-            if (AofStorageConnectionString1 != null)
+            if (Optional.IsDefined(AofStorageConnectionString1))
             {
                 writer.WritePropertyName("aof-storage-connection-string-1"u8);
                 writer.WriteStringValue(AofStorageConnectionString1);
             }
-            if (MaxFragmentationMemoryReserved != null)
+            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
             {
                 writer.WritePropertyName("maxfragmentationmemory-reserved"u8);
                 writer.WriteStringValue(MaxFragmentationMemoryReserved);
             }
-            if (MaxMemoryPolicy != null)
+            if (Optional.IsDefined(MaxMemoryPolicy))
             {
                 writer.WritePropertyName("maxmemory-policy"u8);
                 writer.WriteStringValue(MaxMemoryPolicy);
             }
-            if (MaxMemoryReserved != null)
+            if (Optional.IsDefined(MaxMemoryReserved))
             {
                 writer.WritePropertyName("maxmemory-reserved"u8);
                 writer.WriteStringValue(MaxMemoryReserved);
             }
-            if (MaxMemoryDelta != null)
+            if (Optional.IsDefined(MaxMemoryDelta))
             {
                 writer.WritePropertyName("maxmemory-delta"u8);
                 writer.WriteStringValue(MaxMemoryDelta);
             }
-            if (options.Format != "W" && MaxClients != null)
+            if (options.Format != "W" && Optional.IsDefined(MaxClients))
             {
                 writer.WritePropertyName("maxclients"u8);
                 writer.WriteStringValue(MaxClients);
             }
-            if (options.Format != "W" && PreferredDataArchiveAuthMethod != null)
+            if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (PreferredDataPersistenceAuthMethod != null)
+            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-persistence-auth-method"u8);
                 writer.WriteStringValue(PreferredDataPersistenceAuthMethod);
             }
-            if (options.Format != "W" && ZonalConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(ZonalConfiguration))
             {
                 writer.WritePropertyName("zonal-configuration"u8);
                 writer.WriteStringValue(ZonalConfiguration);
             }
-            if (AuthNotRequired != null)
+            if (Optional.IsDefined(AuthNotRequired))
             {
                 writer.WritePropertyName("authnotrequired"u8);
                 writer.WriteStringValue(AuthNotRequired);
             }
-            if (StorageSubscriptionId != null)
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
             }
-            if (IsAadEnabled != null)
+            if (Optional.IsDefined(IsAadEnabled))
             {
                 writer.WritePropertyName("aad-enabled"u8);
                 writer.WriteStringValue(IsAadEnabled);
@@ -151,24 +152,24 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<bool> rdbBackupEnabled = default;
-            Optional<string> rdbBackupFrequency = default;
-            Optional<int> rdbBackupMaxSnapshotCount = default;
-            Optional<string> rdbStorageConnectionString = default;
-            Optional<bool> aofBackupEnabled = default;
-            Optional<string> aofStorageConnectionString0 = default;
-            Optional<string> aofStorageConnectionString1 = default;
-            Optional<string> maxfragmentationmemoryReserved = default;
-            Optional<string> maxmemoryPolicy = default;
-            Optional<string> maxmemoryReserved = default;
-            Optional<string> maxmemoryDelta = default;
-            Optional<string> maxclients = default;
-            Optional<string> preferredDataArchiveAuthMethod = default;
-            Optional<string> preferredDataPersistenceAuthMethod = default;
-            Optional<string> zonalConfiguration = default;
-            Optional<string> authnotrequired = default;
-            Optional<string> storageSubscriptionId = default;
-            Optional<string> aadEnabled = default;
+            bool? rdbBackupEnabled = default;
+            string rdbBackupFrequency = default;
+            int? rdbBackupMaxSnapshotCount = default;
+            string rdbStorageConnectionString = default;
+            bool? aofBackupEnabled = default;
+            string aofStorageConnectionString0 = default;
+            string aofStorageConnectionString1 = default;
+            string maxfragmentationmemoryReserved = default;
+            string maxmemoryPolicy = default;
+            string maxmemoryReserved = default;
+            string maxmemoryDelta = default;
+            string maxclients = default;
+            string preferredDataArchiveAuthMethod = default;
+            string preferredDataPersistenceAuthMethod = default;
+            string zonalConfiguration = default;
+            string authnotrequired = default;
+            string storageSubscriptionId = default;
+            string aadEnabled = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,24 +268,24 @@ namespace Azure.ResourceManager.Redis.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RedisCommonConfiguration(
-                Optional.ToNullable(rdbBackupEnabled),
-                rdbBackupFrequency.Value,
-                Optional.ToNullable(rdbBackupMaxSnapshotCount),
-                rdbStorageConnectionString.Value,
-                Optional.ToNullable(aofBackupEnabled),
-                aofStorageConnectionString0.Value,
-                aofStorageConnectionString1.Value,
-                maxfragmentationmemoryReserved.Value,
-                maxmemoryPolicy.Value,
-                maxmemoryReserved.Value,
-                maxmemoryDelta.Value,
-                maxclients.Value,
-                preferredDataArchiveAuthMethod.Value,
-                preferredDataPersistenceAuthMethod.Value,
-                zonalConfiguration.Value,
-                authnotrequired.Value,
-                storageSubscriptionId.Value,
-                aadEnabled.Value,
+                rdbBackupEnabled,
+                rdbBackupFrequency,
+                rdbBackupMaxSnapshotCount,
+                rdbStorageConnectionString,
+                aofBackupEnabled,
+                aofStorageConnectionString0,
+                aofStorageConnectionString1,
+                maxfragmentationmemoryReserved,
+                maxmemoryPolicy,
+                maxmemoryReserved,
+                maxmemoryDelta,
+                maxclients,
+                preferredDataArchiveAuthMethod,
+                preferredDataPersistenceAuthMethod,
+                zonalConfiguration,
+                authnotrequired,
+                storageSubscriptionId,
+                aadEnabled,
                 additionalProperties);
         }
 

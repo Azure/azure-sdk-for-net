@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (SourceField != null)
+            if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> sourceField = default;
-            Optional<string> defaultValue = default;
+            string sourceField = default;
+            string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonFieldWithDefault(sourceField.Value, defaultValue.Value, serializedAdditionalRawData);
+            return new JsonFieldWithDefault(sourceField, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonFieldWithDefault>.Write(ModelReaderWriterOptions options)

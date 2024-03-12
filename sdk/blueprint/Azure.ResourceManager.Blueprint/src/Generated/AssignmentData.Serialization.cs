@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (BlueprintId != null)
+            if (Optional.IsDefined(BlueprintId))
             {
                 writer.WritePropertyName("blueprintId"u8);
                 writer.WriteStringValue(BlueprintId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Locks != null)
+            if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
                 writer.WriteObjectValue(Locks);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> blueprintId = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string blueprintId = default;
+            string scope = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, ResourceGroupValue> resourceGroups = default;
-            Optional<AssignmentStatus> status = default;
-            Optional<AssignmentLockSettings> locks = default;
-            Optional<AssignmentProvisioningState> provisioningState = default;
+            AssignmentStatus status = default;
+            AssignmentLockSettings locks = default;
+            AssignmentProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.Blueprint
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                displayName.Value,
-                description.Value,
-                blueprintId.Value,
-                scope.Value,
+                displayName,
+                description,
+                blueprintId,
+                scope,
                 parameters,
                 resourceGroups,
-                status.Value,
-                locks.Value,
-                Optional.ToNullable(provisioningState),
+                status,
+                locks,
+                provisioningState,
                 location,
                 serializedAdditionalRawData);
         }

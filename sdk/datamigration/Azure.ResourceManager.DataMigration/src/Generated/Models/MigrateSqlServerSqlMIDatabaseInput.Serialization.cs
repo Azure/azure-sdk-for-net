@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("restoreDatabaseName"u8);
             writer.WriteStringValue(RestoreDatabaseName);
-            if (BackupFileShare != null)
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            if (!(BackupFilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BackupFilePaths))
             {
                 writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string name = default;
             string restoreDatabaseName = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             IList<string> backupFilePaths = default;
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,9 +145,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMIDatabaseInput(
                 name,
                 restoreDatabaseName,
-                backupFileShare.Value,
+                backupFileShare,
                 backupFilePaths ?? new ChangeTrackingList<string>(),
-                id.Value,
+                id,
                 serializedAdditionalRawData);
         }
 

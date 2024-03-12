@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<WindowsEventLogDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(XPathQueries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(XPathQueries))
             {
                 writer.WritePropertyName("xPathQueries"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<WindowsEventLogDataSourceStream> streams = default;
             IList<string> xPathQueries = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsEventLogDataSource(streams ?? new ChangeTrackingList<WindowsEventLogDataSourceStream>(), xPathQueries ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
+            return new WindowsEventLogDataSource(streams ?? new ChangeTrackingList<WindowsEventLogDataSourceStream>(), xPathQueries ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsEventLogDataSource>.Write(ModelReaderWriterOptions options)

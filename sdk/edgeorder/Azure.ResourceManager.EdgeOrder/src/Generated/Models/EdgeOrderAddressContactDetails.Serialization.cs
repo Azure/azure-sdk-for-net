@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (PhoneExtension != null)
+            if (Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Mobile != null)
+            if (Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IList<string> emailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,8 +134,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderAddressContactDetails(
                 contactName,
                 phone,
-                phoneExtension.Value,
-                mobile.Value,
+                phoneExtension,
+                mobile,
                 emailList,
                 serializedAdditionalRawData);
         }

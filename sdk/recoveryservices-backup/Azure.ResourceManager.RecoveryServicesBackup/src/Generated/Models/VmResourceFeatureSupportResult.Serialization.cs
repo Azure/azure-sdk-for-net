@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SupportStatus.HasValue)
+            if (Optional.IsDefined(SupportStatus))
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<VmResourceFeatureSupportStatus> supportStatus = default;
+            VmResourceFeatureSupportStatus? supportStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmResourceFeatureSupportResult(Optional.ToNullable(supportStatus), serializedAdditionalRawData);
+            return new VmResourceFeatureSupportResult(supportStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmResourceFeatureSupportResult>.Write(ModelReaderWriterOptions options)

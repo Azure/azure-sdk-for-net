@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="fileShareName"/> is null. </exception>
         public AzureStorageSmbFileShareEndpointProperties(ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
-            if (storageAccountResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountResourceId));
-            }
-            if (fileShareName == null)
-            {
-                throw new ArgumentNullException(nameof(fileShareName));
-            }
+            Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
+            Argument.AssertNotNull(fileShareName, nameof(fileShareName));
 
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;

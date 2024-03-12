@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppInsightsJavaAgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AppInsightsJavaAgentVersion))
             {
                 writer.WritePropertyName("java"u8);
                 writer.WriteStringValue(AppInsightsJavaAgentVersion);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> java = default;
+            string java = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsAgentVersions(java.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsAgentVersions(java, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsAgentVersions>.Write(ModelReaderWriterOptions options)

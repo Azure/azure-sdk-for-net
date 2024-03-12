@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
-            Optional<int> retentionInDays = default;
-            Optional<bool> enabled = default;
+            Uri sasUrl = default;
+            int? retentionInDays = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBlobStorageHttpLogsConfig(sasUrl.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AppServiceBlobStorageHttpLogsConfig(sasUrl, retentionInDays, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBlobStorageHttpLogsConfig>.Write(ModelReaderWriterOptions options)

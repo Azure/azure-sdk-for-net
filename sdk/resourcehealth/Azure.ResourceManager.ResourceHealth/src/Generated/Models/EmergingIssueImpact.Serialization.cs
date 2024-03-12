@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Regions is ChangeTrackingList<EmergingIssueImpactedRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            string id = default;
+            string name = default;
             IReadOnlyList<EmergingIssueImpactedRegion> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueImpact(id.Value, name.Value, regions ?? new ChangeTrackingList<EmergingIssueImpactedRegion>(), serializedAdditionalRawData);
+            return new EmergingIssueImpact(id, name, regions ?? new ChangeTrackingList<EmergingIssueImpactedRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueImpact>.Write(ModelReaderWriterOptions options)

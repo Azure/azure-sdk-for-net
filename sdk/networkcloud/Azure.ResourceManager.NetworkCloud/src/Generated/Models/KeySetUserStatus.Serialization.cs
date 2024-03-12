@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureUserName != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureUserName))
             {
                 writer.WritePropertyName("azureUserName"u8);
                 writer.WriteStringValue(AzureUserName);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> azureUserName = default;
-            Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
-            Optional<string> statusMessage = default;
+            string azureUserName = default;
+            BareMetalMachineKeySetUserSetupStatus? status = default;
+            string statusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value, serializedAdditionalRawData);
+            return new KeySetUserStatus(azureUserName, status, statusMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUserStatus>.Write(ModelReaderWriterOptions options)

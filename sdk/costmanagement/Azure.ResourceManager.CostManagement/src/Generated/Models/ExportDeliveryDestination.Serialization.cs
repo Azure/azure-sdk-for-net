@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (RootFolderPath != null)
+            if (Optional.IsDefined(RootFolderPath))
             {
                 writer.WritePropertyName("rootFolderPath"u8);
                 writer.WriteStringValue(RootFolderPath);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             string container = default;
-            Optional<string> rootFolderPath = default;
-            Optional<string> sasToken = default;
-            Optional<string> storageAccount = default;
+            string rootFolderPath = default;
+            string sasToken = default;
+            string storageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,11 +132,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExportDeliveryDestination(
-                resourceId.Value,
+                resourceId,
                 container,
-                rootFolderPath.Value,
-                sasToken.Value,
-                storageAccount.Value,
+                rootFolderPath,
+                sasToken,
+                storageAccount,
                 serializedAdditionalRawData);
         }
 

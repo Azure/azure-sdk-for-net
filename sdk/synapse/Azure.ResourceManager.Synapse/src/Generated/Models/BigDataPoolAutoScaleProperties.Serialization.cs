@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (MinNodeCount.HasValue)
+            if (Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (MaxNodeCount.HasValue)
+            if (Optional.IsDefined(MaxNodeCount))
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<int> minNodeCount = default;
-            Optional<bool> enabled = default;
-            Optional<int> maxNodeCount = default;
+            int? minNodeCount = default;
+            bool? enabled = default;
+            int? maxNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolAutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount), serializedAdditionalRawData);
+            return new BigDataPoolAutoScaleProperties(minNodeCount, enabled, maxNodeCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolAutoScaleProperties>.Write(ModelReaderWriterOptions options)

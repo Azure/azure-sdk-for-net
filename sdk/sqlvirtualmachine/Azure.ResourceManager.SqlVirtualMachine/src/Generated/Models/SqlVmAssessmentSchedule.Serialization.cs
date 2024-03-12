@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (WeeklyInterval.HasValue)
+            if (Optional.IsDefined(WeeklyInterval))
             {
                 writer.WritePropertyName("weeklyInterval"u8);
                 writer.WriteNumberValue(WeeklyInterval.Value);
             }
-            if (MonthlyOccurrence.HasValue)
+            if (Optional.IsDefined(MonthlyOccurrence))
             {
                 writer.WritePropertyName("monthlyOccurrence"u8);
                 writer.WriteNumberValue(MonthlyOccurrence.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<int> weeklyInterval = default;
-            Optional<int> monthlyOccurrence = default;
-            Optional<SqlVmAssessmentDayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
+            bool? enable = default;
+            int? weeklyInterval = default;
+            int? monthlyOccurrence = default;
+            SqlVmAssessmentDayOfWeek? dayOfWeek = default;
+            string startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlVmAssessmentSchedule(
-                Optional.ToNullable(enable),
-                Optional.ToNullable(weeklyInterval),
-                Optional.ToNullable(monthlyOccurrence),
-                Optional.ToNullable(dayOfWeek),
-                startTime.Value,
+                enable,
+                weeklyInterval,
+                monthlyOccurrence,
+                dayOfWeek,
+                startTime,
                 serializedAdditionalRawData);
         }
 

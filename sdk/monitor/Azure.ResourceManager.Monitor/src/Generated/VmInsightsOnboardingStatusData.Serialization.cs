@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (OnboardingStatus.HasValue)
+            if (Optional.IsDefined(OnboardingStatus))
             {
                 writer.WritePropertyName("onboardingStatus"u8);
                 writer.WriteStringValue(OnboardingStatus.Value.ToString());
             }
-            if (DataStatus.HasValue)
+            if (Optional.IsDefined(DataStatus))
             {
                 writer.WritePropertyName("dataStatus"u8);
                 writer.WriteStringValue(DataStatus.Value.ToString());
             }
-            if (!(Data is ChangeTrackingList<DataContainer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<OnboardingStatus> onboardingStatus = default;
-            Optional<DataStatus> dataStatus = default;
+            SystemData systemData = default;
+            ResourceIdentifier resourceId = default;
+            OnboardingStatus? onboardingStatus = default;
+            DataStatus? dataStatus = default;
             IReadOnlyList<DataContainer> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                resourceId.Value,
-                Optional.ToNullable(onboardingStatus),
-                Optional.ToNullable(dataStatus),
+                systemData,
+                resourceId,
+                onboardingStatus,
+                dataStatus,
                 data ?? new ChangeTrackingList<DataContainer>(),
                 serializedAdditionalRawData);
         }

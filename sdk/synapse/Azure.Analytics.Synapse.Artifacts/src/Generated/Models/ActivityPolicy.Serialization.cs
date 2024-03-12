@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,27 +20,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteObjectValue(Timeout);
             }
-            if (Retry != null)
+            if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteObjectValue(Retry);
             }
-            if (RetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (SecureInput.HasValue)
+            if (Optional.IsDefined(SecureInput))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (SecureOutput.HasValue)
+            if (Optional.IsDefined(SecureOutput))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
@@ -58,11 +59,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> timeout = default;
-            Optional<object> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            object timeout = default;
+            object retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -116,11 +117,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityPolicy(
-                timeout.Value,
-                retry.Value,
-                Optional.ToNullable(retryIntervalInSeconds),
-                Optional.ToNullable(secureInput),
-                Optional.ToNullable(secureOutput),
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
                 additionalProperties);
         }
 

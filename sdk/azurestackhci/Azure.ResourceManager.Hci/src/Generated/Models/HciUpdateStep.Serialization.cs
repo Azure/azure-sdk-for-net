@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            string name = default;
+            string description = default;
+            string errorMessage = default;
+            string status = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,13 +190,13 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HciUpdateStep(
-                name.Value,
-                description.Value,
-                errorMessage.Value,
-                status.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(lastUpdatedTimeUtc),
+                name,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 serializedAdditionalRawData);
         }

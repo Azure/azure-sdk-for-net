@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,24 +30,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -79,39 +80,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (RelativeUri != null)
+            if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (AdditionalHeaders != null)
+            if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
@@ -153,19 +154,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DataFactoryElement<string>> relativeUrl = default;
-            Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> requestBody = default;
-            Optional<DataFactoryElement<string>> additionalHeaders = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            DatasetFolder folder = default;
+            DataFactoryElement<string> relativeUrl = default;
+            DataFactoryElement<string> requestMethod = default;
+            DataFactoryElement<string> requestBody = default;
+            DataFactoryElement<string> additionalHeaders = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,20 +319,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryHttpDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                relativeUrl.Value,
-                requestMethod.Value,
-                requestBody.Value,
-                additionalHeaders.Value,
-                format.Value,
-                compression.Value);
+                relativeUrl,
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                format,
+                compression);
         }
 
         BinaryData IPersistableModel<DataFactoryHttpDataset>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (UltraSsdEnabled.HasValue)
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
-            if (HibernationEnabled.HasValue)
+            if (Optional.IsDefined(HibernationEnabled))
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> ultraSsdEnabled = default;
-            Optional<bool> hibernationEnabled = default;
+            bool? ultraSsdEnabled = default;
+            bool? hibernationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), Optional.ToNullable(hibernationEnabled), serializedAdditionalRawData);
+            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalCapabilities>.Write(ModelReaderWriterOptions options)

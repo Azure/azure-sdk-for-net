@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (ExtensionProfile != null)
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
                 writer.WriteObjectValue(BillingProfile);
             }
-            if (ScheduledEventsProfile != null)
+            if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
                 writer.WriteObjectValue(ScheduledEventsProfile);
             }
-            if (UserData != null)
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineScaleSetUpdateOSProfile> osProfile = default;
-            Optional<VirtualMachineScaleSetUpdateStorageProfile> storageProfile = default;
-            Optional<VirtualMachineScaleSetUpdateNetworkProfile> networkProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
-            Optional<string> licenseType = default;
-            Optional<BillingProfile> billingProfile = default;
-            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
+            VirtualMachineScaleSetUpdateOSProfile osProfile = default;
+            VirtualMachineScaleSetUpdateStorageProfile storageProfile = default;
+            VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default;
+            SecurityProfile securityProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            VirtualMachineScaleSetExtensionProfile extensionProfile = default;
+            string licenseType = default;
+            BillingProfile billingProfile = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
+            string userData = default;
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,17 +233,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineScaleSetUpdateVmProfile(
-                osProfile.Value,
-                storageProfile.Value,
-                networkProfile.Value,
-                securityProfile.Value,
-                diagnosticsProfile.Value,
-                extensionProfile.Value,
-                licenseType.Value,
-                billingProfile.Value,
-                scheduledEventsProfile.Value,
-                userData.Value,
-                hardwareProfile.Value,
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                diagnosticsProfile,
+                extensionProfile,
+                licenseType,
+                billingProfile,
+                scheduledEventsProfile,
+                userData,
+                hardwareProfile,
                 serializedAdditionalRawData);
         }
 

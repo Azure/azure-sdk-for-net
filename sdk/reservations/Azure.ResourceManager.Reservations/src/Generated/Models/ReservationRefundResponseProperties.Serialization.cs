@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (BillingRefundAmount != null)
+            if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
                 writer.WriteObjectValue(BillingRefundAmount);
             }
-            if (PricingRefundAmount != null)
+            if (Optional.IsDefined(PricingRefundAmount))
             {
                 writer.WritePropertyName("pricingRefundAmount"u8);
                 writer.WriteObjectValue(PricingRefundAmount);
             }
-            if (PolicyResult != null)
+            if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);
             }
-            if (BillingInformation != null)
+            if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
                 writer.WriteObjectValue(BillingInformation);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<int> quantity = default;
-            Optional<PurchasePrice> billingRefundAmount = default;
-            Optional<PurchasePrice> pricingRefundAmount = default;
-            Optional<RefundPolicyResult> policyResult = default;
-            Optional<ReservationRefundBillingInformation> billingInformation = default;
+            Guid? sessionId = default;
+            int? quantity = default;
+            PurchasePrice billingRefundAmount = default;
+            PurchasePrice pricingRefundAmount = default;
+            RefundPolicyResult policyResult = default;
+            ReservationRefundBillingInformation billingInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationRefundResponseProperties(
-                Optional.ToNullable(sessionId),
-                Optional.ToNullable(quantity),
-                billingRefundAmount.Value,
-                pricingRefundAmount.Value,
-                policyResult.Value,
-                billingInformation.Value,
+                sessionId,
+                quantity,
+                billingRefundAmount,
+                pricingRefundAmount,
+                policyResult,
+                billingInformation,
                 serializedAdditionalRawData);
         }
 

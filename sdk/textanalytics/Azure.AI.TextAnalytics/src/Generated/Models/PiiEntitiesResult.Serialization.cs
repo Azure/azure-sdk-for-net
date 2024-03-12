@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Statistics != null)
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
             }
             IList<PiiResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new PiiEntitiesResult(errors, statistics.Value, modelVersion, documents);
+            return new PiiEntitiesResult(errors, statistics, modelVersion, documents);
         }
     }
 }

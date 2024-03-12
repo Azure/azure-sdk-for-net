@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterId != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && ExtendedUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtendedUnit))
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> meterId = default;
-            Optional<long> quantity = default;
-            Optional<string> extendedUnit = default;
+            string meterId = default;
+            long? quantity = default;
+            string extendedUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSkuCost(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeSkuCost(meterId, quantity, extendedUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSkuCost>.Write(ModelReaderWriterOptions options)

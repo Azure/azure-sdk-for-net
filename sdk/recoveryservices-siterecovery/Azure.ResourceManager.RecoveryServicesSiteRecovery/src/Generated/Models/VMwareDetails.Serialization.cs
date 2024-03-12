@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProcessServers))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MasterTargetServers is ChangeTrackingList<MasterTargetServer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MasterTargetServers))
             {
                 writer.WritePropertyName("masterTargetServers"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RunAsAccounts is ChangeTrackingList<SiteRecoveryRunAsAccount> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RunAsAccounts))
             {
                 writer.WritePropertyName("runAsAccounts"u8);
                 writer.WriteStartArray();
@@ -57,152 +58,152 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicationPairCount != null)
+            if (Optional.IsDefined(ReplicationPairCount))
             {
                 writer.WritePropertyName("replicationPairCount"u8);
                 writer.WriteStringValue(ReplicationPairCount);
             }
-            if (ProcessServerCount != null)
+            if (Optional.IsDefined(ProcessServerCount))
             {
                 writer.WritePropertyName("processServerCount"u8);
                 writer.WriteStringValue(ProcessServerCount);
             }
-            if (AgentCount != null)
+            if (Optional.IsDefined(AgentCount))
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteStringValue(AgentCount);
             }
-            if (ProtectedServers != null)
+            if (Optional.IsDefined(ProtectedServers))
             {
                 writer.WritePropertyName("protectedServers"u8);
                 writer.WriteStringValue(ProtectedServers);
             }
-            if (SystemLoad != null)
+            if (Optional.IsDefined(SystemLoad))
             {
                 writer.WritePropertyName("systemLoad"u8);
                 writer.WriteStringValue(SystemLoad);
             }
-            if (SystemLoadStatus != null)
+            if (Optional.IsDefined(SystemLoadStatus))
             {
                 writer.WritePropertyName("systemLoadStatus"u8);
                 writer.WriteStringValue(SystemLoadStatus);
             }
-            if (CpuLoad != null)
+            if (Optional.IsDefined(CpuLoad))
             {
                 writer.WritePropertyName("cpuLoad"u8);
                 writer.WriteStringValue(CpuLoad);
             }
-            if (CpuLoadStatus != null)
+            if (Optional.IsDefined(CpuLoadStatus))
             {
                 writer.WritePropertyName("cpuLoadStatus"u8);
                 writer.WriteStringValue(CpuLoadStatus);
             }
-            if (TotalMemoryInBytes.HasValue)
+            if (Optional.IsDefined(TotalMemoryInBytes))
             {
                 writer.WritePropertyName("totalMemoryInBytes"u8);
                 writer.WriteNumberValue(TotalMemoryInBytes.Value);
             }
-            if (AvailableMemoryInBytes.HasValue)
+            if (Optional.IsDefined(AvailableMemoryInBytes))
             {
                 writer.WritePropertyName("availableMemoryInBytes"u8);
                 writer.WriteNumberValue(AvailableMemoryInBytes.Value);
             }
-            if (MemoryUsageStatus != null)
+            if (Optional.IsDefined(MemoryUsageStatus))
             {
                 writer.WritePropertyName("memoryUsageStatus"u8);
                 writer.WriteStringValue(MemoryUsageStatus);
             }
-            if (TotalSpaceInBytes.HasValue)
+            if (Optional.IsDefined(TotalSpaceInBytes))
             {
                 writer.WritePropertyName("totalSpaceInBytes"u8);
                 writer.WriteNumberValue(TotalSpaceInBytes.Value);
             }
-            if (AvailableSpaceInBytes.HasValue)
+            if (Optional.IsDefined(AvailableSpaceInBytes))
             {
                 writer.WritePropertyName("availableSpaceInBytes"u8);
                 writer.WriteNumberValue(AvailableSpaceInBytes.Value);
             }
-            if (SpaceUsageStatus != null)
+            if (Optional.IsDefined(SpaceUsageStatus))
             {
                 writer.WritePropertyName("spaceUsageStatus"u8);
                 writer.WriteStringValue(SpaceUsageStatus);
             }
-            if (WebLoad != null)
+            if (Optional.IsDefined(WebLoad))
             {
                 writer.WritePropertyName("webLoad"u8);
                 writer.WriteStringValue(WebLoad);
             }
-            if (WebLoadStatus != null)
+            if (Optional.IsDefined(WebLoadStatus))
             {
                 writer.WritePropertyName("webLoadStatus"u8);
                 writer.WriteStringValue(WebLoadStatus);
             }
-            if (DatabaseServerLoad != null)
+            if (Optional.IsDefined(DatabaseServerLoad))
             {
                 writer.WritePropertyName("databaseServerLoad"u8);
                 writer.WriteStringValue(DatabaseServerLoad);
             }
-            if (DatabaseServerLoadStatus != null)
+            if (Optional.IsDefined(DatabaseServerLoadStatus))
             {
                 writer.WritePropertyName("databaseServerLoadStatus"u8);
                 writer.WriteStringValue(DatabaseServerLoadStatus);
             }
-            if (CsServiceStatus != null)
+            if (Optional.IsDefined(CsServiceStatus))
             {
                 writer.WritePropertyName("csServiceStatus"u8);
                 writer.WriteStringValue(CsServiceStatus);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (LastHeartbeat.HasValue)
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeat.Value, "O");
             }
-            if (VersionStatus != null)
+            if (Optional.IsDefined(VersionStatus))
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (SslCertExpireOn.HasValue)
+            if (Optional.IsDefined(SslCertExpireOn))
             {
                 writer.WritePropertyName("sslCertExpiryDate"u8);
                 writer.WriteStringValue(SslCertExpireOn.Value, "O");
             }
-            if (SslCertExpiryRemainingDays.HasValue)
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
             {
                 writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
                 writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
             }
-            if (PSTemplateVersion != null)
+            if (Optional.IsDefined(PSTemplateVersion))
             {
                 writer.WritePropertyName("psTemplateVersion"u8);
                 writer.WriteStringValue(PSTemplateVersion);
             }
-            if (AgentExpireOn.HasValue)
+            if (Optional.IsDefined(AgentExpireOn))
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (AgentVersionDetails != null)
+            if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
                 writer.WriteObjectValue(AgentVersionDetails);
             }
-            if (!(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();
@@ -255,35 +256,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<SiteRecoveryProcessServer> processServers = default;
             IReadOnlyList<MasterTargetServer> masterTargetServers = default;
             IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts = default;
-            Optional<string> replicationPairCount = default;
-            Optional<string> processServerCount = default;
-            Optional<string> agentCount = default;
-            Optional<string> protectedServers = default;
-            Optional<string> systemLoad = default;
-            Optional<string> systemLoadStatus = default;
-            Optional<string> cpuLoad = default;
-            Optional<string> cpuLoadStatus = default;
-            Optional<long> totalMemoryInBytes = default;
-            Optional<long> availableMemoryInBytes = default;
-            Optional<string> memoryUsageStatus = default;
-            Optional<long> totalSpaceInBytes = default;
-            Optional<long> availableSpaceInBytes = default;
-            Optional<string> spaceUsageStatus = default;
-            Optional<string> webLoad = default;
-            Optional<string> webLoadStatus = default;
-            Optional<string> databaseServerLoad = default;
-            Optional<string> databaseServerLoadStatus = default;
-            Optional<string> csServiceStatus = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> agentVersion = default;
-            Optional<string> hostName = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<DateTimeOffset> sslCertExpireOn = default;
-            Optional<int> sslCertExpiryRemainingDays = default;
-            Optional<string> psTemplateVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            string replicationPairCount = default;
+            string processServerCount = default;
+            string agentCount = default;
+            string protectedServers = default;
+            string systemLoad = default;
+            string systemLoadStatus = default;
+            string cpuLoad = default;
+            string cpuLoadStatus = default;
+            long? totalMemoryInBytes = default;
+            long? availableMemoryInBytes = default;
+            string memoryUsageStatus = default;
+            long? totalSpaceInBytes = default;
+            long? availableSpaceInBytes = default;
+            string spaceUsageStatus = default;
+            string webLoad = default;
+            string webLoadStatus = default;
+            string databaseServerLoad = default;
+            string databaseServerLoadStatus = default;
+            string csServiceStatus = default;
+            IPAddress ipAddress = default;
+            string agentVersion = default;
+            string hostName = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
+            DateTimeOffset? sslCertExpireOn = default;
+            int? sslCertExpiryRemainingDays = default;
+            string psTemplateVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
             IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -548,35 +549,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(),
                 masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(),
                 runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(),
-                replicationPairCount.Value,
-                processServerCount.Value,
-                agentCount.Value,
-                protectedServers.Value,
-                systemLoad.Value,
-                systemLoadStatus.Value,
-                cpuLoad.Value,
-                cpuLoadStatus.Value,
-                Optional.ToNullable(totalMemoryInBytes),
-                Optional.ToNullable(availableMemoryInBytes),
-                memoryUsageStatus.Value,
-                Optional.ToNullable(totalSpaceInBytes),
-                Optional.ToNullable(availableSpaceInBytes),
-                spaceUsageStatus.Value,
-                webLoad.Value,
-                webLoadStatus.Value,
-                databaseServerLoad.Value,
-                databaseServerLoadStatus.Value,
-                csServiceStatus.Value,
-                ipAddress.Value,
-                agentVersion.Value,
-                hostName.Value,
-                Optional.ToNullable(lastHeartbeat),
-                versionStatus.Value,
-                Optional.ToNullable(sslCertExpireOn),
-                Optional.ToNullable(sslCertExpiryRemainingDays),
-                psTemplateVersion.Value,
-                Optional.ToNullable(agentExpireOn),
-                agentVersionDetails.Value,
+                replicationPairCount,
+                processServerCount,
+                agentCount,
+                protectedServers,
+                systemLoad,
+                systemLoadStatus,
+                cpuLoad,
+                cpuLoadStatus,
+                totalMemoryInBytes,
+                availableMemoryInBytes,
+                memoryUsageStatus,
+                totalSpaceInBytes,
+                availableSpaceInBytes,
+                spaceUsageStatus,
+                webLoad,
+                webLoadStatus,
+                databaseServerLoad,
+                databaseServerLoadStatus,
+                csServiceStatus,
+                ipAddress,
+                agentVersion,
+                hostName,
+                lastHeartbeat,
+                versionStatus,
+                sslCertExpireOn,
+                sslCertExpiryRemainingDays,
+                psTemplateVersion,
+                agentExpireOn,
+                agentVersionDetails,
                 switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
         }
 

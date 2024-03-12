@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FreeTrial != null)
+            if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
                 writer.WriteObjectValue(FreeTrial);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.PlaywrightTesting
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FreeTrialProperties> freeTrial = default;
-            Optional<PlaywrightTestingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            FreeTrialProperties freeTrial = default;
+            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 id,
                 name,
                 type,
-                systemData.Value,
-                freeTrial.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                freeTrial,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

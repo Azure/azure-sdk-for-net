@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultConfigurationName != null)
+            if (Optional.IsDefined(DefaultConfigurationName))
             {
                 writer.WritePropertyName("defaultConfiguration"u8);
                 writer.WriteStringValue(DefaultConfigurationName);
             }
-            if (!(Configurations is ChangeTrackingList<SemanticConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultConfiguration = default;
+            string defaultConfiguration = default;
             IList<SemanticConfiguration> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSearch(defaultConfiguration.Value, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
+            return new SemanticSearch(defaultConfiguration, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
         }
     }
 }

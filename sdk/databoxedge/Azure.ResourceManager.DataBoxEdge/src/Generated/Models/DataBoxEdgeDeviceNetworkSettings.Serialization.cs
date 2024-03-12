@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(NetworkAdapters is ChangeTrackingList<DataBoxEdgeNetworkAdapter> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAdapters))
             {
                 writer.WritePropertyName("networkAdapters"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>(),
                 serializedAdditionalRawData);
         }

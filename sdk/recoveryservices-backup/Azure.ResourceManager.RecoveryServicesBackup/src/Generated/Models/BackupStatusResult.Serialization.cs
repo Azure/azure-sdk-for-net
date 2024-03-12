@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectionStatus.HasValue)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus.Value.ToString());
             }
-            if (VaultId != null)
+            if (Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (FabricName.HasValue)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName.Value.ToString());
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (AcquireStorageAccountLock.HasValue)
+            if (Optional.IsDefined(AcquireStorageAccountLock))
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupProtectionStatus> protectionStatus = default;
-            Optional<ResourceIdentifier> vaultId = default;
-            Optional<BackupFabricName> fabricName = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> policyName = default;
-            Optional<string> registrationStatus = default;
-            Optional<int> protectedItemsCount = default;
-            Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
+            BackupProtectionStatus? protectionStatus = default;
+            ResourceIdentifier vaultId = default;
+            BackupFabricName? fabricName = default;
+            string containerName = default;
+            string protectedItemName = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string policyName = default;
+            string registrationStatus = default;
+            int? protectedItemsCount = default;
+            AcquireStorageAccountLock? acquireStorageAccountLock = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,17 +217,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupStatusResult(
-                Optional.ToNullable(protectionStatus),
-                vaultId.Value,
-                Optional.ToNullable(fabricName),
-                containerName.Value,
-                protectedItemName.Value,
-                errorCode.Value,
-                errorMessage.Value,
-                policyName.Value,
-                registrationStatus.Value,
-                Optional.ToNullable(protectedItemsCount),
-                Optional.ToNullable(acquireStorageAccountLock),
+                protectionStatus,
+                vaultId,
+                fabricName,
+                containerName,
+                protectedItemName,
+                errorCode,
+                errorMessage,
+                policyName,
+                registrationStatus,
+                protectedItemsCount,
+                acquireStorageAccountLock,
                 serializedAdditionalRawData);
         }
 

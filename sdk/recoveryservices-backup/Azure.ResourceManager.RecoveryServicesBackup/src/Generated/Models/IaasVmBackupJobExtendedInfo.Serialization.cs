@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(TasksList is ChangeTrackingList<IaasVmBackupJobTaskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TasksList))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(InternalPropertyBag is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InternalPropertyBag))
             {
                 writer.WritePropertyName("internalPropertyBag"u8);
                 writer.WriteStartObject();
@@ -58,17 +59,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ProgressPercentage.HasValue)
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (EstimatedRemainingDurationValue != null)
+            if (Optional.IsDefined(EstimatedRemainingDurationValue))
             {
                 writer.WritePropertyName("estimatedRemainingDuration"u8);
                 writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
-            if (DynamicErrorMessage != null)
+            if (Optional.IsDefined(DynamicErrorMessage))
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
@@ -114,9 +115,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<IaasVmBackupJobTaskDetails> tasksList = default;
             IDictionary<string, string> propertyBag = default;
             IDictionary<string, string> internalPropertyBag = default;
-            Optional<double> progressPercentage = default;
-            Optional<string> estimatedRemainingDuration = default;
-            Optional<string> dynamicErrorMessage = default;
+            double? progressPercentage = default;
+            string estimatedRemainingDuration = default;
+            string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,9 +193,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tasksList ?? new ChangeTrackingList<IaasVmBackupJobTaskDetails>(),
                 propertyBag ?? new ChangeTrackingDictionary<string, string>(),
                 internalPropertyBag ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(progressPercentage),
-                estimatedRemainingDuration.Value,
-                dynamicErrorMessage.Value,
+                progressPercentage,
+                estimatedRemainingDuration,
+                dynamicErrorMessage,
                 serializedAdditionalRawData);
         }
 

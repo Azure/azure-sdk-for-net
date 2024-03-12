@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (InfraVnetProfile != null)
+            if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
                 writer.WriteObjectValue(InfraVnetProfile);
             }
-            if (!(VipPool is ChangeTrackingList<KubernetesVirtualIPItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VipPool))
             {
                 writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmipPool is ChangeTrackingList<VirtualMachineIPItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmipPool))
             {
                 writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -61,27 +62,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Gateway != null)
+            if (Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (IPAddressPrefix != null)
+            if (Optional.IsDefined(IPAddressPrefix))
             {
                 writer.WritePropertyName("ipAddressPrefix"u8);
                 writer.WriteStringValue(IPAddressPrefix);
             }
-            if (VlanId.HasValue)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanID"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<InfraVnetProfile> infraVnetProfile = default;
+            InfraVnetProfile infraVnetProfile = default;
             IList<KubernetesVirtualIPItem> vipPool = default;
             IList<VirtualMachineIPItem> vmipPool = default;
             IList<string> dnsServers = default;
-            Optional<string> gateway = default;
-            Optional<string> ipAddressPrefix = default;
-            Optional<int> vlanId = default;
-            Optional<HybridContainerServiceProvisioningState> provisioningState = default;
-            Optional<HybridContainerServiceNetworkStatus> status = default;
+            string gateway = default;
+            string ipAddressPrefix = default;
+            int? vlanId = default;
+            HybridContainerServiceProvisioningState? provisioningState = default;
+            HybridContainerServiceNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,15 +233,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceVirtualNetworkProperties(
-                infraVnetProfile.Value,
+                infraVnetProfile,
                 vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
                 vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
-                gateway.Value,
-                ipAddressPrefix.Value,
-                Optional.ToNullable(vlanId),
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                gateway,
+                ipAddressPrefix,
+                vlanId,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
-            if (Address2 != null)
+            if (Optional.IsDefined(Address2))
             {
                 writer.WritePropertyName("address2"u8);
                 writer.WriteStringValue(Address2);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string address1 = default;
-            Optional<string> address2 = default;
+            string address2 = default;
             string city = default;
             string country = default;
             string postalCode = default;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RegistrationAddressInfo(
                 address1,
-                address2.Value,
+                address2,
                 city,
                 country,
                 postalCode,

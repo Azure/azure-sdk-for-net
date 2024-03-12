@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (!(Scope is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (IssuerUri != null)
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuerUri"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             IList<string> scope = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Uri> issuerUri = default;
+            string clientId = default;
+            string clientSecret = default;
+            Uri issuerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSsoProperties(scope ?? new ChangeTrackingList<string>(), clientId.Value, clientSecret.Value, issuerUri.Value, serializedAdditionalRawData);
+            return new AppPlatformSsoProperties(scope ?? new ChangeTrackingList<string>(), clientId, clientSecret, issuerUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSsoProperties>.Write(ModelReaderWriterOptions options)

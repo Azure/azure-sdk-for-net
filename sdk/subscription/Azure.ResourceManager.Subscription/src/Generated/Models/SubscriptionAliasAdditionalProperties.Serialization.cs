@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (SubscriptionTenantId.HasValue)
+            if (Optional.IsDefined(SubscriptionTenantId))
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
-            if (SubscriptionOwnerId != null)
+            if (Optional.IsDefined(SubscriptionOwnerId))
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> managementGroupId = default;
-            Optional<Guid> subscriptionTenantId = default;
-            Optional<string> subscriptionOwnerId = default;
+            string managementGroupId = default;
+            Guid? subscriptionTenantId = default;
+            string subscriptionOwnerId = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasAdditionalProperties(managementGroupId.Value, Optional.ToNullable(subscriptionTenantId), subscriptionOwnerId.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasAdditionalProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (SourceDestinationType.HasValue)
+            if (Optional.IsDefined(SourceDestinationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
-            if (PrefixType.HasValue)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (!(IPPrefixValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPrefixValues))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPGroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPGroupNames))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<SourceDestinationType> type = default;
-            Optional<IPMatchConditionPrefixType> prefixType = default;
+            SourceDestinationType? type = default;
+            IPMatchConditionPrefixType? prefixType = default;
             IList<string> ipPrefixValues = default;
             IList<string> ipGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IPMatchCondition(type, prefixType, ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPMatchCondition>.Write(ModelReaderWriterOptions options)

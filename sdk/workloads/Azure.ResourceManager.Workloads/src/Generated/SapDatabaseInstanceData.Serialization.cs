@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,39 +57,39 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SubnetId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && DatabaseSid != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseSid))
             {
                 writer.WritePropertyName("databaseSid"u8);
                 writer.WriteStringValue(DatabaseSid);
             }
-            if (options.Format != "W" && DatabaseType != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && LoadBalancerDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerDetails);
             }
-            if (options.Format != "W" && !(VmDetails is ChangeTrackingList<DatabaseVmDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
                 writer.WritePropertyName("vmDetails"u8);
                 writer.WriteStartArray();
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -158,16 +158,16 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<string> databaseSid = default;
-            Optional<string> databaseType = default;
-            Optional<string> ipAddress = default;
-            Optional<SubResource> loadBalancerDetails = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnet = default;
+            string databaseSid = default;
+            string databaseType = default;
+            string ipAddress = default;
+            SubResource loadBalancerDetails = default;
             IReadOnlyList<DatabaseVmDetails> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SapVirtualInstanceStatus? status = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,18 +311,18 @@ namespace Azure.ResourceManager.Workloads
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                subnet.Value,
-                databaseSid.Value,
-                databaseType.Value,
-                ipAddress.Value,
+                subnet,
+                databaseSid,
+                databaseType,
+                ipAddress,
                 loadBalancerDetails,
                 vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>(),
-                Optional.ToNullable(status),
-                Optional.ToNullable(provisioningState),
-                errors.Value,
+                status,
+                provisioningState,
+                errors,
                 serializedAdditionalRawData);
         }
 

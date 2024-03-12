@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && TieredFilesMostRecentAccessTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TieredFilesMostRecentAccessTimestamp))
             {
                 writer.WritePropertyName("tieredFilesMostRecentAccessTimestamp"u8);
                 writer.WriteStringValue(TieredFilesMostRecentAccessTimestamp.Value, "O");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<DateTimeOffset> tieredFilesMostRecentAccessTimestamp = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            DateTimeOffset? tieredFilesMostRecentAccessTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringDatePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(tieredFilesMostRecentAccessTimestamp), serializedAdditionalRawData);
+            return new CloudTieringDatePolicyStatus(lastUpdatedTimestamp, tieredFilesMostRecentAccessTimestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringDatePolicyStatus>.Write(ModelReaderWriterOptions options)

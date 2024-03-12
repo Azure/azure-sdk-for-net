@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (NextResetOn.HasValue)
+            if (Optional.IsDefined(NextResetOn))
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");
             }
-            if (QuotaPeriod != null)
+            if (Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<OperationalInsightsMetricName> name = default;
-            Optional<string> unit = default;
-            Optional<double> currentValue = default;
-            Optional<double> limit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<string> quotaPeriod = default;
+            OperationalInsightsMetricName name = default;
+            string unit = default;
+            double? currentValue = default;
+            double? limit = default;
+            DateTimeOffset? nextResetTime = default;
+            string quotaPeriod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OperationalInsightsUsageMetric(
-                name.Value,
-                unit.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                Optional.ToNullable(nextResetTime),
-                quotaPeriod.Value,
+                name,
+                unit,
+                currentValue,
+                limit,
+                nextResetTime,
+                quotaPeriod,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (NetTotal.HasValue)
+            if (Optional.IsDefined(NetTotal))
             {
                 writer.WritePropertyName("netTotal"u8);
                 writer.WriteNumberValue(NetTotal.Value);
             }
-            if (TaxTotal.HasValue)
+            if (Optional.IsDefined(TaxTotal))
             {
                 writer.WritePropertyName("taxTotal"u8);
                 writer.WriteNumberValue(TaxTotal.Value);
             }
-            if (GrandTotal.HasValue)
+            if (Optional.IsDefined(GrandTotal))
             {
                 writer.WritePropertyName("grandTotal"u8);
                 writer.WriteNumberValue(GrandTotal.Value);
             }
-            if (IsTaxIncluded.HasValue)
+            if (Optional.IsDefined(IsTaxIncluded))
             {
                 writer.WritePropertyName("isTaxIncluded"u8);
                 writer.WriteBooleanValue(IsTaxIncluded.Value);
             }
-            if (IsBillingPartnerManaged.HasValue)
+            if (Optional.IsDefined(IsBillingPartnerManaged))
             {
                 writer.WritePropertyName("isBillingPartnerManaged"u8);
                 writer.WriteBooleanValue(IsBillingPartnerManaged.Value);
             }
-            if (ReservationOrderId.HasValue)
+            if (Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId.Value);
             }
-            if (SkuTitle != null)
+            if (Optional.IsDefined(SkuTitle))
             {
                 writer.WritePropertyName("skuTitle"u8);
                 writer.WriteStringValue(SkuTitle);
             }
-            if (SkuDescription != null)
+            if (Optional.IsDefined(SkuDescription))
             {
                 writer.WritePropertyName("skuDescription"u8);
                 writer.WriteStringValue(SkuDescription);
             }
-            if (PricingCurrencyTotal != null)
+            if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (!(PaymentSchedule is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PaymentSchedule))
             {
                 writer.WritePropertyName("paymentSchedule"u8);
                 writer.WriteStartArray();
@@ -124,16 +125,16 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
-            Optional<double> netTotal = default;
-            Optional<double> taxTotal = default;
-            Optional<double> grandTotal = default;
-            Optional<bool> isTaxIncluded = default;
-            Optional<bool> isBillingPartnerManaged = default;
-            Optional<Guid> reservationOrderId = default;
-            Optional<string> skuTitle = default;
-            Optional<string> skuDescription = default;
-            Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
+            CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = default;
+            double? netTotal = default;
+            double? taxTotal = default;
+            double? grandTotal = default;
+            bool? isTaxIncluded = default;
+            bool? isBillingPartnerManaged = default;
+            Guid? reservationOrderId = default;
+            string skuTitle = default;
+            string skuDescription = default;
+            CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = default;
             IReadOnlyList<PaymentDetail> paymentSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,16 +243,16 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CalculatePriceResultProperties(
-                billingCurrencyTotal.Value,
-                Optional.ToNullable(netTotal),
-                Optional.ToNullable(taxTotal),
-                Optional.ToNullable(grandTotal),
-                Optional.ToNullable(isTaxIncluded),
-                Optional.ToNullable(isBillingPartnerManaged),
-                Optional.ToNullable(reservationOrderId),
-                skuTitle.Value,
-                skuDescription.Value,
-                pricingCurrencyTotal.Value,
+                billingCurrencyTotal,
+                netTotal,
+                taxTotal,
+                grandTotal,
+                isTaxIncluded,
+                isBillingPartnerManaged,
+                reservationOrderId,
+                skuTitle,
+                skuDescription,
+                pricingCurrencyTotal,
                 paymentSchedule ?? new ChangeTrackingList<PaymentDetail>(),
                 serializedAdditionalRawData);
         }

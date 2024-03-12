@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && WaitEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WaitEndOn))
             {
                 writer.WritePropertyName("waitEndTime"u8);
                 writer.WriteStringValue(WaitEndOn.Value, "O");
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -87,27 +87,27 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Correlation != null)
+            if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (options.Format != "W" && Workflow != null)
+            if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (options.Format != "W" && Trigger != null)
+            if (options.Format != "W" && Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
-            if (options.Format != "W" && !(Outputs is ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Response != null)
+            if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -165,19 +165,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> waitEndTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<string> correlationId = default;
-            Optional<Correlation> correlation = default;
-            Optional<LogicResourceReference> workflow = default;
-            Optional<LogicWorkflowRunTrigger> trigger = default;
+            SystemData systemData = default;
+            DateTimeOffset? waitEndTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            string correlationId = default;
+            Correlation correlation = default;
+            LogicResourceReference workflow = default;
+            LogicWorkflowRunTrigger trigger = default;
             IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs = default;
-            Optional<LogicWorkflowRunTrigger> response = default;
+            LogicWorkflowRunTrigger response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,19 +333,19 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(waitEndTime),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(status),
-                code.Value,
-                error.Value,
-                correlationId.Value,
-                correlation.Value,
-                workflow.Value,
-                trigger.Value,
+                systemData,
+                waitEndTime,
+                startTime,
+                endTime,
+                status,
+                code,
+                error,
+                correlationId,
+                correlation,
+                workflow,
+                trigger,
                 outputs ?? new ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>(),
-                response.Value,
+                response,
                 serializedAdditionalRawData);
         }
 

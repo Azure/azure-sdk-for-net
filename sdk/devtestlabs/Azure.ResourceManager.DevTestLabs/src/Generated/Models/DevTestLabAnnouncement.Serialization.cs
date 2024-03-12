@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Markdown != null)
+            if (Optional.IsDefined(Markdown))
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (IsExpired.HasValue)
+            if (Optional.IsDefined(IsExpired))
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteBooleanValue(IsExpired.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> markdown = default;
-            Optional<DevTestLabEnableStatus> enabled = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<bool> expired = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string title = default;
+            string markdown = default;
+            DevTestLabEnableStatus? enabled = default;
+            DateTimeOffset? expirationDate = default;
+            bool? expired = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +169,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabAnnouncement(
-                title.Value,
-                markdown.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(expired),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                title,
+                markdown,
+                enabled,
+                expirationDate,
+                expired,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

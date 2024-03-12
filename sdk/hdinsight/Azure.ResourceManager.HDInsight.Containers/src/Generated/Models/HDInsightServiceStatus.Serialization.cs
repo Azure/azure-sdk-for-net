@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("ready"u8);
             writer.WriteStringValue(Ready);
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string kind = default;
             string ready = default;
-            Optional<string> message = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightServiceStatus(kind, ready, message.Value, serializedAdditionalRawData);
+            return new HDInsightServiceStatus(kind, ready, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightServiceStatus>.Write(ModelReaderWriterOptions options)

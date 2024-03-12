@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TitleField != null)
+            if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteObjectValue(TitleField);
             }
-            if (!(ContentFields is ChangeTrackingList<SemanticField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentFields))
             {
                 writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeywordsFields is ChangeTrackingList<SemanticField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KeywordsFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SemanticField> titleField = default;
+            SemanticField titleField = default;
             IList<SemanticField> prioritizedContentFields = default;
             IList<SemanticField> prioritizedKeywordsFields = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticPrioritizedFields(titleField.Value, prioritizedContentFields ?? new ChangeTrackingList<SemanticField>(), prioritizedKeywordsFields ?? new ChangeTrackingList<SemanticField>());
+            return new SemanticPrioritizedFields(titleField, prioritizedContentFields ?? new ChangeTrackingList<SemanticField>(), prioritizedKeywordsFields ?? new ChangeTrackingList<SemanticField>());
         }
     }
 }

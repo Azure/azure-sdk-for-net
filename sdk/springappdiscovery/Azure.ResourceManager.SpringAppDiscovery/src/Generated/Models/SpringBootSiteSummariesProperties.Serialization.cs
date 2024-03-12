@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiscoveredServers.HasValue)
+            if (Optional.IsDefined(DiscoveredServers))
             {
                 writer.WritePropertyName("discoveredServers"u8);
                 writer.WriteNumberValue(DiscoveredServers.Value);
             }
-            if (DiscoveredApps.HasValue)
+            if (Optional.IsDefined(DiscoveredApps))
             {
                 writer.WritePropertyName("discoveredApps"u8);
                 writer.WriteNumberValue(DiscoveredApps.Value);
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<long> discoveredServers = default;
-            Optional<long> discoveredApps = default;
+            long? discoveredServers = default;
+            long? discoveredApps = default;
             IList<SpringBootSiteError> errors = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteSummariesProperties(Optional.ToNullable(discoveredServers), Optional.ToNullable(discoveredApps), errors ?? new ChangeTrackingList<SpringBootSiteError>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootSiteSummariesProperties(discoveredServers, discoveredApps, errors ?? new ChangeTrackingList<SpringBootSiteError>(), provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteSummariesProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (QueueName != null)
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (QueueLength.HasValue)
+            if (Optional.IsDefined(QueueLength))
             {
                 writer.WritePropertyName("queueLength"u8);
                 writer.WriteNumberValue(QueueLength.Value);
             }
-            if (!(Auth is ChangeTrackingList<ContainerAppScaleRuleAuth> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> queueName = default;
-            Optional<int> queueLength = default;
+            string queueName = default;
+            int? queueLength = default;
             IList<ContainerAppScaleRuleAuth> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppQueueScaleRule(queueName.Value, Optional.ToNullable(queueLength), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
+            return new ContainerAppQueueScaleRule(queueName, queueLength, auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppQueueScaleRule>.Write(ModelReaderWriterOptions options)

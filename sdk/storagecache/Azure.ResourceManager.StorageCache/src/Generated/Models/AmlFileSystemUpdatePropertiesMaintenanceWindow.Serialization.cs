@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (TimeOfDayUTC != null)
+            if (Optional.IsDefined(TimeOfDayUTC))
             {
                 writer.WritePropertyName("timeOfDayUTC"u8);
                 writer.WriteStringValue(TimeOfDayUTC);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<MaintenanceDayOfWeekType> dayOfWeek = default;
-            Optional<string> timeOfDayUTC = default;
+            MaintenanceDayOfWeekType? dayOfWeek = default;
+            string timeOfDayUTC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemUpdatePropertiesMaintenanceWindow(Optional.ToNullable(dayOfWeek), timeOfDayUTC.Value, serializedAdditionalRawData);
+            return new AmlFileSystemUpdatePropertiesMaintenanceWindow(dayOfWeek, timeOfDayUTC, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemUpdatePropertiesMaintenanceWindow>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanNetworkProfile(subnetId.Value, serializedAdditionalRawData);
+            return new LabPlanNetworkProfile(subnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabPlanNetworkProfile>.Write(ModelReaderWriterOptions options)

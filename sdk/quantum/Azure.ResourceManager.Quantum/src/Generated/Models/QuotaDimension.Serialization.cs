@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Period != null)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period);
             }
-            if (Quota.HasValue)
+            if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteNumberValue(Quota.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (UnitPlural != null)
+            if (Optional.IsDefined(UnitPlural))
             {
                 writer.WritePropertyName("unitPlural"u8);
                 writer.WriteStringValue(UnitPlural);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> scope = default;
-            Optional<string> period = default;
-            Optional<float> quota = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> unit = default;
-            Optional<string> unitPlural = default;
+            string id = default;
+            string scope = default;
+            string period = default;
+            float? quota = default;
+            string name = default;
+            string description = default;
+            string unit = default;
+            string unitPlural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +168,14 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QuotaDimension(
-                id.Value,
-                scope.Value,
-                period.Value,
-                Optional.ToNullable(quota),
-                name.Value,
-                description.Value,
-                unit.Value,
-                unitPlural.Value,
+                id,
+                scope,
+                period,
+                quota,
+                name,
+                description,
+                unit,
+                unitPlural,
                 serializedAdditionalRawData);
         }
 

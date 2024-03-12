@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
-            Optional<SynapseSparkConfigurationType> configurationType = default;
+            DateTimeOffset? time = default;
+            string content = default;
+            string filename = default;
+            SynapseSparkConfigurationType? configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolSparkConfigProperties(Optional.ToNullable(time), content.Value, filename.Value, Optional.ToNullable(configurationType), serializedAdditionalRawData);
+            return new BigDataPoolSparkConfigProperties(time, content, filename, configurationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolSparkConfigProperties>.Write(ModelReaderWriterOptions options)

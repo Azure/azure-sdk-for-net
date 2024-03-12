@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClassificationsToInclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsExcludeKbsRebootRequired.HasValue)
+            if (Optional.IsDefined(IsExcludeKbsRebootRequired))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             IList<string> kbNumbersToExclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> classificationsToInclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
+            bool? excludeKbsRequiringReboot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), Optional.ToNullable(excludeKbsRequiringReboot), serializedAdditionalRawData);
+            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), excludeKbsRequiringReboot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowsPatchSettings>.Write(ModelReaderWriterOptions options)

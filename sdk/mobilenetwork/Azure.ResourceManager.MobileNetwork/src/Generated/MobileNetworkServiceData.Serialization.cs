@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("servicePrecedence"u8);
             writer.WriteNumberValue(ServicePrecedence);
-            if (ServiceQosPolicy != null)
+            if (Optional.IsDefined(ServiceQosPolicy))
             {
                 writer.WritePropertyName("serviceQosPolicy"u8);
                 writer.WriteObjectValue(ServiceQosPolicy);
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             int servicePrecedence = default;
-            Optional<MobileNetworkQosPolicy> serviceQosPolicy = default;
+            MobileNetworkQosPolicy serviceQosPolicy = default;
             IList<PccRuleConfiguration> pccRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 servicePrecedence,
-                serviceQosPolicy.Value,
+                serviceQosPolicy,
                 pccRules,
                 serializedAdditionalRawData);
         }

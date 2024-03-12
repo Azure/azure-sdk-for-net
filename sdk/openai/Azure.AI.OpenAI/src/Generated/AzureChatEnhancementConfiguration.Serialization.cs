@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Grounding != null)
+            if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);
             }
-            if (Ocr != null)
+            if (Optional.IsDefined(Ocr))
             {
                 writer.WritePropertyName("ocr"u8);
                 writer.WriteObjectValue(Ocr);
@@ -75,8 +75,8 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<AzureChatGroundingEnhancementConfiguration> grounding = default;
-            Optional<AzureChatOCREnhancementConfiguration> ocr = default;
+            AzureChatGroundingEnhancementConfiguration grounding = default;
+            AzureChatOCREnhancementConfiguration ocr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatEnhancementConfiguration(grounding.Value, ocr.Value, serializedAdditionalRawData);
+            return new AzureChatEnhancementConfiguration(grounding, ocr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatEnhancementConfiguration>.Write(ModelReaderWriterOptions options)

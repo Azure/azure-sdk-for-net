@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -72,77 +72,77 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndObject();
             }
-            if (ShareQuota.HasValue)
+            if (Optional.IsDefined(ShareQuota))
             {
                 writer.WritePropertyName("shareQuota"u8);
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (EnabledProtocol.HasValue)
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
-            if (RootSquash.HasValue)
+            if (Optional.IsDefined(RootSquash))
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteStringValue(RootSquash.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && IsDeleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("deleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletedTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && RemainingRetentionDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RemainingRetentionDays))
             {
                 writer.WritePropertyName("remainingRetentionDays"u8);
                 writer.WriteNumberValue(RemainingRetentionDays.Value);
             }
-            if (AccessTier.HasValue)
+            if (Optional.IsDefined(AccessTier))
             {
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToString());
             }
-            if (options.Format != "W" && AccessTierChangeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccessTierChangeOn))
             {
                 writer.WritePropertyName("accessTierChangeTime"u8);
                 writer.WriteStringValue(AccessTierChangeOn.Value, "O");
             }
-            if (options.Format != "W" && AccessTierStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessTierStatus))
             {
                 writer.WritePropertyName("accessTierStatus"u8);
                 writer.WriteStringValue(AccessTierStatus);
             }
-            if (options.Format != "W" && ShareUsageBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareUsageBytes))
             {
                 writer.WritePropertyName("shareUsageBytes"u8);
                 writer.WriteNumberValue(ShareUsageBytes.Value);
             }
-            if (options.Format != "W" && LeaseStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseStatus))
             {
                 writer.WritePropertyName("leaseStatus"u8);
                 writer.WriteStringValue(LeaseStatus.Value.ToString());
             }
-            if (options.Format != "W" && LeaseState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseState))
             {
                 writer.WritePropertyName("leaseState"u8);
                 writer.WriteStringValue(LeaseState.Value.ToString());
             }
-            if (options.Format != "W" && LeaseDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteStringValue(LeaseDuration.Value.ToString());
             }
-            if (!(SignedIdentifiers is ChangeTrackingList<StorageSignedIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SnapshotOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SnapshotOn))
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotOn.Value, "O");
@@ -196,29 +196,29 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, string> metadata = default;
-            Optional<int> shareQuota = default;
-            Optional<FileShareEnabledProtocol> enabledProtocols = default;
-            Optional<RootSquashType> rootSquash = default;
-            Optional<string> version = default;
-            Optional<bool> deleted = default;
-            Optional<DateTimeOffset> deletedTime = default;
-            Optional<int> remainingRetentionDays = default;
-            Optional<FileShareAccessTier> accessTier = default;
-            Optional<DateTimeOffset> accessTierChangeTime = default;
-            Optional<string> accessTierStatus = default;
-            Optional<long> shareUsageBytes = default;
-            Optional<StorageLeaseStatus> leaseStatus = default;
-            Optional<StorageLeaseState> leaseState = default;
-            Optional<StorageLeaseDurationType> leaseDuration = default;
+            int? shareQuota = default;
+            FileShareEnabledProtocol? enabledProtocols = default;
+            RootSquashType? rootSquash = default;
+            string version = default;
+            bool? deleted = default;
+            DateTimeOffset? deletedTime = default;
+            int? remainingRetentionDays = default;
+            FileShareAccessTier? accessTier = default;
+            DateTimeOffset? accessTierChangeTime = default;
+            string accessTierStatus = default;
+            long? shareUsageBytes = default;
+            StorageLeaseStatus? leaseStatus = default;
+            StorageLeaseState? leaseState = default;
+            StorageLeaseDurationType? leaseDuration = default;
             IList<StorageSignedIdentifier> signedIdentifiers = default;
-            Optional<DateTimeOffset> snapshotTime = default;
+            DateTimeOffset? snapshotTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -442,26 +442,26 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(lastModifiedTime),
+                systemData,
+                lastModifiedTime,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(shareQuota),
-                Optional.ToNullable(enabledProtocols),
-                Optional.ToNullable(rootSquash),
-                version.Value,
-                Optional.ToNullable(deleted),
-                Optional.ToNullable(deletedTime),
-                Optional.ToNullable(remainingRetentionDays),
-                Optional.ToNullable(accessTier),
-                Optional.ToNullable(accessTierChangeTime),
-                accessTierStatus.Value,
-                Optional.ToNullable(shareUsageBytes),
-                Optional.ToNullable(leaseStatus),
-                Optional.ToNullable(leaseState),
-                Optional.ToNullable(leaseDuration),
+                shareQuota,
+                enabledProtocols,
+                rootSquash,
+                version,
+                deleted,
+                deletedTime,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeTime,
+                accessTierStatus,
+                shareUsageBytes,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
                 signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(),
-                Optional.ToNullable(snapshotTime),
-                Optional.ToNullable(etag),
+                snapshotTime,
+                etag,
                 serializedAdditionalRawData);
         }
 

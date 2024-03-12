@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -15,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (CurrentConnection != null)
+            if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
@@ -39,9 +40,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<KqlScriptContentMetadata> metadata = default;
-            Optional<KqlScriptContentCurrentConnection> currentConnection = default;
+            string query = default;
+            KqlScriptContentMetadata metadata = default;
+            KqlScriptContentCurrentConnection currentConnection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -68,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptContent(query.Value, metadata.Value, currentConnection.Value);
+            return new KqlScriptContent(query, metadata, currentConnection);
         }
     }
 }

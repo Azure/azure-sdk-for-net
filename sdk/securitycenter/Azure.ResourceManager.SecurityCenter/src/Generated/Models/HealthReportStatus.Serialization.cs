@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Code.HasValue)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && LastScannedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastScannedOn))
             {
                 writer.WritePropertyName("lastScannedDate"u8);
                 writer.WriteStringValue(LastScannedOn.Value, "O");
             }
-            if (options.Format != "W" && StatusChangeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeOn.Value, "O");
             }
-            if (options.Format != "W" && FirstEvaluationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirstEvaluationOn))
             {
                 writer.WritePropertyName("firstEvaluationDate"u8);
                 writer.WriteStringValue(FirstEvaluationOn.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HealthReportStatusName> code = default;
-            Optional<string> reason = default;
-            Optional<DateTimeOffset> lastScannedDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
-            Optional<DateTimeOffset> firstEvaluationDate = default;
+            HealthReportStatusName? code = default;
+            string reason = default;
+            DateTimeOffset? lastScannedDate = default;
+            DateTimeOffset? statusChangeDate = default;
+            DateTimeOffset? firstEvaluationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HealthReportStatus(
-                Optional.ToNullable(code),
-                reason.Value,
-                Optional.ToNullable(lastScannedDate),
-                Optional.ToNullable(statusChangeDate),
-                Optional.ToNullable(firstEvaluationDate),
+                code,
+                reason,
+                lastScannedDate,
+                statusChangeDate,
+                firstEvaluationDate,
                 serializedAdditionalRawData);
         }
 

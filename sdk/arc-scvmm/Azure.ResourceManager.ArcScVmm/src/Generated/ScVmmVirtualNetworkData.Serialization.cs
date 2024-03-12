@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,34 +58,34 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> networkName = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            string networkName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,15 +240,15 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                inventoryItemId.Value,
-                uuid.Value,
-                vmmServerId.Value,
-                networkName.Value,
-                provisioningState.Value,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                networkName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

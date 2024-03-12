@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsCustomDomainValidated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCustomDomainValidated))
             {
                 writer.WritePropertyName("customDomainValidated"u8);
                 writer.WriteBooleanValue(IsCustomDomainValidated.Value);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<bool> customDomainValidated = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            bool? customDomainValidated = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value, serializedAdditionalRawData);
+            return new FrontDoorValidateCustomDomainResult(customDomainValidated, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorValidateCustomDomainResult>.Write(ModelReaderWriterOptions options)

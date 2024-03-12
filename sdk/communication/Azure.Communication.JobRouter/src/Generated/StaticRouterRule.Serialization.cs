@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (_value != null)
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -79,7 +79,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<BinaryData> value = default;
+            BinaryData value = default;
             RouterRuleKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRouterRule(kind, serializedAdditionalRawData, value.Value);
+            return new StaticRouterRule(kind, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<StaticRouterRule>.Write(ModelReaderWriterOptions options)

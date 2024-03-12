@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (BackupFormat.HasValue)
+            if (Optional.IsDefined(BackupFormat))
             {
                 writer.WritePropertyName("backupFormat"u8);
                 writer.WriteStringValue(BackupFormat.Value.ToString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             string backupName = default;
-            Optional<MySqlFlexibleServerBackupFormat> backupFormat = default;
+            MySqlFlexibleServerBackupFormat? backupFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerBackupSettings(backupName, Optional.ToNullable(backupFormat), serializedAdditionalRawData);
+            return new MySqlFlexibleServerBackupSettings(backupName, backupFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupSettings>.Write(ModelReaderWriterOptions options)

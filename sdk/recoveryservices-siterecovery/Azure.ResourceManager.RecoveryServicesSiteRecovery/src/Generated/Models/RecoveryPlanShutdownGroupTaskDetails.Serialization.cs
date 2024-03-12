@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (RpGroupType != null)
+            if (Optional.IsDefined(RpGroupType))
             {
                 writer.WritePropertyName("rpGroupType"u8);
                 writer.WriteStringValue(RpGroupType);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildTasks))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> groupId = default;
-            Optional<string> rpGroupType = default;
+            string name = default;
+            string groupId = default;
+            string rpGroupType = default;
             string instanceType = default;
             IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,9 +145,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 childTasks ?? new ChangeTrackingList<AsrTask>(),
                 serializedAdditionalRawData,
-                name.Value,
-                groupId.Value,
-                rpGroupType.Value);
+                name,
+                groupId,
+                rpGroupType);
         }
 
         BinaryData IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Write(ModelReaderWriterOptions options)

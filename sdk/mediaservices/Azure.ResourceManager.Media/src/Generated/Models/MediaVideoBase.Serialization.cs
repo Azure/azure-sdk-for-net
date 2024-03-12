@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -97,11 +98,11 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
                 }
             }
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = "#Microsoft.Media.Video";
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,11 +152,11 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MediaVideoBase(
                 odataType,
-                label.Value,
+                label,
                 serializedAdditionalRawData,
-                Optional.ToNullable(keyFrameInterval),
-                Optional.ToNullable(stretchMode),
-                Optional.ToNullable(syncMode));
+                keyFrameInterval,
+                stretchMode,
+                syncMode);
         }
 
         BinaryData IPersistableModel<MediaVideoBase>.Write(ModelReaderWriterOptions options)

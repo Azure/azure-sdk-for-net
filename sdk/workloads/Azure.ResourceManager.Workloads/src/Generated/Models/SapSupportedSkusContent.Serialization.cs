@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProductType sapProduct = default;
             SapDeploymentType deploymentType = default;
             SapDatabaseType databaseType = default;
-            Optional<SapHighAvailabilityType> highAvailabilityType = default;
+            SapHighAvailabilityType? highAvailabilityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 sapProduct,
                 deploymentType,
                 databaseType,
-                Optional.ToNullable(highAvailabilityType),
+                highAvailabilityType,
                 serializedAdditionalRawData);
         }
 

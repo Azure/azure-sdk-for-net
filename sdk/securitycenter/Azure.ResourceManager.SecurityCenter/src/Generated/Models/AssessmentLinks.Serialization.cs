@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzurePortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AzurePortalUri))
             {
                 writer.WritePropertyName("azurePortalUri"u8);
                 writer.WriteStringValue(AzurePortalUri.AbsoluteUri);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Uri> azurePortalUri = default;
+            Uri azurePortalUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessmentLinks(azurePortalUri.Value, serializedAdditionalRawData);
+            return new AssessmentLinks(azurePortalUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessmentLinks>.Write(ModelReaderWriterOptions options)

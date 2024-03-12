@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (EndpointId != null)
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteStringValue(EndpointId);
             }
-            if (HealthStatus.HasValue)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (LastKnownError != null)
+            if (Optional.IsDefined(LastKnownError))
             {
                 writer.WritePropertyName("lastKnownError"u8);
                 writer.WriteStringValue(LastKnownError);
             }
-            if (LastKnownErrorOn.HasValue)
+            if (Optional.IsDefined(LastKnownErrorOn))
             {
                 writer.WritePropertyName("lastKnownErrorTime"u8);
                 writer.WriteStringValue(LastKnownErrorOn.Value, "R");
             }
-            if (LastSuccessfulSendAttemptOn.HasValue)
+            if (Optional.IsDefined(LastSuccessfulSendAttemptOn))
             {
                 writer.WritePropertyName("lastSuccessfulSendAttemptTime"u8);
                 writer.WriteStringValue(LastSuccessfulSendAttemptOn.Value, "R");
             }
-            if (LastSendAttemptOn.HasValue)
+            if (Optional.IsDefined(LastSendAttemptOn))
             {
                 writer.WritePropertyName("lastSendAttemptTime"u8);
                 writer.WriteStringValue(LastSendAttemptOn.Value, "R");
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> endpointId = default;
-            Optional<IotHubEndpointHealthStatus> healthStatus = default;
-            Optional<string> lastKnownError = default;
-            Optional<DateTimeOffset> lastKnownErrorTime = default;
-            Optional<DateTimeOffset> lastSuccessfulSendAttemptTime = default;
-            Optional<DateTimeOffset> lastSendAttemptTime = default;
+            string endpointId = default;
+            IotHubEndpointHealthStatus? healthStatus = default;
+            string lastKnownError = default;
+            DateTimeOffset? lastKnownErrorTime = default;
+            DateTimeOffset? lastSuccessfulSendAttemptTime = default;
+            DateTimeOffset? lastSendAttemptTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubEndpointHealthInfo(
-                endpointId.Value,
-                Optional.ToNullable(healthStatus),
-                lastKnownError.Value,
-                Optional.ToNullable(lastKnownErrorTime),
-                Optional.ToNullable(lastSuccessfulSendAttemptTime),
-                Optional.ToNullable(lastSendAttemptTime),
+                endpointId,
+                healthStatus,
+                lastKnownError,
+                lastKnownErrorTime,
+                lastSuccessfulSendAttemptTime,
+                lastSendAttemptTime,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(And is ChangeTrackingList<ForecastFilter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Or is ChangeTrackingList<ForecastFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Or))
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -96,8 +97,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             IList<ForecastFilter> and = default;
             IList<ForecastFilter> or = default;
-            Optional<ForecastComparisonExpression> dimensions = default;
-            Optional<ForecastComparisonExpression> tags = default;
+            ForecastComparisonExpression dimensions = default;
+            ForecastComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastFilter>.Write(ModelReaderWriterOptions options)

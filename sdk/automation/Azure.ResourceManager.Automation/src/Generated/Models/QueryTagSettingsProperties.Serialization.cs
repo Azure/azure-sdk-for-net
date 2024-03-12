@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FilterOperator.HasValue)
+            if (Optional.IsDefined(FilterOperator))
             {
                 writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             IDictionary<string, IList<string>> tags = default;
-            Optional<QueryTagOperator> filterOperator = default;
+            QueryTagOperator? filterOperator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryTagSettingsProperties(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+            return new QueryTagSettingsProperties(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryTagSettingsProperties>.Write(ModelReaderWriterOptions options)

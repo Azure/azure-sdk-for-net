@@ -27,49 +27,49 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublishedOn.HasValue)
+            if (Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (IsExcludedFromLatest.HasValue)
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Disclaimer != null)
+            if (Optional.IsDefined(Disclaimer))
             {
                 writer.WritePropertyName("disclaimer"u8);
                 writer.WriteStringValue(Disclaimer);
             }
-            if (!(ArtifactTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ArtifactTags))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
             writer.WritePropertyName("identifier"u8);
             writer.WriteStartObject();
-            if (UniqueId != null)
+            if (Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
-            Optional<string> disclaimer = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? excludeFromLatest = default;
+            SharedGalleryImageVersionStorageProfile storageProfile = default;
+            string disclaimer = default;
             IReadOnlyDictionary<string, string> artifactTags = default;
-            Optional<string> uniqueId = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,16 +255,16 @@ namespace Azure.ResourceManager.Compute
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommunityGalleryImageVersionData(
-                name.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(type),
-                uniqueId.Value,
+                name,
+                location,
+                type,
+                uniqueId,
                 serializedAdditionalRawData,
-                Optional.ToNullable(publishedDate),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(excludeFromLatest),
-                storageProfile.Value,
-                disclaimer.Value,
+                publishedDate,
+                endOfLifeDate,
+                excludeFromLatest,
+                storageProfile,
+                disclaimer,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 

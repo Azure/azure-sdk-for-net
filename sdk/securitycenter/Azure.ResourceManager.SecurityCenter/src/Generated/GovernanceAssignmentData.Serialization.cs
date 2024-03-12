@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (RemediationDueOn.HasValue)
+            if (Optional.IsDefined(RemediationDueOn))
             {
                 writer.WritePropertyName("remediationDueDate"u8);
                 writer.WriteStringValue(RemediationDueOn.Value, "O");
             }
-            if (RemediationEta != null)
+            if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
                 writer.WriteObjectValue(RemediationEta);
             }
-            if (IsGracePeriod.HasValue)
+            if (Optional.IsDefined(IsGracePeriod))
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (GovernanceEmailNotification != null)
+            if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
-            if (AdditionalData != null)
+            if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> owner = default;
-            Optional<DateTimeOffset> remediationDueDate = default;
-            Optional<RemediationEta> remediationEta = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<GovernanceEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceAssignmentAdditionalInfo> additionalData = default;
+            SystemData systemData = default;
+            string owner = default;
+            DateTimeOffset? remediationDueDate = default;
+            RemediationEta remediationEta = default;
+            bool? isGracePeriod = default;
+            GovernanceEmailNotification governanceEmailNotification = default;
+            GovernanceAssignmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                owner.Value,
-                Optional.ToNullable(remediationDueDate),
-                remediationEta.Value,
-                Optional.ToNullable(isGracePeriod),
-                governanceEmailNotification.Value,
-                additionalData.Value,
+                systemData,
+                owner,
+                remediationDueDate,
+                remediationEta,
+                isGracePeriod,
+                governanceEmailNotification,
+                additionalData,
                 serializedAdditionalRawData);
         }
 

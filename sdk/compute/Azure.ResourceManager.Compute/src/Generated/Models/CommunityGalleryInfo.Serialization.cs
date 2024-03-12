@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PublisherUriString != null)
+            if (Optional.IsDefined(PublisherUriString))
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUriString);
             }
-            if (PublisherContact != null)
+            if (Optional.IsDefined(PublisherContact))
             {
                 writer.WritePropertyName("publisherContact"u8);
                 writer.WriteStringValue(PublisherContact);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (PublicNamePrefix != null)
+            if (Optional.IsDefined(PublicNamePrefix))
             {
                 writer.WritePropertyName("publicNamePrefix"u8);
                 writer.WriteStringValue(PublicNamePrefix);
             }
-            if (options.Format != "W" && CommunityGalleryEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunityGalleryEnabled))
             {
                 writer.WritePropertyName("communityGalleryEnabled"u8);
                 writer.WriteBooleanValue(CommunityGalleryEnabled.Value);
             }
-            if (options.Format != "W" && !(PublicNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicNames))
             {
                 writer.WritePropertyName("publicNames"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisherUri = default;
-            Optional<string> publisherContact = default;
-            Optional<string> eula = default;
-            Optional<string> publicNamePrefix = default;
-            Optional<bool> communityGalleryEnabled = default;
+            string publisherUri = default;
+            string publisherContact = default;
+            string eula = default;
+            string publicNamePrefix = default;
+            bool? communityGalleryEnabled = default;
             IReadOnlyList<string> publicNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,11 +160,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommunityGalleryInfo(
-                publisherUri.Value,
-                publisherContact.Value,
-                eula.Value,
-                publicNamePrefix.Value,
-                Optional.ToNullable(communityGalleryEnabled),
+                publisherUri,
+                publisherContact,
+                eula,
+                publicNamePrefix,
+                communityGalleryEnabled,
                 publicNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

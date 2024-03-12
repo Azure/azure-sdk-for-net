@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (IsSuppressed.HasValue)
+            if (Optional.IsDefined(IsSuppressed))
             {
                 writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<bool> isSuppressed = default;
+            bool? isSuppressed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertActionStatus(Optional.ToNullable(isSuppressed), serializedAdditionalRawData);
+            return new ServiceAlertActionStatus(isSuppressed, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertActionStatus>.Write(ModelReaderWriterOptions options)

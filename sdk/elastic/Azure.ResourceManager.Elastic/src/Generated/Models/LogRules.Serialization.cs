@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (SendAadLogs.HasValue)
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (SendSubscriptionLogs.HasValue)
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (SendActivityLogs.HasValue)
+            if (Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteBooleanValue(SendActivityLogs.Value);
             }
-            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<bool> sendAadLogs = default;
-            Optional<bool> sendSubscriptionLogs = default;
-            Optional<bool> sendActivityLogs = default;
+            bool? sendAadLogs = default;
+            bool? sendSubscriptionLogs = default;
+            bool? sendActivityLogs = default;
             IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
+            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogRules>.Write(ModelReaderWriterOptions options)

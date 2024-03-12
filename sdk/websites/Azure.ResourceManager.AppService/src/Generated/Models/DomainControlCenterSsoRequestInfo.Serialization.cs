@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && PostParameterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PostParameterKey))
             {
                 writer.WritePropertyName("postParameterKey"u8);
                 writer.WriteStringValue(PostParameterKey);
             }
-            if (options.Format != "W" && PostParameterValue != null)
+            if (options.Format != "W" && Optional.IsDefined(PostParameterValue))
             {
                 writer.WritePropertyName("postParameterValue"u8);
                 writer.WriteStringValue(PostParameterValue);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> postParameterKey = default;
-            Optional<string> postParameterValue = default;
+            Uri url = default;
+            string postParameterKey = default;
+            string postParameterValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainControlCenterSsoRequestInfo(url.Value, postParameterKey.Value, postParameterValue.Value, serializedAdditionalRawData);
+            return new DomainControlCenterSsoRequestInfo(url, postParameterKey, postParameterValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainControlCenterSsoRequestInfo>.Write(ModelReaderWriterOptions options)

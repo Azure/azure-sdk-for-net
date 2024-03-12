@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -42,59 +43,59 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ParentPath != null)
+            if (Optional.IsDefined(ParentPath))
             {
                 writer.WritePropertyName("parentPath"u8);
                 writer.WriteStringValue(ParentPath);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (BytesUsed.HasValue)
+            if (Optional.IsDefined(BytesUsed))
             {
                 writer.WritePropertyName("bytesUsed"u8);
                 writer.WriteNumberValue(BytesUsed.Value);
             }
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (AccessedOn.HasValue)
+            if (Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedTimeStamp"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTimeStamp"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (ChangedOn.HasValue)
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTimeStamp"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -141,17 +142,17 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<string> parentPath = default;
-            Optional<long> size = default;
-            Optional<long> bytesUsed = default;
-            Optional<string> permissions = default;
-            Optional<DateTimeOffset> creationTimeStamp = default;
-            Optional<DateTimeOffset> accessedTimeStamp = default;
-            Optional<DateTimeOffset> modifiedTimeStamp = default;
-            Optional<DateTimeOffset> changedTimeStamp = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string path = default;
+            string parentPath = default;
+            long? size = default;
+            long? bytesUsed = default;
+            string permissions = default;
+            DateTimeOffset? creationTimeStamp = default;
+            DateTimeOffset? accessedTimeStamp = default;
+            DateTimeOffset? modifiedTimeStamp = default;
+            DateTimeOffset? changedTimeStamp = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,17 +277,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                path.Value,
-                parentPath.Value,
-                Optional.ToNullable(size),
-                Optional.ToNullable(bytesUsed),
-                permissions.Value,
-                Optional.ToNullable(creationTimeStamp),
-                Optional.ToNullable(accessedTimeStamp),
-                Optional.ToNullable(modifiedTimeStamp),
-                Optional.ToNullable(changedTimeStamp),
-                provisioningState.Value,
+                systemData,
+                path,
+                parentPath,
+                size,
+                bytesUsed,
+                permissions,
+                creationTimeStamp,
+                accessedTimeStamp,
+                modifiedTimeStamp,
+                changedTimeStamp,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

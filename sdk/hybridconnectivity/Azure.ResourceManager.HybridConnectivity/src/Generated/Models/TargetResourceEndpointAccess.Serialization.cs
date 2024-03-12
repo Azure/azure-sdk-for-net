@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relay"u8);
             writer.WriteStartObject();
-            if (NamespaceName != null)
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("namespaceName"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (NamespaceNameSuffix != null)
+            if (Optional.IsDefined(NamespaceNameSuffix))
             {
                 writer.WritePropertyName("namespaceNameSuffix"u8);
                 writer.WriteStringValue(NamespaceNameSuffix);
             }
-            if (HybridConnectionName != null)
+            if (Optional.IsDefined(HybridConnectionName))
             {
                 writer.WritePropertyName("hybridConnectionName"u8);
                 writer.WriteStringValue(HybridConnectionName);
             }
-            if (options.Format != "W" && AccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (ExpiresOn.HasValue)
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteNumberValue(ExpiresOn.Value);
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            Optional<string> namespaceName = default;
-            Optional<string> namespaceNameSuffix = default;
-            Optional<string> hybridConnectionName = default;
-            Optional<string> accessKey = default;
-            Optional<long> expiresOn = default;
+            string namespaceName = default;
+            string namespaceNameSuffix = default;
+            string hybridConnectionName = default;
+            string accessKey = default;
+            long? expiresOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,11 +150,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetResourceEndpointAccess(
-                namespaceName.Value,
-                namespaceNameSuffix.Value,
-                hybridConnectionName.Value,
-                accessKey.Value,
-                Optional.ToNullable(expiresOn),
+                namespaceName,
+                namespaceNameSuffix,
+                hybridConnectionName,
+                accessKey,
+                expiresOn,
                 serializedAdditionalRawData);
         }
 

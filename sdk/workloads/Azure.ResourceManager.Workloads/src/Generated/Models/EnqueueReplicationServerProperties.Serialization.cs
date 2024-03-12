@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErsVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErsVersion))
             {
                 writer.WritePropertyName("ersVersion"u8);
                 writer.WriteStringValue(ErsVersion.Value.ToString());
             }
-            if (options.Format != "W" && InstanceNo != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && KernelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
                 writer.WritePropertyName("kernelVersion"u8);
                 writer.WriteStringValue(KernelVersion);
             }
-            if (options.Format != "W" && KernelPatch != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
             {
                 writer.WritePropertyName("kernelPatch"u8);
                 writer.WriteStringValue(KernelPatch);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<EnqueueReplicationServerType> ersVersion = default;
-            Optional<string> instanceNo = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<SapHealthState> health = default;
+            EnqueueReplicationServerType? ersVersion = default;
+            string instanceNo = default;
+            string hostname = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            string ipAddress = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +161,13 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EnqueueReplicationServerProperties(
-                Optional.ToNullable(ersVersion),
-                instanceNo.Value,
-                hostname.Value,
-                kernelVersion.Value,
-                kernelPatch.Value,
-                ipAddress.Value,
-                Optional.ToNullable(health),
+                ersVersion,
+                instanceNo,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                health,
                 serializedAdditionalRawData);
         }
 

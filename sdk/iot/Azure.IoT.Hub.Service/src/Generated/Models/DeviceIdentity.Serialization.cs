@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -16,67 +17,67 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (GenerationId != null)
+            if (Optional.IsDefined(GenerationId))
             {
                 writer.WritePropertyName("generationId"u8);
                 writer.WriteStringValue(GenerationId);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
-            if (ConnectionState.HasValue)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusReason != null)
+            if (Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
-            if (ConnectionStateUpdatedTime.HasValue)
+            if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {
                 writer.WritePropertyName("connectionStateUpdatedTime"u8);
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "O");
             }
-            if (StatusUpdatedTime.HasValue)
+            if (Optional.IsDefined(StatusUpdatedTime))
             {
                 writer.WritePropertyName("statusUpdatedTime"u8);
                 writer.WriteStringValue(StatusUpdatedTime.Value, "O");
             }
-            if (LastActivityTime.HasValue)
+            if (Optional.IsDefined(LastActivityTime))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
-            if (CloudToDeviceMessageCount.HasValue)
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (DeviceScope != null)
+            if (Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
@@ -90,19 +91,19 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<string> generationId = default;
-            Optional<string> etag = default;
-            Optional<DeviceConnectionState> connectionState = default;
-            Optional<DeviceStatus> status = default;
-            Optional<string> statusReason = default;
-            Optional<DateTimeOffset> connectionStateUpdatedTime = default;
-            Optional<DateTimeOffset> statusUpdatedTime = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
-            Optional<int> cloudToDeviceMessageCount = default;
-            Optional<AuthenticationMechanism> authentication = default;
-            Optional<DeviceCapabilities> capabilities = default;
-            Optional<string> deviceScope = default;
+            string deviceId = default;
+            string generationId = default;
+            string etag = default;
+            DeviceConnectionState? connectionState = default;
+            DeviceStatus? status = default;
+            string statusReason = default;
+            DateTimeOffset? connectionStateUpdatedTime = default;
+            DateTimeOffset? statusUpdatedTime = default;
+            DateTimeOffset? lastActivityTime = default;
+            int? cloudToDeviceMessageCount = default;
+            AuthenticationMechanism authentication = default;
+            DeviceCapabilities capabilities = default;
+            string deviceScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -204,19 +205,19 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new DeviceIdentity(
-                deviceId.Value,
-                generationId.Value,
-                etag.Value,
-                Optional.ToNullable(connectionState),
-                Optional.ToNullable(status),
-                statusReason.Value,
-                Optional.ToNullable(connectionStateUpdatedTime),
-                Optional.ToNullable(statusUpdatedTime),
-                Optional.ToNullable(lastActivityTime),
-                Optional.ToNullable(cloudToDeviceMessageCount),
-                authentication.Value,
-                capabilities.Value,
-                deviceScope.Value);
+                deviceId,
+                generationId,
+                etag,
+                connectionState,
+                status,
+                statusReason,
+                connectionStateUpdatedTime,
+                statusUpdatedTime,
+                lastActivityTime,
+                cloudToDeviceMessageCount,
+                authentication,
+                capabilities,
+                deviceScope);
         }
     }
 }

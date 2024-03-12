@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(Container);
             writer.WritePropertyName("loggingContainer"u8);
             writer.WriteStringValue(LoggingContainer);
-            if (ImportPrefix != null)
+            if (Optional.IsDefined(ImportPrefix))
             {
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             string container = default;
             string loggingContainer = default;
-            Optional<string> importPrefix = default;
+            string importPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix.Value, serializedAdditionalRawData);
+            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHsmSettings>.Write(ModelReaderWriterOptions options)

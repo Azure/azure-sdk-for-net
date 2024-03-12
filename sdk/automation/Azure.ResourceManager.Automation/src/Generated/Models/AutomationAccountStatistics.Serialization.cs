@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CounterProperty != null)
+            if (options.Format != "W" && Optional.IsDefined(CounterProperty))
             {
                 writer.WritePropertyName("counterProperty"u8);
                 writer.WriteStringValue(CounterProperty);
             }
-            if (options.Format != "W" && CounterValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CounterValue))
             {
                 writer.WritePropertyName("counterValue"u8);
                 writer.WriteNumberValue(CounterValue.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> counterProperty = default;
-            Optional<long> counterValue = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> id = default;
+            string counterProperty = default;
+            long? counterValue = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationAccountStatistics(
-                counterProperty.Value,
-                Optional.ToNullable(counterValue),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                id.Value,
+                counterProperty,
+                counterValue,
+                startTime,
+                endTime,
+                id,
                 serializedAdditionalRawData);
         }
 

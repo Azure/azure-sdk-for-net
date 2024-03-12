@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (!(Passwords is ChangeTrackingList<ContainerRegistryTokenPassword> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Passwords))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> username = default;
+            string username = default;
             IReadOnlyList<ContainerRegistryTokenPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryGenerateCredentialsResult(username.Value, passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>(), serializedAdditionalRawData);
+            return new ContainerRegistryGenerateCredentialsResult(username, passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryGenerateCredentialsResult>.Write(ModelReaderWriterOptions options)

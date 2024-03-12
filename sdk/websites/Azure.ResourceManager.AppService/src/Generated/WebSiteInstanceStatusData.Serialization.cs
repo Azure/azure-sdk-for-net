@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (StatusUri != null)
+            if (Optional.IsDefined(StatusUri))
             {
                 writer.WritePropertyName("statusUrl"u8);
                 writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
-            if (DetectorUri != null)
+            if (Optional.IsDefined(DetectorUri))
             {
                 writer.WritePropertyName("detectorUrl"u8);
                 writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
-            if (ConsoleUri != null)
+            if (Optional.IsDefined(ConsoleUri))
             {
                 writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
-            if (HealthCheckUrlString != null)
+            if (Optional.IsDefined(HealthCheckUrlString))
             {
                 writer.WritePropertyName("healthCheckUrl"u8);
                 writer.WriteStringValue(HealthCheckUrlString);
             }
-            if (!(Containers is ChangeTrackingDictionary<string, ContainerInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartObject();
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SiteRuntimeState> state = default;
-            Optional<Uri> statusUrl = default;
-            Optional<Uri> detectorUrl = default;
-            Optional<Uri> consoleUrl = default;
-            Optional<string> healthCheckUrl = default;
+            SystemData systemData = default;
+            SiteRuntimeState? state = default;
+            Uri statusUrl = default;
+            Uri detectorUrl = default;
+            Uri consoleUrl = default;
+            string healthCheckUrl = default;
             IDictionary<string, ContainerInfo> containers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(state),
-                statusUrl.Value,
-                detectorUrl.Value,
-                consoleUrl.Value,
-                healthCheckUrl.Value,
+                systemData,
+                state,
+                statusUrl,
+                detectorUrl,
+                consoleUrl,
+                healthCheckUrl,
                 containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

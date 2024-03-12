@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (options.Format != "W" && LastSyncOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (ConflictResolutionPolicy.HasValue)
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteStringValue(ConflictResolutionPolicy.Value.ToString());
             }
-            if (SyncDatabaseId != null)
+            if (Optional.IsDefined(SyncDatabaseId))
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
-            if (HubDatabaseUserName != null)
+            if (Optional.IsDefined(HubDatabaseUserName))
             {
                 writer.WritePropertyName("hubDatabaseUserName"u8);
                 writer.WriteStringValue(HubDatabaseUserName);
             }
-            if (HubDatabasePassword != null)
+            if (Optional.IsDefined(HubDatabasePassword))
             {
                 writer.WritePropertyName("hubDatabasePassword"u8);
                 writer.WriteStringValue(HubDatabasePassword);
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (IsConflictLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
                 writer.WritePropertyName("enableConflictLogging"u8);
                 writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
-            if (ConflictLoggingRetentionInDays.HasValue)
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {
                 writer.WritePropertyName("conflictLoggingRetentionInDays"u8);
                 writer.WriteNumberValue(ConflictLoggingRetentionInDays.Value);
             }
-            if (UsePrivateLinkConnection.HasValue)
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (options.Format != "W" && PrivateEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
             {
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);
@@ -154,23 +154,23 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
-            Optional<SyncConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<ResourceIdentifier> syncDatabaseId = default;
-            Optional<string> hubDatabaseUserName = default;
-            Optional<string> hubDatabasePassword = default;
-            Optional<SyncGroupState> syncState = default;
-            Optional<SyncGroupSchema> schema = default;
-            Optional<bool> enableConflictLogging = default;
-            Optional<int> conflictLoggingRetentionInDays = default;
-            Optional<bool> usePrivateLinkConnection = default;
-            Optional<string> privateEndpointName = default;
+            SystemData systemData = default;
+            int? interval = default;
+            DateTimeOffset? lastSyncTime = default;
+            SyncConflictResolutionPolicy? conflictResolutionPolicy = default;
+            ResourceIdentifier syncDatabaseId = default;
+            string hubDatabaseUserName = default;
+            string hubDatabasePassword = default;
+            SyncGroupState? syncState = default;
+            SyncGroupSchema schema = default;
+            bool? enableConflictLogging = default;
+            int? conflictLoggingRetentionInDays = default;
+            bool? usePrivateLinkConnection = default;
+            string privateEndpointName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,20 +326,20 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                Optional.ToNullable(interval),
-                Optional.ToNullable(lastSyncTime),
-                Optional.ToNullable(conflictResolutionPolicy),
-                syncDatabaseId.Value,
-                hubDatabaseUserName.Value,
-                hubDatabasePassword.Value,
-                Optional.ToNullable(syncState),
-                schema.Value,
-                Optional.ToNullable(enableConflictLogging),
-                Optional.ToNullable(conflictLoggingRetentionInDays),
-                Optional.ToNullable(usePrivateLinkConnection),
-                privateEndpointName.Value,
+                systemData,
+                sku,
+                interval,
+                lastSyncTime,
+                conflictResolutionPolicy,
+                syncDatabaseId,
+                hubDatabaseUserName,
+                hubDatabasePassword,
+                syncState,
+                schema,
+                enableConflictLogging,
+                conflictLoggingRetentionInDays,
+                usePrivateLinkConnection,
+                privateEndpointName,
                 serializedAdditionalRawData);
         }
 

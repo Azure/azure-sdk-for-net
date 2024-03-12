@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DnsZoneData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Dns.Models
                 return null;
             }
             IReadOnlyList<DnsZoneData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsZoneListResult(value ?? new ChangeTrackingList<DnsZoneData>(), nextLink.Value, serializedAdditionalRawData);
+            return new DnsZoneListResult(value ?? new ChangeTrackingList<DnsZoneData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsZoneListResult>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,52 +75,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AccountEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountEntityId))
             {
                 writer.WritePropertyName("accountEntityId"u8);
                 writer.WriteStringValue(AccountEntityId);
             }
-            if (options.Format != "W" && CommandLine != null)
+            if (options.Format != "W" && Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ElevationToken.HasValue)
+            if (Optional.IsDefined(ElevationToken))
             {
                 writer.WritePropertyName("elevationToken"u8);
                 writer.WriteStringValue(ElevationToken.Value.ToSerialString());
             }
-            if (options.Format != "W" && HostEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
             }
-            if (options.Format != "W" && HostLogonSessionEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostLogonSessionEntityId))
             {
                 writer.WritePropertyName("hostLogonSessionEntityId"u8);
                 writer.WriteStringValue(HostLogonSessionEntityId);
             }
-            if (options.Format != "W" && ImageFileEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageFileEntityId))
             {
                 writer.WritePropertyName("imageFileEntityId"u8);
                 writer.WriteStringValue(ImageFileEntityId);
             }
-            if (options.Format != "W" && ParentProcessEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ParentProcessEntityId))
             {
                 writer.WritePropertyName("parentProcessEntityId"u8);
                 writer.WriteStringValue(ParentProcessEntityId);
             }
-            if (options.Format != "W" && ProcessId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProcessId))
             {
                 writer.WritePropertyName("processId"u8);
                 writer.WriteStringValue(ProcessId);
@@ -167,18 +168,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> accountEntityId = default;
-            Optional<string> commandLine = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<SecurityInsightsProcessElevationToken> elevationToken = default;
-            Optional<string> hostEntityId = default;
-            Optional<string> hostLogonSessionEntityId = default;
-            Optional<string> imageFileEntityId = default;
-            Optional<string> parentProcessEntityId = default;
-            Optional<string> processId = default;
+            string friendlyName = default;
+            string accountEntityId = default;
+            string commandLine = default;
+            DateTimeOffset? creationTimeUtc = default;
+            SecurityInsightsProcessElevationToken? elevationToken = default;
+            string hostEntityId = default;
+            string hostLogonSessionEntityId = default;
+            string imageFileEntityId = default;
+            string parentProcessEntityId = default;
+            string processId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,20 +314,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                accountEntityId.Value,
-                commandLine.Value,
-                Optional.ToNullable(creationTimeUtc),
-                Optional.ToNullable(elevationToken),
-                hostEntityId.Value,
-                hostLogonSessionEntityId.Value,
-                imageFileEntityId.Value,
-                parentProcessEntityId.Value,
-                processId.Value);
+                friendlyName,
+                accountEntityId,
+                commandLine,
+                creationTimeUtc,
+                elevationToken,
+                hostEntityId,
+                hostLogonSessionEntityId,
+                imageFileEntityId,
+                parentProcessEntityId,
+                processId);
         }
 
         BinaryData IPersistableModel<SecurityInsightsProcessEntity>.Write(ModelReaderWriterOptions options)

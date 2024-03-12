@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<int> hour = default;
-            Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
+            int? hour = default;
+            DesktopVirtualizationDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostMaintenanceWindowProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
+            return new SessionHostMaintenanceWindowProperties(hour, dayOfWeek, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostMaintenanceWindowProperties>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<AzureDevOpsRepoData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 return null;
             }
             IReadOnlyList<AzureDevOpsRepoData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsRepoListResponse(value ?? new ChangeTrackingList<AzureDevOpsRepoData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AzureDevOpsRepoListResponse(value ?? new ChangeTrackingList<AzureDevOpsRepoData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsRepoListResponse>.Write(ModelReaderWriterOptions options)

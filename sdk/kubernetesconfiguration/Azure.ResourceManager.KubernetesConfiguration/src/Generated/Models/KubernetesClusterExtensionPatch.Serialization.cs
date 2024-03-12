@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (ReleaseTrain != null)
+            if (Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("version");
                 }
             }
-            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -125,9 +126,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> releaseTrain = default;
-            Optional<string> version = default;
+            bool? autoUpgradeMinorVersion = default;
+            string releaseTrain = default;
+            string version = default;
             IDictionary<string, string> configurationSettings = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -207,9 +208,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterExtensionPatch(
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                releaseTrain.Value,
-                version.Value,
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
                 configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorityUri != null)
+            if (Optional.IsDefined(AuthorityUri))
             {
                 if (AuthorityUri != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
                 {
@@ -96,9 +97,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Uri authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Uri resourceUrl = default;
             MachineLearningServicePrincipalDatastoreSecrets secrets = default;
             Guid tenantId = default;
             CredentialsType credentialsType = default;
@@ -155,9 +156,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningServicePrincipalDatastoreCredentials(
                 credentialsType,
                 serializedAdditionalRawData,
-                authorityUrl.Value,
+                authorityUrl,
                 clientId,
-                resourceUrl.Value,
+                resourceUrl,
                 secrets,
                 tenantId);
         }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -31,12 +32,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartIPAddress != null)
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
             }
-            if (EndIPAddress != null)
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             string name = default;
-            Optional<IPAddress> startIPAddress = default;
-            Optional<IPAddress> endIPAddress = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleForDataLakeStoreAccountUpdateContent(name, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new FirewallRuleForDataLakeStoreAccountUpdateContent(name, startIPAddress, endIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleForDataLakeStoreAccountUpdateContent>.Write(ModelReaderWriterOptions options)

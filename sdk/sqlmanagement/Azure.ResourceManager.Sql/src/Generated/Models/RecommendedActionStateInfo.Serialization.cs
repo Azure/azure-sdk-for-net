@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("currentValue"u8);
             writer.WriteStringValue(CurrentValue.ToString());
-            if (options.Format != "W" && ActionInitiatedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActionInitiatedBy))
             {
                 writer.WritePropertyName("actionInitiatedBy"u8);
                 writer.WriteStringValue(ActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             RecommendedActionCurrentState currentValue = default;
-            Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
-            Optional<DateTimeOffset> lastModified = default;
+            RecommendedActionInitiatedBy? actionInitiatedBy = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionStateInfo(currentValue, Optional.ToNullable(actionInitiatedBy), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new RecommendedActionStateInfo(currentValue, actionInitiatedBy, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionStateInfo>.Write(ModelReaderWriterOptions options)

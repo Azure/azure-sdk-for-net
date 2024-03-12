@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactSelector != null)
+            if (Optional.IsDefined(ArtifactSelector))
             {
                 writer.WritePropertyName("artifactSelector"u8);
                 writer.WriteStringValue(ArtifactSelector);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> artifactSelector = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> relativePath = default;
+            string artifactSelector = default;
+            string runtimeVersion = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,11 +129,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SourceUploadedUserSourceInfo(
                 type,
-                version.Value,
+                version,
                 serializedAdditionalRawData,
-                relativePath.Value,
-                artifactSelector.Value,
-                runtimeVersion.Value);
+                relativePath,
+                artifactSelector,
+                runtimeVersion);
         }
 
         BinaryData IPersistableModel<SourceUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

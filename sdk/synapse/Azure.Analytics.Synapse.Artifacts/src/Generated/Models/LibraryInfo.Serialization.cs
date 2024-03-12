@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (UploadedTimestamp.HasValue)
+            if (Optional.IsDefined(UploadedTimestamp))
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedTimestamp.Value, "O");
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
@@ -52,13 +53,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            string name = default;
+            string path = default;
+            string containerName = default;
+            DateTimeOffset? uploadedTimestamp = default;
+            string type = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -102,13 +103,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LibraryInfo(
-                name.Value,
-                path.Value,
-                containerName.Value,
-                Optional.ToNullable(uploadedTimestamp),
-                type.Value,
-                provisioningStatus.Value,
-                creatorId.Value);
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         internal partial class LibraryInfoConverter : JsonConverter<LibraryInfo>

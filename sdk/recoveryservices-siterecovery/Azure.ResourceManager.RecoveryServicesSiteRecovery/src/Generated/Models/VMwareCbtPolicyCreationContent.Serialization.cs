@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointHistoryInMinutes.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistoryInMinutes))
             {
                 writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryInMinutes.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
+            int? recoveryPointHistoryInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtPolicyCreationContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes));
+            return new VMwareCbtPolicyCreationContent(instanceType, serializedAdditionalRawData, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
         BinaryData IPersistableModel<VMwareCbtPolicyCreationContent>.Write(ModelReaderWriterOptions options)

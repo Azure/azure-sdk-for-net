@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Containers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tables is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> containers = default;
             IList<string> tables = default;
-            Optional<OperationalInsightsStorageAccount> storageAccount = default;
-            Optional<StorageInsightStatus> status = default;
+            OperationalInsightsStorageAccount storageAccount = default;
+            StorageInsightStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 containers ?? new ChangeTrackingList<string>(),
                 tables ?? new ChangeTrackingList<string>(),
-                storageAccount.Value,
-                status.Value,
+                storageAccount,
+                status,
                 serializedAdditionalRawData);
         }
 

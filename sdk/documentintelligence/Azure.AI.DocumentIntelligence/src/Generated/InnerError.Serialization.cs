@@ -27,17 +27,17 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (InnerErrorObject != null)
+            if (Optional.IsDefined(InnerErrorObject))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(InnerErrorObject);
@@ -80,9 +80,9 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            string message = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InnerError(code.Value, message.Value, innererror.Value, serializedAdditionalRawData);
+            return new InnerError(code, message, innererror, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

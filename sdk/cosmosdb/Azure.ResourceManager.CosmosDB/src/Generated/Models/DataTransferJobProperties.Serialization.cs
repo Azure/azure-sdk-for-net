@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName != null)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
@@ -35,32 +36,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ProcessedCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedCount))
             {
                 writer.WritePropertyName("processedCount"u8);
                 writer.WriteNumberValue(ProcessedCount.Value);
             }
-            if (options.Format != "W" && TotalCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (options.Format != "W" && LastUpdatedUtcOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtcOn))
             {
                 writer.WritePropertyName("lastUpdatedUtcTime"u8);
                 writer.WriteStringValue(LastUpdatedUtcOn.Value, "O");
             }
-            if (WorkerCount.HasValue)
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -103,15 +104,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,15 +189,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataTransferJobProperties(
-                jobName.Value,
+                jobName,
                 source,
                 destination,
-                status.Value,
-                Optional.ToNullable(processedCount),
-                Optional.ToNullable(totalCount),
-                Optional.ToNullable(lastUpdatedUtcTime),
-                Optional.ToNullable(workerCount),
-                error.Value,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
                 serializedAdditionalRawData);
         }
 

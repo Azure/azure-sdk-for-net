@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(DataLocationToServiceLocationMap is ChangeTrackingList<DataLocationToServiceLocationMap> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
             {
                 writer.WritePropertyName("dataLocationToServiceLocationMap"u8);
                 writer.WriteStartArray();
@@ -48,12 +49,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Capacity != null)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxSkuCost> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -73,22 +74,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisabledReason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReason))
             {
                 writer.WritePropertyName("disabledReason"u8);
                 writer.WriteStringValue(DisabledReason.Value.ToSerialString());
             }
-            if (options.Format != "W" && DisabledReasonMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReasonMessage))
             {
                 writer.WritePropertyName("disabledReasonMessage"u8);
                 writer.WriteStringValue(DisabledReasonMessage);
             }
-            if (options.Format != "W" && RequiredFeature != null)
+            if (options.Format != "W" && Optional.IsDefined(RequiredFeature))
             {
                 writer.WritePropertyName("requiredFeature"u8);
                 writer.WriteStringValue(RequiredFeature);
             }
-            if (options.Format != "W" && !(CountriesWithinCommerceBoundary is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
             {
                 writer.WritePropertyName("countriesWithinCommerceBoundary"u8);
                 writer.WriteStartArray();
@@ -137,15 +138,15 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxSku> sku = default;
-            Optional<bool> enabled = default;
+            DataBoxSku sku = default;
+            bool? enabled = default;
             IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default;
-            Optional<DataBoxSkuCapacity> capacity = default;
+            DataBoxSkuCapacity capacity = default;
             IReadOnlyList<DataBoxSkuCost> costs = default;
             IReadOnlyList<string> apiVersions = default;
-            Optional<SkuDisabledReason> disabledReason = default;
-            Optional<string> disabledReasonMessage = default;
-            Optional<string> requiredFeature = default;
+            SkuDisabledReason? disabledReason = default;
+            string disabledReasonMessage = default;
+            string requiredFeature = default;
             IReadOnlyList<string> countriesWithinCommerceBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,15 +273,15 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxSkuInformation(
-                sku.Value,
-                Optional.ToNullable(enabled),
+                sku,
+                enabled,
                 dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(),
-                capacity.Value,
+                capacity,
                 costs ?? new ChangeTrackingList<DataBoxSkuCost>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(disabledReason),
-                disabledReasonMessage.Value,
-                requiredFeature.Value,
+                disabledReason,
+                disabledReasonMessage,
+                requiredFeature,
                 countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

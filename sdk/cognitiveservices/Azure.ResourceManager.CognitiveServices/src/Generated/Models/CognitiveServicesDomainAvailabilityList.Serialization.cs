@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (IsSubdomainAvailable.HasValue)
+            if (Optional.IsDefined(IsSubdomainAvailable))
             {
                 writer.WritePropertyName("isSubdomainAvailable"u8);
                 writer.WriteBooleanValue(IsSubdomainAvailable.Value);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (SubdomainName != null)
+            if (Optional.IsDefined(SubdomainName))
             {
                 writer.WritePropertyName("subdomainName"u8);
                 writer.WriteStringValue(SubdomainName);
             }
-            if (DomainAvailabilityType != null)
+            if (Optional.IsDefined(DomainAvailabilityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DomainAvailabilityType);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<bool> isSubdomainAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> subdomainName = default;
-            Optional<string> type = default;
-            Optional<string> kind = default;
+            bool? isSubdomainAvailable = default;
+            string reason = default;
+            string subdomainName = default;
+            string type = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CognitiveServicesDomainAvailabilityList(
-                Optional.ToNullable(isSubdomainAvailable),
-                reason.Value,
-                subdomainName.Value,
-                type.Value,
-                kind.Value,
+                isSubdomainAvailable,
+                reason,
+                subdomainName,
+                type,
+                kind,
                 serializedAdditionalRawData);
         }
 

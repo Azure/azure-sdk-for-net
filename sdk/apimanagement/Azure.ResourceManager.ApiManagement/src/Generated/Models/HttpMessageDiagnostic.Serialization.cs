@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(Headers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteObjectValue(Body);
             }
-            if (DataMasking != null)
+            if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
                 writer.WriteObjectValue(DataMasking);
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> headers = default;
-            Optional<BodyDiagnosticSettings> body = default;
-            Optional<DataMasking> dataMasking = default;
+            BodyDiagnosticSettings body = default;
+            DataMasking dataMasking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpMessageDiagnostic(headers ?? new ChangeTrackingList<string>(), body.Value, dataMasking.Value, serializedAdditionalRawData);
+            return new HttpMessageDiagnostic(headers ?? new ChangeTrackingList<string>(), body, dataMasking, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpMessageDiagnostic>.Write(ModelReaderWriterOptions options)

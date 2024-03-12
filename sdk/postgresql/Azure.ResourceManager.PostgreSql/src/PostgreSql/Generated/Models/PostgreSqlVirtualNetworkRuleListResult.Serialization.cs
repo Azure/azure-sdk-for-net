@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<PostgreSqlVirtualNetworkRuleData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             IReadOnlyList<PostgreSqlVirtualNetworkRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<PostgreSqlVirtualNetworkRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<PostgreSqlVirtualNetworkRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleListResult>.Write(ModelReaderWriterOptions options)

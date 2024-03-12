@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (CollectionId.HasValue)
+            if (Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> collectionName = default;
-            Optional<Guid> collectionId = default;
+            string collectionName = default;
+            Guid? collectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreCollectionDetails(collectionName.Value, Optional.ToNullable(collectionId), serializedAdditionalRawData);
+            return new PrivateStoreCollectionDetails(collectionName, collectionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreCollectionDetails>.Write(ModelReaderWriterOptions options)

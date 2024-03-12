@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(VirtualMachineConfiguration);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (DiskConfiguration != null)
+            if (Optional.IsDefined(DiskConfiguration))
             {
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteObjectValue(DiskConfiguration);
@@ -80,11 +81,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapDatabaseType> databaseType = default;
+            SapDatabaseType? databaseType = default;
             ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
-            Optional<DiskConfiguration> diskConfiguration = default;
+            DiskConfiguration diskConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,11 +130,11 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatabaseConfiguration(
-                Optional.ToNullable(databaseType),
+                databaseType,
                 subnetId,
                 virtualMachineConfiguration,
                 instanceCount,
-                diskConfiguration.Value,
+                diskConfiguration,
                 serializedAdditionalRawData);
         }
 

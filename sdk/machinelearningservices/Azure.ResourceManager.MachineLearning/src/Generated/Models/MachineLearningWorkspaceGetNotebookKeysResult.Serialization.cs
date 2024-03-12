@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAccessKey))
             {
                 writer.WritePropertyName("primaryAccessKey"u8);
                 writer.WriteStringValue(PrimaryAccessKey);
             }
-            if (options.Format != "W" && SecondaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAccessKey))
             {
                 writer.WritePropertyName("secondaryAccessKey"u8);
                 writer.WriteStringValue(SecondaryAccessKey);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> primaryAccessKey = default;
-            Optional<string> secondaryAccessKey = default;
+            string primaryAccessKey = default;
+            string secondaryAccessKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey.Value, secondaryAccessKey.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceGetNotebookKeysResult(primaryAccessKey, secondaryAccessKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceGetNotebookKeysResult>.Write(ModelReaderWriterOptions options)

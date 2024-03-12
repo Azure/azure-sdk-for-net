@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Note != null)
+            if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (!(Identities is ChangeTrackingList<UserIdentityContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -70,27 +70,27 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (FirstName != null)
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (LastName != null)
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (RegistriesOn.HasValue)
+            if (Optional.IsDefined(RegistriesOn))
             {
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<GroupContractProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
+            SystemData systemData = default;
+            ApiManagementUserState? state = default;
+            string note = default;
             IList<UserIdentityContract> identities = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> registrationDate = default;
+            string firstName = default;
+            string lastName = default;
+            string email = default;
+            DateTimeOffset? registrationDate = default;
             IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,14 +267,14 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(state),
-                note.Value,
+                systemData,
+                state,
+                note,
                 identities ?? new ChangeTrackingList<UserIdentityContract>(),
-                firstName.Value,
-                lastName.Value,
-                email.Value,
-                Optional.ToNullable(registrationDate),
+                firstName,
+                lastName,
+                email,
+                registrationDate,
                 groups ?? new ChangeTrackingList<GroupContractProperties>(),
                 serializedAdditionalRawData);
         }

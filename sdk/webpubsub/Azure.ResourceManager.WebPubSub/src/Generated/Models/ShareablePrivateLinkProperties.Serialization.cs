@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (ShareablePrivateLinkPropertiesType != null)
+            if (Optional.IsDefined(ShareablePrivateLinkPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkPropertiesType);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> groupId = default;
-            Optional<string> type = default;
+            string description = default;
+            string groupId = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkProperties(description.Value, groupId.Value, type.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkProperties(description, groupId, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkProperties>.Write(ModelReaderWriterOptions options)

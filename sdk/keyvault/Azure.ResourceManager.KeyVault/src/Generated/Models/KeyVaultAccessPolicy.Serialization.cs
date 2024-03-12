@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            if (ApplicationId.HasValue)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Guid tenantId = default;
             string objectId = default;
-            Optional<Guid> applicationId = default;
+            Guid? applicationId = default;
             IdentityAccessPermissions permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultAccessPolicy(tenantId, objectId, Optional.ToNullable(applicationId), permissions, serializedAdditionalRawData);
+            return new KeyVaultAccessPolicy(tenantId, objectId, applicationId, permissions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultAccessPolicy>.Write(ModelReaderWriterOptions options)

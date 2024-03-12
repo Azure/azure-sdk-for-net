@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -42,34 +43,34 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SizeInKB.HasValue)
+            if (Optional.IsDefined(SizeInKB))
             {
                 writer.WritePropertyName("sizeInKB"u8);
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (LogFileType != null)
+            if (Optional.IsDefined(LogFileType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LogFileType);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInKB = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> type0 = default;
-            Optional<Uri> url = default;
+            SystemData systemData = default;
+            long? sizeInKB = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string type0 = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,12 +214,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(sizeInKB),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(lastModifiedTime),
-                type0.Value,
-                url.Value,
+                systemData,
+                sizeInKB,
+                createdTime,
+                lastModifiedTime,
+                type0,
+                url,
                 serializedAdditionalRawData);
         }
 

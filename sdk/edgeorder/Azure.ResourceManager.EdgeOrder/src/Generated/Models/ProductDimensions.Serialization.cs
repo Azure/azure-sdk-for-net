@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Length.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Length))
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (options.Format != "W" && Height.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (options.Format != "W" && Width.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (options.Format != "W" && LengthHeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LengthHeightUnit))
             {
                 writer.WritePropertyName("lengthHeightUnit"u8);
                 writer.WriteStringValue(LengthHeightUnit.Value.ToString());
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (options.Format != "W" && Depth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Depth))
             {
                 writer.WritePropertyName("depth"u8);
                 writer.WriteNumberValue(Depth.Value);
             }
-            if (options.Format != "W" && WeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WeightUnit))
             {
                 writer.WritePropertyName("weightUnit"u8);
                 writer.WriteStringValue(WeightUnit.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<double> length = default;
-            Optional<double> height = default;
-            Optional<double> width = default;
-            Optional<ProductLengthHeightWidthUnit> lengthHeightUnit = default;
-            Optional<double> weight = default;
-            Optional<double> depth = default;
-            Optional<ProductWeightMeasurementUnit> weightUnit = default;
+            double? length = default;
+            double? height = default;
+            double? width = default;
+            ProductLengthHeightWidthUnit? lengthHeightUnit = default;
+            double? weight = default;
+            double? depth = default;
+            ProductWeightMeasurementUnit? weightUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductDimensions(
-                Optional.ToNullable(length),
-                Optional.ToNullable(height),
-                Optional.ToNullable(width),
-                Optional.ToNullable(lengthHeightUnit),
-                Optional.ToNullable(weight),
-                Optional.ToNullable(depth),
-                Optional.ToNullable(weightUnit),
+                length,
+                height,
+                width,
+                lengthHeightUnit,
+                weight,
+                depth,
+                weightUnit,
                 serializedAdditionalRawData);
         }
 

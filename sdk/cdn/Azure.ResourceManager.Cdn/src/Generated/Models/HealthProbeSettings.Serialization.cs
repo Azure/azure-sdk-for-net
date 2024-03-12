@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (ProbePath != null)
+            if (Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (ProbeRequestType.HasValue)
+            if (Optional.IsDefined(ProbeRequestType))
             {
                 writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
-            if (ProbeProtocol.HasValue)
+            if (Optional.IsDefined(ProbeProtocol))
             {
                 writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
-            if (ProbeIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(ProbeIntervalInSeconds))
             {
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> probePath = default;
-            Optional<HealthProbeRequestType> probeRequestType = default;
-            Optional<HealthProbeProtocol> probeProtocol = default;
-            Optional<int> probeIntervalInSeconds = default;
+            string probePath = default;
+            HealthProbeRequestType? probeRequestType = default;
+            HealthProbeProtocol? probeProtocol = default;
+            int? probeIntervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds), serializedAdditionalRawData);
+            return new HealthProbeSettings(probePath, probeRequestType, probeProtocol, probeIntervalInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthProbeSettings>.Write(ModelReaderWriterOptions options)

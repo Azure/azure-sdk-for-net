@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Headers != null)
+            if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> headers = default;
-            Optional<Uri> uri = default;
-            Optional<string> method = default;
+            BinaryData headers = default;
+            Uri uri = default;
+            string method = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRequest(headers.Value, uri.Value, method.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRequest(headers, uri, method, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRequest>.Write(ModelReaderWriterOptions options)

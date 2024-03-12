@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,14 +56,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (!(Sources is ChangeTrackingList<PowerQuerySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -72,12 +73,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (DocumentLocale != null)
+            if (Optional.IsDefined(DocumentLocale))
             {
                 writer.WritePropertyName("documentLocale"u8);
                 writer.WriteStringValue(DocumentLocale);
@@ -122,12 +123,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IList<PowerQuerySource> sources = default;
-            Optional<string> script = default;
-            Optional<string> documentLocale = default;
+            string script = default;
+            string documentLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,13 +217,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataFactoryWranglingDataFlowProperties(
                 type,
-                description.Value,
+                description,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 serializedAdditionalRawData,
                 sources ?? new ChangeTrackingList<PowerQuerySource>(),
-                script.Value,
-                documentLocale.Value);
+                script,
+                documentLocale);
         }
 
         BinaryData IPersistableModel<DataFactoryWranglingDataFlowProperties>.Write(ModelReaderWriterOptions options)

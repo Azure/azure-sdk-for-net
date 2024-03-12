@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EtcdInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
                 writer.WriteObjectValue(EtcdInfo);
             }
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<EdgeKubernetesNodeInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
+            DataBoxEdgeEtcdInfo etcdInfo = default;
             IReadOnlyList<EdgeKubernetesNodeInfo> nodes = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
+            return new EdgeKubernetesClusterInfo(etcdInfo, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesClusterInfo>.Write(ModelReaderWriterOptions options)

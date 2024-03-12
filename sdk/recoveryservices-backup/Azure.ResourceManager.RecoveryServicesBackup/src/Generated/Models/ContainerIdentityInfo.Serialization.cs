@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UniqueName != null)
+            if (Optional.IsDefined(UniqueName))
             {
                 writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);
             }
-            if (AadTenantId.HasValue)
+            if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (ServicePrincipalClientId != null)
+            if (Optional.IsDefined(ServicePrincipalClientId))
             {
                 writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId);
             }
-            if (Audience != null)
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> uniqueName = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> servicePrincipalClientId = default;
-            Optional<string> audience = default;
+            string uniqueName = default;
+            Guid? aadTenantId = default;
+            string servicePrincipalClientId = default;
+            string audience = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerIdentityInfo(uniqueName.Value, Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value, serializedAdditionalRawData);
+            return new ContainerIdentityInfo(uniqueName, aadTenantId, servicePrincipalClientId, audience, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerIdentityInfo>.Write(ModelReaderWriterOptions options)

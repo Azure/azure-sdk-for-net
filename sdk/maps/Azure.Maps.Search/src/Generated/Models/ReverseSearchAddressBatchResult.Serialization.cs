@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             IReadOnlyList<ReverseSearchAddressBatchItem> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressBatchResult(summary.Value, batchItems ?? new ChangeTrackingList<ReverseSearchAddressBatchItem>());
+            return new ReverseSearchAddressBatchResult(summary, batchItems ?? new ChangeTrackingList<ReverseSearchAddressBatchItem>());
         }
     }
 }

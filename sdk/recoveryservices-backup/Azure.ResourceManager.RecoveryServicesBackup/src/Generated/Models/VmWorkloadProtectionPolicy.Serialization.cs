@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (WorkLoadType.HasValue)
+            if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (!(SubProtectionPolicy is ChangeTrackingList<SubProtectionPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
@@ -46,19 +47,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DoesMakePolicyConsistent.HasValue)
+            if (Optional.IsDefined(DoesMakePolicyConsistent))
             {
                 writer.WritePropertyName("makePolicyConsistent"u8);
                 writer.WriteBooleanValue(DoesMakePolicyConsistent.Value);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -106,11 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupWorkloadType> workLoadType = default;
-            Optional<BackupCommonSettings> settings = default;
+            BackupWorkloadType? workLoadType = default;
+            BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
-            Optional<bool> makePolicyConsistent = default;
-            Optional<int> protectedItemsCount = default;
+            bool? makePolicyConsistent = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,14 +194,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmWorkloadProtectionPolicy(
-                Optional.ToNullable(protectedItemsCount),
+                protectedItemsCount,
                 backupManagementType,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(workLoadType),
-                settings.Value,
+                workLoadType,
+                settings,
                 subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
-                Optional.ToNullable(makePolicyConsistent));
+                makePolicyConsistent);
         }
 
         BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options)

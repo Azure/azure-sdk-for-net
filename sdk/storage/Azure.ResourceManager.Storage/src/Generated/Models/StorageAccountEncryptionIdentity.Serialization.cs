@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionUserAssignedIdentity != null)
+            if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
-            if (EncryptionFederatedIdentityClientId != null)
+            if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
             {
                 writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentity = default;
-            Optional<string> federatedIdentityClientId = default;
+            string userAssignedIdentity = default;
+            string federatedIdentityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryptionIdentity(userAssignedIdentity.Value, federatedIdentityClientId.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryptionIdentity(userAssignedIdentity, federatedIdentityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryptionIdentity>.Write(ModelReaderWriterOptions options)

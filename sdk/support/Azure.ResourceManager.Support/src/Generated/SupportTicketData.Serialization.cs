@@ -43,139 +43,139 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SupportTicketId != null)
+            if (Optional.IsDefined(SupportTicketId))
             {
                 writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ProblemClassificationId != null)
+            if (Optional.IsDefined(ProblemClassificationId))
             {
                 writer.WritePropertyName("problemClassificationId"u8);
                 writer.WriteStringValue(ProblemClassificationId);
             }
-            if (options.Format != "W" && ProblemClassificationDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProblemClassificationDisplayName))
             {
                 writer.WritePropertyName("problemClassificationDisplayName"u8);
                 writer.WriteStringValue(ProblemClassificationDisplayName);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && EnrollmentId != null)
+            if (Optional.IsDefined(EnrollmentId))
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
             }
-            if (Require24X7Response.HasValue)
+            if (Optional.IsDefined(Require24X7Response))
             {
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
-            if (AdvancedDiagnosticConsent.HasValue)
+            if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
                 writer.WritePropertyName("advancedDiagnosticConsent"u8);
                 writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
             }
-            if (ProblemScopingQuestions != null)
+            if (Optional.IsDefined(ProblemScopingQuestions))
             {
                 writer.WritePropertyName("problemScopingQuestions"u8);
                 writer.WriteStringValue(ProblemScopingQuestions);
             }
-            if (SupportPlanId != null)
+            if (Optional.IsDefined(SupportPlanId))
             {
                 writer.WritePropertyName("supportPlanId"u8);
                 writer.WriteStringValue(SupportPlanId);
             }
-            if (ContactDetails != null)
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (ServiceLevelAgreement != null)
+            if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
                 writer.WriteObjectValue(ServiceLevelAgreement);
             }
-            if (SupportEngineer != null)
+            if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
                 writer.WriteObjectValue(SupportEngineer);
             }
-            if (options.Format != "W" && SupportPlanType != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
                 writer.WritePropertyName("supportPlanType"u8);
                 writer.WriteStringValue(SupportPlanType);
             }
-            if (options.Format != "W" && SupportPlanDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportPlanDisplayName))
             {
                 writer.WritePropertyName("supportPlanDisplayName"u8);
                 writer.WriteStringValue(SupportPlanDisplayName);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (ProblemStartOn.HasValue)
+            if (Optional.IsDefined(ProblemStartOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
-            if (ServiceId != null)
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (options.Format != "W" && ServiceDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceDisplayName))
             {
                 writer.WritePropertyName("serviceDisplayName"u8);
                 writer.WriteStringValue(ServiceDisplayName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedDate"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (FileWorkspaceName != null)
+            if (Optional.IsDefined(FileWorkspaceName))
             {
                 writer.WritePropertyName("fileWorkspaceName"u8);
                 writer.WriteStringValue(FileWorkspaceName);
             }
-            if (TechnicalTicketDetails != null)
+            if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
                 writer.WriteObjectValue(TechnicalTicketDetails);
             }
-            if (QuotaTicketDetails != null)
+            if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
             }
-            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecondaryConsent))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();
@@ -227,32 +227,32 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> supportTicketId = default;
-            Optional<string> description = default;
-            Optional<string> problemClassificationId = default;
-            Optional<string> problemClassificationDisplayName = default;
-            Optional<SupportSeverityLevel> severity = default;
-            Optional<string> enrollmentId = default;
-            Optional<bool> require24X7Response = default;
-            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
-            Optional<string> problemScopingQuestions = default;
-            Optional<string> supportPlanId = default;
-            Optional<SupportContactProfile> contactDetails = default;
-            Optional<SupportServiceLevelAgreement> serviceLevelAgreement = default;
-            Optional<SupportEngineer> supportEngineer = default;
-            Optional<string> supportPlanType = default;
-            Optional<string> supportPlanDisplayName = default;
-            Optional<string> title = default;
-            Optional<DateTimeOffset> problemStartTime = default;
-            Optional<string> serviceId = default;
-            Optional<string> serviceDisplayName = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<string> fileWorkspaceName = default;
-            Optional<TechnicalTicketDetails> technicalTicketDetails = default;
-            Optional<QuotaTicketDetails> quotaTicketDetails = default;
+            SystemData systemData = default;
+            string supportTicketId = default;
+            string description = default;
+            string problemClassificationId = default;
+            string problemClassificationDisplayName = default;
+            SupportSeverityLevel? severity = default;
+            string enrollmentId = default;
+            bool? require24X7Response = default;
+            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
+            string problemScopingQuestions = default;
+            string supportPlanId = default;
+            SupportContactProfile contactDetails = default;
+            SupportServiceLevelAgreement serviceLevelAgreement = default;
+            SupportEngineer supportEngineer = default;
+            string supportPlanType = default;
+            string supportPlanDisplayName = default;
+            string title = default;
+            DateTimeOffset? problemStartTime = default;
+            string serviceId = default;
+            string serviceDisplayName = default;
+            string status = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            string fileWorkspaceName = default;
+            TechnicalTicketDetails technicalTicketDetails = default;
+            QuotaTicketDetails quotaTicketDetails = default;
             IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -487,32 +487,32 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                supportTicketId.Value,
-                description.Value,
-                problemClassificationId.Value,
-                problemClassificationDisplayName.Value,
-                Optional.ToNullable(severity),
-                enrollmentId.Value,
-                Optional.ToNullable(require24X7Response),
-                Optional.ToNullable(advancedDiagnosticConsent),
-                problemScopingQuestions.Value,
-                supportPlanId.Value,
-                contactDetails.Value,
-                serviceLevelAgreement.Value,
-                supportEngineer.Value,
-                supportPlanType.Value,
-                supportPlanDisplayName.Value,
-                title.Value,
-                Optional.ToNullable(problemStartTime),
-                serviceId.Value,
-                serviceDisplayName.Value,
-                status.Value,
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(modifiedDate),
-                fileWorkspaceName.Value,
-                technicalTicketDetails.Value,
-                quotaTicketDetails.Value,
+                systemData,
+                supportTicketId,
+                description,
+                problemClassificationId,
+                problemClassificationDisplayName,
+                severity,
+                enrollmentId,
+                require24X7Response,
+                advancedDiagnosticConsent,
+                problemScopingQuestions,
+                supportPlanId,
+                contactDetails,
+                serviceLevelAgreement,
+                supportEngineer,
+                supportPlanType,
+                supportPlanDisplayName,
+                title,
+                problemStartTime,
+                serviceId,
+                serviceDisplayName,
+                status,
+                createdDate,
+                modifiedDate,
+                fileWorkspaceName,
+                technicalTicketDetails,
+                quotaTicketDetails,
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
                 serializedAdditionalRawData);
         }

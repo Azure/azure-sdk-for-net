@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(HeaderActionType.ToString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             RulesEngineHeaderActionType headerActionType = default;
             string headerName = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineHeaderAction(headerActionType, headerName, value.Value, serializedAdditionalRawData);
+            return new RulesEngineHeaderAction(headerActionType, headerName, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineHeaderAction>.Write(ModelReaderWriterOptions options)

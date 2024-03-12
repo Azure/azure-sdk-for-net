@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string country = default;
-            Optional<string> state = default;
-            Optional<string> city = default;
+            string state = default;
+            string city = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportLocation(country, state.Value, city.Value, serializedAdditionalRawData);
+            return new AzureReachabilityReportLocation(country, state, city, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportLocation>.Write(ModelReaderWriterOptions options)

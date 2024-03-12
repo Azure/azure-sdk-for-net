@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Authorization != null)
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (AutoDiscovery.HasValue)
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (!(TopLevelInventoryList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TopLevelInventoryList))
             {
                 writer.WritePropertyName("topLevelInventoryList"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<DevOpsAuthorization> authorization = default;
-            Optional<DevOpsAutoDiscovery> autoDiscovery = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            DevOpsAuthorization authorization = default;
+            DevOpsAutoDiscovery? autoDiscovery = default;
             IList<string> topLevelInventoryList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,11 +172,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevOpsConfigurationProperties(
-                provisioningStatusMessage.Value,
-                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
-                Optional.ToNullable(provisioningState),
-                authorization.Value,
-                Optional.ToNullable(autoDiscovery),
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                authorization,
+                autoDiscovery,
                 topLevelInventoryList ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (WorkLoadType.HasValue)
+            if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
-            if (SchedulePolicy != null)
+            if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (VaultRetentionPolicy != null)
+            if (Optional.IsDefined(VaultRetentionPolicy))
             {
                 writer.WritePropertyName("vaultRetentionPolicy"u8);
                 writer.WriteObjectValue(VaultRetentionPolicy);
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupWorkloadType> workLoadType = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<VaultRetentionPolicy> vaultRetentionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<int> protectedItemsCount = default;
+            BackupWorkloadType? workLoadType = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            VaultRetentionPolicy vaultRetentionPolicy = default;
+            string timeZone = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -194,15 +195,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FileShareProtectionPolicy(
-                Optional.ToNullable(protectedItemsCount),
+                protectedItemsCount,
                 backupManagementType,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(workLoadType),
-                schedulePolicy.Value,
-                retentionPolicy.Value,
-                vaultRetentionPolicy.Value,
-                timeZone.Value);
+                workLoadType,
+                schedulePolicy,
+                retentionPolicy,
+                vaultRetentionPolicy,
+                timeZone);
         }
 
         BinaryData IPersistableModel<FileShareProtectionPolicy>.Write(ModelReaderWriterOptions options)

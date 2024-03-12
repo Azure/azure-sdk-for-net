@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Exclude.HasValue)
+            if (Optional.IsDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
-            if (LowCpuThreshold.HasValue)
+            if (Optional.IsDefined(LowCpuThreshold))
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (!(Digests is ChangeTrackingList<DigestConfig> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Digests))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();
@@ -111,9 +112,9 @@ namespace Azure.ResourceManager.Advisor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> exclude = default;
-            Optional<CpuThreshold> lowCpuThreshold = default;
+            SystemData systemData = default;
+            bool? exclude = default;
+            CpuThreshold? lowCpuThreshold = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,9 +198,9 @@ namespace Azure.ResourceManager.Advisor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(exclude),
-                Optional.ToNullable(lowCpuThreshold),
+                systemData,
+                exclude,
+                lowCpuThreshold,
                 digests ?? new ChangeTrackingList<DigestConfig>(),
                 serializedAdditionalRawData);
         }

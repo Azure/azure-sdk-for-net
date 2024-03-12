@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (ExportIPv4RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv4RoutePolicyId);
             }
-            if (ExportIPv6RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv6RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv6RoutePolicyId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportIPv4RoutePolicyId = default;
-            Optional<ResourceIdentifier> exportIPv6RoutePolicyId = default;
+            ResourceIdentifier exportIPv4RoutePolicyId = default;
+            ResourceIdentifier exportIPv6RoutePolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3ExportRoutePolicy(exportIPv4RoutePolicyId.Value, exportIPv6RoutePolicyId.Value, serializedAdditionalRawData);
+            return new L3ExportRoutePolicy(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3ExportRoutePolicy>.Write(ModelReaderWriterOptions options)

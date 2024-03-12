@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Ranking != null)
+            if (Optional.IsDefined(Ranking))
             {
                 writer.WritePropertyName("ranking"u8);
                 writer.WriteStringValue(Ranking);
             }
-            if (!(Data is ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ranking = default;
+            string ranking = default;
             IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesItem(ranking.Value, data ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>(), serializedAdditionalRawData);
+            return new RankingsResponseTablesItem(ranking, data ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesItem>.Write(ModelReaderWriterOptions options)

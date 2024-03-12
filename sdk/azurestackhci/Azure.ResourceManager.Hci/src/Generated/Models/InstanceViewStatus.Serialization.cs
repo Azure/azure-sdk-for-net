@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<HciStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            string code = default;
+            HciStatusLevelType? level = default;
+            string displayStatus = default;
+            string message = default;
+            DateTimeOffset? time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InstanceViewStatus(
-                code.Value,
-                Optional.ToNullable(level),
-                displayStatus.Value,
-                message.Value,
-                Optional.ToNullable(time),
+                code,
+                level,
+                displayStatus,
+                message,
+                time,
                 serializedAdditionalRawData);
         }
 

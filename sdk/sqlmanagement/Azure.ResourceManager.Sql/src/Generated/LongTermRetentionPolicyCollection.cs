@@ -82,10 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LongTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LongTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, LongTermRetentionPolicyName policyName, LongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _longTermRetentionPolicyClientDiagnostics.CreateScope("LongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();

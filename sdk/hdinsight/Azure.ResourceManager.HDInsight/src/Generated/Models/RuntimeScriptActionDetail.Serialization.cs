@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ScriptExecutionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScriptExecutionId))
             {
                 writer.WritePropertyName("scriptExecutionId"u8);
                 writer.WriteNumberValue(ScriptExecutionId.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Operation != null)
+            if (options.Format != "W" && Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && !(ExecutionSummary is ChangeTrackingList<ScriptActionExecutionSummary> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExecutionSummary))
             {
                 writer.WritePropertyName("executionSummary"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DebugInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(DebugInformation))
             {
                 writer.WritePropertyName("debugInformation"u8);
                 writer.WriteStringValue(DebugInformation);
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ApplicationName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
@@ -125,18 +126,18 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<long> scriptExecutionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> status = default;
-            Optional<string> operation = default;
+            long? scriptExecutionId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string status = default;
+            string operation = default;
             IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
-            Optional<string> debugInformation = default;
+            string debugInformation = default;
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,17 +237,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new RuntimeScriptActionDetail(
                 name,
                 uri,
-                parameters.Value,
+                parameters,
                 roles,
-                applicationName.Value,
+                applicationName,
                 serializedAdditionalRawData,
-                Optional.ToNullable(scriptExecutionId),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                status.Value,
-                operation.Value,
+                scriptExecutionId,
+                startTime,
+                endTime,
+                status,
+                operation,
                 executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),
-                debugInformation.Value);
+                debugInformation);
         }
 
         BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)

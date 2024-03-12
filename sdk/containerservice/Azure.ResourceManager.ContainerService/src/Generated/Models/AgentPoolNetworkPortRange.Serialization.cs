@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (PortStart.HasValue)
+            if (Optional.IsDefined(PortStart))
             {
                 writer.WritePropertyName("portStart"u8);
                 writer.WriteNumberValue(PortStart.Value);
             }
-            if (PortEnd.HasValue)
+            if (Optional.IsDefined(PortEnd))
             {
                 writer.WritePropertyName("portEnd"u8);
                 writer.WriteNumberValue(PortEnd.Value);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> portStart = default;
-            Optional<int> portEnd = default;
-            Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            int? portStart = default;
+            int? portEnd = default;
+            AgentPoolNetworkPortProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new AgentPoolNetworkPortRange(portStart, portEnd, protocol, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolNetworkPortRange>.Write(ModelReaderWriterOptions options)

@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,24 +51,24 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Sources is ChangeTrackingList<AddressPrefixItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Destinations is ChangeTrackingList<AddressPrefixItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -107,27 +108,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Access.HasValue)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -172,22 +173,22 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AdminRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<SecurityConfigurationRuleProtocol> protocol = default;
+            SystemData systemData = default;
+            string description = default;
+            SecurityConfigurationRuleProtocol? protocol = default;
             IList<AddressPrefixItem> sources = default;
             IList<AddressPrefixItem> destinations = default;
             IList<string> sourcePortRanges = default;
             IList<string> destinationPortRanges = default;
-            Optional<SecurityConfigurationRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityConfigurationRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            SecurityConfigurationRuleAccess? access = default;
+            int? priority = default;
+            SecurityConfigurationRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -367,21 +368,21 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                description.Value,
-                Optional.ToNullable(protocol),
+                description,
+                protocol,
                 sources ?? new ChangeTrackingList<AddressPrefixItem>(),
                 destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
                 sourcePortRanges ?? new ChangeTrackingList<string>(),
                 destinationPortRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(access),
-                Optional.ToNullable(priority),
-                Optional.ToNullable(direction),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid));
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<NetworkAdminRule>.Write(ModelReaderWriterOptions options)

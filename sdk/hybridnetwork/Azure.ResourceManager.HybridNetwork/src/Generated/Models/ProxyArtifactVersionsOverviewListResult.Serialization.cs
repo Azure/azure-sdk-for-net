@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ProxyArtifactVersionsListOverview> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             IReadOnlyList<ProxyArtifactVersionsListOverview> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactVersionsOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactVersionsListOverview>(), nextLink.Value, serializedAdditionalRawData);
+            return new ProxyArtifactVersionsOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactVersionsListOverview>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactVersionsOverviewListResult>.Write(ModelReaderWriterOptions options)

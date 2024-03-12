@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (ArticleContent != null)
+            if (Optional.IsDefined(ArticleContent))
             {
                 writer.WritePropertyName("articleContent"u8);
                 writer.WriteStringValue(ArticleContent);
             }
-            if (ArticleId != null)
+            if (Optional.IsDefined(ArticleId))
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> articleContent = default;
-            Optional<string> articleId = default;
-            Optional<BinaryData> parameters = default;
+            string articleContent = default;
+            string articleId = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventArticle(articleContent.Value, articleId.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventArticle(articleContent, articleId, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventArticle>.Write(ModelReaderWriterOptions options)

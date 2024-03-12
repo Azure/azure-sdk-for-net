@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (PrincipalName != null)
+            if (Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> principalName = default;
-            Optional<string> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> objectId = default;
-            Optional<string> appId = default;
+            string principalName = default;
+            string principalId = default;
+            Guid? tenantId = default;
+            string objectId = default;
+            string appId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabUserIdentity(
-                principalName.Value,
-                principalId.Value,
-                Optional.ToNullable(tenantId),
-                objectId.Value,
-                appId.Value,
+                principalName,
+                principalId,
+                tenantId,
+                objectId,
+                appId,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Values is ChangeTrackingList<KubernetesVersionProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             IReadOnlyList<KubernetesVersionProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), values ?? new ChangeTrackingList<KubernetesVersionProperties>(), serializedAdditionalRawData);
+            return new KubernetesVersionProfileProperties(provisioningState, values ?? new ChangeTrackingList<KubernetesVersionProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileProperties>.Write(ModelReaderWriterOptions options)

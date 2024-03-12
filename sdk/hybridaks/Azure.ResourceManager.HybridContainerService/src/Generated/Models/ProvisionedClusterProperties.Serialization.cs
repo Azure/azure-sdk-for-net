@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (LinuxProfile != null)
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
-            if (ControlPlane != null)
+            if (Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
                 writer.WriteObjectValue(ControlPlane);
             }
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (ClusterVmAccessProfile != null)
+            if (Optional.IsDefined(ClusterVmAccessProfile))
             {
                 writer.WritePropertyName("clusterVMAccessProfile"u8);
                 writer.WriteObjectValue(ClusterVmAccessProfile);
             }
-            if (!(AgentPoolProfiles is ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
@@ -66,27 +67,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CloudProviderProfile != null)
+            if (Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (LicenseProfile != null)
+            if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
                 writer.WriteObjectValue(LicenseProfile);
             }
-            if (AutoScalerProfile != null)
+            if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
                 writer.WriteObjectValue(AutoScalerProfile);
@@ -129,18 +130,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<ProvisionedClusterControlPlaneProfile> controlPlane = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<ClusterVmAccessProfile> clusterVmAccessProfile = default;
+            LinuxProfileProperties linuxProfile = default;
+            ProvisionedClusterControlPlaneProfile controlPlane = default;
+            string kubernetesVersion = default;
+            ProvisionedClusterNetworkProfile networkProfile = default;
+            StorageProfile storageProfile = default;
+            ClusterVmAccessProfile clusterVmAccessProfile = default;
             IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default;
-            Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<ProvisionedClusterStatus> status = default;
-            Optional<ProvisionedClusterLicenseProfile> licenseProfile = default;
-            Optional<ProvisionedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
+            ProvisionedClusterCloudProviderProfile cloudProviderProfile = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            ProvisionedClusterStatus status = default;
+            ProvisionedClusterLicenseProfile licenseProfile = default;
+            ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,18 +262,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProvisionedClusterProperties(
-                linuxProfile.Value,
-                controlPlane.Value,
-                kubernetesVersion.Value,
-                networkProfile.Value,
-                storageProfile.Value,
-                clusterVmAccessProfile.Value,
+                linuxProfile,
+                controlPlane,
+                kubernetesVersion,
+                networkProfile,
+                storageProfile,
+                clusterVmAccessProfile,
                 agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>(),
-                cloudProviderProfile.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
-                licenseProfile.Value,
-                autoScalerProfile.Value,
+                cloudProviderProfile,
+                provisioningState,
+                status,
+                licenseProfile,
+                autoScalerProfile,
                 serializedAdditionalRawData);
         }
 

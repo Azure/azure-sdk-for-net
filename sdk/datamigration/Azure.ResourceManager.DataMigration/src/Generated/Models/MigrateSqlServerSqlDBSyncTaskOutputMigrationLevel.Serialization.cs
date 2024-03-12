@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && SourceServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && SourceServer != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServer))
             {
                 writer.WritePropertyName("sourceServer"u8);
                 writer.WriteStringValue(SourceServer);
             }
-            if (options.Format != "W" && TargetServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && TargetServer != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServer))
             {
                 writer.WritePropertyName("targetServer"u8);
                 writer.WriteStringValue(TargetServer);
             }
-            if (options.Format != "W" && DatabaseCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseCount))
             {
                 writer.WritePropertyName("databaseCount"u8);
                 writer.WriteNumberValue(DatabaseCount.Value);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServer = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServer = default;
-            Optional<int> databaseCount = default;
-            Optional<string> id = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string sourceServerVersion = default;
+            string sourceServer = default;
+            string targetServerVersion = default;
+            string targetServer = default;
+            int? databaseCount = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,16 +184,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                sourceServerVersion.Value,
-                sourceServer.Value,
-                targetServerVersion.Value,
-                targetServer.Value,
-                Optional.ToNullable(databaseCount));
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer,
+                databaseCount);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

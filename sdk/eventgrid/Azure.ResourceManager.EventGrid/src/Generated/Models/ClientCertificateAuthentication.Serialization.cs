@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (ValidationScheme.HasValue)
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (!(AllowedThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<ClientCertificateValidationScheme> validationScheme = default;
+            ClientCertificateValidationScheme? validationScheme = default;
             IList<string> allowedThumbprints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientCertificateAuthentication(Optional.ToNullable(validationScheme), allowedThumbprints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ClientCertificateAuthentication(validationScheme, allowedThumbprints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientCertificateAuthentication>.Write(ModelReaderWriterOptions options)

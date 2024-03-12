@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> address = default;
+            string address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallPublicIPAddress(address.Value, serializedAdditionalRawData);
+            return new AzureFirewallPublicIPAddress(address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallPublicIPAddress>.Write(ModelReaderWriterOptions options)

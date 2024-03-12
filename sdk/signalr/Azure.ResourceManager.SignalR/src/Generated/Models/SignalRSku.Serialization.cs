@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Capacity != null)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<SignalRResourceSku> sku = default;
-            Optional<SignalRSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            SignalRResourceSku sku = default;
+            SignalRSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new SignalRSku(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSku>.Write(ModelReaderWriterOptions options)

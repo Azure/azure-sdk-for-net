@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (GpuCapacity != null)
+            if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
                 writer.WriteObjectValue(GpuCapacity);
             }
-            if (MemoryCapacity != null)
+            if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
                 writer.WriteObjectValue(MemoryCapacity);
             }
-            if (LastRefreshedOn.HasValue)
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (TotalProvisionedNonHpnCores.HasValue)
+            if (Optional.IsDefined(TotalProvisionedNonHpnCores))
             {
                 writer.WritePropertyName("totalProvisionedNonHpnCores"u8);
                 writer.WriteNumberValue(TotalProvisionedNonHpnCores.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<EdgeClusterGpuCapacity> gpuCapacity = default;
-            Optional<EdgeClusterMemoryCapacity> memoryCapacity = default;
-            Optional<DateTimeOffset> lastRefreshedTime = default;
-            Optional<long> totalProvisionedNonHpnCores = default;
+            string fqdn = default;
+            EdgeClusterGpuCapacity gpuCapacity = default;
+            EdgeClusterMemoryCapacity memoryCapacity = default;
+            DateTimeOffset? lastRefreshedTime = default;
+            long? totalProvisionedNonHpnCores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdgeClusterCapacityViewInfo(
-                fqdn.Value,
-                gpuCapacity.Value,
-                memoryCapacity.Value,
-                Optional.ToNullable(lastRefreshedTime),
-                Optional.ToNullable(totalProvisionedNonHpnCores),
+                fqdn,
+                gpuCapacity,
+                memoryCapacity,
+                lastRefreshedTime,
+                totalProvisionedNonHpnCores,
                 serializedAdditionalRawData);
         }
 

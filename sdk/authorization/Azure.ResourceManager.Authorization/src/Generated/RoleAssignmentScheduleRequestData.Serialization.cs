@@ -43,118 +43,118 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (PrincipalId.HasValue)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && PrincipalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (RequestType.HasValue)
+            if (Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ApprovalId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApprovalId))
             {
                 writer.WritePropertyName("approvalId"u8);
                 writer.WriteStringValue(ApprovalId);
             }
-            if (TargetRoleAssignmentScheduleId != null)
+            if (Optional.IsDefined(TargetRoleAssignmentScheduleId))
             {
                 writer.WritePropertyName("targetRoleAssignmentScheduleId"u8);
                 writer.WriteStringValue(TargetRoleAssignmentScheduleId);
             }
-            if (TargetRoleAssignmentScheduleInstanceId != null)
+            if (Optional.IsDefined(TargetRoleAssignmentScheduleInstanceId))
             {
                 writer.WritePropertyName("targetRoleAssignmentScheduleInstanceId"u8);
                 writer.WriteStringValue(TargetRoleAssignmentScheduleInstanceId);
             }
-            if (LinkedRoleEligibilityScheduleId != null)
+            if (Optional.IsDefined(LinkedRoleEligibilityScheduleId))
             {
                 writer.WritePropertyName("linkedRoleEligibilityScheduleId"u8);
                 writer.WriteStringValue(LinkedRoleEligibilityScheduleId);
             }
-            if (Justification != null)
+            if (Optional.IsDefined(Justification))
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (TicketInfo != null)
+            if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
                 writer.WriteObjectValue(TicketInfo);
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (ConditionVersion != null)
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && RequestorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestorId))
             {
                 writer.WritePropertyName("requestorId"u8);
                 writer.WriteStringValue(RequestorId.Value);
             }
-            if (options.Format != "W" && ExpandedProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
                 writer.WriteObjectValue(ExpandedProperties);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WritePropertyName("expiration"u8);
             writer.WriteStartObject();
-            if (ExpirationType.HasValue)
+            if (Optional.IsDefined(ExpirationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExpirationType.Value.ToString());
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -203,28 +203,28 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<RoleManagementScheduleRequestType> requestType = default;
-            Optional<RoleManagementScheduleStatus> status = default;
-            Optional<string> approvalId = default;
-            Optional<ResourceIdentifier> targetRoleAssignmentScheduleId = default;
-            Optional<ResourceIdentifier> targetRoleAssignmentScheduleInstanceId = default;
-            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleId = default;
-            Optional<string> justification = default;
-            Optional<RoleAssignmentScheduleTicketInfo> ticketInfo = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<Guid> requestorId = default;
-            Optional<RoleManagementExpandedProperties> expandedProperties = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<RoleManagementScheduleExpirationType> type0 = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<TimeSpan> duration = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid? principalId = default;
+            RoleManagementPrincipalType? principalType = default;
+            RoleManagementScheduleRequestType? requestType = default;
+            RoleManagementScheduleStatus? status = default;
+            string approvalId = default;
+            ResourceIdentifier targetRoleAssignmentScheduleId = default;
+            ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default;
+            ResourceIdentifier linkedRoleEligibilityScheduleId = default;
+            string justification = default;
+            RoleAssignmentScheduleTicketInfo ticketInfo = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            Guid? requestorId = default;
+            RoleManagementExpandedProperties expandedProperties = default;
+            DateTimeOffset? startDateTime = default;
+            RoleManagementScheduleExpirationType? type0 = default;
+            DateTimeOffset? endDateTime = default;
+            TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -468,28 +468,28 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                scope.Value,
-                roleDefinitionId.Value,
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(principalType),
-                Optional.ToNullable(requestType),
-                Optional.ToNullable(status),
-                approvalId.Value,
-                targetRoleAssignmentScheduleId.Value,
-                targetRoleAssignmentScheduleInstanceId.Value,
-                linkedRoleEligibilityScheduleId.Value,
-                justification.Value,
-                ticketInfo.Value,
-                condition.Value,
-                conditionVersion.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(requestorId),
-                expandedProperties.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(type0),
-                Optional.ToNullable(endDateTime),
-                Optional.ToNullable(duration),
+                systemData,
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                requestType,
+                status,
+                approvalId,
+                targetRoleAssignmentScheduleId,
+                targetRoleAssignmentScheduleInstanceId,
+                linkedRoleEligibilityScheduleId,
+                justification,
+                ticketInfo,
+                condition,
+                conditionVersion,
+                createdOn,
+                requestorId,
+                expandedProperties,
+                startDateTime,
+                type0,
+                endDateTime,
+                duration,
                 serializedAdditionalRawData);
         }
 

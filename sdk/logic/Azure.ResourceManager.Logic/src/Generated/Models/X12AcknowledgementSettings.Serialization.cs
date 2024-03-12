@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
             writer.WritePropertyName("needFunctionalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
-            if (FunctionalAcknowledgementVersion != null)
+            if (Optional.IsDefined(FunctionalAcknowledgementVersion))
             {
                 writer.WritePropertyName("functionalAcknowledgementVersion"u8);
                 writer.WriteStringValue(FunctionalAcknowledgementVersion);
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
             writer.WritePropertyName("needImplementationAcknowledgement"u8);
             writer.WriteBooleanValue(NeedImplementationAcknowledgement);
-            if (ImplementationAcknowledgementVersion != null)
+            if (Optional.IsDefined(ImplementationAcknowledgementVersion))
             {
                 writer.WritePropertyName("implementationAcknowledgementVersion"u8);
                 writer.WriteStringValue(ImplementationAcknowledgementVersion);
@@ -52,12 +53,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (AcknowledgementControlNumberPrefix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (AcknowledgementControlNumberSuffix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Logic.Models
             bool needTechnicalAcknowledgement = default;
             bool batchTechnicalAcknowledgements = default;
             bool needFunctionalAcknowledgement = default;
-            Optional<string> functionalAcknowledgementVersion = default;
+            string functionalAcknowledgementVersion = default;
             bool batchFunctionalAcknowledgements = default;
             bool needImplementationAcknowledgement = default;
-            Optional<string> implementationAcknowledgementVersion = default;
+            string implementationAcknowledgementVersion = default;
             bool batchImplementationAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            string acknowledgementControlNumberPrefix = default;
+            string acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.Logic.Models
                 needTechnicalAcknowledgement,
                 batchTechnicalAcknowledgements,
                 needFunctionalAcknowledgement,
-                functionalAcknowledgementVersion.Value,
+                functionalAcknowledgementVersion,
                 batchFunctionalAcknowledgements,
                 needImplementationAcknowledgement,
-                implementationAcknowledgementVersion.Value,
+                implementationAcknowledgementVersion,
                 batchImplementationAcknowledgements,
                 needLoopForValidMessages,
                 sendSynchronousAcknowledgement,
-                acknowledgementControlNumberPrefix.Value,
-                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberPrefix,
+                acknowledgementControlNumberSuffix,
                 acknowledgementControlNumberLowerBound,
                 acknowledgementControlNumberUpperBound,
                 rolloverAcknowledgementControlNumber,

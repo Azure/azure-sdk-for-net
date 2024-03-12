@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (!(BackendHttpSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
             {
                 writer.WritePropertyName("backendHttpSettingsCollection"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
+            ApplicationGatewayBackendAddressPool backendAddressPool = default;
             IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings>(), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool, backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthPool>.Write(ModelReaderWriterOptions options)

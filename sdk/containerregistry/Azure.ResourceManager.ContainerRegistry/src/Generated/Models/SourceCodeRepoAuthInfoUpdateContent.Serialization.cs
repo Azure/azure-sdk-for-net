@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (TokenType.HasValue)
+            if (Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ExpiresIn.HasValue)
+            if (Optional.IsDefined(ExpiresIn))
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpiresIn.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoAuthTokenType> tokenType = default;
-            Optional<string> token = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<int> expiresIn = default;
+            SourceCodeRepoAuthTokenType? tokenType = default;
+            string token = default;
+            string refreshToken = default;
+            string scope = default;
+            int? expiresIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SourceCodeRepoAuthInfoUpdateContent(
-                Optional.ToNullable(tokenType),
-                token.Value,
-                refreshToken.Value,
-                scope.Value,
-                Optional.ToNullable(expiresIn),
+                tokenType,
+                token,
+                refreshToken,
+                scope,
+                expiresIn,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (GallerySource != null)
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<HostCaching> hostCaching = default;
-            Optional<GalleryDiskImageSource> source = default;
+            int? sizeInGB = default;
+            HostCaching? hostCaching = default;
+            GalleryDiskImageSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryOSDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, serializedAdditionalRawData);
+            return new GalleryOSDiskImage(sizeInGB, hostCaching, source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryOSDiskImage>.Write(ModelReaderWriterOptions options)

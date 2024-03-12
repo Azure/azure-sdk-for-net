@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvsEncryptionState> status = default;
-            Optional<AvsEncryptionKeyVaultProperties> keyVaultProperties = default;
+            AvsEncryptionState? status = default;
+            AvsEncryptionKeyVaultProperties keyVaultProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerManagedEncryption(Optional.ToNullable(status), keyVaultProperties.Value, serializedAdditionalRawData);
+            return new CustomerManagedEncryption(status, keyVaultProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerManagedEncryption>.Write(ModelReaderWriterOptions options)

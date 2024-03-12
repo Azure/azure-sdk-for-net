@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (IgnoreMissingVnetServiceEndpoint.HasValue)
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVNetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            ResourceIdentifier id = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBVirtualNetworkRule(id.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
+            return new CosmosDBVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<BigDataPoolResourceInfo> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfoListResult(nextLink.Value, value ?? new ChangeTrackingList<BigDataPoolResourceInfo>());
+            return new BigDataPoolResourceInfoListResult(nextLink, value ?? new ChangeTrackingList<BigDataPoolResourceInfo>());
         }
 
         internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>

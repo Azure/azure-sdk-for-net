@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && BackupType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && !(BackupFiles is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFiles))
             {
                 writer.WritePropertyName("backupFiles"u8);
                 writer.WriteStartArray();
@@ -46,27 +47,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Position.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (options.Format != "W" && IsDamaged.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDamaged))
             {
                 writer.WritePropertyName("isDamaged"u8);
                 writer.WriteBooleanValue(IsDamaged.Value);
             }
-            if (options.Format != "W" && IsCompressed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCompressed))
             {
                 writer.WritePropertyName("isCompressed"u8);
                 writer.WriteBooleanValue(IsCompressed.Value);
             }
-            if (options.Format != "W" && FamilyCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FamilyCount))
             {
                 writer.WritePropertyName("familyCount"u8);
                 writer.WriteNumberValue(FamilyCount.Value);
             }
-            if (options.Format != "W" && BackupFinishOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
             {
                 writer.WritePropertyName("backupFinishDate"u8);
                 writer.WriteStringValue(BackupFinishOn.Value, "O");
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<BackupType> backupType = default;
+            string databaseName = default;
+            BackupType? backupType = default;
             IReadOnlyList<string> backupFiles = default;
-            Optional<int> position = default;
-            Optional<bool> isDamaged = default;
-            Optional<bool> isCompressed = default;
-            Optional<int> familyCount = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
+            int? position = default;
+            bool? isDamaged = default;
+            bool? isCompressed = default;
+            int? familyCount = default;
+            DateTimeOffset? backupFinishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatabaseBackupInfo(
-                databaseName.Value,
-                Optional.ToNullable(backupType),
+                databaseName,
+                backupType,
                 backupFiles ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(position),
-                Optional.ToNullable(isDamaged),
-                Optional.ToNullable(isCompressed),
-                Optional.ToNullable(familyCount),
-                Optional.ToNullable(backupFinishDate),
+                position,
+                isDamaged,
+                isCompressed,
+                familyCount,
+                backupFinishDate,
                 serializedAdditionalRawData);
         }
 

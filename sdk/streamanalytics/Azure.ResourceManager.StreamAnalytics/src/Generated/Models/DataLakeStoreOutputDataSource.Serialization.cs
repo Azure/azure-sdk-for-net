@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,47 +31,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (TokenUserPrincipalName != null)
+            if (Optional.IsDefined(TokenUserPrincipalName))
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (TokenUserDisplayName != null)
+            if (Optional.IsDefined(TokenUserDisplayName))
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (FilePathPrefix != null)
+            if (Optional.IsDefined(FilePathPrefix))
             {
                 writer.WritePropertyName("filePathPrefix"u8);
                 writer.WriteStringValue(FilePathPrefix);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -115,15 +116,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> refreshToken = default;
-            Optional<string> tokenUserPrincipalName = default;
-            Optional<string> tokenUserDisplayName = default;
-            Optional<string> accountName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> filePathPrefix = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string refreshToken = default;
+            string tokenUserPrincipalName = default;
+            string tokenUserDisplayName = default;
+            string accountName = default;
+            Guid? tenantId = default;
+            string filePathPrefix = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,15 +208,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new DataLakeStoreOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                refreshToken.Value,
-                tokenUserPrincipalName.Value,
-                tokenUserDisplayName.Value,
-                accountName.Value,
-                Optional.ToNullable(tenantId),
-                filePathPrefix.Value,
-                dateFormat.Value,
-                timeFormat.Value,
-                Optional.ToNullable(authenticationMode));
+                refreshToken,
+                tokenUserPrincipalName,
+                tokenUserDisplayName,
+                accountName,
+                tenantId,
+                filePathPrefix,
+                dateFormat,
+                timeFormat,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)

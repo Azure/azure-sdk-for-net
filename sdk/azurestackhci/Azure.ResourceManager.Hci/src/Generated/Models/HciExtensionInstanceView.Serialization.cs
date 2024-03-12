@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ExtensionInstanceViewType != null)
+            if (Optional.IsDefined(ExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionInstanceViewType);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<ExtensionInstanceViewStatus> status = default;
+            string name = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            ExtensionInstanceViewStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
+            return new HciExtensionInstanceView(name, type, typeHandlerVersion, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciExtensionInstanceView>.Write(ModelReaderWriterOptions options)

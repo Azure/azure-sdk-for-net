@@ -287,10 +287,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -337,10 +334,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AutoRebuild.HasValue)
+            if (Optional.IsDefined(AutoRebuild))
             {
                 writer.WritePropertyName("autoRebuild"u8);
                 writer.WriteStringValue(AutoRebuild.Value.ToString());
             }
-            if (Build != null)
+            if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
                 writer.WriteObjectValue(Build);
             }
-            if (CondaFile != null)
+            if (Optional.IsDefined(CondaFile))
             {
                 writer.WritePropertyName("condaFile"u8);
                 writer.WriteStringValue(CondaFile);
             }
-            if (options.Format != "W" && EnvironmentType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnvironmentType))
             {
                 writer.WritePropertyName("environmentType"u8);
                 writer.WriteStringValue(EnvironmentType.Value.ToString());
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (InferenceConfig != null)
+            if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
                 writer.WriteObjectValue(InferenceConfig);
             }
-            if (IntellectualProperty != null)
+            if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
@@ -68,17 +69,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Stage != null)
+            if (Optional.IsDefined(Stage))
             {
                 if (Stage != null)
                 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
-            if (AutoDeleteSetting != null)
+            if (Optional.IsDefined(AutoDeleteSetting))
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -102,17 +103,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (IsAnonymous.HasValue)
+            if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -198,20 +199,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutoRebuildSetting> autoRebuild = default;
-            Optional<MachineLearningBuildContext> build = default;
-            Optional<string> condaFile = default;
-            Optional<MachineLearningEnvironmentType> environmentType = default;
-            Optional<string> image = default;
-            Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<MachineLearningOperatingSystemType> osType = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
+            AutoRebuildSetting? autoRebuild = default;
+            MachineLearningBuildContext build = default;
+            string condaFile = default;
+            MachineLearningEnvironmentType? environmentType = default;
+            string image = default;
+            MachineLearningInferenceContainerProperties inferenceConfig = default;
+            IntellectualProperty intellectualProperty = default;
+            MachineLearningOperatingSystemType? osType = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -377,23 +378,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningEnvironmentVersionProperties(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting.Value,
-                Optional.ToNullable(isAnonymous),
-                Optional.ToNullable(isArchived),
-                Optional.ToNullable(autoRebuild),
-                build.Value,
-                condaFile.Value,
-                Optional.ToNullable(environmentType),
-                image.Value,
-                inferenceConfig.Value,
-                intellectualProperty.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(provisioningState),
-                stage.Value);
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                autoRebuild,
+                build,
+                condaFile,
+                environmentType,
+                image,
+                inferenceConfig,
+                intellectualProperty,
+                osType,
+                provisioningState,
+                stage);
         }
 
         BinaryData IPersistableModel<MachineLearningEnvironmentVersionProperties>.Write(ModelReaderWriterOptions options)

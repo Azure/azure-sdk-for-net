@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url.AbsoluteUri);
-            if (Detail.HasValue)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail.Value.ToString());
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Uri url = default;
-            Optional<ChatMessageImageDetailLevel> detail = default;
+            ChatMessageImageDetailLevel? detail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatMessageImageUrl(url, Optional.ToNullable(detail), serializedAdditionalRawData);
+            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatMessageImageUrl>.Write(ModelReaderWriterOptions options)

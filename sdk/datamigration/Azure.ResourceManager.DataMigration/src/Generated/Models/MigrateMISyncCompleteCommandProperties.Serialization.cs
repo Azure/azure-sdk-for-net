@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (options.Format != "W" && Output != null)
+            if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateMISyncCompleteCommandInput> input = default;
-            Optional<MigrateMISyncCompleteCommandOutput> output = default;
+            MigrateMISyncCompleteCommandInput input = default;
+            MigrateMISyncCompleteCommandOutput output = default;
             CommandType commandType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<CommandState> state = default;
+            CommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,10 +156,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateMISyncCompleteCommandProperties(
                 commandType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 serializedAdditionalRawData,
-                input.Value,
-                output.Value);
+                input,
+                output);
         }
 
         BinaryData IPersistableModel<MigrateMISyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)

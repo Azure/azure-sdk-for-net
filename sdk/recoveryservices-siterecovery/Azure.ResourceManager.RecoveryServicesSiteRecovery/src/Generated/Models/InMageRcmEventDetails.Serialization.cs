@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProtectedItemName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && VmName != null)
+            if (options.Format != "W" && Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && LatestAgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestAgentVersion))
             {
                 writer.WritePropertyName("latestAgentVersion"u8);
                 writer.WriteStringValue(LatestAgentVersion);
             }
-            if (options.Format != "W" && JobId != null)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && FabricName != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (options.Format != "W" && ApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && ServerType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
             }
-            if (options.Format != "W" && ComponentDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
             {
                 writer.WritePropertyName("componentDisplayName"u8);
                 writer.WriteStringValue(ComponentDisplayName);
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> latestAgentVersion = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> fabricName = default;
-            Optional<string> applianceName = default;
-            Optional<string> serverType = default;
-            Optional<string> componentDisplayName = default;
+            string protectedItemName = default;
+            string vmName = default;
+            string latestAgentVersion = default;
+            ResourceIdentifier jobId = default;
+            string fabricName = default;
+            string applianceName = default;
+            string serverType = default;
+            string componentDisplayName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,14 +178,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                protectedItemName.Value,
-                vmName.Value,
-                latestAgentVersion.Value,
-                jobId.Value,
-                fabricName.Value,
-                applianceName.Value,
-                serverType.Value,
-                componentDisplayName.Value);
+                protectedItemName,
+                vmName,
+                latestAgentVersion,
+                jobId,
+                fabricName,
+                applianceName,
+                serverType,
+                componentDisplayName);
         }
 
         BinaryData IPersistableModel<InMageRcmEventDetails>.Write(ModelReaderWriterOptions options)

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Reservations
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && RequestSubmitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
                 writer.WritePropertyName("requestSubmitTime"u8);
                 writer.WriteStringValue(RequestSubmitOn.Value, "O");
             }
-            if (!(QuotaRequestValue is ChangeTrackingList<SubContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QuotaRequestValue))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Reservations
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> requestSubmitTime = default;
+            SystemData systemData = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            DateTimeOffset? requestSubmitTime = default;
             IReadOnlyList<SubContent> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Reservations
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                message.Value,
-                Optional.ToNullable(requestSubmitTime),
+                systemData,
+                provisioningState,
+                message,
+                requestSubmitTime,
                 value ?? new ChangeTrackingList<SubContent>(),
                 serializedAdditionalRawData);
         }

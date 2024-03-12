@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (!(Categories is ChangeTrackingList<LiveTraceCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
+            string enabled = default;
             IList<LiveTraceCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveTraceConfiguration(enabled.Value, categories ?? new ChangeTrackingList<LiveTraceCategory>(), serializedAdditionalRawData);
+            return new LiveTraceConfiguration(enabled, categories ?? new ChangeTrackingList<LiveTraceCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveTraceConfiguration>.Write(ModelReaderWriterOptions options)

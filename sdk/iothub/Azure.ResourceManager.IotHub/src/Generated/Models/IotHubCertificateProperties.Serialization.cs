@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "R");
             }
-            if (options.Format != "W" && ThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (IsVerified.HasValue)
+            if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "R");
             }
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<BinaryData> certificate = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            bool? isVerified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            BinaryData certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubCertificateProperties(
-                subject.Value,
-                Optional.ToNullable(expiry),
-                thumbprint.Value,
-                Optional.ToNullable(isVerified),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
-                certificate.Value,
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                created,
+                updated,
+                certificate,
                 serializedAdditionalRawData);
         }
 

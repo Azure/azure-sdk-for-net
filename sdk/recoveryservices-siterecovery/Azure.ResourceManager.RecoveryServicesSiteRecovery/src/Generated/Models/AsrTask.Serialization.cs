@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TaskId != null)
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (!(AllowedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
@@ -56,37 +57,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (StateDescription != null)
+            if (Optional.IsDefined(StateDescription))
             {
                 writer.WritePropertyName("stateDescription"u8);
                 writer.WriteStringValue(StateDescription);
             }
-            if (TaskType != null)
+            if (Optional.IsDefined(TaskType))
             {
                 writer.WritePropertyName("taskType"u8);
                 writer.WriteStringValue(TaskType);
             }
-            if (CustomDetails != null)
+            if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
             }
-            if (GroupTaskCustomDetails != null)
+            if (Optional.IsDefined(GroupTaskCustomDetails))
             {
                 writer.WritePropertyName("groupTaskCustomDetails"u8);
                 writer.WriteObjectValue(GroupTaskCustomDetails);
             }
-            if (!(Errors is ChangeTrackingList<SiteRecoveryJobErrorDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -134,17 +135,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> taskId = default;
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string taskId = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<string> allowedActions = default;
-            Optional<string> friendlyName = default;
-            Optional<string> state = default;
-            Optional<string> stateDescription = default;
-            Optional<string> taskType = default;
-            Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
-            Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
+            string friendlyName = default;
+            string state = default;
+            string stateDescription = default;
+            string taskType = default;
+            SiteRecoveryTaskTypeDetails customDetails = default;
+            SiteRecoveryGroupTaskDetails groupTaskCustomDetails = default;
             IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -251,17 +252,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AsrTask(
-                taskId.Value,
-                name.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                taskId,
+                name,
+                startTime,
+                endTime,
                 allowedActions ?? new ChangeTrackingList<string>(),
-                friendlyName.Value,
-                state.Value,
-                stateDescription.Value,
-                taskType.Value,
-                customDetails.Value,
-                groupTaskCustomDetails.Value,
+                friendlyName,
+                state,
+                stateDescription,
+                taskType,
+                customDetails,
+                groupTaskCustomDetails,
                 errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
                 serializedAdditionalRawData);
         }

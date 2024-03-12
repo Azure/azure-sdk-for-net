@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkAddressSpace != null)
+            if (Optional.IsDefined(VirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("virtualNetworkAddressSpace"u8);
                 writer.WriteStringValue(VirtualNetworkAddressSpace);
             }
-            if (AccessEndpoint != null)
+            if (Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
                 writer.WriteObjectValue(AccessEndpoint);
             }
-            if (!(Subnets is ChangeTrackingList<LogicResourceReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> virtualNetworkAddressSpace = default;
-            Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
+            string virtualNetworkAddressSpace = default;
+            IntegrationServiceEnvironmentAccessEndpoint accessEndpoint = default;
             IList<LogicResourceReference> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, accessEndpoint, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)

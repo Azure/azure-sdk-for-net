@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -33,17 +34,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ValidationOptions != null)
+            if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
-            if (StartedOn != null)
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
-            Optional<MigrationValidationOptions> validationOptions = default;
-            Optional<string> startedOn = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            MigrationValidationOptions validationOptions = default;
+            string startedOn = default;
+            string encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,9 +151,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 targetConnectionInfo,
                 serializedAdditionalRawData,
                 selectedDatabases,
-                validationOptions.Value,
-                startedOn.Value,
-                encryptedKeyForSecureFields.Value);
+                validationOptions,
+                startedOn,
+                encryptedKeyForSecureFields);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskInput>.Write(ModelReaderWriterOptions options)

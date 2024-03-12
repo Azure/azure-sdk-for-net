@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Statistics != null)
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             IList<CustomLabelClassificationResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string projectName = default;
             string deploymentName = default;
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomLabelClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
+            return new CustomLabelClassificationResult(errors, statistics, projectName, deploymentName, documents);
         }
     }
 }

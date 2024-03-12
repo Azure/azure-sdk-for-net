@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OverageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OverageCost))
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && BenefitCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BenefitCost))
             {
                 writer.WritePropertyName("benefitCost"u8);
                 writer.WriteNumberValue(BenefitCost.Value);
             }
-            if (options.Format != "W" && TotalCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCost))
             {
                 writer.WritePropertyName("totalCost"u8);
                 writer.WriteNumberValue(TotalCost.Value);
             }
-            if (options.Format != "W" && SavingsAmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SavingsAmount))
             {
                 writer.WritePropertyName("savingsAmount"u8);
                 writer.WriteNumberValue(SavingsAmount.Value);
             }
-            if (options.Format != "W" && SavingsPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SavingsPercentage))
             {
                 writer.WritePropertyName("savingsPercentage"u8);
                 writer.WriteNumberValue(SavingsPercentage.Value);
             }
-            if (options.Format != "W" && CoveragePercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CoveragePercentage))
             {
                 writer.WritePropertyName("coveragePercentage"u8);
                 writer.WriteNumberValue(CoveragePercentage.Value);
             }
-            if (options.Format != "W" && CommitmentAmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommitmentAmount))
             {
                 writer.WritePropertyName("commitmentAmount"u8);
                 writer.WriteNumberValue(CommitmentAmount.Value);
             }
-            if (options.Format != "W" && AverageUtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AverageUtilizationPercentage))
             {
                 writer.WritePropertyName("averageUtilizationPercentage"u8);
                 writer.WriteNumberValue(AverageUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && WastageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WastageCost))
             {
                 writer.WritePropertyName("wastageCost"u8);
                 writer.WriteNumberValue(WastageCost.Value);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<decimal> overageCost = default;
-            Optional<decimal> benefitCost = default;
-            Optional<decimal> totalCost = default;
-            Optional<decimal> savingsAmount = default;
-            Optional<decimal> savingsPercentage = default;
-            Optional<decimal> coveragePercentage = default;
-            Optional<decimal> commitmentAmount = default;
-            Optional<decimal> averageUtilizationPercentage = default;
-            Optional<decimal> wastageCost = default;
+            decimal? overageCost = default;
+            decimal? benefitCost = default;
+            decimal? totalCost = default;
+            decimal? savingsAmount = default;
+            decimal? savingsPercentage = default;
+            decimal? coveragePercentage = default;
+            decimal? commitmentAmount = default;
+            decimal? averageUtilizationPercentage = default;
+            decimal? wastageCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AllSavingsBenefitDetails(
-                Optional.ToNullable(overageCost),
-                Optional.ToNullable(benefitCost),
-                Optional.ToNullable(totalCost),
-                Optional.ToNullable(savingsAmount),
-                Optional.ToNullable(savingsPercentage),
-                Optional.ToNullable(coveragePercentage),
-                Optional.ToNullable(commitmentAmount),
-                Optional.ToNullable(averageUtilizationPercentage),
-                Optional.ToNullable(wastageCost),
+                overageCost,
+                benefitCost,
+                totalCost,
+                savingsAmount,
+                savingsPercentage,
+                coveragePercentage,
+                commitmentAmount,
+                averageUtilizationPercentage,
+                wastageCost,
                 serializedAdditionalRawData);
         }
 

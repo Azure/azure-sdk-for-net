@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && DiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && IsOSDisk != null)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && LunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LunId))
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteNumberValue(LunId.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<int> lunId = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            int? lunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryAgentDiskDetails(
-                diskId.Value,
-                diskName.Value,
-                isOSDisk.Value,
-                Optional.ToNullable(capacityInBytes),
-                Optional.ToNullable(lunId),
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                lunId,
                 serializedAdditionalRawData);
         }
 

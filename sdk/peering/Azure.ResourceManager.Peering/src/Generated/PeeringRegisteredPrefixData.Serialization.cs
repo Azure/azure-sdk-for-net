@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && PrefixValidationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrefixValidationState))
             {
                 writer.WritePropertyName("prefixValidationState"u8);
                 writer.WriteStringValue(PrefixValidationState.Value.ToString());
             }
-            if (options.Format != "W" && PeeringServicePrefixKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PeeringServicePrefixKey))
             {
                 writer.WritePropertyName("peeringServicePrefixKey"u8);
                 writer.WriteStringValue(PeeringServicePrefixKey);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<PeeringPrefixValidationState> prefixValidationState = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<string> errorMessage = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string prefix = default;
+            PeeringPrefixValidationState? prefixValidationState = default;
+            string peeringServicePrefixKey = default;
+            string errorMessage = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.Peering
                 id,
                 name,
                 type,
-                systemData.Value,
-                prefix.Value,
-                Optional.ToNullable(prefixValidationState),
-                peeringServicePrefixKey.Value,
-                errorMessage.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                prefix,
+                prefixValidationState,
+                peeringServicePrefixKey,
+                errorMessage,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

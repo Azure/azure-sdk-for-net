@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (UserType.HasValue)
+            if (Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType"u8);
                 writer.WriteStringValue(UserType.Value.ToString());
             }
-            if (IsBackup.HasValue)
+            if (Optional.IsDefined(IsBackup))
             {
                 writer.WritePropertyName("isBackup"u8);
                 writer.WriteBooleanValue(IsBackup.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<RoleManagementUserType> userType = default;
-            Optional<bool> isBackup = default;
-            Optional<string> id = default;
-            Optional<string> description = default;
+            RoleManagementUserType? userType = default;
+            bool? isBackup = default;
+            string id = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementUserInfo(Optional.ToNullable(userType), Optional.ToNullable(isBackup), id.Value, description.Value, serializedAdditionalRawData);
+            return new RoleManagementUserInfo(userType, isBackup, id, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementUserInfo>.Write(ModelReaderWriterOptions options)

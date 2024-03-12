@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinimumTlsVersionAllowed.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<bool> disableLocalAuth = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,10 +188,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartnerNamespacePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                Optional.ToNullable(minimumTlsVersionAllowed),
-                Optional.ToNullable(disableLocalAuth),
+                minimumTlsVersionAllowed,
+                disableLocalAuth,
                 serializedAdditionalRawData);
         }
 

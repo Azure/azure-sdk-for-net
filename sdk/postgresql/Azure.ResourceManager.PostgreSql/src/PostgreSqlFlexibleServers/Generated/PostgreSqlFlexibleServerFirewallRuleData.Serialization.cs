@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 startIPAddress,
                 endIPAddress,
                 serializedAdditionalRawData);

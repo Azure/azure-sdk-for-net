@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("formatType"u8);
             writer.WriteStringValue(FormatType.ToString());
-            if (ColumnDelimiter != null)
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteStringValue(ColumnDelimiter);
             }
-            if (AcceptLanguage != null)
+            if (Optional.IsDefined(AcceptLanguage))
             {
                 writer.WritePropertyName("acceptLanguage"u8);
                 writer.WriteStringValue(AcceptLanguage);
             }
-            if (QuoteCharacter != null)
+            if (Optional.IsDefined(QuoteCharacter))
             {
                 writer.WritePropertyName("quoteCharacter"u8);
                 writer.WriteStringValue(QuoteCharacter);
             }
-            if (QuoteEscapeCharacter != null)
+            if (Optional.IsDefined(QuoteEscapeCharacter))
             {
                 writer.WritePropertyName("quoteEscapeCharacter"u8);
                 writer.WriteStringValue(QuoteEscapeCharacter);
             }
-            if (ArraySeparator != null)
+            if (Optional.IsDefined(ArraySeparator))
             {
                 writer.WritePropertyName("arraySeparator"u8);
                 writer.WriteStringValue(ArraySeparator);
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             FormatType formatType = default;
-            Optional<string> columnDelimiter = default;
-            Optional<string> acceptLanguage = default;
-            Optional<string> quoteCharacter = default;
-            Optional<string> quoteEscapeCharacter = default;
-            Optional<string> arraySeparator = default;
+            string columnDelimiter = default;
+            string acceptLanguage = default;
+            string quoteCharacter = default;
+            string quoteEscapeCharacter = default;
+            string arraySeparator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,11 +140,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectorMappingFormat(
                 formatType,
-                columnDelimiter.Value,
-                acceptLanguage.Value,
-                quoteCharacter.Value,
-                quoteEscapeCharacter.Value,
-                arraySeparator.Value,
+                columnDelimiter,
+                acceptLanguage,
+                quoteCharacter,
+                quoteEscapeCharacter,
+                arraySeparator,
                 serializedAdditionalRawData);
         }
 

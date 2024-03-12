@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (GroupedBy != null)
+            if (Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
-            if (!(Values is ChangeTrackingList<ServiceAlertSummaryGroupItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> count = default;
-            Optional<string> groupedby = default;
+            string name = default;
+            long? count = default;
+            string groupedby = default;
             IList<ServiceAlertSummaryGroupItemInfo> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertSummaryGroupItemInfo(name.Value, Optional.ToNullable(count), groupedby.Value, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), serializedAdditionalRawData);
+            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedby, values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertSummaryGroupItemInfo>.Write(ModelReaderWriterOptions options)

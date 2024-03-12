@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(EligibleAuthorizations is ChangeTrackingList<ManagedServicesEligibleAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -45,17 +46,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OfferDisplayName != null)
+            if (Optional.IsDefined(OfferDisplayName))
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (PublisherDisplayName != null)
+            if (Optional.IsDefined(PublisherDisplayName))
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (PlanDisplayName != null)
+            if (Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
             IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<string> planDisplayName = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            string planDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,9 +163,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 managedByTenantId,
                 authorizations,
                 eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
-                offerDisplayName.Value,
-                publisherDisplayName.Value,
-                planDisplayName.Value,
+                offerDisplayName,
+                publisherDisplayName,
+                planDisplayName,
                 serializedAdditionalRawData);
         }
 

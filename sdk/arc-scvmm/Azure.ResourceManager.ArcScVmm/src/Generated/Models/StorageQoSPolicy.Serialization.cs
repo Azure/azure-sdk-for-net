@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (IopsMaximum.HasValue)
+            if (Optional.IsDefined(IopsMaximum))
             {
                 writer.WritePropertyName("iopsMaximum"u8);
                 writer.WriteNumberValue(IopsMaximum.Value);
             }
-            if (IopsMinimum.HasValue)
+            if (Optional.IsDefined(IopsMinimum))
             {
                 writer.WritePropertyName("iopsMinimum"u8);
                 writer.WriteNumberValue(IopsMinimum.Value);
             }
-            if (BandwidthLimit.HasValue)
+            if (Optional.IsDefined(BandwidthLimit))
             {
                 writer.WritePropertyName("bandwidthLimit"u8);
                 writer.WriteNumberValue(BandwidthLimit.Value);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<long> iopsMaximum = default;
-            Optional<long> iopsMinimum = default;
-            Optional<long> bandwidthLimit = default;
-            Optional<string> policyId = default;
+            string name = default;
+            string id = default;
+            long? iopsMaximum = default;
+            long? iopsMinimum = default;
+            long? bandwidthLimit = default;
+            string policyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageQoSPolicy(
-                name.Value,
-                id.Value,
-                Optional.ToNullable(iopsMaximum),
-                Optional.ToNullable(iopsMinimum),
-                Optional.ToNullable(bandwidthLimit),
-                policyId.Value,
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
                 serializedAdditionalRawData);
         }
 

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,89 +59,89 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && ComputerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (options.Format != "W" && MemoryMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (options.Format != "W" && CpuCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (options.Format != "W" && LimitCpuForMigration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (options.Format != "W" && DynamicMemoryEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (options.Format != "W" && IsCustomizable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCustomizable))
             {
                 writer.WritePropertyName("isCustomizable"u8);
                 writer.WriteStringValue(IsCustomizable.Value.ToString());
             }
-            if (options.Format != "W" && DynamicMemoryMaxMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryMaxMB))
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (options.Format != "W" && DynamicMemoryMinMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryMinMB))
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
-            if (options.Format != "W" && IsHighlyAvailable != null)
+            if (options.Format != "W" && Optional.IsDefined(IsHighlyAvailable))
             {
                 writer.WritePropertyName("isHighlyAvailable"u8);
                 writer.WriteStringValue(IsHighlyAvailable);
             }
-            if (options.Format != "W" && Generation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteNumberValue(Generation.Value);
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkInterfaces> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Disks is ChangeTrackingList<VirtualDisk> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -211,25 +211,25 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> computerName = default;
-            Optional<int> memoryMB = default;
-            Optional<int> cpuCount = default;
-            Optional<LimitCpuForMigration> limitCpuForMigration = default;
-            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
-            Optional<IsCustomizable> isCustomizable = default;
-            Optional<int> dynamicMemoryMaxMB = default;
-            Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
-            Optional<int> generation = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            OSType? osType = default;
+            string osName = default;
+            string computerName = default;
+            int? memoryMB = default;
+            int? cpuCount = default;
+            LimitCpuForMigration? limitCpuForMigration = default;
+            DynamicMemoryEnabled? dynamicMemoryEnabled = default;
+            IsCustomizable? isCustomizable = default;
+            int? dynamicMemoryMaxMB = default;
+            int? dynamicMemoryMinMB = default;
+            string isHighlyAvailable = default;
+            int? generation = default;
             IReadOnlyList<NetworkInterfaces> networkInterfaces = default;
             IReadOnlyList<VirtualDisk> disks = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -448,28 +448,28 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                inventoryItemId.Value,
-                uuid.Value,
-                vmmServerId.Value,
-                Optional.ToNullable(osType),
-                osName.Value,
-                computerName.Value,
-                Optional.ToNullable(memoryMB),
-                Optional.ToNullable(cpuCount),
-                Optional.ToNullable(limitCpuForMigration),
-                Optional.ToNullable(dynamicMemoryEnabled),
-                Optional.ToNullable(isCustomizable),
-                Optional.ToNullable(dynamicMemoryMaxMB),
-                Optional.ToNullable(dynamicMemoryMinMB),
-                isHighlyAvailable.Value,
-                Optional.ToNullable(generation),
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                osType,
+                osName,
+                computerName,
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                isCustomizable,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                generation,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(),
                 disks ?? new ChangeTrackingList<VirtualDisk>(),
-                provisioningState.Value,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

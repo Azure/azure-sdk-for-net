@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string performShutdown = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
+            ResourceIdentifier recoveryPointId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmUnplannedFailoverContent(instanceType, serializedAdditionalRawData, performShutdown, recoveryPointId.Value);
+            return new InMageRcmUnplannedFailoverContent(instanceType, serializedAdditionalRawData, performShutdown, recoveryPointId);
         }
 
         BinaryData IPersistableModel<InMageRcmUnplannedFailoverContent>.Write(ModelReaderWriterOptions options)

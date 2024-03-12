@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (!(Aliases is ChangeTrackingList<ResourceTypeAlias> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            string resourceType = default;
             IReadOnlyList<ResourceTypeAlias> aliases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliases(resourceType.Value, aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), serializedAdditionalRawData);
+            return new ResourceTypeAliases(resourceType, aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliases>.Write(ModelReaderWriterOptions options)

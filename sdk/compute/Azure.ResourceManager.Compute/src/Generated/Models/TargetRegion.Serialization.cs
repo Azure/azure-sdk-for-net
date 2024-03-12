@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (RegionalReplicaCount.HasValue)
+            if (Optional.IsDefined(RegionalReplicaCount))
             {
                 writer.WritePropertyName("regionalReplicaCount"u8);
                 writer.WriteNumberValue(RegionalReplicaCount.Value);
             }
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (IsExcludedFromLatest.HasValue)
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<int> regionalReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
-            Optional<bool> excludeFromLatest = default;
+            int? regionalReplicaCount = default;
+            ImageStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
+            bool? excludeFromLatest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetRegion(
                 name,
-                Optional.ToNullable(regionalReplicaCount),
-                Optional.ToNullable(storageAccountType),
-                encryption.Value,
-                Optional.ToNullable(excludeFromLatest),
+                regionalReplicaCount,
+                storageAccountType,
+                encryption,
+                excludeFromLatest,
                 serializedAdditionalRawData);
         }
 

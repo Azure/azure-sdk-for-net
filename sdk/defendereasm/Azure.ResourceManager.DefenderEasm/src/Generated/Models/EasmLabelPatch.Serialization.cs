@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Color != null)
+            if (Optional.IsDefined(Color))
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
@@ -106,10 +107,10 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<string> color = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string displayName = default;
+            string color = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +180,10 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                displayName.Value,
-                color.Value,
+                systemData,
+                provisioningState,
+                displayName,
+                color,
                 serializedAdditionalRawData);
         }
 

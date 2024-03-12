@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AccessRulesVersion != null)
+            if (Optional.IsDefined(AccessRulesVersion))
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteStringValue(AccessRulesVersion);
             }
-            if (!(AccessRules is ChangeTrackingList<EventHubsNspAccessRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessRules))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> accessRulesVersion = default;
+            string name = default;
+            string accessRulesVersion = default;
             IReadOnlyList<EventHubsNspAccessRule> accessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, accessRules ?? new ChangeTrackingList<EventHubsNspAccessRule>(), serializedAdditionalRawData);
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<EventHubsNspAccessRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(ModelReaderWriterOptions options)

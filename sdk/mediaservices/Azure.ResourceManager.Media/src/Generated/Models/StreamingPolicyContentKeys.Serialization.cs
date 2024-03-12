@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultKey != null)
+            if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
                 writer.WriteObjectValue(DefaultKey);
             }
-            if (!(KeyToTrackMappings is ChangeTrackingList<StreamingPolicyContentKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
                 writer.WritePropertyName("keyToTrackMappings"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
+            EncryptionSchemeDefaultKey defaultKey = default;
             IList<StreamingPolicyContentKey> keyToTrackMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyContentKeys(defaultKey.Value, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
+            return new StreamingPolicyContentKeys(defaultKey, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyContentKeys>.Write(ModelReaderWriterOptions options)

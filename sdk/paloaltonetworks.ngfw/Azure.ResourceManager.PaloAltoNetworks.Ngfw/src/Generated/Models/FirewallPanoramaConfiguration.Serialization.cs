@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -28,37 +29,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("configString"u8);
             writer.WriteStringValue(ConfigString);
-            if (options.Format != "W" && VmAuthKey != null)
+            if (options.Format != "W" && Optional.IsDefined(VmAuthKey))
             {
                 writer.WritePropertyName("vmAuthKey"u8);
                 writer.WriteStringValue(VmAuthKey);
             }
-            if (options.Format != "W" && PanoramaServer != null)
+            if (options.Format != "W" && Optional.IsDefined(PanoramaServer))
             {
                 writer.WritePropertyName("panoramaServer"u8);
                 writer.WriteStringValue(PanoramaServer);
             }
-            if (options.Format != "W" && PanoramaServer2 != null)
+            if (options.Format != "W" && Optional.IsDefined(PanoramaServer2))
             {
                 writer.WritePropertyName("panoramaServer2"u8);
                 writer.WriteStringValue(PanoramaServer2);
             }
-            if (options.Format != "W" && DgName != null)
+            if (options.Format != "W" && Optional.IsDefined(DgName))
             {
                 writer.WritePropertyName("dgName"u8);
                 writer.WriteStringValue(DgName);
             }
-            if (options.Format != "W" && TplName != null)
+            if (options.Format != "W" && Optional.IsDefined(TplName))
             {
                 writer.WritePropertyName("tplName"u8);
                 writer.WriteStringValue(TplName);
             }
-            if (options.Format != "W" && CgName != null)
+            if (options.Format != "W" && Optional.IsDefined(CgName))
             {
                 writer.WritePropertyName("cgName"u8);
                 writer.WriteStringValue(CgName);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
@@ -102,13 +103,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string configString = default;
-            Optional<string> vmAuthKey = default;
-            Optional<string> panoramaServer = default;
-            Optional<string> panoramaServer2 = default;
-            Optional<string> dgName = default;
-            Optional<string> tplName = default;
-            Optional<string> cgName = default;
-            Optional<string> hostName = default;
+            string vmAuthKey = default;
+            string panoramaServer = default;
+            string panoramaServer2 = default;
+            string dgName = default;
+            string tplName = default;
+            string cgName = default;
+            string hostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,13 +162,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPanoramaConfiguration(
                 configString,
-                vmAuthKey.Value,
-                panoramaServer.Value,
-                panoramaServer2.Value,
-                dgName.Value,
-                tplName.Value,
-                cgName.Value,
-                hostName.Value,
+                vmAuthKey,
+                panoramaServer,
+                panoramaServer2,
+                dgName,
+                tplName,
+                cgName,
+                hostName,
                 serializedAdditionalRawData);
         }
 

@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Attributes is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(LocalizedAttributes is ChangeTrackingDictionary<string, IDictionary<string, string>> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LocalizedAttributes))
             {
                 writer.WritePropertyName("localizedAttributes"u8);
                 writer.WriteStartObject();
@@ -115,32 +115,32 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (SmallImage != null)
+            if (Optional.IsDefined(SmallImage))
             {
                 writer.WritePropertyName("smallImage"u8);
                 writer.WriteStringValue(SmallImage);
             }
-            if (MediumImage != null)
+            if (Optional.IsDefined(MediumImage))
             {
                 writer.WritePropertyName("mediumImage"u8);
                 writer.WriteStringValue(MediumImage);
             }
-            if (LargeImage != null)
+            if (Optional.IsDefined(LargeImage))
             {
                 writer.WritePropertyName("largeImage"u8);
                 writer.WriteStringValue(LargeImage);
             }
-            if (ApiEntitySetName != null)
+            if (Optional.IsDefined(ApiEntitySetName))
             {
                 writer.WritePropertyName("apiEntitySetName"u8);
                 writer.WriteStringValue(ApiEntitySetName);
             }
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -150,42 +150,42 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (InstancesCount.HasValue)
+            if (Optional.IsDefined(InstancesCount))
             {
                 writer.WritePropertyName("instancesCount"u8);
                 writer.WriteNumberValue(InstancesCount.Value);
             }
-            if (options.Format != "W" && LastChangedUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastChangedUtc))
             {
                 writer.WritePropertyName("lastChangedUtc"u8);
                 writer.WriteStringValue(LastChangedUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SchemaItemTypeLink != null)
+            if (Optional.IsDefined(SchemaItemTypeLink))
             {
                 writer.WritePropertyName("schemaItemTypeLink"u8);
                 writer.WriteStringValue(SchemaItemTypeLink);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (TimestampFieldName != null)
+            if (Optional.IsDefined(TimestampFieldName))
             {
                 writer.WritePropertyName("timestampFieldName"u8);
                 writer.WriteStringValue(TimestampFieldName);
             }
-            if (TypeName != null)
+            if (Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (!(IdPropertyNames is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(IdPropertyNames))
             {
                 writer.WritePropertyName("idPropertyNames"u8);
                 writer.WriteStartArray();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(ParticipantProfiles is ChangeTrackingList<Participant> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ParticipantProfiles))
             {
                 writer.WritePropertyName("participantProfiles"u8);
                 writer.WriteStartArray();
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (PrimaryParticipantProfilePropertyName != null)
+            if (Optional.IsDefined(PrimaryParticipantProfilePropertyName))
             {
                 writer.WritePropertyName("primaryParticipantProfilePropertyName"u8);
                 writer.WriteStringValue(PrimaryParticipantProfilePropertyName);
             }
-            if (options.Format != "W" && !(DataSourcePrecedenceRules is ChangeTrackingList<DataSourcePrecedence> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
             {
                 writer.WritePropertyName("dataSourcePrecedenceRules"u8);
                 writer.WriteStartArray();
@@ -220,34 +220,34 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (IsActivity.HasValue)
+            if (Optional.IsDefined(IsActivity))
             {
                 writer.WritePropertyName("isActivity"u8);
                 writer.WriteBooleanValue(IsActivity.Value);
             }
             writer.WritePropertyName("defaultDataSource"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && NamePropertiesDefaultDataSourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesDefaultDataSourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesDefaultDataSourceName);
             }
-            if (options.Format != "W" && DataSourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSourceType))
             {
                 writer.WritePropertyName("dataSourceType"u8);
                 writer.WriteStringValue(DataSourceType.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && IdPropertiesDefaultDataSourceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IdPropertiesDefaultDataSourceId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(IdPropertiesDefaultDataSourceId.Value);
             }
-            if (options.Format != "W" && DataSourceReferenceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataSourceReferenceId))
             {
                 writer.WritePropertyName("dataSourceReferenceId"u8);
                 writer.WriteStringValue(DataSourceReferenceId);
@@ -295,34 +295,34 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, IList<string>> attributes = default;
             IDictionary<string, string> description = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, IDictionary<string, string>> localizedAttributes = default;
-            Optional<string> smallImage = default;
-            Optional<string> mediumImage = default;
-            Optional<string> largeImage = default;
-            Optional<string> apiEntitySetName = default;
-            Optional<EntityType> entityType = default;
+            string smallImage = default;
+            string mediumImage = default;
+            string largeImage = default;
+            string apiEntitySetName = default;
+            EntityType? entityType = default;
             IList<PropertyDefinition> fields = default;
-            Optional<int> instancesCount = default;
-            Optional<DateTimeOffset> lastChangedUtc = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> schemaItemTypeLink = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> timestampFieldName = default;
-            Optional<string> typeName = default;
+            int? instancesCount = default;
+            DateTimeOffset? lastChangedUtc = default;
+            ProvisioningState? provisioningState = default;
+            string schemaItemTypeLink = default;
+            Guid? tenantId = default;
+            string timestampFieldName = default;
+            string typeName = default;
             IList<string> idPropertyNames = default;
             IList<Participant> participantProfiles = default;
-            Optional<string> primaryParticipantProfilePropertyName = default;
+            string primaryParticipantProfilePropertyName = default;
             IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
-            Optional<bool> isActivity = default;
-            Optional<string> name0 = default;
-            Optional<DataSourceType> dataSourceType = default;
-            Optional<Status> status = default;
-            Optional<int> id0 = default;
-            Optional<string> dataSourceReferenceId = default;
+            bool? isActivity = default;
+            string name0 = default;
+            DataSourceType? dataSourceType = default;
+            Status? status = default;
+            int? id0 = default;
+            string dataSourceReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -652,34 +652,34 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 attributes ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(),
-                smallImage.Value,
-                mediumImage.Value,
-                largeImage.Value,
-                apiEntitySetName.Value,
-                Optional.ToNullable(entityType),
+                smallImage,
+                mediumImage,
+                largeImage,
+                apiEntitySetName,
+                entityType,
                 fields ?? new ChangeTrackingList<PropertyDefinition>(),
-                Optional.ToNullable(instancesCount),
-                Optional.ToNullable(lastChangedUtc),
-                Optional.ToNullable(provisioningState),
-                schemaItemTypeLink.Value,
-                Optional.ToNullable(tenantId),
-                timestampFieldName.Value,
-                typeName.Value,
+                instancesCount,
+                lastChangedUtc,
+                provisioningState,
+                schemaItemTypeLink,
+                tenantId,
+                timestampFieldName,
+                typeName,
                 idPropertyNames ?? new ChangeTrackingList<string>(),
                 participantProfiles ?? new ChangeTrackingList<Participant>(),
-                primaryParticipantProfilePropertyName.Value,
+                primaryParticipantProfilePropertyName,
                 dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
-                Optional.ToNullable(isActivity),
-                name0.Value,
-                Optional.ToNullable(dataSourceType),
-                Optional.ToNullable(status),
-                Optional.ToNullable(id0),
-                dataSourceReferenceId.Value,
+                isActivity,
+                name0,
+                dataSourceType,
+                status,
+                id0,
+                dataSourceReferenceId,
                 serializedAdditionalRawData);
         }
 

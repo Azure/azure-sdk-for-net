@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ConnectionStringName != null)
+            if (Optional.IsDefined(ConnectionStringName))
             {
                 writer.WritePropertyName("connectionStringName"u8);
                 writer.WriteStringValue(ConnectionStringName);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             AppServiceDatabaseType databaseType = default;
-            Optional<string> name = default;
-            Optional<string> connectionStringName = default;
-            Optional<string> connectionString = default;
+            string name = default;
+            string connectionStringName = default;
+            string connectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value, serializedAdditionalRawData);
+            return new AppServiceDatabaseBackupSetting(databaseType, name, connectionStringName, connectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDatabaseBackupSetting>.Write(ModelReaderWriterOptions options)

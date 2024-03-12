@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
-            if (AnalyticsWorkspaceId != null)
+            if (Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (options.Format != "W" && !(AvailableUpgradeVersions is ChangeTrackingList<ClusterAvailableUpgradeVersion> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgradeVersions))
             {
                 writer.WritePropertyName("availableUpgradeVersions"u8);
                 writer.WriteStartArray();
@@ -82,37 +82,37 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ClusterCapacity != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterCapacity))
             {
                 writer.WritePropertyName("clusterCapacity"u8);
                 writer.WriteObjectValue(ClusterCapacity);
             }
-            if (options.Format != "W" && ClusterConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterConnectionStatus))
             {
                 writer.WritePropertyName("clusterConnectionStatus"u8);
                 writer.WriteStringValue(ClusterConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && ClusterExtendedLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
                 writer.WriteObjectValue(ClusterExtendedLocation);
             }
-            if (ClusterLocation != null)
+            if (Optional.IsDefined(ClusterLocation))
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (options.Format != "W" && ClusterManagerConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterManagerConnectionStatus))
             {
                 writer.WritePropertyName("clusterManagerConnectionStatus"u8);
                 writer.WriteStringValue(ClusterManagerConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && ClusterManagerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterManagerId))
             {
                 writer.WritePropertyName("clusterManagerId"u8);
                 writer.WriteStringValue(ClusterManagerId);
             }
-            if (ClusterServicePrincipal != null)
+            if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
-            if (ComputeDeploymentThreshold != null)
+            if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -136,44 +136,44 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && HybridAksExtendedLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
                 writer.WriteObjectValue(HybridAksExtendedLocation);
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && ManualActionCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
                 writer.WritePropertyName("manualActionCount"u8);
                 writer.WriteNumberValue(ManualActionCount.Value);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SupportExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && !(WorkloadResourceIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
                 writer.WritePropertyName("workloadResourceIds"u8);
                 writer.WriteStartArray();
@@ -233,29 +233,29 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
+            ResourceIdentifier analyticsWorkspaceId = default;
             IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default;
-            Optional<ClusterCapacity> clusterCapacity = default;
-            Optional<ClusterConnectionStatus> clusterConnectionStatus = default;
-            Optional<ExtendedLocation> clusterExtendedLocation = default;
-            Optional<string> clusterLocation = default;
-            Optional<ClusterManagerConnectionStatus> clusterManagerConnectionStatus = default;
-            Optional<ResourceIdentifier> clusterManagerId = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
+            ClusterCapacity clusterCapacity = default;
+            ClusterConnectionStatus? clusterConnectionStatus = default;
+            ExtendedLocation clusterExtendedLocation = default;
+            string clusterLocation = default;
+            ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default;
+            ResourceIdentifier clusterManagerId = default;
+            ServicePrincipalInformation clusterServicePrincipal = default;
             ClusterType clusterType = default;
             string clusterVersion = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
+            ValidationThreshold computeDeploymentThreshold = default;
             IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
-            Optional<ClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<ExtendedLocation> hybridAksExtendedLocation = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<long> manualActionCount = default;
+            ClusterDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            ExtendedLocation hybridAksExtendedLocation = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            long? manualActionCount = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> supportExpiryDate = default;
+            ClusterProvisioningState? provisioningState = default;
+            DateTimeOffset? supportExpiryDate = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -536,32 +536,32 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 aggregatorOrSingleRackDefinition,
-                analyticsWorkspaceId.Value,
+                analyticsWorkspaceId,
                 availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(),
-                clusterCapacity.Value,
-                Optional.ToNullable(clusterConnectionStatus),
-                clusterExtendedLocation.Value,
-                clusterLocation.Value,
-                Optional.ToNullable(clusterManagerConnectionStatus),
-                clusterManagerId.Value,
-                clusterServicePrincipal.Value,
+                clusterCapacity,
+                clusterConnectionStatus,
+                clusterExtendedLocation,
+                clusterLocation,
+                clusterManagerConnectionStatus,
+                clusterManagerId,
+                clusterServicePrincipal,
                 clusterType,
                 clusterVersion,
-                computeDeploymentThreshold.Value,
+                computeDeploymentThreshold,
                 computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                hybridAksExtendedLocation.Value,
-                managedResourceGroupConfiguration.Value,
-                Optional.ToNullable(manualActionCount),
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksExtendedLocation,
+                managedResourceGroupConfiguration,
+                manualActionCount,
                 networkFabricId,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(supportExpiryDate),
+                provisioningState,
+                supportExpiryDate,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

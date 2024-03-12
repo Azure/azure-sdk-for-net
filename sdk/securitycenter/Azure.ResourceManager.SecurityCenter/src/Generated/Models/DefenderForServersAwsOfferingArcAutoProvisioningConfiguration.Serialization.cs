@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Proxy != null)
+            if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteStringValue(Proxy);
             }
-            if (PrivateLinkScope != null)
+            if (Optional.IsDefined(PrivateLinkScope))
             {
                 writer.WritePropertyName("privateLinkScope"u8);
                 writer.WriteStringValue(PrivateLinkScope);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> proxy = default;
-            Optional<string> privateLinkScope = default;
+            string proxy = default;
+            string privateLinkScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOfferingArcAutoProvisioningConfiguration(proxy.Value, privateLinkScope.Value, serializedAdditionalRawData);
+            return new DefenderForServersAwsOfferingArcAutoProvisioningConfiguration(proxy, privateLinkScope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOfferingArcAutoProvisioningConfiguration>.Write(ModelReaderWriterOptions options)

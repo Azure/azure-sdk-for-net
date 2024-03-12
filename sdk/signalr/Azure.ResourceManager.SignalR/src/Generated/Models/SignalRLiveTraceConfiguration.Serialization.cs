@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (!(Categories is ChangeTrackingList<SignalRLiveTraceCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
+            string enabled = default;
             IList<SignalRLiveTraceCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRLiveTraceConfiguration(enabled.Value, categories ?? new ChangeTrackingList<SignalRLiveTraceCategory>(), serializedAdditionalRawData);
+            return new SignalRLiveTraceConfiguration(enabled, categories ?? new ChangeTrackingList<SignalRLiveTraceCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRLiveTraceConfiguration>.Write(ModelReaderWriterOptions options)

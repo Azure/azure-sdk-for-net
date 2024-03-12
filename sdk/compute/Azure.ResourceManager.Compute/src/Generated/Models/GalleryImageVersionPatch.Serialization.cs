@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,39 +54,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublishingProfile != null)
+            if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
                 writer.WriteObjectValue(PublishingProfile);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (SafetyProfile != null)
+            if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
                 writer.WriteObjectValue(SafetyProfile);
             }
-            if (options.Format != "W" && ReplicationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
                 writer.WriteObjectValue(ReplicationStatus);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
@@ -133,13 +134,13 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<GalleryImageVersionStorageProfile> storageProfile = default;
-            Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
-            Optional<ReplicationStatus> replicationStatus = default;
-            Optional<ImageVersionSecurityProfile> securityProfile = default;
+            SystemData systemData = default;
+            GalleryImageVersionPublishingProfile publishingProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            GalleryImageVersionStorageProfile storageProfile = default;
+            GalleryImageVersionSafetyProfile safetyProfile = default;
+            ReplicationStatus replicationStatus = default;
+            ImageVersionSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,13 +259,13 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                publishingProfile.Value,
-                Optional.ToNullable(provisioningState),
-                storageProfile.Value,
-                safetyProfile.Value,
-                replicationStatus.Value,
-                securityProfile.Value,
+                systemData,
+                publishingProfile,
+                provisioningState,
+                storageProfile,
+                safetyProfile,
+                replicationStatus,
+                securityProfile,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

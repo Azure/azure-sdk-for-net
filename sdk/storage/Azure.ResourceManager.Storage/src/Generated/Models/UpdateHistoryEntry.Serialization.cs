@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdateType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (options.Format != "W" && ImmutabilityPeriodSinceCreationInDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && ObjectIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectIdentifier))
             {
                 writer.WritePropertyName("objectIdentifier"u8);
                 writer.WriteStringValue(ObjectIdentifier);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Upn != null)
+            if (options.Format != "W" && Optional.IsDefined(Upn))
             {
                 writer.WritePropertyName("upn"u8);
                 writer.WriteStringValue(Upn);
             }
-            if (AllowProtectedAppendWrites.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
-            if (AllowProtectedAppendWritesAll.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ImmutabilityPolicyUpdateType> update = default;
-            Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> objectIdentifier = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> upn = default;
-            Optional<bool> allowProtectedAppendWrites = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            ImmutabilityPolicyUpdateType? update = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            DateTimeOffset? timestamp = default;
+            string objectIdentifier = default;
+            Guid? tenantId = default;
+            string upn = default;
+            bool? allowProtectedAppendWrites = default;
+            bool? allowProtectedAppendWritesAll = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +188,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateHistoryEntry(
-                Optional.ToNullable(update),
-                Optional.ToNullable(immutabilityPeriodSinceCreationInDays),
-                Optional.ToNullable(timestamp),
-                objectIdentifier.Value,
-                Optional.ToNullable(tenantId),
-                upn.Value,
-                Optional.ToNullable(allowProtectedAppendWrites),
-                Optional.ToNullable(allowProtectedAppendWritesAll),
+                update,
+                immutabilityPeriodSinceCreationInDays,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
                 serializedAdditionalRawData);
         }
 

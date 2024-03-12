@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (PartnerNamespace != null)
+            if (Optional.IsDefined(PartnerNamespace))
             {
                 writer.WritePropertyName("partnerNamespace"u8);
                 writer.WriteStringValue(PartnerNamespace);
             }
-            if (AlternateName != null)
+            if (Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
-            if (options.Format != "W" && Role.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (options.Format != "W" && PendingReplicationOperationsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingReplicationOperationsCount))
             {
                 writer.WritePropertyName("pendingReplicationOperationsCount"u8);
                 writer.WriteNumberValue(PendingReplicationOperationsCount.Value);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsDisasterRecoveryProvisioningState> provisioningState = default;
-            Optional<string> partnerNamespace = default;
-            Optional<string> alternateName = default;
-            Optional<EventHubsDisasterRecoveryRole> role = default;
-            Optional<long> pendingReplicationOperationsCount = default;
+            SystemData systemData = default;
+            EventHubsDisasterRecoveryProvisioningState? provisioningState = default;
+            string partnerNamespace = default;
+            string alternateName = default;
+            EventHubsDisasterRecoveryRole? role = default;
+            long? pendingReplicationOperationsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                partnerNamespace.Value,
-                alternateName.Value,
-                Optional.ToNullable(role),
-                Optional.ToNullable(pendingReplicationOperationsCount),
-                Optional.ToNullable(location),
+                systemData,
+                provisioningState,
+                partnerNamespace,
+                alternateName,
+                role,
+                pendingReplicationOperationsCount,
+                location,
                 serializedAdditionalRawData);
         }
 

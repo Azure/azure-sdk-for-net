@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (PrometheusUri != null)
+            if (Optional.IsDefined(PrometheusUri))
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (SslPreference.HasValue)
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (SslCertificateUri != null)
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (SapSid != null)
+            if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> prometheusUrl = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<string> sapSid = default;
+            Uri prometheusUrl = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
+            string sapSid = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,10 +142,10 @@ namespace Azure.ResourceManager.Workloads.Models
             return new PrometheusOSProviderInstanceProperties(
                 providerType,
                 serializedAdditionalRawData,
-                prometheusUrl.Value,
-                Optional.ToNullable(sslPreference),
-                sslCertificateUri.Value,
-                sapSid.Value);
+                prometheusUrl,
+                sslPreference,
+                sslCertificateUri,
+                sapSid);
         }
 
         BinaryData IPersistableModel<PrometheusOSProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (InstantRpRetentionRangeInDays.HasValue)
+            if (Optional.IsDefined(InstantRpRetentionRangeInDays))
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
             }
-            if (InstantRPDetails != null)
+            if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteStringValue(InstantRPDetails);
             }
-            if (UserAssignedManagedIdentityDetails != null)
+            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> instantRpRetentionRangeInDays = default;
-            Optional<string> instantRPDetails = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
+            int? instantRpRetentionRangeInDays = default;
+            string instantRPDetails = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotBackupAdditionalDetails(Optional.ToNullable(instantRpRetentionRangeInDays), instantRPDetails.Value, userAssignedManagedIdentityDetails.Value, serializedAdditionalRawData);
+            return new SnapshotBackupAdditionalDetails(instantRpRetentionRangeInDays, instantRPDetails, userAssignedManagedIdentityDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotBackupAdditionalDetails>.Write(ModelReaderWriterOptions options)

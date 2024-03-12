@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (CertObjectName != null)
+            if (Optional.IsDefined(CertObjectName))
             {
                 writer.WritePropertyName("certObjectName"u8);
                 writer.WriteStringValue(CertObjectName);
             }
-            if (KeyObjectName != null)
+            if (Optional.IsDefined(KeyObjectName))
             {
                 writer.WritePropertyName("keyObjectName"u8);
                 writer.WriteStringValue(KeyObjectName);
             }
-            if (RootCertObjectName != null)
+            if (Optional.IsDefined(RootCertObjectName))
             {
                 writer.WritePropertyName("rootCertObjectName"u8);
                 writer.WriteStringValue(RootCertObjectName);
             }
-            if (CertChainObjectName != null)
+            if (Optional.IsDefined(CertChainObjectName))
             {
                 writer.WritePropertyName("certChainObjectName"u8);
                 writer.WriteStringValue(CertChainObjectName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> certObjectName = default;
-            Optional<string> keyObjectName = default;
-            Optional<string> rootCertObjectName = default;
-            Optional<string> certChainObjectName = default;
+            ResourceIdentifier keyVaultId = default;
+            string certObjectName = default;
+            string keyObjectName = default;
+            string rootCertObjectName = default;
+            string certChainObjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IstioPluginCertificateAuthority(
-                keyVaultId.Value,
-                certObjectName.Value,
-                keyObjectName.Value,
-                rootCertObjectName.Value,
-                certChainObjectName.Value,
+                keyVaultId,
+                certObjectName,
+                keyObjectName,
+                rootCertObjectName,
+                certChainObjectName,
                 serializedAdditionalRawData);
         }
 

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IReadOnlyList<LinkTableStatus> value = default;
-            Optional<object> continuationToken = default;
+            object continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -50,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken.Value);
+            return new LinkConnectionQueryTableStatus(value ?? new ChangeTrackingList<LinkTableStatus>(), continuationToken);
         }
 
         internal partial class LinkConnectionQueryTableStatusConverter : JsonConverter<LinkConnectionQueryTableStatus>

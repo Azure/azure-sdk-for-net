@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkResourceId != null)
+            if (Optional.IsDefined(VirtualNetworkResourceId))
             {
                 writer.WritePropertyName("virtualNetworkResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkResourceId);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualNetworkResourceId = default;
+            ResourceIdentifier virtualNetworkResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkResourceId.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Write(ModelReaderWriterOptions options)

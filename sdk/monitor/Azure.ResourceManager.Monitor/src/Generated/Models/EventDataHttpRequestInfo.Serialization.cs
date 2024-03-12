@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ClientRequestId != null)
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (ClientIPAddress != null)
+            if (Optional.IsDefined(ClientIPAddress))
             {
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIPAddress.ToString());
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<IPAddress> clientIPAddress = default;
-            Optional<string> method = default;
-            Optional<Uri> uri = default;
+            string clientRequestId = default;
+            IPAddress clientIPAddress = default;
+            string method = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value, serializedAdditionalRawData);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, method, uri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataHttpRequestInfo>.Write(ModelReaderWriterOptions options)

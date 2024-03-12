@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (MdmAccount != null)
+            if (Optional.IsDefined(MdmAccount))
             {
                 writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
-            if (MetricNameSpace != null)
+            if (Optional.IsDefined(MetricNameSpace))
             {
                 writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<string> mdmAccount = default;
-            Optional<string> metricNameSpace = default;
+            string mdmAccount = default;
+            string metricNameSpace = default;
             IList<DataBoxEdgeMetricCounterSet> counterSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount.Value, metricNameSpace.Value, counterSets, serializedAdditionalRawData);
+            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount, metricNameSpace, counterSets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricConfiguration>.Write(ModelReaderWriterOptions options)

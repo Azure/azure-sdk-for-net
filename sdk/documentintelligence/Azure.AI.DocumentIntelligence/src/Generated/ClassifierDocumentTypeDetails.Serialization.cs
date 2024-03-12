@@ -27,17 +27,17 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (SourceKind.HasValue)
+            if (Optional.IsDefined(SourceKind))
             {
                 writer.WritePropertyName("sourceKind"u8);
                 writer.WriteStringValue(SourceKind.Value.ToString());
             }
-            if (AzureBlobSource != null)
+            if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
-            if (AzureBlobFileListSource != null)
+            if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
@@ -80,9 +80,9 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<ContentSourceKind> sourceKind = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
+            ContentSourceKind? sourceKind = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassifierDocumentTypeDetails(Optional.ToNullable(sourceKind), azureBlobSource.Value, azureBlobFileListSource.Value, serializedAdditionalRawData);
+            return new ClassifierDocumentTypeDetails(sourceKind, azureBlobSource, azureBlobFileListSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassifierDocumentTypeDetails>.Write(ModelReaderWriterOptions options)

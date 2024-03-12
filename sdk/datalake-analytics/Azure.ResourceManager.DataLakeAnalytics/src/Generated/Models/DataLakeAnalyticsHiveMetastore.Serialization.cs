@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUri"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && RuntimeVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Password != null)
+            if (options.Format != "W" && Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && NestedResourceProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NestedResourceProvisioningState))
             {
                 writer.WritePropertyName("nestedResourceProvisioningState"u8);
                 writer.WriteStringValue(NestedResourceProvisioningState.Value.ToSerialString());
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> serverUri = default;
-            Optional<string> databaseName = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
+            SystemData systemData = default;
+            Uri serverUri = default;
+            string databaseName = default;
+            string runtimeVersion = default;
+            string userName = default;
+            string password = default;
+            NestedResourceProvisioningState? nestedResourceProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,13 +217,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                serverUri.Value,
-                databaseName.Value,
-                runtimeVersion.Value,
-                userName.Value,
-                password.Value,
-                Optional.ToNullable(nestedResourceProvisioningState),
+                systemData,
+                serverUri,
+                databaseName,
+                runtimeVersion,
+                userName,
+                password,
+                nestedResourceProvisioningState,
                 serializedAdditionalRawData);
         }
 

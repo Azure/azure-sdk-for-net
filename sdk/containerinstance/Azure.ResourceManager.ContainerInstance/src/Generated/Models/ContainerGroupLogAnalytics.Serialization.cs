@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("workspaceKey"u8);
             writer.WriteStringValue(WorkspaceKey);
-            if (LogType.HasValue)
+            if (Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string workspaceId = default;
             string workspaceKey = default;
-            Optional<ContainerGroupLogAnalyticsLogType> logType = default;
+            ContainerGroupLogAnalyticsLogType? logType = default;
             IDictionary<string, string> metadata = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
+            ResourceIdentifier workspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,9 +150,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupLogAnalytics(
                 workspaceId,
                 workspaceKey,
-                Optional.ToNullable(logType),
+                logType,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                workspaceResourceId.Value,
+                workspaceResourceId,
                 serializedAdditionalRawData);
         }
 

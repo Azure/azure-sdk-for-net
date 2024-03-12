@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (ProvisioningAction.HasValue)
+            if (Optional.IsDefined(ProvisioningAction))
             {
                 writer.WritePropertyName("provisioningAction"u8);
                 writer.WriteStringValue(ProvisioningAction.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GuestCredential> credentials = default;
-            Optional<ProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            GuestCredential credentials = default;
+            ProvisioningAction? provisioningAction = default;
+            string status = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                credentials.Value,
-                Optional.ToNullable(provisioningAction),
-                status.Value,
-                provisioningState.Value,
+                systemData,
+                credentials,
+                provisioningAction,
+                status,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ArtifactManifestState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ArtifactManifestState))
             {
                 writer.WritePropertyName("artifactManifestState"u8);
                 writer.WriteStringValue(ArtifactManifestState.Value.ToString());
             }
-            if (!(Artifacts is ChangeTrackingList<ManifestArtifactFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ArtifactManifestState> artifactManifestState = default;
+            ProvisioningState? provisioningState = default;
+            ArtifactManifestState? artifactManifestState = default;
             IList<ManifestArtifactFormat> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactManifestPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(artifactManifestState), artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>(), serializedAdditionalRawData);
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactManifestPropertiesFormat>.Write(ModelReaderWriterOptions options)

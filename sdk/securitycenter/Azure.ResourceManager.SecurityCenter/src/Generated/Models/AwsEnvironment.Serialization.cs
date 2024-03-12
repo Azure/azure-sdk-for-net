@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (OrganizationalData != null)
+            if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ScanInterval.HasValue)
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scanInterval"u8);
                 writer.WriteNumberValue(ScanInterval.Value);
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsOrganizationalInfo> organizationalData = default;
+            AwsOrganizationalInfo organizationalData = default;
             IList<string> regions = default;
-            Optional<string> accountName = default;
-            Optional<long> scanInterval = default;
+            string accountName = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,10 +152,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AwsEnvironment(
                 environmentType,
                 serializedAdditionalRawData,
-                organizationalData.Value,
+                organizationalData,
                 regions ?? new ChangeTrackingList<string>(),
-                accountName.Value,
-                Optional.ToNullable(scanInterval));
+                accountName,
+                scanInterval);
         }
 
         BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)

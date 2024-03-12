@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastExecutedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
             {
                 writer.WritePropertyName("lastExecutionTime"u8);
                 writer.WriteStringValue(LastExecutedOn.Value, "O");
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.AppService.Models
             BackupFrequencyUnit frequencyUnit = default;
             bool keepAtLeastOneBackup = default;
             int retentionPeriodInDays = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastExecutionTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,8 +142,8 @@ namespace Azure.ResourceManager.AppService.Models
                 frequencyUnit,
                 keepAtLeastOneBackup,
                 retentionPeriodInDays,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(lastExecutionTime),
+                startTime,
+                lastExecutionTime,
                 serializedAdditionalRawData);
         }
 

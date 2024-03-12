@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -58,10 +59,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SpringBootServerProperties(string server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
+            Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
             FqdnAndIPAddressList = new ChangeTrackingList<IPAddress>();

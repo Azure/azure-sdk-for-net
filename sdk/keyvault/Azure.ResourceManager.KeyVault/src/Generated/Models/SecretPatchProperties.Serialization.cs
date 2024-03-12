@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Attributes != null)
+            if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretPatchProperties(value.Value, contentType.Value, attributes.Value, serializedAdditionalRawData);
+            return new SecretPatchProperties(value, contentType, attributes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretPatchProperties>.Write(ModelReaderWriterOptions options)

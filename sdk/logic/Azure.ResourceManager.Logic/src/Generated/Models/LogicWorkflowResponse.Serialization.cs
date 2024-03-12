@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Headers != null)
+            if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (BodyLink != null)
+            if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
                 writer.WriteObjectValue(BodyLink);
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> headers = default;
-            Optional<int> statusCode = default;
-            Optional<LogicContentLink> bodyLink = default;
+            BinaryData headers = default;
+            int? statusCode = default;
+            LogicContentLink bodyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowResponse(headers.Value, Optional.ToNullable(statusCode), bodyLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowResponse(headers, statusCode, bodyLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowResponse>.Write(ModelReaderWriterOptions options)

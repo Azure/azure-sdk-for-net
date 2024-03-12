@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
-            if (OrgCreationSource.HasValue)
+            if (Optional.IsDefined(OrgCreationSource))
             {
                 writer.WritePropertyName("orgCreationSource"u8);
                 writer.WriteStringValue(OrgCreationSource.Value.ToString());
             }
-            if (AccountCreationSource.HasValue)
+            if (Optional.IsDefined(AccountCreationSource))
             {
                 writer.WritePropertyName("accountCreationSource"u8);
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
@@ -106,10 +107,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicPlanDetails> planData = default;
-            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
-            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            SystemData systemData = default;
+            NewRelicPlanDetails planData = default;
+            NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
+            NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,10 +188,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                planData.Value,
-                Optional.ToNullable(orgCreationSource),
-                Optional.ToNullable(accountCreationSource),
+                systemData,
+                planData,
+                orgCreationSource,
+                accountCreationSource,
                 serializedAdditionalRawData);
         }
 

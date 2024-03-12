@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVmResourceId != null)
+            if (Optional.IsDefined(SourceVmResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
                 writer.WriteStringValue(SourceVmResourceId);
             }
-            if (DestinationVmName != null)
+            if (Optional.IsDefined(DestinationVmName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
                 writer.WriteStringValue(DestinationVmName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceVmResourceId = default;
-            Optional<string> destinationVmName = default;
+            ResourceIdentifier sourceVmResourceId = default;
+            string destinationVmName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabImportVmContent(sourceVmResourceId.Value, destinationVmName.Value, serializedAdditionalRawData);
+            return new DevTestLabImportVmContent(sourceVmResourceId, destinationVmName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabImportVmContent>.Write(ModelReaderWriterOptions options)

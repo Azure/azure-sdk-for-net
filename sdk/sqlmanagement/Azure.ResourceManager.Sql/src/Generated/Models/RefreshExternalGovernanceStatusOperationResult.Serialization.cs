@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RequestId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId.Value);
             }
-            if (options.Format != "W" && RequestType != null)
+            if (options.Format != "W" && Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType);
             }
-            if (options.Format != "W" && QueuedTime != null)
+            if (options.Format != "W" && Optional.IsDefined(QueuedTime))
             {
                 writer.WritePropertyName("queuedTime"u8);
                 writer.WriteStringValue(QueuedTime);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> requestType = default;
-            Optional<string> queuedTime = default;
-            Optional<string> serverName = default;
-            Optional<string> status = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            Guid? requestId = default;
+            string requestType = default;
+            string queuedTime = default;
+            string serverName = default;
+            string status = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,13 +213,13 @@ namespace Azure.ResourceManager.Sql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(requestId),
-                requestType.Value,
-                queuedTime.Value,
-                serverName.Value,
-                status.Value,
-                errorMessage.Value,
+                systemData,
+                requestId,
+                requestType,
+                queuedTime,
+                serverName,
+                status,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

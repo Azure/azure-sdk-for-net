@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResellerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> resellerId = default;
-            Optional<string> description = default;
+            string resellerId = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreatedSubscriptionReseller(resellerId.Value, description.Value, serializedAdditionalRawData);
+            return new CreatedSubscriptionReseller(resellerId, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreatedSubscriptionReseller>.Write(ModelReaderWriterOptions options)

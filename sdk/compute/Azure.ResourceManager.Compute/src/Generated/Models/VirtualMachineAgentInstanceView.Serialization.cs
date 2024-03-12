@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (VmAgentVersion != null)
+            if (Optional.IsDefined(VmAgentVersion))
             {
                 writer.WritePropertyName("vmAgentVersion"u8);
                 writer.WriteStringValue(VmAgentVersion);
             }
-            if (!(ExtensionHandlers is ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionHandlers))
             {
                 writer.WritePropertyName("extensionHandlers"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> vmAgentVersion = default;
+            string vmAgentVersion = default;
             IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, extensionHandlers ?? new ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
+            return new VirtualMachineAgentInstanceView(vmAgentVersion, extensionHandlers ?? new ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineAgentInstanceView>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SelectedStorageClassName != null)
+            if (Optional.IsDefined(SelectedStorageClassName))
             {
                 writer.WritePropertyName("selectedStorageClassName"u8);
                 writer.WriteStringValue(SelectedStorageClassName);
             }
-            if (Provisioner != null)
+            if (Optional.IsDefined(Provisioner))
             {
                 writer.WritePropertyName("provisioner"u8);
                 writer.WriteStringValue(Provisioner);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> selectedStorageClassName = default;
-            Optional<string> provisioner = default;
+            string selectedStorageClassName = default;
+            string provisioner = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName.Value, provisioner.Value);
+            return new KubernetesStorageClassRestoreCriteria(objectType, serializedAdditionalRawData, selectedStorageClassName, provisioner);
         }
 
         BinaryData IPersistableModel<KubernetesStorageClassRestoreCriteria>.Write(ModelReaderWriterOptions options)

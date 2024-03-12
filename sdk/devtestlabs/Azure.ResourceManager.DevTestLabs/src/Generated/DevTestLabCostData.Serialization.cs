@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetCost != null)
+            if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
                 writer.WriteObjectValue(TargetCost);
             }
-            if (options.Format != "W" && LabCostSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
                 writer.WriteObjectValue(LabCostSummary);
             }
-            if (options.Format != "W" && !(LabCostDetails is ChangeTrackingList<DevTestLabCostDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
                 writer.WritePropertyName("labCostDetails"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ResourceCosts is ChangeTrackingList<DevTestLabResourceCost> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCosts))
             {
                 writer.WritePropertyName("resourceCosts"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabTargetCost> targetCost = default;
-            Optional<LabCostSummaryProperties> labCostSummary = default;
+            SystemData systemData = default;
+            DevTestLabTargetCost targetCost = default;
+            LabCostSummaryProperties labCostSummary = default;
             IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
             IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
-            Optional<string> currencyCode = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string currencyCode = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,19 +339,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost.Value,
-                labCostSummary.Value,
+                targetCost,
+                labCostSummary,
                 labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(),
                 resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(),
-                currencyCode.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(endDateTime),
-                Optional.ToNullable(createdDate),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                currencyCode,
+                startDateTime,
+                endDateTime,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

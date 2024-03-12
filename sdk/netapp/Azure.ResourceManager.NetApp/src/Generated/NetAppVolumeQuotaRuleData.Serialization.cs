@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (QuotaSizeInKiBs.HasValue)
+            if (Optional.IsDefined(QuotaSizeInKiBs))
             {
                 writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
-            if (QuotaType.HasValue)
+            if (Optional.IsDefined(QuotaType))
             {
                 writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
-            if (QuotaTarget != null)
+            if (Optional.IsDefined(QuotaTarget))
             {
                 writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetAppProvisioningState> provisioningState = default;
-            Optional<long> quotaSizeInKiBs = default;
-            Optional<NetAppVolumeQuotaType> quotaType = default;
-            Optional<string> quotaTarget = default;
+            SystemData systemData = default;
+            NetAppProvisioningState? provisioningState = default;
+            long? quotaSizeInKiBs = default;
+            NetAppVolumeQuotaType? quotaType = default;
+            string quotaTarget = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(quotaSizeInKiBs),
-                Optional.ToNullable(quotaType),
-                quotaTarget.Value,
+                provisioningState,
+                quotaSizeInKiBs,
+                quotaType,
+                quotaTarget,
                 serializedAdditionalRawData);
         }
 

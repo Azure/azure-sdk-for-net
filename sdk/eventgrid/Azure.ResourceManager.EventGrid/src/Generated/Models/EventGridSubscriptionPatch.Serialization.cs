@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (DeliveryWithResourceIdentity != null)
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -51,27 +52,27 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (EventDeliverySchema.HasValue)
+            if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (RetryPolicy != null)
+            if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (DeadLetterDestination != null)
+            if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
-            if (DeadLetterWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);
@@ -114,15 +115,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventSubscriptionDestination> destination = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
-            Optional<EventSubscriptionFilter> filter = default;
+            EventSubscriptionDestination destination = default;
+            DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
+            EventSubscriptionFilter filter = default;
             IList<string> labels = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
-            Optional<EventDeliverySchema> eventDeliverySchema = default;
-            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
-            Optional<DeadLetterDestination> deadLetterDestination = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            DateTimeOffset? expirationTimeUtc = default;
+            EventDeliverySchema? eventDeliverySchema = default;
+            EventSubscriptionRetryPolicy retryPolicy = default;
+            DeadLetterDestination deadLetterDestination = default;
+            DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,15 +221,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventGridSubscriptionPatch(
-                destination.Value,
-                deliveryWithResourceIdentity.Value,
-                filter.Value,
+                destination,
+                deliveryWithResourceIdentity,
+                filter,
                 labels ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(expirationTimeUtc),
-                Optional.ToNullable(eventDeliverySchema),
-                retryPolicy.Value,
-                deadLetterDestination.Value,
-                deadLetterWithResourceIdentity.Value,
+                expirationTimeUtc,
+                eventDeliverySchema,
+                retryPolicy,
+                deadLetterDestination,
+                deadLetterWithResourceIdentity,
                 serializedAdditionalRawData);
         }
 

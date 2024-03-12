@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryZone != null)
+            if (Optional.IsDefined(PrimaryZone))
             {
                 writer.WritePropertyName("primaryZone"u8);
                 writer.WriteStringValue(PrimaryZone);
             }
-            if (RecoveryZone != null)
+            if (Optional.IsDefined(RecoveryZone))
             {
                 writer.WritePropertyName("recoveryZone"u8);
                 writer.WriteStringValue(RecoveryZone);
             }
-            if (PrimaryExtendedLocation != null)
+            if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (RecoveryExtendedLocation != null)
+            if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            string primaryZone = default;
+            string recoveryZone = default;
+            SiteRecoveryExtendedLocation primaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,10 +138,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanA2ADetails(
                 instanceType,
                 serializedAdditionalRawData,
-                primaryZone.Value,
-                recoveryZone.Value,
-                primaryExtendedLocation.Value,
-                recoveryExtendedLocation.Value);
+                primaryZone,
+                recoveryZone,
+                primaryExtendedLocation,
+                recoveryExtendedLocation);
         }
 
         BinaryData IPersistableModel<RecoveryPlanA2ADetails>.Write(ModelReaderWriterOptions options)

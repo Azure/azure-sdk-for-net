@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (UtilizationInfo != null)
+            if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
                 writer.WriteObjectValue(UtilizationInfo);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<CapacityReservationUtilization> utilizationInfo = default;
+            string name = default;
+            CapacityReservationUtilization utilizationInfo = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData, name.Value);
+            return new CapacityReservationInstanceViewWithName(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<CapacityReservationInstanceViewWithName>.Write(ModelReaderWriterOptions options)

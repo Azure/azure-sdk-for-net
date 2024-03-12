@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerPlatform != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerPlatform))
             {
                 writer.WritePropertyName("serverPlatform"u8);
                 writer.WriteStringValue(ServerPlatform);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && ServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (options.Format != "W" && ServerEdition != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerEdition))
             {
                 writer.WritePropertyName("serverEdition"u8);
                 writer.WriteStringValue(ServerEdition);
             }
-            if (options.Format != "W" && ServerOperatingSystemVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerOperatingSystemVersion))
             {
                 writer.WritePropertyName("serverOperatingSystemVersion"u8);
                 writer.WriteStringValue(ServerOperatingSystemVersion);
             }
-            if (options.Format != "W" && ServerDatabaseCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerDatabaseCount))
             {
                 writer.WritePropertyName("serverDatabaseCount"u8);
                 writer.WriteNumberValue(ServerDatabaseCount.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> serverPlatform = default;
-            Optional<string> serverName = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverEdition = default;
-            Optional<string> serverOperatingSystemVersion = default;
-            Optional<int> serverDatabaseCount = default;
+            string serverPlatform = default;
+            string serverName = default;
+            string serverVersion = default;
+            string serverEdition = default;
+            string serverOperatingSystemVersion = default;
+            int? serverDatabaseCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServerProperties(
-                serverPlatform.Value,
-                serverName.Value,
-                serverVersion.Value,
-                serverEdition.Value,
-                serverOperatingSystemVersion.Value,
-                Optional.ToNullable(serverDatabaseCount),
+                serverPlatform,
+                serverName,
+                serverVersion,
+                serverEdition,
+                serverOperatingSystemVersion,
+                serverDatabaseCount,
                 serializedAdditionalRawData);
         }
 

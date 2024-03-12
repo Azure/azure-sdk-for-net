@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (SourceResourceType.HasValue)
+            if (Optional.IsDefined(SourceResourceType))
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (!(ConditionSets is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConditionSets))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<ApplicationSourceResourceType> sourceResourceType = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            ApplicationSourceResourceType? sourceResourceType = default;
             IList<BinaryData> conditionSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(sourceResourceType),
+                systemData,
+                displayName,
+                description,
+                sourceResourceType,
                 conditionSets ?? new ChangeTrackingList<BinaryData>(),
                 serializedAdditionalRawData);
         }

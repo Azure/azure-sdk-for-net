@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,79 +61,79 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NamespaceName != null)
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && MetricId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (ServiceBusEndpoint != null)
+            if (Optional.IsDefined(ServiceBusEndpoint))
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ScaleUnit != null)
+            if (Optional.IsDefined(ScaleUnit))
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (IsCritical.HasValue)
+            if (Optional.IsDefined(IsCritical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
-            if (DataCenter != null)
+            if (Optional.IsDefined(DataCenter))
             {
                 writer.WritePropertyName("dataCenter"u8);
                 writer.WriteStringValue(DataCenter);
             }
-            if (NamespaceType.HasValue)
+            if (Optional.IsDefined(NamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());
@@ -177,27 +177,27 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
+            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> provisioningState = default;
-            Optional<string> region = default;
-            Optional<string> metricId = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<Uri> serviceBusEndpoint = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> scaleUnit = default;
-            Optional<bool> enabled = default;
-            Optional<bool> critical = default;
-            Optional<string> dataCenter = default;
-            Optional<NotificationHubNamespaceType> namespaceType = default;
+            SystemData systemData = default;
+            string name0 = default;
+            string provisioningState = default;
+            string region = default;
+            string metricId = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            Uri serviceBusEndpoint = default;
+            string subscriptionId = default;
+            string scaleUnit = default;
+            bool? enabled = default;
+            bool? critical = default;
+            string dataCenter = default;
+            NotificationHubNamespaceType? namespaceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -370,24 +370,24 @@ namespace Azure.ResourceManager.NotificationHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                name0.Value,
-                provisioningState.Value,
-                region.Value,
-                metricId.Value,
-                status.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                serviceBusEndpoint.Value,
-                subscriptionId.Value,
-                scaleUnit.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(critical),
-                dataCenter.Value,
-                Optional.ToNullable(namespaceType),
-                sku.Value,
+                name0,
+                provisioningState,
+                region,
+                metricId,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                subscriptionId,
+                scaleUnit,
+                enabled,
+                critical,
+                dataCenter,
+                namespaceType,
+                sku,
                 serializedAdditionalRawData);
         }
 

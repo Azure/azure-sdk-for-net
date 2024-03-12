@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (ImpactedService != null)
+            if (Optional.IsDefined(ImpactedService))
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImpactedRegions))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedService = default;
+            string impactedService = default;
             IReadOnlyList<ResourceHealthEventImpactedServiceRegion> impactedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpact(impactedService.Value, impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>(), serializedAdditionalRawData);
+            return new ResourceHealthEventImpact(impactedService, impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpact>.Write(ModelReaderWriterOptions options)

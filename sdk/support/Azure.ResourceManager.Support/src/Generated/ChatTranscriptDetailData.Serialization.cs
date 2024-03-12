@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Messages is ChangeTrackingList<ChatTranscriptMessageProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Support
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ChatTranscriptMessageProperties> messages = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(),
-                Optional.ToNullable(startTime),
+                startTime,
                 serializedAdditionalRawData);
         }
 

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<BillingBenefitsSavingsPlanData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(AdditionalProperties is ChangeTrackingList<SavingsPlanSummary> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             IReadOnlyList<BillingBenefitsSavingsPlanData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SavingsPlanSummary> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanModelListResult(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanData>(), nextLink.Value, additionalProperties ?? new ChangeTrackingList<SavingsPlanSummary>(), serializedAdditionalRawData);
+            return new SavingsPlanModelListResult(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanData>(), nextLink, additionalProperties ?? new ChangeTrackingList<SavingsPlanSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanModelListResult>.Write(ModelReaderWriterOptions options)

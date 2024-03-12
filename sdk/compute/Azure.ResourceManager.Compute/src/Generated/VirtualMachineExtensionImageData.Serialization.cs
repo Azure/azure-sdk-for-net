@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,34 +55,34 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OperatingSystem != null)
+            if (Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem);
             }
-            if (ComputeRole != null)
+            if (Optional.IsDefined(ComputeRole))
             {
                 writer.WritePropertyName("computeRole"u8);
                 writer.WriteStringValue(ComputeRole);
             }
-            if (HandlerSchema != null)
+            if (Optional.IsDefined(HandlerSchema))
             {
                 writer.WritePropertyName("handlerSchema"u8);
                 writer.WriteStringValue(HandlerSchema);
             }
-            if (VirtualMachineScaleSetEnabled.HasValue)
+            if (Optional.IsDefined(VirtualMachineScaleSetEnabled))
             {
                 writer.WritePropertyName("vmScaleSetEnabled"u8);
                 writer.WriteBooleanValue(VirtualMachineScaleSetEnabled.Value);
             }
-            if (SupportsMultipleExtensions.HasValue)
+            if (Optional.IsDefined(SupportsMultipleExtensions))
             {
                 writer.WritePropertyName("supportsMultipleExtensions"u8);
                 writer.WriteBooleanValue(SupportsMultipleExtensions.Value);
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> operatingSystem = default;
-            Optional<string> computeRole = default;
-            Optional<string> handlerSchema = default;
-            Optional<bool> virtualMachineScaleSetEnabled = default;
-            Optional<bool> supportsMultipleExtensions = default;
+            SystemData systemData = default;
+            string operatingSystem = default;
+            string computeRole = default;
+            string handlerSchema = default;
+            bool? virtualMachineScaleSetEnabled = default;
+            bool? supportsMultipleExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                operatingSystem.Value,
-                computeRole.Value,
-                handlerSchema.Value,
-                Optional.ToNullable(virtualMachineScaleSetEnabled),
-                Optional.ToNullable(supportsMultipleExtensions),
+                operatingSystem,
+                computeRole,
+                handlerSchema,
+                virtualMachineScaleSetEnabled,
+                supportsMultipleExtensions,
                 serializedAdditionalRawData);
         }
 

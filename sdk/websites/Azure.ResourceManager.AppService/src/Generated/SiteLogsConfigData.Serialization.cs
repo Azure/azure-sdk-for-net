@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ApplicationLogs != null)
+            if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
                 writer.WriteObjectValue(ApplicationLogs);
             }
-            if (HttpLogs != null)
+            if (Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
                 writer.WriteObjectValue(HttpLogs);
             }
-            if (IsFailedRequestsTracing != null)
+            if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
                 writer.WriteObjectValue(IsFailedRequestsTracing);
             }
-            if (IsDetailedErrorMessages != null)
+            if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
                 writer.WriteObjectValue(IsDetailedErrorMessages);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApplicationLogsConfig> applicationLogs = default;
-            Optional<AppServiceHttpLogsConfig> httpLogs = default;
-            Optional<WebAppEnabledConfig> failedRequestsTracing = default;
-            Optional<WebAppEnabledConfig> detailedErrorMessages = default;
+            SystemData systemData = default;
+            ApplicationLogsConfig applicationLogs = default;
+            AppServiceHttpLogsConfig httpLogs = default;
+            WebAppEnabledConfig failedRequestsTracing = default;
+            WebAppEnabledConfig detailedErrorMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                applicationLogs.Value,
-                httpLogs.Value,
-                failedRequestsTracing.Value,
-                detailedErrorMessages.Value,
-                kind.Value,
+                systemData,
+                applicationLogs,
+                httpLogs,
+                failedRequestsTracing,
+                detailedErrorMessages,
+                kind,
                 serializedAdditionalRawData);
         }
 

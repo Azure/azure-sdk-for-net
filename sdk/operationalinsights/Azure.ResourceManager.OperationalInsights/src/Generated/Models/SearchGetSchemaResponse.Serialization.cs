@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(Value is ChangeTrackingList<OperationalInsightsSearchSchemaValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<SearchMetadata> metadata = default;
+            SearchMetadata metadata = default;
             IReadOnlyList<OperationalInsightsSearchSchemaValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchGetSchemaResponse(metadata.Value, value ?? new ChangeTrackingList<OperationalInsightsSearchSchemaValue>(), serializedAdditionalRawData);
+            return new SearchGetSchemaResponse(metadata, value ?? new ChangeTrackingList<OperationalInsightsSearchSchemaValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchGetSchemaResponse>.Write(ModelReaderWriterOptions options)

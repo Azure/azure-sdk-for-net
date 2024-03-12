@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (FromAddress != null)
+            if (Optional.IsDefined(FromAddress))
             {
                 writer.WritePropertyName("fromAddress"u8);
                 writer.WriteStringValue(FromAddress);
             }
-            if (FromName != null)
+            if (Optional.IsDefined(FromName))
             {
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (StartTLSPolicy.HasValue)
+            if (Optional.IsDefined(StartTLSPolicy))
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
                 writer.WriteStringValue(StartTLSPolicy.Value.ToString());
             }
-            if (SkipVerify.HasValue)
+            if (Optional.IsDefined(SkipVerify))
             {
                 writer.WritePropertyName("skipVerify"u8);
                 writer.WriteBooleanValue(SkipVerify.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> host = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<string> fromAddress = default;
-            Optional<string> fromName = default;
-            Optional<StartTLSPolicy> startTLSPolicy = default;
-            Optional<bool> skipVerify = default;
+            bool? enabled = default;
+            string host = default;
+            string user = default;
+            string password = default;
+            string fromAddress = default;
+            string fromName = default;
+            StartTLSPolicy? startTLSPolicy = default;
+            bool? skipVerify = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,14 +176,14 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Smtp(
-                Optional.ToNullable(enabled),
-                host.Value,
-                user.Value,
-                password.Value,
-                fromAddress.Value,
-                fromName.Value,
-                Optional.ToNullable(startTLSPolicy),
-                Optional.ToNullable(skipVerify),
+                enabled,
+                host,
+                user,
+                password,
+                fromAddress,
+                fromName,
+                startTLSPolicy,
+                skipVerify,
                 serializedAdditionalRawData);
         }
 

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,29 +53,29 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RunRequest != null)
+            if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
                 writer.WriteObjectValue(RunRequest);
             }
-            if (options.Format != "W" && RunResult != null)
+            if (options.Format != "W" && Optional.IsDefined(RunResult))
             {
                 writer.WritePropertyName("runResult"u8);
                 writer.WriteObjectValue(RunResult);
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryRunContent> runRequest = default;
-            Optional<ContainerRegistryRunData> runResult = default;
-            Optional<string> forceUpdateTag = default;
+            SystemData systemData = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryRunContent runRequest = default;
+            ContainerRegistryRunData runResult = default;
+            string forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.ContainerRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                Optional.ToNullable(location),
-                Optional.ToNullable(provisioningState),
-                runRequest.Value,
-                runResult.Value,
-                forceUpdateTag.Value,
+                location,
+                provisioningState,
+                runRequest,
+                runResult,
+                forceUpdateTag,
                 serializedAdditionalRawData);
         }
 

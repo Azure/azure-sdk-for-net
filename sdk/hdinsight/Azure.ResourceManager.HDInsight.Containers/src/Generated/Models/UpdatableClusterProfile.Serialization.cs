@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -36,32 +37,32 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
             }
-            if (AutoscaleProfile != null)
+            if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (AuthorizationProfile != null)
+            if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
                 writer.WriteObjectValue(AuthorizationProfile);
             }
-            if (LogAnalyticsProfile != null)
+            if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
             }
-            if (PrometheusProfile != null)
+            if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
-            Optional<ClusterSshProfile> sshProfile = default;
-            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<AuthorizationProfile> authorizationProfile = default;
-            Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<ClusterPrometheusProfile> prometheusProfile = default;
+            ClusterSshProfile sshProfile = default;
+            ClusterAutoscaleProfile autoscaleProfile = default;
+            AuthorizationProfile authorizationProfile = default;
+            ClusterLogAnalyticsProfile logAnalyticsProfile = default;
+            ClusterPrometheusProfile prometheusProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,11 +202,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdatableClusterProfile(
                 serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
-                sshProfile.Value,
-                autoscaleProfile.Value,
-                authorizationProfile.Value,
-                logAnalyticsProfile.Value,
-                prometheusProfile.Value,
+                sshProfile,
+                autoscaleProfile,
+                authorizationProfile,
+                logAnalyticsProfile,
+                prometheusProfile,
                 scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
                 serializedAdditionalRawData);
         }

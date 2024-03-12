@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
@@ -20,15 +19,15 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<long> odataCount = default;
-            Optional<double> searchCoverage = default;
+            long? odataCount = default;
+            double? searchCoverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyList<QueryAnswerResult> searchAnswers = default;
-            Optional<SearchOptions> searchNextPageParameters = default;
-            Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
+            SearchOptions searchNextPageParameters = default;
+            SemanticErrorReason? searchSemanticPartialResponseReason = default;
+            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
-            Optional<string> odataNextLink = default;
+            string odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -134,15 +133,15 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new SearchDocumentsResult(
-                Optional.ToNullable(odataCount),
-                Optional.ToNullable(searchCoverage),
+                odataCount,
+                searchCoverage,
                 searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
-                searchNextPageParameters.Value,
-                Optional.ToNullable(searchSemanticPartialResponseReason),
-                Optional.ToNullable(searchSemanticPartialResponseType),
+                searchNextPageParameters,
+                searchSemanticPartialResponseReason,
+                searchSemanticPartialResponseType,
                 value,
-                odataNextLink.Value);
+                odataNextLink);
         }
     }
 }

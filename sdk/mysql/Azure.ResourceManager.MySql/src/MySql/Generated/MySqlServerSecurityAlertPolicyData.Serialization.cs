@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (!(DisabledAlerts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisabledAlerts))
             {
                 writer.WritePropertyName("disabledAlerts"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (!(EmailAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (SendToEmailAccountAdmins.HasValue)
+            if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins"u8);
                 writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
-            if (StorageEndpoint != null)
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (StorageAccountAccessKey != null)
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (RetentionDays.HasValue)
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MySqlServerSecurityAlertPolicyState> state = default;
+            SystemData systemData = default;
+            MySqlServerSecurityAlertPolicyState? state = default;
             IList<string> disabledAlerts = default;
             IList<string> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.MySql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(state),
+                systemData,
+                state,
                 disabledAlerts ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(emailAccountAdmins),
-                storageEndpoint.Value,
-                storageAccountAccessKey.Value,
-                Optional.ToNullable(retentionDays),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
                 serializedAdditionalRawData);
         }
 

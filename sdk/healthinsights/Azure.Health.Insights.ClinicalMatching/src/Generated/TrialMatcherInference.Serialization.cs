@@ -31,17 +31,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConfidenceScore.HasValue)
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (!(Evidence is ChangeTrackingList<TrialMatcherInferenceEvidence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -106,12 +106,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             TrialMatcherInferenceType type = default;
             string value = default;
-            Optional<string> description = default;
-            Optional<float> confidenceScore = default;
+            string description = default;
+            float? confidenceScore = default;
             IReadOnlyList<TrialMatcherInferenceEvidence> evidence = default;
-            Optional<string> id = default;
-            Optional<ClinicalTrialSource> source = default;
-            Optional<ClinicalTrialMetadata> metadata = default;
+            string id = default;
+            ClinicalTrialSource? source = default;
+            ClinicalTrialMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,12 +186,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             return new TrialMatcherInference(
                 type,
                 value,
-                description.Value,
-                Optional.ToNullable(confidenceScore),
+                description,
+                confidenceScore,
                 evidence ?? new ChangeTrackingList<TrialMatcherInferenceEvidence>(),
-                id.Value,
-                Optional.ToNullable(source),
-                metadata.Value,
+                id,
+                source,
+                metadata,
                 serializedAdditionalRawData);
         }
 

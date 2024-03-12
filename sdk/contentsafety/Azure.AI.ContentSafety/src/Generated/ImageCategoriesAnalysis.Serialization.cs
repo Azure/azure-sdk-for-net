@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
@@ -73,7 +73,7 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             ImageCategory category = default;
-            Optional<int> severity = default;
+            int? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageCategoriesAnalysis(category, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageCategoriesAnalysis>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,74 +27,74 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Profile.HasValue)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (BufferWindow.HasValue)
+            if (Optional.IsDefined(BufferWindow))
             {
                 writer.WritePropertyName("bufferWindow"u8);
                 writer.WriteStringValue(BufferWindow.Value, "P");
             }
-            if (ConstantRateFactor.HasValue)
+            if (Optional.IsDefined(ConstantRateFactor))
             {
                 writer.WritePropertyName("crf"u8);
                 writer.WriteNumberValue(ConstantRateFactor.Value);
             }
-            if (ReferenceFrames.HasValue)
+            if (Optional.IsDefined(ReferenceFrames))
             {
                 writer.WritePropertyName("referenceFrames"u8);
                 writer.WriteNumberValue(ReferenceFrames.Value);
             }
-            if (EntropyMode.HasValue)
+            if (Optional.IsDefined(EntropyMode))
             {
                 writer.WritePropertyName("entropyMode"u8);
                 writer.WriteStringValue(EntropyMode.Value.ToString());
             }
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (MaxBitrate.HasValue)
+            if (Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (BFrames.HasValue)
+            if (Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (FrameRate != null)
+            if (Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Slices.HasValue)
+            if (Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (UseAdaptiveBFrame.HasValue)
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -136,21 +137,21 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<H264VideoProfile> profile = default;
-            Optional<string> level = default;
-            Optional<TimeSpan> bufferWindow = default;
-            Optional<float> crf = default;
-            Optional<int> referenceFrames = default;
-            Optional<LayerEntropyMode> entropyMode = default;
+            H264VideoProfile? profile = default;
+            string level = default;
+            TimeSpan? bufferWindow = default;
+            float? crf = default;
+            int? referenceFrames = default;
+            LayerEntropyMode? entropyMode = default;
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? maxBitrate = default;
+            int? bFrames = default;
+            string frameRate = default;
+            int? slices = default;
+            bool? adaptiveBFrame = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,22 +274,22 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new H264Layer(
-                width.Value,
-                height.Value,
-                label.Value,
+                width,
+                height,
+                label,
                 serializedAdditionalRawData,
                 bitrate,
-                Optional.ToNullable(maxBitrate),
-                Optional.ToNullable(bFrames),
-                frameRate.Value,
-                Optional.ToNullable(slices),
-                Optional.ToNullable(adaptiveBFrame),
-                Optional.ToNullable(profile),
-                level.Value,
-                Optional.ToNullable(bufferWindow),
-                Optional.ToNullable(crf),
-                Optional.ToNullable(referenceFrames),
-                Optional.ToNullable(entropyMode));
+                maxBitrate,
+                bFrames,
+                frameRate,
+                slices,
+                adaptiveBFrame,
+                profile,
+                level,
+                bufferWindow,
+                crf,
+                referenceFrames,
+                entropyMode);
         }
 
         BinaryData IPersistableModel<H264Layer>.Write(ModelReaderWriterOptions options)

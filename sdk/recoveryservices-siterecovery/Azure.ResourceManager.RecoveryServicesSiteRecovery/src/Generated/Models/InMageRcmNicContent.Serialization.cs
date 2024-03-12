@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -31,27 +32,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (IsSelectedForFailover != null)
+            if (Optional.IsDefined(IsSelectedForFailover))
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TargetStaticIPAddress != null)
+            if (Optional.IsDefined(TargetStaticIPAddress))
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TestStaticIPAddress != null)
+            if (Optional.IsDefined(TestStaticIPAddress))
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string nicId = default;
             string isPrimaryNic = default;
-            Optional<string> isSelectedForFailover = default;
-            Optional<string> targetSubnetName = default;
-            Optional<IPAddress> targetStaticIPAddress = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testStaticIPAddress = default;
+            string isSelectedForFailover = default;
+            string targetSubnetName = default;
+            IPAddress targetStaticIPAddress = default;
+            string testSubnetName = default;
+            IPAddress testStaticIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,11 +158,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmNicContent(
                 nicId,
                 isPrimaryNic,
-                isSelectedForFailover.Value,
-                targetSubnetName.Value,
-                targetStaticIPAddress.Value,
-                testSubnetName.Value,
-                testStaticIPAddress.Value,
+                isSelectedForFailover,
+                targetSubnetName,
+                targetStaticIPAddress,
+                testSubnetName,
+                testStaticIPAddress,
                 serializedAdditionalRawData);
         }
 

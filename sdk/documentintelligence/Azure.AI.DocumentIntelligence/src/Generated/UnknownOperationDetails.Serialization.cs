@@ -31,25 +31,25 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (PercentCompleted.HasValue)
+            if (Optional.IsDefined(PercentCompleted))
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(PercentCompleted.Value);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -105,14 +105,14 @@ namespace Azure.AI.DocumentIntelligence
             }
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = "Unknown";
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,14 +193,14 @@ namespace Azure.AI.DocumentIntelligence
             return new UnknownOperationDetails(
                 operationId,
                 status,
-                Optional.ToNullable(percentCompleted),
+                percentCompleted,
                 createdDateTime,
                 lastUpdatedDateTime,
                 kind,
                 resourceLocation,
-                apiVersion.Value,
+                apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                error.Value,
+                error,
                 serializedAdditionalRawData);
         }
 

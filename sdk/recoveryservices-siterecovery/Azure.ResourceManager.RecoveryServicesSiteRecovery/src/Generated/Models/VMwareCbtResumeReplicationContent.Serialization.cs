@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DeleteMigrationResources != null)
+            if (Optional.IsDefined(DeleteMigrationResources))
             {
                 writer.WritePropertyName("deleteMigrationResources"u8);
                 writer.WriteStringValue(DeleteMigrationResources);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> deleteMigrationResources = default;
+            string deleteMigrationResources = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtResumeReplicationContent(instanceType, serializedAdditionalRawData, deleteMigrationResources.Value);
+            return new VMwareCbtResumeReplicationContent(instanceType, serializedAdditionalRawData, deleteMigrationResources);
         }
 
         BinaryData IPersistableModel<VMwareCbtResumeReplicationContent>.Write(ModelReaderWriterOptions options)

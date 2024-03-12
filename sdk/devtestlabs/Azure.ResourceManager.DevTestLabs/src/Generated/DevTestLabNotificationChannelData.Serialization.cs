@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WebHookUri != null)
+            if (Optional.IsDefined(WebHookUri))
             {
                 writer.WritePropertyName("webHookUrl"u8);
                 writer.WriteStringValue(WebHookUri.AbsoluteUri);
             }
-            if (EmailRecipient != null)
+            if (Optional.IsDefined(EmailRecipient))
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (NotificationLocale != null)
+            if (Optional.IsDefined(NotificationLocale))
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Events is ChangeTrackingList<DevTestLabNotificationChannelEvent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> webHookUrl = default;
-            Optional<string> emailRecipient = default;
-            Optional<string> notificationLocale = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            Uri webHookUrl = default;
+            string emailRecipient = default;
+            string notificationLocale = default;
+            string description = default;
             IList<DevTestLabNotificationChannelEvent> events = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,17 +291,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                webHookUrl.Value,
-                emailRecipient.Value,
-                notificationLocale.Value,
-                description.Value,
+                webHookUrl,
+                emailRecipient,
+                notificationLocale,
+                description,
                 events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>(),
-                Optional.ToNullable(createdDate),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

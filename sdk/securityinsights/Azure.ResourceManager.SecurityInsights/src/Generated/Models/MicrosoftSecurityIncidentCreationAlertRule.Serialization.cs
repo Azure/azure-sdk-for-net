@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,14 +51,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DisplayNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayNamesFilter))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DisplayNamesExcludeFilter is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProductFilter.HasValue)
+            if (Optional.IsDefined(ProductFilter))
             {
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (!(SeveritiesFilter is ChangeTrackingList<SecurityInsightsAlertSeverity> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SeveritiesFilter))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();
@@ -92,27 +93,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AlertRuleTemplateName != null)
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -157,20 +158,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> displayNamesFilter = default;
             IList<string> displayNamesExcludeFilter = default;
-            Optional<MicrosoftSecurityProductName> productFilter = default;
+            MicrosoftSecurityProductName? productFilter = default;
             IList<SecurityInsightsAlertSeverity> severitiesFilter = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
+            string alertRuleTemplateName = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -319,19 +320,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
                 displayNamesFilter ?? new ChangeTrackingList<string>(),
                 displayNamesExcludeFilter ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(productFilter),
+                productFilter,
                 severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(),
-                alertRuleTemplateName.Value,
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(lastModifiedUtc));
+                alertRuleTemplateName,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc);
         }
 
         BinaryData IPersistableModel<MicrosoftSecurityIncidentCreationAlertRule>.Write(ModelReaderWriterOptions options)

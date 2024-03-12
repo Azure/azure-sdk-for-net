@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (UpdateType.HasValue)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (DoesUseSessionHostLocalTime.HasValue)
+            if (Optional.IsDefined(DoesUseSessionHostLocalTime))
             {
                 writer.WritePropertyName("useSessionHostLocalTime"u8);
                 writer.WriteBooleanValue(DoesUseSessionHostLocalTime.Value);
             }
-            if (MaintenanceWindowTimeZone != null)
+            if (Optional.IsDefined(MaintenanceWindowTimeZone))
             {
                 writer.WritePropertyName("maintenanceWindowTimeZone"u8);
                 writer.WriteStringValue(MaintenanceWindowTimeZone);
             }
-            if (!(MaintenanceWindows is ChangeTrackingList<MaintenanceWindowPatchProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MaintenanceWindows))
             {
                 writer.WritePropertyName("maintenanceWindows"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<SessionHostComponentUpdateType> type = default;
-            Optional<bool> useSessionHostLocalTime = default;
-            Optional<string> maintenanceWindowTimeZone = default;
+            SessionHostComponentUpdateType? type = default;
+            bool? useSessionHostLocalTime = default;
+            string maintenanceWindowTimeZone = default;
             IList<MaintenanceWindowPatchProperties> maintenanceWindows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostAgentUpdatePatchProperties(Optional.ToNullable(type), Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>(), serializedAdditionalRawData);
+            return new SessionHostAgentUpdatePatchProperties(type, useSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostAgentUpdatePatchProperties>.Write(ModelReaderWriterOptions options)

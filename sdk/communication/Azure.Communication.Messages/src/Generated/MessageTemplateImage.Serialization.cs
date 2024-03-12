@@ -29,12 +29,12 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
@@ -82,8 +82,8 @@ namespace Azure.Communication.Messages
                 return null;
             }
             Uri url = default;
-            Optional<string> caption = default;
-            Optional<string> fileName = default;
+            string caption = default;
+            string fileName = default;
             string name = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,8 +126,8 @@ namespace Azure.Communication.Messages
                 kind,
                 serializedAdditionalRawData,
                 url,
-                caption.Value,
-                fileName.Value);
+                caption,
+                fileName);
         }
 
         BinaryData IPersistableModel<MessageTemplateImage>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ClusterResourceId != null)
+            if (Optional.IsDefined(ClusterResourceId))
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (options.Format != "W" && !(AttachedDatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedDatabaseNames))
             {
                 writer.WritePropertyName("attachedDatabaseNames"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultPrincipalsModificationKind.HasValue)
+            if (Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
                 writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
                 writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
             }
-            if (TableLevelSharingProperties != null)
+            if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
-            if (DatabaseNameOverride != null)
+            if (Optional.IsDefined(DatabaseNameOverride))
             {
                 writer.WritePropertyName("databaseNameOverride"u8);
                 writer.WriteStringValue(DatabaseNameOverride);
             }
-            if (DatabaseNamePrefix != null)
+            if (Optional.IsDefined(DatabaseNamePrefix))
             {
                 writer.WritePropertyName("databaseNamePrefix"u8);
                 writer.WriteStringValue(DatabaseNamePrefix);
@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.Kusto
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<string> databaseName = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            string databaseName = default;
+            ResourceIdentifier clusterResourceId = default;
             IReadOnlyList<string> attachedDatabaseNames = default;
-            Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<string> databaseNameOverride = default;
-            Optional<string> databaseNamePrefix = default;
+            KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
+            string databaseNameOverride = default;
+            string databaseNamePrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.Kusto
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(provisioningState),
-                databaseName.Value,
-                clusterResourceId.Value,
+                systemData,
+                location,
+                provisioningState,
+                databaseName,
+                clusterResourceId,
                 attachedDatabaseNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(defaultPrincipalsModificationKind),
-                tableLevelSharingProperties.Value,
-                databaseNameOverride.Value,
-                databaseNamePrefix.Value,
+                defaultPrincipalsModificationKind,
+                tableLevelSharingProperties,
+                databaseNameOverride,
+                databaseNamePrefix,
                 serializedAdditionalRawData);
         }
 

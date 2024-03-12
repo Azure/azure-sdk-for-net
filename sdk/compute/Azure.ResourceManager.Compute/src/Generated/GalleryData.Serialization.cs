@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SharingProfile != null)
+            if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile);
             }
-            if (SoftDeletePolicy != null)
+            if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
                 writer.WriteObjectValue(SoftDeletePolicy);
             }
-            if (options.Format != "W" && SharingStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
                 writer.WriteObjectValue(SharingStatus);
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<GalleryIdentifier> identifier = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<SharingProfile> sharingProfile = default;
-            Optional<SoftDeletePolicy> softDeletePolicy = default;
-            Optional<SharingStatus> sharingStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            GalleryIdentifier identifier = default;
+            GalleryProvisioningState? provisioningState = default;
+            SharingProfile sharingProfile = default;
+            SoftDeletePolicy softDeletePolicy = default;
+            SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                identifier.Value,
-                Optional.ToNullable(provisioningState),
-                sharingProfile.Value,
-                softDeletePolicy.Value,
-                sharingStatus.Value,
+                description,
+                identifier,
+                provisioningState,
+                sharingProfile,
+                softDeletePolicy,
+                sharingStatus,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedHsmId != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedHsmId))
             {
                 writer.WritePropertyName("mhsmId"u8);
                 writer.WriteStringValue(ManagedHsmId);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && PurgeProtectionEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurgeProtectionEnabled))
             {
                 writer.WritePropertyName("purgeProtectionEnabled"u8);
                 writer.WriteBooleanValue(PurgeProtectionEnabled.Value);
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedHsmId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<bool> purgeProtectionEnabled = default;
+            ResourceIdentifier managedHsmId = default;
+            AzureLocation? location = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            bool? purgeProtectionEnabled = default;
             IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,11 +177,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DeletedManagedHsmProperties(
-                managedHsmId.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(deletionDate),
-                Optional.ToNullable(scheduledPurgeDate),
-                Optional.ToNullable(purgeProtectionEnabled),
+                managedHsmId,
+                location,
+                deletionDate,
+                scheduledPurgeDate,
+                purgeProtectionEnabled,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
-            if (AutoUpgradePolicy != null)
+            if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
             }
-            if (options.Format != "W" && TargetMaxThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {
                 writer.WritePropertyName("targetMaxThroughput"u8);
                 writer.WriteNumberValue(TargetMaxThroughput.Value);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             int maxThroughput = default;
-            Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
-            Optional<int> targetMaxThroughput = default;
+            AutoUpgradePolicyResourceInfo autoUpgradePolicy = default;
+            int? targetMaxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy.Value, Optional.ToNullable(targetMaxThroughput), serializedAdditionalRawData);
+            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy, targetMaxThroughput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

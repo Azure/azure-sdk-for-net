@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,17 +42,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContentKeys != null)
+            if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Drm != null)
+            if (Optional.IsDefined(Drm))
             {
                 writer.WritePropertyName("drm"u8);
                 writer.WriteObjectValue(Drm);
             }
-            if (ClearKeyEncryptionConfiguration != null)
+            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            MediaEnabledProtocols enabledProtocols = default;
             IList<MediaTrackSelection> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<CbcsDrmConfiguration> drm = default;
-            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            CbcsDrmConfiguration drm = default;
+            ClearKeyEncryptionConfiguration clearKeyEncryptionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +161,11 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommonEncryptionCbcs(
-                enabledProtocols.Value,
+                enabledProtocols,
                 clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
-                contentKeys.Value,
-                drm.Value,
-                clearKeyEncryptionConfiguration.Value,
+                contentKeys,
+                drm,
+                clearKeyEncryptionConfiguration,
                 serializedAdditionalRawData);
         }
 

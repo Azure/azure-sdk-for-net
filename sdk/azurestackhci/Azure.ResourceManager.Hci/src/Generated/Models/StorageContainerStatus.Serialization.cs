@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (AvailableSizeMB.HasValue)
+            if (Optional.IsDefined(AvailableSizeMB))
             {
                 writer.WritePropertyName("availableSizeMB"u8);
                 writer.WriteNumberValue(AvailableSizeMB.Value);
             }
-            if (ContainerSizeMB.HasValue)
+            if (Optional.IsDefined(ContainerSizeMB))
             {
                 writer.WritePropertyName("containerSizeMB"u8);
                 writer.WriteNumberValue(ContainerSizeMB.Value);
             }
-            if (ProvisioningStatus != null)
+            if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<long> availableSizeMB = default;
-            Optional<long> containerSizeMB = default;
-            Optional<StorageContainerStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            long? availableSizeMB = default;
+            long? containerSizeMB = default;
+            StorageContainerStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageContainerStatus(
-                errorCode.Value,
-                errorMessage.Value,
-                Optional.ToNullable(availableSizeMB),
-                Optional.ToNullable(containerSizeMB),
-                provisioningStatus.Value,
+                errorCode,
+                errorMessage,
+                availableSizeMB,
+                containerSizeMB,
+                provisioningStatus,
                 serializedAdditionalRawData);
         }
 

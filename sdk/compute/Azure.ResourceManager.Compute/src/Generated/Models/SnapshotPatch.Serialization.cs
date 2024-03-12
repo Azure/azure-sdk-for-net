@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,59 +38,59 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (EncryptionSettingsGroup != null)
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (NetworkAccessPolicy.HasValue)
+            if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (DiskAccessId != null)
+            if (Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (SupportsHibernation.HasValue)
+            if (Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DataAccessAuthMode.HasValue)
+            if (Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (SupportedCapabilities != null)
+            if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
@@ -134,17 +135,17 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<SnapshotSku> sku = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<int> diskSizeGB = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
+            SnapshotSku sku = default;
+            SupportedOperatingSystemType? osType = default;
+            int? diskSizeGB = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
+            SupportedCapabilities supportedCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,17 +283,17 @@ namespace Azure.ResourceManager.Compute.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SnapshotPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(diskSizeGB),
-                encryptionSettingsGroup.Value,
-                encryption.Value,
-                Optional.ToNullable(networkAccessPolicy),
-                diskAccessId.Value,
-                Optional.ToNullable(supportsHibernation),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(dataAccessAuthMode),
-                supportedCapabilities.Value,
+                sku,
+                osType,
+                diskSizeGB,
+                encryptionSettingsGroup,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                supportsHibernation,
+                publicNetworkAccess,
+                dataAccessAuthMode,
+                supportedCapabilities,
                 serializedAdditionalRawData);
         }
 

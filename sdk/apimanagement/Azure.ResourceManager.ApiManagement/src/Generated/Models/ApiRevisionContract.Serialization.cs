@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ApiId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (options.Format != "W" && ApiRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && PrivateUriString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateUriString))
             {
                 writer.WritePropertyName("privateUrl"u8);
                 writer.WriteStringValue(PrivateUriString);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (options.Format != "W" && IsCurrent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> apiId = default;
-            Optional<string> apiRevision = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
-            Optional<string> description = default;
-            Optional<string> privateUri = default;
-            Optional<bool> isOnline = default;
-            Optional<bool> isCurrent = default;
+            string apiId = default;
+            string apiRevision = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? updatedDateTime = default;
+            string description = default;
+            string privateUri = default;
+            bool? isOnline = default;
+            bool? isCurrent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,14 +180,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiRevisionContract(
-                apiId.Value,
-                apiRevision.Value,
-                Optional.ToNullable(createdDateTime),
-                Optional.ToNullable(updatedDateTime),
-                description.Value,
-                privateUri.Value,
-                Optional.ToNullable(isOnline),
-                Optional.ToNullable(isCurrent),
+                apiId,
+                apiRevision,
+                createdDateTime,
+                updatedDateTime,
+                description,
+                privateUri,
+                isOnline,
+                isCurrent,
                 serializedAdditionalRawData);
         }
 

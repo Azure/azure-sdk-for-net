@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(PrefixMatch is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinCreationTime != null)
+            if (Optional.IsDefined(MinCreationTime))
             {
                 writer.WritePropertyName("minCreationTime"u8);
                 writer.WriteStringValue(MinCreationTime);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IList<string> prefixMatch = default;
-            Optional<string> minCreationTime = default;
+            string minCreationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), minCreationTime.Value, serializedAdditionalRawData);
+            return new ObjectReplicationPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), minCreationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyFilter>.Write(ModelReaderWriterOptions options)

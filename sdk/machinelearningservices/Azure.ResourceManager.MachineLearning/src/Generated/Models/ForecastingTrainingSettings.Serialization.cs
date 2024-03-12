@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedTrainingAlgorithms is ChangeTrackingList<ForecastingModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("allowedTrainingAlgorithms");
                 }
             }
-            if (!(BlockedTrainingAlgorithms is ChangeTrackingList<ForecastingModel> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
             {
                 if (BlockedTrainingAlgorithms != null)
                 {
@@ -60,37 +61,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (IsDnnTrainingEnabled.HasValue)
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (IsModelExplainabilityEnabled.HasValue)
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (IsOnnxCompatibleModelsEnabled.HasValue)
+            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (IsStackEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (IsVoteEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
-            if (EnsembleModelDownloadTimeout.HasValue)
+            if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (StackEnsembleSettings != null)
+            if (Optional.IsDefined(StackEnsembleSettings))
             {
                 if (StackEnsembleSettings != null)
                 {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (TrainingMode.HasValue)
+            if (Optional.IsDefined(TrainingMode))
             {
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());
@@ -147,14 +148,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<ForecastingModel> allowedTrainingAlgorithms = default;
             IList<ForecastingModel> blockedTrainingAlgorithms = default;
-            Optional<bool> enableDnnTraining = default;
-            Optional<bool> enableModelExplainability = default;
-            Optional<bool> enableOnnxCompatibleModels = default;
-            Optional<bool> enableStackEnsemble = default;
-            Optional<bool> enableVoteEnsemble = default;
-            Optional<TimeSpan> ensembleModelDownloadTimeout = default;
-            Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
-            Optional<TrainingMode> trainingMode = default;
+            bool? enableDnnTraining = default;
+            bool? enableModelExplainability = default;
+            bool? enableOnnxCompatibleModels = default;
+            bool? enableStackEnsemble = default;
+            bool? enableVoteEnsemble = default;
+            TimeSpan? ensembleModelDownloadTimeout = default;
+            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
+            TrainingMode? trainingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,14 +270,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ForecastingTrainingSettings(
-                Optional.ToNullable(enableDnnTraining),
-                Optional.ToNullable(enableModelExplainability),
-                Optional.ToNullable(enableOnnxCompatibleModels),
-                Optional.ToNullable(enableStackEnsemble),
-                Optional.ToNullable(enableVoteEnsemble),
-                Optional.ToNullable(ensembleModelDownloadTimeout),
-                stackEnsembleSettings.Value,
-                Optional.ToNullable(trainingMode),
+                enableDnnTraining,
+                enableModelExplainability,
+                enableOnnxCompatibleModels,
+                enableStackEnsemble,
+                enableVoteEnsemble,
+                ensembleModelDownloadTimeout,
+                stackEnsembleSettings,
+                trainingMode,
                 serializedAdditionalRawData,
                 allowedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>(),
                 blockedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>());

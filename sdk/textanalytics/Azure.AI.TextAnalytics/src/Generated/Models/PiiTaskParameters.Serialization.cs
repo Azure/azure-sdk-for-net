@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Domain.HasValue)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
-            if (!(PiiCategories is ChangeTrackingList<PiiEntityCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -32,17 +32,17 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -56,11 +56,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<PiiDomain> domain = default;
+            PiiDomain? domain = default;
             IList<PiiEntityCategory> piiCategories = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(domain), piiCategories ?? new ChangeTrackingList<PiiEntityCategory>(), Optional.ToNullable(stringIndexType));
+            return new PiiTaskParameters(loggingOptOut, modelVersion, domain, piiCategories ?? new ChangeTrackingList<PiiEntityCategory>(), stringIndexType);
         }
     }
 }

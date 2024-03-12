@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && TargetType != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ParametersSchema != null)
+            if (options.Format != "W" && Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteStringValue(ParametersSchema);
             }
-            if (options.Format != "W" && Urn != null)
+            if (options.Format != "W" && Optional.IsDefined(Urn))
             {
                 writer.WritePropertyName("urn"u8);
                 writer.WriteStringValue(Urn);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> targetType = default;
-            Optional<string> description = default;
-            Optional<string> parametersSchema = default;
-            Optional<string> urn = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string targetType = default;
+            string description = default;
+            string parametersSchema = default;
+            string urn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.Chaos
                 id,
                 name,
                 type,
-                systemData.Value,
-                publisher.Value,
-                targetType.Value,
-                description.Value,
-                parametersSchema.Value,
-                urn.Value,
+                systemData,
+                publisher,
+                targetType,
+                description,
+                parametersSchema,
+                urn,
                 serializedAdditionalRawData);
         }
 

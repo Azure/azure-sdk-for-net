@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IDictionary<string, string> experimentalOptions = default;
-            Optional<FilteringOperations> filters = default;
+            FilteringOperations filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Media.Models
                 odataType,
                 serializedAdditionalRawData,
                 experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
-                filters.Value,
+                filters,
                 codecs,
                 formats);
         }

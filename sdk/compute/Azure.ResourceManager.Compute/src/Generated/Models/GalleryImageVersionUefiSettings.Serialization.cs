@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(SignatureTemplateNames is ChangeTrackingList<UefiSignatureTemplateName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SignatureTemplateNames))
             {
                 writer.WritePropertyName("signatureTemplateNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AdditionalSignatures != null)
+            if (Optional.IsDefined(AdditionalSignatures))
             {
                 writer.WritePropertyName("additionalSignatures"u8);
                 writer.WriteObjectValue(AdditionalSignatures);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<UefiSignatureTemplateName> signatureTemplateNames = default;
-            Optional<UefiKeySignatures> additionalSignatures = default;
+            UefiKeySignatures additionalSignatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionUefiSettings(signatureTemplateNames ?? new ChangeTrackingList<UefiSignatureTemplateName>(), additionalSignatures.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionUefiSettings(signatureTemplateNames ?? new ChangeTrackingList<UefiSignatureTemplateName>(), additionalSignatures, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionUefiSettings>.Write(ModelReaderWriterOptions options)

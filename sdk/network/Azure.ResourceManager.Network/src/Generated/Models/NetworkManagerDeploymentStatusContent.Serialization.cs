@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DeploymentTypes is ChangeTrackingList<NetworkConfigurationDeploymentType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DeploymentTypes))
             {
                 writer.WritePropertyName("deploymentTypes"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<string> regions = default;
             IList<NetworkConfigurationDeploymentType> deploymentTypes = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatusContent(regions ?? new ChangeTrackingList<string>(), deploymentTypes ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatusContent(regions ?? new ChangeTrackingList<string>(), deploymentTypes ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatusContent>.Write(ModelReaderWriterOptions options)

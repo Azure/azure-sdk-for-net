@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration);
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (IsIncrementNodeConfigurationBuildRequired.HasValue)
+            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
                 writer.WritePropertyName("incrementNodeConfigurationBuild"u8);
                 writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             DscConfigurationAssociationProperty configuration = default;
             IDictionary<string, string> parameters = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,12 +192,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DscCompilationJobCreateOrUpdateContent(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 configuration,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(incrementNodeConfigurationBuild),
+                incrementNodeConfigurationBuild,
                 serializedAdditionalRawData);
         }
 

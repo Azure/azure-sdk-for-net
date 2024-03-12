@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SnapshotId != null)
+            if (options.Format != "W" && Optional.IsDefined(SnapshotId))
             {
                 writer.WritePropertyName("snapshotId"u8);
                 writer.WriteStringValue(SnapshotId);
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> snapshotId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string snapshotId = default;
+            DateTimeOffset? created = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 location,
-                snapshotId.Value,
-                Optional.ToNullable(created),
-                provisioningState.Value,
+                snapshotId,
+                created,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (MigrationState != null)
+            if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             BackupPolicyType type = "Unknown";
-            Optional<BackupPolicyMigrationState> migrationState = default;
+            BackupPolicyMigrationState migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBackupPolicy(type, migrationState.Value, serializedAdditionalRawData);
+            return new UnknownBackupPolicy(type, migrationState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountBackupPolicy>.Write(ModelReaderWriterOptions options)

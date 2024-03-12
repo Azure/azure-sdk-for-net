@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (InstanceType != null)
+            if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 if (Locations != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("locations");
                 }
             }
-            if (MaxInstanceCount.HasValue)
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 if (MaxInstanceCount != null)
                 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxInstanceCount");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -140,10 +141,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> instanceCount = default;
-            Optional<string> instanceType = default;
+            int? instanceCount = default;
+            string instanceType = default;
             IList<string> locations = default;
-            Optional<int?> maxInstanceCount = default;
+            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,10 +223,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningDeploymentResourceConfiguration(
-                Optional.ToNullable(instanceCount),
-                instanceType.Value,
+                instanceCount,
+                instanceType,
                 locations ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxInstanceCount),
+                maxInstanceCount,
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }

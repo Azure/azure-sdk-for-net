@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PrivateEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (options.Format != "W" && PrivateLinkServiceConnectionState != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (!(GroupIds is ChangeTrackingList<VaultSubResourceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesPrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<RecoveryServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
+            RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IReadOnlyList<VaultSubResourceType> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesPrivateEndpointConnection(Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), serializedAdditionalRawData);
+            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpoint, privateLinkServiceConnectionState, groupIds ?? new ChangeTrackingList<VaultSubResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

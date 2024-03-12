@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,34 +28,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (SchemaLinkedService != null)
+            if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Flowlet != null)
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -97,13 +98,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> script = default;
-            Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
+            string script = default;
+            DataFactoryLinkedServiceReference schemaLinkedService = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            string description = default;
+            DatasetReference dataset = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,13 +168,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PowerQuerySource(
                 name,
-                description.Value,
-                dataset.Value,
+                description,
+                dataset,
                 linkedService,
-                flowlet.Value,
+                flowlet,
                 serializedAdditionalRawData,
                 schemaLinkedService,
-                script.Value);
+                script);
         }
 
         BinaryData IPersistableModel<PowerQuerySource>.Write(ModelReaderWriterOptions options)

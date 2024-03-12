@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (!(Details is ChangeTrackingList<ConfigServerSettingsErrorRecord> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
+            bool? isValid = default;
             IReadOnlyList<ConfigServerSettingsErrorRecord> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), details ?? new ChangeTrackingList<ConfigServerSettingsErrorRecord>(), serializedAdditionalRawData);
+            return new ConfigServerSettingsValidateResult(isValid, details ?? new ChangeTrackingList<ConfigServerSettingsErrorRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsValidateResult>.Write(ModelReaderWriterOptions options)

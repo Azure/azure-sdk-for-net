@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (OriginalSwaggerUri != null)
+            if (Optional.IsDefined(OriginalSwaggerUri))
             {
                 writer.WritePropertyName("originalSwaggerUrl"u8);
                 writer.WriteStringValue(OriginalSwaggerUri.AbsoluteUri);
             }
-            if (ModifiedSwaggerUri != null)
+            if (Optional.IsDefined(ModifiedSwaggerUri))
             {
                 writer.WritePropertyName("modifiedSwaggerUrl"u8);
                 writer.WriteStringValue(ModifiedSwaggerUri.AbsoluteUri);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> originalSwaggerUrl = default;
-            Optional<Uri> modifiedSwaggerUrl = default;
+            Uri originalSwaggerUrl = default;
+            Uri modifiedSwaggerUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceDefinitions(originalSwaggerUrl.Value, modifiedSwaggerUrl.Value, serializedAdditionalRawData);
+            return new LogicApiResourceDefinitions(originalSwaggerUrl, modifiedSwaggerUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceDefinitions>.Write(ModelReaderWriterOptions options)

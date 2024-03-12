@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -15,22 +16,22 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MethodName != null)
+            if (Optional.IsDefined(MethodName))
             {
                 writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteObjectValue(Payload);
             }
-            if (ResponseTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
                 writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
-            if (ConnectTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
@@ -44,10 +45,10 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> methodName = default;
-            Optional<object> payload = default;
-            Optional<int> responseTimeoutInSeconds = default;
-            Optional<int> connectTimeoutInSeconds = default;
+            string methodName = default;
+            object payload = default;
+            int? responseTimeoutInSeconds = default;
+            int? connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -83,7 +84,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
         }
     }
 }

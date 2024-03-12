@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,29 +41,29 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultGroup != null)
+            if (Optional.IsDefined(DefaultGroup))
             {
                 writer.WritePropertyName("defaultGroup"u8);
                 writer.WriteStringValue(DefaultGroup);
             }
-            if (EncryptionConfig != null)
+            if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
                 writer.WriteObjectValue(EncryptionConfig);
             }
-            if (EncryptionState.HasValue)
+            if (Optional.IsDefined(EncryptionState))
             {
                 writer.WritePropertyName("encryptionState"u8);
                 writer.WriteStringValue(EncryptionState.Value.ToSerialString());
             }
-            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -82,17 +83,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallState.HasValue)
+            if (Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (FirewallAllowAzureIPs.HasValue)
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (!(TrustedIdProviders is ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedIdProviders))
             {
                 writer.WritePropertyName("trustedIdProviders"u8);
                 writer.WriteStartArray();
@@ -102,12 +103,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TrustedIdProviderState.HasValue)
+            if (Optional.IsDefined(TrustedIdProviderState))
             {
                 writer.WritePropertyName("trustedIdProviderState"u8);
                 writer.WriteStringValue(TrustedIdProviderState.Value.ToSerialString());
             }
-            if (NewTier.HasValue)
+            if (Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
@@ -153,17 +154,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> defaultGroup = default;
-            Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
-            Optional<DataLakeStoreEncryptionState> encryptionState = default;
+            ManagedServiceIdentity identity = default;
+            string defaultGroup = default;
+            DataLakeStoreAccountEncryptionConfig encryptionConfig = default;
+            DataLakeStoreEncryptionState? encryptionState = default;
             IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules = default;
             IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules = default;
-            Optional<DataLakeStoreFirewallState> firewallState = default;
-            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
+            DataLakeStoreFirewallState? firewallState = default;
+            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
             IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders = default;
-            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
+            DataLakeStoreCommitmentTierType? newTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -319,16 +320,16 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                defaultGroup.Value,
-                encryptionConfig.Value,
-                Optional.ToNullable(encryptionState),
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
                 firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>(),
                 virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>(),
-                Optional.ToNullable(firewallState),
-                Optional.ToNullable(firewallAllowAzureIPs),
+                firewallState,
+                firewallAllowAzureIPs,
                 trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>(),
-                Optional.ToNullable(trustedIdProviderState),
-                Optional.ToNullable(newTier),
+                trustedIdProviderState,
+                newTier,
                 serializedAdditionalRawData);
         }
 

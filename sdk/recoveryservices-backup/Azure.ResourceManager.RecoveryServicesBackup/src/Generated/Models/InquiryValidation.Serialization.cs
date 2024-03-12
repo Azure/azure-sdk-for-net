@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ErrorDetail != null)
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (options.Format != "W" && AdditionalDetail != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
             {
                 writer.WritePropertyName("additionalDetail"u8);
                 writer.WriteStringValue(AdditionalDetail);
             }
-            if (options.Format != "W" && ProtectableItemCount != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectableItemCount))
             {
                 writer.WritePropertyName("protectableItemCount"u8);
 #if NET6_0_OR_GREATER
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<string> additionalDetail = default;
-            Optional<BinaryData> protectableItemCount = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            string additionalDetail = default;
+            BinaryData protectableItemCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InquiryValidation(status.Value, errorDetail.Value, additionalDetail.Value, protectableItemCount.Value, serializedAdditionalRawData);
+            return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InquiryValidation>.Write(ModelReaderWriterOptions options)

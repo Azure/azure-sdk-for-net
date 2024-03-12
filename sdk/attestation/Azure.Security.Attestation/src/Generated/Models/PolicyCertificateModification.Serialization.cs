@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InternalPolicyCertificate != null)
+            if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
                 writer.WriteObjectValue(InternalPolicyCertificate);
@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<JsonWebKey> policyCertificate = default;
+            JsonWebKey policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyCertificate"u8))
@@ -45,7 +45,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificateModification(policyCertificate.Value);
+            return new PolicyCertificateModification(policyCertificate);
         }
 
         internal partial class PolicyCertificateModificationConverter : JsonConverter<PolicyCertificateModification>

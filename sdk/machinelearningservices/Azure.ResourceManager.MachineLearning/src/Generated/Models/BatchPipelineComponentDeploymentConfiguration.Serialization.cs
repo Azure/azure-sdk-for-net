@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Settings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 if (Settings != null)
                 {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("settings");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningIdAssetReference> componentId = default;
-            Optional<string> description = default;
+            MachineLearningIdAssetReference componentId = default;
+            string description = default;
             IDictionary<string, string> settings = default;
             IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
@@ -199,8 +200,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new BatchPipelineComponentDeploymentConfiguration(
                 deploymentConfigurationType,
                 serializedAdditionalRawData,
-                componentId.Value,
-                description.Value,
+                componentId,
+                description,
                 settings ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Registration != null)
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (GraphApiVersion != null)
+            if (Optional.IsDefined(GraphApiVersion))
             {
                 writer.WritePropertyName("graphApiVersion"u8);
                 writer.WriteStringValue(GraphApiVersion);
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppRegistration> registration = default;
-            Optional<string> graphApiVersion = default;
-            Optional<LoginScopes> login = default;
+            bool? enabled = default;
+            ContainerAppRegistration registration = default;
+            string graphApiVersion = default;
+            LoginScopes login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppFacebookConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value, serializedAdditionalRawData);
+            return new ContainerAppFacebookConfiguration(enabled, registration, graphApiVersion, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppFacebookConfiguration>.Write(ModelReaderWriterOptions options)

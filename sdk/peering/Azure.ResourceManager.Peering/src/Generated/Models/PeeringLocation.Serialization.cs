@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -47,34 +48,34 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Direct != null)
+            if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
-            if (Exchange != null)
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (PeeringLocationValue != null)
+            if (Optional.IsDefined(PeeringLocationValue))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocationValue);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (AzureRegion.HasValue)
+            if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
@@ -118,16 +119,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringKind> kind = default;
+            PeeringKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringLocationProperties> direct = default;
-            Optional<PeeringLocationPropertiesExchange> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<string> country = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            DirectPeeringLocationProperties direct = default;
+            PeeringLocationPropertiesExchange exchange = default;
+            string peeringLocation = default;
+            string country = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +225,13 @@ namespace Azure.ResourceManager.Peering.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(kind),
-                direct.Value,
-                exchange.Value,
-                peeringLocation.Value,
-                country.Value,
-                Optional.ToNullable(azureRegion),
+                systemData,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                country,
+                azureRegion,
                 serializedAdditionalRawData);
         }
 

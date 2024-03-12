@@ -17,12 +17,12 @@ namespace Azure.Search.Documents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IncludeTotalCount.HasValue)
+            if (Optional.IsDefined(IncludeTotalCount))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteBooleanValue(IncludeTotalCount.Value);
             }
-            if (!(Facets is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -32,52 +32,52 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (HighlightFieldsRaw != null)
+            if (Optional.IsDefined(HighlightFieldsRaw))
             {
                 writer.WritePropertyName("highlight"u8);
                 writer.WriteStringValue(HighlightFieldsRaw);
             }
-            if (HighlightPostTag != null)
+            if (Optional.IsDefined(HighlightPostTag))
             {
                 writer.WritePropertyName("highlightPostTag"u8);
                 writer.WriteStringValue(HighlightPostTag);
             }
-            if (HighlightPreTag != null)
+            if (Optional.IsDefined(HighlightPreTag))
             {
                 writer.WritePropertyName("highlightPreTag"u8);
                 writer.WriteStringValue(HighlightPreTag);
             }
-            if (MinimumCoverage.HasValue)
+            if (Optional.IsDefined(MinimumCoverage))
             {
                 writer.WritePropertyName("minimumCoverage"u8);
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (OrderByRaw != null)
+            if (Optional.IsDefined(OrderByRaw))
             {
                 writer.WritePropertyName("orderby"u8);
                 writer.WriteStringValue(OrderByRaw);
             }
-            if (QueryType.HasValue)
+            if (Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
-            if (ScoringStatistics.HasValue)
+            if (Optional.IsDefined(ScoringStatistics))
             {
                 writer.WritePropertyName("scoringStatistics"u8);
                 writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
             }
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (!(ScoringParameters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
@@ -87,27 +87,27 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (ScoringProfile != null)
+            if (Optional.IsDefined(ScoringProfile))
             {
                 writer.WritePropertyName("scoringProfile"u8);
                 writer.WriteStringValue(ScoringProfile);
             }
-            if (SemanticQuery != null)
+            if (Optional.IsDefined(SemanticQuery))
             {
                 writer.WritePropertyName("semanticQuery"u8);
                 writer.WriteStringValue(SemanticQuery);
             }
-            if (SemanticConfigurationName != null)
+            if (Optional.IsDefined(SemanticConfigurationName))
             {
                 writer.WritePropertyName("semanticConfiguration"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
-            if (SemanticErrorMode.HasValue)
+            if (Optional.IsDefined(SemanticErrorMode))
             {
                 writer.WritePropertyName("semanticErrorHandling"u8);
                 writer.WriteStringValue(SemanticErrorMode.Value.ToString());
             }
-            if (SemanticMaxWaitInMilliseconds.HasValue)
+            if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
             {
                 if (SemanticMaxWaitInMilliseconds != null)
                 {
@@ -119,67 +119,67 @@ namespace Azure.Search.Documents
                     writer.WriteNull("semanticMaxWaitInMilliseconds");
                 }
             }
-            if (Debug.HasValue)
+            if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug.Value.ToString());
             }
-            if (SearchText != null)
+            if (Optional.IsDefined(SearchText))
             {
                 writer.WritePropertyName("search"u8);
                 writer.WriteStringValue(SearchText);
             }
-            if (SearchFieldsRaw != null)
+            if (Optional.IsDefined(SearchFieldsRaw))
             {
                 writer.WritePropertyName("searchFields"u8);
                 writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (SearchMode.HasValue)
+            if (Optional.IsDefined(SearchMode))
             {
                 writer.WritePropertyName("searchMode"u8);
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
-            if (QueryLanguage.HasValue)
+            if (Optional.IsDefined(QueryLanguage))
             {
                 writer.WritePropertyName("queryLanguage"u8);
                 writer.WriteStringValue(QueryLanguage.Value.ToString());
             }
-            if (QuerySpeller.HasValue)
+            if (Optional.IsDefined(QuerySpeller))
             {
                 writer.WritePropertyName("speller"u8);
                 writer.WriteStringValue(QuerySpeller.Value.ToString());
             }
-            if (QueryAnswerRaw != null)
+            if (Optional.IsDefined(QueryAnswerRaw))
             {
                 writer.WritePropertyName("answers"u8);
                 writer.WriteStringValue(QueryAnswerRaw);
             }
-            if (SelectRaw != null)
+            if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select"u8);
                 writer.WriteStringValue(SelectRaw);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (QueryCaptionRaw != null)
+            if (Optional.IsDefined(QueryCaptionRaw))
             {
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (SemanticFieldsRaw != null)
+            if (Optional.IsDefined(SemanticFieldsRaw))
             {
                 writer.WritePropertyName("semanticFields"u8);
                 writer.WriteStringValue(SemanticFieldsRaw);
             }
-            if (!(VectorQueries is ChangeTrackingList<VectorQuery> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VectorQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
                 writer.WriteStartArray();
@@ -189,7 +189,7 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (FilterMode.HasValue)
+            if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("vectorFilterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
@@ -203,37 +203,37 @@ namespace Azure.Search.Documents
             {
                 return null;
             }
-            Optional<bool> count = default;
+            bool? count = default;
             IList<string> facets = default;
-            Optional<string> filter = default;
-            Optional<string> highlight = default;
-            Optional<string> highlightPostTag = default;
-            Optional<string> highlightPreTag = default;
-            Optional<double> minimumCoverage = default;
-            Optional<string> orderby = default;
-            Optional<SearchQueryType> queryType = default;
-            Optional<ScoringStatistics> scoringStatistics = default;
-            Optional<string> sessionId = default;
+            string filter = default;
+            string highlight = default;
+            string highlightPostTag = default;
+            string highlightPreTag = default;
+            double? minimumCoverage = default;
+            string orderby = default;
+            SearchQueryType? queryType = default;
+            ScoringStatistics? scoringStatistics = default;
+            string sessionId = default;
             IList<string> scoringParameters = default;
-            Optional<string> scoringProfile = default;
-            Optional<string> semanticQuery = default;
-            Optional<string> semanticConfiguration = default;
-            Optional<SemanticErrorMode> semanticErrorHandling = default;
-            Optional<int?> semanticMaxWaitInMilliseconds = default;
-            Optional<QueryDebugMode> debug = default;
-            Optional<string> search = default;
-            Optional<string> searchFields = default;
-            Optional<SearchMode> searchMode = default;
-            Optional<QueryLanguage> queryLanguage = default;
-            Optional<QuerySpellerType> speller = default;
-            Optional<string> answers = default;
-            Optional<string> select = default;
-            Optional<int> skip = default;
-            Optional<int> top = default;
-            Optional<string> captions = default;
-            Optional<string> semanticFields = default;
+            string scoringProfile = default;
+            string semanticQuery = default;
+            string semanticConfiguration = default;
+            SemanticErrorMode? semanticErrorHandling = default;
+            int? semanticMaxWaitInMilliseconds = default;
+            QueryDebugMode? debug = default;
+            string search = default;
+            string searchFields = default;
+            SearchMode? searchMode = default;
+            QueryLanguage? queryLanguage = default;
+            QuerySpellerType? speller = default;
+            string answers = default;
+            string select = default;
+            int? skip = default;
+            int? top = default;
+            string captions = default;
+            string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
-            Optional<VectorFilterMode> vectorFilterMode = default;
+            VectorFilterMode? vectorFilterMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -473,37 +473,37 @@ namespace Azure.Search.Documents
                 }
             }
             return new SearchOptions(
-                Optional.ToNullable(count),
+                count,
                 facets ?? new ChangeTrackingList<string>(),
-                filter.Value,
-                highlight.Value,
-                highlightPostTag.Value,
-                highlightPreTag.Value,
-                Optional.ToNullable(minimumCoverage),
-                orderby.Value,
-                Optional.ToNullable(queryType),
-                Optional.ToNullable(scoringStatistics),
-                sessionId.Value,
+                filter,
+                highlight,
+                highlightPostTag,
+                highlightPreTag,
+                minimumCoverage,
+                orderby,
+                queryType,
+                scoringStatistics,
+                sessionId,
                 scoringParameters ?? new ChangeTrackingList<string>(),
-                scoringProfile.Value,
-                semanticQuery.Value,
-                semanticConfiguration.Value,
-                Optional.ToNullable(semanticErrorHandling),
-                Optional.ToNullable(semanticMaxWaitInMilliseconds),
-                Optional.ToNullable(debug),
-                search.Value,
-                searchFields.Value,
-                Optional.ToNullable(searchMode),
-                Optional.ToNullable(queryLanguage),
-                Optional.ToNullable(speller),
-                answers.Value,
-                select.Value,
-                Optional.ToNullable(skip),
-                Optional.ToNullable(top),
-                captions.Value,
-                semanticFields.Value,
+                scoringProfile,
+                semanticQuery,
+                semanticConfiguration,
+                semanticErrorHandling,
+                semanticMaxWaitInMilliseconds,
+                debug,
+                search,
+                searchFields,
+                searchMode,
+                queryLanguage,
+                speller,
+                answers,
+                select,
+                skip,
+                top,
+                captions,
+                semanticFields,
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
-                Optional.ToNullable(vectorFilterMode));
+                vectorFilterMode);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("policy"u8);
             writer.WriteStartObject();
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -67,17 +68,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("roleDefinition"u8);
             writer.WriteStartObject();
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (RoleDefinitionDisplayName != null)
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(RoleDefinitionDisplayName);
             }
-            if (RoleType.HasValue)
+            if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -85,17 +86,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (ScopeId != null)
+            if (Optional.IsDefined(ScopeId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (ScopeDisplayName != null)
+            if (Optional.IsDefined(ScopeDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (ScopeType.HasValue)
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
@@ -142,16 +143,16 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> id0 = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<ResourceIdentifier> id1 = default;
-            Optional<string> displayName = default;
-            Optional<AuthorizationRoleType> type0 = default;
-            Optional<ResourceIdentifier> id2 = default;
-            Optional<string> displayName0 = default;
-            Optional<RoleManagementScopeType> type1 = default;
+            SystemData systemData = default;
+            ResourceIdentifier id0 = default;
+            RoleManagementPrincipal lastModifiedBy = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            ResourceIdentifier id1 = default;
+            string displayName = default;
+            AuthorizationRoleType? type0 = default;
+            ResourceIdentifier id2 = default;
+            string displayName0 = default;
+            RoleManagementScopeType? type1 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,16 +300,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                id0.Value,
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastModifiedDateTime),
-                id1.Value,
-                displayName.Value,
-                Optional.ToNullable(type0),
-                id2.Value,
-                displayName0.Value,
-                Optional.ToNullable(type1),
+                systemData,
+                id0,
+                lastModifiedBy,
+                lastModifiedDateTime,
+                id1,
+                displayName,
+                type0,
+                id2,
+                displayName0,
+                type1,
                 serializedAdditionalRawData);
         }
 

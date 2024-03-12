@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (OverrideModelName != null)
+            if (Optional.IsDefined(OverrideModelName))
             {
                 if (OverrideModelName != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("model");
                 }
             }
-            if (OverrideInstructions != null)
+            if (Optional.IsDefined(OverrideInstructions))
             {
                 if (OverrideInstructions != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (AdditionalInstructions != null)
+            if (Optional.IsDefined(AdditionalInstructions))
             {
                 if (AdditionalInstructions != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("additional_instructions");
                 }
             }
-            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OverrideTools))
             {
                 if (OverrideTools != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("tools");
                 }
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -139,9 +139,9 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string assistantId = default;
-            Optional<string> model = default;
-            Optional<string> instructions = default;
-            Optional<string> additionalInstructions = default;
+            string model = default;
+            string instructions = default;
+            string additionalInstructions = default;
             IList<ToolDefinition> tools = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,9 +219,9 @@ namespace Azure.AI.OpenAI.Assistants
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CreateRunOptions(
                 assistantId,
-                model.Value,
-                instructions.Value,
-                additionalInstructions.Value,
+                model,
+                instructions,
+                additionalInstructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<ReservationCatalog> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (TotalItems.HasValue)
+            if (Optional.IsDefined(TotalItems))
             {
                 writer.WritePropertyName("totalItems"u8);
                 writer.WriteNumberValue(TotalItems.Value);
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             IReadOnlyList<ReservationCatalog> value = default;
-            Optional<string> nextLink = default;
-            Optional<long> totalItems = default;
+            string nextLink = default;
+            long? totalItems = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink.Value, Optional.ToNullable(totalItems), serializedAdditionalRawData);
+            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink, totalItems, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CatalogsResult>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WorkerSizeId.HasValue)
+            if (Optional.IsDefined(WorkerSizeId))
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (ComputeMode.HasValue)
+            if (Optional.IsDefined(ComputeMode))
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (WorkerSize != null)
+            if (Optional.IsDefined(WorkerSize))
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize);
             }
-            if (WorkerCount.HasValue)
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && !(InstanceNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InstanceNames))
             {
                 writer.WritePropertyName("instanceNames"u8);
                 writer.WriteStartArray();
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<string> kind = default;
+            AppServiceSkuDescription sku = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> workerSizeId = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<string> workerSize = default;
-            Optional<int> workerCount = default;
+            SystemData systemData = default;
+            int? workerSizeId = default;
+            ComputeModeOption? computeMode = default;
+            string workerSize = default;
+            int? workerCount = default;
             IReadOnlyList<string> instanceNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                Optional.ToNullable(workerSizeId),
-                Optional.ToNullable(computeMode),
-                workerSize.Value,
-                Optional.ToNullable(workerCount),
+                systemData,
+                sku,
+                workerSizeId,
+                computeMode,
+                workerSize,
+                workerCount,
                 instanceNames ?? new ChangeTrackingList<string>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

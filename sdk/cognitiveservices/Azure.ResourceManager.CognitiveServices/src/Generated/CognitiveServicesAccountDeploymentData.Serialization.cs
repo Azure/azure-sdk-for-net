@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.CognitiveServices
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<CognitiveServicesSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
+            CognitiveServicesSku sku = default;
+            ETag? etag = default;
+            CognitiveServicesAccountDeploymentProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.CognitiveServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                Optional.ToNullable(etag),
-                properties.Value,
+                systemData,
+                sku,
+                etag,
+                properties,
                 serializedAdditionalRawData);
         }
 

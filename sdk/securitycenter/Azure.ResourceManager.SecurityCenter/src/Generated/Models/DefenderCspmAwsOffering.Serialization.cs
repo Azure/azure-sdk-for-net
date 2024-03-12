@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (VmScanners != null)
+            if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
             }
-            if (DataSensitivityDiscovery != null)
+            if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
                 writer.WriteObjectValue(DataSensitivityDiscovery);
             }
-            if (DatabasesDspm != null)
+            if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
                 writer.WriteObjectValue(DatabasesDspm);
             }
-            if (Ciem != null)
+            if (Optional.IsDefined(Ciem))
             {
                 writer.WritePropertyName("ciem"u8);
                 writer.WriteObjectValue(Ciem);
             }
-            if (MdcContainersImageAssessment != null)
+            if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (MdcContainersAgentlessDiscoveryK8S != null)
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderCspmAwsOfferingVmScanners> vmScanners = default;
-            Optional<DefenderCspmAwsOfferingDataSensitivityDiscovery> dataSensitivityDiscovery = default;
-            Optional<DefenderCspmAwsOfferingDatabasesDspm> databasesDspm = default;
-            Optional<DefenderCspmAwsOfferingCiem> ciem = default;
-            Optional<DefenderCspmAwsOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderCspmAwsOfferingVmScanners vmScanners = default;
+            DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default;
+            DefenderCspmAwsOfferingDatabasesDspm databasesDspm = default;
+            DefenderCspmAwsOfferingCiem ciem = default;
+            DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefenderCspmAwsOffering(
                 offeringType,
-                description.Value,
+                description,
                 serializedAdditionalRawData,
-                vmScanners.Value,
-                dataSensitivityDiscovery.Value,
-                databasesDspm.Value,
-                ciem.Value,
-                mdcContainersImageAssessment.Value,
-                mdcContainersAgentlessDiscoveryK8S.Value);
+                vmScanners,
+                dataSensitivityDiscovery,
+                databasesDspm,
+                ciem,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOffering>.Write(ModelReaderWriterOptions options)

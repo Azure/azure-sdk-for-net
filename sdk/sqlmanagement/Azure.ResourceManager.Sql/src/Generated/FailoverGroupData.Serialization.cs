@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,34 +59,34 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ReadWriteEndpoint != null)
+            if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (ReadOnlyEndpoint != null)
+            if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (options.Format != "W" && ReplicationRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (!(PartnerServers is ChangeTrackingList<PartnerServerInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PartnerServers))
             {
                 writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailoverDatabases is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(FailoverDatabases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<FailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
+            SystemData systemData = default;
+            FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            FailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
             IList<PartnerServerInfo> partnerServers = default;
             IList<ResourceIdentifier> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -302,13 +302,13 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                readWriteEndpoint.Value,
-                readOnlyEndpoint.Value,
-                Optional.ToNullable(replicationRole),
-                replicationState.Value,
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
                 partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
                 databases ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);

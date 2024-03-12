@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && ConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && IsReadOnly.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> connectionString = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> readOnly = default;
+            string id = default;
+            string name = default;
+            string value = default;
+            string connectionString = default;
+            DateTimeOffset? lastModified = default;
+            bool? readOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,12 +150,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppConfigurationStoreApiKey(
-                id.Value,
-                name.Value,
-                value.Value,
-                connectionString.Value,
-                Optional.ToNullable(lastModified),
-                Optional.ToNullable(readOnly),
+                id,
+                name,
+                value,
+                connectionString,
+                lastModified,
+                readOnly,
                 serializedAdditionalRawData);
         }
 

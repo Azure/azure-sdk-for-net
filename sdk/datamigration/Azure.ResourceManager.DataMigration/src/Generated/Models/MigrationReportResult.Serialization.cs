@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ReportUri != null)
+            if (Optional.IsDefined(ReportUri))
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.AbsoluteUri);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<Uri> reportUrl = default;
+            string id = default;
+            Uri reportUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationReportResult(id.Value, reportUrl.Value, serializedAdditionalRawData);
+            return new MigrationReportResult(id, reportUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationReportResult>.Write(ModelReaderWriterOptions options)

@@ -43,94 +43,94 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (options.Format != "W" && SourceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (PurchasePlan != null)
+            if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (SupportedCapabilities != null)
+            if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
             }
-            if (options.Format != "W" && FamilyId != null)
+            if (options.Format != "W" && Optional.IsDefined(FamilyId))
             {
                 writer.WritePropertyName("familyId"u8);
                 writer.WriteStringValue(FamilyId);
             }
-            if (options.Format != "W" && SourceUniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceUniqueId))
             {
                 writer.WritePropertyName("sourceUniqueId"u8);
                 writer.WriteStringValue(SourceUniqueId);
             }
-            if (options.Format != "W" && Encryption != null)
+            if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (SupportsHibernation.HasValue)
+            if (Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (NetworkAccessPolicy.HasValue)
+            if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DiskAccessId != null)
+            if (Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (CompletionPercent.HasValue)
+            if (Optional.IsDefined(CompletionPercent))
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
-            if (options.Format != "W" && ReplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (options.Format != "W" && SourceResourceLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceLocation))
             {
                 writer.WritePropertyName("sourceResourceLocation"u8);
                 writer.WriteStringValue(SourceResourceLocation.Value);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
@@ -177,24 +177,24 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<string> familyId = default;
-            Optional<string> sourceUniqueId = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<float> completionPercent = default;
-            Optional<string> replicationState = default;
-            Optional<AzureLocation> sourceResourceLocation = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeCreated = default;
+            ResourceIdentifier sourceResourceId = default;
+            SupportedOperatingSystemType? osType = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            string familyId = default;
+            string sourceUniqueId = default;
+            DiskEncryption encryption = default;
+            bool? supportsHibernation = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            ResourceIdentifier diskAccessId = default;
+            float? completionPercent = default;
+            string replicationState = default;
+            AzureLocation? sourceResourceLocation = default;
+            DiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -386,24 +386,24 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(timeCreated),
-                sourceResourceId.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(hyperVGeneration),
-                purchasePlan.Value,
-                supportedCapabilities.Value,
-                familyId.Value,
-                sourceUniqueId.Value,
-                encryption.Value,
-                Optional.ToNullable(supportsHibernation),
-                Optional.ToNullable(networkAccessPolicy),
-                Optional.ToNullable(publicNetworkAccess),
-                diskAccessId.Value,
-                Optional.ToNullable(completionPercent),
-                replicationState.Value,
-                Optional.ToNullable(sourceResourceLocation),
-                securityProfile.Value,
+                systemData,
+                timeCreated,
+                sourceResourceId,
+                osType,
+                hyperVGeneration,
+                purchasePlan,
+                supportedCapabilities,
+                familyId,
+                sourceUniqueId,
+                encryption,
+                supportsHibernation,
+                networkAccessPolicy,
+                publicNetworkAccess,
+                diskAccessId,
+                completionPercent,
+                replicationState,
+                sourceResourceLocation,
+                securityProfile,
                 serializedAdditionalRawData);
         }
 

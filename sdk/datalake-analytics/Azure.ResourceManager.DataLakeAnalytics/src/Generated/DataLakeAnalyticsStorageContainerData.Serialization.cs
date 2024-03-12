@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(lastModifiedTime),
+                systemData,
+                lastModifiedTime,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ODataContext != null)
+            if (Optional.IsDefined(ODataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (ODataCount.HasValue)
+            if (Optional.IsDefined(ODataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(ODataCount.Value);
             }
-            if (!(Value is ChangeTrackingList<PolicySummary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
+            string odataContext = default;
+            int? odataCount = default;
             IReadOnlyList<PolicySummary> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SummarizeResults(odataContext.Value, Optional.ToNullable(odataCount), value ?? new ChangeTrackingList<PolicySummary>(), serializedAdditionalRawData);
+            return new SummarizeResults(odataContext, odataCount, value ?? new ChangeTrackingList<PolicySummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SummarizeResults>.Write(ModelReaderWriterOptions options)

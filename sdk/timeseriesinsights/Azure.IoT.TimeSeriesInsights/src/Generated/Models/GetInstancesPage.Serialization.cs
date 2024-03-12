@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -20,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             IReadOnlyList<TimeSeriesInstance> instances = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instances"u8))
@@ -43,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new GetInstancesPage(continuationToken.Value, instances ?? new ChangeTrackingList<TimeSeriesInstance>());
+            return new GetInstancesPage(continuationToken, instances ?? new ChangeTrackingList<TimeSeriesInstance>());
         }
     }
 }

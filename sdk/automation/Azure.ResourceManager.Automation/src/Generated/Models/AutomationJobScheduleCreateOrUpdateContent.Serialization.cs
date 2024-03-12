@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("runbook"u8);
             writer.WriteObjectValue(Runbook);
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             ScheduleAssociationProperty schedule = default;
             RunbookAssociationProperty runbook = default;
-            Optional<string> runOn = default;
+            string runOn = default;
             IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

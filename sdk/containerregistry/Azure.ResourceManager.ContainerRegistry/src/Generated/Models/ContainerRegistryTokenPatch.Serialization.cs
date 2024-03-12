@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ScopeMapId != null)
+            if (Optional.IsDefined(ScopeMapId))
             {
                 writer.WritePropertyName("scopeMapId"u8);
                 writer.WriteStringValue(ScopeMapId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> scopeMapId = default;
-            Optional<ContainerRegistryTokenStatus> status = default;
-            Optional<ContainerRegistryTokenCredentials> credentials = default;
+            ResourceIdentifier scopeMapId = default;
+            ContainerRegistryTokenStatus? status = default;
+            ContainerRegistryTokenCredentials credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenPatch(scopeMapId.Value, Optional.ToNullable(status), credentials.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenPatch(scopeMapId, status, credentials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenPatch>.Write(ModelReaderWriterOptions options)

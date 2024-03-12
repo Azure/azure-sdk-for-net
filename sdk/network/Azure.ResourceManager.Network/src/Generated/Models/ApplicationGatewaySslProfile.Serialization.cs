@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -28,29 +29,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TrustedClientCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedClientCertificates))
             {
                 writer.WritePropertyName("trustedClientCertificates"u8);
                 writer.WriteStartArray();
@@ -60,17 +61,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SslPolicy != null)
+            if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
                 writer.WriteObjectValue(SslPolicy);
             }
-            if (ClientAuthConfiguration != null)
+            if (Optional.IsDefined(ClientAuthConfiguration))
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
                 writer.WriteObjectValue(ClientAuthConfiguration);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<WritableSubResource> trustedClientCertificates = default;
-            Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
-            Optional<ApplicationGatewayClientAuthConfiguration> clientAuthConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ApplicationGatewaySslPolicy sslPolicy = default;
+            ApplicationGatewayClientAuthConfiguration clientAuthConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,15 +219,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewaySslProfile(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 trustedClientCertificates ?? new ChangeTrackingList<WritableSubResource>(),
-                sslPolicy.Value,
-                clientAuthConfiguration.Value,
-                Optional.ToNullable(provisioningState));
+                sslPolicy,
+                clientAuthConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslProfile>.Write(ModelReaderWriterOptions options)

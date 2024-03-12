@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (KeyIncarnationId.HasValue)
+            if (Optional.IsDefined(KeyIncarnationId))
             {
                 writer.WritePropertyName("keyIncarnationId"u8);
                 writer.WriteNumberValue(KeyIncarnationId.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<Mode> mode = default;
-            Optional<int> keyIncarnationId = default;
+            bool? enabled = default;
+            Mode? mode = default;
+            int? keyIncarnationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyAgentSettings(Optional.ToNullable(enabled), Optional.ToNullable(mode), Optional.ToNullable(keyIncarnationId), serializedAdditionalRawData);
+            return new ProxyAgentSettings(enabled, mode, keyIncarnationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyAgentSettings>.Write(ModelReaderWriterOptions options)

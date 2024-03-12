@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionDuration != null)
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RetentionDuration> retentionDuration = default;
+            RetentionDuration retentionDuration = default;
             string retentionPolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, retentionDuration.Value);
+            return new SimpleRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, retentionDuration);
         }
 
         BinaryData IPersistableModel<SimpleRetentionPolicy>.Write(ModelReaderWriterOptions options)

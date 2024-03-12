@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> aadTenant = default;
-            Optional<string> aadAudience = default;
-            Optional<string> aadIssuer = default;
+            string aadTenant = default;
+            string aadAudience = default;
+            string aadIssuer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadAuthenticationParameters(aadTenant.Value, aadAudience.Value, aadIssuer.Value, serializedAdditionalRawData);
+            return new AadAuthenticationParameters(aadTenant, aadAudience, aadIssuer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AadAuthenticationParameters>.Write(ModelReaderWriterOptions options)

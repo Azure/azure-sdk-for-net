@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (SecretRef != null)
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> secretRef = default;
+            string name = default;
+            string value = default;
+            string secretRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppEnvironmentVariable(name.Value, value.Value, secretRef.Value, serializedAdditionalRawData);
+            return new ContainerAppEnvironmentVariable(name, value, secretRef, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppEnvironmentVariable>.Write(ModelReaderWriterOptions options)

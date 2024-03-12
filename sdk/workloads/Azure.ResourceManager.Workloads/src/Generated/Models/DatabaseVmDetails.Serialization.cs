@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualMachineId != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && !(StorageDetails is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageDetails))
             {
                 writer.WritePropertyName("storageDetails"u8);
                 writer.WriteStartArray();
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<SapVirtualInstanceStatus> status = default;
+            ResourceIdentifier virtualMachineId = default;
+            SapVirtualInstanceStatus? status = default;
             IReadOnlyList<SubResource> storageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status), storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new DatabaseVmDetails(virtualMachineId, status, storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseVmDetails>.Write(ModelReaderWriterOptions options)

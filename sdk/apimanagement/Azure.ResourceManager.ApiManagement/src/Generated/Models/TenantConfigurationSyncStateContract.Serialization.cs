@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -42,49 +43,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (CommitId != null)
+            if (Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (IsExported.HasValue)
+            if (Optional.IsDefined(IsExported))
             {
                 writer.WritePropertyName("isExport"u8);
                 writer.WriteBooleanValue(IsExported.Value);
             }
-            if (IsSynced.HasValue)
+            if (Optional.IsDefined(IsSynced))
             {
                 writer.WritePropertyName("isSynced"u8);
                 writer.WriteBooleanValue(IsSynced.Value);
             }
-            if (IsGitEnabled.HasValue)
+            if (Optional.IsDefined(IsGitEnabled))
             {
                 writer.WritePropertyName("isGitEnabled"u8);
                 writer.WriteBooleanValue(IsGitEnabled.Value);
             }
-            if (SyncOn.HasValue)
+            if (Optional.IsDefined(SyncOn))
             {
                 writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
-            if (ConfigurationChangeOn.HasValue)
+            if (Optional.IsDefined(ConfigurationChangeOn))
             {
                 writer.WritePropertyName("configurationChangeDate"u8);
                 writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
             }
-            if (LastOperationId != null)
+            if (Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId);
@@ -131,15 +132,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> branch = default;
-            Optional<string> commitId = default;
-            Optional<bool> isExport = default;
-            Optional<bool> isSynced = default;
-            Optional<bool> isGitEnabled = default;
-            Optional<DateTimeOffset> syncDate = default;
-            Optional<DateTimeOffset> configurationChangeDate = default;
-            Optional<string> lastOperationId = default;
+            SystemData systemData = default;
+            string branch = default;
+            string commitId = default;
+            bool? isExport = default;
+            bool? isSynced = default;
+            bool? isGitEnabled = default;
+            DateTimeOffset? syncDate = default;
+            DateTimeOffset? configurationChangeDate = default;
+            string lastOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,15 +251,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                branch.Value,
-                commitId.Value,
-                Optional.ToNullable(isExport),
-                Optional.ToNullable(isSynced),
-                Optional.ToNullable(isGitEnabled),
-                Optional.ToNullable(syncDate),
-                Optional.ToNullable(configurationChangeDate),
-                lastOperationId.Value,
+                systemData,
+                branch,
+                commitId,
+                isExport,
+                isSynced,
+                isGitEnabled,
+                syncDate,
+                configurationChangeDate,
+                lastOperationId,
                 serializedAdditionalRawData);
         }
 

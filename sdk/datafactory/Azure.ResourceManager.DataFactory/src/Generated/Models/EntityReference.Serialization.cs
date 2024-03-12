@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (IntegrationRuntimeEntityReferenceType.HasValue)
+            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
-            if (ReferenceName != null)
+            if (Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            IntegrationRuntimeEntityReferenceType? type = default;
+            string referenceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityReference(Optional.ToNullable(type), referenceName.Value, serializedAdditionalRawData);
+            return new EntityReference(type, referenceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityReference>.Write(ModelReaderWriterOptions options)

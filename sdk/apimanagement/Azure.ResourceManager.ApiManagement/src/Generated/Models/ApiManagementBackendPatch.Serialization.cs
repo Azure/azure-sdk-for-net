@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,47 +29,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Proxy != null)
+            if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteObjectValue(Proxy);
             }
-            if (Tls != null)
+            if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -112,15 +113,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> resourceId = default;
-            Optional<BackendProperties> properties = default;
-            Optional<BackendCredentialsContract> credentials = default;
-            Optional<BackendProxyContract> proxy = default;
-            Optional<BackendTlsProperties> tls = default;
-            Optional<Uri> uri = default;
-            Optional<BackendProtocol> protocol = default;
+            string title = default;
+            string description = default;
+            Uri resourceId = default;
+            BackendProperties properties = default;
+            BackendCredentialsContract credentials = default;
+            BackendProxyContract proxy = default;
+            BackendTlsProperties tls = default;
+            Uri uri = default;
+            BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +218,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiManagementBackendPatch(
-                title.Value,
-                description.Value,
-                resourceId.Value,
-                properties.Value,
-                credentials.Value,
-                proxy.Value,
-                tls.Value,
-                uri.Value,
-                Optional.ToNullable(protocol),
+                title,
+                description,
+                resourceId,
+                properties,
+                credentials,
+                proxy,
+                tls,
+                uri,
+                protocol,
                 serializedAdditionalRawData);
         }
 

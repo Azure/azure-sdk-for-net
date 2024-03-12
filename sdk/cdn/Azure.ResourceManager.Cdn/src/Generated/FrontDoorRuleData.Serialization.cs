@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleSetName != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleSetName))
             {
                 writer.WritePropertyName("ruleSetName"u8);
                 writer.WriteStringValue(RuleSetName);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<DeliveryRuleAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (MatchProcessingBehavior.HasValue)
+            if (Optional.IsDefined(MatchProcessingBehavior))
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
+            SystemData systemData = default;
+            string ruleSetName = default;
+            int? order = default;
             IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                ruleSetName.Value,
-                Optional.ToNullable(order),
+                systemData,
+                ruleSetName,
+                order,
                 conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
                 actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
-                Optional.ToNullable(matchProcessingBehavior),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deploymentStatus),
+                matchProcessingBehavior,
+                provisioningState,
+                deploymentStatus,
                 serializedAdditionalRawData);
         }
 

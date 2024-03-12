@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Throughput.HasValue)
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (AutoscaleSettings != null)
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettings> autoscaleSettings = default;
+            int? throughput = default;
+            AutoscaleSettings autoscaleSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraTablePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value, serializedAdditionalRawData);
+            return new CassandraTablePropertiesConfig(throughput, autoscaleSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraTablePropertiesConfig>.Write(ModelReaderWriterOptions options)

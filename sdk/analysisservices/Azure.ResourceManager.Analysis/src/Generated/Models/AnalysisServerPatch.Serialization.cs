@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,37 +45,37 @@ namespace Azure.ResourceManager.Analysis.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AsAdministrators != null)
+            if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
-            if (BackupBlobContainerUri != null)
+            if (Optional.IsDefined(BackupBlobContainerUri))
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (GatewayDetails != null)
+            if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
-            if (IPV4FirewallSettings != null)
+            if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPV4FirewallSettings);
             }
-            if (QuerypoolConnectionMode.HasValue)
+            if (Optional.IsDefined(QuerypoolConnectionMode))
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QuerypoolConnectionMode.Value.ToSerialString());
             }
-            if (ManagedMode.HasValue)
+            if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (ServerMonitorMode.HasValue)
+            if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
@@ -118,15 +119,15 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<AnalysisResourceSku> sku = default;
+            AnalysisResourceSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,15 +237,15 @@ namespace Azure.ResourceManager.Analysis.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AnalysisServerPatch(
-                sku.Value,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                asAdministrators.Value,
-                backupBlobContainerUri.Value,
-                gatewayDetails.Value,
-                ipV4FirewallSettings.Value,
-                Optional.ToNullable(querypoolConnectionMode),
-                Optional.ToNullable(managedMode),
-                Optional.ToNullable(serverMonitorMode),
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
                 serializedAdditionalRawData);
         }
 

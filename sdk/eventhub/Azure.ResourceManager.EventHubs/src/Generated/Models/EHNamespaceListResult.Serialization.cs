@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<EventHubsNamespaceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             IReadOnlyList<EventHubsNamespaceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EHNamespaceListResult(value ?? new ChangeTrackingList<EventHubsNamespaceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new EHNamespaceListResult(value ?? new ChangeTrackingList<EventHubsNamespaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EHNamespaceListResult>.Write(ModelReaderWriterOptions options)

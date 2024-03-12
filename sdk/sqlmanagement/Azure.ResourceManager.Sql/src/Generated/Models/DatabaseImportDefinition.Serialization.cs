@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (ServiceObjectiveName != null)
+            if (Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (MaxSizeBytes != null)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (NetworkIsolation != null)
+            if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
@@ -104,17 +105,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> serviceObjectiveName = default;
-            Optional<string> maxSizeBytes = default;
+            string databaseName = default;
+            string edition = default;
+            string serviceObjectiveName = default;
+            string maxSizeBytes = default;
             StorageKeyType storageKeyType = default;
             string storageKey = default;
             Uri storageUri = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<string> authenticationType = default;
-            Optional<NetworkIsolationSettings> networkIsolation = default;
+            string authenticationType = default;
+            NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,17 +186,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatabaseImportDefinition(
-                databaseName.Value,
-                edition.Value,
-                serviceObjectiveName.Value,
-                maxSizeBytes.Value,
+                databaseName,
+                edition,
+                serviceObjectiveName,
+                maxSizeBytes,
                 storageKeyType,
                 storageKey,
                 storageUri,
                 administratorLogin,
                 administratorLoginPassword,
-                authenticationType.Value,
-                networkIsolation.Value,
+                authenticationType,
+                networkIsolation,
                 serializedAdditionalRawData);
         }
 

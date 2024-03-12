@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmPlacementQuery"/> is null. </exception>
         public DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery)
         {
-            if (vmPlacementQuery == null)
-            {
-                throw new ArgumentNullException(nameof(vmPlacementQuery));
-            }
+            Argument.AssertNotNull(vmPlacementQuery, nameof(vmPlacementQuery));
 
             VmPlacementQuery = vmPlacementQuery.ToList();
             VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();

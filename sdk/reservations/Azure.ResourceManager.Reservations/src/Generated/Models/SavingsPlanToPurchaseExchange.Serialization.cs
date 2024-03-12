@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (SavingsPlanOrderId != null)
+            if (Optional.IsDefined(SavingsPlanOrderId))
             {
                 writer.WritePropertyName("savingsPlanOrderId"u8);
                 writer.WriteStringValue(SavingsPlanOrderId);
             }
-            if (SavingsPlanId != null)
+            if (Optional.IsDefined(SavingsPlanId))
             {
                 writer.WritePropertyName("savingsPlanId"u8);
                 writer.WriteStringValue(SavingsPlanId);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> savingsPlanOrderId = default;
-            Optional<string> savingsPlanId = default;
-            Optional<SavingsPlanPurchase> properties = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<ReservationOperationStatus> status = default;
+            string savingsPlanOrderId = default;
+            string savingsPlanId = default;
+            SavingsPlanPurchase properties = default;
+            PurchasePrice billingCurrencyTotal = default;
+            ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SavingsPlanToPurchaseExchange(
-                savingsPlanOrderId.Value,
-                savingsPlanId.Value,
-                properties.Value,
-                billingCurrencyTotal.Value,
-                Optional.ToNullable(status),
+                savingsPlanOrderId,
+                savingsPlanId,
+                properties,
+                billingCurrencyTotal,
+                status,
                 serializedAdditionalRawData);
         }
 

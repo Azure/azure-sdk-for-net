@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NvaSku != null)
+            if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
                 writer.WriteObjectValue(NvaSku);
             }
-            if (options.Format != "W" && AddressPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (!(BootStrapConfigurationBlobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
             {
                 writer.WritePropertyName("bootStrapConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (!(CloudInitConfigurationBlobs is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
                 writer.WritePropertyName("cloudInitConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -108,22 +108,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (CloudInitConfiguration != null)
+            if (Optional.IsDefined(CloudInitConfiguration))
             {
                 writer.WritePropertyName("cloudInitConfiguration"u8);
                 writer.WriteStringValue(CloudInitConfiguration);
             }
-            if (VirtualApplianceAsn.HasValue)
+            if (Optional.IsDefined(VirtualApplianceAsn))
             {
                 writer.WritePropertyName("virtualApplianceAsn"u8);
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
-            if (SshPublicKey != null)
+            if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
             }
-            if (options.Format != "W" && !(VirtualApplianceNics is ChangeTrackingList<VirtualApplianceNicProperties> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceNics))
             {
                 writer.WritePropertyName("virtualApplianceNics"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalNics is ChangeTrackingList<VirtualApplianceAdditionalNicProperties> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalNics))
             {
                 writer.WritePropertyName("additionalNics"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(InternetIngressPublicIPs is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualApplianceSites is ChangeTrackingList<WritableSubResource> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceSites))
             {
                 writer.WritePropertyName("virtualApplianceSites"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualApplianceConnections is ChangeTrackingList<WritableSubResource> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceConnections))
             {
                 writer.WritePropertyName("virtualApplianceConnections"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InboundSecurityRules is ChangeTrackingList<WritableSubResource> collection7 && collection7.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundSecurityRules))
             {
                 writer.WritePropertyName("inboundSecurityRules"u8);
                 writer.WriteStartArray();
@@ -183,22 +183,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentType != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteStringValue(DeploymentType);
             }
-            if (Delegation != null)
+            if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
                 writer.WriteObjectValue(Delegation);
             }
-            if (PartnerManagedResource != null)
+            if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
                 writer.WriteObjectValue(PartnerManagedResource);
@@ -242,31 +242,31 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<VirtualApplianceSkuProperties> nvaSku = default;
-            Optional<string> addressPrefix = default;
+            VirtualApplianceSkuProperties nvaSku = default;
+            string addressPrefix = default;
             IList<string> bootStrapConfigurationBlobs = default;
-            Optional<WritableSubResource> virtualHub = default;
+            WritableSubResource virtualHub = default;
             IList<string> cloudInitConfigurationBlobs = default;
-            Optional<string> cloudInitConfiguration = default;
-            Optional<long> virtualApplianceAsn = default;
-            Optional<string> sshPublicKey = default;
+            string cloudInitConfiguration = default;
+            long? virtualApplianceAsn = default;
+            string sshPublicKey = default;
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
             IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
             IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
             IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> deploymentType = default;
-            Optional<VirtualApplianceDelegationProperties> delegation = default;
-            Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
+            NetworkProvisioningState? provisioningState = default;
+            string deploymentType = default;
+            VirtualApplianceDelegationProperties delegation = default;
+            PartnerManagedResourceProperties partnerManagedResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -540,32 +540,32 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkVirtualApplianceData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 identity,
-                Optional.ToNullable(etag),
-                nvaSku.Value,
-                addressPrefix.Value,
+                etag,
+                nvaSku,
+                addressPrefix,
                 bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),
                 virtualHub,
                 cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(),
-                cloudInitConfiguration.Value,
-                Optional.ToNullable(virtualApplianceAsn),
-                sshPublicKey.Value,
+                cloudInitConfiguration,
+                virtualApplianceAsn,
+                sshPublicKey,
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
                 internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(provisioningState),
-                deploymentType.Value,
-                delegation.Value,
-                partnerManagedResource.Value);
+                provisioningState,
+                deploymentType,
+                delegation,
+                partnerManagedResource);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceData>.Write(ModelReaderWriterOptions options)

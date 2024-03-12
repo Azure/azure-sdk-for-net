@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (OSStorageType != null)
+            if (Optional.IsDefined(OSStorageType))
             {
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
-            if (HibernateSupport.HasValue)
+            if (Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ImageValidationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImageValidationStatus))
             {
                 writer.WritePropertyName("imageValidationStatus"u8);
                 writer.WriteStringValue(ImageValidationStatus.Value.ToString());
             }
-            if (options.Format != "W" && ImageValidationErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
                 writer.WriteObjectValue(ImageValidationErrorDetails);
             }
-            if (options.Format != "W" && ActiveImageReference != null)
+            if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
                 writer.WriteObjectValue(ActiveImageReference);
@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterImageReference> imageReference = default;
-            Optional<DevCenterSku> sku = default;
-            Optional<string> osStorageType = default;
-            Optional<DevCenterHibernateSupport> hibernateSupport = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ImageValidationStatus> imageValidationStatus = default;
-            Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
-            Optional<DevCenterImageReference> activeImageReference = default;
+            SystemData systemData = default;
+            DevCenterImageReference imageReference = default;
+            DevCenterSku sku = default;
+            string osStorageType = default;
+            DevCenterHibernateSupport? hibernateSupport = default;
+            DevCenterProvisioningState? provisioningState = default;
+            ImageValidationStatus? imageValidationStatus = default;
+            ImageValidationErrorDetails imageValidationErrorDetails = default;
+            DevCenterImageReference activeImageReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,17 +293,17 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                imageReference.Value,
-                sku.Value,
-                osStorageType.Value,
-                Optional.ToNullable(hibernateSupport),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(imageValidationStatus),
-                imageValidationErrorDetails.Value,
-                activeImageReference.Value,
+                imageReference,
+                sku,
+                osStorageType,
+                hibernateSupport,
+                provisioningState,
+                imageValidationStatus,
+                imageValidationErrorDetails,
+                activeImageReference,
                 serializedAdditionalRawData);
         }
 

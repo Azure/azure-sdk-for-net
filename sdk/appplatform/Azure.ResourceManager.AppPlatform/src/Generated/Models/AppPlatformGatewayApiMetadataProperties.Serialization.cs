@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Documentation != null)
+            if (Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("documentation"u8);
                 writer.WriteStringValue(Documentation);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ServerUri != null)
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> documentation = default;
-            Optional<string> version = default;
-            Optional<Uri> serverUri = default;
+            string title = default;
+            string description = default;
+            string documentation = default;
+            string version = default;
+            Uri serverUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformGatewayApiMetadataProperties(
-                title.Value,
-                description.Value,
-                documentation.Value,
-                version.Value,
-                serverUri.Value,
+                title,
+                description,
+                documentation,
+                version,
+                serverUri,
                 serializedAdditionalRawData);
         }
 

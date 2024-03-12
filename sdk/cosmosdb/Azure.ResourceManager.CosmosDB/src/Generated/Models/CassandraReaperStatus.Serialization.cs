@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (IsHealthy.HasValue)
+            if (Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (!(RepairRunIds is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RepairRunIds))
             {
                 writer.WritePropertyName("repairRunIds"u8);
                 writer.WriteStartObject();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(RepairSchedules is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RepairSchedules))
             {
                 writer.WritePropertyName("repairSchedules"u8);
                 writer.WriteStartObject();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
+            bool? healthy = default;
             IReadOnlyDictionary<string, string> repairRunIds = default;
             IReadOnlyDictionary<string, string> repairSchedules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraReaperStatus(Optional.ToNullable(healthy), repairRunIds ?? new ChangeTrackingDictionary<string, string>(), repairSchedules ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new CassandraReaperStatus(healthy, repairRunIds ?? new ChangeTrackingDictionary<string, string>(), repairSchedules ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraReaperStatus>.Write(ModelReaderWriterOptions options)

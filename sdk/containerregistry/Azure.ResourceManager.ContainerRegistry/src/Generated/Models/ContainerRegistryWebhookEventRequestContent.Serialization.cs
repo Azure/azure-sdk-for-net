@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Addr != null)
+            if (Optional.IsDefined(Addr))
             {
                 writer.WritePropertyName("addr"u8);
                 writer.WriteStringValue(Addr);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (UserAgent != null)
+            if (Optional.IsDefined(UserAgent))
             {
                 writer.WritePropertyName("useragent"u8);
                 writer.WriteStringValue(UserAgent);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> addr = default;
-            Optional<string> host = default;
-            Optional<string> method = default;
-            Optional<string> userAgent = default;
+            Guid? id = default;
+            string addr = default;
+            string host = default;
+            string method = default;
+            string userAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryWebhookEventRequestContent(
-                Optional.ToNullable(id),
-                addr.Value,
-                host.Value,
-                method.Value,
-                userAgent.Value,
+                id,
+                addr,
+                host,
+                method,
+                userAgent,
                 serializedAdditionalRawData);
         }
 

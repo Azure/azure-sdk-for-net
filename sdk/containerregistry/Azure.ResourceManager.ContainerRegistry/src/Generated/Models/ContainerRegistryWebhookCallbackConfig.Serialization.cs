@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
-            if (!(CustomHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartObject();

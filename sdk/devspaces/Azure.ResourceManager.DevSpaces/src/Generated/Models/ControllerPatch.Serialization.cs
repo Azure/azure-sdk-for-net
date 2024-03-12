@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetContainerHostCredentialsBase64 != null)
+            if (Optional.IsDefined(TargetContainerHostCredentialsBase64))
             {
                 writer.WritePropertyName("targetContainerHostCredentialsBase64"u8);
                 writer.WriteStringValue(TargetContainerHostCredentialsBase64);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> targetContainerHostCredentialsBase64 = default;
+            string targetContainerHostCredentialsBase64 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), targetContainerHostCredentialsBase64.Value, serializedAdditionalRawData);
+            return new ControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), targetContainerHostCredentialsBase64, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerPatch>.Write(ModelReaderWriterOptions options)

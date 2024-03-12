@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,59 +54,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RecommendationName != null)
+            if (Optional.IsDefined(RecommendationName))
             {
                 writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
-            if (options.Format != "W" && RecommendationDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
             {
                 writer.WritePropertyName("recommendationDisplayName"u8);
                 writer.WriteStringValue(RecommendationDisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && RecommendationTypeId != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationTypeId))
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (options.Format != "W" && DetectedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(DetectedBy))
             {
                 writer.WritePropertyName("detectedBy"u8);
                 writer.WriteStringValue(DetectedBy);
             }
-            if (options.Format != "W" && RemediationSteps != null)
+            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (options.Format != "W" && ReportedSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && HealthyDevices.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthyDevices))
             {
                 writer.WritePropertyName("healthyDevices"u8);
                 writer.WriteNumberValue(HealthyDevices.Value);
             }
-            if (options.Format != "W" && UnhealthyDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
                 writer.WritePropertyName("unhealthyDeviceCount"u8);
                 writer.WriteNumberValue(UnhealthyDeviceCount.Value);
             }
-            if (options.Format != "W" && LogAnalyticsQuery != null)
+            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
             {
                 writer.WritePropertyName("logAnalyticsQuery"u8);
                 writer.WriteStringValue(LogAnalyticsQuery);
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> recommendationName = default;
-            Optional<string> recommendationDisplayName = default;
-            Optional<string> description = default;
-            Optional<string> recommendationTypeId = default;
-            Optional<string> detectedBy = default;
-            Optional<string> remediationSteps = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<long> healthyDevices = default;
-            Optional<long> unhealthyDeviceCount = default;
-            Optional<string> logAnalyticsQuery = default;
+            SystemData systemData = default;
+            string recommendationName = default;
+            string recommendationDisplayName = default;
+            string description = default;
+            string recommendationTypeId = default;
+            string detectedBy = default;
+            string remediationSteps = default;
+            ReportedSeverity? reportedSeverity = default;
+            long? healthyDevices = default;
+            long? unhealthyDeviceCount = default;
+            string logAnalyticsQuery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,17 +291,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                recommendationName.Value,
-                recommendationDisplayName.Value,
-                description.Value,
-                recommendationTypeId.Value,
-                detectedBy.Value,
-                remediationSteps.Value,
-                Optional.ToNullable(reportedSeverity),
-                Optional.ToNullable(healthyDevices),
-                Optional.ToNullable(unhealthyDeviceCount),
-                logAnalyticsQuery.Value,
+                systemData,
+                recommendationName,
+                recommendationDisplayName,
+                description,
+                recommendationTypeId,
+                detectedBy,
+                remediationSteps,
+                reportedSeverity,
+                healthyDevices,
+                unhealthyDeviceCount,
+                logAnalyticsQuery,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

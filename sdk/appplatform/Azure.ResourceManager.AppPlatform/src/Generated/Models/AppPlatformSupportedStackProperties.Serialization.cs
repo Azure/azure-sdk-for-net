@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (StackId != null)
+            if (Optional.IsDefined(StackId))
             {
                 writer.WritePropertyName("stackId"u8);
                 writer.WriteStringValue(StackId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> stackId = default;
-            Optional<string> version = default;
+            string stackId = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSupportedStackProperties(stackId.Value, version.Value, serializedAdditionalRawData);
+            return new AppPlatformSupportedStackProperties(stackId, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSupportedStackProperties>.Write(ModelReaderWriterOptions options)

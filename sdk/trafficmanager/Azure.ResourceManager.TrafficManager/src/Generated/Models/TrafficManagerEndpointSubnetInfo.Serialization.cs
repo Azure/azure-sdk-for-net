@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (First != null)
+            if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
-            if (Last != null)
+            if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IPAddress> first = default;
-            Optional<IPAddress> last = default;
-            Optional<int> scope = default;
+            IPAddress first = default;
+            IPAddress last = default;
+            int? scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope), serializedAdditionalRawData);
+            return new TrafficManagerEndpointSubnetInfo(first, last, scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerEndpointSubnetInfo>.Write(ModelReaderWriterOptions options)

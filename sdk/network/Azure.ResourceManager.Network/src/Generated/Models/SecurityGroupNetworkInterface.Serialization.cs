@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SecurityRuleAssociations != null)
+            if (Optional.IsDefined(SecurityRuleAssociations))
             {
                 writer.WritePropertyName("securityRuleAssociations"u8);
                 writer.WriteObjectValue(SecurityRuleAssociations);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<SecurityRuleAssociations> securityRuleAssociations = default;
+            string id = default;
+            SecurityRuleAssociations securityRuleAssociations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityGroupNetworkInterface(id.Value, securityRuleAssociations.Value, serializedAdditionalRawData);
+            return new SecurityGroupNetworkInterface(id, securityRuleAssociations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityGroupNetworkInterface>.Write(ModelReaderWriterOptions options)

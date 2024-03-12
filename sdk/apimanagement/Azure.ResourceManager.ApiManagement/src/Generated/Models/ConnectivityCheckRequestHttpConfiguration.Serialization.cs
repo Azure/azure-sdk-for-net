@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (!(ValidStatusCodes is ChangeTrackingList<long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<HttpHeaderConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<HttpMethodConfiguration> method = default;
+            HttpMethodConfiguration? method = default;
             IList<long> validStatusCodes = default;
             IList<HttpHeaderConfiguration> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckRequestHttpConfiguration(Optional.ToNullable(method), validStatusCodes ?? new ChangeTrackingList<long>(), headers ?? new ChangeTrackingList<HttpHeaderConfiguration>(), serializedAdditionalRawData);
+            return new ConnectivityCheckRequestHttpConfiguration(method, validStatusCodes ?? new ChangeTrackingList<long>(), headers ?? new ChangeTrackingList<HttpHeaderConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckRequestHttpConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<HybridContainerServiceResourceProvisioningState> status = default;
-            Optional<HybridContainerServiceCredentialListError> error = default;
-            Optional<ListCredentialResponseProperties> properties = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            HybridContainerServiceResourceProvisioningState? status = default;
+            HybridContainerServiceCredentialListError error = default;
+            ListCredentialResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceCredentialListResult(
-                id.Value,
-                name.Value,
-                resourceId.Value,
-                Optional.ToNullable(status),
-                error.Value,
-                properties.Value,
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                properties,
                 serializedAdditionalRawData);
         }
 

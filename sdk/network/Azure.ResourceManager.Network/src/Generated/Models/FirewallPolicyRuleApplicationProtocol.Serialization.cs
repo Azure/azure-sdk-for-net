@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProtocolType.HasValue)
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyRuleApplicationProtocolType> protocolType = default;
-            Optional<int> port = default;
+            FirewallPolicyRuleApplicationProtocolType? protocolType = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyRuleApplicationProtocol(Optional.ToNullable(protocolType), Optional.ToNullable(port), serializedAdditionalRawData);
+            return new FirewallPolicyRuleApplicationProtocol(protocolType, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRuleApplicationProtocol>.Write(ModelReaderWriterOptions options)

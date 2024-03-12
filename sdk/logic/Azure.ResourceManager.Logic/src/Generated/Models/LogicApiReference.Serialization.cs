@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUri"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Swagger != null)
+            if (Optional.IsDefined(Swagger))
             {
                 writer.WritePropertyName("swagger"u8);
 #if NET6_0_OR_GREATER
@@ -53,32 +54,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (BrandColor != null)
+            if (Optional.IsDefined(BrandColor))
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (IntegrationServiceEnvironment != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -121,16 +122,16 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUri = default;
-            Optional<BinaryData> swagger = default;
-            Optional<string> brandColor = default;
-            Optional<LogicApiTier> category = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string displayName = default;
+            string description = default;
+            Uri iconUri = default;
+            BinaryData swagger = default;
+            string brandColor = default;
+            LogicApiTier? category = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,17 +217,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicApiReference(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                displayName.Value,
-                description.Value,
-                iconUri.Value,
-                swagger.Value,
-                brandColor.Value,
-                Optional.ToNullable(category),
-                integrationServiceEnvironment.Value);
+                displayName,
+                description,
+                iconUri,
+                swagger,
+                brandColor,
+                category,
+                integrationServiceEnvironment);
         }
 
         BinaryData IPersistableModel<LogicApiReference>.Write(ModelReaderWriterOptions options)

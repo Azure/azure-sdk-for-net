@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Edition != null)
+            if (options.Format != "W" && Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && MaxSizeBytes != null)
+            if (options.Format != "W" && Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
             }
-            if (options.Format != "W" && ServiceLevelObjective != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && ElasticPoolName != null)
+            if (options.Format != "W" && Optional.IsDefined(ElasticPoolName))
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> maxSizeBytes = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            string edition = default;
+            string maxSizeBytes = default;
+            string serviceLevelObjective = default;
+            string elasticPoolName = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,16 +257,16 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                databaseName.Value,
-                edition.Value,
-                maxSizeBytes.Value,
-                serviceLevelObjective.Value,
-                elasticPoolName.Value,
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(deletionDate),
-                Optional.ToNullable(earliestRestoreDate),
+                systemData,
+                location,
+                databaseName,
+                edition,
+                maxSizeBytes,
+                serviceLevelObjective,
+                elasticPoolName,
+                creationDate,
+                deletionDate,
+                earliestRestoreDate,
                 serializedAdditionalRawData);
         }
 

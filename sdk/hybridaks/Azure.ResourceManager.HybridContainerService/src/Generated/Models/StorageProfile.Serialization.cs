@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (SmbCsiDriver != null)
+            if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
                 writer.WriteObjectValue(SmbCsiDriver);
             }
-            if (NfsCsiDriver != null)
+            if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
                 writer.WriteObjectValue(NfsCsiDriver);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<StorageProfileSmbCSIDriver> smbCsiDriver = default;
-            Optional<StorageProfileNfsCSIDriver> nfsCsiDriver = default;
+            StorageProfileSmbCSIDriver smbCsiDriver = default;
+            StorageProfileNfsCSIDriver nfsCsiDriver = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfile(smbCsiDriver.Value, nfsCsiDriver.Value, serializedAdditionalRawData);
+            return new StorageProfile(smbCsiDriver, nfsCsiDriver, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)

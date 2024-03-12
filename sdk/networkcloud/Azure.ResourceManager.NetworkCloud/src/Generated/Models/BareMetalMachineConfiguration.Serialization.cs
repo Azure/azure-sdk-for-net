@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BmcConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(BmcConnectionString))
             {
                 writer.WritePropertyName("bmcConnectionString"u8);
                 writer.WriteStringValue(BmcConnectionString);
@@ -37,12 +38,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (MachineDetails != null)
+            if (Optional.IsDefined(MachineDetails))
             {
                 writer.WritePropertyName("machineDetails"u8);
                 writer.WriteStringValue(MachineDetails);
             }
-            if (MachineName != null)
+            if (Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> bmcConnectionString = default;
+            string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<string> machineDetails = default;
-            Optional<string> machineName = default;
+            string machineDetails = default;
+            string machineName = default;
             long rackSlot = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -148,12 +149,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BareMetalMachineConfiguration(
-                bmcConnectionString.Value,
+                bmcConnectionString,
                 bmcCredentials,
                 bmcMacAddress,
                 bootMacAddress,
-                machineDetails.Value,
-                machineName.Value,
+                machineDetails,
+                machineName,
                 rackSlot,
                 serialNumber,
                 serializedAdditionalRawData);

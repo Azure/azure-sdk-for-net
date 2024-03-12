@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Offer != null)
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && ExactVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ExactVersion))
             {
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (SharedGalleryImageUniqueId != null)
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
                 writer.WriteStringValue(SharedGalleryImageUniqueId);
             }
-            if (CommunityGalleryImageId != null)
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<string> exactVersion = default;
-            Optional<string> sharedGalleryImageId = default;
-            Optional<string> communityGalleryImageId = default;
-            Optional<ResourceIdentifier> id = default;
+            string publisher = default;
+            string offer = default;
+            string sku = default;
+            string version = default;
+            string exactVersion = default;
+            string sharedGalleryImageId = default;
+            string communityGalleryImageId = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,15 +168,15 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ImageReference(
-                id.Value,
+                id,
                 serializedAdditionalRawData,
-                publisher.Value,
-                offer.Value,
-                sku.Value,
-                version.Value,
-                exactVersion.Value,
-                sharedGalleryImageId.Value,
-                communityGalleryImageId.Value);
+                publisher,
+                offer,
+                sku,
+                version,
+                exactVersion,
+                sharedGalleryImageId,
+                communityGalleryImageId);
         }
 
         BinaryData IPersistableModel<ImageReference>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (PatchMode.HasValue)
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<TagPatchMode> operation = default;
-            Optional<Tag> properties = default;
+            TagPatchMode? operation = default;
+            Tag properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourcePatch(Optional.ToNullable(operation), properties.Value, serializedAdditionalRawData);
+            return new TagResourcePatch(operation, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourcePatch>.Write(ModelReaderWriterOptions options)

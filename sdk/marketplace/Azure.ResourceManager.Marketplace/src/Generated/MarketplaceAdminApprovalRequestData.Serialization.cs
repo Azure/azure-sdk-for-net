@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (AdminAction.HasValue)
+            if (Optional.IsDefined(AdminAction))
             {
                 writer.WritePropertyName("adminAction"u8);
                 writer.WriteStringValue(AdminAction.Value.ToString());
             }
-            if (!(ApprovedPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApprovedPlans))
             {
                 writer.WritePropertyName("approvedPlans"u8);
                 writer.WriteStartArray();
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Comment != null)
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (Administrator != null)
+            if (Optional.IsDefined(Administrator))
             {
                 writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
-            if (options.Format != "W" && !(Plans is ChangeTrackingList<PlanRequesterDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (!(CollectionIds is ChangeTrackingList<Guid> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IconUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<string> publisherId = default;
-            Optional<MarketplaceAdminAction> adminAction = default;
+            SystemData systemData = default;
+            string offerId = default;
+            string displayName = default;
+            string publisherId = default;
+            MarketplaceAdminAction? adminAction = default;
             IList<string> approvedPlans = default;
-            Optional<string> comment = default;
-            Optional<string> administrator = default;
+            string comment = default;
+            string administrator = default;
             IReadOnlyList<PlanRequesterDetails> plans = default;
             IList<Guid> collectionIds = default;
-            Optional<Uri> icon = default;
+            Uri icon = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,17 +303,17 @@ namespace Azure.ResourceManager.Marketplace
                 id,
                 name,
                 type,
-                systemData.Value,
-                offerId.Value,
-                displayName.Value,
-                publisherId.Value,
-                Optional.ToNullable(adminAction),
+                systemData,
+                offerId,
+                displayName,
+                publisherId,
+                adminAction,
                 approvedPlans ?? new ChangeTrackingList<string>(),
-                comment.Value,
-                administrator.Value,
+                comment,
+                administrator,
                 plans ?? new ChangeTrackingList<PlanRequesterDetails>(),
                 collectionIds ?? new ChangeTrackingList<Guid>(),
-                icon.Value,
+                icon,
                 serializedAdditionalRawData);
         }
 

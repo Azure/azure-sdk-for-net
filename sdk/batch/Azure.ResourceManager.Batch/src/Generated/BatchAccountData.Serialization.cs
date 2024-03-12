@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,39 +64,39 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountEndpoint))
             {
                 writer.WritePropertyName("accountEndpoint"u8);
                 writer.WriteStringValue(AccountEndpoint);
             }
-            if (options.Format != "W" && NodeManagementEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeManagementEndpoint))
             {
                 writer.WritePropertyName("nodeManagementEndpoint"u8);
                 writer.WriteStringValue(NodeManagementEndpoint);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PoolAllocationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PoolAllocationMode))
             {
                 writer.WritePropertyName("poolAllocationMode"u8);
                 writer.WriteStringValue(PoolAllocationMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && KeyVaultReference != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 if (NetworkProfile != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("networkProfile");
                 }
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<BatchPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (options.Format != "W" && AutoStorage != null)
+            if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
                 writer.WriteObjectValue(AutoStorage);
             }
-            if (options.Format != "W" && Encryption != null)
+            if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && DedicatedCoreQuota.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
             {
                 if (DedicatedCoreQuota != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("dedicatedCoreQuota");
                 }
             }
-            if (options.Format != "W" && LowPriorityCoreQuota.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LowPriorityCoreQuota))
             {
                 if (LowPriorityCoreQuota != null)
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("lowPriorityCoreQuota");
                 }
             }
-            if (options.Format != "W" && !(DedicatedCoreQuotaPerVmFamily is ChangeTrackingList<BatchVmFamilyCoreQuota> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
             {
                 if (DedicatedCoreQuotaPerVmFamily != null)
                 {
@@ -188,22 +188,22 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("dedicatedCoreQuotaPerVMFamily");
                 }
             }
-            if (options.Format != "W" && IsDedicatedCoreQuotaPerVmFamilyEnforced.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDedicatedCoreQuotaPerVmFamilyEnforced))
             {
                 writer.WritePropertyName("dedicatedCoreQuotaPerVMFamilyEnforced"u8);
                 writer.WriteBooleanValue(IsDedicatedCoreQuotaPerVmFamilyEnforced.Value);
             }
-            if (options.Format != "W" && PoolQuota.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PoolQuota))
             {
                 writer.WritePropertyName("poolQuota"u8);
                 writer.WriteNumberValue(PoolQuota.Value);
             }
-            if (options.Format != "W" && ActiveJobAndJobScheduleQuota.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActiveJobAndJobScheduleQuota))
             {
                 writer.WritePropertyName("activeJobAndJobScheduleQuota"u8);
                 writer.WriteNumberValue(ActiveJobAndJobScheduleQuota.Value);
             }
-            if (options.Format != "W" && !(AllowedAuthenticationModes is ChangeTrackingList<BatchAuthenticationMode> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
                 if (AllowedAuthenticationModes != null)
                 {
@@ -259,29 +259,29 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountEndpoint = default;
-            Optional<string> nodeManagementEndpoint = default;
-            Optional<BatchProvisioningState> provisioningState = default;
-            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
-            Optional<BatchKeyVaultReference> keyVaultReference = default;
-            Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
+            SystemData systemData = default;
+            string accountEndpoint = default;
+            string nodeManagementEndpoint = default;
+            BatchProvisioningState? provisioningState = default;
+            BatchAccountPoolAllocationMode? poolAllocationMode = default;
+            BatchKeyVaultReference keyVaultReference = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
             IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Optional<int?> dedicatedCoreQuota = default;
-            Optional<int?> lowPriorityCoreQuota = default;
+            BatchAccountAutoStorageConfiguration autoStorage = default;
+            BatchAccountEncryptionConfiguration encryption = default;
+            int? dedicatedCoreQuota = default;
+            int? lowPriorityCoreQuota = default;
             IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default;
-            Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
-            Optional<int> poolQuota = default;
-            Optional<int> activeJobAndJobScheduleQuota = default;
+            bool? dedicatedCoreQuotaPerVmFamilyEnforced = default;
+            int? poolQuota = default;
+            int? activeJobAndJobScheduleQuota = default;
             IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -532,26 +532,26 @@ namespace Azure.ResourceManager.Batch
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                accountEndpoint.Value,
-                nodeManagementEndpoint.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(poolAllocationMode),
-                keyVaultReference.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                networkProfile.Value,
+                accountEndpoint,
+                nodeManagementEndpoint,
+                provisioningState,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
                 privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(),
-                autoStorage.Value,
-                encryption.Value,
-                Optional.ToNullable(dedicatedCoreQuota),
-                Optional.ToNullable(lowPriorityCoreQuota),
+                autoStorage,
+                encryption,
+                dedicatedCoreQuota,
+                lowPriorityCoreQuota,
                 dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
-                Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced),
-                Optional.ToNullable(poolQuota),
-                Optional.ToNullable(activeJobAndJobScheduleQuota),
+                dedicatedCoreQuotaPerVmFamilyEnforced,
+                poolQuota,
+                activeJobAndJobScheduleQuota,
                 allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

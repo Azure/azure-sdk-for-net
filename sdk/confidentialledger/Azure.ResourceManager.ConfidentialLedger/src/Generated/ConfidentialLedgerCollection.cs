@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfidentialLedgerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConfidentialLedgerResource> CreateOrUpdate(WaitUntil waitUntil, string ledgerName, ConfidentialLedgerData data, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual async Task<Response<ConfidentialLedgerResource>> GetAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual Response<ConfidentialLedgerResource> Get(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.Exists");
             scope.Start();
@@ -415,14 +374,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual Response<bool> Exists(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.Exists");
             scope.Start();
@@ -465,14 +417,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConfidentialLedgerResource>> GetIfExistsAsync(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetIfExists");
             scope.Start();
@@ -517,14 +462,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
         public virtual NullableResponse<ConfidentialLedgerResource> GetIfExists(string ledgerName, CancellationToken cancellationToken = default)
         {
-            if (ledgerName == null)
-            {
-                throw new ArgumentNullException(nameof(ledgerName));
-            }
-            if (ledgerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ledgerName));
-            }
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetIfExists");
             scope.Start();

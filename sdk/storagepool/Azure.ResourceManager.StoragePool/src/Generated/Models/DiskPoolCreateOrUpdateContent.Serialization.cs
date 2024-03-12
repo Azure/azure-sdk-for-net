@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (!(ManagedByExtended is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -73,14 +74,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AvailabilityZones is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Disks is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (!(AdditionalCapabilities is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();
@@ -154,12 +155,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             StoragePoolSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            Optional<string> managedBy = default;
+            string managedBy = default;
             IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<string> availabilityZones = default;
             IList<WritableSubResource> disks = default;
             ResourceIdentifier subnetId = default;
@@ -304,11 +305,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<string>(),
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 disks ?? new ChangeTrackingList<WritableSubResource>(),

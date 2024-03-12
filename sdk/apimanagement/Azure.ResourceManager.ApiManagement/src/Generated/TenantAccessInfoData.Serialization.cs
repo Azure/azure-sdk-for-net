@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccessInfoType != null)
+            if (Optional.IsDefined(AccessInfoType))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(AccessInfoType);
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (IsDirectAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> principalId = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string principalId = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                id0.Value,
-                principalId.Value,
-                Optional.ToNullable(enabled),
+                systemData,
+                id0,
+                principalId,
+                enabled,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             int expectedDataSizeInTerabytes = default;
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
-            Optional<string> country = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskScheduleAvailabilityContent(storageLocation, skuName, country.Value, serializedAdditionalRawData, expectedDataSizeInTerabytes);
+            return new DiskScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData, expectedDataSizeInTerabytes);
         }
 
         BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

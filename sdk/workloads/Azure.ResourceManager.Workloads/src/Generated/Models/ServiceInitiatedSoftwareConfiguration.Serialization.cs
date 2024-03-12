@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapFqdn);
             writer.WritePropertyName("sshPrivateKey"u8);
             writer.WriteStringValue(SshPrivateKey);
-            if (HighAvailabilitySoftwareConfiguration != null)
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string sapBitsStorageAccountId = default;
             string sapFqdn = default;
             string sshPrivateKey = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 sapBitsStorageAccountId,
                 sapFqdn,
                 sshPrivateKey,
-                highAvailabilitySoftwareConfiguration.Value);
+                highAvailabilitySoftwareConfiguration);
         }
 
         BinaryData IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RequestedBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateLongTermRetentionBackupContent(Optional.ToNullable(requestedBackupStorageRedundancy), serializedAdditionalRawData);
+            return new UpdateLongTermRetentionBackupContent(requestedBackupStorageRedundancy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateLongTermRetentionBackupContent>.Write(ModelReaderWriterOptions options)

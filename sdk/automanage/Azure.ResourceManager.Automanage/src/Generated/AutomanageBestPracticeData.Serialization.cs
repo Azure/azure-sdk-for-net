@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Automanage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Automanage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> configuration = default;
+            SystemData systemData = default;
+            BinaryData configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Automanage
                 id,
                 name,
                 type,
-                systemData.Value,
-                configuration.Value,
+                systemData,
+                configuration,
                 serializedAdditionalRawData);
         }
 

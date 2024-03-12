@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Requests is ChangeTrackingList<JitNetworkAccessRequestInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
             IList<JitNetworkAccessRequestInfo> requests = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 virtualMachines,
                 requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(),
-                provisioningState.Value,
-                kind.Value,
-                Optional.ToNullable(location),
+                provisioningState,
+                kind,
+                location,
                 serializedAdditionalRawData);
         }
 

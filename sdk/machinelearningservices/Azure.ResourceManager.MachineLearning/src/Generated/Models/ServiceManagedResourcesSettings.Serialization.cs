@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CosmosDb != null)
+            if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
                 writer.WriteObjectValue(CosmosDb);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<CosmosDbSettings> cosmosDb = default;
+            CosmosDbSettings cosmosDb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceManagedResourcesSettings(cosmosDb.Value, serializedAdditionalRawData);
+            return new ServiceManagedResourcesSettings(cosmosDb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceManagedResourcesSettings>.Write(ModelReaderWriterOptions options)

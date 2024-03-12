@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointSyncType.HasValue)
+            if (Optional.IsDefined(RecoveryPointSyncType))
             {
                 writer.WritePropertyName("recoveryPointSyncType"u8);
                 writer.WriteStringValue(RecoveryPointSyncType.Value.ToString());
             }
-            if (!(Disks is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
+            RecoveryPointSyncType? recoveryPointSyncType = default;
             IReadOnlyList<string> disks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointSyncType), disks ?? new ChangeTrackingList<string>());
+            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, recoveryPointSyncType, disks ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<A2ARecoveryPointDetails>.Write(ModelReaderWriterOptions options)

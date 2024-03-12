@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(StorageAccounts is ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ComputePolicies is ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ComputePolicies))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -80,42 +81,42 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallState.HasValue)
+            if (Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (FirewallAllowAzureIPs.HasValue)
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (NewTier.HasValue)
+            if (Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (MaxJobCount.HasValue)
+            if (Optional.IsDefined(MaxJobCount))
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (MaxDegreeOfParallelism.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelism))
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (MinPriorityPerJob.HasValue)
+            if (Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (QueryStoreRetention.HasValue)
+            if (Optional.IsDefined(QueryStoreRetention))
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);
@@ -166,14 +167,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts = default;
             IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies = default;
             IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules = default;
-            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
-            Optional<int> maxJobCount = default;
-            Optional<int> maxDegreeOfParallelism = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
-            Optional<int> queryStoreRetention = default;
+            DataLakeAnalyticsFirewallState? firewallState = default;
+            DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            DataLakeAnalyticsCommitmentTierType? newTier = default;
+            int? maxJobCount = default;
+            int? maxDegreeOfParallelism = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
+            int? queryStoreRetention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -352,14 +353,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
                 computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
                 firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
-                Optional.ToNullable(firewallState),
-                Optional.ToNullable(firewallAllowAzureIPs),
-                Optional.ToNullable(newTier),
-                Optional.ToNullable(maxJobCount),
-                Optional.ToNullable(maxDegreeOfParallelism),
-                Optional.ToNullable(maxDegreeOfParallelismPerJob),
-                Optional.ToNullable(minPriorityPerJob),
-                Optional.ToNullable(queryStoreRetention),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                maxJobCount,
+                maxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
                 serializedAdditionalRawData);
         }
 

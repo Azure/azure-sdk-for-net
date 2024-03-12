@@ -29,34 +29,34 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GatewayLoadBalancer != null)
+            if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
                 JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
-            if (!(VirtualNetworkTaps is ChangeTrackingList<VirtualNetworkTapData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
                 writer.WritePropertyName("virtualNetworkTaps"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationGatewayBackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendAddressPool> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<BackendAddressPoolData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancerInboundNatRules is ChangeTrackingList<InboundNatRuleData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerInboundNatRules))
             {
                 writer.WritePropertyName("loadBalancerInboundNatRules"u8);
                 writer.WriteStartArray();
@@ -96,37 +96,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (PrivateIPAddressVersion.HasValue)
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Primary.HasValue)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 writer.WriteObjectValue(PublicIPAddress);
             }
-            if (!(ApplicationSecurityGroups is ChangeTrackingList<ApplicationSecurityGroupData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PrivateLinkConnectionProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkConnectionProperties))
             {
                 writer.WritePropertyName("privateLinkConnectionProperties"u8);
                 writer.WriteObjectValue(PrivateLinkConnectionProperties);
@@ -185,24 +185,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> gatewayLoadBalancer = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource gatewayLoadBalancer = default;
             IList<VirtualNetworkTapData> virtualNetworkTaps = default;
             IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default;
             IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
             IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<NetworkIPVersion> privateIPAddressVersion = default;
-            Optional<SubnetData> subnet = default;
-            Optional<bool> primary = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            NetworkIPVersion? privateIPAddressVersion = default;
+            SubnetData subnet = default;
+            bool? primary = default;
+            PublicIPAddressData publicIPAddress = default;
             IList<ApplicationSecurityGroupData> applicationSecurityGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -405,25 +405,25 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkInterfaceIPConfigurationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 gatewayLoadBalancer,
                 virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>(),
                 applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
                 loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
-                privateIPAddress.Value,
-                Optional.ToNullable(privateIPAllocationMethod),
-                Optional.ToNullable(privateIPAddressVersion),
-                subnet.Value,
-                Optional.ToNullable(primary),
-                publicIPAddress.Value,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                privateIPAddressVersion,
+                subnet,
+                primary,
+                publicIPAddress,
                 applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
-                Optional.ToNullable(provisioningState),
-                privateLinkConnectionProperties.Value);
+                provisioningState,
+                privateLinkConnectionProperties);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)

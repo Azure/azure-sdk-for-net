@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsPublic.HasValue)
+            if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (IsHttpsOnly.HasValue)
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (!(GatewayIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GatewayIds))
             {
                 writer.WritePropertyName("gatewayIds"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceUris is ChangeTrackingList<Uri> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceUris))
             {
                 writer.WritePropertyName("sourceUrls"u8);
                 writer.WriteStartArray();
@@ -76,17 +77,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SsoProperties != null)
+            if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
-            if (options.Format != "W" && ResourceRequests != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformApiPortalInstance> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -134,14 +135,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
-            Optional<bool> @public = default;
-            Optional<Uri> uri = default;
-            Optional<bool> httpsOnly = default;
+            AppPlatformApiPortalProvisioningState? provisioningState = default;
+            bool? @public = default;
+            Uri uri = default;
+            bool? httpsOnly = default;
             IList<ResourceIdentifier> gatewayIds = default;
             IList<Uri> sourceUris = default;
-            Optional<AppPlatformSsoProperties> ssoProperties = default;
-            Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
+            AppPlatformSsoProperties ssoProperties = default;
+            AppPlatformApiPortalResourceRequirements resourceRequests = default;
             IReadOnlyList<AppPlatformApiPortalInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -264,14 +265,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformApiPortalProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(@public),
-                uri.Value,
-                Optional.ToNullable(httpsOnly),
+                provisioningState,
+                @public,
+                uri,
+                httpsOnly,
                 gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 sourceUris ?? new ChangeTrackingList<Uri>(),
-                ssoProperties.Value,
-                resourceRequests.Value,
+                ssoProperties,
+                resourceRequests,
                 instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(),
                 serializedAdditionalRawData);
         }

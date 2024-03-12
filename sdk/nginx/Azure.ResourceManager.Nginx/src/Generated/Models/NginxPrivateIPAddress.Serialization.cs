@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<NginxPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            IPAddress privateIPAddress = default;
+            NginxPrivateIPAllocationMethod? privateIPAllocationMethod = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxPrivateIPAddress(privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnetId.Value, serializedAdditionalRawData);
+            return new NginxPrivateIPAddress(privateIPAddress, privateIPAllocationMethod, subnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxPrivateIPAddress>.Write(ModelReaderWriterOptions options)

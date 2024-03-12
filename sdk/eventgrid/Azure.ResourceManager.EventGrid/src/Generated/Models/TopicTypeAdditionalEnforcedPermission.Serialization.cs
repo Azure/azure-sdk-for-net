@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (PermissionName != null)
+            if (Optional.IsDefined(PermissionName))
             {
                 writer.WritePropertyName("permissionName"u8);
                 writer.WriteStringValue(PermissionName);
             }
-            if (IsDataAction.HasValue)
+            if (Optional.IsDefined(IsDataAction))
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> permissionName = default;
-            Optional<bool> isDataAction = default;
+            string permissionName = default;
+            bool? isDataAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypeAdditionalEnforcedPermission(permissionName.Value, Optional.ToNullable(isDataAction), serializedAdditionalRawData);
+            return new TopicTypeAdditionalEnforcedPermission(permissionName, isDataAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypeAdditionalEnforcedPermission>.Write(ModelReaderWriterOptions options)

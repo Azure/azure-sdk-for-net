@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Authorization != null)
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (!(Orgs is ChangeTrackingList<AzureDevOpsOrgMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Orgs))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AuthorizationInfo> authorization = default;
+            ProvisioningState? provisioningState = default;
+            AuthorizationInfo authorization = default;
             IList<AzureDevOpsOrgMetadata> orgs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
+            return new AzureDevOpsConnectorProperties(provisioningState, authorization, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorProperties>.Write(ModelReaderWriterOptions options)

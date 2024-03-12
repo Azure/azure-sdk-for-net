@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
 #endif
             }
-            if (CommonName != null)
+            if (Optional.IsDefined(CommonName))
             {
                 writer.WritePropertyName("commonName"u8);
                 writer.WriteStringValue(CommonName);
             }
-            if (IssuerThumbprint != null)
+            if (Optional.IsDefined(IssuerThumbprint))
             {
                 writer.WritePropertyName("issuerThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -96,9 +97,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             bool isAdmin = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<string> commonName = default;
-            Optional<BinaryData> issuerThumbprint = default;
+            BinaryData thumbprint = default;
+            string commonName = default;
+            BinaryData issuerThumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterClientCertificate(isAdmin, thumbprint.Value, commonName.Value, issuerThumbprint.Value, serializedAdditionalRawData);
+            return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterClientCertificate>.Write(ModelReaderWriterOptions options)

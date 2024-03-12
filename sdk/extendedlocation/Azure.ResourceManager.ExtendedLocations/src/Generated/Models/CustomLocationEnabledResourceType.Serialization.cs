@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterExtensionId != null)
+            if (Optional.IsDefined(ClusterExtensionId))
             {
                 writer.WritePropertyName("clusterExtensionId"u8);
                 writer.WriteStringValue(ClusterExtensionId);
             }
-            if (ExtensionType != null)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (!(TypesMetadata is ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TypesMetadata))
             {
                 writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();
@@ -111,9 +112,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> clusterExtensionId = default;
-            Optional<string> extensionType = default;
+            SystemData systemData = default;
+            ResourceIdentifier clusterExtensionId = default;
+            string extensionType = default;
             IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,9 +194,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                clusterExtensionId.Value,
-                extensionType.Value,
+                systemData,
+                clusterExtensionId,
+                extensionType,
                 typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(),
                 serializedAdditionalRawData);
         }

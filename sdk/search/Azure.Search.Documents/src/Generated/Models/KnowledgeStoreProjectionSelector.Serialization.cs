@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ReferenceKeyName != null)
+            if (Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
-            if (GeneratedKeyName != null)
+            if (Optional.IsDefined(GeneratedKeyName))
             {
                 writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (SourceContext != null)
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (!(Inputs is ChangeTrackingList<InputFieldMappingEntry> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -55,10 +56,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> referenceKeyName = default;
-            Optional<string> generatedKeyName = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+            return new KnowledgeStoreProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (EnvironmentName != null)
+            if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> environmentName = default;
-            Optional<DynatraceBillingPlanInfo> planData = default;
+            string environmentId = default;
+            string environmentName = default;
+            DynatraceBillingPlanInfo planData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value, serializedAdditionalRawData);
+            return new LinkableEnvironmentResult(environmentId, environmentName, planData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentResult>.Write(ModelReaderWriterOptions options)

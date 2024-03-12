@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResellerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (options.Format != "W" && ResellerDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ResellerDescription))
             {
                 writer.WritePropertyName("resellerDescription"u8);
                 writer.WriteStringValue(ResellerDescription);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resellerId = default;
-            Optional<string> resellerDescription = default;
+            ResourceIdentifier resellerId = default;
+            string resellerDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReseller(resellerId.Value, resellerDescription.Value, serializedAdditionalRawData);
+            return new ConsumptionReseller(resellerId, resellerDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReseller>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DataCollectionRuleId != null)
+            if (Optional.IsDefined(DataCollectionRuleId))
             {
                 writer.WritePropertyName("dataCollectionRuleId"u8);
                 writer.WriteStringValue(DataCollectionRuleId);
             }
-            if (DataCollectionEndpointId != null)
+            if (Optional.IsDefined(DataCollectionEndpointId))
             {
                 writer.WritePropertyName("dataCollectionEndpointId"u8);
                 writer.WriteStringValue(DataCollectionEndpointId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ResourceIdentifier> dataCollectionRuleId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
-            Optional<DataCollectionRuleAssociationProvisioningState> provisioningState = default;
-            Optional<DataCollectionRuleAssociationMetadata> metadata = default;
+            SystemData systemData = default;
+            string description = default;
+            ResourceIdentifier dataCollectionRuleId = default;
+            ResourceIdentifier dataCollectionEndpointId = default;
+            DataCollectionRuleAssociationProvisioningState? provisioningState = default;
+            DataCollectionRuleAssociationMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                description.Value,
-                dataCollectionRuleId.Value,
-                dataCollectionEndpointId.Value,
-                Optional.ToNullable(provisioningState),
-                metadata.Value,
+                systemData,
+                etag,
+                description,
+                dataCollectionRuleId,
+                dataCollectionEndpointId,
+                provisioningState,
+                metadata,
                 serializedAdditionalRawData);
         }
 

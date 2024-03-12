@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<bool> isDefault = default;
+            bool? isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;
             string objectType = default;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, Optional.ToNullable(isDefault), lifecycles);
+            return new DataProtectionRetentionRule(name, objectType, serializedAdditionalRawData, isDefault, lifecycles);
         }
 
         BinaryData IPersistableModel<DataProtectionRetentionRule>.Write(ModelReaderWriterOptions options)

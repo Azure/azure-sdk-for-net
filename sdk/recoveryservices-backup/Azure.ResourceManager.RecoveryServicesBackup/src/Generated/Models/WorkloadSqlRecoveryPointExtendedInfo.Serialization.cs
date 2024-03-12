@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DataDirectoryInfoCapturedOn.HasValue)
+            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
                 writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
-            if (!(DataDirectoryPaths is ChangeTrackingList<SqlDataDirectory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDirectoryPaths))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dataDirectoryTimeInUTC = default;
+            DateTimeOffset? dataDirectoryTimeInUTC = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlRecoveryPointExtendedInfo(Optional.ToNullable(dataDirectoryTimeInUTC), dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), serializedAdditionalRawData);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options)

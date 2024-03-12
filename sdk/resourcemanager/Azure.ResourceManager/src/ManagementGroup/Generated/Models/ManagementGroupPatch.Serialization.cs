@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (ParentGroupId != null)
+            if (Optional.IsDefined(ParentGroupId))
             {
                 if (ParentGroupId != null)
                 {
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> parentGroupId = default;
+            string displayName = default;
+            string parentGroupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupPatch(displayName.Value, parentGroupId.Value, serializedAdditionalRawData);
+            return new ManagementGroupPatch(displayName, parentGroupId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +51,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RunRequest != null)
+            if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
                 writer.WriteObjectValue(RunRequest);
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<ContainerRegistryRunContent> runRequest = default;
-            Optional<string> forceUpdateTag = default;
+            ContainerRegistryRunContent runRequest = default;
+            string forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,10 +175,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryTaskRunPatch(
                 identity,
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                runRequest.Value,
-                forceUpdateTag.Value,
+                runRequest,
+                forceUpdateTag,
                 serializedAdditionalRawData);
         }
 

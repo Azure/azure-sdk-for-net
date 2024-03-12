@@ -29,49 +29,49 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PeerAsn.HasValue)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (PeerIP != null)
+            if (Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp"u8);
                 writer.WriteStringValue(PeerIP);
             }
-            if (HubVirtualNetworkConnection != null)
+            if (Optional.IsDefined(HubVirtualNetworkConnection))
             {
                 writer.WritePropertyName("hubVirtualNetworkConnection"u8);
                 JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<long> peerAsn = default;
-            Optional<string> peerIP = default;
-            Optional<WritableSubResource> hubVirtualNetworkConnection = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<HubBgpConnectionStatus> connectionState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            long? peerAsn = default;
+            string peerIP = default;
+            WritableSubResource hubVirtualNetworkConnection = default;
+            NetworkProvisioningState? provisioningState = default;
+            HubBgpConnectionStatus? connectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,16 +220,16 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(peerAsn),
-                peerIP.Value,
+                etag,
+                peerAsn,
+                peerIP,
                 hubVirtualNetworkConnection,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(connectionState));
+                provisioningState,
+                connectionState);
         }
 
         BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options)

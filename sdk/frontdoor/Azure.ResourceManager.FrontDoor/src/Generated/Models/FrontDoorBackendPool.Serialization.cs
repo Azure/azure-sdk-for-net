@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -27,24 +28,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Backends is ChangeTrackingList<FrontDoorBackend> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Backends))
             {
                 writer.WritePropertyName("backends"u8);
                 writer.WriteStartArray();
@@ -54,17 +55,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LoadBalancingSettings != null)
+            if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 JsonSerializer.Serialize(writer, LoadBalancingSettings);
             }
-            if (HealthProbeSettings != null)
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 JsonSerializer.Serialize(writer, HealthProbeSettings);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<FrontDoorBackend> backends = default;
-            Optional<WritableSubResource> loadBalancingSettings = default;
-            Optional<WritableSubResource> healthProbeSettings = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            WritableSubResource loadBalancingSettings = default;
+            WritableSubResource healthProbeSettings = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,14 +203,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontDoorBackendPool(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
                 backends ?? new ChangeTrackingList<FrontDoorBackend>(),
                 loadBalancingSettings,
                 healthProbeSettings,
-                Optional.ToNullable(resourceState));
+                resourceState);
         }
 
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)

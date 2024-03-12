@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             string username = default;
-            Optional<string> password = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineCredential(username, password.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineCredential(username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineCredential>.Write(ModelReaderWriterOptions options)

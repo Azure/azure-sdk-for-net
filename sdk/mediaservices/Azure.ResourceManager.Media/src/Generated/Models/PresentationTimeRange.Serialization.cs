@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (StartTimestamp.HasValue)
+            if (Optional.IsDefined(StartTimestamp))
             {
                 writer.WritePropertyName("startTimestamp"u8);
                 writer.WriteNumberValue(StartTimestamp.Value);
             }
-            if (EndTimestamp.HasValue)
+            if (Optional.IsDefined(EndTimestamp))
             {
                 writer.WritePropertyName("endTimestamp"u8);
                 writer.WriteNumberValue(EndTimestamp.Value);
             }
-            if (PresentationWindowDuration.HasValue)
+            if (Optional.IsDefined(PresentationWindowDuration))
             {
                 writer.WritePropertyName("presentationWindowDuration"u8);
                 writer.WriteNumberValue(PresentationWindowDuration.Value);
             }
-            if (LiveBackoffDuration.HasValue)
+            if (Optional.IsDefined(LiveBackoffDuration))
             {
                 writer.WritePropertyName("liveBackoffDuration"u8);
                 writer.WriteNumberValue(LiveBackoffDuration.Value);
             }
-            if (Timescale.HasValue)
+            if (Optional.IsDefined(Timescale))
             {
                 writer.WritePropertyName("timescale"u8);
                 writer.WriteNumberValue(Timescale.Value);
             }
-            if (ForceEndTimestamp.HasValue)
+            if (Optional.IsDefined(ForceEndTimestamp))
             {
                 writer.WritePropertyName("forceEndTimestamp"u8);
                 writer.WriteBooleanValue(ForceEndTimestamp.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<long> startTimestamp = default;
-            Optional<long> endTimestamp = default;
-            Optional<long> presentationWindowDuration = default;
-            Optional<long> liveBackoffDuration = default;
-            Optional<long> timescale = default;
-            Optional<bool> forceEndTimestamp = default;
+            long? startTimestamp = default;
+            long? endTimestamp = default;
+            long? presentationWindowDuration = default;
+            long? liveBackoffDuration = default;
+            long? timescale = default;
+            bool? forceEndTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PresentationTimeRange(
-                Optional.ToNullable(startTimestamp),
-                Optional.ToNullable(endTimestamp),
-                Optional.ToNullable(presentationWindowDuration),
-                Optional.ToNullable(liveBackoffDuration),
-                Optional.ToNullable(timescale),
-                Optional.ToNullable(forceEndTimestamp),
+                startTimestamp,
+                endTimestamp,
+                presentationWindowDuration,
+                liveBackoffDuration,
+                timescale,
+                forceEndTimestamp,
                 serializedAdditionalRawData);
         }
 

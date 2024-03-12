@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(ExcludedProjectNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
             {
                 writer.WritePropertyName("excludedProjectNumbers"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServiceAccountEmailAddress != null)
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (WorkloadIdentityProviderId != null)
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (options.Format != "W" && OrganizationName != null)
+            if (options.Format != "W" && Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> excludedProjectNumbers = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> organizationName = default;
+            string serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
+            string organizationName = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,9 +145,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 organizationMembershipType,
                 serializedAdditionalRawData,
                 excludedProjectNumbers ?? new ChangeTrackingList<string>(),
-                serviceAccountEmailAddress.Value,
-                workloadIdentityProviderId.Value,
-                organizationName.Value);
+                serviceAccountEmailAddress,
+                workloadIdentityProviderId,
+                organizationName);
         }
 
         BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)

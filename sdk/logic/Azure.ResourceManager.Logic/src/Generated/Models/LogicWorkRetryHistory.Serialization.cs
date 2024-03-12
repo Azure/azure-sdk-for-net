@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (ClientRequestId != null)
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (ServiceRequestId != null)
+            if (Optional.IsDefined(ServiceRequestId))
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> code = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> serviceRequestId = default;
-            Optional<LogicErrorResponse> error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string code = default;
+            string clientRequestId = default;
+            string serviceRequestId = default;
+            LogicErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicWorkRetryHistory(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                code.Value,
-                clientRequestId.Value,
-                serviceRequestId.Value,
-                error.Value,
+                startTime,
+                endTime,
+                code,
+                clientRequestId,
+                serviceRequestId,
+                error,
                 serializedAdditionalRawData);
         }
 

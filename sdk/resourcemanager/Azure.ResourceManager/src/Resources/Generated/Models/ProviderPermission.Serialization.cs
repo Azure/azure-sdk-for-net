@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (RoleDefinition != null)
+            if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
                 writer.WriteObjectValue(RoleDefinition);
             }
-            if (ManagedByRoleDefinition != null)
+            if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
                 writer.WriteObjectValue(ManagedByRoleDefinition);
             }
-            if (ProviderAuthorizationConsentState.HasValue)
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<AzureRoleDefinition> roleDefinition = default;
-            Optional<AzureRoleDefinition> managedByRoleDefinition = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            string applicationId = default;
+            AzureRoleDefinition roleDefinition = default;
+            AzureRoleDefinition managedByRoleDefinition = default;
+            ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
+            return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderPermission>.Write(ModelReaderWriterOptions options)

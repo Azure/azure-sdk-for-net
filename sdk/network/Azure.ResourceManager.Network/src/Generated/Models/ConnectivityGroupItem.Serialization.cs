@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
             writer.WriteStringValue(NetworkGroupId);
-            if (UseHubGateway.HasValue)
+            if (Optional.IsDefined(UseHubGateway))
             {
                 writer.WritePropertyName("useHubGateway"u8);
                 writer.WriteStringValue(UseHubGateway.Value.ToString());
             }
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string networkGroupId = default;
-            Optional<HubGatewayUsageFlag> useHubGateway = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
+            HubGatewayUsageFlag? useHubGateway = default;
+            GlobalMeshSupportFlag? isGlobal = default;
             GroupConnectivity groupConnectivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityGroupItem(networkGroupId, Optional.ToNullable(useHubGateway), Optional.ToNullable(isGlobal), groupConnectivity, serializedAdditionalRawData);
+            return new ConnectivityGroupItem(networkGroupId, useHubGateway, isGlobal, groupConnectivity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityGroupItem>.Write(ModelReaderWriterOptions options)

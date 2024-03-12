@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (VaultName != null)
+            if (Optional.IsDefined(VaultName))
             {
                 writer.WritePropertyName("vaultName"u8);
                 writer.WriteStringValue(VaultName);
             }
-            if (SecretName != null)
+            if (Optional.IsDefined(SecretName))
             {
                 writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityType"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (ActiveVersion != null)
+            if (Optional.IsDefined(ActiveVersion))
             {
                 writer.WritePropertyName("activeVersion"u8);
                 writer.WriteStringValue(ActiveVersion);
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reference = default;
-            Optional<ResolveStatus> status = default;
-            Optional<string> vaultName = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
-            Optional<ManagedServiceIdentity> identityType = default;
-            Optional<string> details = default;
-            Optional<ConfigReferenceSource> source = default;
-            Optional<string> activeVersion = default;
+            SystemData systemData = default;
+            string reference = default;
+            ResolveStatus? status = default;
+            string vaultName = default;
+            string secretName = default;
+            string secretVersion = default;
+            ManagedServiceIdentity identityType = default;
+            string details = default;
+            ConfigReferenceSource? source = default;
+            string activeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,17 +265,17 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                reference.Value,
-                Optional.ToNullable(status),
-                vaultName.Value,
-                secretName.Value,
-                secretVersion.Value,
+                systemData,
+                reference,
+                status,
+                vaultName,
+                secretName,
+                secretVersion,
                 identityType,
-                details.Value,
-                Optional.ToNullable(source),
-                activeVersion.Value,
-                kind.Value,
+                details,
+                source,
+                activeVersion,
+                kind,
                 serializedAdditionalRawData);
         }
 

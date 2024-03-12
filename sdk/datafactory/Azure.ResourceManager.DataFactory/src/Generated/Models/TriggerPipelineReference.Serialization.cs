@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PipelineReference != null)
+            if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryPipelineReference> pipelineReference = default;
+            DataFactoryPipelineReference pipelineReference = default;
             IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerPipelineReference(pipelineReference.Value, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerPipelineReference>.Write(ModelReaderWriterOptions options)

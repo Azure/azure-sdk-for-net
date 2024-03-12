@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectivityType.HasValue)
+            if (Optional.IsDefined(ConnectivityType))
             {
                 writer.WritePropertyName("connectivityType"u8);
                 writer.WriteStringValue(ConnectivityType.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (SqlAuthUpdateUserName != null)
+            if (Optional.IsDefined(SqlAuthUpdateUserName))
             {
                 writer.WritePropertyName("sqlAuthUpdateUserName"u8);
                 writer.WriteStringValue(SqlAuthUpdateUserName);
             }
-            if (SqlAuthUpdatePassword != null)
+            if (Optional.IsDefined(SqlAuthUpdatePassword))
             {
                 writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlServerConnectivityType> connectivityType = default;
-            Optional<int> port = default;
-            Optional<string> sqlAuthUpdateUserName = default;
-            Optional<string> sqlAuthUpdatePassword = default;
+            SqlServerConnectivityType? connectivityType = default;
+            int? port = default;
+            string sqlAuthUpdateUserName = default;
+            string sqlAuthUpdatePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlConnectivityUpdateSettings(Optional.ToNullable(connectivityType), Optional.ToNullable(port), sqlAuthUpdateUserName.Value, sqlAuthUpdatePassword.Value, serializedAdditionalRawData);
+            return new SqlConnectivityUpdateSettings(connectivityType, port, sqlAuthUpdateUserName, sqlAuthUpdatePassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlConnectivityUpdateSettings>.Write(ModelReaderWriterOptions options)

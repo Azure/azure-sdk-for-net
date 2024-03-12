@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationQualifier"u8);
             writer.WriteStringValue(AuthorizationQualifier);
-            if (AuthorizationValue != null)
+            if (Optional.IsDefined(AuthorizationValue))
             {
                 writer.WritePropertyName("authorizationValue"u8);
                 writer.WriteStringValue(AuthorizationValue);
             }
             writer.WritePropertyName("securityQualifier"u8);
             writer.WriteStringValue(SecurityQualifier);
-            if (PasswordValue != null)
+            if (Optional.IsDefined(PasswordValue))
             {
                 writer.WritePropertyName("passwordValue"u8);
                 writer.WriteStringValue(PasswordValue);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string authorizationQualifier = default;
-            Optional<string> authorizationValue = default;
+            string authorizationValue = default;
             string securityQualifier = default;
-            Optional<string> passwordValue = default;
+            string passwordValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12SecuritySettings(authorizationQualifier, authorizationValue.Value, securityQualifier, passwordValue.Value, serializedAdditionalRawData);
+            return new X12SecuritySettings(authorizationQualifier, authorizationValue, securityQualifier, passwordValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12SecuritySettings>.Write(ModelReaderWriterOptions options)

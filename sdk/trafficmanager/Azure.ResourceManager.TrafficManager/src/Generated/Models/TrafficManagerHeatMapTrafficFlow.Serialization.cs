@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (SourceIP != null)
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Latitude.HasValue)
+            if (Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Longitude.HasValue)
+            if (Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (!(QueryExperiences is ChangeTrackingList<TrafficManagerHeatMapQueryExperience> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueryExperiences))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IPAddress> sourceIP = default;
-            Optional<double> latitude = default;
-            Optional<double> longitude = default;
+            IPAddress sourceIP = default;
+            double? latitude = default;
+            double? longitude = default;
             IList<TrafficManagerHeatMapQueryExperience> queryExperiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), serializedAdditionalRawData);
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Write(ModelReaderWriterOptions options)

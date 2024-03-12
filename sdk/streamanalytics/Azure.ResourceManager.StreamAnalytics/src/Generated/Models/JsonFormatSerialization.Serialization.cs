@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
-            Optional<JsonOutputSerializationFormat> format = default;
+            StreamAnalyticsDataSerializationEncoding? encoding = default;
+            JsonOutputSerializationFormat? format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonFormatSerialization(type, serializedAdditionalRawData, Optional.ToNullable(encoding), Optional.ToNullable(format));
+            return new JsonFormatSerialization(type, serializedAdditionalRawData, encoding, format);
         }
 
         BinaryData IPersistableModel<JsonFormatSerialization>.Write(ModelReaderWriterOptions options)

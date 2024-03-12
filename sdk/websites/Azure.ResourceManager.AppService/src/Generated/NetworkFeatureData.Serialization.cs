@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualNetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkName))
             {
                 writer.WritePropertyName("virtualNetworkName"u8);
                 writer.WriteStringValue(VirtualNetworkName);
             }
-            if (options.Format != "W" && VirtualNetworkConnection != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
                 writer.WriteObjectValue(VirtualNetworkConnection);
             }
-            if (options.Format != "W" && !(HybridConnections is ChangeTrackingList<RelayServiceConnectionEntityData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
             {
                 writer.WritePropertyName("hybridConnections"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(HybridConnectionsV2 is ChangeTrackingList<HybridConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnectionsV2))
             {
                 writer.WritePropertyName("hybridConnectionsV2"u8);
                 writer.WriteStartArray();
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> virtualNetworkName = default;
-            Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
+            SystemData systemData = default;
+            string virtualNetworkName = default;
+            AppServiceVirtualNetworkProperties virtualNetworkConnection = default;
             IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections = default;
             IReadOnlyList<HybridConnectionData> hybridConnectionsV2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                virtualNetworkName.Value,
-                virtualNetworkConnection.Value,
+                systemData,
+                virtualNetworkName,
+                virtualNetworkConnection,
                 hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(),
                 hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

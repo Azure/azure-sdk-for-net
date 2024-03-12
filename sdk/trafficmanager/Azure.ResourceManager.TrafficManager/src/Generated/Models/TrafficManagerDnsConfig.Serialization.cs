@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (RelativeName != null)
+            if (Optional.IsDefined(RelativeName))
             {
                 writer.WritePropertyName("relativeName"u8);
                 writer.WriteStringValue(RelativeName);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Ttl.HasValue)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<string> relativeName = default;
-            Optional<string> fqdn = default;
-            Optional<long> ttl = default;
+            string relativeName = default;
+            string fqdn = default;
+            long? ttl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerDnsConfig(relativeName.Value, fqdn.Value, Optional.ToNullable(ttl), serializedAdditionalRawData);
+            return new TrafficManagerDnsConfig(relativeName, fqdn, ttl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerDnsConfig>.Write(ModelReaderWriterOptions options)

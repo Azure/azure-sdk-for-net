@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (TargetTier != null)
+            if (Optional.IsDefined(TargetTier))
             {
                 writer.WritePropertyName("targetTier"u8);
                 writer.WriteStringValue(TargetTier);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> targetTier = default;
+            string targetTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyUpdatesInProgress(targetTier.Value, serializedAdditionalRawData);
+            return new PropertyUpdatesInProgress(targetTier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyUpdatesInProgress>.Write(ModelReaderWriterOptions options)

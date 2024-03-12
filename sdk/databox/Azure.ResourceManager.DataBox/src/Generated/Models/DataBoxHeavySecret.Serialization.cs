@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DeviceSerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(DeviceSerialNumber))
             {
                 writer.WritePropertyName("deviceSerialNumber"u8);
                 writer.WriteStringValue(DeviceSerialNumber);
             }
-            if (options.Format != "W" && DevicePassword != null)
+            if (options.Format != "W" && Optional.IsDefined(DevicePassword))
             {
                 writer.WritePropertyName("devicePassword"u8);
                 writer.WriteStringValue(DevicePassword);
             }
-            if (options.Format != "W" && !(NetworkConfigurations is ChangeTrackingList<ApplianceNetworkConfiguration> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkConfigurations))
             {
                 writer.WritePropertyName("networkConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EncodedValidationCertPubKey != null)
+            if (options.Format != "W" && Optional.IsDefined(EncodedValidationCertPubKey))
             {
                 writer.WritePropertyName("encodedValidationCertPubKey"u8);
                 writer.WriteStringValue(EncodedValidationCertPubKey);
             }
-            if (options.Format != "W" && !(AccountCredentialDetails is ChangeTrackingList<DataBoxAccountCredentialDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AccountCredentialDetails))
             {
                 writer.WritePropertyName("accountCredentialDetails"u8);
                 writer.WriteStartArray();
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> deviceSerialNumber = default;
-            Optional<string> devicePassword = default;
+            string deviceSerialNumber = default;
+            string devicePassword = default;
             IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
-            Optional<string> encodedValidationCertPubKey = default;
+            string encodedValidationCertPubKey = default;
             IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,10 +159,10 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxHeavySecret(
-                deviceSerialNumber.Value,
-                devicePassword.Value,
+                deviceSerialNumber,
+                devicePassword,
                 networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
-                encodedValidationCertPubKey.Value,
+                encodedValidationCertPubKey,
                 accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToSerialString());
             }
-            if (ElevationLevel.HasValue)
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchAutoUserScope> scope = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
+            BatchAutoUserScope? scope = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAutoUserSpecification(Optional.ToNullable(scope), Optional.ToNullable(elevationLevel), serializedAdditionalRawData);
+            return new BatchAutoUserSpecification(scope, elevationLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAutoUserSpecification>.Write(ModelReaderWriterOptions options)

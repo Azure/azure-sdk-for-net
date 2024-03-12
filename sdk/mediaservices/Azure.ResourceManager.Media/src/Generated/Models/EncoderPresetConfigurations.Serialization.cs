@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Complexity.HasValue)
+            if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (InterleaveOutput.HasValue)
+            if (Optional.IsDefined(InterleaveOutput))
             {
                 writer.WritePropertyName("interleaveOutput"u8);
                 writer.WriteStringValue(InterleaveOutput.Value.ToString());
             }
-            if (KeyFrameIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(KeyFrameIntervalInSeconds))
             {
                 writer.WritePropertyName("keyFrameIntervalInSeconds"u8);
                 writer.WriteNumberValue(KeyFrameIntervalInSeconds.Value);
             }
-            if (MaxBitrateBps.HasValue)
+            if (Optional.IsDefined(MaxBitrateBps))
             {
                 writer.WritePropertyName("maxBitrateBps"u8);
                 writer.WriteNumberValue(MaxBitrateBps.Value);
             }
-            if (MaxHeight.HasValue)
+            if (Optional.IsDefined(MaxHeight))
             {
                 writer.WritePropertyName("maxHeight"u8);
                 writer.WriteNumberValue(MaxHeight.Value);
             }
-            if (MaxLayers.HasValue)
+            if (Optional.IsDefined(MaxLayers))
             {
                 writer.WritePropertyName("maxLayers"u8);
                 writer.WriteNumberValue(MaxLayers.Value);
             }
-            if (MinBitrateBps.HasValue)
+            if (Optional.IsDefined(MinBitrateBps))
             {
                 writer.WritePropertyName("minBitrateBps"u8);
                 writer.WriteNumberValue(MinBitrateBps.Value);
             }
-            if (MinHeight.HasValue)
+            if (Optional.IsDefined(MinHeight))
             {
                 writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncodingComplexity> complexity = default;
-            Optional<InterleaveOutput> interleaveOutput = default;
-            Optional<float> keyFrameIntervalInSeconds = default;
-            Optional<int> maxBitrateBps = default;
-            Optional<int> maxHeight = default;
-            Optional<int> maxLayers = default;
-            Optional<int> minBitrateBps = default;
-            Optional<int> minHeight = default;
+            EncodingComplexity? complexity = default;
+            InterleaveOutput? interleaveOutput = default;
+            float? keyFrameIntervalInSeconds = default;
+            int? maxBitrateBps = default;
+            int? maxHeight = default;
+            int? maxLayers = default;
+            int? minBitrateBps = default;
+            int? minHeight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EncoderPresetConfigurations(
-                Optional.ToNullable(complexity),
-                Optional.ToNullable(interleaveOutput),
-                Optional.ToNullable(keyFrameIntervalInSeconds),
-                Optional.ToNullable(maxBitrateBps),
-                Optional.ToNullable(maxHeight),
-                Optional.ToNullable(maxLayers),
-                Optional.ToNullable(minBitrateBps),
-                Optional.ToNullable(minHeight),
+                complexity,
+                interleaveOutput,
+                keyFrameIntervalInSeconds,
+                maxBitrateBps,
+                maxHeight,
+                maxLayers,
+                minBitrateBps,
+                minHeight,
                 serializedAdditionalRawData);
         }
 

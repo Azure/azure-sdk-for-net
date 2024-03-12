@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (CpuCoresCount.HasValue)
+            if (Optional.IsDefined(CpuCoresCount))
             {
                 writer.WritePropertyName("cpuCoresCount"u8);
                 writer.WriteNumberValue(CpuCoresCount.Value);
             }
-            if (options.Format != "W" && VCpusAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCpusAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
-            if (MemoryInGB.HasValue)
+            if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (MaxNicsCount.HasValue)
+            if (Optional.IsDefined(MaxNicsCount))
             {
                 writer.WritePropertyName("maxNicsCount"u8);
                 writer.WriteNumberValue(MaxNicsCount.Value);
             }
-            if (!(Errors is ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HighIopsSupported != null)
+            if (Optional.IsDefined(HighIopsSupported))
             {
                 writer.WritePropertyName("highIopsSupported"u8);
                 writer.WriteStringValue(HighIopsSupported);
             }
-            if (!(HyperVGenerations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HyperVGenerations))
             {
                 writer.WritePropertyName("hyperVGenerations"u8);
                 writer.WriteStartArray();
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<int> cpuCoresCount = default;
-            Optional<int> vCpusAvailable = default;
-            Optional<double> memoryInGB = default;
-            Optional<int> maxDataDiskCount = default;
-            Optional<int> maxNicsCount = default;
+            string name = default;
+            string friendlyName = default;
+            int? cpuCoresCount = default;
+            int? vCpusAvailable = default;
+            double? memoryInGB = default;
+            int? maxDataDiskCount = default;
+            int? maxNicsCount = default;
             IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors = default;
-            Optional<string> highIopsSupported = default;
+            string highIopsSupported = default;
             IReadOnlyList<string> hyperVGenerations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -233,15 +234,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TargetComputeSizeProperties(
-                name.Value,
-                friendlyName.Value,
-                Optional.ToNullable(cpuCoresCount),
-                Optional.ToNullable(vCpusAvailable),
-                Optional.ToNullable(memoryInGB),
-                Optional.ToNullable(maxDataDiskCount),
-                Optional.ToNullable(maxNicsCount),
+                name,
+                friendlyName,
+                cpuCoresCount,
+                vCpusAvailable,
+                memoryInGB,
+                maxDataDiskCount,
+                maxNicsCount,
                 errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(),
-                highIopsSupported.Value,
+                highIopsSupported,
                 hyperVGenerations ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

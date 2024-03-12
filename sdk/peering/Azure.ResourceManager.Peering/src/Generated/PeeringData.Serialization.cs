@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,29 +60,29 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Direct != null)
+            if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
-            if (Exchange != null)
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringProperties> direct = default;
-            Optional<ExchangePeeringProperties> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DirectPeeringProperties direct = default;
+            ExchangePeeringProperties exchange = default;
+            string peeringLocation = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,15 +249,15 @@ namespace Azure.ResourceManager.Peering
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
                 kind,
-                direct.Value,
-                exchange.Value,
-                peeringLocation.Value,
-                Optional.ToNullable(provisioningState),
+                direct,
+                exchange,
+                peeringLocation,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && PropertiesSchema != null)
+            if (options.Format != "W" && Optional.IsDefined(PropertiesSchema))
             {
                 writer.WritePropertyName("propertiesSchema"u8);
                 writer.WriteStringValue(PropertiesSchema);
             }
-            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> propertiesSchema = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string propertiesSchema = default;
             IReadOnlyList<string> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Chaos
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                displayName.Value,
-                description.Value,
-                propertiesSchema.Value,
+                systemData,
+                location,
+                displayName,
+                description,
+                propertiesSchema,
                 resourceTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

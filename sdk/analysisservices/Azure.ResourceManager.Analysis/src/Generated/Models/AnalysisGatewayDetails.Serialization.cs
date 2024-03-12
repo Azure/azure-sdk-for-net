@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (GatewayResourceId != null)
+            if (Optional.IsDefined(GatewayResourceId))
             {
                 writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
             }
-            if (options.Format != "W" && GatewayObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayObjectId))
             {
                 writer.WritePropertyName("gatewayObjectId"u8);
                 writer.WriteStringValue(GatewayObjectId);
             }
-            if (options.Format != "W" && DmtsClusterUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DmtsClusterUri))
             {
                 writer.WritePropertyName("dmtsClusterUri"u8);
                 writer.WriteStringValue(DmtsClusterUri.AbsoluteUri);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<string> gatewayResourceId = default;
-            Optional<string> gatewayObjectId = default;
-            Optional<Uri> dmtsClusterUri = default;
+            string gatewayResourceId = default;
+            string gatewayObjectId = default;
+            Uri dmtsClusterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value, serializedAdditionalRawData);
+            return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisGatewayDetails>.Write(ModelReaderWriterOptions options)

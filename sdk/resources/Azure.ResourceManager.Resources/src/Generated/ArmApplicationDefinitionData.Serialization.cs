@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("lockLevel"u8);
             writer.WriteStringValue(LockLevel.ToSerialString());
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(Authorizations is ChangeTrackingList<ArmApplicationAuthorization> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Artifacts is ChangeTrackingList<ArmApplicationDefinitionArtifact> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -105,17 +105,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (PackageFileUri != null)
+            if (Optional.IsDefined(PackageFileUri))
             {
                 writer.WritePropertyName("packageFileUri"u8);
                 writer.WriteStringValue(PackageFileUri.AbsoluteUri);
             }
-            if (MainTemplate != null)
+            if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (CreateUiDefinition != null)
+            if (Optional.IsDefined(CreateUiDefinition))
             {
                 writer.WritePropertyName("createUiDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -139,27 +139,27 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (NotificationPolicy != null)
+            if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
                 writer.WriteObjectValue(NotificationPolicy);
             }
-            if (LockingPolicy != null)
+            if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
                 writer.WriteObjectValue(LockingPolicy);
             }
-            if (DeploymentPolicy != null)
+            if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
                 writer.WriteObjectValue(DeploymentPolicy);
             }
-            if (ManagementPolicy != null)
+            if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
                 writer.WriteObjectValue(ManagementPolicy);
             }
-            if (!(Policies is ChangeTrackingList<ArmApplicationPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -208,27 +208,27 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<ArmApplicationSku> sku = default;
+            string managedBy = default;
+            ArmApplicationSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ArmApplicationLockLevel lockLevel = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEnabled = default;
+            string displayName = default;
+            bool? isEnabled = default;
             IList<ArmApplicationAuthorization> authorizations = default;
             IList<ArmApplicationDefinitionArtifact> artifacts = default;
-            Optional<string> description = default;
-            Optional<Uri> packageFileUri = default;
-            Optional<BinaryData> mainTemplate = default;
-            Optional<BinaryData> createUiDefinition = default;
-            Optional<ArmApplicationNotificationPolicy> notificationPolicy = default;
-            Optional<ArmApplicationPackageLockingPolicy> lockingPolicy = default;
-            Optional<ArmApplicationDeploymentPolicy> deploymentPolicy = default;
-            Optional<ArmApplicationManagementPolicy> managementPolicy = default;
+            string description = default;
+            Uri packageFileUri = default;
+            BinaryData mainTemplate = default;
+            BinaryData createUiDefinition = default;
+            ArmApplicationNotificationPolicy notificationPolicy = default;
+            ArmApplicationPackageLockingPolicy lockingPolicy = default;
+            ArmApplicationDeploymentPolicy deploymentPolicy = default;
+            ArmApplicationManagementPolicy managementPolicy = default;
             IList<ArmApplicationPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -442,25 +442,25 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
-                sku.Value,
+                managedBy,
+                sku,
                 serializedAdditionalRawData,
                 lockLevel,
-                displayName.Value,
-                Optional.ToNullable(isEnabled),
+                displayName,
+                isEnabled,
                 authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
                 artifacts ?? new ChangeTrackingList<ArmApplicationDefinitionArtifact>(),
-                description.Value,
-                packageFileUri.Value,
-                mainTemplate.Value,
-                createUiDefinition.Value,
-                notificationPolicy.Value,
-                lockingPolicy.Value,
-                deploymentPolicy.Value,
-                managementPolicy.Value,
+                description,
+                packageFileUri,
+                mainTemplate,
+                createUiDefinition,
+                notificationPolicy,
+                lockingPolicy,
+                deploymentPolicy,
+                managementPolicy,
                 policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
         }
 

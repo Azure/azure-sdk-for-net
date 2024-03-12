@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 return null;
             }
             string expression = default;
-            Optional<FacetRequestOptions> options0 = default;
+            FacetRequestOptions options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacetRequest(expression, options0.Value, serializedAdditionalRawData);
+            return new FacetRequest(expression, options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacetRequest>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<string> payload = default;
+            string region = default;
+            string payload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportQuotaChangeContent(region.Value, payload.Value, serializedAdditionalRawData);
+            return new SupportQuotaChangeContent(region, payload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportQuotaChangeContent>.Write(ModelReaderWriterOptions options)

@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapsePrivateLinkHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateLinkHubName, SynapsePrivateLinkHubData data, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapsePrivateLinkHubResource> CreateOrUpdate(WaitUntil waitUntil, string privateLinkHubName, SynapsePrivateLinkHubData data, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual async Task<Response<SynapsePrivateLinkHubResource>> GetAsync(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual Response<SynapsePrivateLinkHubResource> Get(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapsePrivateLinkHubResource>> GetIfExistsAsync(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
         public virtual NullableResponse<SynapsePrivateLinkHubResource> GetIfExists(string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.GetIfExists");
             scope.Start();

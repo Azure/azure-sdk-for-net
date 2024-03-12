@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,47 +67,47 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualWan != null)
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (DeviceProperties != null)
+            if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
                 writer.WriteObjectValue(DeviceProperties);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (SiteKey != null)
+            if (Optional.IsDefined(SiteKey))
             {
                 writer.WritePropertyName("siteKey"u8);
                 writer.WriteStringValue(SiteKey);
             }
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (BgpProperties != null)
+            if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
                 writer.WriteObjectValue(BgpProperties);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsSecuritySite.HasValue)
+            if (Optional.IsDefined(IsSecuritySite))
             {
                 writer.WritePropertyName("isSecuritySite"u8);
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (!(VpnSiteLinks is ChangeTrackingList<VpnSiteLinkData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnSiteLinks))
             {
                 writer.WritePropertyName("vpnSiteLinks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (O365Policy != null)
+            if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
                 writer.WriteObjectValue(O365Policy);
@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<DeviceProperties> deviceProperties = default;
-            Optional<string> ipAddress = default;
-            Optional<string> siteKey = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<BgpSettings> bgpProperties = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> isSecuritySite = default;
+            WritableSubResource virtualWan = default;
+            DeviceProperties deviceProperties = default;
+            string ipAddress = default;
+            string siteKey = default;
+            AddressSpace addressSpace = default;
+            BgpSettings bgpProperties = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? isSecuritySite = default;
             IList<VpnSiteLinkData> vpnSiteLinks = default;
-            Optional<O365PolicyProperties> o365Policy = default;
+            O365PolicyProperties o365Policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,23 +342,23 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnSiteData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 virtualWan,
-                deviceProperties.Value,
-                ipAddress.Value,
-                siteKey.Value,
-                addressSpace.Value,
-                bgpProperties.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(isSecuritySite),
+                deviceProperties,
+                ipAddress,
+                siteKey,
+                addressSpace,
+                bgpProperties,
+                provisioningState,
+                isSecuritySite,
                 vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(),
-                o365Policy.Value);
+                o365Policy);
         }
 
         BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(HostsRemaining is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HostsRemaining))
             {
                 writer.WritePropertyName("hostsRemaining"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && QuotaEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuotaEnabled))
             {
                 writer.WritePropertyName("quotaEnabled"u8);
                 writer.WriteStringValue(QuotaEnabled.Value.ToString());
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IReadOnlyDictionary<string, int> hostsRemaining = default;
-            Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
+            AvsSubscriptionQuotaEnabled? quotaEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), Optional.ToNullable(quotaEnabled), serializedAdditionalRawData);
+            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), quotaEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsSubscriptionQuotaAvailabilityResult>.Write(ModelReaderWriterOptions options)

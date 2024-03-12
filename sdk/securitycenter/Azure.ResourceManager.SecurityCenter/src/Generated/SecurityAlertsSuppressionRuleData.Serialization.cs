@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertType != null)
+            if (Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Comment != null)
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (SuppressionAlertsScope != null)
+            if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
                 writer.WriteObjectValue(SuppressionAlertsScope);
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<DateTimeOffset> expirationDateUtc = default;
-            Optional<string> reason = default;
-            Optional<SecurityAlertsSuppressionRuleState> state = default;
-            Optional<string> comment = default;
-            Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
+            SystemData systemData = default;
+            string alertType = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            DateTimeOffset? expirationDateUtc = default;
+            string reason = default;
+            SecurityAlertsSuppressionRuleState? state = default;
+            string comment = default;
+            SuppressionAlertsScope suppressionAlertsScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                alertType.Value,
-                Optional.ToNullable(lastModifiedUtc),
-                Optional.ToNullable(expirationDateUtc),
-                reason.Value,
-                Optional.ToNullable(state),
-                comment.Value,
-                suppressionAlertsScope.Value,
+                systemData,
+                alertType,
+                lastModifiedUtc,
+                expirationDateUtc,
+                reason,
+                state,
+                comment,
+                suppressionAlertsScope,
                 serializedAdditionalRawData);
         }
 

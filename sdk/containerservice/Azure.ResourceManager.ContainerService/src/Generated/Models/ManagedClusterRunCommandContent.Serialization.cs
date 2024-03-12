@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (ClusterToken != null)
+            if (Optional.IsDefined(ClusterToken))
             {
                 writer.WritePropertyName("clusterToken"u8);
                 writer.WriteStringValue(ClusterToken);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string command = default;
-            Optional<string> context = default;
-            Optional<string> clusterToken = default;
+            string context = default;
+            string clusterToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterRunCommandContent(command, context.Value, clusterToken.Value, serializedAdditionalRawData);
+            return new ManagedClusterRunCommandContent(command, context, clusterToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterRunCommandContent>.Write(ModelReaderWriterOptions options)

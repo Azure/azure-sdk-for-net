@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && EventTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && DatabaseId != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(DatabaseId);
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteObjectValue(Database);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
-            Optional<RestorableSqlDatabasePropertiesResourceDatabase> database = default;
+            string rid = default;
+            CosmosDBOperationType? operationType = default;
+            string eventTimestamp = default;
+            string ownerId = default;
+            string ownerResourceId = default;
+            RestorableSqlDatabasePropertiesResourceDatabase database = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,12 +150,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExtendedRestorableSqlDatabaseResourceInfo(
-                rid.Value,
-                Optional.ToNullable(operationType),
-                eventTimestamp.Value,
-                ownerId.Value,
-                ownerResourceId.Value,
-                database.Value,
+                rid,
+                operationType,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                database,
                 serializedAdditionalRawData);
         }
 

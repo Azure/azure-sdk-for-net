@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Files is ChangeTrackingList<NginxConfigurationFile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProtectedFiles is ChangeTrackingList<NginxConfigurationFile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedFiles))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Package != null)
+            if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
                 writer.WriteObjectValue(Package);
             }
-            if (RootFile != null)
+            if (Optional.IsDefined(RootFile))
             {
                 writer.WritePropertyName("rootFile"u8);
                 writer.WriteStringValue(RootFile);
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
+            NginxProvisioningState? provisioningState = default;
             IList<NginxConfigurationFile> files = default;
             IList<NginxConfigurationFile> protectedFiles = default;
-            Optional<NginxConfigurationPackage> package = default;
-            Optional<string> rootFile = default;
+            NginxConfigurationPackage package = default;
+            string rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,11 +167,11 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NginxConfigurationProperties(
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 files ?? new ChangeTrackingList<NginxConfigurationFile>(),
                 protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
-                package.Value,
-                rootFile.Value,
+                package,
+                rootFile,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<MarketplaceSubscription> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SkipToken != null)
+            if (options.Format != "W" && Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             IReadOnlyList<MarketplaceSubscription> value = default;
-            Optional<string> skipToken = default;
-            Optional<long> count = default;
+            string skipToken = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionsResponse(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+            return new SubscriptionsResponse(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionsResponse>.Write(ModelReaderWriterOptions options)

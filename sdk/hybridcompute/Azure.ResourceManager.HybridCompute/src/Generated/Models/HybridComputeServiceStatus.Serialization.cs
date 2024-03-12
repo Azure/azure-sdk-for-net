@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartupType != null)
+            if (Optional.IsDefined(StartupType))
             {
                 writer.WritePropertyName("startupType"u8);
                 writer.WriteStringValue(StartupType);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> startupType = default;
+            string status = default;
+            string startupType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeServiceStatus(status.Value, startupType.Value, serializedAdditionalRawData);
+            return new HybridComputeServiceStatus(status, startupType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeServiceStatus>.Write(ModelReaderWriterOptions options)

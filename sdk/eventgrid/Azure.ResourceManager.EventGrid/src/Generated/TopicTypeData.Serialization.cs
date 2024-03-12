@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ResourceRegionType.HasValue)
+            if (Optional.IsDefined(ResourceRegionType))
             {
                 writer.WritePropertyName("resourceRegionType"u8);
                 writer.WriteStringValue(ResourceRegionType.Value.ToString());
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(SupportedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedLocations))
             {
                 writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (SourceResourceFormat != null)
+            if (Optional.IsDefined(SourceResourceFormat))
             {
                 writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
-            if (!(SupportedScopesForSource is ChangeTrackingList<TopicTypeSourceScope> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedScopesForSource))
             {
                 writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (AreRegionalAndGlobalSourcesSupported.HasValue)
+            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
             {
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
-            if (!(AdditionalEnforcedPermissions is ChangeTrackingList<TopicTypeAdditionalEnforcedPermission> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
             {
                 writer.WritePropertyName("additionalEnforcedPermissions"u8);
                 writer.WriteStartArray();
@@ -157,16 +157,16 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provider = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<EventGridResourceRegionType> resourceRegionType = default;
-            Optional<TopicTypeProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string provider = default;
+            string displayName = default;
+            string description = default;
+            EventGridResourceRegionType? resourceRegionType = default;
+            TopicTypeProvisioningState? provisioningState = default;
             IList<string> supportedLocations = default;
-            Optional<string> sourceResourceFormat = default;
+            string sourceResourceFormat = default;
             IList<TopicTypeSourceScope> supportedScopesForSource = default;
-            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            bool? areRegionalAndGlobalSourcesSupported = default;
             IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                provider.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(resourceRegionType),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provider,
+                displayName,
+                description,
+                resourceRegionType,
+                provisioningState,
                 supportedLocations ?? new ChangeTrackingList<string>(),
-                sourceResourceFormat.Value,
+                sourceResourceFormat,
                 supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(),
-                Optional.ToNullable(areRegionalAndGlobalSourcesSupported),
+                areRegionalAndGlobalSourcesSupported,
                 additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (ValidateOnly.HasValue)
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
             }
-            if (!(MoverResources is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MoverResources))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MoverResourceInputType.HasValue)
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<bool> validateOnly = default;
+            bool? validateOnly = default;
             IList<ResourceIdentifier> moveResources = default;
-            Optional<MoverResourceInputType> moveResourceInputType = default;
+            MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverBulkRemoveContent(Optional.ToNullable(validateOnly), moveResources ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(moveResourceInputType), serializedAdditionalRawData);
+            return new MoverBulkRemoveContent(validateOnly, moveResources ?? new ChangeTrackingList<ResourceIdentifier>(), moveResourceInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverBulkRemoveContent>.Write(ModelReaderWriterOptions options)

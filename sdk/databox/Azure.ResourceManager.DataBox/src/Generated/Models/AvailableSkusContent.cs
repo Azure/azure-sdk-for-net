@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -53,10 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AvailableSkusContent(DataBoxJobTransferType transferType, string country, AzureLocation location)
         {
-            if (country == null)
-            {
-                throw new ArgumentNullException(nameof(country));
-            }
+            Argument.AssertNotNull(country, nameof(country));
 
             TransferType = transferType;
             Country = country;

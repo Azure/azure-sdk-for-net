@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SubjectName != null)
+            if (Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (DomainControlValidation.HasValue)
+            if (Optional.IsDefined(DomainControlValidation))
             {
                 writer.WritePropertyName("domainControlValidation"u8);
                 writer.WriteStringValue(DomainControlValidation.Value.ToString());
             }
-            if (options.Format != "W" && ValidationToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationToken))
             {
                 writer.WritePropertyName("validationToken"u8);
                 writer.WriteStringValue(ValidationToken);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> subjectName = default;
-            Optional<string> error = default;
-            Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
-            Optional<string> validationToken = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string subjectName = default;
+            string error = default;
+            ManagedCertificateDomainControlValidation? domainControlValidation = default;
+            string validationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedCertificateProperties(
-                Optional.ToNullable(provisioningState),
-                subjectName.Value,
-                error.Value,
-                Optional.ToNullable(domainControlValidation),
-                validationToken.Value,
+                provisioningState,
+                subjectName,
+                error,
+                domainControlValidation,
+                validationToken,
                 serializedAdditionalRawData);
         }
 

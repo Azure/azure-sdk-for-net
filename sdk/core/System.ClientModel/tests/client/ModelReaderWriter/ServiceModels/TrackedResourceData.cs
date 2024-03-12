@@ -1,17 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using ClientModel.Tests.ClientShared;
 using System.Collections.Generic;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
     public abstract partial class TrackedResourceData : ResourceData
     {
-        internal TrackedResourceData() { }
+        internal TrackedResourceData()
+        {
+            Tags = new OptionalDictionary<string, string>();
+        }
 
         /// <summary> Initializes a new instance of TrackedResource. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -36,7 +37,23 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        private string? _location;
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public string Location
+        {
+            get
+            {
+                AssertHasValue(_location, nameof(Location));
+                return _location!;
+            }
+            set { _location = value; }
+        }
+
+        private void AssertHasValue<T>(T? value, string name)
+        {
+            if (value is null)
+                throw new ArgumentNullException(name);
+        }
     }
 }

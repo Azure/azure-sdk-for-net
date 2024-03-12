@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && ErrorLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorLogLink))
             {
                 writer.WritePropertyName("errorLogLink"u8);
                 writer.WriteStringValue(ErrorLogLink);
             }
-            if (options.Format != "W" && VerboseLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(VerboseLogLink))
             {
                 writer.WritePropertyName("verboseLogLink"u8);
                 writer.WriteStringValue(VerboseLogLink);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            string serialNumber = default;
+            ResourceIdentifier accountId = default;
+            string errorLogLink = default;
+            string verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,10 +134,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskGranularCopyLogDetails(
                 copyLogDetailsType,
                 serializedAdditionalRawData,
-                serialNumber.Value,
-                accountId.Value,
-                errorLogLink.Value,
-                verboseLogLink.Value);
+                serialNumber,
+                accountId,
+                errorLogLink,
+                verboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxDiskGranularCopyLogDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactProfile != null)
+            if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
                 writer.WriteObjectValue(ArtifactProfile);
             }
-            if (DeployParametersMappingRuleProfile != null)
+            if (Optional.IsDefined(DeployParametersMappingRuleProfile))
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
                 writer.WriteObjectValue(DeployParametersMappingRuleProfile);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DependsOnProfile != null)
+            if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<AzureArcKubernetesArtifactProfile> artifactProfile = default;
-            Optional<AzureArcKubernetesDeployMappingRuleProfile> deployParametersMappingRuleProfile = default;
+            AzureArcKubernetesArtifactProfile artifactProfile = default;
+            AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
             AzureArcKubernetesArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,12 +140,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureArcKubernetesHelmApplication(
-                name.Value,
-                dependsOnProfile.Value,
+                name,
+                dependsOnProfile,
                 serializedAdditionalRawData,
                 artifactType,
-                artifactProfile.Value,
-                deployParametersMappingRuleProfile.Value);
+                artifactProfile,
+                deployParametersMappingRuleProfile);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesHelmApplication>.Write(ModelReaderWriterOptions options)

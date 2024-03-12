@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (MonitoringSummary != null)
+            if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
                 writer.WriteObjectValue(MonitoringSummary);
             }
-            if (JobsSummary != null)
+            if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
                 writer.WriteObjectValue(JobsSummary);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (RecoveryPlanCount.HasValue)
+            if (Optional.IsDefined(RecoveryPlanCount))
             {
                 writer.WritePropertyName("recoveryPlanCount"u8);
                 writer.WriteNumberValue(RecoveryPlanCount.Value);
             }
-            if (RegisteredServersCount.HasValue)
+            if (Optional.IsDefined(RegisteredServersCount))
             {
                 writer.WritePropertyName("registeredServersCount"u8);
                 writer.WriteNumberValue(RegisteredServersCount.Value);
             }
-            if (RecoveryServicesProviderAuthType.HasValue)
+            if (Optional.IsDefined(RecoveryServicesProviderAuthType))
             {
                 writer.WritePropertyName("recoveryServicesProviderAuthType"u8);
                 writer.WriteNumberValue(RecoveryServicesProviderAuthType.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<VaultMonitoringSummary> monitoringSummary = default;
-            Optional<ReplicationJobSummary> jobsSummary = default;
-            Optional<int> protectedItemCount = default;
-            Optional<int> recoveryPlanCount = default;
-            Optional<int> registeredServersCount = default;
-            Optional<int> recoveryServicesProviderAuthType = default;
+            VaultMonitoringSummary monitoringSummary = default;
+            ReplicationJobSummary jobsSummary = default;
+            int? protectedItemCount = default;
+            int? recoveryPlanCount = default;
+            int? registeredServersCount = default;
+            int? recoveryServicesProviderAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReplicationUsage(
-                monitoringSummary.Value,
-                jobsSummary.Value,
-                Optional.ToNullable(protectedItemCount),
-                Optional.ToNullable(recoveryPlanCount),
-                Optional.ToNullable(registeredServersCount),
-                Optional.ToNullable(recoveryServicesProviderAuthType),
+                monitoringSummary,
+                jobsSummary,
+                protectedItemCount,
+                recoveryPlanCount,
+                registeredServersCount,
+                recoveryServicesProviderAuthType,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (RemoteContainerName != null)
+            if (Optional.IsDefined(RemoteContainerName))
             {
                 writer.WritePropertyName("remoteContainerName"u8);
                 writer.WriteStringValue(RemoteContainerName);
             }
-            if (RemoteFabricName != null)
+            if (Optional.IsDefined(RemoteFabricName))
             {
                 writer.WritePropertyName("remoteFabricName"u8);
                 writer.WriteStringValue(RemoteFabricName);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<string> fabricName = default;
-            Optional<string> remoteContainerName = default;
-            Optional<string> remoteFabricName = default;
+            string containerName = default;
+            string fabricName = default;
+            string remoteContainerName = default;
+            string remoteFabricName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,10 +130,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplica2012R2EventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                containerName.Value,
-                fabricName.Value,
-                remoteContainerName.Value,
-                remoteFabricName.Value);
+                containerName,
+                fabricName,
+                remoteContainerName,
+                remoteFabricName);
         }
 
         BinaryData IPersistableModel<HyperVReplica2012R2EventDetails>.Write(ModelReaderWriterOptions options)

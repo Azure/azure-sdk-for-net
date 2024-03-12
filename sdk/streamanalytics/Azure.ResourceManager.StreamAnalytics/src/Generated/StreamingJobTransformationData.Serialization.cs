@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StreamingUnits.HasValue)
+            if (Optional.IsDefined(StreamingUnits))
             {
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);
             }
-            if (!(ValidStreamingUnits is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStreamingUnits))
             {
                 writer.WritePropertyName("validStreamingUnits"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> streamingUnits = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? streamingUnits = default;
             IList<int> validStreamingUnits = default;
-            Optional<string> query = default;
-            Optional<ETag> etag = default;
+            string query = default;
+            ETag? etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamingJobTransformationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(streamingUnits),
+                streamingUnits,
                 validStreamingUnits ?? new ChangeTrackingList<int>(),
-                query.Value,
-                Optional.ToNullable(etag));
+                query,
+                etag);
         }
 
         BinaryData IPersistableModel<StreamingJobTransformationData>.Write(ModelReaderWriterOptions options)

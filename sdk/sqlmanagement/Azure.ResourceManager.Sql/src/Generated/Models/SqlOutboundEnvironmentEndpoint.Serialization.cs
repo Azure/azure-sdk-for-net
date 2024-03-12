@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<ManagedInstanceEndpointDependency> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<ManagedInstanceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<ManagedInstanceEndpointDependency>(), serializedAdditionalRawData);
+            return new SqlOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<ManagedInstanceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

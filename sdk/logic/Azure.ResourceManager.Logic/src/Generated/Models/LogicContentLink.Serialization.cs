@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && ContentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (options.Format != "W" && ContentSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContentSize))
             {
                 writer.WritePropertyName("contentSize"u8);
                 writer.WriteNumberValue(ContentSize.Value);
             }
-            if (options.Format != "W" && ContentHash != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteObjectValue(ContentHash);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> contentVersion = default;
-            Optional<long> contentSize = default;
-            Optional<LogicContentHash> contentHash = default;
-            Optional<BinaryData> metadata = default;
+            Uri uri = default;
+            string contentVersion = default;
+            long? contentSize = default;
+            LogicContentHash contentHash = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,11 +154,11 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicContentLink(
-                uri.Value,
-                contentVersion.Value,
-                Optional.ToNullable(contentSize),
-                contentHash.Value,
-                metadata.Value,
+                uri,
+                contentVersion,
+                contentSize,
+                contentHash,
+                metadata,
                 serializedAdditionalRawData);
         }
 

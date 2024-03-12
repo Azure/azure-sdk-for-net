@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -44,22 +45,22 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && !(Operations is ChangeTrackingList<OperationStatusResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -97,14 +98,14 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            ResourceIdentifier id = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<OperationStatusResult> operations = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.Models
             }
             return new OperationStatusResult(
                 id,
-                name.Value,
+                name,
                 status,
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                percentComplete,
+                startTime,
+                endTime,
                 operations ?? new ChangeTrackingList<OperationStatusResult>(),
-                error.Value);
+                error);
         }
 
         BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MobileNetworkSimGroupData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             IReadOnlyList<MobileNetworkSimGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimGroupListResult(value ?? new ChangeTrackingList<MobileNetworkSimGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SimGroupListResult(value ?? new ChangeTrackingList<MobileNetworkSimGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimGroupListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (RegistryServer != null)
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryServer"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> registryServer = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string username = default;
+            string password = default;
+            string registryServer = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value, serializedAdditionalRawData);
+            return new BatchVmContainerRegistry(username, password, registryServer, identityReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmContainerRegistry>.Write(ModelReaderWriterOptions options)

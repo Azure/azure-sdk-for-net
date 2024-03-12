@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocationName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (options.Format != "W" && RegionalDatabaseAccountInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(RegionalDatabaseAccountInstanceId))
             {
                 writer.WritePropertyName("regionalDatabaseAccountInstanceId"u8);
                 writer.WriteStringValue(RegionalDatabaseAccountInstanceId);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AzureLocation> locationName = default;
-            Optional<string> regionalDatabaseAccountInstanceId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            AzureLocation? locationName = default;
+            string regionalDatabaseAccountInstanceId = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableLocationResourceInfo(Optional.ToNullable(locationName), regionalDatabaseAccountInstanceId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, creationTime, deletionTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableLocationResourceInfo>.Write(ModelReaderWriterOptions options)

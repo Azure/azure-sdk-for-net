@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (DirectPeeringType.HasValue)
+            if (Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
             }
-            if (PeeringDBFacilityId.HasValue)
+            if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (PeeringDBFacilityLink != null)
+            if (Optional.IsDefined(PeeringDBFacilityLink))
             {
                 writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<DirectPeeringType> directPeeringType = default;
-            Optional<int> peeringDBFacilityId = default;
-            Optional<string> peeringDBFacilityLink = default;
+            string address = default;
+            DirectPeeringType? directPeeringType = default;
+            int? peeringDBFacilityId = default;
+            string peeringDBFacilityLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringFacility(address.Value, Optional.ToNullable(directPeeringType), Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
+            return new DirectPeeringFacility(address, directPeeringType, peeringDBFacilityId, peeringDBFacilityLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringFacility>.Write(ModelReaderWriterOptions options)

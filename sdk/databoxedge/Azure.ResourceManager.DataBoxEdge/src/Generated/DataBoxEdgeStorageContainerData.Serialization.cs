@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ContainerStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContainerStatus))
             {
                 writer.WritePropertyName("containerStatus"u8);
                 writer.WriteStringValue(ContainerStatus.Value.ToString());
             }
             writer.WritePropertyName("dataFormat"u8);
             writer.WriteStringValue(DataFormat.ToString());
-            if (options.Format != "W" && RefreshDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeStorageContainerStatus> containerStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeStorageContainerStatus? containerStatus = default;
             DataBoxEdgeStorageContainerDataFormat dataFormat = default;
-            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            DataBoxEdgeRefreshDetails refreshDetails = default;
+            DateTimeOffset? createdDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(containerStatus),
+                systemData,
+                containerStatus,
                 dataFormat,
-                refreshDetails.Value,
-                Optional.ToNullable(createdDateTime),
+                refreshDetails,
+                createdDateTime,
                 serializedAdditionalRawData);
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -19,18 +18,18 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
+            string mediaType = default;
             IReadOnlyList<ManifestListAttributes> manifests = default;
-            Optional<OciDescriptor> config = default;
+            OciDescriptor config = default;
             IReadOnlyList<OciDescriptor> layers = default;
-            Optional<OciAnnotations> annotations = default;
-            Optional<string> architecture = default;
-            Optional<string> name = default;
-            Optional<string> tag = default;
+            OciAnnotations annotations = default;
+            string architecture = default;
+            string name = default;
+            string tag = default;
             IReadOnlyList<FsLayer> fsLayers = default;
             IReadOnlyList<History> history = default;
             IReadOnlyList<ImageSignature> signatures = default;
-            Optional<int> schemaVersion = default;
+            int? schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -153,15 +152,15 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new ManifestWrapper(
-                Optional.ToNullable(schemaVersion),
-                mediaType.Value,
+                schemaVersion,
+                mediaType,
                 manifests ?? new ChangeTrackingList<ManifestListAttributes>(),
-                config.Value,
+                config,
                 layers ?? new ChangeTrackingList<OciDescriptor>(),
-                annotations.Value,
-                architecture.Value,
-                name.Value,
-                tag.Value,
+                annotations,
+                architecture,
+                name,
+                tag,
                 fsLayers ?? new ChangeTrackingList<FsLayer>(),
                 history ?? new ChangeTrackingList<History>(),
                 signatures ?? new ChangeTrackingList<ImageSignature>());

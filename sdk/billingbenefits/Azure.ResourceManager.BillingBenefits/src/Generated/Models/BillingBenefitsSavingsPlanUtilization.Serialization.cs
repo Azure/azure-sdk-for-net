@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Trend != null)
+            if (options.Format != "W" && Optional.IsDefined(Trend))
             {
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (!(Aggregates is ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregates))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
+            string trend = default;
             IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanUtilization(trend.Value, aggregates ?? new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>(), serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanUtilization(trend, aggregates ?? new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanUtilization>.Write(ModelReaderWriterOptions options)

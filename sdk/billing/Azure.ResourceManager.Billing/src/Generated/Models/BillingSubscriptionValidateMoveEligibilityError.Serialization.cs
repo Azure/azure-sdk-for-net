@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Code.HasValue)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<SubscriptionTransferValidationErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<string> details = default;
+            SubscriptionTransferValidationErrorCode? code = default;
+            string message = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionValidateMoveEligibilityError(Optional.ToNullable(code), message.Value, details.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionValidateMoveEligibilityError(code, message, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>.Write(ModelReaderWriterOptions options)

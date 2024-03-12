@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ActionPerformedOn.HasValue)
+            if (Optional.IsDefined(ActionPerformedOn))
             {
                 writer.WritePropertyName("actionDateTimeInUtc"u8);
                 writer.WriteStringValue(ActionPerformedOn.Value, "O");
             }
-            if (IsPerformedByCustomer.HasValue)
+            if (Optional.IsDefined(IsPerformedByCustomer))
             {
                 writer.WritePropertyName("isPerformedByCustomer"u8);
                 writer.WriteBooleanValue(IsPerformedByCustomer.Value);
             }
-            if (CustomerResolution.HasValue)
+            if (Optional.IsDefined(CustomerResolution))
             {
                 writer.WritePropertyName("customerResolution"u8);
                 writer.WriteStringValue(CustomerResolution.Value.ToSerialString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> actionDateTimeInUtc = default;
-            Optional<bool> isPerformedByCustomer = default;
-            Optional<CustomerResolutionCode> customerResolution = default;
+            DateTimeOffset? actionDateTimeInUtc = default;
+            bool? isPerformedByCustomer = default;
+            CustomerResolutionCode? customerResolution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastMitigationActionOnJob(Optional.ToNullable(actionDateTimeInUtc), Optional.ToNullable(isPerformedByCustomer), Optional.ToNullable(customerResolution), serializedAdditionalRawData);
+            return new LastMitigationActionOnJob(actionDateTimeInUtc, isPerformedByCustomer, customerResolution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastMitigationActionOnJob>.Write(ModelReaderWriterOptions options)

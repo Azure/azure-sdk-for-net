@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingList<SyncGroupSchemaTableColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (QuotedName != null)
+            if (Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IList<SyncGroupSchemaTableColumn> columns = default;
-            Optional<string> quotedName = default;
+            string quotedName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchemaTable(columns ?? new ChangeTrackingList<SyncGroupSchemaTableColumn>(), quotedName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchemaTable(columns ?? new ChangeTrackingList<SyncGroupSchemaTableColumn>(), quotedName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchemaTable>.Write(ModelReaderWriterOptions options)

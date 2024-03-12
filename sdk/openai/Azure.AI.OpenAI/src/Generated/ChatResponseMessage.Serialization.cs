@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            if (!(ToolCalls is ChangeTrackingList<ChatCompletionsToolCall> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ToolCalls))
             {
                 writer.WritePropertyName("tool_calls"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionCall != null)
+            if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (AzureExtensionsContext != null)
+            if (Optional.IsDefined(AzureExtensionsContext))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AzureExtensionsContext);
@@ -99,8 +99,8 @@ namespace Azure.AI.OpenAI
             ChatRole role = default;
             string content = default;
             IReadOnlyList<ChatCompletionsToolCall> toolCalls = default;
-            Optional<FunctionCall> functionCall = default;
-            Optional<AzureChatExtensionsMessageContext> context = default;
+            FunctionCall functionCall = default;
+            AzureChatExtensionsMessageContext context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,8 +162,8 @@ namespace Azure.AI.OpenAI
                 role,
                 content,
                 toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
-                functionCall.Value,
-                context.Value,
+                functionCall,
+                context,
                 serializedAdditionalRawData);
         }
 

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,76 +48,76 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (TimeStarted.HasValue)
+            if (Optional.IsDefined(TimeStarted))
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Duration != null)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("progress"u8);
             writer.WriteStartObject();
-            if (NamePropertiesProgressName != null)
+            if (Optional.IsDefined(NamePropertiesProgressName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesProgressName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -167,23 +167,23 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> timeStarted = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<string> duration = default;
-            Optional<UpdateRunPropertiesState> state = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            DateTimeOffset? timeStarted = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            string duration = default;
+            UpdateRunPropertiesState? state = default;
+            string name0 = default;
+            string description = default;
+            string errorMessage = default;
+            string status = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -358,20 +358,20 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(timeStarted),
-                Optional.ToNullable(lastUpdatedTime),
-                duration.Value,
-                Optional.ToNullable(state),
-                name0.Value,
-                description.Value,
-                errorMessage.Value,
-                status.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(lastUpdatedTimeUtc),
+                systemData,
+                location,
+                provisioningState,
+                timeStarted,
+                lastUpdatedTime,
+                duration,
+                state,
+                name0,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
                 steps ?? new ChangeTrackingList<HciUpdateStep>(),
                 serializedAdditionalRawData);
         }

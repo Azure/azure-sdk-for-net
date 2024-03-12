@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && MinStorageSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinStorageSize))
             {
                 writer.WritePropertyName("minStorageSize"u8);
                 writer.WriteNumberValue(MinStorageSize.Value);
             }
-            if (options.Format != "W" && MaxStorageSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxStorageSize))
             {
                 writer.WritePropertyName("maxStorageSize"u8);
                 writer.WriteNumberValue(MaxStorageSize.Value);
             }
-            if (options.Format != "W" && MinBackupRetentionDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinBackupRetentionDays))
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (options.Format != "W" && MaxBackupRetentionDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxBackupRetentionDays))
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> minStorageSize = default;
-            Optional<long> maxStorageSize = default;
-            Optional<long> minBackupRetentionDays = default;
-            Optional<long> maxBackupRetentionDays = default;
+            string name = default;
+            long? minStorageSize = default;
+            long? maxStorageSize = default;
+            long? minBackupRetentionDays = default;
+            long? maxBackupRetentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlFlexibleServerStorageEditionCapability(
-                name.Value,
-                Optional.ToNullable(minStorageSize),
-                Optional.ToNullable(maxStorageSize),
-                Optional.ToNullable(minBackupRetentionDays),
-                Optional.ToNullable(maxBackupRetentionDays),
+                name,
+                minStorageSize,
+                maxStorageSize,
+                minBackupRetentionDays,
+                maxBackupRetentionDays,
                 serializedAdditionalRawData);
         }
 

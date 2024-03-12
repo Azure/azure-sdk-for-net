@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 JsonSerializer.Serialize(writer, Count);
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> count = default;
-            Optional<int> intervalInSeconds = default;
+            DataFactoryElement<int> count = default;
+            int? intervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds), serializedAdditionalRawData);
+            return new RetryPolicy(count, intervalInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RetryPolicy>.Write(ModelReaderWriterOptions options)

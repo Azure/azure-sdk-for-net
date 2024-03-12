@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BlobContainerUri != null)
+            if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
@@ -37,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> blobContainerUri = default;
-            Optional<SecureString> sasToken = default;
+            string blobContainerUri = default;
+            SecureString sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"u8))
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken);
         }
 
         internal partial class IntegrationRuntimeCustomSetupScriptPropertiesConverter : JsonConverter<IntegrationRuntimeCustomSetupScriptProperties>

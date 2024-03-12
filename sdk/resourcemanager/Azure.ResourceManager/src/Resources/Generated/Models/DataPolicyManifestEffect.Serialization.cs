@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DetailsSchema != null)
+            if (Optional.IsDefined(DetailsSchema))
             {
                 writer.WritePropertyName("detailsSchema"u8);
 #if NET6_0_OR_GREATER
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> detailsSchema = default;
+            string name = default;
+            BinaryData detailsSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPolicyManifestEffect(name.Value, detailsSchema.Value, serializedAdditionalRawData);
+            return new DataPolicyManifestEffect(name, detailsSchema, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPolicyManifestEffect>.Write(ModelReaderWriterOptions options)

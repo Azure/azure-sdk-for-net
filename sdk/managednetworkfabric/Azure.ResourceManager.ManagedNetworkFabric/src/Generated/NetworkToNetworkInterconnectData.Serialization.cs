@@ -43,71 +43,71 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NniType.HasValue)
+            if (Optional.IsDefined(NniType))
             {
                 writer.WritePropertyName("nniType"u8);
                 writer.WriteStringValue(NniType.Value.ToString());
             }
-            if (IsManagementType.HasValue)
+            if (Optional.IsDefined(IsManagementType))
             {
                 writer.WritePropertyName("isManagementType"u8);
                 writer.WriteStringValue(IsManagementType.Value.ToString());
             }
             writer.WritePropertyName("useOptionB"u8);
             writer.WriteStringValue(UseOptionB.ToString());
-            if (Layer2Configuration != null)
+            if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (OptionBLayer3Configuration != null)
+            if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Configuration);
             }
-            if (NpbStaticRouteConfiguration != null)
+            if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (EgressAclId != null)
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (IngressAclId != null)
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NniType> nniType = default;
-            Optional<IsManagementType> isManagementType = default;
+            SystemData systemData = default;
+            NniType? nniType = default;
+            IsManagementType? isManagementType = default;
             NetworkFabricBooleanValue useOptionB = default;
-            Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
-            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
-            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
-            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Layer2Configuration layer2Configuration = default;
+            NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
+            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
+            ImportRoutePolicyInformation importRoutePolicy = default;
+            ExportRoutePolicyInformation exportRoutePolicy = default;
+            ResourceIdentifier egressAclId = default;
+            ResourceIdentifier ingressAclId = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -331,20 +331,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(nniType),
-                Optional.ToNullable(isManagementType),
+                systemData,
+                nniType,
+                isManagementType,
                 useOptionB,
-                layer2Configuration.Value,
-                optionBLayer3Configuration.Value,
-                npbStaticRouteConfiguration.Value,
-                importRoutePolicy.Value,
-                exportRoutePolicy.Value,
-                egressAclId.Value,
-                ingressAclId.Value,
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                layer2Configuration,
+                optionBLayer3Configuration,
+                npbStaticRouteConfiguration,
+                importRoutePolicy,
+                exportRoutePolicy,
+                egressAclId,
+                ingressAclId,
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

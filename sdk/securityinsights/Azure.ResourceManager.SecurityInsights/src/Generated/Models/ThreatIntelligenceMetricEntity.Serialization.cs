@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (MetricValue.HasValue)
+            if (Optional.IsDefined(MetricValue))
             {
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
-            Optional<int> metricValue = default;
+            string metricName = default;
+            int? metricValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceMetricEntity(metricName.Value, Optional.ToNullable(metricValue), serializedAdditionalRawData);
+            return new ThreatIntelligenceMetricEntity(metricName, metricValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceMetricEntity>.Write(ModelReaderWriterOptions options)

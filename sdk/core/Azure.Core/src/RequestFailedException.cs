@@ -82,13 +82,13 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
+        private RequestFailedException(int status, (string Message, ResponseError? Error) details) :
             this(status, details.Message, details.Error?.Code, null)
         {
         }
 
-        internal RequestFailedException(int status, (string FormatMessage, string? ErrorCode, IDictionary<string, string>? Data) details, Exception? innerException) :
-            this(status, details.FormatMessage, details.ErrorCode, innerException)
+        private RequestFailedException(int status, ErrorDetails details, Exception? innerException) :
+            this(status, details.Message, details.ErrorCode, innerException)
         {
             if (details.Data != null)
             {
@@ -122,7 +122,7 @@ namespace Azure
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         /// <param name="detailsParser">The parser to use to parse the response content.</param>
         public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
-            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
+            : this(response.Status, CreateExceptionDetails(response, detailsParser), innerException)
         {
             _response = response;
         }
@@ -151,12 +151,15 @@ namespace Azure
         /// </summary>
         public Response? GetRawResponse() => _response;
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
+        private static ErrorDetails CreateExceptionDetails(Response response, RequestFailedDetailsParser? parser)
         {
             BufferResponseIfNeeded(response);
             parser ??= response.RequestFailedDetailsParser;
 
-            bool parseSuccess = parser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) : parser.TryParse(response, out error, out additionalInfo);
+            bool parseSuccess = parser == null ?
+                DefaultRequestFailedDetailsParser.TryParseDetails(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) :
+                parser.TryParse(response, out error, out additionalInfo);
+
             if (!parseSuccess)
             {
                 error = null;
@@ -221,7 +224,7 @@ namespace Azure
             }
 
             var formatMessage = messageBuilder.ToString();
-            return (formatMessage, error?.Code, additionalInfo);
+            return new(formatMessage, error?.Code, additionalInfo);
         }
 
         private static void BufferResponseIfNeeded(Response response)
@@ -243,45 +246,27 @@ namespace Azure
             response.ContentStream = bufferedStream;
         }
 
-        internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
-        {
-            error = null;
-            data = null;
-
-            try
-            {
-                // The response content is buffered at this point.
-                string? content = response.Content.ToString();
-
-                // Optimistic check for JSON object we expect
-                if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
-                {
-                    return false;
-                }
-                // Try the ErrorResponse format and fallback to the ResponseError format.
-
-#if NET6_0_OR_GREATER
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
-                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
-#else
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
-                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
-#endif
-            }
-            catch (Exception)
-            {
-                // Ignore any failures - unexpected content will be
-                // included verbatim in the detailed error message
-            }
-
-            return error != null;
-        }
-
         // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class ErrorResponse
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+        }
+
+        private readonly struct ErrorDetails
+        {
+            public ErrorDetails(string message, string? errorCode, IDictionary<string, string>? data)
+            {
+                Message = message;
+                ErrorCode = errorCode;
+                Data = data;
+            }
+
+            public string Message { get; }
+
+            public string? ErrorCode { get; }
+
+            public IDictionary<string, string>? Data { get; }
         }
     }
 }

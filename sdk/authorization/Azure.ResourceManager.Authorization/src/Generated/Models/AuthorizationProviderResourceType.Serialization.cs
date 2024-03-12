@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Operations is ChangeTrackingList<AuthorizationProviderOperationInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
+            string name = default;
+            string displayName = default;
             IReadOnlyList<AuthorizationProviderOperationInfo> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderResourceType(name.Value, displayName.Value, operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(), serializedAdditionalRawData);
+            return new AuthorizationProviderResourceType(name, displayName, operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderResourceType>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (SecureValue != null)
+            if (Optional.IsDefined(SecureValue))
             {
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
-            Optional<string> secureValue = default;
+            string value = default;
+            string secureValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEnvironmentVariable(name, value.Value, secureValue.Value, serializedAdditionalRawData);
+            return new ContainerEnvironmentVariable(name, value, secureValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEnvironmentVariable>.Write(ModelReaderWriterOptions options)

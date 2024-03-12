@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (DiskEncryptionKey != null)
+            if (Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
-            Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
+            KeyVaultAndSecretReference diskEncryptionKey = default;
+            KeyVaultAndKeyReference keyEncryptionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionSettingsElement(diskEncryptionKey.Value, keyEncryptionKey.Value, serializedAdditionalRawData);
+            return new EncryptionSettingsElement(diskEncryptionKey, keyEncryptionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionSettingsElement>.Write(ModelReaderWriterOptions options)

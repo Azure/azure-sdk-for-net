@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (EndpointId != null)
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteStringValue(EndpointId);
             }
-            if (History.HasValue)
+            if (Optional.IsDefined(History))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> endpointId = default;
-            Optional<bool> history = default;
+            string id = default;
+            string name = default;
+            string endpointId = default;
+            bool? history = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseCustomDomainsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history), serializedAdditionalRawData);
+            return new ResourcesResponseCustomDomainsItem(id, name, endpointId, history, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseCustomDomainsItem>.Write(ModelReaderWriterOptions options)

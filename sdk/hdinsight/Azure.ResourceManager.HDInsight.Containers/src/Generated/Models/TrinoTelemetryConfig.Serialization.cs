@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (HivecatalogName != null)
+            if (Optional.IsDefined(HivecatalogName))
             {
                 writer.WritePropertyName("hivecatalogName"u8);
                 writer.WriteStringValue(HivecatalogName);
             }
-            if (HivecatalogSchema != null)
+            if (Optional.IsDefined(HivecatalogSchema))
             {
                 writer.WritePropertyName("hivecatalogSchema"u8);
                 writer.WriteStringValue(HivecatalogSchema);
             }
-            if (PartitionRetentionInDays.HasValue)
+            if (Optional.IsDefined(PartitionRetentionInDays))
             {
                 writer.WritePropertyName("partitionRetentionInDays"u8);
                 writer.WriteNumberValue(PartitionRetentionInDays.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> hivecatalogName = default;
-            Optional<string> hivecatalogSchema = default;
-            Optional<int> partitionRetentionInDays = default;
-            Optional<string> path = default;
+            string hivecatalogName = default;
+            string hivecatalogSchema = default;
+            int? partitionRetentionInDays = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoTelemetryConfig(hivecatalogName.Value, hivecatalogSchema.Value, Optional.ToNullable(partitionRetentionInDays), path.Value, serializedAdditionalRawData);
+            return new TrinoTelemetryConfig(hivecatalogName, hivecatalogSchema, partitionRetentionInDays, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoTelemetryConfig>.Write(ModelReaderWriterOptions options)

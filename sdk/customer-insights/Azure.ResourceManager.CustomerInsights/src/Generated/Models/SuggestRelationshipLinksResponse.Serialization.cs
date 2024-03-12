@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InteractionName != null)
+            if (options.Format != "W" && Optional.IsDefined(InteractionName))
             {
                 writer.WritePropertyName("interactionName"u8);
                 writer.WriteStringValue(InteractionName);
             }
-            if (options.Format != "W" && !(SuggestedRelationships is ChangeTrackingList<RelationshipsLookup> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedRelationships))
             {
                 writer.WritePropertyName("suggestedRelationships"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> interactionName = default;
+            string interactionName = default;
             IReadOnlyList<RelationshipsLookup> suggestedRelationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestRelationshipLinksResponse(interactionName.Value, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
+            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestRelationshipLinksResponse>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TrackedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackedResourceId))
             {
                 writer.WritePropertyName("trackedResourceId"u8);
                 writer.WriteStringValue(TrackedResourceId);
             }
-            if (options.Format != "W" && PolicyDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteObjectValue(PolicyDetails);
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy);
             }
-            if (options.Format != "W" && LastUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
                 writer.WritePropertyName("lastUpdateUtc"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> trackedResourceId = default;
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<TrackedResourceModificationDetails> createdBy = default;
-            Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastUpdateUtc = default;
+            ResourceIdentifier trackedResourceId = default;
+            PolicyDetails policyDetails = default;
+            TrackedResourceModificationDetails createdBy = default;
+            TrackedResourceModificationDetails lastModifiedBy = default;
+            DateTimeOffset? lastUpdateUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicyTrackedResourceRecord(
-                trackedResourceId.Value,
-                policyDetails.Value,
-                createdBy.Value,
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastUpdateUtc),
+                trackedResourceId,
+                policyDetails,
+                createdBy,
+                lastModifiedBy,
+                lastUpdateUtc,
                 serializedAdditionalRawData);
         }
 

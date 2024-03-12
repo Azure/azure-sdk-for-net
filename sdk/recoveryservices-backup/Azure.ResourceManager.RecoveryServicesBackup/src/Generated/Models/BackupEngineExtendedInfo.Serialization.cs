@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (ProtectedServersCount.HasValue)
+            if (Optional.IsDefined(ProtectedServersCount))
             {
                 writer.WritePropertyName("protectedServersCount"u8);
                 writer.WriteNumberValue(ProtectedServersCount.Value);
             }
-            if (DiskCount.HasValue)
+            if (Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (UsedDiskSpace.HasValue)
+            if (Optional.IsDefined(UsedDiskSpace))
             {
                 writer.WritePropertyName("usedDiskSpace"u8);
                 writer.WriteNumberValue(UsedDiskSpace.Value);
             }
-            if (AvailableDiskSpace.HasValue)
+            if (Optional.IsDefined(AvailableDiskSpace))
             {
                 writer.WritePropertyName("availableDiskSpace"u8);
                 writer.WriteNumberValue(AvailableDiskSpace.Value);
             }
-            if (RefreshedOn.HasValue)
+            if (Optional.IsDefined(RefreshedOn))
             {
                 writer.WritePropertyName("refreshedAt"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (AzureProtectedInstances.HasValue)
+            if (Optional.IsDefined(AzureProtectedInstances))
             {
                 writer.WritePropertyName("azureProtectedInstances"u8);
                 writer.WriteNumberValue(AzureProtectedInstances.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<int> protectedItemsCount = default;
-            Optional<int> protectedServersCount = default;
-            Optional<int> diskCount = default;
-            Optional<double> usedDiskSpace = default;
-            Optional<double> availableDiskSpace = default;
-            Optional<DateTimeOffset> refreshedAt = default;
-            Optional<int> azureProtectedInstances = default;
+            string databaseName = default;
+            int? protectedItemsCount = default;
+            int? protectedServersCount = default;
+            int? diskCount = default;
+            double? usedDiskSpace = default;
+            double? availableDiskSpace = default;
+            DateTimeOffset? refreshedAt = default;
+            int? azureProtectedInstances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,14 +192,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupEngineExtendedInfo(
-                databaseName.Value,
-                Optional.ToNullable(protectedItemsCount),
-                Optional.ToNullable(protectedServersCount),
-                Optional.ToNullable(diskCount),
-                Optional.ToNullable(usedDiskSpace),
-                Optional.ToNullable(availableDiskSpace),
-                Optional.ToNullable(refreshedAt),
-                Optional.ToNullable(azureProtectedInstances),
+                databaseName,
+                protectedItemsCount,
+                protectedServersCount,
+                diskCount,
+                usedDiskSpace,
+                availableDiskSpace,
+                refreshedAt,
+                azureProtectedInstances,
                 serializedAdditionalRawData);
         }
 

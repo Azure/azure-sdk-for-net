@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (LatestScan.HasValue)
+            if (Optional.IsDefined(LatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
                 writer.WriteBooleanValue(LatestScan.Value);
             }
-            if (!(Results is ChangeTrackingDictionary<string, IList<IList<string>>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> latestScan = default;
+            bool? latestScan = default;
             IDictionary<string, IList<IList<string>>> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesResultsContent(Optional.ToNullable(latestScan), results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), serializedAdditionalRawData);
+            return new RulesResultsContent(latestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesResultsContent>.Write(ModelReaderWriterOptions options)

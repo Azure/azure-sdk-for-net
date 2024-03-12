@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (!(ServiceTypeHealthPolicies is ChangeTrackingDictionary<string, ServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
+            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy, serviceTypeHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

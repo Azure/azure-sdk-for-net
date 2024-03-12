@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AgentAutoUpdateStatus.HasValue)
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
-            if (AutomationAccountArmId != null)
+            if (Optional.IsDefined(AutomationAccountArmId))
             {
                 writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
-            if (AutomationAccountAuthenticationType.HasValue)
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<ResourceIdentifier> automationAccountArmId = default;
-            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
+            SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = default;
+            ResourceIdentifier automationAccountArmId = default;
+            AutomationAccountAuthenticationType? automationAccountAuthenticationType = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AContainerMappingContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
+            return new A2AContainerMappingContent(instanceType, serializedAdditionalRawData, agentAutoUpdateStatus, automationAccountArmId, automationAccountAuthenticationType);
         }
 
         BinaryData IPersistableModel<A2AContainerMappingContent>.Write(ModelReaderWriterOptions options)

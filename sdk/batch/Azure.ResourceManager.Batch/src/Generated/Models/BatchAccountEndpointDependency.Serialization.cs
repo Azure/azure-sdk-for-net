@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && !(EndpointDetails is ChangeTrackingList<BatchEndpointDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
+            string domainName = default;
+            string description = default;
             IReadOnlyList<BatchEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountEndpointDependency(domainName.Value, description.Value, endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>(), serializedAdditionalRawData);
+            return new BatchAccountEndpointDependency(domainName, description, endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountEndpointDependency>.Write(ModelReaderWriterOptions options)

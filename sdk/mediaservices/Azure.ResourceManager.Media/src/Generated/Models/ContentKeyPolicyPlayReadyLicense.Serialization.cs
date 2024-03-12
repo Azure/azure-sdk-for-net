@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,37 +29,37 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowTestDevices"u8);
             writer.WriteBooleanValue(AllowTestDevices);
-            if (SecurityLevel.HasValue)
+            if (Optional.IsDefined(SecurityLevel))
             {
                 writer.WritePropertyName("securityLevel"u8);
                 writer.WriteStringValue(SecurityLevel.Value.ToString());
             }
-            if (BeginOn.HasValue)
+            if (Optional.IsDefined(BeginOn))
             {
                 writer.WritePropertyName("beginDate"u8);
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RelativeBeginDate.HasValue)
+            if (Optional.IsDefined(RelativeBeginDate))
             {
                 writer.WritePropertyName("relativeBeginDate"u8);
                 writer.WriteStringValue(RelativeBeginDate.Value, "P");
             }
-            if (RelativeExpirationDate.HasValue)
+            if (Optional.IsDefined(RelativeExpirationDate))
             {
                 writer.WritePropertyName("relativeExpirationDate"u8);
                 writer.WriteStringValue(RelativeExpirationDate.Value, "P");
             }
-            if (GracePeriod.HasValue)
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod.Value, "P");
             }
-            if (PlayRight != null)
+            if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
                 writer.WriteObjectValue(PlayRight);
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             bool allowTestDevices = default;
-            Optional<PlayReadySecurityLevel> securityLevel = default;
-            Optional<DateTimeOffset> beginDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<TimeSpan> relativeBeginDate = default;
-            Optional<TimeSpan> relativeExpirationDate = default;
-            Optional<TimeSpan> gracePeriod = default;
-            Optional<ContentKeyPolicyPlayReadyPlayRight> playRight = default;
+            PlayReadySecurityLevel? securityLevel = default;
+            DateTimeOffset? beginDate = default;
+            DateTimeOffset? expirationDate = default;
+            TimeSpan? relativeBeginDate = default;
+            TimeSpan? relativeExpirationDate = default;
+            TimeSpan? gracePeriod = default;
+            ContentKeyPolicyPlayReadyPlayRight playRight = default;
             ContentKeyPolicyPlayReadyLicenseType licenseType = default;
             ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation = default;
             ContentKeyPolicyPlayReadyContentType contentType = default;
@@ -213,13 +214,13 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContentKeyPolicyPlayReadyLicense(
                 allowTestDevices,
-                Optional.ToNullable(securityLevel),
-                Optional.ToNullable(beginDate),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(relativeBeginDate),
-                Optional.ToNullable(relativeExpirationDate),
-                Optional.ToNullable(gracePeriod),
-                playRight.Value,
+                securityLevel,
+                beginDate,
+                expirationDate,
+                relativeBeginDate,
+                relativeExpirationDate,
+                gracePeriod,
+                playRight,
                 licenseType,
                 contentKeyLocation,
                 contentType,

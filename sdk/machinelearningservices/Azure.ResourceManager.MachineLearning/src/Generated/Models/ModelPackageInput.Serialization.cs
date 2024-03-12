@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inputType"u8);
             writer.WriteStringValue(InputType.ToString());
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 if (MountPath != null)
                 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             PackageInputType inputType = default;
-            Optional<PackageInputDeliveryMode> mode = default;
-            Optional<string> mountPath = default;
+            PackageInputDeliveryMode? mode = default;
+            string mountPath = default;
             PackageInputPathBase path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageInput(inputType, Optional.ToNullable(mode), mountPath.Value, path, serializedAdditionalRawData);
+            return new ModelPackageInput(inputType, mode, mountPath, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageInput>.Write(ModelReaderWriterOptions options)

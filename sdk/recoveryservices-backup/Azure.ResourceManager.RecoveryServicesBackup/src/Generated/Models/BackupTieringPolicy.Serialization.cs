@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TieringMode.HasValue)
+            if (Optional.IsDefined(TieringMode))
             {
                 writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
-            if (DurationValue.HasValue)
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(DurationValue.Value);
             }
-            if (DurationType.HasValue)
+            if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TieringMode> tieringMode = default;
-            Optional<int> duration = default;
-            Optional<RetentionDurationType> durationType = default;
+            TieringMode? tieringMode = default;
+            int? duration = default;
+            RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupTieringPolicy(Optional.ToNullable(tieringMode), Optional.ToNullable(duration), Optional.ToNullable(durationType), serializedAdditionalRawData);
+            return new BackupTieringPolicy(tieringMode, duration, durationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupTieringPolicy>.Write(ModelReaderWriterOptions options)

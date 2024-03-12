@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsPushEnabled.HasValue)
+            if (Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (TagWhitelistJson != null)
+            if (Optional.IsDefined(TagWhitelistJson))
             {
                 writer.WritePropertyName("tagWhitelistJson"u8);
                 writer.WriteStringValue(TagWhitelistJson);
             }
-            if (TagsRequiringAuth != null)
+            if (Optional.IsDefined(TagsRequiringAuth))
             {
                 writer.WritePropertyName("tagsRequiringAuth"u8);
                 writer.WriteStringValue(TagsRequiringAuth);
             }
-            if (DynamicTagsJson != null)
+            if (Optional.IsDefined(DynamicTagsJson))
             {
                 writer.WritePropertyName("dynamicTagsJson"u8);
                 writer.WriteStringValue(DynamicTagsJson);
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<string> tagWhitelistJson = default;
-            Optional<string> tagsRequiringAuth = default;
-            Optional<string> dynamicTagsJson = default;
+            SystemData systemData = default;
+            bool? isPushEnabled = default;
+            string tagWhitelistJson = default;
+            string tagsRequiringAuth = default;
+            string dynamicTagsJson = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,12 +202,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(isPushEnabled),
-                tagWhitelistJson.Value,
-                tagsRequiringAuth.Value,
-                dynamicTagsJson.Value,
-                kind.Value,
+                systemData,
+                isPushEnabled,
+                tagWhitelistJson,
+                tagsRequiringAuth,
+                dynamicTagsJson,
+                kind,
                 serializedAdditionalRawData);
         }
 

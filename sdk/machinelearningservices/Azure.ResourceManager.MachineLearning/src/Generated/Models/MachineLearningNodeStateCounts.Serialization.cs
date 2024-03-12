@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IdleNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IdleNodeCount))
             {
                 writer.WritePropertyName("idleNodeCount"u8);
                 writer.WriteNumberValue(IdleNodeCount.Value);
             }
-            if (options.Format != "W" && RunningNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningNodeCount))
             {
                 writer.WritePropertyName("runningNodeCount"u8);
                 writer.WriteNumberValue(RunningNodeCount.Value);
             }
-            if (options.Format != "W" && PreparingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreparingNodeCount))
             {
                 writer.WritePropertyName("preparingNodeCount"u8);
                 writer.WriteNumberValue(PreparingNodeCount.Value);
             }
-            if (options.Format != "W" && UnusableNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnusableNodeCount))
             {
                 writer.WritePropertyName("unusableNodeCount"u8);
                 writer.WriteNumberValue(UnusableNodeCount.Value);
             }
-            if (options.Format != "W" && LeavingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeavingNodeCount))
             {
                 writer.WritePropertyName("leavingNodeCount"u8);
                 writer.WriteNumberValue(LeavingNodeCount.Value);
             }
-            if (options.Format != "W" && PreemptedNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreemptedNodeCount))
             {
                 writer.WritePropertyName("preemptedNodeCount"u8);
                 writer.WriteNumberValue(PreemptedNodeCount.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> idleNodeCount = default;
-            Optional<int> runningNodeCount = default;
-            Optional<int> preparingNodeCount = default;
-            Optional<int> unusableNodeCount = default;
-            Optional<int> leavingNodeCount = default;
-            Optional<int> preemptedNodeCount = default;
+            int? idleNodeCount = default;
+            int? runningNodeCount = default;
+            int? preparingNodeCount = default;
+            int? unusableNodeCount = default;
+            int? leavingNodeCount = default;
+            int? preemptedNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningNodeStateCounts(
-                Optional.ToNullable(idleNodeCount),
-                Optional.ToNullable(runningNodeCount),
-                Optional.ToNullable(preparingNodeCount),
-                Optional.ToNullable(unusableNodeCount),
-                Optional.ToNullable(leavingNodeCount),
-                Optional.ToNullable(preemptedNodeCount),
+                idleNodeCount,
+                runningNodeCount,
+                preparingNodeCount,
+                unusableNodeCount,
+                leavingNodeCount,
+                preemptedNodeCount,
                 serializedAdditionalRawData);
         }
 

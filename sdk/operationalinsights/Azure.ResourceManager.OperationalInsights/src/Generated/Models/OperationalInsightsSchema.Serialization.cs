@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Columns is ChangeTrackingList<OperationalInsightsColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(StandardColumns is ChangeTrackingList<OperationalInsightsColumn> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StandardColumns))
             {
                 writer.WritePropertyName("standardColumns"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Categories is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Labels is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -81,22 +82,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Source.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && TableType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TableType))
             {
                 writer.WritePropertyName("tableType"u8);
                 writer.WriteStringValue(TableType.Value.ToString());
             }
-            if (options.Format != "W" && TableSubType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TableSubType))
             {
                 writer.WritePropertyName("tableSubType"u8);
                 writer.WriteStringValue(TableSubType.Value.ToString());
             }
-            if (options.Format != "W" && !(Solutions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -144,16 +145,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
             IList<OperationalInsightsColumn> columns = default;
             IReadOnlyList<OperationalInsightsColumn> standardColumns = default;
             IReadOnlyList<string> categories = default;
             IReadOnlyList<string> labels = default;
-            Optional<OperationalInsightsTableCreator> source = default;
-            Optional<OperationalInsightsTableType> tableType = default;
-            Optional<OperationalInsightsTableSubType> tableSubType = default;
+            OperationalInsightsTableCreator? source = default;
+            OperationalInsightsTableType? tableType = default;
+            OperationalInsightsTableSubType? tableSubType = default;
             IReadOnlyList<string> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -278,16 +279,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OperationalInsightsSchema(
-                name.Value,
-                displayName.Value,
-                description.Value,
+                name,
+                displayName,
+                description,
                 columns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
                 standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
                 categories ?? new ChangeTrackingList<string>(),
                 labels ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(source),
-                Optional.ToNullable(tableType),
-                Optional.ToNullable(tableSubType),
+                source,
+                tableType,
+                tableSubType,
                 solutions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

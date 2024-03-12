@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (KekState != null)
+            if (Optional.IsDefined(KekState))
             {
                 writer.WritePropertyName("kekState"u8);
                 writer.WriteStringValue(KekState);
             }
-            if (KekCertThumbprint != null)
+            if (Optional.IsDefined(KekCertThumbprint))
             {
                 writer.WritePropertyName("kekCertThumbprint"u8);
                 writer.WriteStringValue(KekCertThumbprint);
             }
-            if (KekCertExpireOn.HasValue)
+            if (Optional.IsDefined(KekCertExpireOn))
             {
                 writer.WritePropertyName("kekCertExpiryDate"u8);
                 writer.WriteStringValue(KekCertExpireOn.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> kekState = default;
-            Optional<string> kekCertThumbprint = default;
-            Optional<DateTimeOffset> kekCertExpireOn = default;
+            string kekState = default;
+            string kekCertThumbprint = default;
+            DateTimeOffset? kekCertExpireOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn), serializedAdditionalRawData);
+            return new SiteRecoveryEncryptionDetails(kekState, kekCertThumbprint, kekCertExpireOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEncryptionDetails>.Write(ModelReaderWriterOptions options)

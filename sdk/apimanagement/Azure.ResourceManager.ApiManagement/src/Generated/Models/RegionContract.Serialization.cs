@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsMasterRegion.HasValue)
+            if (Optional.IsDefined(IsMasterRegion))
             {
                 writer.WritePropertyName("isMasterRegion"u8);
                 writer.WriteBooleanValue(IsMasterRegion.Value);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isMasterRegion = default;
-            Optional<bool> isDeleted = default;
+            string name = default;
+            bool? isMasterRegion = default;
+            bool? isDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionContract(name.Value, Optional.ToNullable(isMasterRegion), Optional.ToNullable(isDeleted), serializedAdditionalRawData);
+            return new RegionContract(name, isMasterRegion, isDeleted, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionContract>.Write(ModelReaderWriterOptions options)

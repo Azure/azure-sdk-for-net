@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (QuotaBasePropertiesType != null)
+            if (Optional.IsDefined(QuotaBasePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(QuotaBasePropertiesType);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string type = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningQuotaProperties(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new MachineLearningQuotaProperties(id, type, limit, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningQuotaProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Frequency.ToString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 if (Schedule != null)
                 {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (EndTime != null)
+            if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
                 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -113,10 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
-            Optional<MachineLearningRecurrenceSchedule> schedule = default;
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            MachineLearningRecurrenceSchedule schedule = default;
+            string endTime = default;
+            string startTime = default;
+            string timeZone = default;
             MachineLearningTriggerType triggerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,14 +180,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningRecurrenceTrigger(
-                endTime.Value,
-                startTime.Value,
-                timeZone.Value,
+                endTime,
+                startTime,
+                timeZone,
                 triggerType,
                 serializedAdditionalRawData,
                 frequency,
                 interval,
-                schedule.Value);
+                schedule);
         }
 
         BinaryData IPersistableModel<MachineLearningRecurrenceTrigger>.Write(ModelReaderWriterOptions options)

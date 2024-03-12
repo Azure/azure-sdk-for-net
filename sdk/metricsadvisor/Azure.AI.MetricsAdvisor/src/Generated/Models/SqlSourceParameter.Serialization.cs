@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -45,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
+            string connectionString = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +71,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new SqlSourceParameter(connectionString.Value, query);
+            return new SqlSourceParameter(connectionString, query);
         }
     }
 }

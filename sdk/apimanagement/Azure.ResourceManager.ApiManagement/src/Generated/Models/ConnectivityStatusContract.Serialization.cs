@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string name = default;
             ConnectivityStatusType status = default;
-            Optional<string> error = default;
+            string error = default;
             DateTimeOffset lastUpdated = default;
             DateTimeOffset lastStatusChange = default;
             string resourceType = default;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ConnectivityStatusContract(
                 name,
                 status,
-                error.Value,
+                error,
                 lastUpdated,
                 lastStatusChange,
                 resourceType,

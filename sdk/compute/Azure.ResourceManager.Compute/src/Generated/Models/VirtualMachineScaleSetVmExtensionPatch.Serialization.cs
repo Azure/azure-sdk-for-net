@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -42,44 +43,44 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (ExtensionType != null)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (EnableAutomaticUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (ProtectedSettings != null)
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -103,12 +104,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (SuppressFailures.HasValue)
+            if (Optional.IsDefined(SuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (KeyVaultProtectedSettings != null)
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(KeyVaultProtectedSettings);
@@ -155,17 +156,17 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type0 = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<bool> suppressFailures = default;
-            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            SystemData systemData = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type0 = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            bool? suppressFailures = default;
+            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,17 +291,17 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                forceUpdateTag.Value,
-                publisher.Value,
-                type0.Value,
-                typeHandlerVersion.Value,
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                Optional.ToNullable(enableAutomaticUpgrade),
-                settings.Value,
-                protectedSettings.Value,
-                Optional.ToNullable(suppressFailures),
-                protectedSettingsFromKeyVault.Value,
+                systemData,
+                forceUpdateTag,
+                publisher,
+                type0,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                suppressFailures,
+                protectedSettingsFromKeyVault,
                 serializedAdditionalRawData);
         }
 

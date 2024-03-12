@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (FailureAction.HasValue)
+            if (Optional.IsDefined(FailureAction))
             {
                 writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
-            if (HealthCheckWaitDuration.HasValue)
+            if (Optional.IsDefined(HealthCheckWaitDuration))
             {
                 writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
-            if (HealthCheckStableDuration.HasValue)
+            if (Optional.IsDefined(HealthCheckStableDuration))
             {
                 writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
-            if (HealthCheckRetryTimeout.HasValue)
+            if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
                 writer.WritePropertyName("healthCheckRetryTimeout"u8);
                 writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
-            if (UpgradeTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeTimeout))
             {
                 writer.WritePropertyName("upgradeTimeout"u8);
                 writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
-            if (UpgradeDomainTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeDomainTimeout))
             {
                 writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ArmUpgradeFailureAction> failureAction = default;
-            Optional<TimeSpan> healthCheckWaitDuration = default;
-            Optional<TimeSpan> healthCheckStableDuration = default;
-            Optional<TimeSpan> healthCheckRetryTimeout = default;
-            Optional<TimeSpan> upgradeTimeout = default;
-            Optional<TimeSpan> upgradeDomainTimeout = default;
+            ArmUpgradeFailureAction? failureAction = default;
+            TimeSpan? healthCheckWaitDuration = default;
+            TimeSpan? healthCheckStableDuration = default;
+            TimeSpan? healthCheckRetryTimeout = default;
+            TimeSpan? upgradeTimeout = default;
+            TimeSpan? upgradeDomainTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArmRollingUpgradeMonitoringPolicy(
-                Optional.ToNullable(failureAction),
-                Optional.ToNullable(healthCheckWaitDuration),
-                Optional.ToNullable(healthCheckStableDuration),
-                Optional.ToNullable(healthCheckRetryTimeout),
-                Optional.ToNullable(upgradeTimeout),
-                Optional.ToNullable(upgradeDomainTimeout),
+                failureAction,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
                 serializedAdditionalRawData);
         }
 

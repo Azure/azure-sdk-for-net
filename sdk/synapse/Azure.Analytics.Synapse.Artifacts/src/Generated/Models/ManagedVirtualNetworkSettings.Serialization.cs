@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreventDataExfiltration.HasValue)
+            if (Optional.IsDefined(PreventDataExfiltration))
             {
                 writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
-            if (LinkedAccessCheckOnTargetResource.HasValue)
+            if (Optional.IsDefined(LinkedAccessCheckOnTargetResource))
             {
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(LinkedAccessCheckOnTargetResource.Value);
             }
-            if (!(AllowedAadTenantIdsForLinking is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
@@ -48,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> preventDataExfiltration = default;
-            Optional<bool> linkedAccessCheckOnTargetResource = default;
+            bool? preventDataExfiltration = default;
+            bool? linkedAccessCheckOnTargetResource = default;
             IList<string> allowedAadTenantIdsForLinking = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>());
+            return new ManagedVirtualNetworkSettings(preventDataExfiltration, linkedAccessCheckOnTargetResource, allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>());
         }
 
         internal partial class ManagedVirtualNetworkSettingsConverter : JsonConverter<ManagedVirtualNetworkSettings>

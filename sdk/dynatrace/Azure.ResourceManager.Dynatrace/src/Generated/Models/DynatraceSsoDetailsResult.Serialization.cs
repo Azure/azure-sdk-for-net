@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (IsSsoEnabled.HasValue)
+            if (Optional.IsDefined(IsSsoEnabled))
             {
                 writer.WritePropertyName("isSsoEnabled"u8);
                 writer.WriteStringValue(IsSsoEnabled.Value.ToString());
             }
-            if (MetadataUri != null)
+            if (Optional.IsDefined(MetadataUri))
             {
                 writer.WritePropertyName("metadataUrl"u8);
                 writer.WriteStringValue(MetadataUri.AbsoluteUri);
             }
-            if (SingleSignOnUri != null)
+            if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (!(AadDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AadDomains))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminUsers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminUsers))
             {
                 writer.WritePropertyName("adminUsers"u8);
                 writer.WriteStartArray();
@@ -99,9 +100,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<DynatraceSsoStatus> isSsoEnabled = default;
-            Optional<Uri> metadataUrl = default;
-            Optional<Uri> singleSignOnUrl = default;
+            DynatraceSsoStatus? isSsoEnabled = default;
+            Uri metadataUrl = default;
+            Uri singleSignOnUrl = default;
             IReadOnlyList<string> aadDomains = default;
             IReadOnlyList<string> adminUsers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,9 +171,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DynatraceSsoDetailsResult(
-                Optional.ToNullable(isSsoEnabled),
-                metadataUrl.Value,
-                singleSignOnUrl.Value,
+                isSsoEnabled,
+                metadataUrl,
+                singleSignOnUrl,
                 aadDomains ?? new ChangeTrackingList<string>(),
                 adminUsers ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

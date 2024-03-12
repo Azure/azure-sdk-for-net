@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Smtp != null)
+            if (Optional.IsDefined(Smtp))
             {
                 writer.WritePropertyName("smtp"u8);
                 writer.WriteObjectValue(Smtp);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<Smtp> smtp = default;
+            Smtp smtp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaConfigurations(smtp.Value, serializedAdditionalRawData);
+            return new GrafanaConfigurations(smtp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaConfigurations>.Write(ModelReaderWriterOptions options)

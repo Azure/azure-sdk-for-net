@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AdapterId != null)
+            if (options.Format != "W" && Optional.IsDefined(AdapterId))
             {
                 writer.WritePropertyName("adapterId"u8);
                 writer.WriteStringValue(AdapterId);
             }
-            if (options.Format != "W" && AdapterPosition != null)
+            if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
                 writer.WriteObjectValue(AdapterPosition);
             }
-            if (options.Format != "W" && Index.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Index))
             {
                 writer.WritePropertyName("index"u8);
                 writer.WriteNumberValue(Index.Value);
             }
-            if (options.Format != "W" && NodeId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId.Value);
             }
-            if (options.Format != "W" && NetworkAdapterName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkAdapterName))
             {
                 writer.WritePropertyName("networkAdapterName"u8);
                 writer.WriteStringValue(NetworkAdapterName);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && LinkSpeed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LinkSpeed))
             {
                 writer.WritePropertyName("linkSpeed"u8);
                 writer.WriteNumberValue(LinkSpeed.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (RdmaStatus.HasValue)
+            if (Optional.IsDefined(RdmaStatus))
             {
                 writer.WritePropertyName("rdmaStatus"u8);
                 writer.WriteStringValue(RdmaStatus.Value.ToString());
             }
-            if (DhcpStatus.HasValue)
+            if (Optional.IsDefined(DhcpStatus))
             {
                 writer.WritePropertyName("dhcpStatus"u8);
                 writer.WriteStringValue(DhcpStatus.Value.ToString());
             }
-            if (options.Format != "W" && IPv4Configuration != null)
+            if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
                 writer.WriteObjectValue(IPv4Configuration);
             }
-            if (options.Format != "W" && IPv6Configuration != null)
+            if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
                 writer.WriteObjectValue(IPv6Configuration);
             }
-            if (options.Format != "W" && IPv6LinkLocalAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {
                 writer.WritePropertyName("ipv6LinkLocalAddress"u8);
                 writer.WriteStringValue(IPv6LinkLocalAddress);
             }
-            if (options.Format != "W" && !(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -144,20 +145,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> adapterId = default;
-            Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
-            Optional<int> index = default;
-            Optional<Guid> nodeId = default;
-            Optional<string> networkAdapterName = default;
-            Optional<string> label = default;
-            Optional<string> macAddress = default;
-            Optional<long> linkSpeed = default;
-            Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
-            Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
-            Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
-            Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
-            Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
-            Optional<string> ipv6LinkLocalAddress = default;
+            string adapterId = default;
+            DataBoxEdgeNetworkAdapterPosition adapterPosition = default;
+            int? index = default;
+            Guid? nodeId = default;
+            string networkAdapterName = default;
+            string label = default;
+            string macAddress = default;
+            long? linkSpeed = default;
+            DataBoxEdgeNetworkAdapterStatus? status = default;
+            DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default;
+            DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default;
+            DataBoxEdgeIPv4Config ipv4Configuration = default;
+            DataBoxEdgeIPv6Config ipv6Configuration = default;
+            string ipv6LinkLocalAddress = default;
             IReadOnlyList<string> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -290,20 +291,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxEdgeNetworkAdapter(
-                adapterId.Value,
-                adapterPosition.Value,
-                Optional.ToNullable(index),
-                Optional.ToNullable(nodeId),
-                networkAdapterName.Value,
-                label.Value,
-                macAddress.Value,
-                Optional.ToNullable(linkSpeed),
-                Optional.ToNullable(status),
-                Optional.ToNullable(rdmaStatus),
-                Optional.ToNullable(dhcpStatus),
-                ipv4Configuration.Value,
-                ipv6Configuration.Value,
-                ipv6LinkLocalAddress.Value,
+                adapterId,
+                adapterPosition,
+                index,
+                nodeId,
+                networkAdapterName,
+                label,
+                macAddress,
+                linkSpeed,
+                status,
+                rdmaStatus,
+                dhcpStatus,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
                 dnsServers ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

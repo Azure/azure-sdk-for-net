@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceSupportedRegion != null)
+            if (Optional.IsDefined(ServiceSupportedRegion))
             {
                 writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
-            if (CommunityName != null)
+            if (Optional.IsDefined(CommunityName))
             {
                 writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
-            if (CommunityValue != null)
+            if (Optional.IsDefined(CommunityValue))
             {
                 writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
-            if (!(CommunityPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
                 writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsAuthorizedToUse.HasValue)
+            if (Optional.IsDefined(IsAuthorizedToUse))
             {
                 writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
-            if (ServiceGroup != null)
+            if (Optional.IsDefined(ServiceGroup))
             {
                 writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceSupportedRegion = default;
-            Optional<string> communityName = default;
-            Optional<string> communityValue = default;
+            string serviceSupportedRegion = default;
+            string communityName = default;
+            string communityValue = default;
             IList<string> communityPrefixes = default;
-            Optional<bool> isAuthorizedToUse = default;
-            Optional<string> serviceGroup = default;
+            bool? isAuthorizedToUse = default;
+            string serviceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpCommunity(
-                serviceSupportedRegion.Value,
-                communityName.Value,
-                communityValue.Value,
+                serviceSupportedRegion,
+                communityName,
+                communityValue,
                 communityPrefixes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isAuthorizedToUse),
-                serviceGroup.Value,
+                isAuthorizedToUse,
+                serviceGroup,
                 serializedAdditionalRawData);
         }
 

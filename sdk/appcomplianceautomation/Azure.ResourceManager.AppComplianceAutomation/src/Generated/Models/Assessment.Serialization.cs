@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Remediation != null)
+            if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (options.Format != "W" && IsPass.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPass))
             {
                 writer.WritePropertyName("isPass"u8);
                 writer.WriteStringValue(IsPass.Value.ToString());
             }
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<AssessmentResourceContent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AssessmentSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<IsPass> isPass = default;
-            Optional<string> policyId = default;
+            string name = default;
+            AssessmentSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            IsPass? isPass = default;
+            string policyId = default;
             IReadOnlyList<AssessmentResourceContent> resourceList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +175,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Assessment(
-                name.Value,
-                Optional.ToNullable(severity),
-                description.Value,
-                remediation.Value,
-                Optional.ToNullable(isPass),
-                policyId.Value,
+                name,
+                severity,
+                description,
+                remediation,
+                isPass,
+                policyId,
                 resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(),
                 serializedAdditionalRawData);
         }

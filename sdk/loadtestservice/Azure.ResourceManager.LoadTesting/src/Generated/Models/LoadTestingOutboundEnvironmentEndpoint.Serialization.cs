@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<LoadTestingEndpointDependency> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<LoadTestingEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>(), serializedAdditionalRawData);
+            return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

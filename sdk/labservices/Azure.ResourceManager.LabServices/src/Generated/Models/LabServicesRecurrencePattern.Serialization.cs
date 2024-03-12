@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToSerialString());
-            if (!(WeekDays is ChangeTrackingList<LabServicesDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WeekDays))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabServicesRecurrenceFrequency frequency = default;
             IList<LabServicesDayOfWeek> weekDays = default;
-            Optional<int> interval = default;
+            int? interval = default;
             DateTimeOffset expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesRecurrencePattern(frequency, weekDays ?? new ChangeTrackingList<LabServicesDayOfWeek>(), Optional.ToNullable(interval), expirationDate, serializedAdditionalRawData);
+            return new LabServicesRecurrencePattern(frequency, weekDays ?? new ChangeTrackingList<LabServicesDayOfWeek>(), interval, expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesRecurrencePattern>.Write(ModelReaderWriterOptions options)

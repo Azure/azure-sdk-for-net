@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (AclsUri != null)
+            if (Optional.IsDefined(AclsUri))
             {
                 writer.WritePropertyName("aclsUrl"u8);
                 writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(MatchConfigurations is ChangeTrackingList<AccessControlListMatchConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConfigurations))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(DynamicMatchConfigurations is ChangeTrackingList<CommonDynamicMatchConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
             {
                 writer.WritePropertyName("dynamicMatchConfigurations"u8);
                 writer.WriteStartArray();
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastSyncedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
                 writer.WritePropertyName("lastSyncedTime"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> aclsUrl = default;
-            Optional<CommunityActionType> defaultAction = default;
+            SystemData systemData = default;
+            string annotation = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri aclsUrl = default;
+            CommunityActionType? defaultAction = default;
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            Optional<DateTimeOffset> lastSyncedTime = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            DateTimeOffset? lastSyncedTime = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation.Value,
-                Optional.ToNullable(configurationType),
-                aclsUrl.Value,
-                Optional.ToNullable(defaultAction),
+                annotation,
+                configurationType,
+                aclsUrl,
+                defaultAction,
                 matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
-                Optional.ToNullable(lastSyncedTime),
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                lastSyncedTime,
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

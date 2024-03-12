@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectoryGroupId != null)
+            if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
-            if (LtiContextId != null)
+            if (Optional.IsDefined(LtiContextId))
             {
                 writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
-            if (LmsInstance != null)
+            if (Optional.IsDefined(LmsInstance))
             {
                 writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
-            if (LtiClientId != null)
+            if (Optional.IsDefined(LtiClientId))
             {
                 writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
-            if (LtiRosterEndpoint != null)
+            if (Optional.IsDefined(LtiRosterEndpoint))
             {
                 writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> activeDirectoryGroupId = default;
-            Optional<string> ltiContextId = default;
-            Optional<Uri> lmsInstance = default;
-            Optional<string> ltiClientId = default;
-            Optional<Uri> ltiRosterEndpoint = default;
+            string activeDirectoryGroupId = default;
+            string ltiContextId = default;
+            Uri lmsInstance = default;
+            string ltiClientId = default;
+            Uri ltiRosterEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LabRosterProfile(
-                activeDirectoryGroupId.Value,
-                ltiContextId.Value,
-                lmsInstance.Value,
-                ltiClientId.Value,
-                ltiRosterEndpoint.Value,
+                activeDirectoryGroupId,
+                ltiContextId,
+                lmsInstance,
+                ltiClientId,
+                ltiRosterEndpoint,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ActionsRequired != null)
+            if (Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> actionsRequired = default;
-            Optional<string> description = default;
-            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
+            string actionsRequired = default;
+            string description = default;
+            MachineLearningPrivateEndpointServiceConnectionStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningPrivateLinkServiceConnectionState(actionsRequired, description, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

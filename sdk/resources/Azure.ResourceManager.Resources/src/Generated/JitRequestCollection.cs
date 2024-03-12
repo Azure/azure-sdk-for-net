@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JitRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jitRequestName, JitRequestData data, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JitRequestResource> CreateOrUpdate(WaitUntil waitUntil, string jitRequestName, JitRequestData data, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual async Task<Response<JitRequestResource>> GetAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual Response<JitRequestResource> Get(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual Response<bool> Exists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual async Task<NullableResponse<JitRequestResource>> GetIfExistsAsync(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="jitRequestName"/> is null. </exception>
         public virtual NullableResponse<JitRequestResource> GetIfExists(string jitRequestName, CancellationToken cancellationToken = default)
         {
-            if (jitRequestName == null)
-            {
-                throw new ArgumentNullException(nameof(jitRequestName));
-            }
-            if (jitRequestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jitRequestName));
-            }
+            Argument.AssertNotNullOrEmpty(jitRequestName, nameof(jitRequestName));
 
             using var scope = _jitRequestClientDiagnostics.CreateScope("JitRequestCollection.GetIfExists");
             scope.Start();

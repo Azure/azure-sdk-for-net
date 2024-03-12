@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (IsUnique.HasValue)
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("isUnique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MongoDBShardKeyField> fields = default;
-            Optional<bool> isUnique = default;
+            bool? isUnique = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBShardKeySetting(fields, Optional.ToNullable(isUnique), serializedAdditionalRawData);
+            return new MongoDBShardKeySetting(fields, isUnique, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBShardKeySetting>.Write(ModelReaderWriterOptions options)

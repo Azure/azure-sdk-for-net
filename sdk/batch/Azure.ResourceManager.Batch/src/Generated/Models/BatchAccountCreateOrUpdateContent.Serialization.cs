@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,44 +41,44 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoStorage != null)
+            if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
                 writer.WriteObjectValue(AutoStorage);
             }
-            if (PoolAllocationMode.HasValue)
+            if (Optional.IsDefined(PoolAllocationMode))
             {
                 writer.WritePropertyName("poolAllocationMode"u8);
                 writer.WriteStringValue(PoolAllocationMode.Value.ToSerialString());
             }
-            if (KeyVaultReference != null)
+            if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(AllowedAuthenticationModes is ChangeTrackingList<BatchAuthenticationMode> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
                 if (AllowedAuthenticationModes != null)
                 {
@@ -135,13 +136,13 @@ namespace Azure.ResourceManager.Batch.Models
             }
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
-            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
-            Optional<BatchKeyVaultReference> keyVaultReference = default;
-            Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
+            ManagedServiceIdentity identity = default;
+            BatchAccountAutoStorageBaseConfiguration autoStorage = default;
+            BatchAccountPoolAllocationMode? poolAllocationMode = default;
+            BatchKeyVaultReference keyVaultReference = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
+            BatchAccountEncryptionConfiguration encryption = default;
             IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -266,12 +267,12 @@ namespace Azure.ResourceManager.Batch.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                autoStorage.Value,
-                Optional.ToNullable(poolAllocationMode),
-                keyVaultReference.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                networkProfile.Value,
-                encryption.Value,
+                autoStorage,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
+                encryption,
                 allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
                 serializedAdditionalRawData);
         }

@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,29 +63,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (PanLocation.HasValue)
+            if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
                 writer.WriteStringValue(PanLocation.Value);
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (!(AssociatedSubscriptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -95,27 +95,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DefaultMode.HasValue)
+            if (Optional.IsDefined(DefaultMode))
             {
                 writer.WritePropertyName("defaultMode"u8);
                 writer.WriteStringValue(DefaultMode.Value.ToString());
             }
-            if (MinAppIdVersion != null)
+            if (Optional.IsDefined(MinAppIdVersion))
             {
                 writer.WritePropertyName("minAppIdVersion"u8);
                 writer.WriteStringValue(MinAppIdVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SecurityServices != null)
+            if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
                 writer.WriteObjectValue(SecurityServices);
@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
+            SystemData systemData = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
             IList<string> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            FirewallProvisioningState? provisioningState = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,19 +332,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(panETag),
-                Optional.ToNullable(panLocation),
-                Optional.ToNullable(scope),
+                panETag,
+                panLocation,
+                scope,
                 associatedSubscriptions ?? new ChangeTrackingList<string>(),
-                description.Value,
-                Optional.ToNullable(defaultMode),
-                minAppIdVersion.Value,
-                Optional.ToNullable(provisioningState),
-                securityServices.Value,
+                description,
+                defaultMode,
+                minAppIdVersion,
+                provisioningState,
+                securityServices,
                 serializedAdditionalRawData);
         }
 

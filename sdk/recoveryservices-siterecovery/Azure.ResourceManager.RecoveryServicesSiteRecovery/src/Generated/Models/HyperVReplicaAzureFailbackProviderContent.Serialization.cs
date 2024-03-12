@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DataSyncOption != null)
+            if (Optional.IsDefined(DataSyncOption))
             {
                 writer.WritePropertyName("dataSyncOption"u8);
                 writer.WriteStringValue(DataSyncOption);
             }
-            if (RecoveryVmCreationOption != null)
+            if (Optional.IsDefined(RecoveryVmCreationOption))
             {
                 writer.WritePropertyName("recoveryVmCreationOption"u8);
                 writer.WriteStringValue(RecoveryVmCreationOption);
             }
-            if (ProviderIdForAlternateRecovery != null)
+            if (Optional.IsDefined(ProviderIdForAlternateRecovery))
             {
                 writer.WritePropertyName("providerIdForAlternateRecovery"u8);
                 writer.WriteStringValue(ProviderIdForAlternateRecovery);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> dataSyncOption = default;
-            Optional<string> recoveryVmCreationOption = default;
-            Optional<string> providerIdForAlternateRecovery = default;
+            string dataSyncOption = default;
+            string recoveryVmCreationOption = default;
+            string providerIdForAlternateRecovery = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureFailbackProviderContent(instanceType, serializedAdditionalRawData, dataSyncOption.Value, recoveryVmCreationOption.Value, providerIdForAlternateRecovery.Value);
+            return new HyperVReplicaAzureFailbackProviderContent(instanceType, serializedAdditionalRawData, dataSyncOption, recoveryVmCreationOption, providerIdForAlternateRecovery);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureFailbackProviderContent>.Write(ModelReaderWriterOptions options)

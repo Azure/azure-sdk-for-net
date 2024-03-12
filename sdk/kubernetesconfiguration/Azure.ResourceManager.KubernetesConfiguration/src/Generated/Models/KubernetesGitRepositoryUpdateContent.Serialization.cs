@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (RepositoryRef != null)
+            if (Optional.IsDefined(RepositoryRef))
             {
                 if (RepositoryRef != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("repositoryRef");
                 }
             }
-            if (SshKnownHosts != null)
+            if (Optional.IsDefined(SshKnownHosts))
             {
                 if (SshKnownHosts != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sshKnownHosts");
                 }
             }
-            if (HttpsUser != null)
+            if (Optional.IsDefined(HttpsUser))
             {
                 if (HttpsUser != null)
                 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsUser");
                 }
             }
-            if (HttpsCACert != null)
+            if (Optional.IsDefined(HttpsCACert))
             {
                 if (HttpsCACert != null)
                 {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsCACert");
                 }
             }
-            if (LocalAuthRef != null)
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {
@@ -160,14 +161,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
-            Optional<string> sshKnownHosts = default;
-            Optional<string> httpsUser = default;
-            Optional<string> httpsCACert = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesGitRepositoryRef repositoryRef = default;
+            string sshKnownHosts = default;
+            string httpsUser = default;
+            string httpsCACert = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,14 +260,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesGitRepositoryUpdateContent(
-                url.Value,
-                Optional.ToNullable(timeoutInSeconds),
-                Optional.ToNullable(syncIntervalInSeconds),
-                repositoryRef.Value,
-                sshKnownHosts.Value,
-                httpsUser.Value,
-                httpsCACert.Value,
-                localAuthRef.Value,
+                url,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
                 serializedAdditionalRawData);
         }
 

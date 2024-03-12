@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(ExceptionRules is ChangeTrackingList<ExceptionRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExceptionRules))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
+            string name = default;
             IList<ExceptionRule> exceptionRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExceptionPolicy(etag, id, name.Value, exceptionRules ?? new ChangeTrackingList<ExceptionRule>(), serializedAdditionalRawData);
+            return new ExceptionPolicy(etag, id, name, exceptionRules ?? new ChangeTrackingList<ExceptionRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExceptionPolicy>.Write(ModelReaderWriterOptions options)

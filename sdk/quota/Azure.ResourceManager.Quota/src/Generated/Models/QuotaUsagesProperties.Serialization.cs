@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Usages != null)
+            if (Optional.IsDefined(Usages))
             {
                 writer.WritePropertyName("usages"u8);
                 writer.WriteObjectValue(Usages);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (ResourceTypeName != null)
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (options.Format != "W" && QuotaPeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod.Value, "P");
             }
-            if (options.Format != "W" && IsQuotaApplicable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsQuotaApplicable))
             {
                 writer.WritePropertyName("isQuotaApplicable"u8);
                 writer.WriteBooleanValue(IsQuotaApplicable.Value);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<QuotaUsagesObject> usages = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<TimeSpan> quotaPeriod = default;
-            Optional<bool> isQuotaApplicable = default;
-            Optional<BinaryData> properties = default;
+            QuotaUsagesObject usages = default;
+            string unit = default;
+            QuotaRequestResourceName name = default;
+            string resourceType = default;
+            TimeSpan? quotaPeriod = default;
+            bool? isQuotaApplicable = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.Quota.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QuotaUsagesProperties(
-                usages.Value,
-                unit.Value,
-                name.Value,
-                resourceType.Value,
-                Optional.ToNullable(quotaPeriod),
-                Optional.ToNullable(isQuotaApplicable),
-                properties.Value,
+                usages,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                isQuotaApplicable,
+                properties,
                 serializedAdditionalRawData);
         }
 

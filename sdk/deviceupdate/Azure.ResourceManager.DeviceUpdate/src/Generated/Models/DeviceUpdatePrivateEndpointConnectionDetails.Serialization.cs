@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && LinkIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);
                 writer.WriteStringValue(LinkIdentifier);
             }
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && MemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            string id = default;
+            string privateIPAddress = default;
+            string linkIdentifier = default;
+            string groupId = default;
+            string memberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DeviceUpdatePrivateEndpointConnectionDetails(
-                id.Value,
-                privateIPAddress.Value,
-                linkIdentifier.Value,
-                groupId.Value,
-                memberName.Value,
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
                 serializedAdditionalRawData);
         }
 

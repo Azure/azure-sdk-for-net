@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (CorrectiveAction != null)
+            if (Optional.IsDefined(CorrectiveAction))
             {
                 writer.WritePropertyName("correctiveAction"u8);
                 writer.WriteStringValue(CorrectiveAction);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (SiteName != null)
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
@@ -101,13 +102,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
-            Optional<string> category = default;
-            Optional<string> component = default;
-            Optional<string> correctiveAction = default;
-            Optional<string> details = default;
-            Optional<string> summary = default;
-            Optional<string> siteName = default;
+            string eventType = default;
+            string category = default;
+            string component = default;
+            string correctiveAction = default;
+            string details = default;
+            string summary = default;
+            string siteName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,13 +163,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                eventType.Value,
-                category.Value,
-                component.Value,
-                correctiveAction.Value,
-                details.Value,
-                summary.Value,
-                siteName.Value);
+                eventType,
+                category,
+                component,
+                correctiveAction,
+                details,
+                summary,
+                siteName);
         }
 
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)

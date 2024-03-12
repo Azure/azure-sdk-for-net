@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (BoostRUs.HasValue)
+            if (Optional.IsDefined(BoostRUs))
             {
                 writer.WritePropertyName("boostRUs"u8);
                 writer.WriteNumberValue(BoostRUs.Value);
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Replication.HasValue)
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteStringValue(Replication.Value.ToString());
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Throttling != null)
+            if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
                 writer.WriteObjectValue(Throttling);
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> boostRUs = default;
+            int? boostRUs = default;
             IDictionary<string, MongoDBDatabaseSettings> databases = default;
-            Optional<MongoDBReplication> replication = default;
+            MongoDBReplication? replication = default;
             MongoDBConnectionInfo source = default;
             MongoDBConnectionInfo target = default;
-            Optional<MongoDBThrottlingSettings> throttling = default;
+            MongoDBThrottlingSettings throttling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,12 +156,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MongoDBMigrationSettings(
-                Optional.ToNullable(boostRUs),
+                boostRUs,
                 databases,
-                Optional.ToNullable(replication),
+                replication,
                 source,
                 target,
-                throttling.Value,
+                throttling,
                 serializedAdditionalRawData);
         }
 

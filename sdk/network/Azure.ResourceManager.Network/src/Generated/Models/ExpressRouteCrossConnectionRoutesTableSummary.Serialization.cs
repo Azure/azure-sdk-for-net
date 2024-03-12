@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Neighbor != null)
+            if (Optional.IsDefined(Neighbor))
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (Asn.HasValue)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (UpDown != null)
+            if (Optional.IsDefined(UpDown))
             {
                 writer.WritePropertyName("upDown"u8);
                 writer.WriteStringValue(UpDown);
             }
-            if (StateOrPrefixesReceived != null)
+            if (Optional.IsDefined(StateOrPrefixesReceived))
             {
                 writer.WritePropertyName("stateOrPrefixesReceived"u8);
                 writer.WriteStringValue(StateOrPrefixesReceived);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> neighbor = default;
-            Optional<int> asn = default;
-            Optional<string> upDown = default;
-            Optional<string> stateOrPrefixesReceived = default;
+            string neighbor = default;
+            int? asn = default;
+            string upDown = default;
+            string stateOrPrefixesReceived = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor.Value, Optional.ToNullable(asn), upDown.Value, stateOrPrefixesReceived.Value, serializedAdditionalRawData);
+            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(ModelReaderWriterOptions options)

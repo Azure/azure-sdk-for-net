@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ServiceBusTopicData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             IReadOnlyList<ServiceBusTopicData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBTopicListResult>.Write(ModelReaderWriterOptions options)

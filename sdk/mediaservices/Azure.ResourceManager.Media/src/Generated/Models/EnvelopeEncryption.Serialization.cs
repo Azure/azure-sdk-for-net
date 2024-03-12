@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContentKeys != null)
+            if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (CustomKeyAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            MediaEnabledProtocols enabledProtocols = default;
             IList<MediaTrackSelection> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUriTemplate = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            string customKeyAcquisitionUriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvelopeEncryption(enabledProtocols.Value, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys.Value, customKeyAcquisitionUriTemplate.Value, serializedAdditionalRawData);
+            return new EnvelopeEncryption(enabledProtocols, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys, customKeyAcquisitionUriTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvelopeEncryption>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,48 +67,48 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (options.Format != "W" && AvailabilityZone != null)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (options.Format != "W" && BareMetalMachineId != null)
+            if (options.Format != "W" && Optional.IsDefined(BareMetalMachineId))
             {
                 writer.WritePropertyName("bareMetalMachineId"u8);
                 writer.WriteStringValue(BareMetalMachineId);
             }
-            if (BootMethod.HasValue)
+            if (Optional.IsDefined(BootMethod))
             {
                 writer.WritePropertyName("bootMethod"u8);
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
             writer.WriteObjectValue(CloudServicesNetworkAttachment);
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (IsolateEmulatorThread.HasValue)
+            if (Optional.IsDefined(IsolateEmulatorThread))
             {
                 writer.WritePropertyName("isolateEmulatorThread"u8);
                 writer.WriteStringValue(IsolateEmulatorThread.Value.ToString());
             }
             writer.WritePropertyName("memorySizeGB"u8);
             writer.WriteNumberValue(MemorySizeInGB);
-            if (!(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkAttachments))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkData != null)
+            if (Optional.IsDefined(NetworkData))
             {
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
             }
-            if (!(PlacementHints is ChangeTrackingList<VirtualMachinePlacementHint> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PlacementHints))
             {
                 writer.WritePropertyName("placementHints"u8);
                 writer.WriteStartArray();
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PowerState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(SshPublicKeys is ChangeTrackingList<NetworkCloudSshPublicKey> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -155,29 +155,29 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("storageProfile"u8);
             writer.WriteObjectValue(StorageProfile);
-            if (UserData != null)
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (VirtioInterface.HasValue)
+            if (Optional.IsDefined(VirtioInterface))
             {
                 writer.WritePropertyName("virtioInterface"u8);
                 writer.WriteStringValue(VirtioInterface.Value.ToString());
             }
-            if (VmDeviceModel.HasValue)
+            if (Optional.IsDefined(VmDeviceModel))
             {
                 writer.WritePropertyName("vmDeviceModel"u8);
                 writer.WriteStringValue(VmDeviceModel.Value.ToString());
             }
             writer.WritePropertyName("vmImage"u8);
             writer.WriteStringValue(VmImage);
-            if (VmImageRepositoryCredentials != null)
+            if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
                 writer.WriteObjectValue(VmImageRepositoryCredentials);
             }
-            if (options.Format != "W" && !(Volumes is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -237,30 +237,30 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string adminUsername = default;
-            Optional<string> availabilityZone = default;
-            Optional<ResourceIdentifier> bareMetalMachineId = default;
-            Optional<VirtualMachineBootMethod> bootMethod = default;
+            string availabilityZone = default;
+            ResourceIdentifier bareMetalMachineId = default;
+            VirtualMachineBootMethod? bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
-            Optional<ResourceIdentifier> clusterId = default;
+            ResourceIdentifier clusterId = default;
             long cpuCores = default;
-            Optional<VirtualMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<VirtualMachineIsolateEmulatorThread> isolateEmulatorThread = default;
+            VirtualMachineDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = default;
             long memorySizeGB = default;
             IList<NetworkAttachment> networkAttachments = default;
-            Optional<string> networkData = default;
+            string networkData = default;
             IList<VirtualMachinePlacementHint> placementHints = default;
-            Optional<VirtualMachinePowerState> powerState = default;
-            Optional<VirtualMachineProvisioningState> provisioningState = default;
+            VirtualMachinePowerState? powerState = default;
+            VirtualMachineProvisioningState? provisioningState = default;
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineVirtioInterfaceType> virtioInterface = default;
-            Optional<VirtualMachineDeviceModelType> vmDeviceModel = default;
+            string userData = default;
+            VirtualMachineVirtioInterfaceType? virtioInterface = default;
+            VirtualMachineDeviceModelType? vmDeviceModel = default;
             string vmImage = default;
-            Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
+            ImageRepositoryCredentials vmImageRepositoryCredentials = default;
             IReadOnlyList<ResourceIdentifier> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -539,33 +539,33 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
                 adminUsername,
-                availabilityZone.Value,
-                bareMetalMachineId.Value,
-                Optional.ToNullable(bootMethod),
+                availabilityZone,
+                bareMetalMachineId,
+                bootMethod,
                 cloudServicesNetworkAttachment,
-                clusterId.Value,
+                clusterId,
                 cpuCores,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(isolateEmulatorThread),
+                detailedStatus,
+                detailedStatusMessage,
+                isolateEmulatorThread,
                 memorySizeGB,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
-                networkData.Value,
+                networkData,
                 placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(),
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(provisioningState),
+                powerState,
+                provisioningState,
                 sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(),
                 storageProfile,
-                userData.Value,
-                Optional.ToNullable(virtioInterface),
-                Optional.ToNullable(vmDeviceModel),
+                userData,
+                virtioInterface,
+                vmDeviceModel,
                 vmImage,
-                vmImageRepositoryCredentials.Value,
+                vmImageRepositoryCredentials,
                 volumes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

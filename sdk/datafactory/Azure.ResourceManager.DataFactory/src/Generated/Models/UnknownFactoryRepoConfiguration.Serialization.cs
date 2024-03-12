@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
+            string lastCommitId = default;
+            bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,8 +147,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 repositoryName,
                 collaborationBranch,
                 rootFolder,
-                lastCommitId.Value,
-                Optional.ToNullable(disablePublish),
+                lastCommitId,
+                disablePublish,
                 serializedAdditionalRawData);
         }
 

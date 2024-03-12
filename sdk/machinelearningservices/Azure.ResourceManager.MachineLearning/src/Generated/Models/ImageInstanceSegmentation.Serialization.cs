@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryMetric.HasValue)
+            if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (ModelSettings != null)
+            if (Optional.IsDefined(ModelSettings))
             {
                 if (ModelSettings != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsObjectDetection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings);
-            if (SweepSettings != null)
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (ValidationDataSize.HasValue)
+            if (Optional.IsDefined(ValidationDataSize))
             {
                 if (ValidationDataSize != null)
                 {
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -157,15 +158,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<InstanceSegmentationPrimaryMetric> primaryMetric = default;
-            Optional<ImageModelSettingsObjectDetection> modelSettings = default;
+            InstanceSegmentationPrimaryMetric? primaryMetric = default;
+            ImageModelSettingsObjectDetection modelSettings = default;
             IList<ImageModelDistributionSettingsObjectDetection> searchSpace = default;
             ImageLimitSettings limitSettings = default;
-            Optional<ImageSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            ImageSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -277,18 +278,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ImageInstanceSegmentation(
-                Optional.ToNullable(logVerbosity),
-                targetColumnName.Value,
+                logVerbosity,
+                targetColumnName,
                 taskType,
                 trainingData,
                 serializedAdditionalRawData,
-                Optional.ToNullable(primaryMetric),
-                modelSettings.Value,
+                primaryMetric,
+                modelSettings,
                 searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(),
                 limitSettings,
-                sweepSettings.Value,
-                validationData.Value,
-                Optional.ToNullable(validationDataSize));
+                sweepSettings,
+                validationData,
+                validationDataSize);
         }
 
         BinaryData IPersistableModel<ImageInstanceSegmentation>.Write(ModelReaderWriterOptions options)

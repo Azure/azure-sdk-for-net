@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PropertyName.HasValue)
+            if (Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (!(PropertyValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyValues))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
-            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
+            AutomationRulePropertyConditionSupportedProperty? propertyName = default;
+            AutomationRulePropertyConditionSupportedOperator? @operator = default;
             IList<string> propertyValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyValuesCondition(Optional.ToNullable(propertyName), Optional.ToNullable(@operator), propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AutomationRulePropertyValuesCondition(propertyName, @operator, propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyValuesCondition>.Write(ModelReaderWriterOptions options)

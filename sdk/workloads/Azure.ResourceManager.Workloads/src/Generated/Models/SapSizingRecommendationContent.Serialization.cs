@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (DBScaleMethod.HasValue)
+            if (Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
@@ -95,8 +96,8 @@ namespace Azure.ResourceManager.Workloads.Models
             long saps = default;
             long dbMemory = default;
             SapDatabaseType databaseType = default;
-            Optional<SapDatabaseScaleMethod> dbScaleMethod = default;
-            Optional<SapHighAvailabilityType> highAvailabilityType = default;
+            SapDatabaseScaleMethod? dbScaleMethod = default;
+            SapHighAvailabilityType? highAvailabilityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,8 +169,8 @@ namespace Azure.ResourceManager.Workloads.Models
                 saps,
                 dbMemory,
                 databaseType,
-                Optional.ToNullable(dbScaleMethod),
-                Optional.ToNullable(highAvailabilityType),
+                dbScaleMethod,
+                highAvailabilityType,
                 serializedAdditionalRawData);
         }
 

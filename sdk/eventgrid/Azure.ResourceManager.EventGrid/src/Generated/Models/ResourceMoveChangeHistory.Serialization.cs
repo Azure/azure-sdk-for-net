@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (AzureSubscriptionId != null)
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (ChangedTimeUtc.HasValue)
+            if (Optional.IsDefined(ChangedTimeUtc))
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<DateTimeOffset> changedTimeUtc = default;
+            string azureSubscriptionId = default;
+            string resourceGroupName = default;
+            DateTimeOffset? changedTimeUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMoveChangeHistory(azureSubscriptionId.Value, resourceGroupName.Value, Optional.ToNullable(changedTimeUtc), serializedAdditionalRawData);
+            return new ResourceMoveChangeHistory(azureSubscriptionId, resourceGroupName, changedTimeUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMoveChangeHistory>.Write(ModelReaderWriterOptions options)

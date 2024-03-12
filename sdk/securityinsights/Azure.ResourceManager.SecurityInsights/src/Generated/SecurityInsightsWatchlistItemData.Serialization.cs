@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WatchlistItemType != null)
+            if (Optional.IsDefined(WatchlistItemType))
             {
                 writer.WritePropertyName("watchlistItemType"u8);
                 writer.WriteStringValue(WatchlistItemType);
             }
-            if (WatchlistItemId != null)
+            if (Optional.IsDefined(WatchlistItemId))
             {
                 writer.WritePropertyName("watchlistItemId"u8);
                 writer.WriteStringValue(WatchlistItemId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (ItemsKeyValue != null)
+            if (Optional.IsDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
 #if NET6_0_OR_GREATER
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
 #endif
             }
-            if (EntityMapping != null)
+            if (Optional.IsDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
 #if NET6_0_OR_GREATER
@@ -159,21 +159,21 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> watchlistItemType = default;
-            Optional<string> watchlistItemId = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<BinaryData> itemsKeyValue = default;
-            Optional<BinaryData> entityMapping = default;
+            SystemData systemData = default;
+            string watchlistItemType = default;
+            string watchlistItemId = default;
+            Guid? tenantId = default;
+            bool? isDeleted = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo createdBy = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            BinaryData itemsKeyValue = default;
+            BinaryData entityMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                watchlistItemType.Value,
-                watchlistItemId.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(isDeleted),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
-                createdBy.Value,
-                updatedBy.Value,
-                itemsKeyValue.Value,
-                entityMapping.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                watchlistItemType,
+                watchlistItemId,
+                tenantId,
+                isDeleted,
+                created,
+                updated,
+                createdBy,
+                updatedBy,
+                itemsKeyValue,
+                entityMapping,
+                etag,
                 serializedAdditionalRawData);
         }
 

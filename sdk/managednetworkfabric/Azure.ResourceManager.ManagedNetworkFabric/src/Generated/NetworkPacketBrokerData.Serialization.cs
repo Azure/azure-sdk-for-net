@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartObject();
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (options.Format != "W" && !(NetworkDeviceIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkDeviceIds))
             {
                 writer.WritePropertyName("networkDeviceIds"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SourceInterfaceIds is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SourceInterfaceIds))
             {
                 writer.WritePropertyName("sourceInterfaceIds"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkTapIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkTapIds))
             {
                 writer.WritePropertyName("networkTapIds"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NeighborGroupIds is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NeighborGroupIds))
             {
                 writer.WritePropertyName("neighborGroupIds"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ResourceIdentifier networkFabricId = default;
             IReadOnlyList<ResourceIdentifier> networkDeviceIds = default;
             IReadOnlyList<ResourceIdentifier> sourceInterfaceIds = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             IReadOnlyList<ResourceIdentifier> neighborGroupIds = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 networkFabricId,
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
             }
-            if (TriggerHint != null)
+            if (Optional.IsDefined(TriggerHint))
             {
                 writer.WritePropertyName("triggerHint"u8);
                 writer.WriteStringValue(TriggerHint);
             }
-            if (IsPageable.HasValue)
+            if (Optional.IsDefined(IsPageable))
             {
                 writer.WritePropertyName("pageable"u8);
                 writer.WriteBooleanValue(IsPageable.Value);
             }
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteObjectValue(Annotation);
             }
-            if (Api != null)
+            if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
                 writer.WriteObjectValue(Api);
             }
-            if (InputsDefinition != null)
+            if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
                 writer.WriteObjectValue(InputsDefinition);
             }
-            if (!(ResponsesDefinition is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
                 writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (IsWebhook.HasValue)
+            if (Optional.IsDefined(IsWebhook))
             {
                 writer.WritePropertyName("isWebhook"u8);
                 writer.WriteBooleanValue(IsWebhook.Value);
             }
-            if (IsNotification.HasValue)
+            if (Optional.IsDefined(IsNotification))
             {
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
@@ -130,18 +131,18 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> visibility = default;
-            Optional<string> trigger = default;
-            Optional<string> triggerHint = default;
-            Optional<bool> pageable = default;
-            Optional<LogicApiOperationAnnotation> annotation = default;
-            Optional<LogicApiReference> api = default;
-            Optional<SwaggerSchema> inputsDefinition = default;
+            string summary = default;
+            string description = default;
+            string visibility = default;
+            string trigger = default;
+            string triggerHint = default;
+            bool? pageable = default;
+            LogicApiOperationAnnotation annotation = default;
+            LogicApiReference api = default;
+            SwaggerSchema inputsDefinition = default;
             IDictionary<string, SwaggerSchema> responsesDefinition = default;
-            Optional<bool> isWebhook = default;
-            Optional<bool> isNotification = default;
+            bool? isWebhook = default;
+            bool? isNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,18 +247,18 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicApiOperationProperties(
-                summary.Value,
-                description.Value,
-                visibility.Value,
-                trigger.Value,
-                triggerHint.Value,
-                Optional.ToNullable(pageable),
-                annotation.Value,
-                api.Value,
-                inputsDefinition.Value,
+                summary,
+                description,
+                visibility,
+                trigger,
+                triggerHint,
+                pageable,
+                annotation,
+                api,
+                inputsDefinition,
                 responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
-                Optional.ToNullable(isWebhook),
-                Optional.ToNullable(isNotification),
+                isWebhook,
+                isNotification,
                 serializedAdditionalRawData);
         }
 

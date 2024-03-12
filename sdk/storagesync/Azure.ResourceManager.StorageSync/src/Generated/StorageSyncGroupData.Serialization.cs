@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && UniqueId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId.Value);
             }
-            if (options.Format != "W" && SyncGroupStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SyncGroupStatus))
             {
                 writer.WritePropertyName("syncGroupStatus"u8);
                 writer.WriteStringValue(SyncGroupStatus);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> uniqueId = default;
-            Optional<string> syncGroupStatus = default;
+            SystemData systemData = default;
+            Guid? uniqueId = default;
+            string syncGroupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.StorageSync
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(uniqueId),
-                syncGroupStatus.Value,
+                systemData,
+                uniqueId,
+                syncGroupStatus,
                 serializedAdditionalRawData);
         }
 

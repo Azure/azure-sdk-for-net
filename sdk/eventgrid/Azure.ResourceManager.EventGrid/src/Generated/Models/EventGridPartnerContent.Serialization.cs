@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (PartnerName != null)
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (AuthorizationExpireOn.HasValue)
+            if (Optional.IsDefined(AuthorizationExpireOn))
             {
                 writer.WritePropertyName("authorizationExpirationTimeInUtc"u8);
                 writer.WriteStringValue(AuthorizationExpireOn.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> partnerName = default;
-            Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string partnerName = default;
+            DateTimeOffset? authorizationExpirationTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridPartnerContent(Optional.ToNullable(partnerRegistrationImmutableId), partnerName.Value, Optional.ToNullable(authorizationExpirationTimeInUtc), serializedAdditionalRawData);
+            return new EventGridPartnerContent(partnerRegistrationImmutableId, partnerName, authorizationExpirationTimeInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridPartnerContent>.Write(ModelReaderWriterOptions options)

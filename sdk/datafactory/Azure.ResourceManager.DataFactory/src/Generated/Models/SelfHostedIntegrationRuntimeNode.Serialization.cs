@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeName != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && MachineName != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && HostServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -57,67 +58,67 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && VersionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && RegisterOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegisterOn))
             {
                 writer.WritePropertyName("registerTime"u8);
                 writer.WriteStringValue(RegisterOn.Value, "O");
             }
-            if (options.Format != "W" && LastConnectOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastConnectOn))
             {
                 writer.WritePropertyName("lastConnectTime"u8);
                 writer.WriteStringValue(LastConnectOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartOn))
             {
                 writer.WritePropertyName("lastStartTime"u8);
                 writer.WriteStringValue(LastStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastStopOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStopOn))
             {
                 writer.WritePropertyName("lastStopTime"u8);
                 writer.WriteStringValue(LastStopOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdateResult.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateResult))
             {
                 writer.WritePropertyName("lastUpdateResult"u8);
                 writer.WriteStringValue(LastUpdateResult.Value.ToString());
             }
-            if (options.Format != "W" && LastStartUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartUpdateOn))
             {
                 writer.WritePropertyName("lastStartUpdateTime"u8);
                 writer.WriteStringValue(LastStartUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && LastEndUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEndUpdateOn))
             {
                 writer.WritePropertyName("lastEndUpdateTime"u8);
                 writer.WriteStringValue(LastEndUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && IsActiveDispatcher.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActiveDispatcher))
             {
                 writer.WritePropertyName("isActiveDispatcher"u8);
                 writer.WriteBooleanValue(IsActiveDispatcher.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
@@ -157,24 +158,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<string> machineName = default;
-            Optional<Uri> hostServiceUri = default;
-            Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
+            string nodeName = default;
+            string machineName = default;
+            Uri hostServiceUri = default;
+            SelfHostedIntegrationRuntimeNodeStatus? status = default;
             IReadOnlyDictionary<string, string> capabilities = default;
-            Optional<string> versionStatus = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> registerTime = default;
-            Optional<DateTimeOffset> lastConnectTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset> lastStartTime = default;
-            Optional<DateTimeOffset> lastStopTime = default;
-            Optional<IntegrationRuntimeUpdateResult> lastUpdateResult = default;
-            Optional<DateTimeOffset> lastStartUpdateTime = default;
-            Optional<DateTimeOffset> lastEndUpdateTime = default;
-            Optional<bool> isActiveDispatcher = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> maxConcurrentJobs = default;
+            string versionStatus = default;
+            string version = default;
+            DateTimeOffset? registerTime = default;
+            DateTimeOffset? lastConnectTime = default;
+            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? lastStartTime = default;
+            DateTimeOffset? lastStopTime = default;
+            IntegrationRuntimeUpdateResult? lastUpdateResult = default;
+            DateTimeOffset? lastStartUpdateTime = default;
+            DateTimeOffset? lastEndUpdateTime = default;
+            bool? isActiveDispatcher = default;
+            int? concurrentJobsLimit = default;
+            int? maxConcurrentJobs = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,24 +335,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntimeNode(
-                nodeName.Value,
-                machineName.Value,
-                hostServiceUri.Value,
-                Optional.ToNullable(status),
+                nodeName,
+                machineName,
+                hostServiceUri,
+                status,
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
-                versionStatus.Value,
-                version.Value,
-                Optional.ToNullable(registerTime),
-                Optional.ToNullable(lastConnectTime),
-                Optional.ToNullable(expiryTime),
-                Optional.ToNullable(lastStartTime),
-                Optional.ToNullable(lastStopTime),
-                Optional.ToNullable(lastUpdateResult),
-                Optional.ToNullable(lastStartUpdateTime),
-                Optional.ToNullable(lastEndUpdateTime),
-                Optional.ToNullable(isActiveDispatcher),
-                Optional.ToNullable(concurrentJobsLimit),
-                Optional.ToNullable(maxConcurrentJobs),
+                versionStatus,
+                version,
+                registerTime,
+                lastConnectTime,
+                expiryTime,
+                lastStartTime,
+                lastStopTime,
+                lastUpdateResult,
+                lastStartUpdateTime,
+                lastEndUpdateTime,
+                isActiveDispatcher,
+                concurrentJobsLimit,
+                maxConcurrentJobs,
                 additionalProperties);
         }
 

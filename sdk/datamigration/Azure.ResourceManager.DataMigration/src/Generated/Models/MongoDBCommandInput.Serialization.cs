@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectName != null)
+            if (Optional.IsDefined(ObjectName))
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
+            string objectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCommandInput(objectName.Value, serializedAdditionalRawData);
+            return new MongoDBCommandInput(objectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCommandInput>.Write(ModelReaderWriterOptions options)

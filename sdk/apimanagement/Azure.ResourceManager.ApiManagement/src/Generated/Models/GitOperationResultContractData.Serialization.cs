@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -42,44 +43,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OperationResultIdentifier != null)
+            if (Optional.IsDefined(OperationResultIdentifier))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(OperationResultIdentifier);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (StartedOn.HasValue)
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (ResultInfo != null)
+            if (Optional.IsDefined(ResultInfo))
             {
                 writer.WritePropertyName("resultInfo"u8);
                 writer.WriteStringValue(ResultInfo);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && !(ActionLog is ChangeTrackingList<OperationResultLogItemContract> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
             {
                 writer.WritePropertyName("actionLog"u8);
                 writer.WriteStartArray();
@@ -131,13 +132,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<AsyncOperationStatus> status = default;
-            Optional<DateTimeOffset> started = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> resultInfo = default;
-            Optional<ErrorResponseBody> error = default;
+            SystemData systemData = default;
+            string id0 = default;
+            AsyncOperationStatus? status = default;
+            DateTimeOffset? started = default;
+            DateTimeOffset? updated = default;
+            string resultInfo = default;
+            ErrorResponseBody error = default;
             IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,13 +250,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                id0.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(started),
-                Optional.ToNullable(updated),
-                resultInfo.Value,
-                error.Value,
+                systemData,
+                id0,
+                status,
+                started,
+                updated,
+                resultInfo,
+                error,
                 actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),
                 serializedAdditionalRawData);
         }

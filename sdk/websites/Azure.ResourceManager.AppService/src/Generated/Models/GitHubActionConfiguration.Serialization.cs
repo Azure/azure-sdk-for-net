@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (CodeConfiguration != null)
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
                 writer.WriteObjectValue(CodeConfiguration);
             }
-            if (ContainerConfiguration != null)
+            if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
-            if (IsLinux.HasValue)
+            if (Optional.IsDefined(IsLinux))
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
             }
-            if (GenerateWorkflowFile.HasValue)
+            if (Optional.IsDefined(GenerateWorkflowFile))
             {
                 writer.WritePropertyName("generateWorkflowFile"u8);
                 writer.WriteBooleanValue(GenerateWorkflowFile.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
-            Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
-            Optional<bool> isLinux = default;
-            Optional<bool> generateWorkflowFile = default;
+            GitHubActionCodeConfiguration codeConfiguration = default;
+            GitHubActionContainerConfiguration containerConfiguration = default;
+            bool? isLinux = default;
+            bool? generateWorkflowFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubActionConfiguration(codeConfiguration.Value, containerConfiguration.Value, Optional.ToNullable(isLinux), Optional.ToNullable(generateWorkflowFile), serializedAdditionalRawData);
+            return new GitHubActionConfiguration(codeConfiguration, containerConfiguration, isLinux, generateWorkflowFile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubActionConfiguration>.Write(ModelReaderWriterOptions options)

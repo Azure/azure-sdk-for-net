@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode != null)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,12 +29,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (IncludeOpinionMining.HasValue)
+            if (Optional.IsDefined(IncludeOpinionMining))
             {
                 writer.WritePropertyName("includeOpinionMining"u8);
                 writer.WriteBooleanValue(IncludeOpinionMining.Value);
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 if (ModelVersion != null)
                 {
@@ -47,17 +48,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -85,13 +86,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultLanguageCode = default;
-            Optional<bool> includeOpinionMining = default;
-            Optional<string> modelVersion = default;
+            string defaultLanguageCode = default;
+            bool? includeOpinionMining = default;
+            string modelVersion = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -168,14 +169,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SentimentSkillV3(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                defaultLanguageCode.Value,
-                Optional.ToNullable(includeOpinionMining),
-                modelVersion.Value);
+                defaultLanguageCode,
+                includeOpinionMining,
+                modelVersion);
         }
     }
 }

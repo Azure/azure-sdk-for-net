@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SkuId != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && PlanId != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && PlanDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (Accessibility.HasValue)
+            if (Optional.IsDefined(Accessibility))
             {
                 writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
             }
-            if (options.Format != "W" && AltStackReference != null)
+            if (options.Format != "W" && Optional.IsDefined(AltStackReference))
             {
                 writer.WritePropertyName("altStackReference"u8);
                 writer.WriteStringValue(AltStackReference);
             }
-            if (options.Format != "W" && StackType != null)
+            if (options.Format != "W" && Optional.IsDefined(StackType))
             {
                 writer.WritePropertyName("stackType"u8);
                 writer.WriteStringValue(StackType);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> skuId = default;
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
-            Optional<PrivateStorePlanAccessibility> accessibility = default;
-            Optional<string> altStackReference = default;
-            Optional<string> stackType = default;
+            string skuId = default;
+            string planId = default;
+            string planDisplayName = default;
+            PrivateStorePlanAccessibility? accessibility = default;
+            string altStackReference = default;
+            string stackType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PrivateStorePlan(
-                skuId.Value,
-                planId.Value,
-                planDisplayName.Value,
-                Optional.ToNullable(accessibility),
-                altStackReference.Value,
-                stackType.Value,
+                skuId,
+                planId,
+                planDisplayName,
+                accessibility,
+                altStackReference,
+                stackType,
                 serializedAdditionalRawData);
         }
 

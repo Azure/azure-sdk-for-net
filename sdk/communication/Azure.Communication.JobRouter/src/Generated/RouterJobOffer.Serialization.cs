@@ -36,12 +36,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(JobId);
             writer.WritePropertyName("capacityCost"u8);
             writer.WriteNumberValue(CapacityCost);
-            if (OfferedAt.HasValue)
+            if (Optional.IsDefined(OfferedAt))
             {
                 writer.WritePropertyName("offeredAt"u8);
                 writer.WriteStringValue(OfferedAt.Value, "O");
             }
-            if (ExpiresAt.HasValue)
+            if (Optional.IsDefined(ExpiresAt))
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");
@@ -87,8 +87,8 @@ namespace Azure.Communication.JobRouter
             string offerId = default;
             string jobId = default;
             int capacityCost = default;
-            Optional<DateTimeOffset> offeredAt = default;
-            Optional<DateTimeOffset> expiresAt = default;
+            DateTimeOffset? offeredAt = default;
+            DateTimeOffset? expiresAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,8 +136,8 @@ namespace Azure.Communication.JobRouter
                 offerId,
                 jobId,
                 capacityCost,
-                Optional.ToNullable(offeredAt),
-                Optional.ToNullable(expiresAt),
+                offeredAt,
+                expiresAt,
                 serializedAdditionalRawData);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -19,17 +20,17 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Number != null)
+            if (Optional.IsDefined(Number))
             {
                 writer.WritePropertyName("number"u8);
                 writer.WriteStringValue(Number);
             }
-            if (!(ReviewNotes is ChangeTrackingList<ReviewNote> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReviewNotes))
             {
                 writer.WritePropertyName("reviewNotes"u8);
                 writer.WriteStartArray();
@@ -39,7 +40,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Costs is ChangeTrackingList<ShortCodeCost> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -49,32 +50,32 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubmissionDate.HasValue)
+            if (Optional.IsDefined(SubmissionDate))
             {
                 writer.WritePropertyName("submissionDate"u8);
                 writer.WriteStringValue(SubmissionDate.Value, "O");
             }
-            if (StatusUpdatedDate.HasValue)
+            if (Optional.IsDefined(StatusUpdatedDate))
             {
                 writer.WritePropertyName("statusUpdatedDate"u8);
                 writer.WriteStringValue(StatusUpdatedDate.Value, "O");
             }
-            if (ProgramDetails != null)
+            if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
                 writer.WriteObjectValue(ProgramDetails);
             }
-            if (CompanyInformation != null)
+            if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
                 writer.WriteObjectValue(CompanyInformation);
             }
-            if (MessageDetails != null)
+            if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
                 writer.WriteObjectValue(MessageDetails);
             }
-            if (TrafficDetails != null)
+            if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
                 writer.WriteObjectValue(TrafficDetails);
@@ -89,16 +90,16 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Guid id = default;
-            Optional<ProgramBriefStatus> status = default;
-            Optional<string> number = default;
+            ProgramBriefStatus? status = default;
+            string number = default;
             IList<ReviewNote> reviewNotes = default;
             IList<ShortCodeCost> costs = default;
-            Optional<DateTimeOffset> submissionDate = default;
-            Optional<DateTimeOffset> statusUpdatedDate = default;
-            Optional<ProgramDetails> programDetails = default;
-            Optional<CompanyInformation> companyInformation = default;
-            Optional<MessageDetails> messageDetails = default;
-            Optional<TrafficDetails> trafficDetails = default;
+            DateTimeOffset? submissionDate = default;
+            DateTimeOffset? statusUpdatedDate = default;
+            ProgramDetails programDetails = default;
+            CompanyInformation companyInformation = default;
+            MessageDetails messageDetails = default;
+            TrafficDetails trafficDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,16 +206,16 @@ namespace Azure.Communication.ShortCodes.Models
             }
             return new USProgramBrief(
                 id,
-                Optional.ToNullable(status),
-                number.Value,
+                status,
+                number,
                 reviewNotes ?? new ChangeTrackingList<ReviewNote>(),
                 costs ?? new ChangeTrackingList<ShortCodeCost>(),
-                Optional.ToNullable(submissionDate),
-                Optional.ToNullable(statusUpdatedDate),
-                programDetails.Value,
-                companyInformation.Value,
-                messageDetails.Value,
-                trafficDetails.Value);
+                submissionDate,
+                statusUpdatedDate,
+                programDetails,
+                companyInformation,
+                messageDetails,
+                trafficDetails);
         }
     }
 }

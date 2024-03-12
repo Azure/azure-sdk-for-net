@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (!(EndpointDetails is ChangeTrackingList<OutboundEndpointDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<OutboundEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<OutboundEndpointDetail>(), serializedAdditionalRawData);
+            return new OutboundEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<OutboundEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointDependency>.Write(ModelReaderWriterOptions options)

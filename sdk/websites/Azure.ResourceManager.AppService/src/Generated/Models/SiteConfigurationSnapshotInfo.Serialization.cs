@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +48,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SnapshotTakenOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SnapshotTakenOn))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(SnapshotTakenOn.Value, "O");
             }
-            if (options.Format != "W" && SnapshotId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SnapshotId))
             {
                 writer.WritePropertyName("snapshotId"u8);
                 writer.WriteNumberValue(SnapshotId.Value);
@@ -103,13 +104,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> time = default;
-            Optional<int> snapshotId = default;
+            SystemData systemData = default;
+            DateTimeOffset? time = default;
+            int? snapshotId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +184,10 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(time),
-                Optional.ToNullable(snapshotId),
-                kind.Value,
+                systemData,
+                time,
+                snapshotId,
+                kind,
                 serializedAdditionalRawData);
         }
 

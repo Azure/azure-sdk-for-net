@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -15,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TollFreeNumber != null)
+            if (Optional.IsDefined(TollFreeNumber))
             {
                 writer.WritePropertyName("tollFreeNumber"u8);
                 writer.WriteStringValue(TollFreeNumber);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -34,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> tollFreeNumber = default;
-            Optional<string> email = default;
+            string tollFreeNumber = default;
+            string email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tollFreeNumber"u8))
@@ -49,7 +50,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new CustomerCareInformation(tollFreeNumber.Value, email.Value);
+            return new CustomerCareInformation(tollFreeNumber, email);
         }
     }
 }

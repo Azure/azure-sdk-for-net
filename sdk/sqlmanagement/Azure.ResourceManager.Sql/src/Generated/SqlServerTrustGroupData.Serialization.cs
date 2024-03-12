@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(GroupMembers is ChangeTrackingList<ServerTrustGroupServerInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupMembers))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrustScopes is ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustScopes))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ServerTrustGroupServerInfo> groupMembers = default;
             IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
                 trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
                 serializedAdditionalRawData);

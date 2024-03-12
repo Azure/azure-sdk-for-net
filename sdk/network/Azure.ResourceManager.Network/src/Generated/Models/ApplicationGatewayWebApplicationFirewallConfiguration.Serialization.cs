@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (!(DisabledRuleGroups is ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisabledRuleGroups))
             {
                 writer.WritePropertyName("disabledRuleGroups"u8);
                 writer.WriteStartArray();
@@ -44,27 +45,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequestBodyCheck.HasValue)
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (MaxRequestBodySize.HasValue)
+            if (Optional.IsDefined(MaxRequestBodySize))
             {
                 writer.WritePropertyName("maxRequestBodySize"u8);
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
-            if (MaxRequestBodySizeInKb.HasValue)
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (FileUploadLimitInMb.HasValue)
+            if (Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (!(Exclusions is ChangeTrackingList<ApplicationGatewayFirewallExclusion> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -117,10 +118,10 @@ namespace Azure.ResourceManager.Network.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> maxRequestBodySize = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<int> fileUploadLimitInMb = default;
+            bool? requestBodyCheck = default;
+            int? maxRequestBodySize = default;
+            int? maxRequestBodySizeInKb = default;
+            int? fileUploadLimitInMb = default;
             IList<ApplicationGatewayFirewallExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,10 +223,10 @@ namespace Azure.ResourceManager.Network.Models
                 ruleSetType,
                 ruleSetVersion,
                 disabledRuleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>(),
-                Optional.ToNullable(requestBodyCheck),
-                Optional.ToNullable(maxRequestBodySize),
-                Optional.ToNullable(maxRequestBodySizeInKb),
-                Optional.ToNullable(fileUploadLimitInMb),
+                requestBodyCheck,
+                maxRequestBodySize,
+                maxRequestBodySizeInKb,
+                fileUploadLimitInMb,
                 exclusions ?? new ChangeTrackingList<ApplicationGatewayFirewallExclusion>(),
                 serializedAdditionalRawData);
         }

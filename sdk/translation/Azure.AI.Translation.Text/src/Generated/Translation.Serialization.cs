@@ -31,17 +31,17 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(To);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Transliteration != null)
+            if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteObjectValue(Transliteration);
             }
-            if (Alignment != null)
+            if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
                 writer.WriteObjectValue(Alignment);
             }
-            if (SentLen != null)
+            if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
                 writer.WriteObjectValue(SentLen);
@@ -86,9 +86,9 @@ namespace Azure.AI.Translation.Text
             }
             string to = default;
             string text = default;
-            Optional<TransliteratedText> transliteration = default;
-            Optional<TranslatedTextAlignment> alignment = default;
-            Optional<SentenceLength> sentLen = default;
+            TransliteratedText transliteration = default;
+            TranslatedTextAlignment alignment = default;
+            SentenceLength sentLen = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,9 +139,9 @@ namespace Azure.AI.Translation.Text
             return new Translation(
                 to,
                 text,
-                transliteration.Value,
-                alignment.Value,
-                sentLen.Value,
+                transliteration,
+                alignment,
+                sentLen,
                 serializedAdditionalRawData);
         }
 

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FromDhcp.HasValue)
+            if (Optional.IsDefined(FromDhcp))
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (!(Ipv4Address is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
@@ -31,7 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ipv6Address is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();
@@ -50,7 +51,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
+            bool? fromDhcp = default;
             IList<string> ipv4Address = default;
             IList<string> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDns(Optional.ToNullable(fromDhcp), ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
+            return new OnvifDns(fromDhcp, ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
         }
     }
 }

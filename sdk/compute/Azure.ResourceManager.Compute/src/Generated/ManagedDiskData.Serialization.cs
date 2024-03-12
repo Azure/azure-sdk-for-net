@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -97,104 +97,104 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (PurchasePlan != null)
+            if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (SupportedCapabilities != null)
+            if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
             }
-            if (CreationData != null)
+            if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && DiskSizeBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeBytes))
             {
                 writer.WritePropertyName("diskSizeBytes"u8);
                 writer.WriteNumberValue(DiskSizeBytes.Value);
             }
-            if (options.Format != "W" && UniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
-            if (EncryptionSettingsGroup != null)
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DiskIopsReadWrite.HasValue)
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (DiskMBpsReadWrite.HasValue)
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (DiskIopsReadOnly.HasValue)
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (DiskMBpsReadOnly.HasValue)
+            if (Optional.IsDefined(DiskMBpsReadOnly))
             {
                 writer.WritePropertyName("diskMBpsReadOnly"u8);
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (options.Format != "W" && DiskState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskState))
             {
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (MaxShares.HasValue)
+            if (Optional.IsDefined(MaxShares))
             {
                 writer.WritePropertyName("maxShares"u8);
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (options.Format != "W" && !(ShareInfo is ChangeTrackingList<ShareInfoElement> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareInfo))
             {
                 writer.WritePropertyName("shareInfo"u8);
                 writer.WriteStartArray();
@@ -204,67 +204,67 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkAccessPolicy.HasValue)
+            if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (DiskAccessId != null)
+            if (Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (options.Format != "W" && BurstingEnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BurstingEnabledOn))
             {
                 writer.WritePropertyName("burstingEnabledTime"u8);
                 writer.WriteStringValue(BurstingEnabledOn.Value, "O");
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (BurstingEnabled.HasValue)
+            if (Optional.IsDefined(BurstingEnabled))
             {
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
             }
-            if (options.Format != "W" && PropertyUpdatesInProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
                 writer.WriteObjectValue(PropertyUpdatesInProgress);
             }
-            if (SupportsHibernation.HasValue)
+            if (Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (CompletionPercent.HasValue)
+            if (Optional.IsDefined(CompletionPercent))
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DataAccessAuthMode.HasValue)
+            if (Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (IsOptimizedForFrequentAttach.HasValue)
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
-            if (options.Format != "W" && LastOwnershipUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastOwnershipUpdateOn))
             {
                 writer.WritePropertyName("LastOwnershipUpdateTime"u8);
                 writer.WriteStringValue(LastOwnershipUpdateOn.Value, "O");
@@ -308,49 +308,49 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
+            ResourceIdentifier managedBy = default;
             IReadOnlyList<ResourceIdentifier> managedByExtended = default;
-            Optional<DiskSku> sku = default;
+            DiskSku sku = default;
             IList<string> zones = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<DiskCreationData> creationData = default;
-            Optional<int> diskSizeGB = default;
-            Optional<long> diskSizeBytes = default;
-            Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<long> diskIOPSReadWrite = default;
-            Optional<long> diskMBpsReadWrite = default;
-            Optional<long> diskIOPSReadOnly = default;
-            Optional<long> diskMBpsReadOnly = default;
-            Optional<DiskState> diskState = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<int> maxShares = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeCreated = default;
+            SupportedOperatingSystemType? osType = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            DiskCreationData creationData = default;
+            int? diskSizeGB = default;
+            long? diskSizeBytes = default;
+            string uniqueId = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            string provisioningState = default;
+            long? diskIOPSReadWrite = default;
+            long? diskMBpsReadWrite = default;
+            long? diskIOPSReadOnly = default;
+            long? diskMBpsReadOnly = default;
+            DiskState? diskState = default;
+            DiskEncryption encryption = default;
+            int? maxShares = default;
             IReadOnlyList<ShareInfoElement> shareInfo = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<DateTimeOffset> burstingEnabledTime = default;
-            Optional<string> tier = default;
-            Optional<bool> burstingEnabled = default;
-            Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
-            Optional<float> completionPercent = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<bool> optimizedForFrequentAttach = default;
-            Optional<DateTimeOffset> lastOwnershipUpdateTime = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            DateTimeOffset? burstingEnabledTime = default;
+            string tier = default;
+            bool? burstingEnabled = default;
+            PropertyUpdatesInProgress propertyUpdatesInProgress = default;
+            bool? supportsHibernation = default;
+            DiskSecurityProfile securityProfile = default;
+            float? completionPercent = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
+            bool? optimizedForFrequentAttach = default;
+            DateTimeOffset? lastOwnershipUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -763,46 +763,46 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedBy.Value,
+                managedBy,
                 managedByExtended ?? new ChangeTrackingList<ResourceIdentifier>(),
-                sku.Value,
+                sku,
                 zones ?? new ChangeTrackingList<string>(),
                 extendedLocation,
-                Optional.ToNullable(timeCreated),
-                Optional.ToNullable(osType),
-                Optional.ToNullable(hyperVGeneration),
-                purchasePlan.Value,
-                supportedCapabilities.Value,
-                creationData.Value,
-                Optional.ToNullable(diskSizeGB),
-                Optional.ToNullable(diskSizeBytes),
-                uniqueId.Value,
-                encryptionSettingsGroup.Value,
-                provisioningState.Value,
-                Optional.ToNullable(diskIOPSReadWrite),
-                Optional.ToNullable(diskMBpsReadWrite),
-                Optional.ToNullable(diskIOPSReadOnly),
-                Optional.ToNullable(diskMBpsReadOnly),
-                Optional.ToNullable(diskState),
-                encryption.Value,
-                Optional.ToNullable(maxShares),
+                timeCreated,
+                osType,
+                hyperVGeneration,
+                purchasePlan,
+                supportedCapabilities,
+                creationData,
+                diskSizeGB,
+                diskSizeBytes,
+                uniqueId,
+                encryptionSettingsGroup,
+                provisioningState,
+                diskIOPSReadWrite,
+                diskMBpsReadWrite,
+                diskIOPSReadOnly,
+                diskMBpsReadOnly,
+                diskState,
+                encryption,
+                maxShares,
                 shareInfo ?? new ChangeTrackingList<ShareInfoElement>(),
-                Optional.ToNullable(networkAccessPolicy),
-                diskAccessId.Value,
-                Optional.ToNullable(burstingEnabledTime),
-                tier.Value,
-                Optional.ToNullable(burstingEnabled),
-                propertyUpdatesInProgress.Value,
-                Optional.ToNullable(supportsHibernation),
-                securityProfile.Value,
-                Optional.ToNullable(completionPercent),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(dataAccessAuthMode),
-                Optional.ToNullable(optimizedForFrequentAttach),
-                Optional.ToNullable(lastOwnershipUpdateTime),
+                networkAccessPolicy,
+                diskAccessId,
+                burstingEnabledTime,
+                tier,
+                burstingEnabled,
+                propertyUpdatesInProgress,
+                supportsHibernation,
+                securityProfile,
+                completionPercent,
+                publicNetworkAccess,
+                dataAccessAuthMode,
+                optimizedForFrequentAttach,
+                lastOwnershipUpdateTime,
                 serializedAdditionalRawData);
         }
 

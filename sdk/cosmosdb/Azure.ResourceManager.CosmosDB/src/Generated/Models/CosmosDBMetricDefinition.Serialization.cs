@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<CosmosDBMetricAvailability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -36,22 +37,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrimaryAggregationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities = default;
-            Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<CosmosDBMetricName> name = default;
+            CosmosDBMetricPrimaryAggregationType? primaryAggregationType = default;
+            CosmosDBMetricUnitType? unit = default;
+            ResourceIdentifier resourceUri = default;
+            CosmosDBMetricName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,10 +162,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBMetricDefinition(
                 metricAvailabilities ?? new ChangeTrackingList<CosmosDBMetricAvailability>(),
-                Optional.ToNullable(primaryAggregationType),
-                Optional.ToNullable(unit),
-                resourceUri.Value,
-                name.Value,
+                primaryAggregationType,
+                unit,
+                resourceUri,
+                name,
                 serializedAdditionalRawData);
         }
 

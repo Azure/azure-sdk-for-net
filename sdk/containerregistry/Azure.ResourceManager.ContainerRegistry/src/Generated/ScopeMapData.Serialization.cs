@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ScopeMapType != null)
+            if (options.Format != "W" && Optional.IsDefined(ScopeMapType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeMapType);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> type0 = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string type0 = default;
+            DateTimeOffset? creationDate = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
             IList<string> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                type0.Value,
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                description,
+                type0,
+                creationDate,
+                provisioningState,
                 actions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

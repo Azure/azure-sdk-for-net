@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Schedule is ChangeTrackingList<HDInsightAutoScaleSchedule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
+            string timeZone = default;
             IList<HDInsightAutoScaleSchedule> schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleRecurrence(timeZone.Value, schedule ?? new ChangeTrackingList<HDInsightAutoScaleSchedule>(), serializedAdditionalRawData);
+            return new HDInsightAutoScaleRecurrence(timeZone, schedule ?? new ChangeTrackingList<HDInsightAutoScaleSchedule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleRecurrence>.Write(ModelReaderWriterOptions options)

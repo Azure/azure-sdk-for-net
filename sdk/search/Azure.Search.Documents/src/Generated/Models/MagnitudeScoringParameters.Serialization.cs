@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteNumberValue(BoostingRangeStart);
             writer.WritePropertyName("boostingRangeEnd"u8);
             writer.WriteNumberValue(BoostingRangeEnd);
-            if (ShouldBoostBeyondRangeByConstant.HasValue)
+            if (Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
             {
                 writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
-            Optional<bool> constantBoostBeyondRange = default;
+            bool? constantBoostBeyondRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingRangeStart"u8))
@@ -58,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Optional.ToNullable(constantBoostBeyondRange));
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, constantBoostBeyondRange);
         }
     }
 }

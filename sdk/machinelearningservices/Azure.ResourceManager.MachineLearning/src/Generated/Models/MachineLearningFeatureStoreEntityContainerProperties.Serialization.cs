@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (options.Format != "W" && LatestVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
             {
                 if (LatestVersion != null)
                 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("latestVersion");
                 }
             }
-            if (options.Format != "W" && NextVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(NextVersion))
             {
                 if (NextVersion != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nextVersion");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<bool> isArchived = default;
-            Optional<string> latestVersion = default;
-            Optional<string> nextVersion = default;
-            Optional<string> description = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            bool? isArchived = default;
+            string latestVersion = default;
+            string nextVersion = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -242,14 +243,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningFeatureStoreEntityContainerProperties(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(isArchived),
-                latestVersion.Value,
-                nextVersion.Value,
-                Optional.ToNullable(provisioningState));
+                isArchived,
+                latestVersion,
+                nextVersion,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureStoreEntityContainerProperties>.Write(ModelReaderWriterOptions options)

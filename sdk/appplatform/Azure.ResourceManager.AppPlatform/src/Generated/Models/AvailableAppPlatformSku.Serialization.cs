@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationInfo is ChangeTrackingList<AppPlatformSkuLocationInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Restrictions is ChangeTrackingList<AppPlatformSkuRestrictions> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Restrictions))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -114,10 +115,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<AppPlatformSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            string name = default;
+            string tier = default;
+            AppPlatformSkuCapacity capacity = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<AppPlatformSkuLocationInfo> locationInfo = default;
             IReadOnlyList<AppPlatformSkuRestrictions> restrictions = default;
@@ -202,10 +203,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailableAppPlatformSku(
-                Optional.ToNullable(resourceType),
-                name.Value,
-                tier.Value,
-                capacity.Value,
+                resourceType,
+                name,
+                tier,
+                capacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 locationInfo ?? new ChangeTrackingList<AppPlatformSkuLocationInfo>(),
                 restrictions ?? new ChangeTrackingList<AppPlatformSkuRestrictions>(),

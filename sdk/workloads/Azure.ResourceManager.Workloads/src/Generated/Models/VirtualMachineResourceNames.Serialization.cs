@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OSDiskName != null)
+            if (Optional.IsDefined(OSDiskName))
             {
                 writer.WritePropertyName("osDiskName"u8);
                 writer.WriteStringValue(OSDiskName);
             }
-            if (!(DataDiskNames is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskNames))
             {
                 writer.WritePropertyName("dataDiskNames"u8);
                 writer.WriteStartObject();
@@ -110,10 +111,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> hostName = default;
+            string vmName = default;
+            string hostName = default;
             IList<NetworkInterfaceResourceNames> networkInterfaces = default;
-            Optional<string> osDiskName = default;
+            string osDiskName = default;
             IDictionary<string, IList<string>> dataDiskNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -181,10 +182,10 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineResourceNames(
-                vmName.Value,
-                hostName.Value,
+                vmName,
+                hostName,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(),
-                osDiskName.Value,
+                osDiskName,
                 dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 serializedAdditionalRawData);
         }

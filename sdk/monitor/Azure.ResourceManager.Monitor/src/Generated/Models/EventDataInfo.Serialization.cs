@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Authorization != null)
+            if (options.Format != "W" && Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (options.Format != "W" && !(Claims is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartObject();
@@ -42,82 +43,82 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Caller != null)
+            if (options.Format != "W" && Optional.IsDefined(Caller))
             {
                 writer.WritePropertyName("caller"u8);
                 writer.WriteStringValue(Caller);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && EventDataId != null)
+            if (options.Format != "W" && Optional.IsDefined(EventDataId))
             {
                 writer.WritePropertyName("eventDataId"u8);
                 writer.WriteStringValue(EventDataId);
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && EventName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteObjectValue(EventName);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteObjectValue(Category);
             }
-            if (options.Format != "W" && HttpRequest != null)
+            if (options.Format != "W" && Optional.IsDefined(HttpRequest))
             {
                 writer.WritePropertyName("httpRequest"u8);
                 writer.WriteObjectValue(HttpRequest);
             }
-            if (options.Format != "W" && Level.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (options.Format != "W" && ResourceGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (options.Format != "W" && ResourceProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceProviderName))
             {
                 writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteObjectValue(ResourceProviderName);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteObjectValue(ResourceType);
             }
-            if (options.Format != "W" && OperationId != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && OperationName != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteObjectValue(OperationName);
             }
-            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -128,32 +129,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && SubStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteObjectValue(SubStatus);
             }
-            if (options.Format != "W" && EventTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp.Value, "O");
             }
-            if (options.Format != "W" && SubmissionTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubmissionTimestamp))
             {
                 writer.WritePropertyName("submissionTimestamp"u8);
                 writer.WriteStringValue(SubmissionTimestamp.Value, "O");
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -196,30 +197,30 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<SenderAuthorization> authorization = default;
+            SenderAuthorization authorization = default;
             IReadOnlyDictionary<string, string> claims = default;
-            Optional<string> caller = default;
-            Optional<string> description = default;
-            Optional<string> id = default;
-            Optional<string> eventDataId = default;
-            Optional<string> correlationId = default;
-            Optional<MonitorLocalizableString> eventName = default;
-            Optional<MonitorLocalizableString> category = default;
-            Optional<EventDataHttpRequestInfo> httpRequest = default;
-            Optional<MonitorEventLevel> level = default;
-            Optional<string> resourceGroupName = default;
-            Optional<MonitorLocalizableString> resourceProviderName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<MonitorLocalizableString> resourceType = default;
-            Optional<string> operationId = default;
-            Optional<MonitorLocalizableString> operationName = default;
+            string caller = default;
+            string description = default;
+            string id = default;
+            string eventDataId = default;
+            string correlationId = default;
+            MonitorLocalizableString eventName = default;
+            MonitorLocalizableString category = default;
+            EventDataHttpRequestInfo httpRequest = default;
+            MonitorEventLevel? level = default;
+            string resourceGroupName = default;
+            MonitorLocalizableString resourceProviderName = default;
+            ResourceIdentifier resourceId = default;
+            MonitorLocalizableString resourceType = default;
+            string operationId = default;
+            MonitorLocalizableString operationName = default;
             IReadOnlyDictionary<string, string> properties = default;
-            Optional<MonitorLocalizableString> status = default;
-            Optional<MonitorLocalizableString> subStatus = default;
-            Optional<DateTimeOffset> eventTimestamp = default;
-            Optional<DateTimeOffset> submissionTimestamp = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
+            MonitorLocalizableString status = default;
+            MonitorLocalizableString subStatus = default;
+            DateTimeOffset? eventTimestamp = default;
+            DateTimeOffset? submissionTimestamp = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,30 +426,30 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventDataInfo(
-                authorization.Value,
+                authorization,
                 claims ?? new ChangeTrackingDictionary<string, string>(),
-                caller.Value,
-                description.Value,
-                id.Value,
-                eventDataId.Value,
-                correlationId.Value,
-                eventName.Value,
-                category.Value,
-                httpRequest.Value,
-                Optional.ToNullable(level),
-                resourceGroupName.Value,
-                resourceProviderName.Value,
-                resourceId.Value,
-                resourceType.Value,
-                operationId.Value,
-                operationName.Value,
+                caller,
+                description,
+                id,
+                eventDataId,
+                correlationId,
+                eventName,
+                category,
+                httpRequest,
+                level,
+                resourceGroupName,
+                resourceProviderName,
+                resourceId,
+                resourceType,
+                operationId,
+                operationName,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                status.Value,
-                subStatus.Value,
-                Optional.ToNullable(eventTimestamp),
-                Optional.ToNullable(submissionTimestamp),
-                subscriptionId.Value,
-                Optional.ToNullable(tenantId),
+                status,
+                subStatus,
+                eventTimestamp,
+                submissionTimestamp,
+                subscriptionId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

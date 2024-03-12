@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Layers is ChangeTrackingDictionary<string, LayoutLayer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartObject();
@@ -38,17 +38,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -65,9 +65,9 @@ namespace Azure.Communication.MediaComposition
             IDictionary<string, LayoutLayer> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"u8))
@@ -125,9 +125,9 @@ namespace Azure.Communication.MediaComposition
             }
             return new CustomLayout(
                 kind,
-                resolution.Value,
-                placeholderImageUri.Value,
-                Optional.ToNullable(scalingMode),
+                resolution,
+                placeholderImageUri,
+                scalingMode,
                 layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
                 inputGroups);
         }

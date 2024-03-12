@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectoryId != null)
+            if (Optional.IsDefined(ActiveDirectoryId))
             {
                 if (ActiveDirectoryId != null)
                 {
@@ -39,52 +40,52 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("activeDirectoryId");
                 }
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Dns != null)
+            if (Optional.IsDefined(Dns))
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteStringValue(Dns);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (SmbServerName != null)
+            if (Optional.IsDefined(SmbServerName))
             {
                 writer.WritePropertyName("smbServerName"u8);
                 writer.WriteStringValue(SmbServerName);
             }
-            if (OrganizationalUnit != null)
+            if (Optional.IsDefined(OrganizationalUnit))
             {
                 writer.WritePropertyName("organizationalUnit"u8);
                 writer.WriteStringValue(OrganizationalUnit);
             }
-            if (Site != null)
+            if (Optional.IsDefined(Site))
             {
                 writer.WritePropertyName("site"u8);
                 writer.WriteStringValue(Site);
             }
-            if (!(BackupOperators is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BackupOperators))
             {
                 writer.WritePropertyName("backupOperators"u8);
                 writer.WriteStartArray();
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Administrators is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
                 writer.WriteStartArray();
@@ -104,32 +105,32 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KdcIP != null)
+            if (Optional.IsDefined(KdcIP))
             {
                 writer.WritePropertyName("kdcIP"u8);
                 writer.WriteStringValue(KdcIP.ToString());
             }
-            if (AdName != null)
+            if (Optional.IsDefined(AdName))
             {
                 writer.WritePropertyName("adName"u8);
                 writer.WriteStringValue(AdName);
             }
-            if (ServerRootCACertificate != null)
+            if (Optional.IsDefined(ServerRootCACertificate))
             {
                 writer.WritePropertyName("serverRootCACertificate"u8);
                 writer.WriteStringValue(ServerRootCACertificate);
             }
-            if (IsAesEncryptionEnabled.HasValue)
+            if (Optional.IsDefined(IsAesEncryptionEnabled))
             {
                 writer.WritePropertyName("aesEncryption"u8);
                 writer.WriteBooleanValue(IsAesEncryptionEnabled.Value);
             }
-            if (IsLdapSigningEnabled.HasValue)
+            if (Optional.IsDefined(IsLdapSigningEnabled))
             {
                 writer.WritePropertyName("ldapSigning"u8);
                 writer.WriteBooleanValue(IsLdapSigningEnabled.Value);
             }
-            if (!(SecurityOperators is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SecurityOperators))
             {
                 writer.WritePropertyName("securityOperators"u8);
                 writer.WriteStartArray();
@@ -139,27 +140,27 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsLdapOverTlsEnabled.HasValue)
+            if (Optional.IsDefined(IsLdapOverTlsEnabled))
             {
                 writer.WritePropertyName("ldapOverTLS"u8);
                 writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
             }
-            if (AllowLocalNfsUsersWithLdap.HasValue)
+            if (Optional.IsDefined(AllowLocalNfsUsersWithLdap))
             {
                 writer.WritePropertyName("allowLocalNfsUsersWithLdap"u8);
                 writer.WriteBooleanValue(AllowLocalNfsUsersWithLdap.Value);
             }
-            if (EncryptDCConnections.HasValue)
+            if (Optional.IsDefined(EncryptDCConnections))
             {
                 writer.WritePropertyName("encryptDCConnections"u8);
                 writer.WriteBooleanValue(EncryptDCConnections.Value);
             }
-            if (LdapSearchScope != null)
+            if (Optional.IsDefined(LdapSearchScope))
             {
                 writer.WritePropertyName("ldapSearchScope"u8);
                 writer.WriteObjectValue(LdapSearchScope);
             }
-            if (PreferredServersForLdapClient != null)
+            if (Optional.IsDefined(PreferredServersForLdapClient))
             {
                 writer.WritePropertyName("preferredServersForLdapClient"u8);
                 writer.WriteStringValue(PreferredServersForLdapClient);
@@ -202,29 +203,29 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> activeDirectoryId = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> domain = default;
-            Optional<string> dns = default;
-            Optional<NetAppAccountActiveDirectoryStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> smbServerName = default;
-            Optional<string> organizationalUnit = default;
-            Optional<string> site = default;
+            string activeDirectoryId = default;
+            string username = default;
+            string password = default;
+            string domain = default;
+            string dns = default;
+            NetAppAccountActiveDirectoryStatus? status = default;
+            string statusDetails = default;
+            string smbServerName = default;
+            string organizationalUnit = default;
+            string site = default;
             IList<string> backupOperators = default;
             IList<string> administrators = default;
-            Optional<IPAddress> kdcIP = default;
-            Optional<string> adName = default;
-            Optional<string> serverRootCACertificate = default;
-            Optional<bool> aesEncryption = default;
-            Optional<bool> ldapSigning = default;
+            IPAddress kdcIP = default;
+            string adName = default;
+            string serverRootCACertificate = default;
+            bool? aesEncryption = default;
+            bool? ldapSigning = default;
             IList<string> securityOperators = default;
-            Optional<bool> ldapOverTls = default;
-            Optional<bool> allowLocalNfsUsersWithLdap = default;
-            Optional<bool> encryptDCConnections = default;
-            Optional<NetAppLdapSearchScopeConfiguration> ldapSearchScope = default;
-            Optional<string> preferredServersForLdapClient = default;
+            bool? ldapOverTls = default;
+            bool? allowLocalNfsUsersWithLdap = default;
+            bool? encryptDCConnections = default;
+            NetAppLdapSearchScopeConfiguration ldapSearchScope = default;
+            string preferredServersForLdapClient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,29 +416,29 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppAccountActiveDirectory(
-                activeDirectoryId.Value,
-                username.Value,
-                password.Value,
-                domain.Value,
-                dns.Value,
-                Optional.ToNullable(status),
-                statusDetails.Value,
-                smbServerName.Value,
-                organizationalUnit.Value,
-                site.Value,
+                activeDirectoryId,
+                username,
+                password,
+                domain,
+                dns,
+                status,
+                statusDetails,
+                smbServerName,
+                organizationalUnit,
+                site,
                 backupOperators ?? new ChangeTrackingList<string>(),
                 administrators ?? new ChangeTrackingList<string>(),
-                kdcIP.Value,
-                adName.Value,
-                serverRootCACertificate.Value,
-                Optional.ToNullable(aesEncryption),
-                Optional.ToNullable(ldapSigning),
+                kdcIP,
+                adName,
+                serverRootCACertificate,
+                aesEncryption,
+                ldapSigning,
                 securityOperators ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(ldapOverTls),
-                Optional.ToNullable(allowLocalNfsUsersWithLdap),
-                Optional.ToNullable(encryptDCConnections),
-                ldapSearchScope.Value,
-                preferredServersForLdapClient.Value,
+                ldapOverTls,
+                allowLocalNfsUsersWithLdap,
+                encryptDCConnections,
+                ldapSearchScope,
+                preferredServersForLdapClient,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -42,119 +43,119 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeviceVersionNumber != null)
+            if (Optional.IsDefined(DeviceVersionNumber))
             {
                 writer.WritePropertyName("deviceVersionNumber"u8);
                 writer.WriteStringValue(DeviceVersionNumber);
             }
-            if (FriendlyDeviceVersionName != null)
+            if (Optional.IsDefined(FriendlyDeviceVersionName))
             {
                 writer.WritePropertyName("friendlyDeviceVersionName"u8);
                 writer.WriteStringValue(FriendlyDeviceVersionName);
             }
-            if (DeviceLastScannedOn.HasValue)
+            if (Optional.IsDefined(DeviceLastScannedOn))
             {
                 writer.WritePropertyName("deviceLastScannedDateTime"u8);
                 writer.WriteStringValue(DeviceLastScannedOn.Value, "O");
             }
-            if (LastCompletedScanJobOn.HasValue)
+            if (Optional.IsDefined(LastCompletedScanJobOn))
             {
                 writer.WritePropertyName("lastCompletedScanJobDateTime"u8);
                 writer.WriteStringValue(LastCompletedScanJobOn.Value, "O");
             }
-            if (LastSuccessfulScanJobOn.HasValue)
+            if (Optional.IsDefined(LastSuccessfulScanJobOn))
             {
                 writer.WritePropertyName("lastSuccessfulScanJobTime"u8);
                 writer.WriteStringValue(LastSuccessfulScanJobOn.Value, "O");
             }
-            if (options.Format != "W" && LastCompletedDownloadJobOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletedDownloadJobOn))
             {
                 writer.WritePropertyName("lastCompletedDownloadJobDateTime"u8);
                 writer.WriteStringValue(LastCompletedDownloadJobOn.Value, "O");
             }
-            if (options.Format != "W" && LastCompletedDownloadJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletedDownloadJobId))
             {
                 writer.WritePropertyName("lastCompletedDownloadJobId"u8);
                 writer.WriteStringValue(LastCompletedDownloadJobId);
             }
-            if (options.Format != "W" && LastDownloadJobStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastDownloadJobStatus))
             {
                 writer.WritePropertyName("lastDownloadJobStatus"u8);
                 writer.WriteStringValue(LastDownloadJobStatus.Value.ToString());
             }
-            if (LastSuccessfulInstallJobOn.HasValue)
+            if (Optional.IsDefined(LastSuccessfulInstallJobOn))
             {
                 writer.WritePropertyName("lastSuccessfulInstallJobDateTime"u8);
                 writer.WriteStringValue(LastSuccessfulInstallJobOn.Value, "O");
             }
-            if (options.Format != "W" && LastCompletedInstallJobOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletedInstallJobOn))
             {
                 writer.WritePropertyName("lastCompletedInstallJobDateTime"u8);
                 writer.WriteStringValue(LastCompletedInstallJobOn.Value, "O");
             }
-            if (options.Format != "W" && LastCompletedInstallJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletedInstallJobId))
             {
                 writer.WritePropertyName("lastCompletedInstallJobId"u8);
                 writer.WriteStringValue(LastCompletedInstallJobId);
             }
-            if (options.Format != "W" && LastInstallJobStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastInstallJobStatus))
             {
                 writer.WritePropertyName("lastInstallJobStatus"u8);
                 writer.WriteStringValue(LastInstallJobStatus.Value.ToString());
             }
-            if (options.Format != "W" && TotalNumberOfUpdatesAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalNumberOfUpdatesAvailable))
             {
                 writer.WritePropertyName("totalNumberOfUpdatesAvailable"u8);
                 writer.WriteNumberValue(TotalNumberOfUpdatesAvailable.Value);
             }
-            if (options.Format != "W" && TotalNumberOfUpdatesPendingDownload.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalNumberOfUpdatesPendingDownload))
             {
                 writer.WritePropertyName("totalNumberOfUpdatesPendingDownload"u8);
                 writer.WriteNumberValue(TotalNumberOfUpdatesPendingDownload.Value);
             }
-            if (options.Format != "W" && TotalNumberOfUpdatesPendingInstall.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalNumberOfUpdatesPendingInstall))
             {
                 writer.WritePropertyName("totalNumberOfUpdatesPendingInstall"u8);
                 writer.WriteNumberValue(TotalNumberOfUpdatesPendingInstall.Value);
             }
-            if (options.Format != "W" && RebootBehavior.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootBehavior))
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (options.Format != "W" && OngoingUpdateOperation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OngoingUpdateOperation))
             {
                 writer.WritePropertyName("ongoingUpdateOperation"u8);
                 writer.WriteStringValue(OngoingUpdateOperation.Value.ToString());
             }
-            if (options.Format != "W" && InProgressDownloadJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(InProgressDownloadJobId))
             {
                 writer.WritePropertyName("inProgressDownloadJobId"u8);
                 writer.WriteStringValue(InProgressDownloadJobId);
             }
-            if (options.Format != "W" && InProgressInstallJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(InProgressInstallJobId))
             {
                 writer.WritePropertyName("inProgressInstallJobId"u8);
                 writer.WriteStringValue(InProgressInstallJobId);
             }
-            if (options.Format != "W" && InProgressDownloadJobStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InProgressDownloadJobStartedOn))
             {
                 writer.WritePropertyName("inProgressDownloadJobStartedDateTime"u8);
                 writer.WriteStringValue(InProgressDownloadJobStartedOn.Value, "O");
             }
-            if (options.Format != "W" && InProgressInstallJobStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InProgressInstallJobStartedOn))
             {
                 writer.WritePropertyName("inProgressInstallJobStartedDateTime"u8);
                 writer.WriteStringValue(InProgressInstallJobStartedOn.Value, "O");
             }
-            if (options.Format != "W" && !(UpdateTitles is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UpdateTitles))
             {
                 writer.WritePropertyName("updateTitles"u8);
                 writer.WriteStartArray();
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Updates is ChangeTrackingList<DataBoxEdgeUpdateDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Updates))
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteStartArray();
@@ -174,12 +175,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TotalUpdateSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalUpdateSizeInBytes))
             {
                 writer.WritePropertyName("totalUpdateSizeInBytes"u8);
                 writer.WriteNumberValue(TotalUpdateSizeInBytes.Value);
             }
-            if (options.Format != "W" && TotalTimeInMinutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalTimeInMinutes))
             {
                 writer.WritePropertyName("totalTimeInMinutes"u8);
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
@@ -226,32 +227,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceVersionNumber = default;
-            Optional<string> friendlyDeviceVersionName = default;
-            Optional<DateTimeOffset> deviceLastScannedDateTime = default;
-            Optional<DateTimeOffset> lastCompletedScanJobDateTime = default;
-            Optional<DateTimeOffset> lastSuccessfulScanJobTime = default;
-            Optional<DateTimeOffset> lastCompletedDownloadJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedDownloadJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastDownloadJobStatus = default;
-            Optional<DateTimeOffset> lastSuccessfulInstallJobDateTime = default;
-            Optional<DateTimeOffset> lastCompletedInstallJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedInstallJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastInstallJobStatus = default;
-            Optional<int> totalNumberOfUpdatesAvailable = default;
-            Optional<int> totalNumberOfUpdatesPendingDownload = default;
-            Optional<int> totalNumberOfUpdatesPendingInstall = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<DataBoxEdgeUpdateOperation> ongoingUpdateOperation = default;
-            Optional<ResourceIdentifier> inProgressDownloadJobId = default;
-            Optional<ResourceIdentifier> inProgressInstallJobId = default;
-            Optional<DateTimeOffset> inProgressDownloadJobStartedDateTime = default;
-            Optional<DateTimeOffset> inProgressInstallJobStartedDateTime = default;
+            SystemData systemData = default;
+            string deviceVersionNumber = default;
+            string friendlyDeviceVersionName = default;
+            DateTimeOffset? deviceLastScannedDateTime = default;
+            DateTimeOffset? lastCompletedScanJobDateTime = default;
+            DateTimeOffset? lastSuccessfulScanJobTime = default;
+            DateTimeOffset? lastCompletedDownloadJobDateTime = default;
+            ResourceIdentifier lastCompletedDownloadJobId = default;
+            DataBoxEdgeJobStatus? lastDownloadJobStatus = default;
+            DateTimeOffset? lastSuccessfulInstallJobDateTime = default;
+            DateTimeOffset? lastCompletedInstallJobDateTime = default;
+            ResourceIdentifier lastCompletedInstallJobId = default;
+            DataBoxEdgeJobStatus? lastInstallJobStatus = default;
+            int? totalNumberOfUpdatesAvailable = default;
+            int? totalNumberOfUpdatesPendingDownload = default;
+            int? totalNumberOfUpdatesPendingInstall = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default;
+            ResourceIdentifier inProgressDownloadJobId = default;
+            ResourceIdentifier inProgressInstallJobId = default;
+            DateTimeOffset? inProgressDownloadJobStartedDateTime = default;
+            DateTimeOffset? inProgressInstallJobStartedDateTime = default;
             IReadOnlyList<string> updateTitles = default;
             IReadOnlyList<DataBoxEdgeUpdateDetails> updates = default;
-            Optional<double> totalUpdateSizeInBytes = default;
-            Optional<int> totalTimeInMinutes = default;
+            double? totalUpdateSizeInBytes = default;
+            int? totalTimeInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -529,32 +530,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                deviceVersionNumber.Value,
-                friendlyDeviceVersionName.Value,
-                Optional.ToNullable(deviceLastScannedDateTime),
-                Optional.ToNullable(lastCompletedScanJobDateTime),
-                Optional.ToNullable(lastSuccessfulScanJobTime),
-                Optional.ToNullable(lastCompletedDownloadJobDateTime),
-                lastCompletedDownloadJobId.Value,
-                Optional.ToNullable(lastDownloadJobStatus),
-                Optional.ToNullable(lastSuccessfulInstallJobDateTime),
-                Optional.ToNullable(lastCompletedInstallJobDateTime),
-                lastCompletedInstallJobId.Value,
-                Optional.ToNullable(lastInstallJobStatus),
-                Optional.ToNullable(totalNumberOfUpdatesAvailable),
-                Optional.ToNullable(totalNumberOfUpdatesPendingDownload),
-                Optional.ToNullable(totalNumberOfUpdatesPendingInstall),
-                Optional.ToNullable(rebootBehavior),
-                Optional.ToNullable(ongoingUpdateOperation),
-                inProgressDownloadJobId.Value,
-                inProgressInstallJobId.Value,
-                Optional.ToNullable(inProgressDownloadJobStartedDateTime),
-                Optional.ToNullable(inProgressInstallJobStartedDateTime),
+                systemData,
+                deviceVersionNumber,
+                friendlyDeviceVersionName,
+                deviceLastScannedDateTime,
+                lastCompletedScanJobDateTime,
+                lastSuccessfulScanJobTime,
+                lastCompletedDownloadJobDateTime,
+                lastCompletedDownloadJobId,
+                lastDownloadJobStatus,
+                lastSuccessfulInstallJobDateTime,
+                lastCompletedInstallJobDateTime,
+                lastCompletedInstallJobId,
+                lastInstallJobStatus,
+                totalNumberOfUpdatesAvailable,
+                totalNumberOfUpdatesPendingDownload,
+                totalNumberOfUpdatesPendingInstall,
+                rebootBehavior,
+                ongoingUpdateOperation,
+                inProgressDownloadJobId,
+                inProgressInstallJobId,
+                inProgressDownloadJobStartedDateTime,
+                inProgressInstallJobStartedDateTime,
                 updateTitles ?? new ChangeTrackingList<string>(),
                 updates ?? new ChangeTrackingList<DataBoxEdgeUpdateDetails>(),
-                Optional.ToNullable(totalUpdateSizeInBytes),
-                Optional.ToNullable(totalTimeInMinutes),
+                totalUpdateSizeInBytes,
+                totalTimeInMinutes,
                 serializedAdditionalRawData);
         }
 

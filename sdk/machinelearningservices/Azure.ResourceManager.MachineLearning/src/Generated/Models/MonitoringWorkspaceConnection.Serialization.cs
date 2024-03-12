@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (!(Secrets is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 if (Secrets != null)
                 {

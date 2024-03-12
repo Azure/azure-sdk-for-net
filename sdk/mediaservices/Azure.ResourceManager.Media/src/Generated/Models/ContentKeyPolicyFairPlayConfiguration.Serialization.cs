@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
             writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
-            if (OfflineRentalConfiguration != null)
+            if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
                 writer.WriteObjectValue(OfflineRentalConfiguration);
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
             string fairPlayPfx = default;
             ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType = default;
             long rentalDuration = default;
-            Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
+            ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Media.Models
                 fairPlayPfx,
                 rentalAndLeaseKeyType,
                 rentalDuration,
-                offlineRentalConfiguration.Value);
+                offlineRentalConfiguration);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)

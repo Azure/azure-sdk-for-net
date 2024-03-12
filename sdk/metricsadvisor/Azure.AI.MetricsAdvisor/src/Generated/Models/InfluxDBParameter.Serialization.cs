@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {
@@ -39,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("database");
                 }
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 if (UserName != null)
                 {
@@ -51,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 if (Password != null)
                 {
@@ -81,10 +82,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
-            Optional<string> database = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string connectionString = default;
+            string database = default;
+            string userName = default;
+            string password = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -139,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new InfluxDBParameter(connectionString.Value, database.Value, userName.Value, password.Value, query);
+            return new InfluxDBParameter(connectionString, database, userName, password, query);
         }
     }
 }

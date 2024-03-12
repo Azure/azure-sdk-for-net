@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Triggers != null)
+            if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AutoHealTriggers> triggers = default;
-            Optional<AutoHealActions> actions = default;
+            AutoHealTriggers triggers = default;
+            AutoHealActions actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealRules(triggers.Value, actions.Value, serializedAdditionalRawData);
+            return new AutoHealRules(triggers, actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealRules>.Write(ModelReaderWriterOptions options)

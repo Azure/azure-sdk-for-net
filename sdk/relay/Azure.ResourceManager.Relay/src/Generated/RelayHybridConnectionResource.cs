@@ -350,10 +350,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelayHybridConnectionResource>> UpdateAsync(WaitUntil waitUntil, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionResource.Update");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelayHybridConnectionResource> Update(WaitUntil waitUntil, RelayHybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayHybridConnectionHybridConnectionsClientDiagnostics.CreateScope("RelayHybridConnectionResource.Update");
             scope.Start();

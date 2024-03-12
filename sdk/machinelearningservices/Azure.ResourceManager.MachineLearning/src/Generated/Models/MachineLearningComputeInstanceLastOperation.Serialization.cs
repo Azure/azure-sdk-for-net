@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (OperationName.HasValue)
+            if (Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName.Value.ToString());
             }
-            if (OperationOn.HasValue)
+            if (Optional.IsDefined(OperationOn))
             {
                 writer.WritePropertyName("operationTime"u8);
                 writer.WriteStringValue(OperationOn.Value, "O");
             }
-            if (OperationStatus.HasValue)
+            if (Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteStringValue(OperationStatus.Value.ToString());
             }
-            if (OperationTrigger.HasValue)
+            if (Optional.IsDefined(OperationTrigger))
             {
                 writer.WritePropertyName("operationTrigger"u8);
                 writer.WriteStringValue(OperationTrigger.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOperationName> operationName = default;
-            Optional<DateTimeOffset> operationTime = default;
-            Optional<MachineLearningOperationStatus> operationStatus = default;
-            Optional<MachineLearningOperationTrigger> operationTrigger = default;
+            MachineLearningOperationName? operationName = default;
+            DateTimeOffset? operationTime = default;
+            MachineLearningOperationStatus? operationStatus = default;
+            MachineLearningOperationTrigger? operationTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus), Optional.ToNullable(operationTrigger), serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceLastOperation(operationName, operationTime, operationStatus, operationTrigger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceLastOperation>.Write(ModelReaderWriterOptions options)

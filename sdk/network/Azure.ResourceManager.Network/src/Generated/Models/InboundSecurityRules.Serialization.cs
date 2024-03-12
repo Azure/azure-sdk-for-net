@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (SourceAddressPrefix != null)
+            if (Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (DestinationPortRange.HasValue)
+            if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<InboundSecurityRulesProtocol> protocol = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<int> destinationPortRange = default;
+            InboundSecurityRulesProtocol? protocol = default;
+            string sourceAddressPrefix = default;
+            int? destinationPortRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange), serializedAdditionalRawData);
+            return new InboundSecurityRules(protocol, sourceAddressPrefix, destinationPortRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundSecurityRules>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,8 +21,8 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             CustomFormModelInfo modelInfo = default;
-            Optional<KeysResult> keys = default;
-            Optional<TrainResult> trainResult = default;
+            KeysResult keys = default;
+            TrainResult trainResult = default;
             IReadOnlyList<TrainResult> composedTrainResults = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new Model(modelInfo, keys.Value, trainResult.Value, composedTrainResults ?? new ChangeTrackingList<TrainResult>());
+            return new Model(modelInfo, keys, trainResult, composedTrainResults ?? new ChangeTrackingList<TrainResult>());
         }
     }
 }

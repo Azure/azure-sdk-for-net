@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (ConsiderWarningAsError.HasValue)
+            if (Optional.IsDefined(ConsiderWarningAsError))
             {
                 writer.WritePropertyName("considerWarningAsError"u8);
                 writer.WriteBooleanValue(ConsiderWarningAsError.Value);
             }
-            if (MaxPercentUnhealthyDeployedApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyDeployedApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications.Value);
             }
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<bool> considerWarningAsError = default;
-            Optional<int> maxPercentUnhealthyDeployedApplications = default;
-            Optional<ArmServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            bool? considerWarningAsError = default;
+            int? maxPercentUnhealthyDeployedApplications = default;
+            ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationHealthPolicy(Optional.ToNullable(considerWarningAsError), Optional.ToNullable(maxPercentUnhealthyDeployedApplications), defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
+            return new ArmApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

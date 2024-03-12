@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag != null)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && RouteTableType != null)
+            if (options.Format != "W" && Optional.IsDefined(RouteTableType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RouteTableType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Routes is ChangeTrackingList<Route> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string etag = default;
+            string name = default;
+            string type = default;
             IList<Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTable(etag.Value, name.Value, type.Value, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
+            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTable>.Write(ModelReaderWriterOptions options)

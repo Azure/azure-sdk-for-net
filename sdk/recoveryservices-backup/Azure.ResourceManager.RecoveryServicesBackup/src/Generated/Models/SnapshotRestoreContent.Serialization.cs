@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SkipAttachAndMount.HasValue)
+            if (Optional.IsDefined(SkipAttachAndMount))
             {
                 writer.WritePropertyName("skipAttachAndMount"u8);
                 writer.WriteBooleanValue(SkipAttachAndMount.Value);
             }
-            if (LogPointInTimeForDBRecovery != null)
+            if (Optional.IsDefined(LogPointInTimeForDBRecovery))
             {
                 writer.WritePropertyName("logPointInTimeForDBRecovery"u8);
                 writer.WriteStringValue(LogPointInTimeForDBRecovery);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> skipAttachAndMount = default;
-            Optional<string> logPointInTimeForDBRecovery = default;
+            bool? skipAttachAndMount = default;
+            string logPointInTimeForDBRecovery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotRestoreContent(Optional.ToNullable(skipAttachAndMount), logPointInTimeForDBRecovery.Value, serializedAdditionalRawData);
+            return new SnapshotRestoreContent(skipAttachAndMount, logPointInTimeForDBRecovery, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotRestoreContent>.Write(ModelReaderWriterOptions options)

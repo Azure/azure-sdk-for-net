@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(RequestHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
             {
                 writer.WritePropertyName("requestHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResponseHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
             {
                 writer.WritePropertyName("responseHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UrlConfiguration != null)
+            if (Optional.IsDefined(UrlConfiguration))
             {
                 writer.WritePropertyName("urlConfiguration"u8);
                 writer.WriteObjectValue(UrlConfiguration);
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = default;
             IList<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = default;
-            Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
+            ApplicationGatewayUrlConfiguration urlConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRuleActionSet(requestHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), responseHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), urlConfiguration.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRuleActionSet(requestHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), responseHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), urlConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRuleActionSet>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationId.HasValue)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (Secret != null)
+            if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Guid> applicationId = default;
-            Optional<string> secret = default;
+            Guid? applicationId = default;
+            string secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicePrincipalProperties(Optional.ToNullable(applicationId), secret.Value, serializedAdditionalRawData);
+            return new ServicePrincipalProperties(applicationId, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicePrincipalProperties>.Write(ModelReaderWriterOptions options)

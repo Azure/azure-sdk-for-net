@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (SolutionType.HasValue)
+            if (Optional.IsDefined(SolutionType))
             {
                 if (SolutionType != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<VnetSolutionType?> type = default;
+            VnetSolutionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VnetSolution(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new VnetSolution(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VnetSolution>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CapacityAllocated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityAllocated))
             {
                 writer.WritePropertyName("capacityAllocated"u8);
                 writer.WriteNumberValue(CapacityAllocated.Value);
             }
-            if (options.Format != "W" && CapacityAssigned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityAssigned))
             {
                 writer.WritePropertyName("capacityAssigned"u8);
                 writer.WriteNumberValue(CapacityAssigned.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<Guid> clusterId = default;
-            Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;
-            Optional<int> capacityAllocated = default;
-            Optional<int> capacityAssigned = default;
+            DateTimeOffset? createdDate = default;
+            Guid? clusterId = default;
+            StreamAnalyticsClusterProvisioningState? provisioningState = default;
+            int? capacityAllocated = default;
+            int? capacityAssigned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamAnalyticsClusterProperties(
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(clusterId),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(capacityAllocated),
-                Optional.ToNullable(capacityAssigned),
+                createdDate,
+                clusterId,
+                provisioningState,
+                capacityAllocated,
+                capacityAssigned,
                 serializedAdditionalRawData);
         }
 

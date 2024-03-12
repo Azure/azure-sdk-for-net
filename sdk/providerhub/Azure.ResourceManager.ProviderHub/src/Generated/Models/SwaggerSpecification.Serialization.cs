@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SwaggerSpecFolderUri != null)
+            if (Optional.IsDefined(SwaggerSpecFolderUri))
             {
                 writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<string> apiVersions = default;
-            Optional<Uri> swaggerSpecFolderUri = default;
+            Uri swaggerSpecFolderUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerSpecification(apiVersions ?? new ChangeTrackingList<string>(), swaggerSpecFolderUri.Value, serializedAdditionalRawData);
+            return new SwaggerSpecification(apiVersions ?? new ChangeTrackingList<string>(), swaggerSpecFolderUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerSpecification>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (SslEnforcement.HasValue)
+            if (Optional.IsDefined(SslEnforcement))
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (InfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlInfrastructureEncryption? infrastructureEncryption = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            MySqlStorageProfile storageProfile = default;
             MySqlCreateMode createMode = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownServerPropertiesForCreate(
-                Optional.ToNullable(version),
-                Optional.ToNullable(sslEnforcement),
-                Optional.ToNullable(minimalTlsVersion),
-                Optional.ToNullable(infrastructureEncryption),
-                Optional.ToNullable(publicNetworkAccess),
-                storageProfile.Value,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
                 createMode,
                 serializedAdditionalRawData);
         }

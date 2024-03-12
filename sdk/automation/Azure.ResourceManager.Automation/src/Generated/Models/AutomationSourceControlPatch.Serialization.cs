@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -28,32 +29,32 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (IsAutoSyncEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoSyncEnabled))
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (IsAutoPublishRunbookEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (SecurityToken != null)
+            if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteObjectValue(SecurityToken);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<string> folderPath = default;
-            Optional<bool> autoSync = default;
-            Optional<bool> publishRunbook = default;
-            Optional<SourceControlSecurityTokenProperties> securityToken = default;
-            Optional<string> description = default;
+            string branch = default;
+            string folderPath = default;
+            bool? autoSync = default;
+            bool? publishRunbook = default;
+            SourceControlSecurityTokenProperties securityToken = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,12 +169,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationSourceControlPatch(
-                branch.Value,
-                folderPath.Value,
-                Optional.ToNullable(autoSync),
-                Optional.ToNullable(publishRunbook),
-                securityToken.Value,
-                description.Value,
+                branch,
+                folderPath,
+                autoSync,
+                publishRunbook,
+                securityToken,
+                description,
                 serializedAdditionalRawData);
         }
 

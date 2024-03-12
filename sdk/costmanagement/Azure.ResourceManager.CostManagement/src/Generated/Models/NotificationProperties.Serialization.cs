@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -33,17 +34,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (RegionalFormat != null)
+            if (Optional.IsDefined(RegionalFormat))
             {
                 writer.WritePropertyName("regionalFormat"u8);
                 writer.WriteStringValue(RegionalFormat);
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IList<string> to = default;
-            Optional<string> language = default;
-            Optional<string> message = default;
-            Optional<string> regionalFormat = default;
+            string language = default;
+            string message = default;
+            string regionalFormat = default;
             string subject = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,9 +136,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NotificationProperties(
                 to,
-                language.Value,
-                message.Value,
-                regionalFormat.Value,
+                language,
+                message,
+                regionalFormat,
                 subject,
                 serializedAdditionalRawData);
         }

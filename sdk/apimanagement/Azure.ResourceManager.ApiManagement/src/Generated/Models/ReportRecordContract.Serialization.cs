@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,132 +27,132 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Zip != null)
+            if (Optional.IsDefined(Zip))
             {
                 writer.WritePropertyName("zip"u8);
                 writer.WriteStringValue(Zip);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (options.Format != "W" && ProductId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (ApiId != null)
+            if (Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (ApiRegion != null)
+            if (Optional.IsDefined(ApiRegion))
             {
                 writer.WritePropertyName("apiRegion"u8);
                 writer.WriteStringValue(ApiRegion);
             }
-            if (SubscriptionResourceId != null)
+            if (Optional.IsDefined(SubscriptionResourceId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionResourceId);
             }
-            if (CallCountSuccess.HasValue)
+            if (Optional.IsDefined(CallCountSuccess))
             {
                 writer.WritePropertyName("callCountSuccess"u8);
                 writer.WriteNumberValue(CallCountSuccess.Value);
             }
-            if (CallCountBlocked.HasValue)
+            if (Optional.IsDefined(CallCountBlocked))
             {
                 writer.WritePropertyName("callCountBlocked"u8);
                 writer.WriteNumberValue(CallCountBlocked.Value);
             }
-            if (CallCountFailed.HasValue)
+            if (Optional.IsDefined(CallCountFailed))
             {
                 writer.WritePropertyName("callCountFailed"u8);
                 writer.WriteNumberValue(CallCountFailed.Value);
             }
-            if (CallCountOther.HasValue)
+            if (Optional.IsDefined(CallCountOther))
             {
                 writer.WritePropertyName("callCountOther"u8);
                 writer.WriteNumberValue(CallCountOther.Value);
             }
-            if (CallCountTotal.HasValue)
+            if (Optional.IsDefined(CallCountTotal))
             {
                 writer.WritePropertyName("callCountTotal"u8);
                 writer.WriteNumberValue(CallCountTotal.Value);
             }
-            if (Bandwidth.HasValue)
+            if (Optional.IsDefined(Bandwidth))
             {
                 writer.WritePropertyName("bandwidth"u8);
                 writer.WriteNumberValue(Bandwidth.Value);
             }
-            if (CacheHitCount.HasValue)
+            if (Optional.IsDefined(CacheHitCount))
             {
                 writer.WritePropertyName("cacheHitCount"u8);
                 writer.WriteNumberValue(CacheHitCount.Value);
             }
-            if (CacheMissCount.HasValue)
+            if (Optional.IsDefined(CacheMissCount))
             {
                 writer.WritePropertyName("cacheMissCount"u8);
                 writer.WriteNumberValue(CacheMissCount.Value);
             }
-            if (ApiTimeAvg.HasValue)
+            if (Optional.IsDefined(ApiTimeAvg))
             {
                 writer.WritePropertyName("apiTimeAvg"u8);
                 writer.WriteNumberValue(ApiTimeAvg.Value);
             }
-            if (ApiTimeMin.HasValue)
+            if (Optional.IsDefined(ApiTimeMin))
             {
                 writer.WritePropertyName("apiTimeMin"u8);
                 writer.WriteNumberValue(ApiTimeMin.Value);
             }
-            if (ApiTimeMax.HasValue)
+            if (Optional.IsDefined(ApiTimeMax))
             {
                 writer.WritePropertyName("apiTimeMax"u8);
                 writer.WriteNumberValue(ApiTimeMax.Value);
             }
-            if (ServiceTimeAvg.HasValue)
+            if (Optional.IsDefined(ServiceTimeAvg))
             {
                 writer.WritePropertyName("serviceTimeAvg"u8);
                 writer.WriteNumberValue(ServiceTimeAvg.Value);
             }
-            if (ServiceTimeMin.HasValue)
+            if (Optional.IsDefined(ServiceTimeMin))
             {
                 writer.WritePropertyName("serviceTimeMin"u8);
                 writer.WriteNumberValue(ServiceTimeMin.Value);
             }
-            if (ServiceTimeMax.HasValue)
+            if (Optional.IsDefined(ServiceTimeMax))
             {
                 writer.WritePropertyName("serviceTimeMax"u8);
                 writer.WriteNumberValue(ServiceTimeMax.Value);
@@ -194,32 +195,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> interval = default;
-            Optional<string> country = default;
-            Optional<string> region = default;
-            Optional<string> zip = default;
-            Optional<string> userId = default;
-            Optional<string> productId = default;
-            Optional<string> apiId = default;
-            Optional<string> operationId = default;
-            Optional<string> apiRegion = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<int> callCountSuccess = default;
-            Optional<int> callCountBlocked = default;
-            Optional<int> callCountFailed = default;
-            Optional<int> callCountOther = default;
-            Optional<int> callCountTotal = default;
-            Optional<long> bandwidth = default;
-            Optional<int> cacheHitCount = default;
-            Optional<int> cacheMissCount = default;
-            Optional<double> apiTimeAvg = default;
-            Optional<double> apiTimeMin = default;
-            Optional<double> apiTimeMax = default;
-            Optional<double> serviceTimeAvg = default;
-            Optional<double> serviceTimeMin = default;
-            Optional<double> serviceTimeMax = default;
+            string name = default;
+            DateTimeOffset? timestamp = default;
+            string interval = default;
+            string country = default;
+            string region = default;
+            string zip = default;
+            string userId = default;
+            string productId = default;
+            string apiId = default;
+            string operationId = default;
+            string apiRegion = default;
+            ResourceIdentifier subscriptionId = default;
+            int? callCountSuccess = default;
+            int? callCountBlocked = default;
+            int? callCountFailed = default;
+            int? callCountOther = default;
+            int? callCountTotal = default;
+            long? bandwidth = default;
+            int? cacheHitCount = default;
+            int? cacheMissCount = default;
+            double? apiTimeAvg = default;
+            double? apiTimeMin = default;
+            double? apiTimeMax = default;
+            double? serviceTimeAvg = default;
+            double? serviceTimeMin = default;
+            double? serviceTimeMax = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,32 +426,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReportRecordContract(
-                name.Value,
-                Optional.ToNullable(timestamp),
-                interval.Value,
-                country.Value,
-                region.Value,
-                zip.Value,
-                userId.Value,
-                productId.Value,
-                apiId.Value,
-                operationId.Value,
-                apiRegion.Value,
-                subscriptionId.Value,
-                Optional.ToNullable(callCountSuccess),
-                Optional.ToNullable(callCountBlocked),
-                Optional.ToNullable(callCountFailed),
-                Optional.ToNullable(callCountOther),
-                Optional.ToNullable(callCountTotal),
-                Optional.ToNullable(bandwidth),
-                Optional.ToNullable(cacheHitCount),
-                Optional.ToNullable(cacheMissCount),
-                Optional.ToNullable(apiTimeAvg),
-                Optional.ToNullable(apiTimeMin),
-                Optional.ToNullable(apiTimeMax),
-                Optional.ToNullable(serviceTimeAvg),
-                Optional.ToNullable(serviceTimeMin),
-                Optional.ToNullable(serviceTimeMax),
+                name,
+                timestamp,
+                interval,
+                country,
+                region,
+                zip,
+                userId,
+                productId,
+                apiId,
+                operationId,
+                apiRegion,
+                subscriptionId,
+                callCountSuccess,
+                callCountBlocked,
+                callCountFailed,
+                callCountOther,
+                callCountTotal,
+                bandwidth,
+                cacheHitCount,
+                cacheMissCount,
+                apiTimeAvg,
+                apiTimeMin,
+                apiTimeMax,
+                serviceTimeAvg,
+                serviceTimeMin,
+                serviceTimeMax,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Aggregation != null)
+            if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteObjectValue(Aggregation);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ManagementEventAggregationCondition> aggregation = default;
+            ManagementEventAggregationCondition aggregation = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementEventRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, aggregation.Value);
+            return new ManagementEventRuleCondition(odataType, dataSource, serializedAdditionalRawData, aggregation);
         }
 
         BinaryData IPersistableModel<ManagementEventRuleCondition>.Write(ModelReaderWriterOptions options)

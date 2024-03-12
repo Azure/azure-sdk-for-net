@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectionState.HasValue)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (IPFrom != null)
+            if (Optional.IsDefined(IPFrom))
             {
                 writer.WritePropertyName("iPFrom"u8);
                 writer.WriteStringValue(IPFrom);
             }
-            if (IPTo != null)
+            if (Optional.IsDefined(IPTo))
             {
                 writer.WritePropertyName("iPTo"u8);
                 writer.WriteStringValue(IPTo);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Exception != null)
+            if (Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraConnectionState> connectionState = default;
-            Optional<string> ipFrom = default;
-            Optional<string> ipTo = default;
-            Optional<int> port = default;
-            Optional<string> exception = default;
+            CassandraConnectionState? connectionState = default;
+            string ipFrom = default;
+            string ipTo = default;
+            int? port = default;
+            string exception = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraConnectionError(
-                Optional.ToNullable(connectionState),
-                ipFrom.Value,
-                ipTo.Value,
-                Optional.ToNullable(port),
-                exception.Value,
+                connectionState,
+                ipFrom,
+                ipTo,
+                port,
+                exception,
                 serializedAdditionalRawData);
         }
 

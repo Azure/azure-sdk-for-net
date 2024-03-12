@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -42,34 +43,34 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Prefix != null)
+            if (options.Format != "W" && Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && AzureRegion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
             }
-            if (options.Format != "W" && AzureService != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureService))
             {
                 writer.WritePropertyName("azureService"u8);
                 writer.WriteStringValue(AzureService);
             }
-            if (options.Format != "W" && IsPrimaryRegion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPrimaryRegion))
             {
                 writer.WritePropertyName("isPrimaryRegion"u8);
                 writer.WriteBooleanValue(IsPrimaryRegion.Value);
             }
-            if (options.Format != "W" && BgpCommunity != null)
+            if (options.Format != "W" && Optional.IsDefined(BgpCommunity))
             {
                 writer.WritePropertyName("bgpCommunity"u8);
                 writer.WriteStringValue(BgpCommunity);
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<AzureLocation> azureRegion = default;
-            Optional<string> azureService = default;
-            Optional<bool> isPrimaryRegion = default;
-            Optional<string> bgpCommunity = default;
+            SystemData systemData = default;
+            string prefix = default;
+            AzureLocation? azureRegion = default;
+            string azureService = default;
+            bool? isPrimaryRegion = default;
+            string bgpCommunity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.Peering.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                prefix.Value,
-                Optional.ToNullable(azureRegion),
-                azureService.Value,
-                Optional.ToNullable(isPrimaryRegion),
-                bgpCommunity.Value,
+                systemData,
+                prefix,
+                azureRegion,
+                azureService,
+                isPrimaryRegion,
+                bgpCommunity,
                 serializedAdditionalRawData);
         }
 

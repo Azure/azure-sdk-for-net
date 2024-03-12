@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (RejectType.HasValue)
+            if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (RejectValue != null)
+            if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
                 JsonSerializer.Serialize(writer, RejectValue);
             }
-            if (RejectSampleValue != null)
+            if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (UseTypeDefault != null)
+            if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<DataFactoryElement<int>> rejectValue = default;
-            Optional<DataFactoryElement<int>> rejectSampleValue = default;
-            Optional<DataFactoryElement<bool>> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            DataFactoryElement<int> rejectValue = default;
+            DataFactoryElement<int> rejectSampleValue = default;
+            DataFactoryElement<bool> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
         BinaryData IPersistableModel<PolybaseSettings>.Write(ModelReaderWriterOptions options)

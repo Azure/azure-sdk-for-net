@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (TargetInstanceCount.HasValue)
+            if (Optional.IsDefined(TargetInstanceCount))
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> targetInstanceCount = default;
+            int? targetInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterResizeContent(Optional.ToNullable(targetInstanceCount), serializedAdditionalRawData);
+            return new HDInsightClusterResizeContent(targetInstanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterResizeContent>.Write(ModelReaderWriterOptions options)

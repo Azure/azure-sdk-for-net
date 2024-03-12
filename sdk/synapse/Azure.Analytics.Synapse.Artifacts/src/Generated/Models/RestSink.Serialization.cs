@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,54 +20,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
-            if (AdditionalHeaders != null)
+            if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
-            if (HttpRequestTimeout != null)
+            if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 writer.WriteObjectValue(HttpRequestTimeout);
             }
-            if (RequestInterval != null)
+            if (Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval"u8);
                 writer.WriteObjectValue(RequestInterval);
             }
-            if (HttpCompressionType != null)
+            if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
                 writer.WriteObjectValue(HttpCompressionType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -85,17 +86,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> requestMethod = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> httpRequestTimeout = default;
-            Optional<object> requestInterval = default;
-            Optional<object> httpCompressionType = default;
+            object requestMethod = default;
+            object additionalHeaders = default;
+            object httpRequestTimeout = default;
+            object requestInterval = default;
+            object httpCompressionType = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -200,17 +201,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RestSink(
                 type,
-                writeBatchSize.Value,
-                writeBatchTimeout.Value,
-                sinkRetryCount.Value,
-                sinkRetryWait.Value,
-                maxConcurrentConnections.Value,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                requestMethod.Value,
-                additionalHeaders.Value,
-                httpRequestTimeout.Value,
-                requestInterval.Value,
-                httpCompressionType.Value);
+                requestMethod,
+                additionalHeaders,
+                httpRequestTimeout,
+                requestInterval,
+                httpCompressionType);
         }
 
         internal partial class RestSinkConverter : JsonConverter<RestSink>

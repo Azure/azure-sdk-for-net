@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (GroupDescription != null)
+            if (Optional.IsDefined(GroupDescription))
             {
                 writer.WritePropertyName("groupDescription"u8);
                 writer.WriteStringValue(GroupDescription);
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (ApplicationIdentifier != null)
+            if (Optional.IsDefined(ApplicationIdentifier))
             {
                 writer.WritePropertyName("applicationIdentifier"u8);
                 writer.WriteStringValue(ApplicationIdentifier);
             }
-            if (!(GlobalPlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GlobalPlacementRules))
             {
                 writer.WritePropertyName("globalPlacementRules"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DeploymentSpecId != null)
-            {
-                writer.WritePropertyName("deploymentSpecId"u8);
-                writer.WriteStringValue(DeploymentSpecId);
-            }
-            if (options.Format != "W" && VolumesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumesCount))
             {
                 writer.WritePropertyName("volumesCount"u8);
                 writer.WriteNumberValue(VolumesCount.Value);
@@ -99,12 +95,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> groupDescription = default;
-            Optional<NetAppApplicationType> applicationType = default;
-            Optional<string> applicationIdentifier = default;
+            string groupDescription = default;
+            NetAppApplicationType? applicationType = default;
+            string applicationIdentifier = default;
             IList<NetAppVolumePlacementRule> globalPlacementRules = default;
-            Optional<string> deploymentSpecId = default;
-            Optional<long> volumesCount = default;
+            long? volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +137,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     globalPlacementRules = array;
                     continue;
                 }
-                if (property.NameEquals("deploymentSpecId"u8))
-                {
-                    deploymentSpecId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("volumesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -163,12 +153,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppVolumeGroupMetadata(
-                groupDescription.Value,
-                Optional.ToNullable(applicationType),
-                applicationIdentifier.Value,
+                groupDescription,
+                applicationType,
+                applicationIdentifier,
                 globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
-                deploymentSpecId.Value,
-                Optional.ToNullable(volumesCount),
+                volumesCount,
                 serializedAdditionalRawData);
         }
 

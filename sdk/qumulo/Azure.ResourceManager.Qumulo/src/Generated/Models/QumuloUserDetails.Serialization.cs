@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
 
             writer.WriteStartObject();
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<string> email = default;
+            string email = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloUserDetails(email.Value, serializedAdditionalRawData);
+            return new QumuloUserDetails(email, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloUserDetails>.Write(ModelReaderWriterOptions options)

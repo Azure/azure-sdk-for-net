@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LegacyResourceId != null)
+            if (Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (ResourceLocation != null)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +137,10 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownRuleDataSource(
                 odataType,
-                resourceUri.Value,
-                legacyResourceId.Value,
-                resourceLocation.Value,
-                metricNamespace.Value,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
                 serializedAdditionalRawData);
         }
 

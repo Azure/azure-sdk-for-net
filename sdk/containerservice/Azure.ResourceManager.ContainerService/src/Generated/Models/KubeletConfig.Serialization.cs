@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (CpuManagerPolicy != null)
+            if (Optional.IsDefined(CpuManagerPolicy))
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
                 writer.WriteStringValue(CpuManagerPolicy);
             }
-            if (IsCpuCfsQuotaEnabled.HasValue)
+            if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
             {
                 writer.WritePropertyName("cpuCfsQuota"u8);
                 writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
-            if (CpuCfsQuotaPeriod != null)
+            if (Optional.IsDefined(CpuCfsQuotaPeriod))
             {
                 writer.WritePropertyName("cpuCfsQuotaPeriod"u8);
                 writer.WriteStringValue(CpuCfsQuotaPeriod);
             }
-            if (ImageGcHighThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcHighThreshold))
             {
                 writer.WritePropertyName("imageGcHighThreshold"u8);
                 writer.WriteNumberValue(ImageGcHighThreshold.Value);
             }
-            if (ImageGcLowThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcLowThreshold))
             {
                 writer.WritePropertyName("imageGcLowThreshold"u8);
                 writer.WriteNumberValue(ImageGcLowThreshold.Value);
             }
-            if (TopologyManagerPolicy != null)
+            if (Optional.IsDefined(TopologyManagerPolicy))
             {
                 writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
-            if (!(AllowedUnsafeSysctls is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
@@ -66,22 +67,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FailStartWithSwapOn.HasValue)
+            if (Optional.IsDefined(FailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn"u8);
                 writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
-            if (ContainerLogMaxSizeInMB.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
                 writer.WritePropertyName("containerLogMaxSizeMB"u8);
                 writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
-            if (ContainerLogMaxFiles.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxFiles))
             {
                 writer.WritePropertyName("containerLogMaxFiles"u8);
                 writer.WriteNumberValue(ContainerLogMaxFiles.Value);
             }
-            if (PodMaxPids.HasValue)
+            if (Optional.IsDefined(PodMaxPids))
             {
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> cpuManagerPolicy = default;
-            Optional<bool> cpuCfsQuota = default;
-            Optional<string> cpuCfsQuotaPeriod = default;
-            Optional<int> imageGcHighThreshold = default;
-            Optional<int> imageGcLowThreshold = default;
-            Optional<string> topologyManagerPolicy = default;
+            string cpuManagerPolicy = default;
+            bool? cpuCfsQuota = default;
+            string cpuCfsQuotaPeriod = default;
+            int? imageGcHighThreshold = default;
+            int? imageGcLowThreshold = default;
+            string topologyManagerPolicy = default;
             IList<string> allowedUnsafeSysctls = default;
-            Optional<bool> failSwapOn = default;
-            Optional<int> containerLogMaxSizeMB = default;
-            Optional<int> containerLogMaxFiles = default;
-            Optional<int> podMaxPids = default;
+            bool? failSwapOn = default;
+            int? containerLogMaxSizeMB = default;
+            int? containerLogMaxFiles = default;
+            int? podMaxPids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,17 +239,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubeletConfig(
-                cpuManagerPolicy.Value,
-                Optional.ToNullable(cpuCfsQuota),
-                cpuCfsQuotaPeriod.Value,
-                Optional.ToNullable(imageGcHighThreshold),
-                Optional.ToNullable(imageGcLowThreshold),
-                topologyManagerPolicy.Value,
+                cpuManagerPolicy,
+                cpuCfsQuota,
+                cpuCfsQuotaPeriod,
+                imageGcHighThreshold,
+                imageGcLowThreshold,
+                topologyManagerPolicy,
                 allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(failSwapOn),
-                Optional.ToNullable(containerLogMaxSizeMB),
-                Optional.ToNullable(containerLogMaxFiles),
-                Optional.ToNullable(podMaxPids),
+                failSwapOn,
+                containerLogMaxSizeMB,
+                containerLogMaxFiles,
+                podMaxPids,
                 serializedAdditionalRawData);
         }
 

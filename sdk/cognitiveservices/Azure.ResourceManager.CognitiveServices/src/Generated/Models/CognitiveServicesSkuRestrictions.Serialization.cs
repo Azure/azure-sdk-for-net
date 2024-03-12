@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (RestrictionsType.HasValue)
+            if (Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RestrictionInfo != null)
+            if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
                 writer.WriteObjectValue(RestrictionInfo);
             }
-            if (ReasonCode.HasValue)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesSkuRestrictionsType> type = default;
+            CognitiveServicesSkuRestrictionsType? type = default;
             IReadOnlyList<string> values = default;
-            Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
-            Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
+            CognitiveServicesSkuRestrictionInfo restrictionInfo = default;
+            CognitiveServicesSkuRestrictionReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new CognitiveServicesSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuRestrictions>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (SizeInGB.HasValue)
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (options.Format != "W" && UsedInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedInGB))
             {
                 writer.WritePropertyName("usedInGB"u8);
                 writer.WriteNumberValue(UsedInGB.Value);
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<int> usedInGB = default;
-            Optional<string> mountPath = default;
+            int? sizeInGB = default;
+            int? usedInGB = default;
+            string mountPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPersistentDisk(Optional.ToNullable(sizeInGB), Optional.ToNullable(usedInGB), mountPath.Value, serializedAdditionalRawData);
+            return new AppPersistentDisk(sizeInGB, usedInGB, mountPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPersistentDisk>.Write(ModelReaderWriterOptions options)

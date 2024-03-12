@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("hugepagesCount"u8);
             writer.WriteNumberValue(HugepagesCount);
-            if (HugepagesSize.HasValue)
+            if (Optional.IsDefined(HugepagesSize))
             {
                 writer.WritePropertyName("hugepagesSize"u8);
                 writer.WriteStringValue(HugepagesSize.Value.ToString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             long hugepagesCount = default;
-            Optional<HugepagesSize> hugepagesSize = default;
+            HugepagesSize? hugepagesSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentConfiguration(hugepagesCount, Optional.ToNullable(hugepagesSize), serializedAdditionalRawData);
+            return new NetworkCloudAgentConfiguration(hugepagesCount, hugepagesSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentConfiguration>.Write(ModelReaderWriterOptions options)

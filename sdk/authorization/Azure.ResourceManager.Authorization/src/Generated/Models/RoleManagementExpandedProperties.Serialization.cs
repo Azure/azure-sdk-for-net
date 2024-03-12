@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("principal"u8);
             writer.WriteStartObject();
-            if (PrincipalId.HasValue)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (PrincipalDisplayName != null)
+            if (Optional.IsDefined(PrincipalDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(PrincipalDisplayName);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
@@ -51,17 +52,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("roleDefinition"u8);
             writer.WriteStartObject();
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (RoleDefinitionDisplayName != null)
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(RoleDefinitionDisplayName);
             }
-            if (RoleType.HasValue)
+            if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -69,17 +70,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (ScopeId != null)
+            if (Optional.IsDefined(ScopeId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (ScopeDisplayName != null)
+            if (Optional.IsDefined(ScopeDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (ScopeType.HasValue)
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
@@ -123,16 +124,16 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> displayName = default;
-            Optional<string> email = default;
-            Optional<RoleManagementPrincipalType> type = default;
-            Optional<ResourceIdentifier> id0 = default;
-            Optional<string> displayName0 = default;
-            Optional<AuthorizationRoleType> type0 = default;
-            Optional<ResourceIdentifier> id1 = default;
-            Optional<string> displayName1 = default;
-            Optional<RoleManagementScopeType> type1 = default;
+            Guid? id = default;
+            string displayName = default;
+            string email = default;
+            RoleManagementPrincipalType? type = default;
+            ResourceIdentifier id0 = default;
+            string displayName0 = default;
+            AuthorizationRoleType? type0 = default;
+            ResourceIdentifier id1 = default;
+            string displayName1 = default;
+            RoleManagementScopeType? type1 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,16 +255,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleManagementExpandedProperties(
-                Optional.ToNullable(id),
-                displayName.Value,
-                email.Value,
-                Optional.ToNullable(type),
-                id0.Value,
-                displayName0.Value,
-                Optional.ToNullable(type0),
-                id1.Value,
-                displayName1.Value,
-                Optional.ToNullable(type1),
+                id,
+                displayName,
+                email,
+                type,
+                id0,
+                displayName0,
+                type0,
+                id1,
+                displayName1,
+                type1,
                 serializedAdditionalRawData);
         }
 

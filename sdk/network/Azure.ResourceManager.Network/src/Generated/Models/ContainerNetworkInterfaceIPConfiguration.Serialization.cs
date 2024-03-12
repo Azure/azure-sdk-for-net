@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,24 +28,24 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ContainerNetworkInterfaceIpConfigurationType != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceIpConfigurationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ContainerNetworkInterfaceIpConfigurationType);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -88,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ETag> etag = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string name = default;
+            string type = default;
+            ETag? etag = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerNetworkInterfaceIPConfiguration(name, type, etag, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceIPConfiguration>.Write(ModelReaderWriterOptions options)

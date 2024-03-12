@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBase64StringValue(Key, "D");
             }
-            if (!(AssetFileEncryptionMetadata is ChangeTrackingList<MediaAssetFileEncryptionMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetFileEncryptionMetadata))
             {
                 writer.WritePropertyName("assetFileEncryptionMetadata"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<byte[]> key = default;
+            byte[] key = default;
             IReadOnlyList<MediaAssetFileEncryptionMetadata> assetFileEncryptionMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageEncryptedAssetDecryptionInfo(key.Value, assetFileEncryptionMetadata ?? new ChangeTrackingList<MediaAssetFileEncryptionMetadata>(), serializedAdditionalRawData);
+            return new StorageEncryptedAssetDecryptionInfo(key, assetFileEncryptionMetadata ?? new ChangeTrackingList<MediaAssetFileEncryptionMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageEncryptedAssetDecryptionInfo>.Write(ModelReaderWriterOptions options)

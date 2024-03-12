@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Rights is ChangeTrackingList<AuthorizationRuleAccessRight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -78,42 +78,42 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (options.Format != "W" && ClaimType != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimType))
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (options.Format != "W" && ClaimValue != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Revision.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
+            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<AuthorizationRuleAccessRight> rights = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
-            Optional<string> claimType = default;
-            Optional<string> claimValue = default;
-            Optional<DateTimeOffset> modifiedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<int> revision = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
+            string claimType = default;
+            string claimValue = default;
+            DateTimeOffset? modifiedTime = default;
+            DateTimeOffset? createdTime = default;
+            int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,19 +317,19 @@ namespace Azure.ResourceManager.NotificationHubs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
-                primaryKey.Value,
-                secondaryKey.Value,
-                keyName.Value,
-                claimType.Value,
-                claimValue.Value,
-                Optional.ToNullable(modifiedTime),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(revision),
-                sku.Value,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                claimType,
+                claimValue,
+                modifiedTime,
+                createdTime,
+                revision,
+                sku,
                 serializedAdditionalRawData);
         }
 

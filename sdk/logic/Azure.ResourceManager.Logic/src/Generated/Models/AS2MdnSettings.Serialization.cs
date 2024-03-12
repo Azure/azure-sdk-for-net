@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -32,19 +33,19 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(SignMdn);
             writer.WritePropertyName("sendMDNAsynchronously"u8);
             writer.WriteBooleanValue(SendMdnAsynchronously);
-            if (ReceiptDeliveryUri != null)
+            if (Optional.IsDefined(ReceiptDeliveryUri))
             {
                 writer.WritePropertyName("receiptDeliveryUrl"u8);
                 writer.WriteStringValue(ReceiptDeliveryUri.AbsoluteUri);
             }
-            if (DispositionNotificationTo != null)
+            if (Optional.IsDefined(DispositionNotificationTo))
             {
                 writer.WritePropertyName("dispositionNotificationTo"u8);
                 writer.WriteStringValue(DispositionNotificationTo);
             }
             writer.WritePropertyName("signOutboundMDNIfOptional"u8);
             writer.WriteBooleanValue(SignOutboundMdnIfOptional);
-            if (MdnText != null)
+            if (Optional.IsDefined(MdnText))
             {
                 writer.WritePropertyName("mdnText"u8);
                 writer.WriteStringValue(MdnText);
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Logic.Models
             bool needMdn = default;
             bool signMdn = default;
             bool sendMdnAsynchronously = default;
-            Optional<Uri> receiptDeliveryUrl = default;
-            Optional<string> dispositionNotificationTo = default;
+            Uri receiptDeliveryUrl = default;
+            string dispositionNotificationTo = default;
             bool signOutboundMdnIfOptional = default;
-            Optional<string> mdnText = default;
+            string mdnText = default;
             bool sendInboundMdnToMessageBox = default;
             AS2HashingAlgorithm micHashingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,10 +164,10 @@ namespace Azure.ResourceManager.Logic.Models
                 needMdn,
                 signMdn,
                 sendMdnAsynchronously,
-                receiptDeliveryUrl.Value,
-                dispositionNotificationTo.Value,
+                receiptDeliveryUrl,
+                dispositionNotificationTo,
                 signOutboundMdnIfOptional,
-                mdnText.Value,
+                mdnText,
                 sendInboundMdnToMessageBox,
                 micHashingAlgorithm,
                 serializedAdditionalRawData);

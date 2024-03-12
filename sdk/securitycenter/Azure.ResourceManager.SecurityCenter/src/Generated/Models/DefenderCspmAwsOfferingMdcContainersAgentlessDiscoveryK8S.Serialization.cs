@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CloudRoleArn != null)
+            if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> cloudRoleArn = default;
+            bool? enabled = default;
+            string cloudRoleArn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
+            return new DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(enabled, cloudRoleArn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Write(ModelReaderWriterOptions options)

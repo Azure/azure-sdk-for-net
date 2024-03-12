@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteNumberValue(RuleId);
-            if (RuleIdString != null)
+            if (Optional.IsDefined(RuleIdString))
             {
                 writer.WritePropertyName("ruleIdString"u8);
                 writer.WriteStringValue(RuleIdString);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int ruleId = default;
-            Optional<string> ruleIdString = default;
-            Optional<ApplicationGatewayWafRuleStateType> state = default;
-            Optional<ApplicationGatewayWafRuleActionType> action = default;
-            Optional<string> description = default;
+            string ruleIdString = default;
+            ApplicationGatewayWafRuleStateType? state = default;
+            ApplicationGatewayWafRuleActionType? action = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +137,10 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayFirewallRule(
                 ruleId,
-                ruleIdString.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(action),
-                description.Value,
+                ruleIdString,
+                state,
+                action,
+                description,
                 serializedAdditionalRawData);
         }
 

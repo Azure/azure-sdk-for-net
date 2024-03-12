@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (MigrationSolutionId != null)
+            if (Optional.IsDefined(MigrationSolutionId))
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (VMwareToAzureProviderType != null)
+            if (Optional.IsDefined(VMwareToAzureProviderType))
             {
                 writer.WritePropertyName("vmwareToAzureProviderType"u8);
                 writer.WriteStringValue(VMwareToAzureProviderType);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> migrationSolutionId = default;
-            Optional<string> vmwareToAzureProviderType = default;
+            ResourceIdentifier migrationSolutionId = default;
+            string vmwareToAzureProviderType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVaultSettingProperties(migrationSolutionId.Value, vmwareToAzureProviderType.Value, serializedAdditionalRawData);
+            return new SiteRecoveryVaultSettingProperties(migrationSolutionId, vmwareToAzureProviderType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVaultSettingProperties>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(ExcludeExtensions is ChangeTrackingList<VirtualMachineExtensionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludeExtensions))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IList<VirtualMachineExtensionData> excludeExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeSecurityPostureReference(id.Value, excludeExtensions ?? new ChangeTrackingList<VirtualMachineExtensionData>(), serializedAdditionalRawData);
+            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<VirtualMachineExtensionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSecurityPostureReference>.Write(ModelReaderWriterOptions options)

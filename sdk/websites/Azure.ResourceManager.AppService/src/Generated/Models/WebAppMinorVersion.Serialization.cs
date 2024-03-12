@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayText != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && StackSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(StackSettings))
             {
                 writer.WritePropertyName("stackSettings"u8);
                 writer.WriteObjectValue(StackSettings);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> value = default;
-            Optional<WebAppRuntimes> stackSettings = default;
+            string displayText = default;
+            string value = default;
+            WebAppRuntimes stackSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMinorVersion(displayText.Value, value.Value, stackSettings.Value, serializedAdditionalRawData);
+            return new WebAppMinorVersion(displayText, value, stackSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMinorVersion>.Write(ModelReaderWriterOptions options)

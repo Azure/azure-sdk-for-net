@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Reference);
             }
-            if (SchemaType.HasValue)
+            if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Items != null)
+            if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteObjectValue(Items);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (AdditionalProperties != null)
+            if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
 #if NET6_0_OR_GREATER
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (!(RequiredProperties is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredProperties))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteStartArray();
@@ -79,17 +80,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxProperties.HasValue)
+            if (Optional.IsDefined(MaxProperties))
             {
                 writer.WritePropertyName("maxProperties"u8);
                 writer.WriteNumberValue(MaxProperties.Value);
             }
-            if (MinProperties.HasValue)
+            if (Optional.IsDefined(MinProperties))
             {
                 writer.WritePropertyName("minProperties"u8);
                 writer.WriteNumberValue(MinProperties.Value);
             }
-            if (!(AllOf is ChangeTrackingList<SwaggerSchema> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -99,27 +100,27 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Discriminator != null)
+            if (Optional.IsDefined(Discriminator))
             {
                 writer.WritePropertyName("discriminator"u8);
                 writer.WriteStringValue(Discriminator);
             }
-            if (IsReadOnly.HasValue)
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (Xml != null)
+            if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
                 writer.WriteObjectValue(Xml);
             }
-            if (ExternalDocs != null)
+            if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
                 writer.WriteObjectValue(ExternalDocs);
             }
-            if (Example != null)
+            if (Optional.IsDefined(Example))
             {
                 writer.WritePropertyName("example"u8);
 #if NET6_0_OR_GREATER
@@ -131,27 +132,27 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (IsNotificationUrlExtension.HasValue)
+            if (Optional.IsDefined(IsNotificationUrlExtension))
             {
                 writer.WritePropertyName("notificationUrlExtension"u8);
                 writer.WriteBooleanValue(IsNotificationUrlExtension.Value);
             }
-            if (DynamicSchemaOld != null)
+            if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
                 writer.WriteObjectValue(DynamicSchemaOld);
             }
-            if (DynamicSchemaNew != null)
+            if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
                 writer.WriteObjectValue(DynamicSchemaNew);
             }
-            if (DynamicListNew != null)
+            if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
                 writer.WriteObjectValue(DynamicListNew);
             }
-            if (DynamicTree != null)
+            if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
                 writer.WriteObjectValue(DynamicTree);
@@ -194,26 +195,26 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> @ref = default;
-            Optional<SwaggerSchemaType> type = default;
-            Optional<string> title = default;
-            Optional<SwaggerSchema> items = default;
+            string @ref = default;
+            SwaggerSchemaType? type = default;
+            string title = default;
+            SwaggerSchema items = default;
             IDictionary<string, SwaggerSchema> properties = default;
-            Optional<BinaryData> additionalProperties = default;
+            BinaryData additionalProperties = default;
             IList<string> required = default;
-            Optional<int> maxProperties = default;
-            Optional<int> minProperties = default;
+            int? maxProperties = default;
+            int? minProperties = default;
             IList<SwaggerSchema> allOf = default;
-            Optional<string> discriminator = default;
-            Optional<bool> readOnly = default;
-            Optional<SwaggerXml> xml = default;
-            Optional<SwaggerExternalDocumentation> externalDocs = default;
-            Optional<BinaryData> example = default;
-            Optional<bool> notificationUrlExtension = default;
-            Optional<SwaggerCustomDynamicSchema> dynamicSchemaOld = default;
-            Optional<SwaggerCustomDynamicProperties> dynamicSchemaNew = default;
-            Optional<SwaggerCustomDynamicList> dynamicListNew = default;
-            Optional<SwaggerCustomDynamicTree> dynamicTree = default;
+            string discriminator = default;
+            bool? readOnly = default;
+            SwaggerXml xml = default;
+            SwaggerExternalDocumentation externalDocs = default;
+            BinaryData example = default;
+            bool? notificationUrlExtension = default;
+            SwaggerCustomDynamicSchema dynamicSchemaOld = default;
+            SwaggerCustomDynamicProperties dynamicSchemaNew = default;
+            SwaggerCustomDynamicList dynamicListNew = default;
+            SwaggerCustomDynamicTree dynamicTree = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -408,26 +409,26 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SwaggerSchema(
-                @ref.Value,
-                Optional.ToNullable(type),
-                title.Value,
-                items.Value,
+                @ref,
+                type,
+                title,
+                items,
                 properties ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
-                additionalProperties.Value,
+                additionalProperties,
                 required ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxProperties),
-                Optional.ToNullable(minProperties),
+                maxProperties,
+                minProperties,
                 allOf ?? new ChangeTrackingList<SwaggerSchema>(),
-                discriminator.Value,
-                Optional.ToNullable(readOnly),
-                xml.Value,
-                externalDocs.Value,
-                example.Value,
-                Optional.ToNullable(notificationUrlExtension),
-                dynamicSchemaOld.Value,
-                dynamicSchemaNew.Value,
-                dynamicListNew.Value,
-                dynamicTree.Value,
+                discriminator,
+                readOnly,
+                xml,
+                externalDocs,
+                example,
+                notificationUrlExtension,
+                dynamicSchemaOld,
+                dynamicSchemaNew,
+                dynamicListNew,
+                dynamicTree,
                 serializedAdditionalRawData);
         }
 

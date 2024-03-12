@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(LogStorageAccountId);
             writer.WritePropertyName("logStorageAccountSasSecretName"u8);
             writer.WriteStringValue(LogStorageAccountSasSecretName);
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
+            SiteRecoveryDiskAccountType? diskType = default;
             string isOSDisk = default;
             ResourceIdentifier logStorageAccountId = default;
             string logStorageAccountSasSecretName = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareCbtDiskContent(
                 diskId,
-                Optional.ToNullable(diskType),
+                diskType,
                 isOSDisk,
                 logStorageAccountId,
                 logStorageAccountSasSecretName,
-                diskEncryptionSetId.Value,
+                diskEncryptionSetId,
                 serializedAdditionalRawData);
         }
 

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
             writer.WriteObjectValue(CreationData);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SourceVolumeSizeGiB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceVolumeSizeGiB))
             {
                 writer.WritePropertyName("sourceVolumeSizeGiB"u8);
                 writer.WriteNumberValue(SourceVolumeSizeGiB.Value);
             }
-            if (options.Format != "W" && VolumeName != null)
+            if (options.Format != "W" && Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SnapshotCreationInfo creationData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<long> sourceVolumeSizeGiB = default;
-            Optional<string> volumeName = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            long? sourceVolumeSizeGiB = default;
+            string volumeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.ElasticSan
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 creationData,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(sourceVolumeSizeGiB),
-                volumeName.Value,
+                provisioningState,
+                sourceVolumeSizeGiB,
+                volumeName,
                 serializedAdditionalRawData);
         }
 

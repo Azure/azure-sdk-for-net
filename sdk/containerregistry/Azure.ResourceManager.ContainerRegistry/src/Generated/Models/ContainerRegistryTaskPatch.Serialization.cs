@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,47 +46,47 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Platform != null)
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (AgentPoolName != null)
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Step != null)
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteObjectValue(Step);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (LogTemplate != null)
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -129,17 +130,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            Optional<ContainerRegistryTaskStatus> status = default;
-            Optional<ContainerRegistryPlatformUpdateContent> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> agentPoolName = default;
-            Optional<int> timeout = default;
-            Optional<ContainerRegistryTaskStepUpdateContent> step = default;
-            Optional<ContainerRegistryTriggerUpdateContent> trigger = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
-            Optional<string> logTemplate = default;
+            ContainerRegistryTaskStatus? status = default;
+            ContainerRegistryPlatformUpdateContent platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string agentPoolName = default;
+            int? timeout = default;
+            ContainerRegistryTaskStepUpdateContent step = default;
+            ContainerRegistryTriggerUpdateContent trigger = default;
+            ContainerRegistryCredentials credentials = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,15 +262,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTaskPatch(
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(status),
-                platform.Value,
-                agentConfiguration.Value,
-                agentPoolName.Value,
-                Optional.ToNullable(timeout),
-                step.Value,
-                trigger.Value,
-                credentials.Value,
-                logTemplate.Value,
+                status,
+                platform,
+                agentConfiguration,
+                agentPoolName,
+                timeout,
+                step,
+                trigger,
+                credentials,
+                logTemplate,
                 serializedAdditionalRawData);
         }
 

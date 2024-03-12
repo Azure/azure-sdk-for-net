@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(LoadBalancerFrontendIPConfigurations is ChangeTrackingList<FrontendIPConfigurationData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerFrontendIPConfigurations))
             {
                 writer.WritePropertyName("loadBalancerFrontendIpConfigurations"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPConfigurations is ChangeTrackingList<PrivateLinkServiceIPConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<NetworkPrivateEndpointConnectionData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteObjectValue(Visibility);
             }
-            if (AutoApproval != null)
+            if (Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
                 writer.WriteObjectValue(AutoApproval);
             }
-            if (!(Fqdns is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Alias != null)
+            if (options.Format != "W" && Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (EnableProxyProtocol.HasValue)
+            if (Optional.IsDefined(EnableProxyProtocol))
             {
                 writer.WritePropertyName("enableProxyProtocol"u8);
                 writer.WriteBooleanValue(EnableProxyProtocol.Value);
@@ -186,23 +186,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
-            Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
+            PrivateLinkServicePropertiesVisibility visibility = default;
+            PrivateLinkServicePropertiesAutoApproval autoApproval = default;
             IList<string> fqdns = default;
-            Optional<string> @alias = default;
-            Optional<bool> enableProxyProtocol = default;
+            string @alias = default;
+            bool? enableProxyProtocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -401,24 +401,24 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PrivateLinkServiceData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                Optional.ToNullable(etag),
+                etag,
                 loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),
-                visibility.Value,
-                autoApproval.Value,
+                visibility,
+                autoApproval,
                 fqdns ?? new ChangeTrackingList<string>(),
-                @alias.Value,
-                Optional.ToNullable(enableProxyProtocol));
+                @alias,
+                enableProxyProtocol);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options)

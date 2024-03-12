@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<SignalRServiceUsageName> name = default;
-            Optional<string> unit = default;
+            ResourceIdentifier id = default;
+            long? currentValue = default;
+            long? limit = default;
+            SignalRServiceUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SignalRServiceUsage(
-                id.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                name.Value,
-                unit.Value,
+                id,
+                currentValue,
+                limit,
+                name,
+                unit,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && DurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Databases != null)
+            if (options.Format != "W" && Optional.IsDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && DatabaseSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseSummary))
             {
                 writer.WritePropertyName("databaseSummary"u8);
                 writer.WriteStringValue(DatabaseSummary);
             }
-            if (MigrationValidationResult != null)
+            if (Optional.IsDefined(MigrationValidationResult))
             {
                 writer.WritePropertyName("migrationValidationResult"u8);
                 writer.WriteObjectValue(MigrationValidationResult);
             }
-            if (MigrationReportResult != null)
+            if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
                 writer.WriteObjectValue(MigrationReportResult);
             }
-            if (options.Format != "W" && SourceServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && SourceServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && TargetServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && TargetServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -151,22 +152,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<long> durationInSeconds = default;
-            Optional<MigrationStatus> status = default;
-            Optional<string> statusMessage = default;
-            Optional<string> message = default;
-            Optional<string> databases = default;
-            Optional<string> databaseSummary = default;
-            Optional<MigrationValidationResult> migrationValidationResult = default;
-            Optional<MigrationReportResult> migrationReportResult = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            long? durationInSeconds = default;
+            MigrationStatus? status = default;
+            string statusMessage = default;
+            string message = default;
+            string databases = default;
+            string databaseSummary = default;
+            MigrationValidationResult migrationValidationResult = default;
+            MigrationReportResult migrationReportResult = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -297,23 +298,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                Optional.ToNullable(durationInSeconds),
-                Optional.ToNullable(status),
-                statusMessage.Value,
-                message.Value,
-                databases.Value,
-                databaseSummary.Value,
-                migrationValidationResult.Value,
-                migrationReportResult.Value,
-                sourceServerVersion.Value,
-                sourceServerBrandVersion.Value,
-                targetServerVersion.Value,
-                targetServerBrandVersion.Value,
+                startedOn,
+                endedOn,
+                durationInSeconds,
+                status,
+                statusMessage,
+                message,
+                databases,
+                databaseSummary,
+                migrationValidationResult,
+                migrationReportResult,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
                 exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 

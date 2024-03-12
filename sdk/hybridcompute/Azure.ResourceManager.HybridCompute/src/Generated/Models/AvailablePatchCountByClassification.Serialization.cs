@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Security.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Security))
             {
                 writer.WritePropertyName("security"u8);
                 writer.WriteNumberValue(Security.Value);
             }
-            if (options.Format != "W" && Critical.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Critical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteNumberValue(Critical.Value);
             }
-            if (options.Format != "W" && Definition.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteNumberValue(Definition.Value);
             }
-            if (options.Format != "W" && UpdateRollup.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateRollup))
             {
                 writer.WritePropertyName("updateRollup"u8);
                 writer.WriteNumberValue(UpdateRollup.Value);
             }
-            if (options.Format != "W" && FeaturePack.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FeaturePack))
             {
                 writer.WritePropertyName("featurePack"u8);
                 writer.WriteNumberValue(FeaturePack.Value);
             }
-            if (options.Format != "W" && ServicePack.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServicePack))
             {
                 writer.WritePropertyName("servicePack"u8);
                 writer.WriteNumberValue(ServicePack.Value);
             }
-            if (options.Format != "W" && Tools.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteNumberValue(Tools.Value);
             }
-            if (options.Format != "W" && Updates.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Updates))
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteNumberValue(Updates.Value);
             }
-            if (options.Format != "W" && Other.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Other))
             {
                 writer.WritePropertyName("other"u8);
                 writer.WriteNumberValue(Other.Value);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<int> security = default;
-            Optional<int> critical = default;
-            Optional<int> definition = default;
-            Optional<int> updateRollup = default;
-            Optional<int> featurePack = default;
-            Optional<int> servicePack = default;
-            Optional<int> tools = default;
-            Optional<int> updates = default;
-            Optional<int> other = default;
+            int? security = default;
+            int? critical = default;
+            int? definition = default;
+            int? updateRollup = default;
+            int? featurePack = default;
+            int? servicePack = default;
+            int? tools = default;
+            int? updates = default;
+            int? other = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailablePatchCountByClassification(
-                Optional.ToNullable(security),
-                Optional.ToNullable(critical),
-                Optional.ToNullable(definition),
-                Optional.ToNullable(updateRollup),
-                Optional.ToNullable(featurePack),
-                Optional.ToNullable(servicePack),
-                Optional.ToNullable(tools),
-                Optional.ToNullable(updates),
-                Optional.ToNullable(other),
+                security,
+                critical,
+                definition,
+                updateRollup,
+                featurePack,
+                servicePack,
+                tools,
+                updates,
+                other,
                 serializedAdditionalRawData);
         }
 

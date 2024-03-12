@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RuleName != null)
+            if (Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (IsSoftDeleted.HasValue)
+            if (Optional.IsDefined(IsSoftDeleted))
             {
                 writer.WritePropertyName("isSoftDeleted"u8);
                 writer.WriteBooleanValue(IsSoftDeleted.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isSoftDeleted = default;
+            DateTimeOffset? expiryTime = default;
+            string ruleName = default;
+            bool? isSoftDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value, Optional.ToNullable(isSoftDeleted), serializedAdditionalRawData);
+            return new RecoveryPointProperties(expiryTime, ruleName, isSoftDeleted, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointProperties>.Write(ModelReaderWriterOptions options)

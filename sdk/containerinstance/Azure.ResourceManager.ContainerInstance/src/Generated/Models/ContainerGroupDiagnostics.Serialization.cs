@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (LogAnalytics != null)
+            if (Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteObjectValue(LogAnalytics);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerGroupLogAnalytics> logAnalytics = default;
+            ContainerGroupLogAnalytics logAnalytics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupDiagnostics(logAnalytics.Value, serializedAdditionalRawData);
+            return new ContainerGroupDiagnostics(logAnalytics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupDiagnostics>.Write(ModelReaderWriterOptions options)

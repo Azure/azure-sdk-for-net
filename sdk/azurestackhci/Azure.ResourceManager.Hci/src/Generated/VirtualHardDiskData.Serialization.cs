@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,59 +61,59 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BlockSizeBytes.HasValue)
+            if (Optional.IsDefined(BlockSizeBytes))
             {
                 writer.WritePropertyName("blockSizeBytes"u8);
                 writer.WriteNumberValue(BlockSizeBytes.Value);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Dynamic.HasValue)
+            if (Optional.IsDefined(Dynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteBooleanValue(Dynamic.Value);
             }
-            if (LogicalSectorBytes.HasValue)
+            if (Optional.IsDefined(LogicalSectorBytes))
             {
                 writer.WritePropertyName("logicalSectorBytes"u8);
                 writer.WriteNumberValue(LogicalSectorBytes.Value);
             }
-            if (PhysicalSectorBytes.HasValue)
+            if (Optional.IsDefined(PhysicalSectorBytes))
             {
                 writer.WritePropertyName("physicalSectorBytes"u8);
                 writer.WriteNumberValue(PhysicalSectorBytes.Value);
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (DiskFileFormat.HasValue)
+            if (Optional.IsDefined(DiskFileFormat))
             {
                 writer.WritePropertyName("diskFileFormat"u8);
                 writer.WriteStringValue(DiskFileFormat.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -157,23 +157,23 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> blockSizeBytes = default;
-            Optional<long> diskSizeGB = default;
-            Optional<bool> @dynamic = default;
-            Optional<int> logicalSectorBytes = default;
-            Optional<int> physicalSectorBytes = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskFileFormat> diskFileFormat = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<ResourceIdentifier> containerId = default;
-            Optional<VirtualHardDiskStatus> status = default;
+            SystemData systemData = default;
+            int? blockSizeBytes = default;
+            long? diskSizeGB = default;
+            bool? @dynamic = default;
+            int? logicalSectorBytes = default;
+            int? physicalSectorBytes = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskFileFormat? diskFileFormat = default;
+            ProvisioningStateEnum? provisioningState = default;
+            ResourceIdentifier containerId = default;
+            VirtualHardDiskStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,20 +342,20 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                Optional.ToNullable(blockSizeBytes),
-                Optional.ToNullable(diskSizeGB),
-                Optional.ToNullable(@dynamic),
-                Optional.ToNullable(logicalSectorBytes),
-                Optional.ToNullable(physicalSectorBytes),
-                Optional.ToNullable(hyperVGeneration),
-                Optional.ToNullable(diskFileFormat),
-                Optional.ToNullable(provisioningState),
-                containerId.Value,
-                status.Value,
+                extendedLocation,
+                blockSizeBytes,
+                diskSizeGB,
+                @dynamic,
+                logicalSectorBytes,
+                physicalSectorBytes,
+                hyperVGeneration,
+                diskFileFormat,
+                provisioningState,
+                containerId,
+                status,
                 serializedAdditionalRawData);
         }
 

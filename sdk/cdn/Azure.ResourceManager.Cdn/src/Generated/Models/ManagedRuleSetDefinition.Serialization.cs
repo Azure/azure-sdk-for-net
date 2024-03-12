@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && RuleSetType != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleSetType))
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (options.Format != "W" && RuleSetVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleSetVersion))
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (options.Format != "W" && !(RuleGroups is ChangeTrackingList<ManagedRuleGroupDefinition> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RuleGroups))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -118,14 +119,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<CdnSku> sku = default;
+            CdnSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
             IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,11 +216,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                provisioningState.Value,
-                ruleSetType.Value,
-                ruleSetVersion.Value,
+                systemData,
+                sku,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
                 ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
                 serializedAdditionalRawData);
         }

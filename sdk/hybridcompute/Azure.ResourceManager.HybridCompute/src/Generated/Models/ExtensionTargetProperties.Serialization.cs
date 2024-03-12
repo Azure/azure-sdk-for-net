@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (TargetVersion != null)
+            if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> targetVersion = default;
+            string targetVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionTargetProperties(targetVersion.Value, serializedAdditionalRawData);
+            return new ExtensionTargetProperties(targetVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionTargetProperties>.Write(ModelReaderWriterOptions options)

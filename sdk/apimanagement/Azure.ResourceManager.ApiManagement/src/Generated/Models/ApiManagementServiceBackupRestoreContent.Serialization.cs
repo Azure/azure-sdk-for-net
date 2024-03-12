@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,17 +33,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (AccessType.HasValue)
+            if (Optional.IsDefined(AccessType))
             {
                 writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string storageAccount = default;
             string containerName = default;
             string backupName = default;
-            Optional<StorageAccountAccessType> accessType = default;
-            Optional<string> accessKey = default;
-            Optional<string> clientId = default;
+            StorageAccountAccessType? accessType = default;
+            string accessKey = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,9 +140,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 storageAccount,
                 containerName,
                 backupName,
-                Optional.ToNullable(accessType),
-                accessKey.Value,
-                clientId.Value,
+                accessType,
+                accessKey,
+                clientId,
                 serializedAdditionalRawData);
         }
 

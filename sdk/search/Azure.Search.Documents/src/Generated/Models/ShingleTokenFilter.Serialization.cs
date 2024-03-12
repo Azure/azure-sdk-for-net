@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,32 +16,32 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxShingleSize.HasValue)
+            if (Optional.IsDefined(MaxShingleSize))
             {
                 writer.WritePropertyName("maxShingleSize"u8);
                 writer.WriteNumberValue(MaxShingleSize.Value);
             }
-            if (MinShingleSize.HasValue)
+            if (Optional.IsDefined(MinShingleSize))
             {
                 writer.WritePropertyName("minShingleSize"u8);
                 writer.WriteNumberValue(MinShingleSize.Value);
             }
-            if (OutputUnigrams.HasValue)
+            if (Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
-            if (OutputUnigramsIfNoShingles.HasValue)
+            if (Optional.IsDefined(OutputUnigramsIfNoShingles))
             {
                 writer.WritePropertyName("outputUnigramsIfNoShingles"u8);
                 writer.WriteBooleanValue(OutputUnigramsIfNoShingles.Value);
             }
-            if (TokenSeparator != null)
+            if (Optional.IsDefined(TokenSeparator))
             {
                 writer.WritePropertyName("tokenSeparator"u8);
                 writer.WriteStringValue(TokenSeparator);
             }
-            if (FilterToken != null)
+            if (Optional.IsDefined(FilterToken))
             {
                 writer.WritePropertyName("filterToken"u8);
                 writer.WriteStringValue(FilterToken);
@@ -58,12 +59,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxShingleSize = default;
-            Optional<int> minShingleSize = default;
-            Optional<bool> outputUnigrams = default;
-            Optional<bool> outputUnigramsIfNoShingles = default;
-            Optional<string> tokenSeparator = default;
-            Optional<string> filterToken = default;
+            int? maxShingleSize = default;
+            int? minShingleSize = default;
+            bool? outputUnigrams = default;
+            bool? outputUnigramsIfNoShingles = default;
+            string tokenSeparator = default;
+            string filterToken = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -128,12 +129,12 @@ namespace Azure.Search.Documents.Indexes.Models
             return new ShingleTokenFilter(
                 odataType,
                 name,
-                Optional.ToNullable(maxShingleSize),
-                Optional.ToNullable(minShingleSize),
-                Optional.ToNullable(outputUnigrams),
-                Optional.ToNullable(outputUnigramsIfNoShingles),
-                tokenSeparator.Value,
-                filterToken.Value);
+                maxShingleSize,
+                minShingleSize,
+                outputUnigrams,
+                outputUnigramsIfNoShingles,
+                tokenSeparator,
+                filterToken);
         }
     }
 }

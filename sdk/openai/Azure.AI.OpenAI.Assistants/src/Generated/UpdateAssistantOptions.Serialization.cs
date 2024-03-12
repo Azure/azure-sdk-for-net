@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             writer.WriteStartObject();
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 if (Name != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("name");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("description");
                 }
             }
-            if (Instructions != null)
+            if (Optional.IsDefined(Instructions))
             {
                 if (Instructions != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -144,10 +144,10 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Optional<string> model = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> instructions = default;
+            string model = default;
+            string name = default;
+            string description = default;
+            string instructions = default;
             IList<ToolDefinition> tools = default;
             IList<string> fileIds = default;
             IDictionary<string, string> metadata = default;
@@ -239,10 +239,10 @@ namespace Azure.AI.OpenAI.Assistants
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateAssistantOptions(
-                model.Value,
-                name.Value,
-                description.Value,
-                instructions.Value,
+                model,
+                name,
+                description,
+                instructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 fileIds ?? new ChangeTrackingList<string>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -15,29 +16,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("Url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (ResponseCode != null)
+            if (Optional.IsDefined(ResponseCode))
             {
                 writer.WritePropertyName("ResponseCode"u8);
                 writer.WriteStringValue(ResponseCode);
             }
-            if (Duration != null)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("Duration"u8);
                 writer.WriteStringValue(Duration);
             }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
-            if (!(DocumentStreamIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Properties is ChangeTrackingList<KeyValuePairString> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteObjectValue(PrivateIPAddress);
             }
-            if (PublicIPAddressResourceId != null)
+            if (Optional.IsDefined(PublicIPAddressResourceId))
             {
                 writer.WritePropertyName("publicIpAddressResourceId"u8);
                 writer.WriteStringValue(PublicIPAddressResourceId);
             }
-            if (LoadBalancerResourceId != null)
+            if (Optional.IsDefined(LoadBalancerResourceId))
             {
                 writer.WritePropertyName("loadBalancerResourceId"u8);
                 writer.WriteStringValue(LoadBalancerResourceId);
             }
-            if (ProbePort.HasValue)
+            if (Optional.IsDefined(ProbePort))
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            if (!(SqlVmInstances is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SqlVmInstances))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<AvailabilityGroupListenerPrivateIPAddress> privateIPAddress = default;
-            Optional<ResourceIdentifier> publicIPAddressResourceId = default;
-            Optional<ResourceIdentifier> loadBalancerResourceId = default;
-            Optional<int> probePort = default;
+            AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
+            ResourceIdentifier publicIPAddressResourceId = default;
+            ResourceIdentifier loadBalancerResourceId = default;
+            int? probePort = default;
             IList<ResourceIdentifier> sqlVmInstances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,10 +173,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailabilityGroupListenerLoadBalancerConfiguration(
-                privateIPAddress.Value,
-                publicIPAddressResourceId.Value,
-                loadBalancerResourceId.Value,
-                Optional.ToNullable(probePort),
+                privateIPAddress,
+                publicIPAddressResourceId,
+                loadBalancerResourceId,
+                probePort,
                 sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

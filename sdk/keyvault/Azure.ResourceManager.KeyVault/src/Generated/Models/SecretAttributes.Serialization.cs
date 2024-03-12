@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Expires.HasValue)
+            if (Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(Created.Value, "U");
             }
-            if (options.Format != "W" && Updated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(Updated.Value, "U");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> nbf = default;
-            Optional<DateTimeOffset> exp = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            bool? enabled = default;
+            DateTimeOffset? nbf = default;
+            DateTimeOffset? exp = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecretAttributes(
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(nbf),
-                Optional.ToNullable(exp),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
+                enabled,
+                nbf,
+                exp,
+                created,
+                updated,
                 serializedAdditionalRawData);
         }
 

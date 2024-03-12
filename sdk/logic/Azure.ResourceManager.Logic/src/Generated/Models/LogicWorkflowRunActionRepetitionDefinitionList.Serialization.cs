@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionRepetitionDefinitionList(nextLink.Value, value ?? new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>(), serializedAdditionalRawData);
+            return new LogicWorkflowRunActionRepetitionDefinitionList(nextLink, value ?? new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionList>.Write(ModelReaderWriterOptions options)

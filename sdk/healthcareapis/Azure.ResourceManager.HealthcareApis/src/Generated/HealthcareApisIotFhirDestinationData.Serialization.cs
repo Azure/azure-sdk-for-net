@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HealthcareApis
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            AzureLocation? location = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
             HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default;
             ResourceIdentifier fhirServiceResourceId = default;
             HealthcareApisIotMappingProperties fhirMapping = default;
@@ -213,13 +213,13 @@ namespace Azure.ResourceManager.HealthcareApis
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 resourceIdentityResolutionType,
                 fhirServiceResourceId,
                 fhirMapping,
-                Optional.ToNullable(location),
-                Optional.ToNullable(etag),
+                location,
+                etag,
                 serializedAdditionalRawData);
         }
 

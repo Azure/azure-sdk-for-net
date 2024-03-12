@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (DataCollectionMode.HasValue)
+            if (Optional.IsDefined(DataCollectionMode))
             {
                 writer.WritePropertyName("dataCollectionMode"u8);
                 writer.WriteStringValue(DataCollectionMode.Value.ToString());
             }
-            if (DataId != null)
+            if (Optional.IsDefined(DataId))
             {
                 if (DataId != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (SamplingRate.HasValue)
+            if (Optional.IsDefined(SamplingRate))
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<DataCollectionMode> dataCollectionMode = default;
-            Optional<string> dataId = default;
-            Optional<double> samplingRate = default;
+            string clientId = default;
+            DataCollectionMode? dataCollectionMode = default;
+            string dataId = default;
+            double? samplingRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionConfiguration(clientId.Value, Optional.ToNullable(dataCollectionMode), dataId.Value, Optional.ToNullable(samplingRate), serializedAdditionalRawData);
+            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionConfiguration>.Write(ModelReaderWriterOptions options)

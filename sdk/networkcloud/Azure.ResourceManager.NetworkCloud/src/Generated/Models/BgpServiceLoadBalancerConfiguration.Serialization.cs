@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(BgpAdvertisements is ChangeTrackingList<BgpAdvertisement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpAdvertisements))
             {
                 writer.WritePropertyName("bgpAdvertisements"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BgpPeers is ChangeTrackingList<ServiceLoadBalancerBgpPeer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpPeers))
             {
                 writer.WritePropertyName("bgpPeers"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FabricPeeringEnabled.HasValue)
+            if (Optional.IsDefined(FabricPeeringEnabled))
             {
                 writer.WritePropertyName("fabricPeeringEnabled"u8);
                 writer.WriteStringValue(FabricPeeringEnabled.Value.ToString());
             }
-            if (!(IPAddressPools is ChangeTrackingList<IPAddressPool> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             IList<BgpAdvertisement> bgpAdvertisements = default;
             IList<ServiceLoadBalancerBgpPeer> bgpPeers = default;
-            Optional<FabricPeeringEnabled> fabricPeeringEnabled = default;
+            FabricPeeringEnabled? fabricPeeringEnabled = default;
             IList<IPAddressPool> ipAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpServiceLoadBalancerConfiguration(bgpAdvertisements ?? new ChangeTrackingList<BgpAdvertisement>(), bgpPeers ?? new ChangeTrackingList<ServiceLoadBalancerBgpPeer>(), Optional.ToNullable(fabricPeeringEnabled), ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
+            return new BgpServiceLoadBalancerConfiguration(bgpAdvertisements ?? new ChangeTrackingList<BgpAdvertisement>(), bgpPeers ?? new ChangeTrackingList<ServiceLoadBalancerBgpPeer>(), fabricPeeringEnabled, ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (RoutingType.HasValue)
+            if (Optional.IsDefined(RoutingType))
             {
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
-            if (ResourceValidation.HasValue)
+            if (Optional.IsDefined(ResourceValidation))
             {
                 writer.WritePropertyName("resourceValidation"u8);
                 writer.WriteStringValue(ResourceValidation.Value.ToString());
             }
-            if (!(AllowedUnauthorizedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActions))
             {
                 writer.WritePropertyName("allowedUnauthorizedActions"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AuthorizationActionMappings is ChangeTrackingList<AuthorizationActionMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizationActionMappings))
             {
                 writer.WritePropertyName("authorizationActionMappings"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedAccessChecks is ChangeTrackingList<LinkedAccessCheck> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedAccessChecks))
             {
                 writer.WritePropertyName("linkedAccessChecks"u8);
                 writer.WriteStartArray();
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultApiVersion != null)
+            if (Optional.IsDefined(DefaultApiVersion))
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (!(LoggingRules is ChangeTrackingList<LoggingRule> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LoggingRules))
             {
                 writer.WritePropertyName("loggingRules"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ThrottlingRules is ChangeTrackingList<ThrottlingRule> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ThrottlingRules))
             {
                 writer.WritePropertyName("throttlingRules"u8);
                 writer.WriteStartArray();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Endpoints is ChangeTrackingList<ResourceProviderEndpoint> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -106,17 +107,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MarketplaceType.HasValue)
+            if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
                 writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
             }
-            if (IdentityManagement != null)
+            if (Optional.IsDefined(IdentityManagement))
             {
                 writer.WritePropertyName("identityManagement"u8);
                 writer.WriteObjectValue(IdentityManagement);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
 #endif
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -138,12 +139,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FeaturesRule != null)
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (!(SubscriptionStateRules is ChangeTrackingList<ProviderSubscriptionStateRule> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
                 writer.WritePropertyName("subscriptionStateRules"u8);
                 writer.WriteStartArray();
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -163,17 +164,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequestHeaderOptions != null)
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (SkuLink != null)
+            if (Optional.IsDefined(SkuLink))
             {
                 writer.WritePropertyName("skuLink"u8);
                 writer.WriteStringValue(SkuLink);
             }
-            if (!(DisallowedActionVerbs is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(DisallowedActionVerbs))
             {
                 writer.WritePropertyName("disallowedActionVerbs"u8);
                 writer.WriteStartArray();
@@ -183,12 +184,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TemplateDeploymentPolicy != null)
+            if (Optional.IsDefined(TemplateDeploymentPolicy))
             {
                 writer.WritePropertyName("templateDeploymentPolicy"u8);
                 writer.WriteObjectValue(TemplateDeploymentPolicy);
             }
-            if (!(ExtendedLocations is ChangeTrackingList<ProviderHubExtendedLocationOptions> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedOperationRules is ChangeTrackingList<LinkedOperationRule> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedOperationRules))
             {
                 writer.WritePropertyName("linkedOperationRules"u8);
                 writer.WriteStartArray();
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceDeletionPolicy.HasValue)
+            if (Optional.IsDefined(ResourceDeletionPolicy))
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
@@ -251,30 +252,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceRoutingType> routingType = default;
-            Optional<ResourceValidation> resourceValidation = default;
+            string name = default;
+            ResourceRoutingType? routingType = default;
+            ResourceValidation? resourceValidation = default;
             IReadOnlyList<string> allowedUnauthorizedActions = default;
             IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
             IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
-            Optional<string> defaultApiVersion = default;
+            string defaultApiVersion = default;
             IReadOnlyList<LoggingRule> loggingRules = default;
             IReadOnlyList<ThrottlingRule> throttlingRules = default;
             IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
-            Optional<MarketplaceType> marketplaceType = default;
-            Optional<IdentityManagement> identityManagement = default;
-            Optional<BinaryData> metadata = default;
+            MarketplaceType? marketplaceType = default;
+            IdentityManagement identityManagement = default;
+            BinaryData metadata = default;
             IReadOnlyList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
+            FeaturesRule featuresRule = default;
             IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Optional<string> skuLink = default;
+            RequestHeaderOptions requestHeaderOptions = default;
+            string skuLink = default;
             IReadOnlyList<string> disallowedActionVerbs = default;
-            Optional<TemplateDeploymentPolicy> templateDeploymentPolicy = default;
+            TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
+            ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -550,30 +551,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProviderResourceType(
-                name.Value,
-                Optional.ToNullable(routingType),
-                Optional.ToNullable(resourceValidation),
+                name,
+                routingType,
+                resourceValidation,
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
                 authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
                 linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
-                defaultApiVersion.Value,
+                defaultApiVersion,
                 loggingRules ?? new ChangeTrackingList<LoggingRule>(),
                 throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
                 endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
-                Optional.ToNullable(marketplaceType),
-                identityManagement.Value,
-                metadata.Value,
+                marketplaceType,
+                identityManagement,
+                metadata,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                featuresRule.Value,
+                featuresRule,
                 subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
                 serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
-                requestHeaderOptions.Value,
-                skuLink.Value,
+                requestHeaderOptions,
+                skuLink,
                 disallowedActionVerbs ?? new ChangeTrackingList<string>(),
-                templateDeploymentPolicy.Value,
+                templateDeploymentPolicy,
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
-                Optional.ToNullable(resourceDeletionPolicy),
+                resourceDeletionPolicy,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NicId != null)
+            if (options.Format != "W" && Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && TargetNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (options.Format != "W" && TestNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && SelectionTypeForFailover.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SelectionTypeForFailover))
             {
                 writer.WritePropertyName("selectionTypeForFailover"u8);
                 writer.WriteStringValue(SelectionTypeForFailover.Value.ToString());
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkName = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<VmNicSelection> selectionTypeForFailover = default;
+            string nicId = default;
+            string macAddress = default;
+            string networkName = default;
+            string targetNetworkId = default;
+            string testNetworkId = default;
+            VmNicSelection? selectionTypeForFailover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HyperVToAzStackHciProtectedNicProperties(
-                nicId.Value,
-                macAddress.Value,
-                networkName.Value,
-                targetNetworkId.Value,
-                testNetworkId.Value,
-                Optional.ToNullable(selectionTypeForFailover),
+                nicId,
+                macAddress,
+                networkName,
+                targetNetworkId,
+                testNetworkId,
+                selectionTypeForFailover,
                 serializedAdditionalRawData);
         }
 

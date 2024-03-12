@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Problem != null)
+            if (Optional.IsDefined(Problem))
             {
                 writer.WritePropertyName("problem"u8);
                 writer.WriteStringValue(Problem);
             }
-            if (Solution != null)
+            if (Optional.IsDefined(Solution))
             {
                 writer.WritePropertyName("solution"u8);
                 writer.WriteStringValue(Solution);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> problem = default;
-            Optional<string> solution = default;
+            string problem = default;
+            string solution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShortDescription(problem.Value, solution.Value, serializedAdditionalRawData);
+            return new ShortDescription(problem, solution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShortDescription>.Write(ModelReaderWriterOptions options)

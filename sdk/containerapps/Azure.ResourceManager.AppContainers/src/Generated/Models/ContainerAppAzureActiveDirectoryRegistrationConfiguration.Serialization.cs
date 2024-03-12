@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (OpenIdIssuer != null)
+            if (Optional.IsDefined(OpenIdIssuer))
             {
                 writer.WritePropertyName("openIdIssuer"u8);
                 writer.WriteStringValue(OpenIdIssuer);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecretSettingName != null)
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (ClientSecretCertificateThumbprint != null)
+            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprint);
             }
-            if (ClientSecretCertificateSubjectAlternativeName != null)
+            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
                 writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName"u8);
                 writer.WriteStringValue(ClientSecretCertificateSubjectAlternativeName);
             }
-            if (ClientSecretCertificateIssuer != null)
+            if (Optional.IsDefined(ClientSecretCertificateIssuer))
             {
                 writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> openIdIssuer = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> clientSecretCertificateSubjectAlternativeName = default;
-            Optional<string> clientSecretCertificateIssuer = default;
+            string openIdIssuer = default;
+            string clientId = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string clientSecretCertificateSubjectAlternativeName = default;
+            string clientSecretCertificateIssuer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +142,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(
-                openIdIssuer.Value,
-                clientId.Value,
-                clientSecretSettingName.Value,
-                clientSecretCertificateThumbprint.Value,
-                clientSecretCertificateSubjectAlternativeName.Value,
-                clientSecretCertificateIssuer.Value,
+                openIdIssuer,
+                clientId,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                clientSecretCertificateSubjectAlternativeName,
+                clientSecretCertificateIssuer,
                 serializedAdditionalRawData);
         }
 

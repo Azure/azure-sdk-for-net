@@ -17,62 +17,62 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("org.opencontainers.image.created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Authors != null)
+            if (Optional.IsDefined(Authors))
             {
                 writer.WritePropertyName("org.opencontainers.image.authors"u8);
                 writer.WriteStringValue(Authors);
             }
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("org.opencontainers.image.url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Documentation != null)
+            if (Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("org.opencontainers.image.documentation"u8);
                 writer.WriteStringValue(Documentation.AbsoluteUri);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("org.opencontainers.image.source"u8);
                 writer.WriteStringValue(Source.AbsoluteUri);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("org.opencontainers.image.version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Revision != null)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("org.opencontainers.image.revision"u8);
                 writer.WriteStringValue(Revision);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("org.opencontainers.image.vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Licenses != null)
+            if (Optional.IsDefined(Licenses))
             {
                 writer.WritePropertyName("org.opencontainers.image.licenses"u8);
                 writer.WriteStringValue(Licenses);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("org.opencontainers.image.ref.name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("org.opencontainers.image.title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("org.opencontainers.image.description"u8);
                 writer.WriteStringValue(Description);
@@ -91,18 +91,18 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
-            Optional<string> orgOpencontainersImageAuthors = default;
-            Optional<Uri> orgOpencontainersImageUrl = default;
-            Optional<Uri> orgOpencontainersImageDocumentation = default;
-            Optional<Uri> orgOpencontainersImageSource = default;
-            Optional<string> orgOpencontainersImageVersion = default;
-            Optional<string> orgOpencontainersImageRevision = default;
-            Optional<string> orgOpencontainersImageVendor = default;
-            Optional<string> orgOpencontainersImageLicenses = default;
-            Optional<string> orgOpencontainersImageRefName = default;
-            Optional<string> orgOpencontainersImageTitle = default;
-            Optional<string> orgOpencontainersImageDescription = default;
+            DateTimeOffset? orgOpencontainersImageCreated = default;
+            string orgOpencontainersImageAuthors = default;
+            Uri orgOpencontainersImageUrl = default;
+            Uri orgOpencontainersImageDocumentation = default;
+            Uri orgOpencontainersImageSource = default;
+            string orgOpencontainersImageVersion = default;
+            string orgOpencontainersImageRevision = default;
+            string orgOpencontainersImageVendor = default;
+            string orgOpencontainersImageLicenses = default;
+            string orgOpencontainersImageRefName = default;
+            string orgOpencontainersImageTitle = default;
+            string orgOpencontainersImageDescription = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -187,18 +187,18 @@ namespace Azure.Containers.ContainerRegistry
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OciAnnotations(
-                Optional.ToNullable(orgOpencontainersImageCreated),
-                orgOpencontainersImageAuthors.Value,
-                orgOpencontainersImageUrl.Value,
-                orgOpencontainersImageDocumentation.Value,
-                orgOpencontainersImageSource.Value,
-                orgOpencontainersImageVersion.Value,
-                orgOpencontainersImageRevision.Value,
-                orgOpencontainersImageVendor.Value,
-                orgOpencontainersImageLicenses.Value,
-                orgOpencontainersImageRefName.Value,
-                orgOpencontainersImageTitle.Value,
-                orgOpencontainersImageDescription.Value,
+                orgOpencontainersImageCreated,
+                orgOpencontainersImageAuthors,
+                orgOpencontainersImageUrl,
+                orgOpencontainersImageDocumentation,
+                orgOpencontainersImageSource,
+                orgOpencontainersImageVersion,
+                orgOpencontainersImageRevision,
+                orgOpencontainersImageVendor,
+                orgOpencontainersImageLicenses,
+                orgOpencontainersImageRefName,
+                orgOpencontainersImageTitle,
+                orgOpencontainersImageDescription,
                 additionalProperties);
         }
     }

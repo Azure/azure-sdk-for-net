@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (PrimaryFabricId != null)
+            if (Optional.IsDefined(PrimaryFabricId))
             {
                 writer.WritePropertyName("primaryFabricId"u8);
                 writer.WriteStringValue(PrimaryFabricId);
             }
-            if (PrimaryFabricFriendlyName != null)
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (RecoveryFabricId != null)
+            if (Optional.IsDefined(RecoveryFabricId))
             {
                 writer.WritePropertyName("recoveryFabricId"u8);
                 writer.WriteStringValue(RecoveryFabricId);
             }
-            if (RecoveryFabricFriendlyName != null)
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (FailoverDeploymentModel != null)
+            if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel);
             }
-            if (!(ReplicationProviders is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicationProviders))
             {
                 writer.WritePropertyName("replicationProviders"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedOperations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedOperations))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -76,37 +77,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastPlannedFailoverOn.HasValue)
+            if (Optional.IsDefined(LastPlannedFailoverOn))
             {
                 writer.WritePropertyName("lastPlannedFailoverTime"u8);
                 writer.WriteStringValue(LastPlannedFailoverOn.Value, "O");
             }
-            if (LastUnplannedFailoverOn.HasValue)
+            if (Optional.IsDefined(LastUnplannedFailoverOn))
             {
                 writer.WritePropertyName("lastUnplannedFailoverTime"u8);
                 writer.WriteStringValue(LastUnplannedFailoverOn.Value, "O");
             }
-            if (LastTestFailoverOn.HasValue)
+            if (Optional.IsDefined(LastTestFailoverOn))
             {
                 writer.WritePropertyName("lastTestFailoverTime"u8);
                 writer.WriteStringValue(LastTestFailoverOn.Value, "O");
             }
-            if (CurrentScenario != null)
+            if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
                 writer.WriteObjectValue(CurrentScenario);
             }
-            if (CurrentScenarioStatus != null)
+            if (Optional.IsDefined(CurrentScenarioStatus))
             {
                 writer.WritePropertyName("currentScenarioStatus"u8);
                 writer.WriteStringValue(CurrentScenarioStatus);
             }
-            if (CurrentScenarioStatusDescription != null)
+            if (Optional.IsDefined(CurrentScenarioStatusDescription))
             {
                 writer.WritePropertyName("currentScenarioStatusDescription"u8);
                 writer.WriteStringValue(CurrentScenarioStatusDescription);
             }
-            if (!(Groups is ChangeTrackingList<SiteRecoveryPlanGroup> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();
@@ -164,20 +165,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> primaryFabricId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryFabricId = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<string> failoverDeploymentModel = default;
+            string friendlyName = default;
+            ResourceIdentifier primaryFabricId = default;
+            string primaryFabricFriendlyName = default;
+            ResourceIdentifier recoveryFabricId = default;
+            string recoveryFabricFriendlyName = default;
+            string failoverDeploymentModel = default;
             IReadOnlyList<string> replicationProviders = default;
             IReadOnlyList<string> allowedOperations = default;
-            Optional<DateTimeOffset> lastPlannedFailoverTime = default;
-            Optional<DateTimeOffset> lastUnplannedFailoverTime = default;
-            Optional<DateTimeOffset> lastTestFailoverTime = default;
-            Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<string> currentScenarioStatus = default;
-            Optional<string> currentScenarioStatusDescription = default;
+            DateTimeOffset? lastPlannedFailoverTime = default;
+            DateTimeOffset? lastUnplannedFailoverTime = default;
+            DateTimeOffset? lastTestFailoverTime = default;
+            CurrentScenarioDetails currentScenario = default;
+            string currentScenarioStatus = default;
+            string currentScenarioStatusDescription = default;
             IReadOnlyList<SiteRecoveryPlanGroup> groups = default;
             IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -331,20 +332,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryRecoveryPlanProperties(
-                friendlyName.Value,
-                primaryFabricId.Value,
-                primaryFabricFriendlyName.Value,
-                recoveryFabricId.Value,
-                recoveryFabricFriendlyName.Value,
-                failoverDeploymentModel.Value,
+                friendlyName,
+                primaryFabricId,
+                primaryFabricFriendlyName,
+                recoveryFabricId,
+                recoveryFabricFriendlyName,
+                failoverDeploymentModel,
                 replicationProviders ?? new ChangeTrackingList<string>(),
                 allowedOperations ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(lastPlannedFailoverTime),
-                Optional.ToNullable(lastUnplannedFailoverTime),
-                Optional.ToNullable(lastTestFailoverTime),
-                currentScenario.Value,
-                currentScenarioStatus.Value,
-                currentScenarioStatusDescription.Value,
+                lastPlannedFailoverTime,
+                lastUnplannedFailoverTime,
+                lastTestFailoverTime,
+                currentScenario,
+                currentScenarioStatus,
+                currentScenarioStatusDescription,
                 groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(),
                 providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(),
                 serializedAdditionalRawData);

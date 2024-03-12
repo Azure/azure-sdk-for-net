@@ -29,34 +29,34 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (NatGateway != null)
+            if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
                 JsonSerializer.Serialize(writer, NatGateway);
             }
-            if (!(ServiceEndpoints is ChangeTrackingList<ServiceEndpointProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceEndpointPolicies is ChangeTrackingList<ServiceEndpointPolicyData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpointPolicies))
             {
                 writer.WritePropertyName("serviceEndpointPolicies"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpoints is ChangeTrackingList<PrivateEndpointData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<NetworkIPConfiguration> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPConfigurationProfiles is ChangeTrackingList<NetworkIPConfigurationProfile> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurationProfiles))
             {
                 writer.WritePropertyName("ipConfigurationProfiles"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPAllocations is ChangeTrackingList<WritableSubResource> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ResourceNavigationLinks is ChangeTrackingList<ResourceNavigationLink> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceNavigationLinks))
             {
                 writer.WritePropertyName("resourceNavigationLinks"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ServiceAssociationLinks is ChangeTrackingList<ServiceAssociationLink> collection7 && collection7.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceAssociationLinks))
             {
                 writer.WritePropertyName("serviceAssociationLinks"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(Delegations is ChangeTrackingList<ServiceDelegation> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(Delegations))
             {
                 writer.WritePropertyName("delegations"u8);
                 writer.WriteStartArray();
@@ -171,27 +171,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Purpose != null)
+            if (options.Format != "W" && Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
                 writer.WriteStringValue(Purpose);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PrivateEndpointNetworkPolicy.HasValue)
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
             }
-            if (PrivateLinkServiceNetworkPolicy.HasValue)
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
             }
-            if (!(ApplicationGatewayIPConfigurations is ChangeTrackingList<ApplicationGatewayIPConfiguration> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
                 writer.WritePropertyName("applicationGatewayIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultOutboundAccess.HasValue)
+            if (Optional.IsDefined(DefaultOutboundAccess))
             {
                 writer.WritePropertyName("defaultOutboundAccess"u8);
                 writer.WriteBooleanValue(DefaultOutboundAccess.Value);
@@ -245,15 +245,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> addressPrefix = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string addressPrefix = default;
             IList<string> addressPrefixes = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<RouteTableData> routeTable = default;
-            Optional<WritableSubResource> natGateway = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            RouteTableData routeTable = default;
+            WritableSubResource natGateway = default;
             IList<ServiceEndpointProperties> serviceEndpoints = default;
             IList<ServiceEndpointPolicyData> serviceEndpointPolicies = default;
             IReadOnlyList<PrivateEndpointData> privateEndpoints = default;
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks = default;
             IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks = default;
             IList<ServiceDelegation> delegations = default;
-            Optional<string> purpose = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
-            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
+            string purpose = default;
+            NetworkProvisioningState? provisioningState = default;
+            VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies = default;
+            VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies = default;
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
-            Optional<bool> defaultOutboundAccess = default;
+            bool? defaultOutboundAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -551,15 +551,15 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SubnetData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                addressPrefix.Value,
+                etag,
+                addressPrefix,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                networkSecurityGroup.Value,
-                routeTable.Value,
+                networkSecurityGroup,
+                routeTable,
                 natGateway,
                 serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
                 serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
@@ -570,12 +570,12 @@ namespace Azure.ResourceManager.Network
                 resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
                 serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
                 delegations ?? new ChangeTrackingList<ServiceDelegation>(),
-                purpose.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(privateEndpointNetworkPolicies),
-                Optional.ToNullable(privateLinkServiceNetworkPolicies),
+                purpose,
+                provisioningState,
+                privateEndpointNetworkPolicies,
+                privateLinkServiceNetworkPolicies,
                 applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
-                Optional.ToNullable(defaultOutboundAccess));
+                defaultOutboundAccess);
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

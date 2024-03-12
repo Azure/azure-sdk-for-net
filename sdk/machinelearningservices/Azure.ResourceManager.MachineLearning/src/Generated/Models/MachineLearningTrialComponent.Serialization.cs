@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CodeId != null)
+            if (Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Distribution != null)
+            if (Optional.IsDefined(Distribution))
             {
                 if (Distribution != null)
                 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
@@ -115,12 +116,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            ResourceIdentifier codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
+            MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
             IDictionary<string, string> environmentVariables = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
+            MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,12 +187,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningTrialComponent(
-                codeId.Value,
+                codeId,
                 command,
-                distribution.Value,
+                distribution,
                 environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                resources.Value,
+                resources,
                 serializedAdditionalRawData);
         }
 

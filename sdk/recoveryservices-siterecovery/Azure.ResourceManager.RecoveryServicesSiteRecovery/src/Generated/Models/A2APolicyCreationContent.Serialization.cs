@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointHistory.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistory))
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
@@ -83,9 +84,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistory = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
+            int? recoveryPointHistory = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
             SetMultiVmSyncStatus multiVmSyncStatus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -138,9 +139,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2APolicyCreationContent(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryPointHistory),
-                Optional.ToNullable(crashConsistentFrequencyInMinutes),
-                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                recoveryPointHistory,
+                crashConsistentFrequencyInMinutes,
+                appConsistentFrequencyInMinutes,
                 multiVmSyncStatus);
         }
 

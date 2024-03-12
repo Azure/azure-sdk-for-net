@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,39 +59,39 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && CloudName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudName))
             {
                 writer.WritePropertyName("cloudName"u8);
                 writer.WriteStringValue(CloudName);
             }
-            if (options.Format != "W" && CloudCapacity != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
                 writer.WriteObjectValue(CloudCapacity);
             }
-            if (options.Format != "W" && !(StorageQoSPolicies is ChangeTrackingList<StorageQoSPolicy> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
                 writer.WritePropertyName("storageQoSPolicies"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudName = default;
-            Optional<CloudCapacity> cloudCapacity = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            string cloudName = default;
+            CloudCapacity cloudCapacity = default;
             IReadOnlyList<StorageQoSPolicy> storageQoSPolicies = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,17 +281,17 @@ namespace Azure.ResourceManager.ArcScVmm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                inventoryItemId.Value,
-                uuid.Value,
-                vmmServerId.Value,
-                cloudName.Value,
-                cloudCapacity.Value,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                cloudName,
+                cloudCapacity,
                 storageQoSPolicies ?? new ChangeTrackingList<StorageQoSPolicy>(),
-                provisioningState.Value,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

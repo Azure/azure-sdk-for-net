@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (RedisPrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState);
             }
-            if (options.Format != "W" && RedisProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RedisProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(RedisProvisioningState.Value.ToString());
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<RedisPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<RedisPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RedisPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

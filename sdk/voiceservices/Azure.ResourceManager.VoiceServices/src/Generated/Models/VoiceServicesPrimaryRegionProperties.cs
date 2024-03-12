@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.VoiceServices;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="operatorAddresses"/> is null. </exception>
         public VoiceServicesPrimaryRegionProperties(IEnumerable<string> operatorAddresses)
         {
-            if (operatorAddresses == null)
-            {
-                throw new ArgumentNullException(nameof(operatorAddresses));
-            }
+            Argument.AssertNotNull(operatorAddresses, nameof(operatorAddresses));
 
             OperatorAddresses = operatorAddresses.ToList();
             EsrpAddresses = new ChangeTrackingList<string>();

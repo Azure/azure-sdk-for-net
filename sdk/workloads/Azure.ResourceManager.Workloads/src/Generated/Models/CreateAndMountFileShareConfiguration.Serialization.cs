@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> resourceGroup = default;
-            Optional<string> storageAccountName = default;
+            string resourceGroup = default;
+            string storageAccountName = default;
             ConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup.Value, storageAccountName.Value);
+            return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup, storageAccountName);
         }
 
         BinaryData IPersistableModel<CreateAndMountFileShareConfiguration>.Write(ModelReaderWriterOptions options)

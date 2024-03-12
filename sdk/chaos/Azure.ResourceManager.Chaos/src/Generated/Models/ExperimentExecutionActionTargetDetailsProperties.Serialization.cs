@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Target != null)
+            if (options.Format != "W" && Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (options.Format != "W" && TargetFailedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetFailedOn))
             {
                 if (TargetFailedOn != null)
                 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     writer.WriteNull("targetFailedTime");
                 }
             }
-            if (options.Format != "W" && TargetCompletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetCompletedOn))
             {
                 if (TargetCompletedOn != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     writer.WriteNull("targetCompletedTime");
                 }
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 if (Error != null)
                 {
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> target = default;
-            Optional<DateTimeOffset?> targetFailedTime = default;
-            Optional<DateTimeOffset?> targetCompletedTime = default;
-            Optional<ExperimentExecutionActionTargetDetailsError> error = default;
+            string status = default;
+            string target = default;
+            DateTimeOffset? targetFailedTime = default;
+            DateTimeOffset? targetCompletedTime = default;
+            ExperimentExecutionActionTargetDetailsError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,11 +167,11 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExperimentExecutionActionTargetDetailsProperties(
-                status.Value,
-                target.Value,
-                Optional.ToNullable(targetFailedTime),
-                Optional.ToNullable(targetCompletedTime),
-                error.Value,
+                status,
+                target,
+                targetFailedTime,
+                targetCompletedTime,
+                error,
                 serializedAdditionalRawData);
         }
 

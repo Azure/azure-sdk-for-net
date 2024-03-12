@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (AllowedPrincipals != null)
+            if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedApplications))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAllowedPrincipals> allowedPrincipals = default;
+            ContainerAppAllowedPrincipals allowedPrincipals = default;
             IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals.Value, allowedApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals, allowedApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDefaultAuthorizationPolicy>.Write(ModelReaderWriterOptions options)

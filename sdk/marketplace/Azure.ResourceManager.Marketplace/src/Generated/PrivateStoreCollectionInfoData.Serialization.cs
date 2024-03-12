@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CollectionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId.Value);
             }
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (Claim != null)
+            if (Optional.IsDefined(Claim))
             {
                 writer.WritePropertyName("claim"u8);
                 writer.WriteStringValue(Claim);
             }
-            if (AreAllSubscriptionsSelected.HasValue)
+            if (Optional.IsDefined(AreAllSubscriptionsSelected))
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
-            if (options.Format != "W" && AreAllItemsApproved.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AreAllItemsApproved))
             {
                 writer.WritePropertyName("approveAllItems"u8);
                 writer.WriteBooleanValue(AreAllItemsApproved.Value);
             }
-            if (options.Format != "W" && ApproveAllItemsModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApproveAllItemsModifiedOn))
             {
                 writer.WritePropertyName("approveAllItemsModifiedAt"u8);
                 writer.WriteStringValue(ApproveAllItemsModifiedOn.Value, "O");
             }
-            if (!(SubscriptionsList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionsList))
             {
                 writer.WritePropertyName("subscriptionsList"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && NumberOfOffers.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfOffers))
             {
                 writer.WritePropertyName("numberOfOffers"u8);
                 writer.WriteNumberValue(NumberOfOffers.Value);
             }
-            if (options.Format != "W" && !(AppliedRules is ChangeTrackingList<MarketplaceRule> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedRules))
             {
                 writer.WritePropertyName("appliedRules"u8);
                 writer.WriteStartArray();
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> collectionId = default;
-            Optional<string> collectionName = default;
-            Optional<string> claim = default;
-            Optional<bool> allSubscriptions = default;
-            Optional<bool> approveAllItems = default;
-            Optional<DateTimeOffset> approveAllItemsModifiedAt = default;
+            SystemData systemData = default;
+            Guid? collectionId = default;
+            string collectionName = default;
+            string claim = default;
+            bool? allSubscriptions = default;
+            bool? approveAllItems = default;
+            DateTimeOffset? approveAllItemsModifiedAt = default;
             IList<string> subscriptionsList = default;
-            Optional<bool> enabled = default;
-            Optional<long> numberOfOffers = default;
+            bool? enabled = default;
+            long? numberOfOffers = default;
             IReadOnlyList<MarketplaceRule> appliedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -305,16 +305,16 @@ namespace Azure.ResourceManager.Marketplace
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(collectionId),
-                collectionName.Value,
-                claim.Value,
-                Optional.ToNullable(allSubscriptions),
-                Optional.ToNullable(approveAllItems),
-                Optional.ToNullable(approveAllItemsModifiedAt),
+                systemData,
+                collectionId,
+                collectionName,
+                claim,
+                allSubscriptions,
+                approveAllItems,
+                approveAllItemsModifiedAt,
                 subscriptionsList ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(numberOfOffers),
+                enabled,
+                numberOfOffers,
                 appliedRules ?? new ChangeTrackingList<MarketplaceRule>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (EndpointId.HasValue)
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteNumberValue(EndpointId.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> endpointId = default;
+            ResourceIdentifier resourceId = default;
+            int? endpointId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapEndpoint(resourceId.Value, Optional.ToNullable(endpointId), serializedAdditionalRawData);
+            return new TrafficManagerHeatMapEndpoint(resourceId, endpointId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapEndpoint>.Write(ModelReaderWriterOptions options)

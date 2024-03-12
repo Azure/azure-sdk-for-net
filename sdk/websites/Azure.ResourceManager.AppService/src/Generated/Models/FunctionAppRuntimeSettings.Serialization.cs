@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuntimeVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (options.Format != "W" && IsRemoteDebuggingSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRemoteDebuggingSupported))
             {
                 writer.WritePropertyName("remoteDebuggingSupported"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingSupported.Value);
             }
-            if (options.Format != "W" && AppInsightsSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
                 writer.WriteObjectValue(AppInsightsSettings);
             }
-            if (options.Format != "W" && GitHubActionSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
                 writer.WriteObjectValue(GitHubActionSettings);
             }
-            if (options.Format != "W" && !(AppSettingsDictionary is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppSettingsDictionary))
             {
                 writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
@@ -57,12 +58,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && SiteConfigPropertiesDictionary != null)
+            if (options.Format != "W" && Optional.IsDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteObjectValue(SiteConfigPropertiesDictionary);
             }
-            if (options.Format != "W" && !(SupportedFunctionsExtensionVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
             {
                 writer.WritePropertyName("supportedFunctionsExtensionVersions"u8);
                 writer.WriteStartArray();
@@ -72,37 +73,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsPreview.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && IsDeprecated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && EndOfLifeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (options.Format != "W" && IsAutoUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
             {
                 writer.WritePropertyName("isAutoUpdate"u8);
                 writer.WriteBooleanValue(IsAutoUpdate.Value);
             }
-            if (options.Format != "W" && IsEarlyAccess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
             {
                 writer.WritePropertyName("isEarlyAccess"u8);
                 writer.WriteBooleanValue(IsEarlyAccess.Value);
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
@@ -145,20 +146,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<bool> remoteDebuggingSupported = default;
-            Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
-            Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
+            string runtimeVersion = default;
+            bool? remoteDebuggingSupported = default;
+            AppInsightsWebAppStackSettings appInsightsSettings = default;
+            GitHubActionWebAppStackSettings gitHubActionSettings = default;
             IReadOnlyDictionary<string, string> appSettingsDictionary = default;
-            Optional<SiteConfigPropertiesDictionary> siteConfigPropertiesDictionary = default;
+            SiteConfigPropertiesDictionary siteConfigPropertiesDictionary = default;
             IReadOnlyList<string> supportedFunctionsExtensionVersions = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
-            Optional<bool> isDefault = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,20 +303,20 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FunctionAppRuntimeSettings(
-                runtimeVersion.Value,
-                Optional.ToNullable(remoteDebuggingSupported),
-                appInsightsSettings.Value,
-                gitHubActionSettings.Value,
+                runtimeVersion,
+                remoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
                 appSettingsDictionary ?? new ChangeTrackingDictionary<string, string>(),
-                siteConfigPropertiesDictionary.Value,
+                siteConfigPropertiesDictionary,
                 supportedFunctionsExtensionVersions ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isPreview),
-                Optional.ToNullable(isDeprecated),
-                Optional.ToNullable(isHidden),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(isAutoUpdate),
-                Optional.ToNullable(isEarlyAccess),
-                Optional.ToNullable(isDefault),
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
+                isDefault,
                 serializedAdditionalRawData);
         }
 

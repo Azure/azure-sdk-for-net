@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (LoadBalancerName != null)
+            if (Optional.IsDefined(LoadBalancerName))
             {
                 writer.WritePropertyName("loadBalancerName"u8);
                 writer.WriteStringValue(LoadBalancerName);
             }
-            if (!(FrontendIPConfigurationNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurationNames))
             {
                 writer.WritePropertyName("frontendIpConfigurationNames"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackendPoolNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendPoolNames))
             {
                 writer.WritePropertyName("backendPoolNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HealthProbeNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthProbeNames))
             {
                 writer.WritePropertyName("healthProbeNames"u8);
                 writer.WriteStartArray();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> loadBalancerName = default;
+            string loadBalancerName = default;
             IList<string> frontendIPConfigurationNames = default;
             IList<string> backendPoolNames = default;
             IList<string> healthProbeNames = default;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerResourceNames(loadBalancerName.Value, frontendIPConfigurationNames ?? new ChangeTrackingList<string>(), backendPoolNames ?? new ChangeTrackingList<string>(), healthProbeNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new LoadBalancerResourceNames(loadBalancerName, frontendIPConfigurationNames ?? new ChangeTrackingList<string>(), backendPoolNames ?? new ChangeTrackingList<string>(), healthProbeNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerResourceNames>.Write(ModelReaderWriterOptions options)

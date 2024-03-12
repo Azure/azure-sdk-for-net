@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (InstanceFlexibility.HasValue)
+            if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsInstanceFlexibility> instanceFlexibility = default;
+            BillingBenefitsInstanceFlexibility? instanceFlexibility = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationOrderAliasResponsePropertiesReservedResourceProperties(Optional.ToNullable(instanceFlexibility), serializedAdditionalRawData);
+            return new ReservationOrderAliasResponsePropertiesReservedResourceProperties(instanceFlexibility, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderAliasResponsePropertiesReservedResourceProperties>.Write(ModelReaderWriterOptions options)

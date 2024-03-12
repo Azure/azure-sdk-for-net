@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (StatusId.HasValue)
+            if (Optional.IsDefined(StatusId))
             {
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DetectorInsightStatus> statusId = default;
+            string message = default;
+            DetectorInsightStatus? statusId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceStatusInfo(message.Value, Optional.ToNullable(statusId), serializedAdditionalRawData);
+            return new AppServiceStatusInfo(message, statusId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceStatusInfo>.Write(ModelReaderWriterOptions options)

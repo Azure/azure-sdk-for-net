@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (ValidateOnly.HasValue)
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MoverResourceInputType.HasValue)
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<bool> validateOnly = default;
+            bool? validateOnly = default;
             IList<ResourceIdentifier> moveResources = default;
-            Optional<MoverResourceInputType> moveResourceInputType = default;
+            MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceMoveContent(Optional.ToNullable(validateOnly), moveResources, Optional.ToNullable(moveResourceInputType), serializedAdditionalRawData);
+            return new MoverResourceMoveContent(validateOnly, moveResources, moveResourceInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceMoveContent>.Write(ModelReaderWriterOptions options)

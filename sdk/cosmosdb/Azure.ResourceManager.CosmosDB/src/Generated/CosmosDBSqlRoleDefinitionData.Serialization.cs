@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RoleName != null)
+            if (Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (RoleDefinitionType.HasValue)
+            if (Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
-            if (!(AssignableScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (!(Permissions is ChangeTrackingList<CosmosDBSqlRolePermission> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<CosmosDBSqlRoleDefinitionType> type0 = default;
+            SystemData systemData = default;
+            string roleName = default;
+            CosmosDBSqlRoleDefinitionType? type0 = default;
             IList<string> assignableScopes = default;
             IList<CosmosDBSqlRolePermission> permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
-                roleName.Value,
-                Optional.ToNullable(type0),
+                systemData,
+                roleName,
+                type0,
                 assignableScopes ?? new ChangeTrackingList<string>(),
                 permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(),
                 serializedAdditionalRawData);

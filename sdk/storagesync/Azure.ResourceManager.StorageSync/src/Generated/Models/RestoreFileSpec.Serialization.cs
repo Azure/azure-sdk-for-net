@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (IsDirectory.HasValue)
+            if (Optional.IsDefined(IsDirectory))
             {
                 writer.WritePropertyName("isdir"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<bool> isdir = default;
+            string path = default;
+            bool? isdir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreFileSpec(path.Value, Optional.ToNullable(isdir), serializedAdditionalRawData);
+            return new RestoreFileSpec(path, isdir, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreFileSpec>.Write(ModelReaderWriterOptions options)

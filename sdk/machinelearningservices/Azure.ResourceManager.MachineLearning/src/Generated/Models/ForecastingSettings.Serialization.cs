@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CountryOrRegionForHolidays != null)
+            if (Optional.IsDefined(CountryOrRegionForHolidays))
             {
                 if (CountryOrRegionForHolidays != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("countryOrRegionForHolidays");
                 }
             }
-            if (CvStepSize.HasValue)
+            if (Optional.IsDefined(CvStepSize))
             {
                 if (CvStepSize != null)
                 {
@@ -50,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvStepSize");
                 }
             }
-            if (FeatureLags.HasValue)
+            if (Optional.IsDefined(FeatureLags))
             {
                 writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
-            if (!(FeaturesUnknownAtForecastTime is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FeaturesUnknownAtForecastTime))
             {
                 if (FeaturesUnknownAtForecastTime != null)
                 {
@@ -72,12 +73,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featuresUnknownAtForecastTime");
                 }
             }
-            if (ForecastHorizon != null)
+            if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
                 writer.WriteObjectValue(ForecastHorizon);
             }
-            if (Frequency != null)
+            if (Optional.IsDefined(Frequency))
             {
                 if (Frequency != null)
                 {
@@ -89,22 +90,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("frequency");
                 }
             }
-            if (Seasonality != null)
+            if (Optional.IsDefined(Seasonality))
             {
                 writer.WritePropertyName("seasonality"u8);
                 writer.WriteObjectValue(Seasonality);
             }
-            if (ShortSeriesHandlingConfig.HasValue)
+            if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
                 writer.WritePropertyName("shortSeriesHandlingConfig"u8);
                 writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
             }
-            if (TargetAggregateFunction.HasValue)
+            if (Optional.IsDefined(TargetAggregateFunction))
             {
                 writer.WritePropertyName("targetAggregateFunction"u8);
                 writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
-            if (TargetLags != null)
+            if (Optional.IsDefined(TargetLags))
             {
                 if (TargetLags != null)
                 {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetLags");
                 }
             }
-            if (TargetRollingWindowSize != null)
+            if (Optional.IsDefined(TargetRollingWindowSize))
             {
                 if (TargetRollingWindowSize != null)
                 {
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetRollingWindowSize");
                 }
             }
-            if (TimeColumnName != null)
+            if (Optional.IsDefined(TimeColumnName))
             {
                 if (TimeColumnName != null)
                 {
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeColumnName");
                 }
             }
-            if (!(TimeSeriesIdColumnNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
                 if (TimeSeriesIdColumnNames != null)
                 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeSeriesIdColumnNames");
                 }
             }
-            if (UseStl.HasValue)
+            if (Optional.IsDefined(UseStl))
             {
                 writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());
@@ -200,20 +201,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> countryOrRegionForHolidays = default;
-            Optional<int?> cvStepSize = default;
-            Optional<MachineLearningFeatureLag> featureLags = default;
+            string countryOrRegionForHolidays = default;
+            int? cvStepSize = default;
+            MachineLearningFeatureLag? featureLags = default;
             IList<string> featuresUnknownAtForecastTime = default;
-            Optional<ForecastHorizon> forecastHorizon = default;
-            Optional<string> frequency = default;
-            Optional<ForecastingSeasonality> seasonality = default;
-            Optional<MachineLearningShortSeriesHandlingConfiguration> shortSeriesHandlingConfig = default;
-            Optional<TargetAggregationFunction> targetAggregateFunction = default;
-            Optional<TargetLags> targetLags = default;
-            Optional<TargetRollingWindowSize> targetRollingWindowSize = default;
-            Optional<string> timeColumnName = default;
+            ForecastHorizon forecastHorizon = default;
+            string frequency = default;
+            ForecastingSeasonality seasonality = default;
+            MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
+            TargetAggregationFunction? targetAggregateFunction = default;
+            TargetLags targetLags = default;
+            TargetRollingWindowSize targetRollingWindowSize = default;
+            string timeColumnName = default;
             IList<string> timeSeriesIdColumnNames = default;
-            Optional<MachineLearningUseStl> useStl = default;
+            MachineLearningUseStl? useStl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -369,20 +370,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ForecastingSettings(
-                countryOrRegionForHolidays.Value,
-                Optional.ToNullable(cvStepSize),
-                Optional.ToNullable(featureLags),
+                countryOrRegionForHolidays,
+                cvStepSize,
+                featureLags,
                 featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(),
-                forecastHorizon.Value,
-                frequency.Value,
-                seasonality.Value,
-                Optional.ToNullable(shortSeriesHandlingConfig),
-                Optional.ToNullable(targetAggregateFunction),
-                targetLags.Value,
-                targetRollingWindowSize.Value,
-                timeColumnName.Value,
+                forecastHorizon,
+                frequency,
+                seasonality,
+                shortSeriesHandlingConfig,
+                targetAggregateFunction,
+                targetLags,
+                targetRollingWindowSize,
+                timeColumnName,
                 timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(useStl),
+                useStl,
                 serializedAdditionalRawData);
         }
 

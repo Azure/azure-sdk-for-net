@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (UnHealthyVmCount.HasValue)
+            if (Optional.IsDefined(UnHealthyVmCount))
             {
                 writer.WritePropertyName("unHealthyVmCount"u8);
                 writer.WriteNumberValue(UnHealthyVmCount.Value);
             }
-            if (UnHealthyProviderCount.HasValue)
+            if (Optional.IsDefined(UnHealthyProviderCount))
             {
                 writer.WritePropertyName("unHealthyProviderCount"u8);
                 writer.WriteNumberValue(UnHealthyProviderCount.Value);
             }
-            if (EventsCount.HasValue)
+            if (Optional.IsDefined(EventsCount))
             {
                 writer.WritePropertyName("eventsCount"u8);
                 writer.WriteNumberValue(EventsCount.Value);
             }
-            if (DeprecatedProviderCount.HasValue)
+            if (Optional.IsDefined(DeprecatedProviderCount))
             {
                 writer.WritePropertyName("deprecatedProviderCount"u8);
                 writer.WriteNumberValue(DeprecatedProviderCount.Value);
             }
-            if (SupportedProviderCount.HasValue)
+            if (Optional.IsDefined(SupportedProviderCount))
             {
                 writer.WritePropertyName("supportedProviderCount"u8);
                 writer.WriteNumberValue(SupportedProviderCount.Value);
             }
-            if (UnsupportedProviderCount.HasValue)
+            if (Optional.IsDefined(UnsupportedProviderCount))
             {
                 writer.WritePropertyName("unsupportedProviderCount"u8);
                 writer.WriteNumberValue(UnsupportedProviderCount.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<int> unHealthyVmCount = default;
-            Optional<int> unHealthyProviderCount = default;
-            Optional<int> eventsCount = default;
-            Optional<int> deprecatedProviderCount = default;
-            Optional<int> supportedProviderCount = default;
-            Optional<int> unsupportedProviderCount = default;
+            int? unHealthyVmCount = default;
+            int? unHealthyProviderCount = default;
+            int? eventsCount = default;
+            int? deprecatedProviderCount = default;
+            int? supportedProviderCount = default;
+            int? unsupportedProviderCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VaultMonitoringSummary(
-                Optional.ToNullable(unHealthyVmCount),
-                Optional.ToNullable(unHealthyProviderCount),
-                Optional.ToNullable(eventsCount),
-                Optional.ToNullable(deprecatedProviderCount),
-                Optional.ToNullable(supportedProviderCount),
-                Optional.ToNullable(unsupportedProviderCount),
+                unHealthyVmCount,
+                unHealthyProviderCount,
+                eventsCount,
+                deprecatedProviderCount,
+                supportedProviderCount,
+                unsupportedProviderCount,
                 serializedAdditionalRawData);
         }
 

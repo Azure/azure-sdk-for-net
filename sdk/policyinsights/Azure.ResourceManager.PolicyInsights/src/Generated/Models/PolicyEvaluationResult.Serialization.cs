@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
                 writer.WriteObjectValue(PolicyInfo);
             }
-            if (options.Format != "W" && EvaluationResult != null)
+            if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
                 writer.WritePropertyName("evaluationResult"u8);
                 writer.WriteStringValue(EvaluationResult);
             }
-            if (options.Format != "W" && EvaluationDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
                 writer.WriteObjectValue(EvaluationDetails);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyReference> policyInfo = default;
-            Optional<string> evaluationResult = default;
-            Optional<PolicyEvaluationDetails> evaluationDetails = default;
+            PolicyReference policyInfo = default;
+            string evaluationResult = default;
+            PolicyEvaluationDetails evaluationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEvaluationResult(policyInfo.Value, evaluationResult.Value, evaluationDetails.Value, serializedAdditionalRawData);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationResult>.Write(ModelReaderWriterOptions options)

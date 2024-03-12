@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<EventGridPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -94,47 +94,47 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (EventTypeInfo != null)
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (MinimumTlsVersionAllowed.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (InputSchema.HasValue)
+            if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (InputSchemaMapping != null)
+            if (Optional.IsDefined(InputSchemaMapping))
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
                 writer.WriteObjectValue(InputSchemaMapping);
             }
-            if (options.Format != "W" && MetricResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
                 writer.WritePropertyName("metricResourceId"u8);
                 writer.WriteStringValue(MetricResourceId);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (DataResidencyBoundary.HasValue)
+            if (Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
@@ -193,28 +193,28 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ResourceSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceKind> kind = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            ResourceSku sku = default;
+            ManagedServiceIdentity identity = default;
+            ResourceKind? kind = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<EventGridTopicProvisioningState> provisioningState = default;
-            Optional<Uri> endpoint = default;
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<EventGridInputSchema> inputSchema = default;
-            Optional<EventGridInputSchemaMapping> inputSchemaMapping = default;
-            Optional<string> metricResourceId = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            EventGridTopicProvisioningState? provisioningState = default;
+            Uri endpoint = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            EventGridInputSchema? inputSchema = default;
+            EventGridInputSchemaMapping inputSchemaMapping = default;
+            string metricResourceId = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<DataResidencyBoundary> dataResidencyBoundary = default;
+            bool? disableLocalAuth = default;
+            DataResidencyBoundary? dataResidencyBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -434,25 +434,25 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
+                sku,
                 identity,
-                Optional.ToNullable(kind),
+                kind,
                 extendedLocation,
                 privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
-                Optional.ToNullable(provisioningState),
-                endpoint.Value,
-                eventTypeInfo.Value,
-                Optional.ToNullable(minimumTlsVersionAllowed),
-                Optional.ToNullable(inputSchema),
-                inputSchemaMapping.Value,
-                metricResourceId.Value,
-                Optional.ToNullable(publicNetworkAccess),
+                provisioningState,
+                endpoint,
+                eventTypeInfo,
+                minimumTlsVersionAllowed,
+                inputSchema,
+                inputSchemaMapping,
+                metricResourceId,
+                publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(dataResidencyBoundary),
+                disableLocalAuth,
+                dataResidencyBoundary,
                 serializedAdditionalRawData);
         }
 

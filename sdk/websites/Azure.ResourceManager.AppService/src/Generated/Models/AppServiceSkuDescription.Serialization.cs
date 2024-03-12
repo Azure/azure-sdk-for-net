@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (SkuCapacity != null)
+            if (Optional.IsDefined(SkuCapacity))
             {
                 writer.WritePropertyName("skuCapacity"u8);
                 writer.WriteObjectValue(SkuCapacity);
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Capabilities is ChangeTrackingList<AppServiceSkuCapability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -114,12 +115,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
+            AppServiceSkuCapacity skuCapacity = default;
             IList<AzureLocation> locations = default;
             IList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,12 +200,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceSkuDescription(
-                name.Value,
-                tier.Value,
-                size.Value,
-                family.Value,
-                Optional.ToNullable(capacity),
-                skuCapacity.Value,
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                skuCapacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
                 serializedAdditionalRawData);

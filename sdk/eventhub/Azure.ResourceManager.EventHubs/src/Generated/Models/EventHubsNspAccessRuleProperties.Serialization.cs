@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subscriptions is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkSecurityPerimeters is ChangeTrackingList<EventHubsNetworkSecurityPerimeter> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkSecurityPerimeters))
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(FullyQualifiedDomainNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FullyQualifiedDomainNames))
             {
                 writer.WritePropertyName("fullyQualifiedDomainNames"u8);
                 writer.WriteStartArray();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsNspAccessRuleDirection> direction = default;
+            EventHubsNspAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
             IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubsNspAccessRuleProperties(
-                Optional.ToNullable(direction),
+                direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(),

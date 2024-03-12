@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && LastExecutionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastExecutionOn))
             {
                 writer.WritePropertyName("lastExecutionTime"u8);
                 writer.WriteStringValue(LastExecutionOn.Value, "O");
             }
-            if (options.Format != "W" && NextExecutionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextExecutionOn))
             {
                 writer.WritePropertyName("nextExecutionTime"u8);
                 writer.WriteStringValue(NextExecutionOn.Value, "O");
             }
-            if (options.Format != "W" && Recurrence != null)
+            if (options.Format != "W" && Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
-            if (options.Format != "W" && Workflow != null)
+            if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowTriggerProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<DateTimeOffset> lastExecutionTime = default;
-            Optional<DateTimeOffset> nextExecutionTime = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
-            Optional<LogicResourceReference> workflow = default;
+            SystemData systemData = default;
+            LogicWorkflowTriggerProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            LogicWorkflowStatus? status = default;
+            DateTimeOffset? lastExecutionTime = default;
+            DateTimeOffset? nextExecutionTime = default;
+            LogicWorkflowTriggerRecurrence recurrence = default;
+            LogicResourceReference workflow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,16 +278,16 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                Optional.ToNullable(state),
-                Optional.ToNullable(status),
-                Optional.ToNullable(lastExecutionTime),
-                Optional.ToNullable(nextExecutionTime),
-                recurrence.Value,
-                workflow.Value,
+                systemData,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                status,
+                lastExecutionTime,
+                nextExecutionTime,
+                recurrence,
+                workflow,
                 serializedAdditionalRawData);
         }
 

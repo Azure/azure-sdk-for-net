@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (SuspensionStartOn.HasValue)
+            if (Optional.IsDefined(SuspensionStartOn))
             {
                 writer.WritePropertyName("suspensionStartDate"u8);
                 writer.WriteStringValue(SuspensionStartOn.Value, "O");
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> suspensionStartDate = default;
+            DateTimeOffset? suspensionStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuspensionDetails(Optional.ToNullable(suspensionStartDate), serializedAdditionalRawData);
+            return new SuspensionDetails(suspensionStartDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuspensionDetails>.Write(ModelReaderWriterOptions options)

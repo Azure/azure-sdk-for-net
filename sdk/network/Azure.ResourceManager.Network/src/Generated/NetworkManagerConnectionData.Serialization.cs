@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,24 +49,24 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NetworkManagerId != null)
+            if (Optional.IsDefined(NetworkManagerId))
             {
                 writer.WritePropertyName("networkManagerId"u8);
                 writer.WriteStringValue(NetworkManagerId);
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> networkManagerId = default;
-            Optional<ScopeConnectionState> connectionState = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            ResourceIdentifier networkManagerId = default;
+            ScopeConnectionState? connectionState = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
-                networkManagerId.Value,
-                Optional.ToNullable(connectionState),
-                description.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                networkManagerId,
+                connectionState,
+                description,
+                etag,
                 serializedAdditionalRawData);
         }
 

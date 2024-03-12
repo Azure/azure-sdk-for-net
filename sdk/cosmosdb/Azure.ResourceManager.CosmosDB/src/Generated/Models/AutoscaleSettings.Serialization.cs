@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (MaxThroughput.HasValue)
+            if (Optional.IsDefined(MaxThroughput))
             {
                 writer.WritePropertyName("maxThroughput"u8);
                 writer.WriteNumberValue(MaxThroughput.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> maxThroughput = default;
+            int? maxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettings(Optional.ToNullable(maxThroughput), serializedAdditionalRawData);
+            return new AutoscaleSettings(maxThroughput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettings>.Write(ModelReaderWriterOptions options)

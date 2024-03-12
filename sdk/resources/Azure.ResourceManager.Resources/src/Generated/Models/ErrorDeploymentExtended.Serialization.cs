@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DeploymentType.HasValue)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<ErrorDeploymentType> type = default;
-            Optional<string> deploymentName = default;
+            string provisioningState = default;
+            ErrorDeploymentType? type = default;
+            string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value, serializedAdditionalRawData);
+            return new ErrorDeploymentExtended(provisioningState, type, deploymentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDeploymentExtended>.Write(ModelReaderWriterOptions options)

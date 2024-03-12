@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (NoSquashNidLists != null)
+            if (Optional.IsDefined(NoSquashNidLists))
             {
                 writer.WritePropertyName("noSquashNidLists"u8);
                 writer.WriteStringValue(NoSquashNidLists);
             }
-            if (SquashUID.HasValue)
+            if (Optional.IsDefined(SquashUID))
             {
                 writer.WritePropertyName("squashUID"u8);
                 writer.WriteNumberValue(SquashUID.Value);
             }
-            if (SquashGID.HasValue)
+            if (Optional.IsDefined(SquashGID))
             {
                 writer.WritePropertyName("squashGID"u8);
                 writer.WriteNumberValue(SquashGID.Value);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemSquashMode> mode = default;
-            Optional<string> noSquashNidLists = default;
-            Optional<long> squashUID = default;
-            Optional<long> squashGID = default;
-            Optional<string> status = default;
+            AmlFileSystemSquashMode? mode = default;
+            string noSquashNidLists = default;
+            long? squashUID = default;
+            long? squashGID = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AmlFileSystemRootSquashSettings(
-                Optional.ToNullable(mode),
-                noSquashNidLists.Value,
-                Optional.ToNullable(squashUID),
-                Optional.ToNullable(squashGID),
-                status.Value,
+                mode,
+                noSquashNidLists,
+                squashUID,
+                squashGID,
+                status,
                 serializedAdditionalRawData);
         }
 

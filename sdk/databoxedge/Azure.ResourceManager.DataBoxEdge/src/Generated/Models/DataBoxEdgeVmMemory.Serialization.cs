@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (StartupMemoryInMB.HasValue)
+            if (Optional.IsDefined(StartupMemoryInMB))
             {
                 writer.WritePropertyName("startupMemoryMB"u8);
                 writer.WriteNumberValue(StartupMemoryInMB.Value);
             }
-            if (CurrentMemoryUsageInMB.HasValue)
+            if (Optional.IsDefined(CurrentMemoryUsageInMB))
             {
                 writer.WritePropertyName("currentMemoryUsageMB"u8);
                 writer.WriteNumberValue(CurrentMemoryUsageInMB.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<long> startupMemoryMB = default;
-            Optional<long> currentMemoryUsageMB = default;
+            long? startupMemoryMB = default;
+            long? currentMemoryUsageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB), serializedAdditionalRawData);
+            return new DataBoxEdgeVmMemory(startupMemoryMB, currentMemoryUsageMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeVmMemory>.Write(ModelReaderWriterOptions options)

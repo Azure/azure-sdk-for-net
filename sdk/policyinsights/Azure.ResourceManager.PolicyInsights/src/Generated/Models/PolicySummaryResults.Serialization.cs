@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (QueryResultsUri != null)
+            if (Optional.IsDefined(QueryResultsUri))
             {
                 writer.WritePropertyName("queryResultsUri"u8);
                 writer.WriteStringValue(QueryResultsUri.AbsoluteUri);
             }
-            if (NonCompliantResources.HasValue)
+            if (Optional.IsDefined(NonCompliantResources))
             {
                 writer.WritePropertyName("nonCompliantResources"u8);
                 writer.WriteNumberValue(NonCompliantResources.Value);
             }
-            if (NonCompliantPolicies.HasValue)
+            if (Optional.IsDefined(NonCompliantPolicies))
             {
                 writer.WritePropertyName("nonCompliantPolicies"u8);
                 writer.WriteNumberValue(NonCompliantPolicies.Value);
             }
-            if (!(ResourceDetails is ChangeTrackingList<ComplianceDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyDetails is ChangeTrackingList<ComplianceDetail> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyGroupDetails is ChangeTrackingList<ComplianceDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyGroupDetails))
             {
                 writer.WritePropertyName("policyGroupDetails"u8);
                 writer.WriteStartArray();
@@ -109,9 +110,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<Uri> queryResultsUri = default;
-            Optional<int> nonCompliantResources = default;
-            Optional<int> nonCompliantPolicies = default;
+            Uri queryResultsUri = default;
+            int? nonCompliantResources = default;
+            int? nonCompliantPolicies = default;
             IReadOnlyList<ComplianceDetail> resourceDetails = default;
             IReadOnlyList<ComplianceDetail> policyDetails = default;
             IReadOnlyList<ComplianceDetail> policyGroupDetails = default;
@@ -195,9 +196,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicySummaryResults(
-                queryResultsUri.Value,
-                Optional.ToNullable(nonCompliantResources),
-                Optional.ToNullable(nonCompliantPolicies),
+                queryResultsUri,
+                nonCompliantResources,
+                nonCompliantPolicies,
                 resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(),
                 policyDetails ?? new ChangeTrackingList<ComplianceDetail>(),
                 policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(),

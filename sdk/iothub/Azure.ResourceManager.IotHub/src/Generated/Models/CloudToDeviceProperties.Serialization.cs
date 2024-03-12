@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (DefaultTtlAsIso8601.HasValue)
+            if (Optional.IsDefined(DefaultTtlAsIso8601))
             {
                 writer.WritePropertyName("defaultTtlAsIso8601"u8);
                 writer.WriteStringValue(DefaultTtlAsIso8601.Value, "P");
             }
-            if (Feedback != null)
+            if (Optional.IsDefined(Feedback))
             {
                 writer.WritePropertyName("feedback"u8);
                 writer.WriteObjectValue(Feedback);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryCount = default;
-            Optional<TimeSpan> defaultTtlAsIso8601 = default;
-            Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
+            int? maxDeliveryCount = default;
+            TimeSpan? defaultTtlAsIso8601 = default;
+            CloudToDeviceFeedbackQueueProperties feedback = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudToDeviceProperties(Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(defaultTtlAsIso8601), feedback.Value, serializedAdditionalRawData);
+            return new CloudToDeviceProperties(maxDeliveryCount, defaultTtlAsIso8601, feedback, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudToDeviceProperties>.Write(ModelReaderWriterOptions options)

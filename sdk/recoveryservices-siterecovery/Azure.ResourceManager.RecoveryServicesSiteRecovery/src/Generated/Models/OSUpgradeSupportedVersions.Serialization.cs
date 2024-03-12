@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportedSourceOSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedSourceOSVersion))
             {
                 writer.WritePropertyName("supportedSourceOsVersion"u8);
                 writer.WriteStringValue(SupportedSourceOSVersion);
             }
-            if (options.Format != "W" && !(SupportedTargetOSVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedTargetOSVersions))
             {
                 writer.WritePropertyName("supportedTargetOsVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> supportedSourceOSVersion = default;
+            string supportedSourceOSVersion = default;
             IReadOnlyList<string> supportedTargetOSVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSUpgradeSupportedVersions(supportedSourceOSVersion.Value, supportedTargetOSVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OSUpgradeSupportedVersions(supportedSourceOSVersion, supportedTargetOSVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSUpgradeSupportedVersions>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -53,18 +54,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackId"/>, <paramref name="rackSerialNumber"/> or <paramref name="rackSkuId"/> is null. </exception>
         public NetworkCloudRackDefinition(ResourceIdentifier networkRackId, string rackSerialNumber, ResourceIdentifier rackSkuId)
         {
-            if (networkRackId == null)
-            {
-                throw new ArgumentNullException(nameof(networkRackId));
-            }
-            if (rackSerialNumber == null)
-            {
-                throw new ArgumentNullException(nameof(rackSerialNumber));
-            }
-            if (rackSkuId == null)
-            {
-                throw new ArgumentNullException(nameof(rackSkuId));
-            }
+            Argument.AssertNotNull(networkRackId, nameof(networkRackId));
+            Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
+            Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
 
             BareMetalMachineConfigurationData = new ChangeTrackingList<BareMetalMachineConfiguration>();
             NetworkRackId = networkRackId;

@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (DetectedLanguage != null)
+            if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage);
@@ -77,7 +77,7 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<DetectedLanguage> detectedLanguage = default;
+            DetectedLanguage detectedLanguage = default;
             IReadOnlyList<int> sentLen = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BreakSentenceItem(detectedLanguage.Value, sentLen, serializedAdditionalRawData);
+            return new BreakSentenceItem(detectedLanguage, sentLen, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BreakSentenceItem>.Write(ModelReaderWriterOptions options)

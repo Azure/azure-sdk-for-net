@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Attribute.ToString());
             writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
-            if (FilterValue != null)
+            if (Optional.IsDefined(FilterValue))
             {
                 writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
-            Optional<string> filterValue = default;
+            string filterValue = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelectVideoTrackByAttribute(odataType, serializedAdditionalRawData, attribute, filter, filterValue.Value);
+            return new SelectVideoTrackByAttribute(odataType, serializedAdditionalRawData, attribute, filter, filterValue);
         }
 
         BinaryData IPersistableModel<SelectVideoTrackByAttribute>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AppPackageUri != null)
+            if (Optional.IsDefined(AppPackageUri))
             {
                 writer.WritePropertyName("appPackageUrl"u8);
                 writer.WriteStringValue(AppPackageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && !(DefaultParameterList is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultParameterList))
             {
                 writer.WritePropertyName("defaultParameterList"u8);
                 writer.WriteStartObject();
@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<Uri> appPackageUrl = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            Uri appPackageUrl = default;
             IReadOnlyDictionary<string, string> defaultParameterList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.ServiceFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
-                appPackageUrl.Value,
+                provisioningState,
+                appPackageUrl,
                 defaultParameterList ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

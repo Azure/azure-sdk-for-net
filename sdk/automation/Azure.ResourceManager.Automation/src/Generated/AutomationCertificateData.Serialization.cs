@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && IsExportable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsExportable))
             {
                 writer.WritePropertyName("isExportable"u8);
                 writer.WriteBooleanValue(IsExportable.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<bool> isExportable = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryTime = default;
+            bool? isExportable = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                thumbprint.Value,
-                Optional.ToNullable(expiryTime),
-                Optional.ToNullable(isExportable),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
+                systemData,
+                thumbprint,
+                expiryTime,
+                isExportable,
+                creationTime,
+                lastModifiedTime,
+                description,
                 serializedAdditionalRawData);
         }
 

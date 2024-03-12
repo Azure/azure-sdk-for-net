@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,42 +28,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (RowCount != null)
+            if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
                 JsonSerializer.Serialize(writer, RowCount);
             }
-            if (RowSkips != null)
+            if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
                 JsonSerializer.Serialize(writer, RowSkips);
             }
-            if (RfcTableFields != null)
+            if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
                 JsonSerializer.Serialize(writer, RfcTableFields);
             }
-            if (RfcTableOptions != null)
+            if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
                 JsonSerializer.Serialize(writer, RfcTableOptions);
             }
-            if (BatchSize != null)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 JsonSerializer.Serialize(writer, BatchSize);
             }
-            if (CustomRfcReadTableFunctionModule != null)
+            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
                 JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
             }
-            if (SapDataColumnDelimiter != null)
+            if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
                 JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
             }
-            if (PartitionOption != null)
+            if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
 #if NET6_0_OR_GREATER
@@ -74,17 +75,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (PartitionSettings != null)
+            if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -98,22 +99,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -153,22 +154,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> rowCount = default;
-            Optional<DataFactoryElement<int>> rowSkips = default;
-            Optional<DataFactoryElement<string>> rfcTableFields = default;
-            Optional<DataFactoryElement<string>> rfcTableOptions = default;
-            Optional<DataFactoryElement<int>> batchSize = default;
-            Optional<DataFactoryElement<string>> customRfcReadTableFunctionModule = default;
-            Optional<DataFactoryElement<string>> sapDataColumnDelimiter = default;
-            Optional<BinaryData> partitionOption = default;
-            Optional<SapTablePartitionSettings> partitionSettings = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<int> rowCount = default;
+            DataFactoryElement<int> rowSkips = default;
+            DataFactoryElement<string> rfcTableFields = default;
+            DataFactoryElement<string> rfcTableOptions = default;
+            DataFactoryElement<int> batchSize = default;
+            DataFactoryElement<string> customRfcReadTableFunctionModule = default;
+            DataFactoryElement<string> sapDataColumnDelimiter = default;
+            BinaryData partitionOption = default;
+            SapTablePartitionSettings partitionSettings = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,22 +319,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SapTableSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                queryTimeout.Value,
-                additionalColumns.Value,
-                rowCount.Value,
-                rowSkips.Value,
-                rfcTableFields.Value,
-                rfcTableOptions.Value,
-                batchSize.Value,
-                customRfcReadTableFunctionModule.Value,
-                sapDataColumnDelimiter.Value,
-                partitionOption.Value,
-                partitionSettings.Value);
+                queryTimeout,
+                additionalColumns,
+                rowCount,
+                rowSkips,
+                rfcTableFields,
+                rfcTableOptions,
+                batchSize,
+                customRfcReadTableFunctionModule,
+                sapDataColumnDelimiter,
+                partitionOption,
+                partitionSettings);
         }
 
         BinaryData IPersistableModel<SapTableSource>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && BiosId != null)
+            if (options.Format != "W" && Optional.IsDefined(BiosId))
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
             }
-            if (options.Format != "W" && FabricObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && ClientAuthenticationType != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientAuthenticationType))
             {
                 writer.WritePropertyName("clientAuthenticationType"u8);
                 writer.WriteStringValue(ClientAuthenticationType);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && LastHeartbeatReceivedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fqdn = default;
-            Optional<string> clientAuthenticationType = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
+            string id = default;
+            string name = default;
+            string biosId = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fqdn = default;
+            string clientAuthenticationType = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            SiteRecoveryProtectionHealth? health = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -211,15 +212,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RcmProxyDetails(
-                id.Value,
-                name.Value,
-                biosId.Value,
-                fabricObjectId.Value,
-                fqdn.Value,
-                clientAuthenticationType.Value,
-                version.Value,
-                Optional.ToNullable(lastHeartbeatUtc),
-                Optional.ToNullable(health),
+                id,
+                name,
+                biosId,
+                fabricObjectId,
+                fqdn,
+                clientAuthenticationType,
+                version,
+                lastHeartbeatUtc,
+                health,
                 healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
                 serializedAdditionalRawData);
         }

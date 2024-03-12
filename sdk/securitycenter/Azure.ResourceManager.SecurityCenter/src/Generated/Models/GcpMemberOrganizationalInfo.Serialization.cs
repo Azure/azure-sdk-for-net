@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ParentHierarchyId != null)
+            if (Optional.IsDefined(ParentHierarchyId))
             {
                 writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
             }
-            if (ManagementProjectNumber != null)
+            if (Optional.IsDefined(ManagementProjectNumber))
             {
                 writer.WritePropertyName("managementProjectNumber"u8);
                 writer.WriteStringValue(ManagementProjectNumber);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> parentHierarchyId = default;
-            Optional<string> managementProjectNumber = default;
+            string parentHierarchyId = default;
+            string managementProjectNumber = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpMemberOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId.Value, managementProjectNumber.Value);
+            return new GcpMemberOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId, managementProjectNumber);
         }
 
         BinaryData IPersistableModel<GcpMemberOrganizationalInfo>.Write(ModelReaderWriterOptions options)

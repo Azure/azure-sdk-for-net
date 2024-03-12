@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Conditions is ChangeTrackingList<AlertProcessingRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -105,10 +106,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             IList<string> scopes = default;
             IList<AlertProcessingRuleCondition> conditions = default;
-            Optional<AlertProcessingRuleSchedule> schedule = default;
+            AlertProcessingRuleSchedule schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            string description = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +180,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertProcessingRuleProperties(
                 scopes,
                 conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
-                schedule.Value,
+                schedule,
                 actions,
-                description.Value,
-                Optional.ToNullable(enabled),
+                description,
+                enabled,
                 serializedAdditionalRawData);
         }
 

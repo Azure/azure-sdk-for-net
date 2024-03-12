@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Publishers is ChangeTrackingList<PublisherInformation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Publishers))
             {
                 writer.WritePropertyName("publishers"u8);
                 writer.WriteStartArray();
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
             IList<PublisherInformation> publishers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 publishers ?? new ChangeTrackingList<PublisherInformation>(),
                 serializedAdditionalRawData);
         }

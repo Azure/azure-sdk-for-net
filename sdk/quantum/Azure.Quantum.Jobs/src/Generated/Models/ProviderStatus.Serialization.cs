@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ProviderAvailability> currentAvailability = default;
+            string id = default;
+            ProviderAvailability? currentAvailability = default;
             IReadOnlyList<TargetStatus> targets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new ProviderStatus(id.Value, Optional.ToNullable(currentAvailability), targets ?? new ChangeTrackingList<TargetStatus>());
+            return new ProviderStatus(id, currentAvailability, targets ?? new ChangeTrackingList<TargetStatus>());
         }
     }
 }

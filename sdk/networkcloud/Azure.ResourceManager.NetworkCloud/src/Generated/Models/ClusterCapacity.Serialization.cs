@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AvailableApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableApplianceStorageGB))
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
                 writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
             }
-            if (AvailableCoreCount.HasValue)
+            if (Optional.IsDefined(AvailableCoreCount))
             {
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (AvailableHostStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableHostStorageGB))
             {
                 writer.WritePropertyName("availableHostStorageGB"u8);
                 writer.WriteNumberValue(AvailableHostStorageGB.Value);
             }
-            if (AvailableMemoryGB.HasValue)
+            if (Optional.IsDefined(AvailableMemoryGB))
             {
                 writer.WritePropertyName("availableMemoryGB"u8);
                 writer.WriteNumberValue(AvailableMemoryGB.Value);
             }
-            if (TotalApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(TotalApplianceStorageGB))
             {
                 writer.WritePropertyName("totalApplianceStorageGB"u8);
                 writer.WriteNumberValue(TotalApplianceStorageGB.Value);
             }
-            if (TotalCoreCount.HasValue)
+            if (Optional.IsDefined(TotalCoreCount))
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (TotalHostStorageGB.HasValue)
+            if (Optional.IsDefined(TotalHostStorageGB))
             {
                 writer.WritePropertyName("totalHostStorageGB"u8);
                 writer.WriteNumberValue(TotalHostStorageGB.Value);
             }
-            if (TotalMemoryGB.HasValue)
+            if (Optional.IsDefined(TotalMemoryGB))
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> availableApplianceStorageGB = default;
-            Optional<long> availableCoreCount = default;
-            Optional<long> availableHostStorageGB = default;
-            Optional<long> availableMemoryGB = default;
-            Optional<long> totalApplianceStorageGB = default;
-            Optional<long> totalCoreCount = default;
-            Optional<long> totalHostStorageGB = default;
-            Optional<long> totalMemoryGB = default;
+            long? availableApplianceStorageGB = default;
+            long? availableCoreCount = default;
+            long? availableHostStorageGB = default;
+            long? availableMemoryGB = default;
+            long? totalApplianceStorageGB = default;
+            long? totalCoreCount = default;
+            long? totalHostStorageGB = default;
+            long? totalMemoryGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterCapacity(
-                Optional.ToNullable(availableApplianceStorageGB),
-                Optional.ToNullable(availableCoreCount),
-                Optional.ToNullable(availableHostStorageGB),
-                Optional.ToNullable(availableMemoryGB),
-                Optional.ToNullable(totalApplianceStorageGB),
-                Optional.ToNullable(totalCoreCount),
-                Optional.ToNullable(totalHostStorageGB),
-                Optional.ToNullable(totalMemoryGB),
+                availableApplianceStorageGB,
+                availableCoreCount,
+                availableHostStorageGB,
+                availableMemoryGB,
+                totalApplianceStorageGB,
+                totalCoreCount,
+                totalHostStorageGB,
+                totalMemoryGB,
                 serializedAdditionalRawData);
         }
 

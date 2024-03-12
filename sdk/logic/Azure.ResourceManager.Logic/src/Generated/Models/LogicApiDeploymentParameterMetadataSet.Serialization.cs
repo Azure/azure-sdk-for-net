@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (PackageContentLink != null)
+            if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
                 writer.WriteObjectValue(PackageContentLink);
             }
-            if (RedisCacheConnectionString != null)
+            if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
                 writer.WriteObjectValue(RedisCacheConnectionString);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
-            Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
+            LogicApiDeploymentParameterMetadata packageContentLink = default;
+            LogicApiDeploymentParameterMetadata redisCacheConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadataSet(packageContentLink.Value, redisCacheConnectionString.Value, serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadataSet>.Write(ModelReaderWriterOptions options)

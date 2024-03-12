@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,54 +61,54 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (ImagePath != null)
+            if (Optional.IsDefined(ImagePath))
             {
                 writer.WritePropertyName("imagePath"u8);
                 writer.WriteStringValue(ImagePath);
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (CloudInitDataSource.HasValue)
+            if (Optional.IsDefined(CloudInitDataSource))
             {
                 writer.WritePropertyName("cloudInitDataSource"u8);
                 writer.WriteStringValue(CloudInitDataSource.Value.ToString());
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> containerId = default;
-            Optional<string> imagePath = default;
-            Optional<OperatingSystemType> osType = default;
-            Optional<CloudInitDataSource> cloudInitDataSource = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<GalleryImageVersion> version = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<GalleryImageStatus> status = default;
+            SystemData systemData = default;
+            ResourceIdentifier containerId = default;
+            string imagePath = default;
+            OperatingSystemType? osType = default;
+            CloudInitDataSource? cloudInitDataSource = default;
+            HyperVGeneration? hyperVGeneration = default;
+            GalleryImageIdentifier identifier = default;
+            GalleryImageVersion version = default;
+            ProvisioningStateEnum? provisioningState = default;
+            GalleryImageStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,19 +323,19 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                containerId.Value,
-                imagePath.Value,
-                Optional.ToNullable(osType),
-                Optional.ToNullable(cloudInitDataSource),
-                Optional.ToNullable(hyperVGeneration),
-                identifier.Value,
-                version.Value,
-                Optional.ToNullable(provisioningState),
-                status.Value,
+                extendedLocation,
+                containerId,
+                imagePath,
+                osType,
+                cloudInitDataSource,
+                hyperVGeneration,
+                identifier,
+                version,
+                provisioningState,
+                status,
                 serializedAdditionalRawData);
         }
 

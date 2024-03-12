@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceName != null)
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (!(NetworkIntentPolicyConfigurations is ChangeTrackingList<NetworkIntentPolicyConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
             {
                 writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
+            string serviceName = default;
             IList<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrepareNetworkPoliciesContent(serviceName.Value, networkIntentPolicyConfigurations ?? new ChangeTrackingList<NetworkIntentPolicyConfiguration>(), serializedAdditionalRawData);
+            return new PrepareNetworkPoliciesContent(serviceName, networkIntentPolicyConfigurations ?? new ChangeTrackingList<NetworkIntentPolicyConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrepareNetworkPoliciesContent>.Write(ModelReaderWriterOptions options)

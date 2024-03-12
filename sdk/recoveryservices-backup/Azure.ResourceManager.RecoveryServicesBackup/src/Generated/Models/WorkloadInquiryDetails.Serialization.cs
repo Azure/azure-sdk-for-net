@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (WorkloadInquiryDetailsType != null)
+            if (Optional.IsDefined(WorkloadInquiryDetailsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkloadInquiryDetailsType);
             }
-            if (ItemCount.HasValue)
+            if (Optional.IsDefined(ItemCount))
             {
                 writer.WritePropertyName("itemCount"u8);
                 writer.WriteNumberValue(ItemCount.Value);
             }
-            if (InquiryValidation != null)
+            if (Optional.IsDefined(InquiryValidation))
             {
                 writer.WritePropertyName("inquiryValidation"u8);
                 writer.WriteObjectValue(InquiryValidation);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<long> itemCount = default;
-            Optional<InquiryValidation> inquiryValidation = default;
+            string type = default;
+            long? itemCount = default;
+            InquiryValidation inquiryValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadInquiryDetails(type.Value, Optional.ToNullable(itemCount), inquiryValidation.Value, serializedAdditionalRawData);
+            return new WorkloadInquiryDetails(type, itemCount, inquiryValidation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadInquiryDetails>.Write(ModelReaderWriterOptions options)

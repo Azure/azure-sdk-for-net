@@ -29,19 +29,19 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (ClinicalType.HasValue)
+            if (Optional.IsDefined(ClinicalType))
             {
                 writer.WritePropertyName("clinicalType"u8);
                 writer.WriteStringValue(ClinicalType.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (CreatedDateTime.HasValue)
+            if (Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
@@ -87,10 +87,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             DocumentType type = default;
-            Optional<ClinicalDocumentType> clinicalType = default;
+            ClinicalDocumentType? clinicalType = default;
             string id = default;
-            Optional<string> language = default;
-            Optional<DateTimeOffset> createdDateTime = default;
+            string language = default;
+            DateTimeOffset? createdDateTime = default;
             DocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,10 +142,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PatientDocument(
                 type,
-                Optional.ToNullable(clinicalType),
+                clinicalType,
                 id,
-                language.Value,
-                Optional.ToNullable(createdDateTime),
+                language,
+                createdDateTime,
                 content,
                 serializedAdditionalRawData);
         }

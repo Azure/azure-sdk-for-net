@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MonitoringModelType modelType = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
+            MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PredictionDriftMonitoringSignal(
-                Optional.ToNullable(mode),
+                mode,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,

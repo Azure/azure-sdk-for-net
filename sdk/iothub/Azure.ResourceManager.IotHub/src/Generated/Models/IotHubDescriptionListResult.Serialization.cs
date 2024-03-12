@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<IotHubDescriptionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IReadOnlyList<IotHubDescriptionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubDescriptionListResult(value ?? new ChangeTrackingList<IotHubDescriptionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubDescriptionListResult(value ?? new ChangeTrackingList<IotHubDescriptionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubDescriptionListResult>.Write(ModelReaderWriterOptions options)

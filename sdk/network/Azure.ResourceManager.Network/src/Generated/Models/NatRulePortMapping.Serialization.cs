@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (InboundNatRuleName != null)
+            if (Optional.IsDefined(InboundNatRuleName))
             {
                 writer.WritePropertyName("inboundNatRuleName"u8);
                 writer.WriteStringValue(InboundNatRuleName);
             }
-            if (FrontendPort.HasValue)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (BackendPort.HasValue)
+            if (Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> inboundNatRuleName = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
+            string inboundNatRuleName = default;
+            int? frontendPort = default;
+            int? backendPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
+            return new NatRulePortMapping(inboundNatRuleName, frontendPort, backendPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NatRulePortMapping>.Write(ModelReaderWriterOptions options)

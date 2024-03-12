@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (PrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(PrimaryFabricLocation))
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (VmProtectionState != null)
+            if (Optional.IsDefined(VmProtectionState))
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (VmProtectionStateDescription != null)
+            if (Optional.IsDefined(VmProtectionStateDescription))
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (LifecycleId != null)
+            if (Optional.IsDefined(LifecycleId))
             {
                 writer.WritePropertyName("lifecycleId"u8);
                 writer.WriteStringValue(LifecycleId);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<string> osType = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<string> lifecycleId = default;
+            ResourceIdentifier fabricObjectId = default;
+            AzureLocation? primaryFabricLocation = default;
+            string osType = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            string lifecycleId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2ACrossClusterMigrationReplicationDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                fabricObjectId.Value,
-                Optional.ToNullable(primaryFabricLocation),
-                osType.Value,
-                vmProtectionState.Value,
-                vmProtectionStateDescription.Value,
-                lifecycleId.Value);
+                fabricObjectId,
+                primaryFabricLocation,
+                osType,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                lifecycleId);
         }
 
         BinaryData IPersistableModel<A2ACrossClusterMigrationReplicationDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && PercentProgress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentProgress))
             {
                 writer.WritePropertyName("percentProgress"u8);
                 writer.WriteNumberValue(PercentProgress.Value);
             }
-            if (options.Format != "W" && DownloadedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DownloadedBytes))
             {
                 writer.WritePropertyName("downloadedBytes"u8);
                 writer.WriteNumberValue(DownloadedBytes.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<DateTimeOffset> startedTimestamp = default;
-            Optional<int> percentProgress = default;
-            Optional<long> downloadedBytes = default;
+            DateTimeOffset? timestamp = default;
+            DateTimeOffset? startedTimestamp = default;
+            int? percentProgress = default;
+            long? downloadedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointBackgroundDataDownloadActivity(Optional.ToNullable(timestamp), Optional.ToNullable(startedTimestamp), Optional.ToNullable(percentProgress), Optional.ToNullable(downloadedBytes), serializedAdditionalRawData);
+            return new ServerEndpointBackgroundDataDownloadActivity(timestamp, startedTimestamp, percentProgress, downloadedBytes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointBackgroundDataDownloadActivity>.Write(ModelReaderWriterOptions options)

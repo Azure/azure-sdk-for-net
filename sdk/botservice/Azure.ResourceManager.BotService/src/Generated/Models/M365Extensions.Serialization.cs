@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new M365Extensions(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new M365Extensions(channelName, etag, provisioningState, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<M365Extensions>.Write(ModelReaderWriterOptions options)

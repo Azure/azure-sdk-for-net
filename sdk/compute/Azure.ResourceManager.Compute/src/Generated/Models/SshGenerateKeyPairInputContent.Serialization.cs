@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SshEncryptionType> encryptionType = default;
+            SshEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshGenerateKeyPairInputContent(Optional.ToNullable(encryptionType), serializedAdditionalRawData);
+            return new SshGenerateKeyPairInputContent(encryptionType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshGenerateKeyPairInputContent>.Write(ModelReaderWriterOptions options)

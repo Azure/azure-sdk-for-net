@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ETag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStartObject();
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<MyWorkbookManagedIdentity> identity = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
+            MyWorkbookManagedIdentity identity = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,11 +191,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MyWorkbookResourceContent(
-                identity.Value,
-                id.Value,
-                name.Value,
-                type.Value,
-                Optional.ToNullable(location),
+                identity,
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

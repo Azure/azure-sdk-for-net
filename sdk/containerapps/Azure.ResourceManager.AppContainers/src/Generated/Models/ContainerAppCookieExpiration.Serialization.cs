@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Convention.HasValue)
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (TimeToExpiration != null)
+            if (Optional.IsDefined(TimeToExpiration))
             {
                 writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCookieExpirationConvention> convention = default;
-            Optional<string> timeToExpiration = default;
+            ContainerAppCookieExpirationConvention? convention = default;
+            string timeToExpiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value, serializedAdditionalRawData);
+            return new ContainerAppCookieExpiration(convention, timeToExpiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCookieExpiration>.Write(ModelReaderWriterOptions options)

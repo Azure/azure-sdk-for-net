@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (AzureFile != null)
+            if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAzureFileProperties> azureFile = default;
+            ContainerAppAzureFileProperties azureFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedEnvironmentStorageProperties(azureFile.Value, serializedAdditionalRawData);
+            return new ManagedEnvironmentStorageProperties(azureFile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedEnvironmentStorageProperties>.Write(ModelReaderWriterOptions options)

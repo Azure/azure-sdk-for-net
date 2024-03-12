@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,18 +22,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         public HDInsightMapReduceActivity(string name, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (className == null)
-            {
-                throw new ArgumentNullException(nameof(className));
-            }
-            if (jarFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(jarFilePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(className, nameof(className));
+            Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
             StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();

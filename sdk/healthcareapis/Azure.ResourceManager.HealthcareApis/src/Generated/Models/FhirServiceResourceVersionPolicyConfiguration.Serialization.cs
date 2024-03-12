@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default.Value.ToString());
             }
-            if (!(ResourceTypeOverrides is ChangeTrackingDictionary<string, FhirResourceVersionPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeOverrides))
             {
                 writer.WritePropertyName("resourceTypeOverrides"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<FhirResourceVersionPolicy> @default = default;
+            FhirResourceVersionPolicy? @default = default;
             IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceResourceVersionPolicyConfiguration(Optional.ToNullable(@default), resourceTypeOverrides ?? new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>(), serializedAdditionalRawData);
+            return new FhirServiceResourceVersionPolicyConfiguration(@default, resourceTypeOverrides ?? new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Write(ModelReaderWriterOptions options)

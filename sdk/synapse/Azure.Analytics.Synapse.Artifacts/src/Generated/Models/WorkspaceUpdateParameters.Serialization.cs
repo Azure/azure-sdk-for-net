@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -45,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<WorkspaceIdentity> identity = default;
+            WorkspaceIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -72,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceUpdateParameters(tags ?? new ChangeTrackingDictionary<string, string>(), identity.Value);
+            return new WorkspaceUpdateParameters(tags ?? new ChangeTrackingDictionary<string, string>(), identity);
         }
 
         internal partial class WorkspaceUpdateParametersConverter : JsonConverter<WorkspaceUpdateParameters>

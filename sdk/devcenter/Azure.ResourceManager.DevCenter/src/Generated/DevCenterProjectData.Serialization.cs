@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DevCenterId != null)
+            if (Optional.IsDefined(DevCenterId))
             {
                 writer.WritePropertyName("devCenterId"u8);
                 writer.WriteStringValue(DevCenterId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (MaxDevBoxesPerUser.HasValue)
+            if (Optional.IsDefined(MaxDevBoxesPerUser))
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DevCenterUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DevCenterUri))
             {
                 writer.WritePropertyName("devCenterUri"u8);
                 writer.WriteStringValue(DevCenterUri.AbsoluteUri);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<Uri> devCenterUri = default;
+            SystemData systemData = default;
+            ResourceIdentifier devCenterId = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
+            DevCenterProvisioningState? provisioningState = default;
+            Uri devCenterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                devCenterId.Value,
-                description.Value,
-                Optional.ToNullable(maxDevBoxesPerUser),
-                Optional.ToNullable(provisioningState),
-                devCenterUri.Value,
+                devCenterId,
+                description,
+                maxDevBoxesPerUser,
+                provisioningState,
+                devCenterUri,
                 serializedAdditionalRawData);
         }
 

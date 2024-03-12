@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteBooleanValue(ConsiderWarningAsError);
             writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
             writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications);
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             bool considerWarningAsError = default;
             int maxPercentUnhealthyDeployedApplications = default;
-            Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy.Value, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
+            return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)

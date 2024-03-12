@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,72 +27,72 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && CdcInsertCounter != null)
+            if (options.Format != "W" && Optional.IsDefined(CdcInsertCounter))
             {
                 writer.WritePropertyName("cdcInsertCounter"u8);
                 writer.WriteStringValue(CdcInsertCounter);
             }
-            if (options.Format != "W" && CdcUpdateCounter != null)
+            if (options.Format != "W" && Optional.IsDefined(CdcUpdateCounter))
             {
                 writer.WritePropertyName("cdcUpdateCounter"u8);
                 writer.WriteStringValue(CdcUpdateCounter);
             }
-            if (options.Format != "W" && CdcDeleteCounter != null)
+            if (options.Format != "W" && Optional.IsDefined(CdcDeleteCounter))
             {
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteStringValue(CdcDeleteCounter);
             }
-            if (options.Format != "W" && FullLoadEstFinishOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishOn))
             {
                 writer.WritePropertyName("fullLoadEstFinishTime"u8);
                 writer.WriteStringValue(FullLoadEstFinishOn.Value, "O");
             }
-            if (options.Format != "W" && FullLoadStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadStartedOn))
             {
                 writer.WritePropertyName("fullLoadStartedOn"u8);
                 writer.WriteStringValue(FullLoadStartedOn.Value, "O");
             }
-            if (options.Format != "W" && FullLoadEndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEndedOn))
             {
                 writer.WritePropertyName("fullLoadEndedOn"u8);
                 writer.WriteStringValue(FullLoadEndedOn.Value, "O");
             }
-            if (options.Format != "W" && FullLoadTotalRows.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadTotalRows))
             {
                 writer.WritePropertyName("fullLoadTotalRows"u8);
                 writer.WriteNumberValue(FullLoadTotalRows.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && TotalChangesApplied.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalChangesApplied))
             {
                 writer.WritePropertyName("totalChangesApplied"u8);
                 writer.WriteNumberValue(TotalChangesApplied.Value);
             }
-            if (options.Format != "W" && DataErrorsCounter.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataErrorsCounter))
             {
                 writer.WritePropertyName("dataErrorsCounter"u8);
                 writer.WriteNumberValue(DataErrorsCounter.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -136,20 +137,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> databaseName = default;
-            Optional<string> cdcInsertCounter = default;
-            Optional<string> cdcUpdateCounter = default;
-            Optional<string> cdcDeleteCounter = default;
-            Optional<DateTimeOffset> fullLoadEstFinishTime = default;
-            Optional<DateTimeOffset> fullLoadStartedOn = default;
-            Optional<DateTimeOffset> fullLoadEndedOn = default;
-            Optional<long> fullLoadTotalRows = default;
-            Optional<SyncTableMigrationState> state = default;
-            Optional<long> totalChangesApplied = default;
-            Optional<long> dataErrorsCounter = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> id = default;
+            string tableName = default;
+            string databaseName = default;
+            string cdcInsertCounter = default;
+            string cdcUpdateCounter = default;
+            string cdcDeleteCounter = default;
+            DateTimeOffset? fullLoadEstFinishTime = default;
+            DateTimeOffset? fullLoadStartedOn = default;
+            DateTimeOffset? fullLoadEndedOn = default;
+            long? fullLoadTotalRows = default;
+            SyncTableMigrationState? state = default;
+            long? totalChangesApplied = default;
+            long? dataErrorsCounter = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -269,22 +270,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                tableName.Value,
-                databaseName.Value,
-                cdcInsertCounter.Value,
-                cdcUpdateCounter.Value,
-                cdcDeleteCounter.Value,
-                Optional.ToNullable(fullLoadEstFinishTime),
-                Optional.ToNullable(fullLoadStartedOn),
-                Optional.ToNullable(fullLoadEndedOn),
-                Optional.ToNullable(fullLoadTotalRows),
-                Optional.ToNullable(state),
-                Optional.ToNullable(totalChangesApplied),
-                Optional.ToNullable(dataErrorsCounter),
-                Optional.ToNullable(lastModifiedTime));
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishTime,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedTime);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

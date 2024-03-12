@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaces is ChangeTrackingList<VirtualMachineNetworkInterfaceReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkApiVersion.HasValue)
+            if (Optional.IsDefined(NetworkApiVersion))
             {
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
-            if (!(NetworkInterfaceConfigurations is ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
-            Optional<NetworkApiVersion> networkApiVersion = default;
+            NetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), Optional.ToNullable(networkApiVersion), networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), serializedAdditionalRawData);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkProfile>.Write(ModelReaderWriterOptions options)

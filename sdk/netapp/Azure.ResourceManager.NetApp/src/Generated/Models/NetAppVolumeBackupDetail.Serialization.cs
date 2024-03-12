@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (VolumeName != null)
+            if (Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (BackupsCount.HasValue)
+            if (Optional.IsDefined(BackupsCount))
             {
                 writer.WritePropertyName("backupsCount"u8);
                 writer.WriteNumberValue(BackupsCount.Value);
             }
-            if (IsPolicyEnabled.HasValue)
+            if (Optional.IsDefined(IsPolicyEnabled))
             {
                 writer.WritePropertyName("policyEnabled"u8);
                 writer.WriteBooleanValue(IsPolicyEnabled.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> volumeName = default;
-            Optional<int> backupsCount = default;
-            Optional<bool> policyEnabled = default;
+            string volumeName = default;
+            int? backupsCount = default;
+            bool? policyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupDetail(volumeName.Value, Optional.ToNullable(backupsCount), Optional.ToNullable(policyEnabled), serializedAdditionalRawData);
+            return new NetAppVolumeBackupDetail(volumeName, backupsCount, policyEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupDetail>.Write(ModelReaderWriterOptions options)

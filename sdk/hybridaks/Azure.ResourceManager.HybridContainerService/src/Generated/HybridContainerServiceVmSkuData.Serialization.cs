@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Values is ChangeTrackingList<HybridContainerServiceVmSkuProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
+            HybridContainerServiceExtendedLocation extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             IList<HybridContainerServiceVmSkuProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.HybridContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
-                extendedLocation.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                extendedLocation,
+                provisioningState,
                 values ?? new ChangeTrackingList<HybridContainerServiceVmSkuProperties>(),
                 serializedAdditionalRawData);
         }

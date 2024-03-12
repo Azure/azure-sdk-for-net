@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (MetadataPath != null)
+            if (Optional.IsDefined(MetadataPath))
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> metadataPath = default;
+            string metadataPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetSsisObjectMetadataContent(metadataPath.Value, serializedAdditionalRawData);
+            return new GetSsisObjectMetadataContent(metadataPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetSsisObjectMetadataContent>.Write(ModelReaderWriterOptions options)

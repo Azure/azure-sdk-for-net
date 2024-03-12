@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DataLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Communication
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> dataLocation = default;
-            Optional<string> username = default;
-            Optional<string> displayName = default;
-            Optional<CommunicationServiceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string dataLocation = default;
+            string username = default;
+            string displayName = default;
+            CommunicationServiceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Communication
                 id,
                 name,
                 type,
-                systemData.Value,
-                dataLocation.Value,
-                username.Value,
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                dataLocation,
+                username,
+                displayName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

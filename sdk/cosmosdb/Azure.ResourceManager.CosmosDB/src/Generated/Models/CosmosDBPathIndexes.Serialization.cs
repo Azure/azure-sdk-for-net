@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (DataType.HasValue)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (Precision.HasValue)
+            if (Optional.IsDefined(Precision))
             {
                 writer.WritePropertyName("precision"u8);
                 writer.WriteNumberValue(Precision.Value);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBDataType> dataType = default;
-            Optional<int> precision = default;
-            Optional<CosmosDBIndexKind> kind = default;
+            CosmosDBDataType? dataType = default;
+            int? precision = default;
+            CosmosDBIndexKind? kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBPathIndexes(Optional.ToNullable(dataType), Optional.ToNullable(precision), Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new CosmosDBPathIndexes(dataType, precision, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBPathIndexes>.Write(ModelReaderWriterOptions options)

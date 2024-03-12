@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(CommonNames is ChangeTrackingList<ClusterServerCertificateCommonName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CommonNames))
             {
                 writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (X509StoreName.HasValue)
+            if (Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             IList<ClusterServerCertificateCommonName> commonNames = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            ClusterCertificateStoreName? x509StoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServerCertificateCommonNames(commonNames ?? new ChangeTrackingList<ClusterServerCertificateCommonName>(), Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
+            return new ClusterServerCertificateCommonNames(commonNames ?? new ChangeTrackingList<ClusterServerCertificateCommonName>(), x509StoreName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServerCertificateCommonNames>.Write(ModelReaderWriterOptions options)

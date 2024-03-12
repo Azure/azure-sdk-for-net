@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (OSConfiguration != null)
+            if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
                 writer.WriteObjectValue(OSConfiguration);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<SapOSConfiguration> osConfiguration = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            SapOSConfiguration osConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapOSProfile(adminUsername.Value, adminPassword.Value, osConfiguration.Value, serializedAdditionalRawData);
+            return new SapOSProfile(adminUsername, adminPassword, osConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapOSProfile>.Write(ModelReaderWriterOptions options)

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,69 +62,69 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DaprAIInstrumentationKey != null)
+            if (Optional.IsDefined(DaprAIInstrumentationKey))
             {
                 writer.WritePropertyName("daprAIInstrumentationKey"u8);
                 writer.WriteStringValue(DaprAIInstrumentationKey);
             }
-            if (DaprAIConnectionString != null)
+            if (Optional.IsDefined(DaprAIConnectionString))
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (VnetConfiguration != null)
+            if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (options.Format != "W" && DeploymentErrors != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && StaticIP != null)
+            if (options.Format != "W" && Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (AppLogsConfiguration != null)
+            if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (CustomDomainConfiguration != null)
+            if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
             }
-            if (options.Format != "W" && EventStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
             }
-            if (!(WorkloadProfiles is ChangeTrackingList<ContainerAppWorkloadProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkloadProfiles))
             {
                 writer.WritePropertyName("workloadProfiles"u8);
                 writer.WriteStartArray();
@@ -134,22 +134,22 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (KedaConfiguration != null)
+            if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
                 writer.WriteObjectValue(KedaConfiguration);
             }
-            if (DaprConfiguration != null)
+            if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
                 writer.WriteObjectValue(DaprConfiguration);
             }
-            if (InfrastructureResourceGroup != null)
+            if (Optional.IsDefined(InfrastructureResourceGroup))
             {
                 writer.WritePropertyName("infrastructureResourceGroup"u8);
                 writer.WriteStringValue(InfrastructureResourceGroup);
             }
-            if (PeerAuthentication != null)
+            if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
                 writer.WriteObjectValue(PeerAuthentication);
@@ -193,29 +193,29 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> daprAIInstrumentationKey = default;
-            Optional<string> daprAIConnectionString = default;
-            Optional<ContainerAppVnetConfiguration> vnetConfiguration = default;
-            Optional<string> deploymentErrors = default;
-            Optional<string> defaultDomain = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<ContainerAppLogsConfiguration> appLogsConfiguration = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
-            Optional<string> eventStreamEndpoint = default;
+            SystemData systemData = default;
+            ContainerAppEnvironmentProvisioningState? provisioningState = default;
+            string daprAIInstrumentationKey = default;
+            string daprAIConnectionString = default;
+            ContainerAppVnetConfiguration vnetConfiguration = default;
+            string deploymentErrors = default;
+            string defaultDomain = default;
+            IPAddress staticIP = default;
+            ContainerAppLogsConfiguration appLogsConfiguration = default;
+            bool? zoneRedundant = default;
+            ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
+            string eventStreamEndpoint = default;
             IList<ContainerAppWorkloadProfile> workloadProfiles = default;
-            Optional<KedaConfiguration> kedaConfiguration = default;
-            Optional<DaprConfiguration> daprConfiguration = default;
-            Optional<string> infrastructureResourceGroup = default;
-            Optional<ManagedEnvironmentPropertiesPeerAuthentication> peerAuthentication = default;
+            KedaConfiguration kedaConfiguration = default;
+            DaprConfiguration daprConfiguration = default;
+            string infrastructureResourceGroup = default;
+            ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,26 +415,26 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                kind.Value,
-                Optional.ToNullable(provisioningState),
-                daprAIInstrumentationKey.Value,
-                daprAIConnectionString.Value,
-                vnetConfiguration.Value,
-                deploymentErrors.Value,
-                defaultDomain.Value,
-                staticIP.Value,
-                appLogsConfiguration.Value,
-                Optional.ToNullable(zoneRedundant),
-                customDomainConfiguration.Value,
-                eventStreamEndpoint.Value,
+                kind,
+                provisioningState,
+                daprAIInstrumentationKey,
+                daprAIConnectionString,
+                vnetConfiguration,
+                deploymentErrors,
+                defaultDomain,
+                staticIP,
+                appLogsConfiguration,
+                zoneRedundant,
+                customDomainConfiguration,
+                eventStreamEndpoint,
                 workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>(),
-                kedaConfiguration.Value,
-                daprConfiguration.Value,
-                infrastructureResourceGroup.Value,
-                peerAuthentication.Value,
+                kedaConfiguration,
+                daprConfiguration,
+                infrastructureResourceGroup,
+                peerAuthentication,
                 serializedAdditionalRawData);
         }
 

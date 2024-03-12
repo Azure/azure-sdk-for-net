@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Sphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Certificate != null)
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && ExpiryUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiryUtc))
             {
                 writer.WritePropertyName("expiryUtc"u8);
                 writer.WriteStringValue(ExpiryUtc.Value, "O");
             }
-            if (options.Format != "W" && NotBeforeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotBeforeUtc))
             {
                 writer.WritePropertyName("notBeforeUtc"u8);
                 writer.WriteStringValue(NotBeforeUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            string certificate = default;
+            SphereCertificateStatus? status = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryUtc = default;
+            DateTimeOffset? notBeforeUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +169,13 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SphereCertificateProperties(
-                certificate.Value,
-                Optional.ToNullable(status),
-                subject.Value,
-                thumbprint.Value,
-                Optional.ToNullable(expiryUtc),
-                Optional.ToNullable(notBeforeUtc),
-                Optional.ToNullable(provisioningState),
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

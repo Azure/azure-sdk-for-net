@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (ManagedByRoleDefinitionId != null)
+            if (Optional.IsDefined(ManagedByRoleDefinitionId))
             {
                 writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> roleDefinitionId = default;
-            Optional<string> managedByRoleDefinitionId = default;
+            string applicationId = default;
+            string roleDefinitionId = default;
+            string managedByRoleDefinitionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderAuthorization(applicationId.Value, roleDefinitionId.Value, managedByRoleDefinitionId.Value, serializedAdditionalRawData);
+            return new ResourceProviderAuthorization(applicationId, roleDefinitionId, managedByRoleDefinitionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderAuthorization>.Write(ModelReaderWriterOptions options)

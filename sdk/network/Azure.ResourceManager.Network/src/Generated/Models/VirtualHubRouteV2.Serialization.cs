@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (DestinationType != null)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (!(Destinations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextHopType != null)
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
-            if (!(NextHops is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NextHops))
             {
                 writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> destinationType = default;
+            string destinationType = default;
             IList<string> destinations = default;
-            Optional<string> nextHopType = default;
+            string nextHopType = default;
             IList<string> nextHops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteV2(destinationType.Value, destinations ?? new ChangeTrackingList<string>(), nextHopType.Value, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualHubRouteV2(destinationType, destinations ?? new ChangeTrackingList<string>(), nextHopType, nextHops ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubRouteV2>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (ManagedResourceId != null)
+            if (Optional.IsDefined(ManagedResourceId))
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (MoRefId != null)
+            if (Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (MoName != null)
+            if (Optional.IsDefined(MoName))
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             VCenterInventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> moRefId = default;
-            Optional<string> moName = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            string managedResourceId = default;
+            string moRefId = default;
+            string moName = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
+                systemData,
+                kind,
                 inventoryType,
-                managedResourceId.Value,
-                moRefId.Value,
-                moName.Value,
-                Optional.ToNullable(provisioningState),
+                managedResourceId,
+                moRefId,
+                moName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

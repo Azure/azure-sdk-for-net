@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TimeStamp.HasValue)
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (ClusterStorageCapacityInfo != null)
+            if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterStorageCapacityInfo);
             }
-            if (ClusterComputeCapacityInfo != null)
+            if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
-            if (!(NodeCapacityInfos is ChangeTrackingDictionary<string, HostCapacity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
                 writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();
@@ -117,10 +118,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
-            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeStamp = default;
+            EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default;
+            EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default;
             IDictionary<string, HostCapacity> nodeCapacityInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,10 +214,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(timeStamp),
-                clusterStorageCapacityInfo.Value,
-                clusterComputeCapacityInfo.Value,
+                systemData,
+                timeStamp,
+                clusterStorageCapacityInfo,
+                clusterComputeCapacityInfo,
                 nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(),
                 serializedAdditionalRawData);
         }

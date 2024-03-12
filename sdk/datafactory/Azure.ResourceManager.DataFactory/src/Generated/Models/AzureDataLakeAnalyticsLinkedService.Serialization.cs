@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,34 +77,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             JsonSerializer.Serialize(writer, AccountName);
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
             JsonSerializer.Serialize(writer, Tenant);
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 JsonSerializer.Serialize(writer, SubscriptionId);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 JsonSerializer.Serialize(writer, ResourceGroupName);
             }
-            if (DataLakeAnalyticsUri != null)
+            if (Optional.IsDefined(DataLakeAnalyticsUri))
             {
                 writer.WritePropertyName("dataLakeAnalyticsUri"u8);
                 JsonSerializer.Serialize(writer, DataLakeAnalyticsUri);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -145,18 +146,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountName = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
-            Optional<DataFactoryElement<string>> subscriptionId = default;
-            Optional<DataFactoryElement<string>> resourceGroupName = default;
-            Optional<DataFactoryElement<string>> dataLakeAnalyticsUri = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> subscriptionId = default;
+            DataFactoryElement<string> resourceGroupName = default;
+            DataFactoryElement<string> dataLakeAnalyticsUri = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,19 +293,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeAnalyticsLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 accountName,
-                servicePrincipalId.Value,
+                servicePrincipalId,
                 servicePrincipalKey,
                 tenant,
-                subscriptionId.Value,
-                resourceGroupName.Value,
-                dataLakeAnalyticsUri.Value,
-                encryptedCredential.Value);
+                subscriptionId,
+                resourceGroupName,
+                dataLakeAnalyticsUri,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<AzureDataLakeAnalyticsLinkedService>.Write(ModelReaderWriterOptions options)

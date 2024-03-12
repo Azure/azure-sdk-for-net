@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SingleSignOnState.HasValue)
+            if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (EnterpriseAppId != null)
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
-            if (options.Format != "W" && SingleSignOnUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SingleSignOnState> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            ProvisioningState? provisioningState = default;
+            SingleSignOnState? singleSignOnState = default;
+            string enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, serializedAdditionalRawData);
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogSingleSignOnProperties>.Write(ModelReaderWriterOptions options)

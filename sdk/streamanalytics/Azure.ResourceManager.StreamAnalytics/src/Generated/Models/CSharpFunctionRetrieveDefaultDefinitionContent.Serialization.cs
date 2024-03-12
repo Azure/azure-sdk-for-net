@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (UdfType.HasValue)
+            if (Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string bindingType = default;
-            Optional<string> script = default;
-            Optional<StreamingJobFunctionUdfType> udfType = default;
+            string script = default;
+            StreamingJobFunctionUdfType? udfType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script.Value, Optional.ToNullable(udfType));
+            return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script, udfType);
         }
 
         BinaryData IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)

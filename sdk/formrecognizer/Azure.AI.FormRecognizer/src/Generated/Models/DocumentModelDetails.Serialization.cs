@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -21,10 +22,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<string> apiVersion = default;
+            DateTimeOffset? expirationDateTime = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
             IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
             foreach (var property in element.EnumerateObject())
@@ -89,10 +90,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new DocumentModelDetails(
                 modelId,
-                description.Value,
+                description,
                 createdDateTime,
-                Optional.ToNullable(expirationDateTime),
-                apiVersion.Value,
+                expirationDateTime,
+                apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>());
         }

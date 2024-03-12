@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteObjectValue(Author);
@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<string> message = default;
-            Optional<SecurityInsightsClientInfo> author = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            string message = default;
+            SecurityInsightsClientInfo author = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdTimeUtc),
-                Optional.ToNullable(lastModifiedTimeUtc),
-                message.Value,
-                author.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                createdTimeUtc,
+                lastModifiedTimeUtc,
+                message,
+                author,
+                etag,
                 serializedAdditionalRawData);
         }
 

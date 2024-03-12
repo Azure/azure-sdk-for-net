@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> containerName = default;
+            string accountName = default;
+            string containerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxStorageAccount(accountName.Value, containerName.Value, serializedAdditionalRawData);
+            return new NginxStorageAccount(accountName, containerName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxStorageAccount>.Write(ModelReaderWriterOptions options)

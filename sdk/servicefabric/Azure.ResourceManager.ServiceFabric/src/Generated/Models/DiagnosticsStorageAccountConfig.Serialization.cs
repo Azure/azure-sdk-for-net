@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
-            if (ProtectedAccountKeyName2 != null)
+            if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
                 writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Optional<string> protectedAccountKeyName2 = default;
+            string protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new DiagnosticsStorageAccountConfig(
                 storageAccountName,
                 protectedAccountKeyName,
-                protectedAccountKeyName2.Value,
+                protectedAccountKeyName2,
                 blobEndpoint,
                 queueEndpoint,
                 tableEndpoint,

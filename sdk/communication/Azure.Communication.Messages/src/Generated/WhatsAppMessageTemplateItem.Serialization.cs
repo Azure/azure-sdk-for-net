@@ -28,7 +28,7 @@ namespace Azure.Communication.Messages.Models.Channels
             }
 
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -89,7 +89,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            Optional<BinaryData> content = default;
+            BinaryData content = default;
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
@@ -139,7 +139,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 status,
                 kind,
                 serializedAdditionalRawData,
-                content.Value);
+                content);
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateItem>.Write(ModelReaderWriterOptions options)

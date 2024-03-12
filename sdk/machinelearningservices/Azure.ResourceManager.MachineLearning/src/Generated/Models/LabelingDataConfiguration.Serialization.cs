@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DataId != null)
+            if (Optional.IsDefined(DataId))
             {
                 if (DataId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (IncrementalDataRefresh.HasValue)
+            if (Optional.IsDefined(IncrementalDataRefresh))
             {
                 writer.WritePropertyName("incrementalDataRefresh"u8);
                 writer.WriteStringValue(IncrementalDataRefresh.Value.ToString());
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> dataId = default;
-            Optional<IncrementalDataRefresh> incrementalDataRefresh = default;
+            string dataId = default;
+            IncrementalDataRefresh? incrementalDataRefresh = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingDataConfiguration(dataId.Value, Optional.ToNullable(incrementalDataRefresh), serializedAdditionalRawData);
+            return new LabelingDataConfiguration(dataId, incrementalDataRefresh, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelingDataConfiguration>.Write(ModelReaderWriterOptions options)

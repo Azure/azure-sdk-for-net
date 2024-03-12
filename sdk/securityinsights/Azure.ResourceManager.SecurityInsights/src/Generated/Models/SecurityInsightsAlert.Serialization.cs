@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,32 +75,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AlertDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && AlertType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && CompromisedEntity != null)
+            if (options.Format != "W" && Optional.IsDefined(CompromisedEntity))
             {
                 writer.WritePropertyName("compromisedEntity"u8);
                 writer.WriteStringValue(CompromisedEntity);
             }
-            if (options.Format != "W" && ConfidenceLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceLevel))
             {
                 writer.WritePropertyName("confidenceLevel"u8);
                 writer.WriteStringValue(ConfidenceLevel.Value.ToString());
             }
-            if (options.Format != "W" && !(ConfidenceReasons is ChangeTrackingList<SecurityInsightsAlertConfidenceReason> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfidenceReasons))
             {
                 writer.WritePropertyName("confidenceReasons"u8);
                 writer.WriteStartArray();
@@ -109,57 +110,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfidenceScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (options.Format != "W" && ConfidenceScoreStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceScoreStatus))
             {
                 writer.WritePropertyName("confidenceScoreStatus"u8);
                 writer.WriteStringValue(ConfidenceScoreStatus.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Intent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent.Value.ToString());
             }
-            if (options.Format != "W" && ProviderAlertId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderAlertId))
             {
                 writer.WritePropertyName("providerAlertId"u8);
                 writer.WriteStringValue(ProviderAlertId);
             }
-            if (options.Format != "W" && ProcessingEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
             {
                 writer.WritePropertyName("processingEndTime"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (options.Format != "W" && ProductComponentName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductComponentName))
             {
                 writer.WritePropertyName("productComponentName"u8);
                 writer.WriteStringValue(ProductComponentName);
             }
-            if (options.Format != "W" && ProductName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (options.Format != "W" && ProductVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("productVersion"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (options.Format != "W" && !(RemediationSteps is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStartArray();
@@ -169,27 +170,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && SystemAlertId != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemAlertId))
             {
                 writer.WritePropertyName("systemAlertId"u8);
                 writer.WriteStringValue(SystemAlertId);
             }
-            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -199,22 +200,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AlertGeneratedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertGeneratedOn))
             {
                 writer.WritePropertyName("timeGenerated"u8);
                 writer.WriteStringValue(AlertGeneratedOn.Value, "O");
             }
-            if (options.Format != "W" && VendorName != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && AlertLink != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertLink))
             {
                 writer.WritePropertyName("alertLink"u8);
                 writer.WriteStringValue(AlertLink);
             }
-            if (options.Format != "W" && !(ResourceIdentifiers is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();
@@ -279,33 +280,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> alertDisplayName = default;
-            Optional<string> alertType = default;
-            Optional<string> compromisedEntity = default;
-            Optional<SecurityInsightsAlertConfidenceLevel> confidenceLevel = default;
+            string friendlyName = default;
+            string alertDisplayName = default;
+            string alertType = default;
+            string compromisedEntity = default;
+            SecurityInsightsAlertConfidenceLevel? confidenceLevel = default;
             IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons = default;
-            Optional<double> confidenceScore = default;
-            Optional<SecurityInsightsAlertConfidenceScoreStatus> confidenceScoreStatus = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<SecurityInsightsKillChainIntent> intent = default;
-            Optional<string> providerAlertId = default;
-            Optional<DateTimeOffset> processingEndTime = default;
-            Optional<string> productComponentName = default;
-            Optional<string> productName = default;
-            Optional<string> productVersion = default;
+            double? confidenceScore = default;
+            SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus = default;
+            string description = default;
+            DateTimeOffset? endTimeUtc = default;
+            SecurityInsightsKillChainIntent? intent = default;
+            string providerAlertId = default;
+            DateTimeOffset? processingEndTime = default;
+            string productComponentName = default;
+            string productName = default;
+            string productVersion = default;
             IReadOnlyList<string> remediationSteps = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<SecurityInsightsAlertStatus> status = default;
-            Optional<string> systemAlertId = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            DateTimeOffset? startTimeUtc = default;
+            SecurityInsightsAlertStatus? status = default;
+            string systemAlertId = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
-            Optional<DateTimeOffset> timeGenerated = default;
-            Optional<string> vendorName = default;
-            Optional<string> alertLink = default;
+            DateTimeOffset? timeGenerated = default;
+            string vendorName = default;
+            string alertLink = default;
             IReadOnlyList<BinaryData> resourceIdentifiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -596,35 +597,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                alertDisplayName.Value,
-                alertType.Value,
-                compromisedEntity.Value,
-                Optional.ToNullable(confidenceLevel),
+                friendlyName,
+                alertDisplayName,
+                alertType,
+                compromisedEntity,
+                confidenceLevel,
                 confidenceReasons ?? new ChangeTrackingList<SecurityInsightsAlertConfidenceReason>(),
-                Optional.ToNullable(confidenceScore),
-                Optional.ToNullable(confidenceScoreStatus),
-                description.Value,
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(intent),
-                providerAlertId.Value,
-                Optional.ToNullable(processingEndTime),
-                productComponentName.Value,
-                productName.Value,
-                productVersion.Value,
+                confidenceScore,
+                confidenceScoreStatus,
+                description,
+                endTimeUtc,
+                intent,
+                providerAlertId,
+                processingEndTime,
+                productComponentName,
+                productName,
+                productVersion,
                 remediationSteps ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(status),
-                systemAlertId.Value,
+                severity,
+                startTimeUtc,
+                status,
+                systemAlertId,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
-                Optional.ToNullable(timeGenerated),
-                vendorName.Value,
-                alertLink.Value,
+                timeGenerated,
+                vendorName,
+                alertLink,
                 resourceIdentifiers ?? new ChangeTrackingList<BinaryData>());
         }
 

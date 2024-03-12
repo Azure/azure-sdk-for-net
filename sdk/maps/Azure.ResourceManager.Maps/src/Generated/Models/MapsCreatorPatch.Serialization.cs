@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.Maps.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (StorageUnits.HasValue)
+            if (Optional.IsDefined(StorageUnits))
             {
                 writer.WritePropertyName("storageUnits"u8);
                 writer.WriteNumberValue(StorageUnits.Value);
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> provisioningState = default;
-            Optional<int> storageUnits = default;
+            string provisioningState = default;
+            int? storageUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState.Value, Optional.ToNullable(storageUnits), serializedAdditionalRawData);
+            return new MapsCreatorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState, storageUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorPatch>.Write(ModelReaderWriterOptions options)

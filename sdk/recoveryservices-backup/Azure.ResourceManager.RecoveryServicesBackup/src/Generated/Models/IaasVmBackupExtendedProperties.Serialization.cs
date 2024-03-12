@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DiskExclusionProperties != null)
+            if (Optional.IsDefined(DiskExclusionProperties))
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
                 writer.WriteObjectValue(DiskExclusionProperties);
             }
-            if (LinuxVmApplicationName != null)
+            if (Optional.IsDefined(LinuxVmApplicationName))
             {
                 writer.WritePropertyName("linuxVmApplicationName"u8);
                 writer.WriteStringValue(LinuxVmApplicationName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DiskExclusionProperties> diskExclusionProperties = default;
-            Optional<string> linuxVmApplicationName = default;
+            DiskExclusionProperties diskExclusionProperties = default;
+            string linuxVmApplicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value, serializedAdditionalRawData);
+            return new IaasVmBackupExtendedProperties(diskExclusionProperties, linuxVmApplicationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupExtendedProperties>.Write(ModelReaderWriterOptions options)

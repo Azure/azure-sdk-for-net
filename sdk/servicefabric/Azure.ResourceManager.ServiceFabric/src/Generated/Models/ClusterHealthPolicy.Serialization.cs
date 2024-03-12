@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPercentUnhealthyNodes.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
-            if (MaxPercentUnhealthyApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (!(ApplicationHealthPolicies is ChangeTrackingDictionary<string, ApplicationHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentUnhealthyNodes = default;
-            Optional<int> maxPercentUnhealthyApplications = default;
+            int? maxPercentUnhealthyNodes = default;
+            int? maxPercentUnhealthyApplications = default;
             IDictionary<string, ApplicationHealthPolicy> applicationHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), serializedAdditionalRawData);
+            return new ClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options)

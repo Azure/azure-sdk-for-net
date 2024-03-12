@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (ErrorResource != null)
+            if (Optional.IsDefined(ErrorResource))
             {
                 writer.WritePropertyName("errorResource"u8);
                 writer.WriteStringValue(ErrorResource);
             }
-            if (!(MessageArguments is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageArguments))
             {
                 writer.WritePropertyName("messageArguments"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> errorResource = default;
+            string code = default;
+            string message = default;
+            string errorResource = default;
             IReadOnlyList<string> messageArguments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterValidationErrorInfo(code.Value, message.Value, errorResource.Value, messageArguments ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HDInsightClusterValidationErrorInfo(code, message, errorResource, messageArguments ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterValidationErrorInfo>.Write(ModelReaderWriterOptions options)

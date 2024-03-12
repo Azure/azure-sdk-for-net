@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> start = default;
-            Optional<DateTimeOffset> end = default;
+            DateTimeOffset? start = default;
+            DateTimeOffset? end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTimeSpan(Optional.ToNullable(start), Optional.ToNullable(end), serializedAdditionalRawData);
+            return new ContainerServiceTimeSpan(start, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTimeSpan>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreserveCompressionFileNameAsFolder != null)
+            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 writer.WriteObjectValue(PreserveCompressionFileNameAsFolder);
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preserveCompressionFileNameAsFolder = default;
+            object preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -63,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TarGZipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
+            return new TarGZipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
 
         internal partial class TarGZipReadSettingsConverter : JsonConverter<TarGZipReadSettings>

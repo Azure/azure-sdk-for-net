@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (!(EndpointDetails is ChangeTrackingList<AppServiceEndpointDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<AppServiceEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<AppServiceEndpointDetail>(), serializedAdditionalRawData);
+            return new AppServiceEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<AppServiceEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEndpointDependency>.Write(ModelReaderWriterOptions options)

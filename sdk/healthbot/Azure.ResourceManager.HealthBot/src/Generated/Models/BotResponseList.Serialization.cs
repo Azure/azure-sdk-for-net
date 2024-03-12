@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<HealthBotData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<HealthBotData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotResponseList(nextLink.Value, value ?? new ChangeTrackingList<HealthBotData>(), serializedAdditionalRawData);
+            return new BotResponseList(nextLink, value ?? new ChangeTrackingList<HealthBotData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotResponseList>.Write(ModelReaderWriterOptions options)

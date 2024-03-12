@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (CertificateId != null)
+            if (Optional.IsDefined(CertificateId))
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (IsClientCertificateRequired.HasValue)
+            if (Optional.IsDefined(IsClientCertificateRequired))
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
-            if (IsTls1_0Enabled.HasValue)
+            if (Optional.IsDefined(IsTls1_0Enabled))
             {
                 writer.WritePropertyName("tls10Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
-            if (IsTls1_1Enabled.HasValue)
+            if (Optional.IsDefined(IsTls1_1Enabled))
             {
                 writer.WritePropertyName("tls11Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
-            if (IsHttp2_0Enabled.HasValue)
+            if (Optional.IsDefined(IsHttp2_0Enabled))
             {
                 writer.WritePropertyName("http2Enabled"u8);
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostname = default;
-            Optional<string> certificateId = default;
-            Optional<bool> negotiateClientCertificate = default;
-            Optional<bool> tls10Enabled = default;
-            Optional<bool> tls11Enabled = default;
-            Optional<bool> http2Enabled = default;
+            SystemData systemData = default;
+            string hostname = default;
+            string certificateId = default;
+            bool? negotiateClientCertificate = default;
+            bool? tls10Enabled = default;
+            bool? tls11Enabled = default;
+            bool? http2Enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                hostname.Value,
-                certificateId.Value,
-                Optional.ToNullable(negotiateClientCertificate),
-                Optional.ToNullable(tls10Enabled),
-                Optional.ToNullable(tls11Enabled),
-                Optional.ToNullable(http2Enabled),
+                systemData,
+                hostname,
+                certificateId,
+                negotiateClientCertificate,
+                tls10Enabled,
+                tls11Enabled,
+                http2Enabled,
                 serializedAdditionalRawData);
         }
 

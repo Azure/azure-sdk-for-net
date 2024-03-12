@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> classificationPolicyId = default;
+            string classificationPolicyId = default;
             IReadOnlyList<AcsRouterCommunicationError> errors = default;
-            Optional<string> queueId = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -101,13 +101,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterJobClassificationFailedEventData(
-                jobId.Value,
-                channelReference.Value,
-                channelId.Value,
-                queueId.Value,
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                classificationPolicyId.Value,
+                classificationPolicyId,
                 errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
 

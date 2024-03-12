@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,42 +31,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceBusNamespace != null)
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (SharedAccessPolicyName != null)
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (SharedAccessPolicyKey != null)
+            if (Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (EventHubName != null)
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyColumns))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -115,13 +116,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> eventHubName = default;
-            Optional<int> partitionCount = default;
-            Optional<string> partitionKey = default;
+            string serviceBusNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string eventHubName = default;
+            int? partitionCount = default;
+            string partitionKey = default;
             IList<string> propertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -210,13 +211,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new EventHubOutputDataSource(
                 type,
                 serializedAdditionalRawData,
-                serviceBusNamespace.Value,
-                sharedAccessPolicyName.Value,
-                sharedAccessPolicyKey.Value,
-                Optional.ToNullable(authenticationMode),
-                eventHubName.Value,
-                Optional.ToNullable(partitionCount),
-                partitionKey.Value,
+                serviceBusNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                authenticationMode,
+                eventHubName,
+                partitionCount,
+                partitionKey,
                 propertyColumns ?? new ChangeTrackingList<string>());
         }
 

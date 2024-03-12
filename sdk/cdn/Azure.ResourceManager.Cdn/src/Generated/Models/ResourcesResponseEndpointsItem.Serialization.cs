@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (History.HasValue)
+            if (Optional.IsDefined(History))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
             }
-            if (!(CustomDomains is ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> history = default;
+            string id = default;
+            string name = default;
+            bool? history = default;
             IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Optional.ToNullable(history), customDomains ?? new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>(), serializedAdditionalRawData);
+            return new ResourcesResponseEndpointsItem(id, name, history, customDomains ?? new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseEndpointsItem>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (IPv6Address != null)
+            if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv6Address = default;
+            IPAddress ipv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsAaaaRecordInfo(ipv6Address.Value, serializedAdditionalRawData);
+            return new DnsAaaaRecordInfo(ipv6Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsAaaaRecordInfo>.Write(ModelReaderWriterOptions options)

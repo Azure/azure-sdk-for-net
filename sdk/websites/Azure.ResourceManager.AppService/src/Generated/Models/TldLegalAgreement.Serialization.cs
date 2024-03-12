@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Title);
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             string agreementKey = default;
             string title = default;
             string content = default;
-            Optional<Uri> url = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TldLegalAgreement(agreementKey, title, content, url.Value, serializedAdditionalRawData);
+            return new TldLegalAgreement(agreementKey, title, content, url, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TldLegalAgreement>.Write(ModelReaderWriterOptions options)

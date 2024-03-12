@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CurrentUsage.HasValue)
+            if (Optional.IsDefined(CurrentUsage))
             {
                 writer.WritePropertyName("currentUsage"u8);
                 writer.WriteNumberValue(CurrentUsage.Value);
             }
-            if (CurrentQuota.HasValue)
+            if (Optional.IsDefined(CurrentQuota))
             {
                 writer.WritePropertyName("currentQuota"u8);
                 writer.WriteNumberValue(CurrentQuota.Value);
             }
-            if (NewQuota.HasValue)
+            if (Optional.IsDefined(NewQuota))
             {
                 writer.WritePropertyName("newQuota"u8);
                 writer.WriteNumberValue(NewQuota.Value);
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> currentUsage = default;
-            Optional<int> currentQuota = default;
-            Optional<int> newQuota = default;
-            Optional<LoadTestingQuotaBucketDimensions> dimensions = default;
+            SystemData systemData = default;
+            int? currentUsage = default;
+            int? currentQuota = default;
+            int? newQuota = default;
+            LoadTestingQuotaBucketDimensions dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,11 +203,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(currentUsage),
-                Optional.ToNullable(currentQuota),
-                Optional.ToNullable(newQuota),
-                dimensions.Value,
+                systemData,
+                currentUsage,
+                currentQuota,
+                newQuota,
+                dimensions,
                 serializedAdditionalRawData);
         }
 

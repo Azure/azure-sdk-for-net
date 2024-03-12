@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (FunctionAlias != null)
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (FunctionParameters != null)
+            if (Optional.IsDefined(FunctionParameters))
             {
                 writer.WritePropertyName("functionParameters"u8);
                 writer.WriteStringValue(FunctionParameters);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (!(Tags is ChangeTrackingList<OperationalInsightsTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string category = default;
             string displayName = default;
             string query = default;
-            Optional<string> functionAlias = default;
-            Optional<string> functionParameters = default;
-            Optional<long> version = default;
+            string functionAlias = default;
+            string functionParameters = default;
+            long? version = default;
             IList<OperationalInsightsTag> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                etag,
                 category,
                 displayName,
                 query,
-                functionAlias.Value,
-                functionParameters.Value,
-                Optional.ToNullable(version),
+                functionAlias,
+                functionParameters,
+                version,
                 tags ?? new ChangeTrackingList<OperationalInsightsTag>(),
                 serializedAdditionalRawData);
         }

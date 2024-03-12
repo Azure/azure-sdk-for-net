@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(Number);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (AllowedSourceAddressPrefix != null)
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
-            Optional<string> allowedSourceAddressPrefix = default;
+            string allowedSourceAddressPrefix = default;
             IList<string> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JitNetworkAccessPortRule(
                 number,
                 protocol,
-                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefix,
                 allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
                 maxRequestAccessDuration,
                 serializedAdditionalRawData);

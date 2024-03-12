@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (options.Format != "W" && TenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantName))
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
             }
-            if (options.Format != "W" && PrincipalName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AadObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AadObjectId))
             {
                 writer.WritePropertyName("aadObjectId"u8);
                 writer.WriteStringValue(AadObjectId.Value);
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principalId = default;
-            Optional<SynapseDatabasePrincipalRole> role = default;
-            Optional<Guid> tenantId = default;
-            Optional<SynapsePrincipalType> principalType = default;
-            Optional<string> tenantName = default;
-            Optional<string> principalName = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Guid> aadObjectId = default;
+            SystemData systemData = default;
+            string principalId = default;
+            SynapseDatabasePrincipalRole? role = default;
+            Guid? tenantId = default;
+            SynapsePrincipalType? principalType = default;
+            string tenantName = default;
+            string principalName = default;
+            ResourceProvisioningState? provisioningState = default;
+            Guid? aadObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                principalId.Value,
-                Optional.ToNullable(role),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(principalType),
-                tenantName.Value,
-                principalName.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(aadObjectId),
+                systemData,
+                principalId,
+                role,
+                tenantId,
+                principalType,
+                tenantName,
+                principalName,
+                provisioningState,
+                aadObjectId,
                 serializedAdditionalRawData);
         }
 

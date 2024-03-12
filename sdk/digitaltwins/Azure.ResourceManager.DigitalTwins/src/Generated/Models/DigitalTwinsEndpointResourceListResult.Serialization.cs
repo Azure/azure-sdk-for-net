@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (!(Value is ChangeTrackingList<DigitalTwinsEndpointResourceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<DigitalTwinsEndpointResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsEndpointResourceListResult(nextLink.Value, value ?? new ChangeTrackingList<DigitalTwinsEndpointResourceData>(), serializedAdditionalRawData);
+            return new DigitalTwinsEndpointResourceListResult(nextLink, value ?? new ChangeTrackingList<DigitalTwinsEndpointResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEndpointResourceListResult>.Write(ModelReaderWriterOptions options)

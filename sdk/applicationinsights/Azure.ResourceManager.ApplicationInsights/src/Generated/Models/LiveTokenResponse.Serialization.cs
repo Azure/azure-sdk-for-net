@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LiveToken != null)
+            if (options.Format != "W" && Optional.IsDefined(LiveToken))
             {
                 writer.WritePropertyName("liveToken"u8);
                 writer.WriteStringValue(LiveToken);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> liveToken = default;
+            string liveToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveTokenResponse(liveToken.Value, serializedAdditionalRawData);
+            return new LiveTokenResponse(liveToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveTokenResponse>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (ArmTemplateFolderPath != null)
+            if (Optional.IsDefined(ArmTemplateFolderPath))
             {
                 writer.WritePropertyName("armTemplateFolderPath"u8);
                 writer.WriteStringValue(ArmTemplateFolderPath);
             }
-            if (BranchRef != null)
+            if (Optional.IsDefined(BranchRef))
             {
                 writer.WritePropertyName("branchRef"u8);
                 writer.WriteStringValue(BranchRef);
             }
-            if (SecurityToken != null)
+            if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<Uri> uri = default;
-            Optional<DevTestLabSourceControlType> sourceType = default;
-            Optional<string> folderPath = default;
-            Optional<string> armTemplateFolderPath = default;
-            Optional<string> branchRef = default;
-            Optional<string> securityToken = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            string displayName = default;
+            Uri uri = default;
+            DevTestLabSourceControlType? sourceType = default;
+            string folderPath = default;
+            string armTemplateFolderPath = default;
+            string branchRef = default;
+            string securityToken = default;
+            DevTestLabEnableStatus? status = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,20 +318,20 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                displayName.Value,
-                uri.Value,
-                Optional.ToNullable(sourceType),
-                folderPath.Value,
-                armTemplateFolderPath.Value,
-                branchRef.Value,
-                securityToken.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(createdDate),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                displayName,
+                uri,
+                sourceType,
+                folderPath,
+                armTemplateFolderPath,
+                branchRef,
+                securityToken,
+                status,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

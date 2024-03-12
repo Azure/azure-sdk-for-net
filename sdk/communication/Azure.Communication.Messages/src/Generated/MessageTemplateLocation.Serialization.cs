@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (LocationName != null)
+            if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -83,8 +83,8 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> locationName = default;
-            Optional<string> address = default;
+            string locationName = default;
+            string address = default;
             double latitude = default;
             double longitude = default;
             string name = default;
@@ -133,8 +133,8 @@ namespace Azure.Communication.Messages
                 name,
                 kind,
                 serializedAdditionalRawData,
-                locationName.Value,
-                address.Value,
+                locationName,
+                address,
                 latitude,
                 longitude);
         }

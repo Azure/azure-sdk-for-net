@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (!(PhoneNumbers is ChangeTrackingList<TelephonyPhoneNumbers> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApiConfigurations is ChangeTrackingList<TelephonyChannelResourceApiConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiConfigurations))
             {
                 writer.WritePropertyName("apiConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CognitiveServiceSubscriptionKey != null)
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (CognitiveServiceRegion != null)
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (DefaultLocale != null)
+            if (Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (PremiumSku != null)
+            if (Optional.IsDefined(PremiumSku))
             {
                 if (PremiumSku != null)
                 {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("premiumSKU");
                 }
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -139,11 +140,11 @@ namespace Azure.ResourceManager.BotService.Models
             }
             IList<TelephonyPhoneNumbers> phoneNumbers = default;
             IList<TelephonyChannelResourceApiConfiguration> apiConfigurations = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> premiumSku = default;
-            Optional<bool> isEnabled = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            string defaultLocale = default;
+            string premiumSku = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,11 +235,11 @@ namespace Azure.ResourceManager.BotService.Models
             return new TelephonyChannelProperties(
                 phoneNumbers ?? new ChangeTrackingList<TelephonyPhoneNumbers>(),
                 apiConfigurations ?? new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>(),
-                cognitiveServiceSubscriptionKey.Value,
-                cognitiveServiceRegion.Value,
-                defaultLocale.Value,
-                premiumSku.Value,
-                Optional.ToNullable(isEnabled),
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                defaultLocale,
+                premiumSku,
+                isEnabled,
                 serializedAdditionalRawData);
         }
 

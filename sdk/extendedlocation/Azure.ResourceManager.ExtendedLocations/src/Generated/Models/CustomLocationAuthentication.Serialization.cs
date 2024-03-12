@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ExtendedLocations;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (CustomLocationPropertiesAuthenticationType != null)
+            if (Optional.IsDefined(CustomLocationPropertiesAuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CustomLocationPropertiesAuthenticationType);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> value = default;
+            string type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationAuthentication(type.Value, value.Value, serializedAdditionalRawData);
+            return new CustomLocationAuthentication(type, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationAuthentication>.Write(ModelReaderWriterOptions options)

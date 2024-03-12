@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
-            if (PrimaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(PrimaryDefaultLoad))
             {
                 writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
-            if (SecondaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(SecondaryDefaultLoad))
             {
                 writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
-            if (DefaultLoad.HasValue)
+            if (Optional.IsDefined(DefaultLoad))
             {
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<ManagedServiceLoadMetricWeight> weight = default;
-            Optional<int> primaryDefaultLoad = default;
-            Optional<int> secondaryDefaultLoad = default;
-            Optional<int> defaultLoad = default;
+            ManagedServiceLoadMetricWeight? weight = default;
+            int? primaryDefaultLoad = default;
+            int? secondaryDefaultLoad = default;
+            int? defaultLoad = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedServiceLoadMetric(
                 name,
-                Optional.ToNullable(weight),
-                Optional.ToNullable(primaryDefaultLoad),
-                Optional.ToNullable(secondaryDefaultLoad),
-                Optional.ToNullable(defaultLoad),
+                weight,
+                primaryDefaultLoad,
+                secondaryDefaultLoad,
+                defaultLoad,
                 serializedAdditionalRawData);
         }
 

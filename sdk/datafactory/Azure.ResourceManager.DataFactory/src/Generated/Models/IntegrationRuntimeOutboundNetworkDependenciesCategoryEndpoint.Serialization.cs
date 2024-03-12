@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (!(Endpoints is ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category.Value, endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>(), serializedAdditionalRawData);
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(ModelReaderWriterOptions options)

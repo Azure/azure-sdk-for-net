@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplicationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Related != null)
+            if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> id0 = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> timeModified = default;
-            Optional<string> author = default;
-            Optional<string> description = default;
-            Optional<string> body = default;
-            Optional<LogAnalyticsQueryRelatedMetadata> related = default;
+            SystemData systemData = default;
+            Guid? id0 = default;
+            string displayName = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? timeModified = default;
+            string author = default;
+            string description = default;
+            string body = default;
+            LogAnalyticsQueryRelatedMetadata related = default;
             IDictionary<string, IList<string>> tags = default;
-            Optional<BinaryData> properties = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,17 +317,17 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(id0),
-                displayName.Value,
-                Optional.ToNullable(timeCreated),
-                Optional.ToNullable(timeModified),
-                author.Value,
-                description.Value,
-                body.Value,
-                related.Value,
+                systemData,
+                id0,
+                displayName,
+                timeCreated,
+                timeModified,
+                author,
+                description,
+                body,
+                related,
                 tags ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                properties.Value,
+                properties,
                 serializedAdditionalRawData);
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,52 +75,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AzureId != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureId))
             {
                 writer.WritePropertyName("azureID"u8);
                 writer.WriteStringValue(AzureId);
             }
-            if (options.Format != "W" && DnsDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsDomain))
             {
                 writer.WritePropertyName("dnsDomain"u8);
                 writer.WriteStringValue(DnsDomain);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && IsDomainJoined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDomainJoined))
             {
                 writer.WritePropertyName("isDomainJoined"u8);
                 writer.WriteBooleanValue(IsDomainJoined.Value);
             }
-            if (options.Format != "W" && NetBiosName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetBiosName))
             {
                 writer.WritePropertyName("netBiosName"u8);
                 writer.WriteStringValue(NetBiosName);
             }
-            if (options.Format != "W" && NtDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(NtDomain))
             {
                 writer.WritePropertyName("ntDomain"u8);
                 writer.WriteStringValue(NtDomain);
             }
-            if (options.Format != "W" && OmsAgentId != null)
+            if (options.Format != "W" && Optional.IsDefined(OmsAgentId))
             {
                 writer.WritePropertyName("omsAgentID"u8);
                 writer.WriteStringValue(OmsAgentId);
             }
-            if (OSFamily.HasValue)
+            if (Optional.IsDefined(OSFamily))
             {
                 writer.WritePropertyName("osFamily"u8);
                 writer.WriteStringValue(OSFamily.Value.ToSerialString());
             }
-            if (options.Format != "W" && OSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
@@ -167,18 +168,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> azureId = default;
-            Optional<string> dnsDomain = default;
-            Optional<string> hostName = default;
-            Optional<bool> isDomainJoined = default;
-            Optional<string> netBiosName = default;
-            Optional<string> ntDomain = default;
-            Optional<string> omsAgentId = default;
-            Optional<SecurityInsightsHostOSFamily> osFamily = default;
-            Optional<string> osVersion = default;
+            string friendlyName = default;
+            ResourceIdentifier azureId = default;
+            string dnsDomain = default;
+            string hostName = default;
+            bool? isDomainJoined = default;
+            string netBiosName = default;
+            string ntDomain = default;
+            string omsAgentId = default;
+            SecurityInsightsHostOSFamily? osFamily = default;
+            string osVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,20 +318,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                azureId.Value,
-                dnsDomain.Value,
-                hostName.Value,
-                Optional.ToNullable(isDomainJoined),
-                netBiosName.Value,
-                ntDomain.Value,
-                omsAgentId.Value,
-                Optional.ToNullable(osFamily),
-                osVersion.Value);
+                friendlyName,
+                azureId,
+                dnsDomain,
+                hostName,
+                isDomainJoined,
+                netBiosName,
+                ntDomain,
+                omsAgentId,
+                osFamily,
+                osVersion);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHostEntity>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (RegistryAddress != null)
+            if (Optional.IsDefined(RegistryAddress))
             {
                 writer.WritePropertyName("registryUri"u8);
                 writer.WriteStringValue(RegistryAddress);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> registryUri = default;
-            Optional<ContainerRegistryImportSourceCredentials> credentials = default;
+            ResourceIdentifier resourceId = default;
+            string registryUri = default;
+            ContainerRegistryImportSourceCredentials credentials = default;
             string sourceImage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImportSource(resourceId.Value, registryUri.Value, credentials.Value, sourceImage, serializedAdditionalRawData);
+            return new ContainerRegistryImportSource(resourceId, registryUri, credentials, sourceImage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImportSource>.Write(ModelReaderWriterOptions options)

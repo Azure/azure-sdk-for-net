@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Defaults != null)
+            if (Optional.IsDefined(Defaults))
             {
                 if (Defaults != null)
                 {
@@ -38,14 +39,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("defaults");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && ScoringUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
             {
                 if (ScoringUri != null)
                 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri");
                 }
             }
-            if (options.Format != "W" && SwaggerUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
             {
                 if (SwaggerUri != null)
                 {
@@ -149,14 +150,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BatchEndpointDefaults> defaults = default;
-            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            BatchEndpointDefaults defaults = default;
+            MachineLearningEndpointProvisioningState? provisioningState = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
             IDictionary<string, string> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,14 +249,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningBatchEndpointProperties(
                 authMode,
-                description.Value,
-                keys.Value,
+                description,
+                keys,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                scoringUri.Value,
-                swaggerUri.Value,
+                scoringUri,
+                swaggerUri,
                 serializedAdditionalRawData,
-                defaults.Value,
-                Optional.ToNullable(provisioningState));
+                defaults,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchEndpointProperties>.Write(ModelReaderWriterOptions options)

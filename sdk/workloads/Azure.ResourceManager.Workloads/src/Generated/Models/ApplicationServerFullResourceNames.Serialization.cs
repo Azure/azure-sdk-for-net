@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             IList<VirtualMachineResourceNames> virtualMachines = default;
-            Optional<string> availabilitySetName = default;
+            string availabilitySetName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName.Value, serializedAdditionalRawData);
+            return new ApplicationServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationServerFullResourceNames>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            Optional<string> expression = default;
+            string startTime = default;
+            string timeZone = default;
+            string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeStartStopCronSchedule(startTime.Value, timeZone.Value, expression.Value, serializedAdditionalRawData);
+            return new ComputeStartStopCronSchedule(startTime, timeZone, expression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeStartStopCronSchedule>.Write(ModelReaderWriterOptions options)

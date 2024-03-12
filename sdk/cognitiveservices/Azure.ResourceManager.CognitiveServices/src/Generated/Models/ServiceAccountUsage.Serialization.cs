@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (QuotaPeriod != null)
+            if (Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (NextResetTime != null)
+            if (Optional.IsDefined(NextResetTime))
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetTime);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ServiceAccountUsageUnitType> unit = default;
-            Optional<ServiceAccountUsageMetricName> name = default;
-            Optional<string> quotaPeriod = default;
-            Optional<double> limit = default;
-            Optional<double> currentValue = default;
-            Optional<string> nextResetTime = default;
-            Optional<ServiceAccountQuotaUsageStatus> status = default;
+            ServiceAccountUsageUnitType? unit = default;
+            ServiceAccountUsageMetricName name = default;
+            string quotaPeriod = default;
+            double? limit = default;
+            double? currentValue = default;
+            string nextResetTime = default;
+            ServiceAccountQuotaUsageStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,13 +173,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceAccountUsage(
-                Optional.ToNullable(unit),
-                name.Value,
-                quotaPeriod.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(currentValue),
-                nextResetTime.Value,
-                Optional.ToNullable(status),
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                nextResetTime,
+                status,
                 serializedAdditionalRawData);
         }
 

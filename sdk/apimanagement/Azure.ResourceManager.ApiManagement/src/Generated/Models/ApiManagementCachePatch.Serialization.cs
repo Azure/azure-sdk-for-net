@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (UseFromLocation != null)
+            if (Optional.IsDefined(UseFromLocation))
             {
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> connectionString = default;
-            Optional<string> useFromLocation = default;
-            Optional<Uri> resourceId = default;
+            string description = default;
+            string connectionString = default;
+            string useFromLocation = default;
+            Uri resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCachePatch(description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementCachePatch(description, connectionString, useFromLocation, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCachePatch>.Write(ModelReaderWriterOptions options)

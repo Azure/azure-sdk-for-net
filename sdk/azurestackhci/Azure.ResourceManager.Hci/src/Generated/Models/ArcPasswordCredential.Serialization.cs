@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (SecretText != null)
+            if (Optional.IsDefined(SecretText))
             {
                 writer.WritePropertyName("secretText"u8);
                 writer.WriteStringValue(SecretText);
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> secretText = default;
-            Optional<string> keyId = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
+            string secretText = default;
+            string keyId = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), serializedAdditionalRawData);
+            return new ArcPasswordCredential(secretText, keyId, startDateTime, endDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcPasswordCredential>.Write(ModelReaderWriterOptions options)

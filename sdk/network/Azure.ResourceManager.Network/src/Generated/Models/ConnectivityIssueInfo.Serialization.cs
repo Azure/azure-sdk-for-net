@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Origin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin.Value.ToString());
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && ConnectivityIssueType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityIssueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectivityIssueType.Value.ToString());
             }
-            if (options.Format != "W" && !(Contexts is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Contexts))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IssueOrigin> origin = default;
-            Optional<IssueSeverity> severity = default;
-            Optional<ConnectivityIssueType> type = default;
+            IssueOrigin? origin = default;
+            IssueSeverity? severity = default;
+            ConnectivityIssueType? type = default;
             IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityIssueInfo(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
+            return new ConnectivityIssueInfo(origin, severity, type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityIssueInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (DependencyName != null)
+            if (Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
                 writer.WriteStringValue(DependencyName);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (MinVersion != null)
+            if (Optional.IsDefined(MinVersion))
             {
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> dependencyName = default;
-            Optional<string> publisher = default;
-            Optional<string> minVersion = default;
+            string dependencyName = default;
+            string publisher = default;
+            string minVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageDependencies(dependencyName.Value, publisher.Value, minVersion.Value, serializedAdditionalRawData);
+            return new MsixPackageDependencies(dependencyName, publisher, minVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageDependencies>.Write(ModelReaderWriterOptions options)

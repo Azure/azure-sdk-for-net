@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && FullyQualifiedName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedName))
             {
                 writer.WritePropertyName("fullyQualifiedName"u8);
                 writer.WriteStringValue(FullyQualifiedName);
             }
-            if (options.Format != "W" && FullyQualifiedFriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedFriendlyName))
             {
                 writer.WritePropertyName("fullyQualifiedFriendlyName"u8);
                 writer.WriteStringValue(FullyQualifiedFriendlyName);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<string> fullyQualifiedName = default;
-            Optional<string> fullyQualifiedFriendlyName = default;
-            Optional<Uri> url = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            string fullyQualifiedName = default;
+            string fullyQualifiedFriendlyName = default;
+            Uri url = default;
+            ResourceOnboardingState? onboardingState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +169,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityConnectorGitLabGroupProperties(
-                provisioningStatusMessage.Value,
-                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
-                Optional.ToNullable(provisioningState),
-                fullyQualifiedName.Value,
-                fullyQualifiedFriendlyName.Value,
-                url.Value,
-                Optional.ToNullable(onboardingState),
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                fullyQualifiedName,
+                fullyQualifiedFriendlyName,
+                url,
+                onboardingState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsPrimary.HasValue)
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ManagedHsmGeoReplicatedRegionProvisioningState> provisioningState = default;
-            Optional<bool> isPrimary = default;
+            string name = default;
+            ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = default;
+            bool? isPrimary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmGeoReplicatedRegion(name.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
+            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmGeoReplicatedRegion>.Write(ModelReaderWriterOptions options)

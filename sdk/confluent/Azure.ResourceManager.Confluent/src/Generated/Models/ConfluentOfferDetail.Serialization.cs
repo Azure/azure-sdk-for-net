@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -36,7 +37,27 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStringValue(PlanName);
             writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
-            if (options.Format != "W" && Status.HasValue)
+            if (Optional.IsDefined(TermId))
+            {
+                writer.WritePropertyName("termId"u8);
+                writer.WriteStringValue(TermId);
+            }
+            if (Optional.IsDefined(PrivateOfferId))
+            {
+                writer.WritePropertyName("privateOfferId"u8);
+                writer.WriteStringValue(PrivateOfferId);
+            }
+            if (Optional.IsCollectionDefined(PrivateOfferIds))
+            {
+                writer.WritePropertyName("privateOfferIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateOfferIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,7 +105,10 @@ namespace Azure.ResourceManager.Confluent.Models
             string planId = default;
             string planName = default;
             string termUnit = default;
-            Optional<ConfluentSaaSOfferStatus> status = default;
+            string termId = default;
+            string privateOfferId = default;
+            IList<string> privateOfferIds = default;
+            ConfluentSaaSOfferStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,6 +138,30 @@ namespace Azure.ResourceManager.Confluent.Models
                     termUnit = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("termId"u8))
+                {
+                    termId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateOfferId"u8))
+                {
+                    privateOfferId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateOfferIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    privateOfferIds = array;
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -135,7 +183,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 planId,
                 planName,
                 termUnit,
-                Optional.ToNullable(status),
+                termId,
+                privateOfferId,
+                privateOfferIds ?? new ChangeTrackingList<string>(),
+                status,
                 serializedAdditionalRawData);
         }
 

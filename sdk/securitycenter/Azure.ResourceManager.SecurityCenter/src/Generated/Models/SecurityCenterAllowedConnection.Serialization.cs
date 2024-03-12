@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,19 +48,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CalculatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CalculatedOn))
             {
                 writer.WritePropertyName("calculatedDateTime"u8);
                 writer.WriteStringValue(CalculatedOn.Value, "O");
             }
-            if (options.Format != "W" && !(ConnectableResources is ChangeTrackingList<ConnectableResourceInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectableResources))
             {
                 writer.WritePropertyName("connectableResources"u8);
                 writer.WriteStartArray();
@@ -108,12 +109,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
             IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,10 +198,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(calculatedDateTime),
+                systemData,
+                calculatedDateTime,
                 connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData);
         }
 

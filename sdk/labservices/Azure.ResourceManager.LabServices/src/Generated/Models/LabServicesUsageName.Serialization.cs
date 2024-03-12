@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (!(SkuInstances is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkuInstances))
             {
                 writer.WritePropertyName("skuInstances"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> localizedValue = default;
+            string localizedValue = default;
             IReadOnlyList<string> skuInstances = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsageName(localizedValue.Value, skuInstances ?? new ChangeTrackingList<string>(), value.Value, serializedAdditionalRawData);
+            return new LabServicesUsageName(localizedValue, skuInstances ?? new ChangeTrackingList<string>(), value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsageName>.Write(ModelReaderWriterOptions options)

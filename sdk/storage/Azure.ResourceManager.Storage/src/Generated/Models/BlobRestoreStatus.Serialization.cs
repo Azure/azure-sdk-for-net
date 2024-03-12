@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && FailureReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && RestoreId != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreId))
             {
                 writer.WritePropertyName("restoreId"u8);
                 writer.WriteStringValue(RestoreId);
             }
-            if (options.Format != "W" && Parameters != null)
+            if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobRestoreProgressStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> restoreId = default;
-            Optional<BlobRestoreContent> parameters = default;
+            BlobRestoreProgressStatus? status = default;
+            string failureReason = default;
+            string restoreId = default;
+            BlobRestoreContent parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobRestoreStatus(Optional.ToNullable(status), failureReason.Value, restoreId.Value, parameters.Value, serializedAdditionalRawData);
+            return new BlobRestoreStatus(status, failureReason, restoreId, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobRestoreStatus>.Write(ModelReaderWriterOptions options)

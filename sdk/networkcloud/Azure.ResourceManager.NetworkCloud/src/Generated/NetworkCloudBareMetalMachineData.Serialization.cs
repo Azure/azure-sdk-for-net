@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -89,37 +89,37 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && CordonStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CordonStatus))
             {
                 writer.WritePropertyName("cordonStatus"u8);
                 writer.WriteStringValue(CordonStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && HardwareInventory != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
                 writer.WriteObjectValue(HardwareInventory);
             }
-            if (options.Format != "W" && HardwareValidationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
                 writer.WriteObjectValue(HardwareValidationStatus);
             }
-            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && KubernetesNodeName != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesNodeName))
             {
                 writer.WritePropertyName("kubernetesNodeName"u8);
                 writer.WriteStringValue(KubernetesNodeName);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -145,27 +145,27 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("machineSkuId"u8);
             writer.WriteStringValue(MachineSkuId);
-            if (options.Format != "W" && OamIPv4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
             {
                 writer.WritePropertyName("oamIpv4Address"u8);
                 writer.WriteStringValue(OamIPv4Address.ToString());
             }
-            if (options.Format != "W" && OamIPv6Address != null)
+            if (options.Format != "W" && Optional.IsDefined(OamIPv6Address))
             {
                 writer.WritePropertyName("oamIpv6Address"u8);
                 writer.WriteStringValue(OamIPv6Address);
             }
-            if (options.Format != "W" && OSImage != null)
+            if (options.Format != "W" && Optional.IsDefined(OSImage))
             {
                 writer.WritePropertyName("osImage"u8);
                 writer.WriteStringValue(OSImage);
             }
-            if (options.Format != "W" && PowerState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
-            if (options.Format != "W" && ReadyState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReadyState))
             {
                 writer.WritePropertyName("readyState"u8);
                 writer.WriteStringValue(ReadyState.Value.ToString());
             }
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (options.Format != "W" && ServiceTag != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceTag))
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -241,34 +241,34 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<BareMetalMachineCordonStatus> cordonStatus = default;
-            Optional<BareMetalMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<HardwareInventory> hardwareInventory = default;
-            Optional<HardwareValidationStatus> hardwareValidationStatus = default;
+            ResourceIdentifier clusterId = default;
+            BareMetalMachineCordonStatus? cordonStatus = default;
+            BareMetalMachineDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            HardwareInventory hardwareInventory = default;
+            HardwareValidationStatus hardwareValidationStatus = default;
             IReadOnlyList<string> hybridAksClustersAssociatedIds = default;
-            Optional<string> kubernetesNodeName = default;
-            Optional<string> kubernetesVersion = default;
+            string kubernetesNodeName = default;
+            string kubernetesVersion = default;
             string machineDetails = default;
             string machineName = default;
             string machineSkuId = default;
-            Optional<IPAddress> oamIPv4Address = default;
-            Optional<string> oamIPv6Address = default;
-            Optional<string> osImage = default;
-            Optional<BareMetalMachinePowerState> powerState = default;
-            Optional<BareMetalMachineProvisioningState> provisioningState = default;
+            IPAddress oamIPv4Address = default;
+            string oamIPv6Address = default;
+            string osImage = default;
+            BareMetalMachinePowerState? powerState = default;
+            BareMetalMachineProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<BareMetalMachineReadyState> readyState = default;
+            BareMetalMachineReadyState? readyState = default;
             string serialNumber = default;
-            Optional<string> serviceTag = default;
+            string serviceTag = default;
             IReadOnlyList<string> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
@@ -563,28 +563,28 @@ namespace Azure.ResourceManager.NetworkCloud
                 bmcCredentials,
                 bmcMacAddress,
                 bootMacAddress,
-                clusterId.Value,
-                Optional.ToNullable(cordonStatus),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                hardwareInventory.Value,
-                hardwareValidationStatus.Value,
+                clusterId,
+                cordonStatus,
+                detailedStatus,
+                detailedStatusMessage,
+                hardwareInventory,
+                hardwareValidationStatus,
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(),
-                kubernetesNodeName.Value,
-                kubernetesVersion.Value,
+                kubernetesNodeName,
+                kubernetesVersion,
                 machineDetails,
                 machineName,
                 machineSkuId,
-                oamIPv4Address.Value,
-                oamIPv6Address.Value,
-                osImage.Value,
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(provisioningState),
+                oamIPv4Address,
+                oamIPv6Address,
+                osImage,
+                powerState,
+                provisioningState,
                 rackId,
                 rackSlot,
-                Optional.ToNullable(readyState),
+                readyState,
                 serialNumber,
-                serviceTag.Value,
+                serviceTag,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

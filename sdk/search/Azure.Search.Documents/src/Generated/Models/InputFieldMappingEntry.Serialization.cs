@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,17 +19,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (SourceContext != null)
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (!(Inputs is ChangeTrackingList<InputFieldMappingEntry> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -48,8 +49,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
+            string source = default;
+            string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,47 +28,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AgentGeneratedId != null)
+            if (Optional.IsDefined(AgentGeneratedId))
             {
                 writer.WritePropertyName("agentGeneratedId"u8);
                 writer.WriteStringValue(AgentGeneratedId);
             }
-            if (AgentInstalled != null)
+            if (Optional.IsDefined(AgentInstalled))
             {
                 writer.WritePropertyName("agentInstalled"u8);
                 writer.WriteStringValue(AgentInstalled);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (PoweredOn != null)
+            if (Optional.IsDefined(PoweredOn))
             {
                 writer.WritePropertyName("poweredOn"u8);
                 writer.WriteStringValue(PoweredOn);
             }
-            if (VCenterInfrastructureId != null)
+            if (Optional.IsDefined(VCenterInfrastructureId))
             {
                 writer.WritePropertyName("vCenterInfrastructureId"u8);
                 writer.WriteStringValue(VCenterInfrastructureId);
             }
-            if (DiscoveryType != null)
+            if (Optional.IsDefined(DiscoveryType))
             {
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (!(DiskDetails is ChangeTrackingList<InMageDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskDetails))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -127,14 +128,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentGeneratedId = default;
-            Optional<string> agentInstalled = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> poweredOn = default;
-            Optional<string> vCenterInfrastructureId = default;
-            Optional<string> discoveryType = default;
+            string agentGeneratedId = default;
+            string agentInstalled = default;
+            string osType = default;
+            string agentVersion = default;
+            IPAddress ipAddress = default;
+            string poweredOn = default;
+            string vCenterInfrastructureId = default;
+            string discoveryType = default;
             IReadOnlyList<InMageDiskDetails> diskDetails = default;
             IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             string instanceType = default;
@@ -228,14 +229,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareVmDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                agentGeneratedId.Value,
-                agentInstalled.Value,
-                osType.Value,
-                agentVersion.Value,
-                ipAddress.Value,
-                poweredOn.Value,
-                vCenterInfrastructureId.Value,
-                discoveryType.Value,
+                agentGeneratedId,
+                agentInstalled,
+                osType,
+                agentVersion,
+                ipAddress,
+                poweredOn,
+                vCenterInfrastructureId,
+                discoveryType,
                 diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
                 validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }

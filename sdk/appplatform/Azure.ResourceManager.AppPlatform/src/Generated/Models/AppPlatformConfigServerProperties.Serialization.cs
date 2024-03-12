@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (ConfigServer != null)
+            if (Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
                 writer.WriteObjectValue(ConfigServer);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigServerState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<ConfigServerSettings> configServer = default;
+            AppPlatformConfigServerState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            ConfigServerSettings configServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigServerProperties(Optional.ToNullable(provisioningState), error.Value, configServer.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigServerProperties(provisioningState, error, configServer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigServerProperties>.Write(ModelReaderWriterOptions options)

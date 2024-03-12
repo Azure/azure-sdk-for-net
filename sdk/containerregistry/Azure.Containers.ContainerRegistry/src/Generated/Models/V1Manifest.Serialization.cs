@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -19,13 +18,13 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> architecture = default;
-            Optional<string> name = default;
-            Optional<string> tag = default;
+            string architecture = default;
+            string name = default;
+            string tag = default;
             IReadOnlyList<FsLayer> fsLayers = default;
             IReadOnlyList<History> history = default;
             IReadOnlyList<ImageSignature> signatures = default;
-            Optional<int> schemaVersion = default;
+            int? schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"u8))
@@ -96,10 +95,10 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new V1Manifest(
-                Optional.ToNullable(schemaVersion),
-                architecture.Value,
-                name.Value,
-                tag.Value,
+                schemaVersion,
+                architecture,
+                name,
+                tag,
                 fsLayers ?? new ChangeTrackingList<FsLayer>(),
                 history ?? new ChangeTrackingList<History>(),
                 signatures ?? new ChangeTrackingList<ImageSignature>());

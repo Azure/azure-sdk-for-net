@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Description is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(InvolvedInteractionTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InvolvedInteractionTypes))
             {
                 writer.WritePropertyName("involvedInteractionTypes"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(InvolvedKpiTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(InvolvedKpiTypes))
             {
                 writer.WritePropertyName("involvedKpiTypes"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(InvolvedRelationships is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(InvolvedRelationships))
             {
                 writer.WritePropertyName("involvedRelationships"u8);
                 writer.WriteStartArray();
@@ -102,57 +102,57 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (NegativeOutcomeExpression != null)
+            if (Optional.IsDefined(NegativeOutcomeExpression))
             {
                 writer.WritePropertyName("negativeOutcomeExpression"u8);
                 writer.WriteStringValue(NegativeOutcomeExpression);
             }
-            if (PositiveOutcomeExpression != null)
+            if (Optional.IsDefined(PositiveOutcomeExpression))
             {
                 writer.WritePropertyName("positiveOutcomeExpression"u8);
                 writer.WriteStringValue(PositiveOutcomeExpression);
             }
-            if (PrimaryProfileType != null)
+            if (Optional.IsDefined(PrimaryProfileType))
             {
                 writer.WritePropertyName("primaryProfileType"u8);
                 writer.WriteStringValue(PrimaryProfileType);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PredictionName != null)
+            if (Optional.IsDefined(PredictionName))
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (ScopeExpression != null)
+            if (Optional.IsDefined(ScopeExpression))
             {
                 writer.WritePropertyName("scopeExpression"u8);
                 writer.WriteStringValue(ScopeExpression);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (AutoAnalyze.HasValue)
+            if (Optional.IsDefined(AutoAnalyze))
             {
                 writer.WritePropertyName("autoAnalyze"u8);
                 writer.WriteBooleanValue(AutoAnalyze.Value);
             }
-            if (Mappings != null)
+            if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (ScoreLabel != null)
+            if (Optional.IsDefined(ScoreLabel))
             {
                 writer.WritePropertyName("scoreLabel"u8);
                 writer.WriteStringValue(ScoreLabel);
             }
-            if (!(Grades is ChangeTrackingList<PredictionGradesItem> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Grades))
             {
                 writer.WritePropertyName("grades"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SystemGeneratedEntities != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemGeneratedEntities))
             {
                 writer.WritePropertyName("systemGeneratedEntities"u8);
                 writer.WriteObjectValue(SystemGeneratedEntities);
@@ -209,24 +209,24 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, string> description = default;
             IDictionary<string, string> displayName = default;
             IList<string> involvedInteractionTypes = default;
             IList<string> involvedKpiTypes = default;
             IList<string> involvedRelationships = default;
-            Optional<string> negativeOutcomeExpression = default;
-            Optional<string> positiveOutcomeExpression = default;
-            Optional<string> primaryProfileType = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> predictionName = default;
-            Optional<string> scopeExpression = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> autoAnalyze = default;
-            Optional<PredictionMappings> mappings = default;
-            Optional<string> scoreLabel = default;
+            string negativeOutcomeExpression = default;
+            string positiveOutcomeExpression = default;
+            string primaryProfileType = default;
+            ProvisioningState? provisioningState = default;
+            string predictionName = default;
+            string scopeExpression = default;
+            Guid? tenantId = default;
+            bool? autoAnalyze = default;
+            PredictionMappings mappings = default;
+            string scoreLabel = default;
             IList<PredictionGradesItem> grades = default;
-            Optional<PredictionSystemGeneratedEntities> systemGeneratedEntities = default;
+            PredictionSystemGeneratedEntities systemGeneratedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -436,24 +436,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 description ?? new ChangeTrackingDictionary<string, string>(),
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 involvedInteractionTypes ?? new ChangeTrackingList<string>(),
                 involvedKpiTypes ?? new ChangeTrackingList<string>(),
                 involvedRelationships ?? new ChangeTrackingList<string>(),
-                negativeOutcomeExpression.Value,
-                positiveOutcomeExpression.Value,
-                primaryProfileType.Value,
-                Optional.ToNullable(provisioningState),
-                predictionName.Value,
-                scopeExpression.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(autoAnalyze),
-                mappings.Value,
-                scoreLabel.Value,
+                negativeOutcomeExpression,
+                positiveOutcomeExpression,
+                primaryProfileType,
+                provisioningState,
+                predictionName,
+                scopeExpression,
+                tenantId,
+                autoAnalyze,
+                mappings,
+                scoreLabel,
                 grades ?? new ChangeTrackingList<PredictionGradesItem>(),
-                systemGeneratedEntities.Value,
+                systemGeneratedEntities,
                 serializedAdditionalRawData);
         }
 

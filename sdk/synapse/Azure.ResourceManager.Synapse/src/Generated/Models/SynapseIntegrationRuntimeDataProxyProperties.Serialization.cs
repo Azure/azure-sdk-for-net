@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (StagingLinkedService != null)
+            if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseEntityReference> connectVia = default;
-            Optional<SynapseEntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            SynapseEntityReference connectVia = default;
+            SynapseEntityReference stagingLinkedService = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeDataProxyProperties>.Write(ModelReaderWriterOptions options)

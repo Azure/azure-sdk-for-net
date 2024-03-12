@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && StartLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartLine))
             {
                 writer.WritePropertyName("startLine"u8);
                 writer.WriteNumberValue(StartLine.Value);
             }
-            if (options.Format != "W" && StartColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartColumn))
             {
                 writer.WritePropertyName("startColumn"u8);
                 writer.WriteNumberValue(StartColumn.Value);
             }
-            if (options.Format != "W" && EndLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndLine))
             {
                 writer.WritePropertyName("endLine"u8);
                 writer.WriteNumberValue(EndLine.Value);
             }
-            if (options.Format != "W" && EndColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndColumn))
             {
                 writer.WritePropertyName("endColumn"u8);
                 writer.WriteNumberValue(EndColumn.Value);
             }
-            if (options.Format != "W" && IsGlobal.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<int> startLine = default;
-            Optional<int> startColumn = default;
-            Optional<int> endLine = default;
-            Optional<int> endColumn = default;
-            Optional<bool> isGlobal = default;
+            string message = default;
+            int? startLine = default;
+            int? startColumn = default;
+            int? endLine = default;
+            int? endColumn = default;
+            bool? isGlobal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamAnalyticsQueryCompilationError(
-                message.Value,
-                Optional.ToNullable(startLine),
-                Optional.ToNullable(startColumn),
-                Optional.ToNullable(endLine),
-                Optional.ToNullable(endColumn),
-                Optional.ToNullable(isGlobal),
+                message,
+                startLine,
+                startColumn,
+                endLine,
+                endColumn,
+                isGlobal,
                 serializedAdditionalRawData);
         }
 

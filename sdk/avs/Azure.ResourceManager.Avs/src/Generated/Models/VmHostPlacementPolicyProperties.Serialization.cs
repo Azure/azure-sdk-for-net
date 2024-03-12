@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndArray();
             writer.WritePropertyName("affinityType"u8);
             writer.WriteStringValue(AffinityType.ToString());
-            if (AffinityStrength.HasValue)
+            if (Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
-            if (AzureHybridBenefitType.HasValue)
+            if (Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -115,12 +116,12 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
-            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AzureHybridBenefitType? azureHybridBenefitType = default;
             PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,15 +212,15 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmHostPlacementPolicyProperties(
                 type,
-                Optional.ToNullable(state),
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
+                state,
+                displayName,
+                provisioningState,
                 serializedAdditionalRawData,
                 vmMembers,
                 hostMembers,
                 affinityType,
-                Optional.ToNullable(affinityStrength),
-                Optional.ToNullable(azureHybridBenefitType));
+                affinityStrength,
+                azureHybridBenefitType);
         }
 
         BinaryData IPersistableModel<VmHostPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)

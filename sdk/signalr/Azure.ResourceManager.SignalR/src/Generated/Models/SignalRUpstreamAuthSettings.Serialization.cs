@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (AuthType.HasValue)
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (ManagedIdentity != null)
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<SignalRUpstreamAuthType> type = default;
-            Optional<ManagedIdentitySettings> managedIdentity = default;
+            SignalRUpstreamAuthType? type = default;
+            ManagedIdentitySettings managedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value, serializedAdditionalRawData);
+            return new SignalRUpstreamAuthSettings(type, managedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUpstreamAuthSettings>.Write(ModelReaderWriterOptions options)

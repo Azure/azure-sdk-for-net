@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TextWeights != null)
+            if (Optional.IsDefined(TextWeights))
             {
                 if (TextWeights != null)
                 {
@@ -30,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("text");
                 }
             }
-            if (!(Functions is ChangeTrackingList<ScoringFunction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -40,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionAggregation.HasValue)
+            if (Optional.IsDefined(FunctionAggregation))
             {
                 if (FunctionAggregation != null)
                 {
@@ -62,9 +63,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<TextWeights> text = default;
+            TextWeights text = default;
             IList<ScoringFunction> functions = default;
-            Optional<ScoringFunctionAggregation?> functionAggregation = default;
+            ScoringFunctionAggregation? functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, functions ?? new ChangeTrackingList<ScoringFunction>(), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
         }
     }
 }

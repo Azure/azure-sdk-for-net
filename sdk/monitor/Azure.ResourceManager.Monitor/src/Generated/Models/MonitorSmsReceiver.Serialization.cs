@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(CountryCode);
             writer.WritePropertyName("phoneNumber"u8);
             writer.WriteStringValue(PhoneNumber);
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string countryCode = default;
             string phoneNumber = default;
-            Optional<MonitorReceiverStatus> status = default;
+            MonitorReceiverStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MonitorSmsReceiver(name, countryCode, phoneNumber, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorSmsReceiver>.Write(ModelReaderWriterOptions options)

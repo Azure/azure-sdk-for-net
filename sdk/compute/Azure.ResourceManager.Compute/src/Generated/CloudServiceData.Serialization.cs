@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,69 +66,69 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PackageUri != null)
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
-            if (ConfigurationUri != null)
+            if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl"u8);
                 writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
-            if (StartCloudService.HasValue)
+            if (Optional.IsDefined(StartCloudService))
             {
                 writer.WritePropertyName("startCloudService"u8);
                 writer.WriteBooleanValue(StartCloudService.Value);
             }
-            if (AllowModelOverride.HasValue)
+            if (Optional.IsDefined(AllowModelOverride))
             {
                 writer.WritePropertyName("allowModelOverride"u8);
                 writer.WriteBooleanValue(AllowModelOverride.Value);
             }
-            if (UpgradeMode.HasValue)
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (RoleProfile != null)
+            if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
                 writer.WriteObjectValue(RoleProfile);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (ExtensionProfile != null)
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
@@ -178,19 +178,19 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> packageUrl = default;
-            Optional<string> configuration = default;
-            Optional<Uri> configurationUrl = default;
-            Optional<bool> startCloudService = default;
-            Optional<bool> allowModelOverride = default;
-            Optional<CloudServiceUpgradeMode> upgradeMode = default;
-            Optional<CloudServiceRoleProfile> roleProfile = default;
-            Optional<CloudServiceOSProfile> osProfile = default;
-            Optional<CloudServiceNetworkProfile> networkProfile = default;
-            Optional<CloudServiceExtensionProfile> extensionProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<string> uniqueId = default;
+            SystemData systemData = default;
+            Uri packageUrl = default;
+            string configuration = default;
+            Uri configurationUrl = default;
+            bool? startCloudService = default;
+            bool? allowModelOverride = default;
+            CloudServiceUpgradeMode? upgradeMode = default;
+            CloudServiceRoleProfile roleProfile = default;
+            CloudServiceOSProfile osProfile = default;
+            CloudServiceNetworkProfile networkProfile = default;
+            CloudServiceExtensionProfile extensionProfile = default;
+            string provisioningState = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -370,22 +370,22 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 zones ?? new ChangeTrackingList<string>(),
-                packageUrl.Value,
-                configuration.Value,
-                configurationUrl.Value,
-                Optional.ToNullable(startCloudService),
-                Optional.ToNullable(allowModelOverride),
-                Optional.ToNullable(upgradeMode),
-                roleProfile.Value,
-                osProfile.Value,
-                networkProfile.Value,
-                extensionProfile.Value,
-                provisioningState.Value,
-                uniqueId.Value,
+                packageUrl,
+                configuration,
+                configurationUrl,
+                startCloudService,
+                allowModelOverride,
+                upgradeMode,
+                roleProfile,
+                osProfile,
+                networkProfile,
+                extensionProfile,
+                provisioningState,
+                uniqueId,
                 serializedAdditionalRawData);
         }
 

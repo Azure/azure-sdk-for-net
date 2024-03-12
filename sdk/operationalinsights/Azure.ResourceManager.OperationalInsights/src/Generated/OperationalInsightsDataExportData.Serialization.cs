@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DataExportId.HasValue)
+            if (Optional.IsDefined(DataExportId))
             {
                 writer.WritePropertyName("dataExportId"u8);
                 writer.WriteStringValue(DataExportId.Value);
             }
-            if (!(TableNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TableNames))
             {
                 writer.WritePropertyName("tableNames"u8);
                 writer.WriteStartArray();
@@ -65,36 +65,36 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "R");
             }
             writer.WritePropertyName("destination"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && DestinationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
             writer.WritePropertyName("metaData"u8);
             writer.WriteStartObject();
-            if (EventHubName != null)
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataExportId = default;
+            SystemData systemData = default;
+            Guid? dataExportId = default;
             IList<string> tableNames = default;
-            Optional<bool> enable = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> lastModifiedDate = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<OperationalInsightsDataExportDestinationType> type0 = default;
-            Optional<string> eventHubName = default;
+            bool? enable = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? lastModifiedDate = default;
+            ResourceIdentifier resourceId = default;
+            OperationalInsightsDataExportDestinationType? type0 = default;
+            string eventHubName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,15 +299,15 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(dataExportId),
+                systemData,
+                dataExportId,
                 tableNames ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(enable),
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(lastModifiedDate),
-                resourceId.Value,
-                Optional.ToNullable(type0),
-                eventHubName.Value,
+                enable,
+                createdDate,
+                lastModifiedDate,
+                resourceId,
+                type0,
+                eventHubName,
                 serializedAdditionalRawData);
         }
 

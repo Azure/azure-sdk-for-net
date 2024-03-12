@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (OperationStatus != null)
+            if (Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(OperationStatus);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkPropertiesStatusOperationStatus> operationStatus = default;
+            VirtualNetworkPropertiesStatusOperationStatus operationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNetworkStatus(operationStatus.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceNetworkStatus(operationStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNetworkStatus>.Write(ModelReaderWriterOptions options)

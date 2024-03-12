@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string ipAddressRange = default;
             ContainerAppIPRuleAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action, serializedAdditionalRawData);
+            return new ContainerAppIPSecurityRestrictionRule(name, description, ipAddressRange, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIPSecurityRestrictionRule>.Write(ModelReaderWriterOptions options)

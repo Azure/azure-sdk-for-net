@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VMwareSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (options.Format != "W" && PhysicalSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            if (options.Format != "W" && ServiceEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && ServiceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && ServiceContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
             {
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && DataPlaneUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
             {
                 writer.WritePropertyName("dataPlaneUri"u8);
                 writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ControlPlaneUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlPlaneUri))
             {
                 writer.WritePropertyName("controlPlaneUri"u8);
                 writer.WriteStringValue(ControlPlaneUri.AbsoluteUri);
             }
-            if (SourceAgentIdentityDetails != null)
+            if (Optional.IsDefined(SourceAgentIdentityDetails))
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
                 writer.WriteObjectValue(SourceAgentIdentityDetails);
             }
-            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RcmProxies is ChangeTrackingList<RcmProxyDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RcmProxies))
             {
                 writer.WritePropertyName("rcmProxies"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PushInstallers is ChangeTrackingList<PushInstallerDetails> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PushInstallers))
             {
                 writer.WritePropertyName("pushInstallers"u8);
                 writer.WriteStartArray();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReplicationAgents is ChangeTrackingList<ReplicationAgentDetails> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReplicationAgents))
             {
                 writer.WritePropertyName("replicationAgents"u8);
                 writer.WriteStartArray();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReprotectAgents is ChangeTrackingList<ReprotectAgentDetails> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReprotectAgents))
             {
                 writer.WritePropertyName("reprotectAgents"u8);
                 writer.WriteStartArray();
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(MarsAgents is ChangeTrackingList<MarsAgentDetails> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MarsAgents))
             {
                 writer.WritePropertyName("marsAgents"u8);
                 writer.WriteStartArray();
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Dras is ChangeTrackingList<SiteRecoveryDraDetails> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Dras))
             {
                 writer.WritePropertyName("dras"u8);
                 writer.WriteStartArray();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AgentDetails is ChangeTrackingList<SiteRecoveryAgentDetails> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AgentDetails))
             {
                 writer.WritePropertyName("agentDetails"u8);
                 writer.WriteStartArray();
@@ -186,14 +187,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
-            Optional<Uri> dataPlaneUri = default;
-            Optional<Uri> controlPlaneUri = default;
-            Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
+            Uri dataPlaneUri = default;
+            Uri controlPlaneUri = default;
+            IdentityProviderDetails sourceAgentIdentityDetails = default;
             IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             IReadOnlyList<RcmProxyDetails> rcmProxies = default;
             IReadOnlyList<PushInstallerDetails> pushInstallers = default;
@@ -397,14 +398,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFabricSpecificDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                vmwareSiteId.Value,
-                physicalSiteId.Value,
-                serviceEndpoint.Value,
-                serviceResourceId.Value,
-                serviceContainerId.Value,
-                dataPlaneUri.Value,
-                controlPlaneUri.Value,
-                sourceAgentIdentityDetails.Value,
+                vmwareSiteId,
+                physicalSiteId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
+                dataPlaneUri,
+                controlPlaneUri,
+                sourceAgentIdentityDetails,
                 processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(),
                 rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(),
                 pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(),

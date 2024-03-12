@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (!(Variables is ChangeTrackingDictionary<string, PipelineVariableSpecification> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Concurrency.HasValue)
+            if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (!(RunDimensions is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -189,20 +189,20 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IDictionary<string, PipelineVariableSpecification> variables = default;
-            Optional<int> concurrency = default;
+            int? concurrency = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> runDimensions = default;
-            Optional<PipelineFolder> folder = default;
-            Optional<DataFactoryPipelinePolicy> policy = default;
+            PipelineFolder folder = default;
+            DataFactoryPipelinePolicy policy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,17 +375,17 @@ namespace Azure.ResourceManager.DataFactory
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
+                systemData,
+                description,
                 activities ?? new ChangeTrackingList<PipelineActivity>(),
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
-                Optional.ToNullable(concurrency),
+                concurrency,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                folder.Value,
-                policy.Value,
-                Optional.ToNullable(etag),
+                folder,
+                policy,
+                etag,
                 additionalProperties);
         }
 

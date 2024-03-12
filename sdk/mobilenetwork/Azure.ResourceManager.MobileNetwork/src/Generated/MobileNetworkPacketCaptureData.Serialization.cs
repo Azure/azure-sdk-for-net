@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && CaptureStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CaptureStartOn))
             {
                 writer.WritePropertyName("captureStartTime"u8);
                 writer.WriteStringValue(CaptureStartOn.Value, "O");
             }
-            if (!(NetworkInterfaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (BytesToCapturePerPacket.HasValue)
+            if (Optional.IsDefined(BytesToCapturePerPacket))
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (TotalBytesPerSession.HasValue)
+            if (Optional.IsDefined(TotalBytesPerSession))
             {
                 writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (TimeLimitInSeconds.HasValue)
+            if (Optional.IsDefined(TimeLimitInSeconds))
             {
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
-            if (options.Format != "W" && !(OutputFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkPacketCaptureStatus> status = default;
-            Optional<string> reason = default;
-            Optional<DateTimeOffset> captureStartTime = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            MobileNetworkPacketCaptureStatus? status = default;
+            string reason = default;
+            DateTimeOffset? captureStartTime = default;
             IList<string> networkInterfaces = default;
-            Optional<long> bytesToCapturePerPacket = default;
-            Optional<long> totalBytesPerSession = default;
-            Optional<int> timeLimitInSeconds = default;
+            long? bytesToCapturePerPacket = default;
+            long? totalBytesPerSession = default;
+            int? timeLimitInSeconds = default;
             IReadOnlyList<string> outputFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,15 +294,15 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                reason.Value,
-                Optional.ToNullable(captureStartTime),
+                systemData,
+                provisioningState,
+                status,
+                reason,
+                captureStartTime,
                 networkInterfaces ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(bytesToCapturePerPacket),
-                Optional.ToNullable(totalBytesPerSession),
-                Optional.ToNullable(timeLimitInSeconds),
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
                 outputFiles ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

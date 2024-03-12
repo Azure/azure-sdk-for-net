@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ArmTemplateId != null)
+            if (Optional.IsDefined(ArmTemplateId))
             {
                 writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
-            if (!(Parameters is ChangeTrackingList<DevTestLabArmTemplateParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> armTemplateId = default;
+            ResourceIdentifier armTemplateId = default;
             IList<DevTestLabArmTemplateParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, parameters ?? new ChangeTrackingList<DevTestLabArmTemplateParameter>(), serializedAdditionalRawData);
+            return new DevTestLabEnvironmentDeployment(armTemplateId, parameters ?? new ChangeTrackingList<DevTestLabArmTemplateParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEnvironmentDeployment>.Write(ModelReaderWriterOptions options)

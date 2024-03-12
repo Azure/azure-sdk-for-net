@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (AzureStorageResourceUri != null)
+            if (Optional.IsDefined(AzureStorageResourceUri))
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && LastBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupOn))
             {
                 writer.WritePropertyName("lastBackupDateTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (options.Format != "W" && LastBackupStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<Uri> azureStorageResourceUri = default;
-            Optional<DateTimeOffset> lastBackupDateTime = default;
-            Optional<string> lastBackupStatus = default;
+            Uri azureStorageResourceUri = default;
+            DateTimeOffset? lastBackupDateTime = default;
+            string lastBackupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupProperties(azureStorageResourceUri.Value, Optional.ToNullable(lastBackupDateTime), lastBackupStatus.Value, serializedAdditionalRawData);
+            return new BackupProperties(azureStorageResourceUri, lastBackupDateTime, lastBackupStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupProperties>.Write(ModelReaderWriterOptions options)

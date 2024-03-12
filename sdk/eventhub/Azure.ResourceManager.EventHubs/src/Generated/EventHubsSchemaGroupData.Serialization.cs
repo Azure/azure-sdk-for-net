@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatedAtUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedAtUtc))
             {
                 writer.WritePropertyName("updatedAtUtc"u8);
                 writer.WriteStringValue(UpdatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && CreatedAtUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedAtUtc))
             {
                 writer.WritePropertyName("createdAtUtc"u8);
                 writer.WriteStringValue(CreatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(GroupProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupProperties))
             {
                 writer.WritePropertyName("groupProperties"u8);
                 writer.WriteStartObject();
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndObject();
             }
-            if (SchemaCompatibility.HasValue)
+            if (Optional.IsDefined(SchemaCompatibility))
             {
                 writer.WritePropertyName("schemaCompatibility"u8);
                 writer.WriteStringValue(SchemaCompatibility.Value.ToString());
             }
-            if (SchemaType.HasValue)
+            if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> updatedAtUtc = default;
-            Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<ETag> eTag = default;
+            SystemData systemData = default;
+            DateTimeOffset? updatedAtUtc = default;
+            DateTimeOffset? createdAtUtc = default;
+            ETag? eTag = default;
             IDictionary<string, string> groupProperties = default;
-            Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
-            Optional<EventHubsSchemaType> schemaType = default;
+            EventHubsSchemaCompatibility? schemaCompatibility = default;
+            EventHubsSchemaType? schemaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(updatedAtUtc),
-                Optional.ToNullable(createdAtUtc),
-                Optional.ToNullable(eTag),
+                systemData,
+                updatedAtUtc,
+                createdAtUtc,
+                eTag,
                 groupProperties ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(schemaCompatibility),
-                Optional.ToNullable(schemaType),
-                Optional.ToNullable(location),
+                schemaCompatibility,
+                schemaType,
+                location,
                 serializedAdditionalRawData);
         }
 

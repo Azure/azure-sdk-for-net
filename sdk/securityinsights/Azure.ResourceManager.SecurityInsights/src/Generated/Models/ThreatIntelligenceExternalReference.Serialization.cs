@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (!(Hashes is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hashes))
             {
                 writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> externalId = default;
-            Optional<string> sourceName = default;
-            Optional<Uri> url = default;
+            string description = default;
+            string externalId = default;
+            string sourceName = default;
+            Uri url = default;
             IDictionary<string, string> hashes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,10 +150,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ThreatIntelligenceExternalReference(
-                description.Value,
-                externalId.Value,
-                sourceName.Value,
-                url.Value,
+                description,
+                externalId,
+                sourceName,
+                url,
                 hashes ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,42 +29,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(GraphName);
-            if (IndexingPolicy != null)
+            if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (DefaultTtl.HasValue)
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (UniqueKeyPolicy != null)
+            if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (ConflictResolutionPolicy != null)
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (AnalyticalStorageTtl.HasValue)
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (RestoreParameters != null)
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Optional<int> defaultTtl = default;
-            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<long> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            CosmosDBIndexingPolicy indexingPolicy = default;
+            CosmosDBContainerPartitionKey partitionKey = default;
+            int? defaultTtl = default;
+            CosmosDBUniqueKeyPolicy uniqueKeyPolicy = default;
+            ConflictResolutionPolicy conflictResolutionPolicy = default;
+            long? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,14 +205,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GremlinGraphResourceInfo(
                 id,
-                indexingPolicy.Value,
-                partitionKey.Value,
-                Optional.ToNullable(defaultTtl),
-                uniqueKeyPolicy.Value,
-                conflictResolutionPolicy.Value,
-                Optional.ToNullable(analyticalStorageTtl),
-                restoreParameters.Value,
-                Optional.ToNullable(createMode),
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeyPolicy,
+                conflictResolutionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
                 serializedAdditionalRawData);
         }
 

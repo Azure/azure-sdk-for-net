@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecureBootEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (IsVTpmEnabled.HasValue)
+            if (Optional.IsDefined(IsVTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
                 writer.WriteBooleanValue(IsVTpmEnabled.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> vTpmEnabled = default;
+            bool? secureBootEnabled = default;
+            bool? vTpmEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled), serializedAdditionalRawData);
+            return new BatchUefiSettings(secureBootEnabled, vTpmEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUefiSettings>.Write(ModelReaderWriterOptions options)

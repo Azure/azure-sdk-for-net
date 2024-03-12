@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TimeGrain != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (options.Format != "W" && Retention != null)
+            if (options.Format != "W" && Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> timeGrain = default;
-            Optional<string> retention = default;
+            string timeGrain = default;
+            string retention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBMetricAvailability(timeGrain.Value, retention.Value, serializedAdditionalRawData);
+            return new CosmosDBMetricAvailability(timeGrain, retention, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBMetricAvailability>.Write(ModelReaderWriterOptions options)

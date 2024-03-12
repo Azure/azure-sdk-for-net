@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FeatureType.HasValue)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
-            if (!(Features is ChangeTrackingList<BackupSupportedFeature> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
+            BackupSupportedFeatureType? featureType = default;
             IReadOnlyList<BackupSupportedFeature> features = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), features ?? new ChangeTrackingList<BackupSupportedFeature>());
+            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, featureType, features ?? new ChangeTrackingList<BackupSupportedFeature>());
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationResult>.Write(ModelReaderWriterOptions options)

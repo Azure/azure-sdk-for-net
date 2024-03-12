@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TaskName != null)
+            if (options.Format != "W" && Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (CustomProperties != null)
+            if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteObjectValue(CustomProperties);
             }
-            if (!(ChildrenWorkflows is ChangeTrackingList<DataReplicationWorkflowData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildrenWorkflows))
             {
                 writer.WritePropertyName("childrenWorkflows"u8);
                 writer.WriteStartArray();
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> taskName = default;
-            Optional<DataReplicationTaskState> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TaskModelCustomProperties> customProperties = default;
+            string taskName = default;
+            DataReplicationTaskState? state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TaskModelCustomProperties customProperties = default;
             IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataReplicationTask(
-                taskName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                customProperties.Value,
+                taskName,
+                state,
+                startTime,
+                endTime,
+                customProperties,
                 childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
                 serializedAdditionalRawData);
         }

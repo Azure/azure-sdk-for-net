@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
-            if (AllowPartialScopes.HasValue)
+            if (Optional.IsDefined(AllowPartialScopes))
             {
                 writer.WritePropertyName("allowPartialScopes"u8);
                 writer.WriteBooleanValue(AllowPartialScopes.Value);
             }
-            if (AuthorizationScopeFilter.HasValue)
+            if (Optional.IsDefined(AuthorizationScopeFilter))
             {
                 writer.WritePropertyName("authorizationScopeFilter"u8);
                 writer.WriteStringValue(AuthorizationScopeFilter.Value.ToSerialString());
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<string> skipToken = default;
-            Optional<int> top = default;
-            Optional<int> skip = default;
-            Optional<ResultFormat> resultFormat = default;
-            Optional<bool> allowPartialScopes = default;
-            Optional<AuthorizationScopeFilter> authorizationScopeFilter = default;
+            string skipToken = default;
+            int? top = default;
+            int? skip = default;
+            ResultFormat? resultFormat = default;
+            bool? allowPartialScopes = default;
+            AuthorizationScopeFilter? authorizationScopeFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceQueryRequestOptions(
-                skipToken.Value,
-                Optional.ToNullable(top),
-                Optional.ToNullable(skip),
-                Optional.ToNullable(resultFormat),
-                Optional.ToNullable(allowPartialScopes),
-                Optional.ToNullable(authorizationScopeFilter),
+                skipToken,
+                top,
+                skip,
+                resultFormat,
+                allowPartialScopes,
+                authorizationScopeFilter,
                 serializedAdditionalRawData);
         }
 

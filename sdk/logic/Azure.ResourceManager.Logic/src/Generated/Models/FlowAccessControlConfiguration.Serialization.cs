@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Triggers != null)
+            if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Contents != null)
+            if (Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteObjectValue(Contents);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (WorkflowManagement != null)
+            if (Optional.IsDefined(WorkflowManagement))
             {
                 writer.WritePropertyName("workflowManagement"u8);
                 writer.WriteObjectValue(WorkflowManagement);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<FlowAccessControlConfigurationPolicy> triggers = default;
-            Optional<FlowAccessControlConfigurationPolicy> contents = default;
-            Optional<FlowAccessControlConfigurationPolicy> actions = default;
-            Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
+            FlowAccessControlConfigurationPolicy triggers = default;
+            FlowAccessControlConfigurationPolicy contents = default;
+            FlowAccessControlConfigurationPolicy actions = default;
+            FlowAccessControlConfigurationPolicy workflowManagement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowAccessControlConfiguration(triggers.Value, contents.Value, actions.Value, workflowManagement.Value, serializedAdditionalRawData);
+            return new FlowAccessControlConfiguration(triggers, contents, actions, workflowManagement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowAccessControlConfiguration>.Write(ModelReaderWriterOptions options)

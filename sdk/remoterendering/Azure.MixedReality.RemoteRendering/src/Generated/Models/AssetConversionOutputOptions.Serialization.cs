@@ -18,17 +18,17 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
-            if (StorageContainerWriteSas != null)
+            if (Optional.IsDefined(StorageContainerWriteSas))
             {
                 writer.WritePropertyName("storageContainerWriteSas"u8);
                 writer.WriteStringValue(StorageContainerWriteSas);
             }
-            if (BlobPrefix != null)
+            if (Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            if (OutputAssetFilename != null)
+            if (Optional.IsDefined(OutputAssetFilename))
             {
                 writer.WritePropertyName("outputAssetFilename"u8);
                 writer.WriteStringValue(OutputAssetFilename);
@@ -43,9 +43,9 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             Uri storageContainerUri = default;
-            Optional<string> storageContainerWriteSas = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> outputAssetFilename = default;
+            string storageContainerWriteSas = default;
+            string blobPrefix = default;
+            string outputAssetFilename = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainerUri"u8))
@@ -69,7 +69,7 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas.Value, blobPrefix.Value, outputAssetFilename.Value);
+            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas, blobPrefix, outputAssetFilename);
         }
     }
 }

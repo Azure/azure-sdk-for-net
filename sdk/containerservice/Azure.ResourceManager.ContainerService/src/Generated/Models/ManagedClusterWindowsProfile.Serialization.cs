@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (IsCsiProxyEnabled.HasValue)
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy"u8);
                 writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
-            if (GmsaProfile != null)
+            if (Optional.IsDefined(GmsaProfile))
             {
                 writer.WritePropertyName("gmsaProfile"u8);
                 writer.WriteObjectValue(GmsaProfile);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<WindowsVmLicenseType> licenseType = default;
-            Optional<bool> enableCsiProxy = default;
-            Optional<WindowsGmsaProfile> gmsaProfile = default;
+            string adminPassword = default;
+            WindowsVmLicenseType? licenseType = default;
+            bool? enableCsiProxy = default;
+            WindowsGmsaProfile gmsaProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,10 +141,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterWindowsProfile(
                 adminUsername,
-                adminPassword.Value,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(enableCsiProxy),
-                gmsaProfile.Value,
+                adminPassword,
+                licenseType,
+                enableCsiProxy,
+                gmsaProfile,
                 serializedAdditionalRawData);
         }
 

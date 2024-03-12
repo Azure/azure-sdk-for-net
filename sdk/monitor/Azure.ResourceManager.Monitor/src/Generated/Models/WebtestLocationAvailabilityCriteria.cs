@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="webTestId"/> or <paramref name="componentId"/> is null. </exception>
         public WebtestLocationAvailabilityCriteria(ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount)
         {
-            if (webTestId == null)
-            {
-                throw new ArgumentNullException(nameof(webTestId));
-            }
-            if (componentId == null)
-            {
-                throw new ArgumentNullException(nameof(componentId));
-            }
+            Argument.AssertNotNull(webTestId, nameof(webTestId));
+            Argument.AssertNotNull(componentId, nameof(componentId));
 
             WebTestId = webTestId;
             ComponentId = componentId;

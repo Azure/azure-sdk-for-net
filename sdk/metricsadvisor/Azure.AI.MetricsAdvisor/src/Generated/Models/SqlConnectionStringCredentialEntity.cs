@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Models;
 
 namespace Azure.AI.MetricsAdvisor.Administration

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (PrimaryConnectionString != null)
+            if (Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (SecondaryConnectionString != null)
+            if (Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubKeys(primaryKey.Value, secondaryKey.Value, primaryConnectionString.Value, secondaryConnectionString.Value, serializedAdditionalRawData);
+            return new WebPubSubKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubKeys>.Write(ModelReaderWriterOptions options)

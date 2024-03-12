@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (IsNameAvailable.HasValue)
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> nameAvailable = default;
-            Optional<PostgreSqlFlexibleServerNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            string name = default;
+            ResourceType? type = default;
+            bool? nameAvailable = default;
+            PostgreSqlFlexibleServerNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,12 +143,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerNameAvailabilityResult(
-                Optional.ToNullable(nameAvailable),
-                Optional.ToNullable(reason),
-                message.Value,
+                nameAvailable,
+                reason,
+                message,
                 serializedAdditionalRawData,
-                name.Value,
-                Optional.ToNullable(type));
+                name,
+                type);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

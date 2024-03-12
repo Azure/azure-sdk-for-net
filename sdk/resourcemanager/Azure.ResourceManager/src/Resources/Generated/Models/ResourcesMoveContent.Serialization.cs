@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (!(Resources is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TargetResourceGroupId != null)
+            if (Optional.IsDefined(TargetResourceGroupId))
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             IList<string> resources = default;
-            Optional<ResourceIdentifier> targetResourceGroup = default;
+            ResourceIdentifier targetResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesMoveContent(resources ?? new ChangeTrackingList<string>(), targetResourceGroup.Value, serializedAdditionalRawData);
+            return new ResourcesMoveContent(resources ?? new ChangeTrackingList<string>(), targetResourceGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesMoveContent>.Write(ModelReaderWriterOptions options)

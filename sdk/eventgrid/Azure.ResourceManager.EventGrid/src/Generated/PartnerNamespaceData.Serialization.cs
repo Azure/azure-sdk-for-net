@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<EventGridPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -73,32 +73,32 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PartnerRegistrationFullyQualifiedId != null)
+            if (Optional.IsDefined(PartnerRegistrationFullyQualifiedId))
             {
                 writer.WritePropertyName("partnerRegistrationFullyQualifiedId"u8);
                 writer.WriteStringValue(PartnerRegistrationFullyQualifiedId);
             }
-            if (MinimumTlsVersionAllowed.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (PartnerTopicRoutingMode.HasValue)
+            if (Optional.IsDefined(PartnerTopicRoutingMode))
             {
                 writer.WritePropertyName("partnerTopicRoutingMode"u8);
                 writer.WriteStringValue(PartnerTopicRoutingMode.Value.ToString());
@@ -162,16 +162,16 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<PartnerNamespaceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<Uri> endpoint = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            PartnerNamespaceProvisioningState? provisioningState = default;
+            ResourceIdentifier partnerRegistrationFullyQualifiedId = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            Uri endpoint = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<PartnerTopicRoutingMode> partnerTopicRoutingMode = default;
+            bool? disableLocalAuth = default;
+            PartnerTopicRoutingMode? partnerTopicRoutingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,18 +332,18 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
-                Optional.ToNullable(provisioningState),
-                partnerRegistrationFullyQualifiedId.Value,
-                Optional.ToNullable(minimumTlsVersionAllowed),
-                endpoint.Value,
-                Optional.ToNullable(publicNetworkAccess),
+                provisioningState,
+                partnerRegistrationFullyQualifiedId,
+                minimumTlsVersionAllowed,
+                endpoint,
+                publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(partnerTopicRoutingMode),
+                disableLocalAuth,
+                partnerTopicRoutingMode,
                 serializedAdditionalRawData);
         }
 

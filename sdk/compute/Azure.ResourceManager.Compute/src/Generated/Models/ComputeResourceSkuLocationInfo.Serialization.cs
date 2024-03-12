@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ZoneDetails is ChangeTrackingList<ComputeResourceSkuZoneDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ExtendedLocations is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ExtendedLocationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 WriteExtendedLocationType(writer);
@@ -105,11 +106,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
-            Optional<ExtendedLocationType> type = default;
+            ExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +178,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeResourceSkuLocationInfo(
-                Optional.ToNullable(location),
+                location,
                 zones ?? new ChangeTrackingList<string>(),
                 zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
                 extendedLocations ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(type),
+                type,
                 serializedAdditionalRawData);
         }
 

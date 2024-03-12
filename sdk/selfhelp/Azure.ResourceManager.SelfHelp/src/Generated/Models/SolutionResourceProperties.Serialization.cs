@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (!(TriggerCriteria is ChangeTrackingList<TriggerCriterion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TriggerCriteria))
             {
                 writer.WritePropertyName("triggerCriteria"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,32 +48,32 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (ReplacementMaps != null)
+            if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
                 writer.WriteObjectValue(ReplacementMaps);
             }
-            if (!(Sections is ChangeTrackingList<SelfHelpSection> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sections))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();
@@ -122,11 +123,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             IList<TriggerCriterion> triggerCriteria = default;
             IDictionary<string, string> parameters = default;
-            Optional<string> solutionId = default;
-            Optional<SolutionProvisioningState> provisioningState = default;
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
+            string solutionId = default;
+            SolutionProvisioningState? provisioningState = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
             IList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionResourceProperties(
                 triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                solutionId.Value,
-                Optional.ToNullable(provisioningState),
-                title.Value,
-                content.Value,
-                replacementMaps.Value,
+                solutionId,
+                provisioningState,
+                title,
+                content,
+                replacementMaps,
                 sections ?? new ChangeTrackingList<SelfHelpSection>(),
                 serializedAdditionalRawData);
         }

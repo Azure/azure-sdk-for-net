@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricFriendlyName != null)
+            if (Optional.IsDefined(FabricFriendlyName))
             {
                 writer.WritePropertyName("fabricFriendlyName"u8);
                 writer.WriteStringValue(FabricFriendlyName);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (FabricType != null)
+            if (Optional.IsDefined(FabricType))
             {
                 writer.WritePropertyName("fabricType"u8);
                 writer.WriteStringValue(FabricType);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (PairingStatus != null)
+            if (Optional.IsDefined(PairingStatus))
             {
                 writer.WritePropertyName("pairingStatus"u8);
                 writer.WriteStringValue(PairingStatus);
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            if (FabricSpecificDetails != null)
+            if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
                 writer.WriteObjectValue(FabricSpecificDetails);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricFriendlyName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> fabricType = default;
-            Optional<int> protectedItemCount = default;
-            Optional<string> pairingStatus = default;
-            Optional<string> role = default;
-            Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
+            string fabricFriendlyName = default;
+            string friendlyName = default;
+            string fabricType = default;
+            int? protectedItemCount = default;
+            string pairingStatus = default;
+            string role = default;
+            ProtectionContainerFabricSpecificDetails fabricSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +161,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryProtectionContainerProperties(
-                fabricFriendlyName.Value,
-                friendlyName.Value,
-                fabricType.Value,
-                Optional.ToNullable(protectedItemCount),
-                pairingStatus.Value,
-                role.Value,
-                fabricSpecificDetails.Value,
+                fabricFriendlyName,
+                friendlyName,
+                fabricType,
+                protectedItemCount,
+                pairingStatus,
+                role,
+                fabricSpecificDetails,
                 serializedAdditionalRawData);
         }
 

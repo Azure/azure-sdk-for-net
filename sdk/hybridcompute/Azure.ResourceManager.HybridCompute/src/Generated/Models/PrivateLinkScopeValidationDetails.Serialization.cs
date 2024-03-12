@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(ConnectionDetails is ChangeTrackingList<HybridComputeConnectionDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetails))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
+            ResourceIdentifier id = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
             IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (IsDisplayEnabled.HasValue)
+            if (Optional.IsDefined(IsDisplayEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
-            if (IsConsentRequired.HasValue)
+            if (Optional.IsDefined(IsConsentRequired))
             {
                 writer.WritePropertyName("consentRequired"u8);
                 writer.WriteBooleanValue(IsConsentRequired.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<bool> enabled = default;
-            Optional<bool> consentRequired = default;
+            string text = default;
+            bool? enabled = default;
+            bool? consentRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TermsOfServiceProperties(text.Value, Optional.ToNullable(enabled), Optional.ToNullable(consentRequired), serializedAdditionalRawData);
+            return new TermsOfServiceProperties(text, enabled, consentRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TermsOfServiceProperties>.Write(ModelReaderWriterOptions options)

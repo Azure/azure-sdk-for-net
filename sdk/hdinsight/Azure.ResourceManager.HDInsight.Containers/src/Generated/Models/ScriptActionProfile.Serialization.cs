@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(UriString);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -44,12 +45,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (TimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(TimeoutInMinutes))
             {
                 writer.WritePropertyName("timeoutInMinutes"u8);
                 writer.WriteNumberValue(TimeoutInMinutes.Value);
             }
-            if (ShouldPersist.HasValue)
+            if (Optional.IsDefined(ShouldPersist))
             {
                 writer.WritePropertyName("shouldPersist"u8);
                 writer.WriteBooleanValue(ShouldPersist.Value);
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string type = default;
             string name = default;
             string url = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> services = default;
-            Optional<int> timeoutInMinutes = default;
-            Optional<bool> shouldPersist = default;
+            int? timeoutInMinutes = default;
+            bool? shouldPersist = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,10 +162,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 type,
                 name,
                 url,
-                parameters.Value,
+                parameters,
                 services,
-                Optional.ToNullable(timeoutInMinutes),
-                Optional.ToNullable(shouldPersist),
+                timeoutInMinutes,
+                shouldPersist,
                 serializedAdditionalRawData);
         }
 

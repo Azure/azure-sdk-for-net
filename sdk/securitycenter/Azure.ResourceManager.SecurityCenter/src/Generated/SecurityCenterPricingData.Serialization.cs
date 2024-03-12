@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PricingTier.HasValue)
+            if (Optional.IsDefined(PricingTier))
             {
                 writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
-            if (SubPlan != null)
+            if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
-            if (options.Format != "W" && FreeTrialRemainingTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FreeTrialRemainingTime))
             {
                 writer.WritePropertyName("freeTrialRemainingTime"u8);
                 writer.WriteStringValue(FreeTrialRemainingTime.Value, "P");
             }
-            if (options.Format != "W" && EnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
             {
                 writer.WritePropertyName("enablementTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (options.Format != "W" && IsDeprecated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("deprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && !(ReplacedBy is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
             {
                 writer.WritePropertyName("replacedBy"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<PlanExtension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterPricingTier> pricingTier = default;
-            Optional<string> subPlan = default;
-            Optional<TimeSpan> freeTrialRemainingTime = default;
-            Optional<DateTimeOffset> enablementTime = default;
-            Optional<bool> deprecated = default;
+            SystemData systemData = default;
+            SecurityCenterPricingTier? pricingTier = default;
+            string subPlan = default;
+            TimeSpan? freeTrialRemainingTime = default;
+            DateTimeOffset? enablementTime = default;
+            bool? deprecated = default;
             IReadOnlyList<string> replacedBy = default;
             IList<PlanExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(pricingTier),
-                subPlan.Value,
-                Optional.ToNullable(freeTrialRemainingTime),
-                Optional.ToNullable(enablementTime),
-                Optional.ToNullable(deprecated),
+                systemData,
+                pricingTier,
+                subPlan,
+                freeTrialRemainingTime,
+                enablementTime,
+                deprecated,
                 replacedBy ?? new ChangeTrackingList<string>(),
                 extensions ?? new ChangeTrackingList<PlanExtension>(),
                 serializedAdditionalRawData);

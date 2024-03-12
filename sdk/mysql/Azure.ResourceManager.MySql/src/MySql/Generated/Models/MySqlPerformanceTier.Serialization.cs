@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (MaxBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MaxBackupRetentionDays))
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (MinBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MinBackupRetentionDays))
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (MaxStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxStorageInMB))
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (MinLargeStorageInMB.HasValue)
+            if (Optional.IsDefined(MinLargeStorageInMB))
             {
                 writer.WritePropertyName("minLargeStorageMB"u8);
                 writer.WriteNumberValue(MinLargeStorageInMB.Value);
             }
-            if (MaxLargeStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxLargeStorageInMB))
             {
                 writer.WritePropertyName("maxLargeStorageMB"u8);
                 writer.WriteNumberValue(MaxLargeStorageInMB.Value);
             }
-            if (MinStorageInMB.HasValue)
+            if (Optional.IsDefined(MinStorageInMB))
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
             }
-            if (!(ServiceLevelObjectives is ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
             {
                 writer.WritePropertyName("serviceLevelObjectives"u8);
                 writer.WriteStartArray();
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minLargeStorageMB = default;
-            Optional<int> maxLargeStorageMB = default;
-            Optional<int> minStorageMB = default;
+            string id = default;
+            int? maxBackupRetentionDays = default;
+            int? minBackupRetentionDays = default;
+            int? maxStorageMB = default;
+            int? minLargeStorageMB = default;
+            int? maxLargeStorageMB = default;
+            int? minStorageMB = default;
             IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -201,13 +202,13 @@ namespace Azure.ResourceManager.MySql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MySqlPerformanceTier(
-                id.Value,
-                Optional.ToNullable(maxBackupRetentionDays),
-                Optional.ToNullable(minBackupRetentionDays),
-                Optional.ToNullable(maxStorageMB),
-                Optional.ToNullable(minLargeStorageMB),
-                Optional.ToNullable(maxLargeStorageMB),
-                Optional.ToNullable(minStorageMB),
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageMB,
+                minLargeStorageMB,
+                maxLargeStorageMB,
+                minStorageMB,
                 serviceLevelObjectives ?? new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>(),
                 serializedAdditionalRawData);
         }

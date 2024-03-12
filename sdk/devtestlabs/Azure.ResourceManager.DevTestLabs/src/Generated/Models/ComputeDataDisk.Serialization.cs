@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiskUri != null)
+            if (Optional.IsDefined(DiskUri))
             {
                 writer.WritePropertyName("diskUri"u8);
                 writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
-            if (ManagedDiskId != null)
+            if (Optional.IsDefined(ManagedDiskId))
             {
                 writer.WritePropertyName("managedDiskId"u8);
                 writer.WriteStringValue(ManagedDiskId);
             }
-            if (DiskSizeGiB.HasValue)
+            if (Optional.IsDefined(DiskSizeGiB))
             {
                 writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> diskUri = default;
-            Optional<string> managedDiskId = default;
-            Optional<int> diskSizeGiB = default;
+            string name = default;
+            Uri diskUri = default;
+            string managedDiskId = default;
+            int? diskSizeGiB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeDataDisk(name.Value, diskUri.Value, managedDiskId.Value, Optional.ToNullable(diskSizeGiB), serializedAdditionalRawData);
+            return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeDataDisk>.Write(ModelReaderWriterOptions options)

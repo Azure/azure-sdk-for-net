@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayText != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && !(MinorVersions is ChangeTrackingList<WebAppMinorVersion> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MinorVersions))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> value = default;
+            string displayText = default;
+            string value = default;
             IReadOnlyList<WebAppMinorVersion> minorVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMajorVersion(displayText.Value, value.Value, minorVersions ?? new ChangeTrackingList<WebAppMinorVersion>(), serializedAdditionalRawData);
+            return new WebAppMajorVersion(displayText, value, minorVersions ?? new ChangeTrackingList<WebAppMinorVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMajorVersion>.Write(ModelReaderWriterOptions options)

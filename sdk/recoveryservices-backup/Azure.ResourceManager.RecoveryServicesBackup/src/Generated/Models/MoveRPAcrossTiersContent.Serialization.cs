@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (SourceTierType.HasValue)
+            if (Optional.IsDefined(SourceTierType))
             {
                 writer.WritePropertyName("sourceTierType"u8);
                 writer.WriteStringValue(SourceTierType.Value.ToSerialString());
             }
-            if (TargetTierType.HasValue)
+            if (Optional.IsDefined(TargetTierType))
             {
                 writer.WritePropertyName("targetTierType"u8);
                 writer.WriteStringValue(TargetTierType.Value.ToSerialString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<RecoveryPointTierType> sourceTierType = default;
-            Optional<RecoveryPointTierType> targetTierType = default;
+            string objectType = default;
+            RecoveryPointTierType? sourceTierType = default;
+            RecoveryPointTierType? targetTierType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveRPAcrossTiersContent(objectType.Value, Optional.ToNullable(sourceTierType), Optional.ToNullable(targetTierType), serializedAdditionalRawData);
+            return new MoveRPAcrossTiersContent(objectType, sourceTierType, targetTierType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveRPAcrossTiersContent>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Alias != null)
+            if (Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (BaseUserDN != null)
+            if (Optional.IsDefined(BaseUserDN))
             {
                 writer.WritePropertyName("baseUserDN"u8);
                 writer.WriteStringValue(BaseUserDN);
             }
-            if (BaseGroupDN != null)
+            if (Optional.IsDefined(BaseGroupDN))
             {
                 writer.WritePropertyName("baseGroupDN"u8);
                 writer.WriteStringValue(BaseGroupDN);
             }
-            if (PrimaryServer != null)
+            if (Optional.IsDefined(PrimaryServer))
             {
                 writer.WritePropertyName("primaryServer"u8);
                 writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
-            if (SecondaryServer != null)
+            if (Optional.IsDefined(SecondaryServer))
             {
                 writer.WritePropertyName("secondaryServer"u8);
                 writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
-            if (Ssl.HasValue)
+            if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteStringValue(Ssl.Value.ToString());
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @alias = default;
-            Optional<string> domain = default;
-            Optional<string> baseUserDN = default;
-            Optional<string> baseGroupDN = default;
-            Optional<Uri> primaryServer = default;
-            Optional<Uri> secondaryServer = default;
-            Optional<SslCertificateStatus> ssl = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string name = default;
+            string @alias = default;
+            string domain = default;
+            string baseUserDN = default;
+            string baseGroupDN = default;
+            Uri primaryServer = default;
+            Uri secondaryServer = default;
+            SslCertificateStatus? ssl = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,16 +198,16 @@ namespace Azure.ResourceManager.Avs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SingleSignOnIdentitySource(
-                name.Value,
-                @alias.Value,
-                domain.Value,
-                baseUserDN.Value,
-                baseGroupDN.Value,
-                primaryServer.Value,
-                secondaryServer.Value,
-                Optional.ToNullable(ssl),
-                username.Value,
-                password.Value,
+                name,
+                @alias,
+                domain,
+                baseUserDN,
+                baseGroupDN,
+                primaryServer,
+                secondaryServer,
+                ssl,
+                username,
+                password,
                 serializedAdditionalRawData);
         }
 

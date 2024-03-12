@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CurrentVersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> keyUri = default;
-            Optional<string> currentVersionedKeyIdentifier = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Uri keyUri = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), serializedAdditionalRawData);
+            return new EncryptionScopeKeyVaultProperties(keyUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionScopeKeyVaultProperties>.Write(ModelReaderWriterOptions options)

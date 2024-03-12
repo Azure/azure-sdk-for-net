@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Selectors is ChangeTrackingList<ResourceSelectorExpression> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Selectors))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IList<ResourceSelectorExpression> selectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSelector(name.Value, selectors ?? new ChangeTrackingList<ResourceSelectorExpression>(), serializedAdditionalRawData);
+            return new ResourceSelector(name, selectors ?? new ChangeTrackingList<ResourceSelectorExpression>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSelector>.Write(ModelReaderWriterOptions options)

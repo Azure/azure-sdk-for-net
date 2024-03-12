@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (DelayInMinutes.HasValue)
+            if (Optional.IsDefined(DelayInMinutes))
             {
                 writer.WritePropertyName("delayInMinutes"u8);
                 writer.WriteNumberValue(DelayInMinutes.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<int> delayInMinutes = default;
-            Optional<bool> enabled = default;
+            int? delayInMinutes = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolAutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new BigDataPoolAutoPauseProperties(delayInMinutes, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolAutoPauseProperties>.Write(ModelReaderWriterOptions options)

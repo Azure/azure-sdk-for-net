@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && SlaInMinutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SlaInMinutes))
             {
                 writer.WritePropertyName("slaMinutes"u8);
                 writer.WriteNumberValue(SlaInMinutes.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<int> slaMinutes = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expirationTime = default;
+            int? slaMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportServiceLevelAgreement(Optional.ToNullable(startTime), Optional.ToNullable(expirationTime), Optional.ToNullable(slaMinutes), serializedAdditionalRawData);
+            return new SupportServiceLevelAgreement(startTime, expirationTime, slaMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportServiceLevelAgreement>.Write(ModelReaderWriterOptions options)

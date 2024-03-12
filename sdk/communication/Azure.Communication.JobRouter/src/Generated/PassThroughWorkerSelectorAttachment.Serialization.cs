@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (ExpiresAfter.HasValue)
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
                 WriteExpiresAfter(writer);
@@ -78,7 +78,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<TimeSpan> expiresAfterSeconds = default;
+            TimeSpan? expiresAfterSeconds = default;
             WorkerSelectorAttachmentKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PassThroughWorkerSelectorAttachment(kind, serializedAdditionalRawData, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, serializedAdditionalRawData, key, labelOperator, expiresAfterSeconds);
         }
 
         BinaryData IPersistableModel<PassThroughWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options)

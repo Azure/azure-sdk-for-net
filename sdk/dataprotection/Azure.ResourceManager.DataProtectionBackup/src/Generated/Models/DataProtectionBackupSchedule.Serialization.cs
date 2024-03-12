@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IList<string> repeatingTimeIntervals = default;
-            Optional<string> timeZone = default;
+            string timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupSchedule(repeatingTimeIntervals, timeZone.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupSchedule(repeatingTimeIntervals, timeZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupSchedule>.Write(ModelReaderWriterOptions options)

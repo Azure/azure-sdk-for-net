@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (ForceRestart.HasValue)
+            if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (HealthPolicy != null)
+            if (Optional.IsDefined(HealthPolicy))
             {
                 writer.WritePropertyName("healthPolicy"u8);
                 writer.WriteObjectValue(HealthPolicy);
             }
-            if (DeltaHealthPolicy != null)
+            if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
             }
-            if (MonitoringPolicy != null)
+            if (Optional.IsDefined(MonitoringPolicy))
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
                 writer.WriteObjectValue(MonitoringPolicy);
             }
-            if (UpgradeReplicaSetCheckTimeout != null)
+            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<bool> forceRestart = default;
-            Optional<ManagedClusterHealthPolicy> healthPolicy = default;
-            Optional<ManagedClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
-            Optional<ManagedClusterMonitoringPolicy> monitoringPolicy = default;
-            Optional<string> upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ManagedClusterHealthPolicy healthPolicy = default;
+            ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy = default;
+            ManagedClusterMonitoringPolicy monitoringPolicy = default;
+            string upgradeReplicaSetCheckTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterUpgradePolicy(
-                Optional.ToNullable(forceRestart),
-                healthPolicy.Value,
-                deltaHealthPolicy.Value,
-                monitoringPolicy.Value,
-                upgradeReplicaSetCheckTimeout.Value,
+                forceRestart,
+                healthPolicy,
+                deltaHealthPolicy,
+                monitoringPolicy,
+                upgradeReplicaSetCheckTimeout,
                 serializedAdditionalRawData);
         }
 

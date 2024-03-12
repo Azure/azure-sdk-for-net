@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -40,32 +41,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (SourcePartitionCount.HasValue)
+            if (Optional.IsDefined(SourcePartitionCount))
             {
                 writer.WritePropertyName("sourcePartitionCount"u8);
                 writer.WriteNumberValue(SourcePartitionCount.Value);
@@ -111,12 +112,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             string type = default;
             IList<StreamAnalyticsStorageAccount> storageAccounts = default;
-            Optional<string> container = default;
-            Optional<string> pathPattern = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<int> sourcePartitionCount = default;
+            string container = default;
+            string pathPattern = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            int? sourcePartitionCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,12 +201,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 type,
                 serializedAdditionalRawData,
                 storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
-                container.Value,
-                pathPattern.Value,
-                dateFormat.Value,
-                timeFormat.Value,
-                Optional.ToNullable(authenticationMode),
-                Optional.ToNullable(sourcePartitionCount));
+                container,
+                pathPattern,
+                dateFormat,
+                timeFormat,
+                authenticationMode,
+                sourcePartitionCount);
         }
 
         BinaryData IPersistableModel<BlobStreamInputDataSource>.Write(ModelReaderWriterOptions options)

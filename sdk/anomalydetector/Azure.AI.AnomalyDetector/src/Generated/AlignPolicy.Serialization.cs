@@ -27,17 +27,17 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (AlignMode.HasValue)
+            if (Optional.IsDefined(AlignMode))
             {
                 writer.WritePropertyName("alignMode"u8);
                 writer.WriteStringValue(AlignMode.Value.ToString());
             }
-            if (FillNAMethod.HasValue)
+            if (Optional.IsDefined(FillNAMethod))
             {
                 writer.WritePropertyName("fillNAMethod"u8);
                 writer.WriteStringValue(FillNAMethod.Value.ToString());
             }
-            if (PaddingValue.HasValue)
+            if (Optional.IsDefined(PaddingValue))
             {
                 writer.WritePropertyName("paddingValue"u8);
                 writer.WriteNumberValue(PaddingValue.Value);
@@ -80,9 +80,9 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<AlignMode> alignMode = default;
-            Optional<FillNAMethod> fillNAMethod = default;
-            Optional<float> paddingValue = default;
+            AlignMode? alignMode = default;
+            FillNAMethod? fillNAMethod = default;
+            float? paddingValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlignPolicy(Optional.ToNullable(alignMode), Optional.ToNullable(fillNAMethod), Optional.ToNullable(paddingValue), serializedAdditionalRawData);
+            return new AlignPolicy(alignMode, fillNAMethod, paddingValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlignPolicy>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (AzureFileShareName != null)
+            if (Optional.IsDefined(AzureFileShareName))
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (StorageAccountTenantId.HasValue)
+            if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> azureFileShareName = default;
-            Optional<Guid> storageAccountTenantId = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string azureFileShareName = default;
+            Guid? storageAccountTenantId = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +195,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                storageAccountResourceId.Value,
-                azureFileShareName.Value,
-                Optional.ToNullable(storageAccountTenantId),
-                friendlyName.Value,
+                systemData,
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                friendlyName,
                 serializedAdditionalRawData);
         }
 

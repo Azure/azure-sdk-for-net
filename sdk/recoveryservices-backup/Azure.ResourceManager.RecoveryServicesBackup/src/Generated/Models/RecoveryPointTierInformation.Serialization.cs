@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TierType.HasValue)
+            if (Optional.IsDefined(TierType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TierType.Value.ToSerialString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (!(ExtendedInfo is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteStartObject();
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointTierType> type = default;
-            Optional<RecoveryPointTierStatus> status = default;
+            RecoveryPointTierType? type = default;
+            RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointTierInformation(Optional.ToNullable(type), Optional.ToNullable(status), extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new RecoveryPointTierInformation(type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointTierInformation>.Write(ModelReaderWriterOptions options)

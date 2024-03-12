@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> profileName = default;
-            Optional<EnabledState> enabledState = default;
+            string profileName = default;
+            EnabledState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), profileName.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorEndpointPatch(tags ?? new ChangeTrackingDictionary<string, string>(), profileName, enabledState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorEndpointPatch>.Write(ModelReaderWriterOptions options)

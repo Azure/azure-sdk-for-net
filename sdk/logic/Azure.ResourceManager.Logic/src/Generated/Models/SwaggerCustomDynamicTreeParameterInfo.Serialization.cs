@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (SelectedItemValuePath != null)
+            if (Optional.IsDefined(SelectedItemValuePath))
             {
                 writer.WritePropertyName("selectedItemValuePath"u8);
                 writer.WriteStringValue(SelectedItemValuePath);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (ParameterReference != null)
+            if (Optional.IsDefined(ParameterReference))
             {
                 writer.WritePropertyName("parameterReference"u8);
                 writer.WriteStringValue(ParameterReference);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> selectedItemValuePath = default;
-            Optional<BinaryData> value = default;
-            Optional<string> parameterReference = default;
-            Optional<bool> required = default;
+            string selectedItemValuePath = default;
+            BinaryData value = default;
+            string parameterReference = default;
+            bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath, value, parameterReference, required, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>.Write(ModelReaderWriterOptions options)

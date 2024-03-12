@@ -15,7 +15,7 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<StreamStatus> status = default;
+            StreamStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -42,7 +42,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CompositionStreamState(Optional.ToNullable(status));
+            return new CompositionStreamState(status);
         }
     }
 }

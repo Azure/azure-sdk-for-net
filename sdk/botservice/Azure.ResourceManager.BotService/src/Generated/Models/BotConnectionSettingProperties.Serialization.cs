@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (options.Format != "W" && SettingId != null)
+            if (options.Format != "W" && Optional.IsDefined(SettingId))
             {
                 writer.WritePropertyName("settingId"u8);
                 writer.WriteStringValue(SettingId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Scopes != null)
+            if (Optional.IsDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (ServiceProviderId != null)
+            if (Optional.IsDefined(ServiceProviderId))
             {
                 writer.WritePropertyName("serviceProviderId"u8);
                 writer.WriteStringValue(ServiceProviderId);
             }
-            if (ServiceProviderDisplayName != null)
+            if (Optional.IsDefined(ServiceProviderDisplayName))
             {
                 writer.WritePropertyName("serviceProviderDisplayName"u8);
                 writer.WriteStringValue(ServiceProviderDisplayName);
             }
-            if (!(Parameters is ChangeTrackingList<BotConnectionSettingParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> settingId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> scopes = default;
-            Optional<string> serviceProviderId = default;
-            Optional<string> serviceProviderDisplayName = default;
+            string clientId = default;
+            string settingId = default;
+            string clientSecret = default;
+            string scopes = default;
+            string serviceProviderId = default;
+            string serviceProviderDisplayName = default;
             IList<BotConnectionSettingParameter> parameters = default;
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,14 +178,14 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotConnectionSettingProperties(
-                clientId.Value,
-                settingId.Value,
-                clientSecret.Value,
-                scopes.Value,
-                serviceProviderId.Value,
-                serviceProviderDisplayName.Value,
+                clientId,
+                settingId,
+                clientSecret,
+                scopes,
+                serviceProviderId,
+                serviceProviderDisplayName,
                 parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
-                provisioningState.Value,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> collectionName = default;
+            string collectionName = default;
             IReadOnlyList<string> subscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionsSubscriptionsMappingDetails(collectionName.Value, subscriptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CollectionsSubscriptionsMappingDetails(collectionName, subscriptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionsSubscriptionsMappingDetails>.Write(ModelReaderWriterOptions options)

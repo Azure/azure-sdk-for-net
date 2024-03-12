@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (TargetInstanceCount.HasValue)
+            if (Optional.IsDefined(TargetInstanceCount))
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
-            if (VmGroupName != null)
+            if (Optional.IsDefined(VmGroupName))
             {
                 writer.WritePropertyName("VMGroupName"u8);
                 writer.WriteStringValue(VmGroupName);
             }
-            if (AutoScaleConfiguration != null)
+            if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (VirtualNetworkProfile != null)
+            if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (!(DataDisksGroups is ChangeTrackingList<HDInsightClusterDataDiskGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksGroups))
             {
                 writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScriptActions is ChangeTrackingList<ScriptAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptDataDisks.HasValue)
+            if (Optional.IsDefined(EncryptDataDisks))
             {
                 writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
@@ -129,17 +130,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> targetInstanceCount = default;
-            Optional<string> vmGroupName = default;
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
+            string name = default;
+            int? minInstanceCount = default;
+            int? targetInstanceCount = default;
+            string vmGroupName = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
+            HardwareProfile hardwareProfile = default;
+            OSProfile osProfile = default;
+            HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
             IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
             IList<ScriptAction> scriptActions = default;
-            Optional<bool> encryptDataDisks = default;
+            bool? encryptDataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,17 +253,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightClusterRole(
-                name.Value,
-                Optional.ToNullable(minInstanceCount),
-                Optional.ToNullable(targetInstanceCount),
-                vmGroupName.Value,
-                autoScale.Value,
-                hardwareProfile.Value,
-                osProfile.Value,
-                virtualNetworkProfile.Value,
+                name,
+                minInstanceCount,
+                targetInstanceCount,
+                vmGroupName,
+                autoScale,
+                hardwareProfile,
+                osProfile,
+                virtualNetworkProfile,
                 dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
                 scriptActions ?? new ChangeTrackingList<ScriptAction>(),
-                Optional.ToNullable(encryptDataDisks),
+                encryptDataDisks,
                 serializedAdditionalRawData);
         }
 

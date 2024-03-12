@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (FailedJobs.HasValue)
+            if (Optional.IsDefined(FailedJobs))
             {
                 writer.WritePropertyName("failedJobs"u8);
                 writer.WriteNumberValue(FailedJobs.Value);
             }
-            if (SuspendedJobs.HasValue)
+            if (Optional.IsDefined(SuspendedJobs))
             {
                 writer.WritePropertyName("suspendedJobs"u8);
                 writer.WriteNumberValue(SuspendedJobs.Value);
             }
-            if (InProgressJobs.HasValue)
+            if (Optional.IsDefined(InProgressJobs))
             {
                 writer.WritePropertyName("inProgressJobs"u8);
                 writer.WriteNumberValue(InProgressJobs.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<int> failedJobs = default;
-            Optional<int> suspendedJobs = default;
-            Optional<int> inProgressJobs = default;
+            int? failedJobs = default;
+            int? suspendedJobs = default;
+            int? inProgressJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationJobSummary(Optional.ToNullable(failedJobs), Optional.ToNullable(suspendedJobs), Optional.ToNullable(inProgressJobs), serializedAdditionalRawData);
+            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationJobSummary>.Write(ModelReaderWriterOptions options)

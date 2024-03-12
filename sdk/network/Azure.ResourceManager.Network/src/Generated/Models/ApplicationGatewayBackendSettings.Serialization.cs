@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -28,49 +29,49 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Probe != null)
+            if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (!(TrustedRootCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedRootCertificates))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
@@ -80,17 +81,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (PickHostNameFromBackendAddress.HasValue)
+            if (Optional.IsDefined(PickHostNameFromBackendAddress))
             {
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -134,18 +135,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<int> timeout = default;
-            Optional<WritableSubResource> probe = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? port = default;
+            ApplicationGatewayProtocol? protocol = default;
+            int? timeout = default;
+            WritableSubResource probe = default;
             IList<WritableSubResource> trustedRootCertificates = default;
-            Optional<string> hostName = default;
-            Optional<bool> pickHostNameFromBackendAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string hostName = default;
+            bool? pickHostNameFromBackendAddress = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,19 +275,19 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayBackendSettings(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(port),
-                Optional.ToNullable(protocol),
-                Optional.ToNullable(timeout),
+                etag,
+                port,
+                protocol,
+                timeout,
                 probe,
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
-                hostName.Value,
-                Optional.ToNullable(pickHostNameFromBackendAddress),
-                Optional.ToNullable(provisioningState));
+                hostName,
+                pickHostNameFromBackendAddress,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendSettings>.Write(ModelReaderWriterOptions options)

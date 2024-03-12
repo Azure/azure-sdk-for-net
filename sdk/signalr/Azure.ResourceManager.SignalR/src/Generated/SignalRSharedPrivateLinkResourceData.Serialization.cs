@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<SignalRSharedPrivateLinkResourceStatus> status = default;
+            SystemData systemData = default;
+            string groupId = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            SignalRProvisioningState? provisioningState = default;
+            string requestMessage = default;
+            SignalRSharedPrivateLinkResourceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.SignalR
                 id,
                 name,
                 type,
-                systemData.Value,
-                groupId.Value,
-                privateLinkResourceId.Value,
-                Optional.ToNullable(provisioningState),
-                requestMessage.Value,
-                Optional.ToNullable(status),
+                systemData,
+                groupId,
+                privateLinkResourceId,
+                provisioningState,
+                requestMessage,
+                status,
                 serializedAdditionalRawData);
         }
 

@@ -44,56 +44,56 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (options.Format != "W" && Priority.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RuleState.HasValue)
+            if (Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (NegateSource.HasValue)
+            if (Optional.IsDefined(NegateSource))
             {
                 writer.WritePropertyName("negateSource"u8);
                 writer.WriteStringValue(NegateSource.Value.ToString());
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (NegateDestination.HasValue)
+            if (Optional.IsDefined(NegateDestination))
             {
                 writer.WritePropertyName("negateDestination"u8);
                 writer.WriteStringValue(NegateDestination.Value.ToString());
             }
-            if (!(Applications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Applications))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteObjectValue(Category);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (!(ProtocolPortList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtocolPortList))
             {
                 writer.WritePropertyName("protocolPortList"u8);
                 writer.WriteStartArray();
@@ -123,32 +123,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (InboundInspectionCertificate != null)
+            if (Optional.IsDefined(InboundInspectionCertificate))
             {
                 writer.WritePropertyName("inboundInspectionCertificate"u8);
                 writer.WriteStringValue(InboundInspectionCertificate);
             }
-            if (AuditComment != null)
+            if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (EnableLogging.HasValue)
+            if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
                 writer.WriteStringValue(EnableLogging.Value.ToString());
             }
-            if (DecryptionRuleType.HasValue)
+            if (Optional.IsDefined(DecryptionRuleType))
             {
                 writer.WritePropertyName("decryptionRuleType"u8);
                 writer.WriteStringValue(DecryptionRuleType.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingList<RulestackTagInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -205,27 +205,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> etag = default;
+            SystemData systemData = default;
+            ETag? etag = default;
             string ruleName = default;
-            Optional<int> priority = default;
-            Optional<string> description = default;
-            Optional<RulestackStateType> ruleState = default;
-            Optional<SourceAddressInfo> source = default;
-            Optional<FirewallBooleanType> negateSource = default;
-            Optional<DestinationAddressInfo> destination = default;
-            Optional<FirewallBooleanType> negateDestination = default;
+            int? priority = default;
+            string description = default;
+            RulestackStateType? ruleState = default;
+            SourceAddressInfo source = default;
+            FirewallBooleanType? negateSource = default;
+            DestinationAddressInfo destination = default;
+            FirewallBooleanType? negateDestination = default;
             IList<string> applications = default;
-            Optional<EdlMatchCategory> category = default;
-            Optional<string> protocol = default;
+            EdlMatchCategory category = default;
+            string protocol = default;
             IList<string> protocolPortList = default;
-            Optional<string> inboundInspectionCertificate = default;
-            Optional<string> auditComment = default;
-            Optional<RulestackActionType> actionType = default;
-            Optional<RulestackStateType> enableLogging = default;
-            Optional<DecryptionRuleType> decryptionRuleType = default;
+            string inboundInspectionCertificate = default;
+            string auditComment = default;
+            RulestackActionType? actionType = default;
+            RulestackStateType? enableLogging = default;
+            DecryptionRuleType? decryptionRuleType = default;
             IList<RulestackTagInfo> tags = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -451,27 +451,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                etag,
                 ruleName,
-                Optional.ToNullable(priority),
-                description.Value,
-                Optional.ToNullable(ruleState),
-                source.Value,
-                Optional.ToNullable(negateSource),
-                destination.Value,
-                Optional.ToNullable(negateDestination),
+                priority,
+                description,
+                ruleState,
+                source,
+                negateSource,
+                destination,
+                negateDestination,
                 applications ?? new ChangeTrackingList<string>(),
-                category.Value,
-                protocol.Value,
+                category,
+                protocol,
                 protocolPortList ?? new ChangeTrackingList<string>(),
-                inboundInspectionCertificate.Value,
-                auditComment.Value,
-                Optional.ToNullable(actionType),
-                Optional.ToNullable(enableLogging),
-                Optional.ToNullable(decryptionRuleType),
+                inboundInspectionCertificate,
+                auditComment,
+                actionType,
+                enableLogging,
+                decryptionRuleType,
                 tags ?? new ChangeTrackingList<RulestackTagInfo>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

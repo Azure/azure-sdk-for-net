@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,27 +31,27 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (UseAadAuth.HasValue)
+            if (Optional.IsDefined(UseAadAuth))
             {
                 writer.WritePropertyName("useAadAuth"u8);
                 writer.WriteBooleanValue(UseAadAuth.Value);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (IdentifierUri != null)
+            if (Optional.IsDefined(IdentifierUri))
             {
                 writer.WritePropertyName("identifierUri"u8);
                 writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             Uri serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<bool> useAadAuth = default;
-            Optional<string> objectId = default;
-            Optional<Uri> identifierUri = default;
-            Optional<Guid> tenantId = default;
+            bool? useCommonAlertSchema = default;
+            bool? useAadAuth = default;
+            string objectId = default;
+            Uri identifierUri = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,11 +165,11 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWebhookReceiver(
                 name,
                 serviceUri,
-                Optional.ToNullable(useCommonAlertSchema),
-                Optional.ToNullable(useAadAuth),
-                objectId.Value,
-                identifierUri.Value,
-                Optional.ToNullable(tenantId),
+                useCommonAlertSchema,
+                useAadAuth,
+                objectId,
+                identifierUri,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

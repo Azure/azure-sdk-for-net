@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (RecoveryPointAdditionalInfo != null)
+            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (RecoveryPointProperties != null)
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> recoveryPointType = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> recoveryPointAdditionalInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            string friendlyName = default;
+            string recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string recoveryPointAdditionalInfo = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,11 +149,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new GenericRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
-                friendlyName.Value,
-                recoveryPointType.Value,
-                Optional.ToNullable(recoveryPointTime),
-                recoveryPointAdditionalInfo.Value,
-                recoveryPointProperties.Value);
+                friendlyName,
+                recoveryPointType,
+                recoveryPointTime,
+                recoveryPointAdditionalInfo,
+                recoveryPointProperties);
         }
 
         BinaryData IPersistableModel<GenericRecoveryPoint>.Write(ModelReaderWriterOptions options)

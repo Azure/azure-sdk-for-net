@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactsStorageType.HasValue)
+            if (Optional.IsDefined(ArtifactsStorageType))
             {
                 writer.WritePropertyName("artifactsStorageType"u8);
                 writer.WriteStringValue(ArtifactsStorageType.Value.ToSerialString());
             }
-            if (ArtifactStorageClassName != null)
+            if (Optional.IsDefined(ArtifactStorageClassName))
             {
                 writer.WritePropertyName("artifactStorageClassName"u8);
                 writer.WriteStringValue(ArtifactStorageClassName);
             }
-            if (ArtifactStorageMountPath != null)
+            if (Optional.IsDefined(ArtifactStorageMountPath))
             {
                 writer.WritePropertyName("artifactStorageMountPath"u8);
                 writer.WriteStringValue(ArtifactStorageMountPath);
             }
-            if (ArtifactStorageNodeName != null)
+            if (Optional.IsDefined(ArtifactStorageNodeName))
             {
                 writer.WritePropertyName("artifactStorageNodeName"u8);
                 writer.WriteStringValue(ArtifactStorageNodeName);
             }
-            if (ArtifactStorageAccessMode != null)
+            if (Optional.IsDefined(ArtifactStorageAccessMode))
             {
                 writer.WritePropertyName("artifactStorageAccessMode"u8);
                 writer.WriteStringValue(ArtifactStorageAccessMode);
             }
-            if (FrontEndServiceConfiguration != null)
+            if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
                 writer.WriteObjectValue(FrontEndServiceConfiguration);
             }
-            if (KubeConfig != null)
+            if (Optional.IsDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ArtifactStorageType> artifactsStorageType = default;
-            Optional<string> artifactStorageClassName = default;
-            Optional<string> artifactStorageMountPath = default;
-            Optional<string> artifactStorageNodeName = default;
-            Optional<string> artifactStorageAccessMode = default;
-            Optional<FrontEndConfiguration> frontEndServiceConfiguration = default;
-            Optional<string> kubeConfig = default;
+            ArtifactStorageType? artifactsStorageType = default;
+            string artifactStorageClassName = default;
+            string artifactStorageMountPath = default;
+            string artifactStorageNodeName = default;
+            string artifactStorageAccessMode = default;
+            FrontEndConfiguration frontEndServiceConfiguration = default;
+            string kubeConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +161,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArcConfiguration(
-                Optional.ToNullable(artifactsStorageType),
-                artifactStorageClassName.Value,
-                artifactStorageMountPath.Value,
-                artifactStorageNodeName.Value,
-                artifactStorageAccessMode.Value,
-                frontEndServiceConfiguration.Value,
-                kubeConfig.Value,
+                artifactsStorageType,
+                artifactStorageClassName,
+                artifactStorageMountPath,
+                artifactStorageNodeName,
+                artifactStorageAccessMode,
+                frontEndServiceConfiguration,
+                kubeConfig,
                 serializedAdditionalRawData);
         }
 

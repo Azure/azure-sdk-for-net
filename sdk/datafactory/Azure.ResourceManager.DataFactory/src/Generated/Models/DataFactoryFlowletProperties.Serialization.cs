@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,14 +56,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (!(Sources is ChangeTrackingList<DataFlowSource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sinks is ChangeTrackingList<DataFlowSink> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Transformations is ChangeTrackingList<DataFlowTransformation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Transformations))
             {
                 writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (!(ScriptLines is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptLines))
             {
                 writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
@@ -147,13 +148,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            DataFlowFolder folder = default;
             IList<DataFlowSource> sources = default;
             IList<DataFlowSink> sinks = default;
             IList<DataFlowTransformation> transformations = default;
-            Optional<string> script = default;
+            string script = default;
             IList<string> scriptLines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,14 +281,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataFactoryFlowletProperties(
                 type,
-                description.Value,
+                description,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 serializedAdditionalRawData,
                 sources ?? new ChangeTrackingList<DataFlowSource>(),
                 sinks ?? new ChangeTrackingList<DataFlowSink>(),
                 transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
-                script.Value,
+                script,
                 scriptLines ?? new ChangeTrackingList<string>());
         }
 

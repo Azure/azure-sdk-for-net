@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (PeriodicModeProperties != null)
+            if (Optional.IsDefined(PeriodicModeProperties))
             {
                 writer.WritePropertyName("periodicModeProperties"u8);
                 writer.WriteObjectValue(PeriodicModeProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (MigrationState != null)
+            if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<PeriodicModeProperties> periodicModeProperties = default;
+            PeriodicModeProperties periodicModeProperties = default;
             BackupPolicyType type = default;
-            Optional<BackupPolicyMigrationState> migrationState = default;
+            BackupPolicyMigrationState migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicModeBackupPolicy(type, migrationState.Value, serializedAdditionalRawData, periodicModeProperties.Value);
+            return new PeriodicModeBackupPolicy(type, migrationState, serializedAdditionalRawData, periodicModeProperties);
         }
 
         BinaryData IPersistableModel<PeriodicModeBackupPolicy>.Write(ModelReaderWriterOptions options)

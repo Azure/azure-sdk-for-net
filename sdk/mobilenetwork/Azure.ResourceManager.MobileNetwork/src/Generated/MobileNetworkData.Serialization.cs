@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ServiceKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceKey))
             {
                 writer.WritePropertyName("serviceKey"u8);
                 writer.WriteStringValue(ServiceKey);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<MobileNetworkManagedServiceIdentity> identity = default;
+            MobileNetworkManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkPlmnId publicLandMobileNetworkIdentifier = default;
             IList<PublicLandMobileNetwork> publicLandMobileNetworks = default;
-            Optional<string> serviceKey = default;
+            string serviceKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity.Value,
-                Optional.ToNullable(provisioningState),
+                identity,
+                provisioningState,
                 publicLandMobileNetworkIdentifier,
                 publicLandMobileNetworks ?? new ChangeTrackingList<PublicLandMobileNetwork>(),
-                serviceKey.Value,
+                serviceKey,
                 serializedAdditionalRawData);
         }
 

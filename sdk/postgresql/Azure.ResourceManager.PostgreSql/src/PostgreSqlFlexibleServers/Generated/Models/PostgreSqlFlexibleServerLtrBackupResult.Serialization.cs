@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -28,52 +29,52 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatasourceSizeInBytes.HasValue)
+            if (Optional.IsDefined(DatasourceSizeInBytes))
             {
                 writer.WritePropertyName("datasourceSizeInBytes"u8);
                 writer.WriteNumberValue(DatasourceSizeInBytes.Value);
             }
-            if (DataTransferredInBytes.HasValue)
+            if (Optional.IsDefined(DataTransferredInBytes))
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (BackupName != null)
+            if (Optional.IsDefined(BackupName))
             {
                 writer.WritePropertyName("backupName"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (BackupMetadata != null)
+            if (Optional.IsDefined(BackupMetadata))
             {
                 writer.WritePropertyName("backupMetadata"u8);
                 writer.WriteStringValue(BackupMetadata);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (PercentComplete.HasValue)
+            if (Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -117,16 +118,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<long> datasourceSizeInBytes = default;
-            Optional<long> dataTransferredInBytes = default;
-            Optional<string> backupName = default;
-            Optional<string> backupMetadata = default;
-            Optional<PostgreSqlExecutionStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            long? datasourceSizeInBytes = default;
+            long? dataTransferredInBytes = default;
+            string backupName = default;
+            string backupMetadata = default;
+            PostgreSqlExecutionStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            double? percentComplete = default;
+            string errorCode = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,16 +225,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerLtrBackupResult(
-                Optional.ToNullable(datasourceSizeInBytes),
-                Optional.ToNullable(dataTransferredInBytes),
-                backupName.Value,
-                backupMetadata.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(percentComplete),
-                errorCode.Value,
-                errorMessage.Value,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupName,
+                backupMetadata,
+                status,
+                startTime,
+                endTime,
+                percentComplete,
+                errorCode,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

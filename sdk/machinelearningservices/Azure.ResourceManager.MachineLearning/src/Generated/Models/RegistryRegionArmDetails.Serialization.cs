@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(AcrDetails is ChangeTrackingList<RegistryAcrDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AcrDetails))
             {
                 if (AcrDetails != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrDetails");
                 }
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 if (Location != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("location");
                 }
             }
-            if (!(StorageAccountDetails is ChangeTrackingList<StorageAccountDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccountDetails))
             {
                 if (StorageAccountDetails != null)
                 {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<RegistryAcrDetails> acrDetails = default;
-            Optional<AzureLocation?> location = default;
+            AzureLocation? location = default;
             IList<StorageAccountDetails> storageAccountDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryRegionArmDetails(acrDetails ?? new ChangeTrackingList<RegistryAcrDetails>(), Optional.ToNullable(location), storageAccountDetails ?? new ChangeTrackingList<StorageAccountDetails>(), serializedAdditionalRawData);
+            return new RegistryRegionArmDetails(acrDetails ?? new ChangeTrackingList<RegistryAcrDetails>(), location, storageAccountDetails ?? new ChangeTrackingList<StorageAccountDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryRegionArmDetails>.Write(ModelReaderWriterOptions options)

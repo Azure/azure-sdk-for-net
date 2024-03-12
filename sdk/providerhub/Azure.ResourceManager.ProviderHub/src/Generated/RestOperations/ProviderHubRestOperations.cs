@@ -64,22 +64,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceProviderManifest>> GenerateManifestAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateGenerateManifestRequest(subscriptionId, providerNamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +91,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceProviderManifest> GenerateManifest(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateGenerateManifestRequest(subscriptionId, providerNamespace);
             _pipeline.Send(message, cancellationToken);
@@ -170,26 +142,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CheckinManifestInfo>> CheckinManifestAsync(string subscriptionId, string providerNamespace, CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -216,26 +171,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CheckinManifestInfo> CheckinManifest(string subscriptionId, string providerNamespace, CheckinManifestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckinManifestRequest(subscriptionId, providerNamespace, content);
             _pipeline.Send(message, cancellationToken);

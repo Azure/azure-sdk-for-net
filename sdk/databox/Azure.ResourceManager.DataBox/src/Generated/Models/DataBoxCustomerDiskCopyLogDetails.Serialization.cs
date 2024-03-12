@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && ErrorLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorLogLink))
             {
                 writer.WritePropertyName("errorLogLink"u8);
                 writer.WriteStringValue(ErrorLogLink);
             }
-            if (options.Format != "W" && VerboseLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(VerboseLogLink))
             {
                 writer.WritePropertyName("verboseLogLink"u8);
                 writer.WriteStringValue(VerboseLogLink);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            string serialNumber = default;
+            string errorLogLink = default;
+            string verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxCustomerDiskCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, serialNumber.Value, errorLogLink.Value, verboseLogLink.Value);
+            return new DataBoxCustomerDiskCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, serialNumber, errorLogLink, verboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxCustomerDiskCopyLogDetails>.Write(ModelReaderWriterOptions options)

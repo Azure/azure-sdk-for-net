@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (HttpProxy != null)
+            if (Optional.IsDefined(HttpProxy))
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (HttpsProxy != null)
+            if (Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (!(NoProxy is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NoProxy))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TrustedCA != null)
+            if (Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> httpProxy = default;
-            Optional<string> httpsProxy = default;
+            string httpProxy = default;
+            string httpsProxy = default;
             IList<string> noProxy = default;
-            Optional<string> trustedCA = default;
+            string trustedCA = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, noProxy ?? new ChangeTrackingList<string>(), trustedCA.Value, serializedAdditionalRawData);
+            return new ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy ?? new ChangeTrackingList<string>(), trustedCA, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterHttpProxyConfig>.Write(ModelReaderWriterOptions options)

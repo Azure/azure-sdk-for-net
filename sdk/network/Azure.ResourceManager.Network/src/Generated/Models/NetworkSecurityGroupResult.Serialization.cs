@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SecurityRuleAccessResult.HasValue)
+            if (Optional.IsDefined(SecurityRuleAccessResult))
             {
                 writer.WritePropertyName("securityRuleAccessResult"u8);
                 writer.WriteStringValue(SecurityRuleAccessResult.Value.ToString());
             }
-            if (options.Format != "W" && !(EvaluatedNetworkSecurityGroups is ChangeTrackingList<EvaluatedNetworkSecurityGroup> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EvaluatedNetworkSecurityGroups))
             {
                 writer.WritePropertyName("evaluatedNetworkSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<SecurityRuleAccess> securityRuleAccessResult = default;
+            SecurityRuleAccess? securityRuleAccessResult = default;
             IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResult(Optional.ToNullable(securityRuleAccessResult), evaluatedNetworkSecurityGroups ?? new ChangeTrackingList<EvaluatedNetworkSecurityGroup>(), serializedAdditionalRawData);
+            return new NetworkSecurityGroupResult(securityRuleAccessResult, evaluatedNetworkSecurityGroups ?? new ChangeTrackingList<EvaluatedNetworkSecurityGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResult>.Write(ModelReaderWriterOptions options)

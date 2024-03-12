@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             FrontDoorUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontDoorUsage(
-                id.Value,
+                id,
                 unit,
                 currentValue,
                 limit,

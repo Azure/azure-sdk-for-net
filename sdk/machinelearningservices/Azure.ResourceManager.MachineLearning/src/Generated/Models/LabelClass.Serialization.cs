@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (!(Subclasses is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subclasses))
             {
                 if (Subclasses != null)
                 {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            string displayName = default;
             IDictionary<string, LabelClass> subclasses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelClass(displayName.Value, subclasses ?? new ChangeTrackingDictionary<string, LabelClass>(), serializedAdditionalRawData);
+            return new LabelClass(displayName, subclasses ?? new ChangeTrackingDictionary<string, LabelClass>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelClass>.Write(ModelReaderWriterOptions options)

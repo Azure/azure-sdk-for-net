@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (NextTrafficRegion.HasValue)
+            if (Optional.IsDefined(NextTrafficRegion))
             {
                 writer.WritePropertyName("nextTrafficRegion"u8);
                 writer.WriteStringValue(NextTrafficRegion.Value.ToString());
             }
-            if (NextTrafficRegionScheduledOn.HasValue)
+            if (Optional.IsDefined(NextTrafficRegionScheduledOn))
             {
                 writer.WritePropertyName("nextTrafficRegionScheduledTime"u8);
                 writer.WriteStringValue(NextTrafficRegionScheduledOn.Value, "O");
             }
-            if (SubscriptionReregistrationResult.HasValue)
+            if (Optional.IsDefined(SubscriptionReregistrationResult))
             {
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
-            if (!(CompletedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailedOrSkippedRegions is ChangeTrackingDictionary<string, ExtendedErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<TrafficRegionCategory> nextTrafficRegion = default;
-            Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
-            Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
+            TrafficRegionCategory? nextTrafficRegion = default;
+            DateTimeOffset? nextTrafficRegionScheduledTime = default;
+            SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,9 +175,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 completedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(nextTrafficRegion),
-                Optional.ToNullable(nextTrafficRegionScheduledTime),
-                Optional.ToNullable(subscriptionReregistrationResult));
+                nextTrafficRegion,
+                nextTrafficRegionScheduledTime,
+                subscriptionReregistrationResult);
         }
 
         BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)

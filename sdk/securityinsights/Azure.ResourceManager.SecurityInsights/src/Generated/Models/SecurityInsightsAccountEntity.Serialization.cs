@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,67 +75,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AadTenantId != null)
+            if (options.Format != "W" && Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId);
             }
-            if (options.Format != "W" && AadUserId != null)
+            if (options.Format != "W" && Optional.IsDefined(AadUserId))
             {
                 writer.WritePropertyName("aadUserId"u8);
                 writer.WriteStringValue(AadUserId);
             }
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && HostEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
             }
-            if (options.Format != "W" && IsDomainJoined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDomainJoined))
             {
                 writer.WritePropertyName("isDomainJoined"u8);
                 writer.WriteBooleanValue(IsDomainJoined.Value);
             }
-            if (options.Format != "W" && NtDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(NtDomain))
             {
                 writer.WritePropertyName("ntDomain"u8);
                 writer.WriteStringValue(NtDomain);
             }
-            if (options.Format != "W" && ObjectGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ObjectGuid))
             {
                 writer.WritePropertyName("objectGuid"u8);
                 writer.WriteStringValue(ObjectGuid.Value);
             }
-            if (options.Format != "W" && Puid != null)
+            if (options.Format != "W" && Optional.IsDefined(Puid))
             {
                 writer.WritePropertyName("puid"u8);
                 writer.WriteStringValue(Puid);
             }
-            if (options.Format != "W" && Sid != null)
+            if (options.Format != "W" && Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (options.Format != "W" && UpnSuffix != null)
+            if (options.Format != "W" && Optional.IsDefined(UpnSuffix))
             {
                 writer.WritePropertyName("upnSuffix"u8);
                 writer.WriteStringValue(UpnSuffix);
             }
-            if (options.Format != "W" && DnsDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsDomain))
             {
                 writer.WritePropertyName("dnsDomain"u8);
                 writer.WriteStringValue(DnsDomain);
@@ -182,21 +183,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> aadTenantId = default;
-            Optional<string> aadUserId = default;
-            Optional<string> accountName = default;
-            Optional<string> displayName = default;
-            Optional<string> hostEntityId = default;
-            Optional<bool> isDomainJoined = default;
-            Optional<string> ntDomain = default;
-            Optional<Guid> objectGuid = default;
-            Optional<string> puid = default;
-            Optional<string> sid = default;
-            Optional<string> upnSuffix = default;
-            Optional<string> dnsDomain = default;
+            string friendlyName = default;
+            string aadTenantId = default;
+            string aadUserId = default;
+            string accountName = default;
+            string displayName = default;
+            string hostEntityId = default;
+            bool? isDomainJoined = default;
+            string ntDomain = default;
+            Guid? objectGuid = default;
+            string puid = default;
+            string sid = default;
+            string upnSuffix = default;
+            string dnsDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,23 +347,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                aadTenantId.Value,
-                aadUserId.Value,
-                accountName.Value,
-                displayName.Value,
-                hostEntityId.Value,
-                Optional.ToNullable(isDomainJoined),
-                ntDomain.Value,
-                Optional.ToNullable(objectGuid),
-                puid.Value,
-                sid.Value,
-                upnSuffix.Value,
-                dnsDomain.Value);
+                friendlyName,
+                aadTenantId,
+                aadUserId,
+                accountName,
+                displayName,
+                hostEntityId,
+                isDomainJoined,
+                ntDomain,
+                objectGuid,
+                puid,
+                sid,
+                upnSuffix,
+                dnsDomain);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAccountEntity>.Write(ModelReaderWriterOptions options)

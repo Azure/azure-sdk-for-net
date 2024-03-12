@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Correlation != null)
+            if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && TrackingId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId.Value);
             }
-            if (options.Format != "W" && Inputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
 #if NET6_0_OR_GREATER
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && InputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
                 writer.WriteObjectValue(InputsLink);
             }
-            if (options.Format != "W" && Outputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && OutputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink);
             }
-            if (options.Format != "W" && TrackedProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
                 writer.WritePropertyName("trackedProperties"u8);
 #if NET6_0_OR_GREATER
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (!(RetryHistory is ChangeTrackingList<LogicWorkRetryHistory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RetryHistory))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (IterationCount.HasValue)
+            if (Optional.IsDefined(IterationCount))
             {
                 writer.WritePropertyName("iterationCount"u8);
                 writer.WriteNumberValue(IterationCount.Value);
             }
-            if (!(RepetitionIndexes is ChangeTrackingList<LogicWorkflowRepetitionIndex> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RepetitionIndexes))
             {
                 writer.WritePropertyName("repetitionIndexes"u8);
                 writer.WriteStartArray();
@@ -220,21 +220,21 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowRunActionCorrelation> correlation = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<BinaryData> trackedProperties = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowRunActionCorrelation correlation = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            BinaryData inputs = default;
+            LogicContentLink inputsLink = default;
+            BinaryData outputs = default;
+            LogicContentLink outputsLink = default;
+            BinaryData trackedProperties = default;
             IList<LogicWorkRetryHistory> retryHistory = default;
-            Optional<int> iterationCount = default;
+            int? iterationCount = default;
             IList<LogicWorkflowRepetitionIndex> repetitionIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -446,23 +446,23 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                correlation.Value,
-                Optional.ToNullable(status),
-                code.Value,
-                error.Value,
-                Optional.ToNullable(trackingId),
-                inputs.Value,
-                inputsLink.Value,
-                outputs.Value,
-                outputsLink.Value,
-                trackedProperties.Value,
+                startTime,
+                endTime,
+                correlation,
+                status,
+                code,
+                error,
+                trackingId,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                trackedProperties,
                 retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(),
-                Optional.ToNullable(iterationCount),
+                iterationCount,
                 repetitionIndexes ?? new ChangeTrackingList<LogicWorkflowRepetitionIndex>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (SnapshotsToKeep.HasValue)
+            if (Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (UsedBytes.HasValue)
+            if (Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> snapshotsToKeep = default;
-            Optional<int> minute = default;
-            Optional<long> usedBytes = default;
+            int? snapshotsToKeep = default;
+            int? minute = default;
+            long? usedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyHourlySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(minute), Optional.ToNullable(usedBytes), serializedAdditionalRawData);
+            return new SnapshotPolicyHourlySchedule(snapshotsToKeep, minute, usedBytes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyHourlySchedule>.Write(ModelReaderWriterOptions options)

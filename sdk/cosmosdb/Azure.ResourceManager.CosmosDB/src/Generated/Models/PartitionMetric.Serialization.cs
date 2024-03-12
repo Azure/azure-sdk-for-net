@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PartitionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PartitionId))
             {
                 writer.WritePropertyName("partitionId"u8);
                 writer.WriteStringValue(PartitionId.Value);
             }
-            if (options.Format != "W" && PartitionKeyRangeId != null)
+            if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
             {
                 writer.WritePropertyName("partitionKeyRangeId"u8);
                 writer.WriteStringValue(PartitionKeyRangeId);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && TimeGrain != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && !(MetricValues is ChangeTrackingList<CosmosDBMetricValue> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
             {
                 writer.WritePropertyName("metricValues"u8);
                 writer.WriteStartArray();
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
             IReadOnlyList<CosmosDBMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -197,15 +198,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartitionMetric(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                timeGrain.Value,
-                Optional.ToNullable(unit),
-                name.Value,
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
                 metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(partitionId),
-                partitionKeyRangeId.Value);
+                partitionId,
+                partitionKeyRangeId);
         }
 
         BinaryData IPersistableModel<PartitionMetric>.Write(ModelReaderWriterOptions options)

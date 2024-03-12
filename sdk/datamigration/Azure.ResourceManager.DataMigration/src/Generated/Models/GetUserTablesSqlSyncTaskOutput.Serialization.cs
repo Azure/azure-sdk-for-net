@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabasesToSourceTables != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabasesToSourceTables))
             {
                 writer.WritePropertyName("databasesToSourceTables"u8);
                 writer.WriteStringValue(DatabasesToSourceTables);
             }
-            if (options.Format != "W" && DatabasesToTargetTables != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabasesToTargetTables))
             {
                 writer.WritePropertyName("databasesToTargetTables"u8);
                 writer.WriteStringValue(DatabasesToTargetTables);
             }
-            if (options.Format != "W" && TableValidationErrors != null)
+            if (options.Format != "W" && Optional.IsDefined(TableValidationErrors))
             {
                 writer.WritePropertyName("tableValidationErrors"u8);
                 writer.WriteStringValue(TableValidationErrors);
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databasesToSourceTables = default;
-            Optional<string> databasesToTargetTables = default;
-            Optional<string> tableValidationErrors = default;
+            string databasesToSourceTables = default;
+            string databasesToTargetTables = default;
+            string tableValidationErrors = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

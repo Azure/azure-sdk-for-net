@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,32 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowDataTruncation != null)
+            if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
                 writer.WriteObjectValue(AllowDataTruncation);
             }
-            if (TreatBooleanAsNumber != null)
+            if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
                 writer.WriteObjectValue(TreatBooleanAsNumber);
             }
-            if (DateTimeFormat != null)
+            if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
                 writer.WriteObjectValue(DateTimeFormat);
             }
-            if (DateTimeOffsetFormat != null)
+            if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
                 writer.WriteObjectValue(DateTimeOffsetFormat);
             }
-            if (TimeSpanFormat != null)
+            if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
                 writer.WriteObjectValue(TimeSpanFormat);
             }
-            if (Culture != null)
+            if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);
@@ -57,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> allowDataTruncation = default;
-            Optional<object> treatBooleanAsNumber = default;
-            Optional<object> dateTimeFormat = default;
-            Optional<object> dateTimeOffsetFormat = default;
-            Optional<object> timeSpanFormat = default;
-            Optional<object> culture = default;
+            object allowDataTruncation = default;
+            object treatBooleanAsNumber = default;
+            object dateTimeFormat = default;
+            object dateTimeOffsetFormat = default;
+            object timeSpanFormat = default;
+            object culture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDataTruncation"u8))
@@ -121,12 +122,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TypeConversionSettings(
-                allowDataTruncation.Value,
-                treatBooleanAsNumber.Value,
-                dateTimeFormat.Value,
-                dateTimeOffsetFormat.Value,
-                timeSpanFormat.Value,
-                culture.Value);
+                allowDataTruncation,
+                treatBooleanAsNumber,
+                dateTimeFormat,
+                dateTimeOffsetFormat,
+                timeSpanFormat,
+                culture);
         }
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>

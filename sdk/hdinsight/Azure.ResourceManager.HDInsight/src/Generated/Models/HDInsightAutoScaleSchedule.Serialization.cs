@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(Days is ChangeTrackingList<HDInsightDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TimeAndCapacity != null)
+            if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
                 writer.WriteObjectValue(TimeAndCapacity);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             IList<HDInsightDayOfWeek> days = default;
-            Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
+            HDInsightAutoScaleTimeAndCapacity timeAndCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleSchedule(days ?? new ChangeTrackingList<HDInsightDayOfWeek>(), timeAndCapacity.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleSchedule(days ?? new ChangeTrackingList<HDInsightDayOfWeek>(), timeAndCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleSchedule>.Write(ModelReaderWriterOptions options)

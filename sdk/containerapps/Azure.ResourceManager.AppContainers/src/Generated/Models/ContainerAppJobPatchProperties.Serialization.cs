@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (!(OutboundIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EventStreamEndpoint != null)
+            if (Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<ContainerAppJobConfiguration> configuration = default;
-            Optional<ContainerAppJobTemplate> template = default;
+            string environmentId = default;
+            ContainerAppJobConfiguration configuration = default;
+            ContainerAppJobTemplate template = default;
             IList<string> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppJobPatchProperties(
-                environmentId.Value,
-                configuration.Value,
-                template.Value,
+                environmentId,
+                configuration,
+                template,
                 outboundIPAddresses ?? new ChangeTrackingList<string>(),
-                eventStreamEndpoint.Value,
+                eventStreamEndpoint,
                 serializedAdditionalRawData);
         }
 

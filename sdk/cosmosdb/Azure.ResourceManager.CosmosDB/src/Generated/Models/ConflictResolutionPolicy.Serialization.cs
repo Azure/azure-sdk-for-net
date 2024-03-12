@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (ConflictResolutionPath != null)
+            if (Optional.IsDefined(ConflictResolutionPath))
             {
                 writer.WritePropertyName("conflictResolutionPath"u8);
                 writer.WriteStringValue(ConflictResolutionPath);
             }
-            if (ConflictResolutionProcedure != null)
+            if (Optional.IsDefined(ConflictResolutionProcedure))
             {
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ConflictResolutionMode> mode = default;
-            Optional<string> conflictResolutionPath = default;
-            Optional<string> conflictResolutionProcedure = default;
+            ConflictResolutionMode? mode = default;
+            string conflictResolutionPath = default;
+            string conflictResolutionProcedure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value, serializedAdditionalRawData);
+            return new ConflictResolutionPolicy(mode, conflictResolutionPath, conflictResolutionProcedure, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConflictResolutionPolicy>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,44 +57,44 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceNo != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && SubnetId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && KernelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
                 writer.WritePropertyName("kernelVersion"u8);
                 writer.WriteStringValue(KernelVersion);
             }
-            if (options.Format != "W" && KernelPatch != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
             {
                 writer.WritePropertyName("kernelPatch"u8);
                 writer.WriteStringValue(KernelPatch);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && GatewayPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(GatewayPort))
             {
                 if (GatewayPort != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Workloads
                     writer.WriteNull("gatewayPort");
                 }
             }
-            if (options.Format != "W" && IcmHttpPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IcmHttpPort))
             {
                 if (IcmHttpPort != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Workloads
                     writer.WriteNull("icmHttpPort");
                 }
             }
-            if (options.Format != "W" && IcmHttpsPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IcmHttpsPort))
             {
                 if (IcmHttpsPort != null)
                 {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Workloads
                     writer.WriteNull("icmHttpsPort");
                 }
             }
-            if (options.Format != "W" && LoadBalancerDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerDetails);
             }
-            if (options.Format != "W" && !(VmDetails is ChangeTrackingList<ApplicationServerVmDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
                 writer.WritePropertyName("vmDetails"u8);
                 writer.WriteStartArray();
@@ -145,22 +145,22 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -209,22 +209,22 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<long?> gatewayPort = default;
-            Optional<long?> icmHttpPort = default;
-            Optional<long?> icmHttpsPort = default;
-            Optional<SubResource> loadBalancerDetails = default;
+            SystemData systemData = default;
+            string instanceNo = default;
+            ResourceIdentifier subnet = default;
+            string hostname = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            string ipAddress = default;
+            long? gatewayPort = default;
+            long? icmHttpPort = default;
+            long? icmHttpsPort = default;
+            SubResource loadBalancerDetails = default;
             IReadOnlyList<ApplicationServerVmDetails> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SapVirtualInstanceStatus? status = default;
+            SapHealthState? health = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -417,24 +417,24 @@ namespace Azure.ResourceManager.Workloads
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                instanceNo.Value,
-                subnet.Value,
-                hostname.Value,
-                kernelVersion.Value,
-                kernelPatch.Value,
-                ipAddress.Value,
-                Optional.ToNullable(gatewayPort),
-                Optional.ToNullable(icmHttpPort),
-                Optional.ToNullable(icmHttpsPort),
+                instanceNo,
+                subnet,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                gatewayPort,
+                icmHttpPort,
+                icmHttpsPort,
                 loadBalancerDetails,
                 vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>(),
-                Optional.ToNullable(status),
-                Optional.ToNullable(health),
-                Optional.ToNullable(provisioningState),
-                errors.Value,
+                status,
+                health,
+                provisioningState,
+                errors,
                 serializedAdditionalRawData);
         }
 

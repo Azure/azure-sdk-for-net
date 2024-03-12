@@ -29,44 +29,44 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VpnNatRuleType.HasValue)
+            if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VpnNatRuleType.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(InternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InternalMappings))
             {
                 writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalMappings))
             {
                 writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (IPConfigurationId != null)
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
-            if (options.Format != "W" && !(EgressVpnSiteLinkConnections is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EgressVpnSiteLinkConnections))
             {
                 writer.WritePropertyName("egressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IngressVpnSiteLinkConnections is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IngressVpnSiteLinkConnections))
             {
                 writer.WritePropertyName("ingressVpnSiteLinkConnections"u8);
                 writer.WriteStartArray();
@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VpnNatRuleType> type0 = default;
-            Optional<VpnNatRuleMode> mode = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            VpnNatRuleType? type0 = default;
+            VpnNatRuleMode? mode = default;
             IList<VpnNatRuleMapping> internalMappings = default;
             IList<VpnNatRuleMapping> externalMappings = default;
-            Optional<string> ipConfigurationId = default;
+            string ipConfigurationId = default;
             IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections = default;
             IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -305,17 +305,17 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnGatewayNatRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(type0),
-                Optional.ToNullable(mode),
+                etag,
+                provisioningState,
+                type0,
+                mode,
                 internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
                 externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
-                ipConfigurationId.Value,
+                ipConfigurationId,
                 egressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 ingressVpnSiteLinkConnections ?? new ChangeTrackingList<WritableSubResource>());
         }

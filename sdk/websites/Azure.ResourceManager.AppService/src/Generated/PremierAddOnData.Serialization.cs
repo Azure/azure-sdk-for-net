@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,34 +60,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (MarketplacePublisher != null)
+            if (Optional.IsDefined(MarketplacePublisher))
             {
                 writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
-            if (MarketplaceOffer != null)
+            if (Optional.IsDefined(MarketplaceOffer))
             {
                 writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sku = default;
-            Optional<string> product = default;
-            Optional<string> vendor = default;
-            Optional<string> marketplacePublisher = default;
-            Optional<string> marketplaceOffer = default;
+            SystemData systemData = default;
+            string sku = default;
+            string product = default;
+            string vendor = default;
+            string marketplacePublisher = default;
+            string marketplaceOffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,15 +242,15 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                product.Value,
-                vendor.Value,
-                marketplacePublisher.Value,
-                marketplaceOffer.Value,
-                kind.Value,
+                sku,
+                product,
+                vendor,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
                 serializedAdditionalRawData);
         }
 

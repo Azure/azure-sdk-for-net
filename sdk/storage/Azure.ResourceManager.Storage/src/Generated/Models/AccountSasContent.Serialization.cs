@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -32,24 +33,24 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(ResourceTypes.ToString());
             writer.WritePropertyName("signedPermission"u8);
             writer.WriteStringValue(Permissions.ToString());
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols.HasValue)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartOn.HasValue)
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasSignedService signedServices = default;
             StorageAccountSasSignedResourceType signedResourceTypes = default;
             StorageAccountSasPermission signedPermission = default;
-            Optional<string> signedIP = default;
-            Optional<StorageAccountHttpProtocol> signedProtocol = default;
-            Optional<DateTimeOffset> signedStart = default;
+            string signedIP = default;
+            StorageAccountHttpProtocol? signedProtocol = default;
+            DateTimeOffset? signedStart = default;
             DateTimeOffset signedExpiry = default;
-            Optional<string> keyToSign = default;
+            string keyToSign = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,11 +163,11 @@ namespace Azure.ResourceManager.Storage.Models
                 signedServices,
                 signedResourceTypes,
                 signedPermission,
-                signedIP.Value,
-                Optional.ToNullable(signedProtocol),
-                Optional.ToNullable(signedStart),
+                signedIP,
+                signedProtocol,
+                signedStart,
                 signedExpiry,
-                keyToSign.Value,
+                keyToSign,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (SourceRegistry != null)
+            if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
-            if (!(CustomRegistries is ChangeTrackingDictionary<string, CustomRegistryCredentials> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomRegistries))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryCredentials> sourceRegistry = default;
+            SourceRegistryCredentials sourceRegistry = default;
             IDictionary<string, CustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(sourceRegistry.Value, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

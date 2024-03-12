@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> provisioningState = default;
+            string name = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPartition(name.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new DataPartition(name, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPartition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Endpoints is ChangeTrackingList<LiveEventEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AccessControl != null)
+            if (Optional.IsDefined(AccessControl))
             {
                 if (AccessControl != null)
                 {
@@ -48,17 +49,17 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("accessControl");
                 }
             }
-            if (PreviewLocator != null)
+            if (Optional.IsDefined(PreviewLocator))
             {
                 writer.WritePropertyName("previewLocator"u8);
                 writer.WriteStringValue(PreviewLocator);
             }
-            if (StreamingPolicyName != null)
+            if (Optional.IsDefined(StreamingPolicyName))
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (AlternativeMediaId != null)
+            if (Optional.IsDefined(AlternativeMediaId))
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
@@ -102,10 +103,10 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IList<LiveEventEndpoint> endpoints = default;
-            Optional<LiveEventPreviewAccessControl> accessControl = default;
-            Optional<string> previewLocator = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> alternativeMediaId = default;
+            LiveEventPreviewAccessControl accessControl = default;
+            string previewLocator = default;
+            string streamingPolicyName = default;
+            string alternativeMediaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,10 +158,10 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LiveEventPreview(
                 endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
-                accessControl.Value,
-                previewLocator.Value,
-                streamingPolicyName.Value,
-                alternativeMediaId.Value,
+                accessControl,
+                previewLocator,
+                streamingPolicyName,
+                alternativeMediaId,
                 serializedAdditionalRawData);
         }
 

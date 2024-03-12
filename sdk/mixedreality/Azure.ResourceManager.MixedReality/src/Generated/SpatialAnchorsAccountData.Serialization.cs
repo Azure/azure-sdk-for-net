@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.MixedReality
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteObjectValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,24 +76,24 @@ namespace Azure.ResourceManager.MixedReality
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && AccountId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && AccountDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountDomain))
             {
                 writer.WritePropertyName("accountDomain"u8);
                 writer.WriteStringValue(AccountDomain);
@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.MixedReality
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ManagedServiceIdentity> plan = default;
-            Optional<MixedRealitySku> sku = default;
-            Optional<MixedRealitySku> kind = default;
+            ManagedServiceIdentity identity = default;
+            ManagedServiceIdentity plan = default;
+            MixedRealitySku sku = default;
+            MixedRealitySku kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> storageAccountName = default;
-            Optional<Guid> accountId = default;
-            Optional<string> accountDomain = default;
+            SystemData systemData = default;
+            string storageAccountName = default;
+            Guid? accountId = default;
+            string accountDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.MixedReality
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
                 plan,
-                sku.Value,
-                kind.Value,
-                storageAccountName.Value,
-                Optional.ToNullable(accountId),
-                accountDomain.Value,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
                 serializedAdditionalRawData);
         }
 

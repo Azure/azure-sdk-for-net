@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Primary != null)
+            if (options.Format != "W" && Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteStringValue(Primary);
             }
-            if (options.Format != "W" && Secondary != null)
+            if (options.Format != "W" && Optional.IsDefined(Secondary))
             {
                 writer.WritePropertyName("secondary"u8);
                 writer.WriteStringValue(Secondary);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            string accountName = default;
+            string primary = default;
+            string secondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountKeys(accountName.Value, primary.Value, secondary.Value, serializedAdditionalRawData);
+            return new BatchAccountKeys(accountName, primary, secondary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountKeys>.Write(ModelReaderWriterOptions options)

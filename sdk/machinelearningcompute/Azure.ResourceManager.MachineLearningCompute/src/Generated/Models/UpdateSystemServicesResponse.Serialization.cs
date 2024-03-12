@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdateStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateStatus))
             {
                 writer.WritePropertyName("updateStatus"u8);
                 writer.WriteStringValue(UpdateStatus.Value.ToString());
             }
-            if (options.Format != "W" && UpdateStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateStartedOn))
             {
                 writer.WritePropertyName("updateStartedOn"u8);
                 writer.WriteStringValue(UpdateStartedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdateCompletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateCompletedOn))
             {
                 writer.WritePropertyName("updateCompletedOn"u8);
                 writer.WriteStringValue(UpdateCompletedOn.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<OperationStatus> updateStatus = default;
-            Optional<DateTimeOffset> updateStartedOn = default;
-            Optional<DateTimeOffset> updateCompletedOn = default;
+            OperationStatus? updateStatus = default;
+            DateTimeOffset? updateStartedOn = default;
+            DateTimeOffset? updateCompletedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSystemServicesResponse(Optional.ToNullable(updateStatus), Optional.ToNullable(updateStartedOn), Optional.ToNullable(updateCompletedOn), serializedAdditionalRawData);
+            return new UpdateSystemServicesResponse(updateStatus, updateStartedOn, updateCompletedOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSystemServicesResponse>.Write(ModelReaderWriterOptions options)

@@ -37,25 +37,6 @@ namespace Azure.AI.OpenAI
         {
         }
 
-        internal HttpMessage CreateGetImageGenerationsRequest(string deploymentId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/openai", false);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentId, true);
-            uri.AppendPath("/images/generations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -31,12 +32,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,17 +54,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (BlobPathBeginsWith != null)
+            if (Optional.IsDefined(BlobPathBeginsWith))
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (BlobPathEndsWith != null)
+            if (Optional.IsDefined(BlobPathEndsWith))
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (IgnoreEmptyBlobs.HasValue)
+            if (Optional.IsDefined(IgnoreEmptyBlobs))
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -94,12 +95,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
             IList<object> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            string blobPathBeginsWith = default;
+            string blobPathEndsWith = default;
+            bool? ignoreEmptyBlobs = default;
             IList<BlobEventType> events = default;
             string scope = default;
             IDictionary<string, object> additionalProperties = default;
@@ -211,14 +212,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new BlobEventsTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
-                blobPathBeginsWith.Value,
-                blobPathEndsWith.Value,
-                Optional.ToNullable(ignoreEmptyBlobs),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
                 events,
                 scope);
         }

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ProjectFileProperties> properties = default;
+            ETag? etag = default;
+            ProjectFileProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.DataMigration
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                properties.Value,
+                systemData,
+                etag,
+                properties,
                 serializedAdditionalRawData);
         }
 

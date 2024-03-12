@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryAzureVmName != null)
+            if (Optional.IsDefined(RecoveryAzureVmName))
             {
                 writer.WritePropertyName("recoveryAzureVMName"u8);
                 writer.WriteStringValue(RecoveryAzureVmName);
             }
-            if (RecoveryAzureVmSize != null)
+            if (Optional.IsDefined(RecoveryAzureVmSize))
             {
                 writer.WritePropertyName("recoveryAzureVMSize"u8);
                 writer.WriteStringValue(RecoveryAzureVmSize);
             }
-            if (SelectedRecoveryAzureNetworkId != null)
+            if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
             {
                 writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
             }
-            if (SelectedTfoAzureNetworkId != null)
+            if (Optional.IsDefined(SelectedTfoAzureNetworkId))
             {
                 writer.WritePropertyName("selectedTfoAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedTfoAzureNetworkId);
             }
-            if (SelectedSourceNicId != null)
+            if (Optional.IsDefined(SelectedSourceNicId))
             {
                 writer.WritePropertyName("selectedSourceNicId"u8);
                 writer.WriteStringValue(SelectedSourceNicId);
             }
-            if (EnableRdpOnTargetOption != null)
+            if (Optional.IsDefined(EnableRdpOnTargetOption))
             {
                 writer.WritePropertyName("enableRdpOnTargetOption"u8);
                 writer.WriteStringValue(EnableRdpOnTargetOption);
             }
-            if (!(VmNics is ChangeTrackingList<VmNicContentDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -66,17 +67,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (RecoveryAvailabilitySetId != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
-            Optional<string> selectedSourceNicId = default;
-            Optional<string> enableRdpOnTargetOption = default;
+            string recoveryAzureVmName = default;
+            string recoveryAzureVmSize = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            ResourceIdentifier selectedTfoAzureNetworkId = default;
+            string selectedSourceNicId = default;
+            string enableRdpOnTargetOption = default;
             IList<VmNicContentDetails> vmNics = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<UpdateReplicationProtectedItemProviderContent> providerSpecificDetails = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            UpdateReplicationProtectedItemProviderContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,16 +220,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateReplicationProtectedItemProperties(
-                recoveryAzureVmName.Value,
-                recoveryAzureVmSize.Value,
-                selectedRecoveryAzureNetworkId.Value,
-                selectedTfoAzureNetworkId.Value,
-                selectedSourceNicId.Value,
-                enableRdpOnTargetOption.Value,
+                recoveryAzureVmName,
+                recoveryAzureVmSize,
+                selectedRecoveryAzureNetworkId,
+                selectedTfoAzureNetworkId,
+                selectedSourceNicId,
+                enableRdpOnTargetOption,
                 vmNics ?? new ChangeTrackingList<VmNicContentDetails>(),
-                Optional.ToNullable(licenseType),
-                recoveryAvailabilitySetId.Value,
-                providerSpecificDetails.Value,
+                licenseType,
+                recoveryAvailabilitySetId,
+                providerSpecificDetails,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (FunctionAlias != null)
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> functionAlias = default;
-            Optional<string> workspaceId = default;
+            string functionAlias = default;
+            string workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NonAzureQueryProperties(functionAlias.Value, workspaceId.Value, serializedAdditionalRawData);
+            return new NonAzureQueryProperties(functionAlias, workspaceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NonAzureQueryProperties>.Write(ModelReaderWriterOptions options)

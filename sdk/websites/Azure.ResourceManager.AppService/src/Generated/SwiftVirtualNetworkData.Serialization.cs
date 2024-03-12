@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SubnetResourceId != null)
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
             }
-            if (IsSwiftSupported.HasValue)
+            if (Optional.IsDefined(IsSwiftSupported))
             {
                 writer.WritePropertyName("swiftSupported"u8);
                 writer.WriteBooleanValue(IsSwiftSupported.Value);
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
-            Optional<bool> swiftSupported = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetResourceId = default;
+            bool? swiftSupported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                subnetResourceId.Value,
-                Optional.ToNullable(swiftSupported),
-                kind.Value,
+                systemData,
+                subnetResourceId,
+                swiftSupported,
+                kind,
                 serializedAdditionalRawData);
         }
 

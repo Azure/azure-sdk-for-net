@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && QueryId != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (options.Format != "W" && StartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && EndTime != null)
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (!(Intervals is ChangeTrackingList<QueryMetricInterval> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Intervals))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> queryId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            string databaseName = default;
+            string queryId = default;
+            string startTime = default;
+            string endTime = default;
             IReadOnlyList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QueryStatisticsProperties(
-                databaseName.Value,
-                queryId.Value,
-                startTime.Value,
-                endTime.Value,
+                databaseName,
+                queryId,
+                startTime,
+                endTime,
                 intervals ?? new ChangeTrackingList<QueryMetricInterval>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> message = default;
-            Optional<string> cloud = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            string title = default;
+            string message = default;
+            string cloud = default;
+            DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueBannerType(title.Value, message.Value, cloud.Value, Optional.ToNullable(lastModifiedTime), serializedAdditionalRawData);
+            return new EmergingIssueBannerType(title, message, cloud, lastModifiedTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueBannerType>.Write(ModelReaderWriterOptions options)

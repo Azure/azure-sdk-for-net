@@ -12,6 +12,7 @@ using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -45,14 +46,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -75,12 +76,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && !(FileEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FileEntityIds))
             {
                 writer.WritePropertyName("fileEntityIds"u8);
                 writer.WriteStartArray();
@@ -90,12 +91,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Recipient != null)
+            if (options.Format != "W" && Optional.IsDefined(Recipient))
             {
                 writer.WritePropertyName("recipient"u8);
                 writer.WriteStringValue(Recipient);
             }
-            if (options.Format != "W" && !(Uris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Uris))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -120,67 +121,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && P1Sender != null)
+            if (options.Format != "W" && Optional.IsDefined(P1Sender))
             {
                 writer.WritePropertyName("p1Sender"u8);
                 writer.WriteStringValue(P1Sender);
             }
-            if (options.Format != "W" && P1SenderDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(P1SenderDisplayName))
             {
                 writer.WritePropertyName("p1SenderDisplayName"u8);
                 writer.WriteStringValue(P1SenderDisplayName);
             }
-            if (options.Format != "W" && P1SenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(P1SenderDomain))
             {
                 writer.WritePropertyName("p1SenderDomain"u8);
                 writer.WriteStringValue(P1SenderDomain);
             }
-            if (options.Format != "W" && SenderIP != null)
+            if (options.Format != "W" && Optional.IsDefined(SenderIP))
             {
                 writer.WritePropertyName("senderIP"u8);
                 writer.WriteStringValue(SenderIP.ToString());
             }
-            if (options.Format != "W" && P2Sender != null)
+            if (options.Format != "W" && Optional.IsDefined(P2Sender))
             {
                 writer.WritePropertyName("p2Sender"u8);
                 writer.WriteStringValue(P2Sender);
             }
-            if (options.Format != "W" && P2SenderDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(P2SenderDisplayName))
             {
                 writer.WritePropertyName("p2SenderDisplayName"u8);
                 writer.WriteStringValue(P2SenderDisplayName);
             }
-            if (options.Format != "W" && P2SenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(P2SenderDomain))
             {
                 writer.WritePropertyName("p2SenderDomain"u8);
                 writer.WriteStringValue(P2SenderDomain);
             }
-            if (options.Format != "W" && ReceiveOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReceiveOn))
             {
                 writer.WritePropertyName("receiveDate"u8);
                 writer.WriteStringValue(ReceiveOn.Value, "O");
             }
-            if (options.Format != "W" && NetworkMessageId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkMessageId))
             {
                 writer.WritePropertyName("networkMessageId"u8);
                 writer.WriteStringValue(NetworkMessageId.Value);
             }
-            if (options.Format != "W" && InternetMessageId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternetMessageId))
             {
                 writer.WritePropertyName("internetMessageId"u8);
                 writer.WriteStringValue(InternetMessageId);
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Language != null)
+            if (options.Format != "W" && Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (options.Format != "W" && !(ThreatDetectionMethods is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatDetectionMethods))
             {
                 writer.WritePropertyName("threatDetectionMethods"u8);
                 writer.WriteStartArray();
@@ -190,42 +191,42 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BodyFingerprintBin1.HasValue)
+            if (Optional.IsDefined(BodyFingerprintBin1))
             {
                 writer.WritePropertyName("bodyFingerprintBin1"u8);
                 writer.WriteNumberValue(BodyFingerprintBin1.Value);
             }
-            if (BodyFingerprintBin2.HasValue)
+            if (Optional.IsDefined(BodyFingerprintBin2))
             {
                 writer.WritePropertyName("bodyFingerprintBin2"u8);
                 writer.WriteNumberValue(BodyFingerprintBin2.Value);
             }
-            if (BodyFingerprintBin3.HasValue)
+            if (Optional.IsDefined(BodyFingerprintBin3))
             {
                 writer.WritePropertyName("bodyFingerprintBin3"u8);
                 writer.WriteNumberValue(BodyFingerprintBin3.Value);
             }
-            if (BodyFingerprintBin4.HasValue)
+            if (Optional.IsDefined(BodyFingerprintBin4))
             {
                 writer.WritePropertyName("bodyFingerprintBin4"u8);
                 writer.WriteNumberValue(BodyFingerprintBin4.Value);
             }
-            if (BodyFingerprintBin5.HasValue)
+            if (Optional.IsDefined(BodyFingerprintBin5))
             {
                 writer.WritePropertyName("bodyFingerprintBin5"u8);
                 writer.WriteNumberValue(BodyFingerprintBin5.Value);
             }
-            if (AntispamDirection.HasValue)
+            if (Optional.IsDefined(AntispamDirection))
             {
                 writer.WritePropertyName("antispamDirection"u8);
                 writer.WriteStringValue(AntispamDirection.Value.ToString());
             }
-            if (DeliveryAction.HasValue)
+            if (Optional.IsDefined(DeliveryAction))
             {
                 writer.WritePropertyName("deliveryAction"u8);
                 writer.WriteStringValue(DeliveryAction.Value.ToSerialString());
             }
-            if (DeliveryLocation.HasValue)
+            if (Optional.IsDefined(DeliveryLocation))
             {
                 writer.WritePropertyName("deliveryLocation"u8);
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
@@ -273,34 +274,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
+            string friendlyName = default;
             IReadOnlyList<string> fileEntityIds = default;
-            Optional<string> recipient = default;
+            string recipient = default;
             IReadOnlyList<Uri> urls = default;
             IReadOnlyList<string> threats = default;
-            Optional<string> p1Sender = default;
-            Optional<string> p1SenderDisplayName = default;
-            Optional<string> p1SenderDomain = default;
-            Optional<IPAddress> senderIP = default;
-            Optional<string> p2Sender = default;
-            Optional<string> p2SenderDisplayName = default;
-            Optional<string> p2SenderDomain = default;
-            Optional<DateTimeOffset> receiveDate = default;
-            Optional<Guid> networkMessageId = default;
-            Optional<string> internetMessageId = default;
-            Optional<string> subject = default;
-            Optional<string> language = default;
+            string p1Sender = default;
+            string p1SenderDisplayName = default;
+            string p1SenderDomain = default;
+            IPAddress senderIP = default;
+            string p2Sender = default;
+            string p2SenderDisplayName = default;
+            string p2SenderDomain = default;
+            DateTimeOffset? receiveDate = default;
+            Guid? networkMessageId = default;
+            string internetMessageId = default;
+            string subject = default;
+            string language = default;
             IReadOnlyList<string> threatDetectionMethods = default;
-            Optional<int> bodyFingerprintBin1 = default;
-            Optional<int> bodyFingerprintBin2 = default;
-            Optional<int> bodyFingerprintBin3 = default;
-            Optional<int> bodyFingerprintBin4 = default;
-            Optional<int> bodyFingerprintBin5 = default;
-            Optional<AntispamMailDirection> antispamDirection = default;
-            Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
-            Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            int? bodyFingerprintBin1 = default;
+            int? bodyFingerprintBin2 = default;
+            int? bodyFingerprintBin3 = default;
+            int? bodyFingerprintBin4 = default;
+            int? bodyFingerprintBin5 = default;
+            AntispamMailDirection? antispamDirection = default;
+            SecurityInsightsMailMessageDeliveryAction? deliveryAction = default;
+            SecurityInsightsMailMessageDeliveryLocation? deliveryLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -594,36 +595,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
+                friendlyName,
                 fileEntityIds ?? new ChangeTrackingList<string>(),
-                recipient.Value,
+                recipient,
                 urls ?? new ChangeTrackingList<Uri>(),
                 threats ?? new ChangeTrackingList<string>(),
-                p1Sender.Value,
-                p1SenderDisplayName.Value,
-                p1SenderDomain.Value,
-                senderIP.Value,
-                p2Sender.Value,
-                p2SenderDisplayName.Value,
-                p2SenderDomain.Value,
-                Optional.ToNullable(receiveDate),
-                Optional.ToNullable(networkMessageId),
-                internetMessageId.Value,
-                subject.Value,
-                language.Value,
+                p1Sender,
+                p1SenderDisplayName,
+                p1SenderDomain,
+                senderIP,
+                p2Sender,
+                p2SenderDisplayName,
+                p2SenderDomain,
+                receiveDate,
+                networkMessageId,
+                internetMessageId,
+                subject,
+                language,
                 threatDetectionMethods ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(bodyFingerprintBin1),
-                Optional.ToNullable(bodyFingerprintBin2),
-                Optional.ToNullable(bodyFingerprintBin3),
-                Optional.ToNullable(bodyFingerprintBin4),
-                Optional.ToNullable(bodyFingerprintBin5),
-                Optional.ToNullable(antispamDirection),
-                Optional.ToNullable(deliveryAction),
-                Optional.ToNullable(deliveryLocation));
+                bodyFingerprintBin1,
+                bodyFingerprintBin2,
+                bodyFingerprintBin3,
+                bodyFingerprintBin4,
+                bodyFingerprintBin5,
+                antispamDirection,
+                deliveryAction,
+                deliveryLocation);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)

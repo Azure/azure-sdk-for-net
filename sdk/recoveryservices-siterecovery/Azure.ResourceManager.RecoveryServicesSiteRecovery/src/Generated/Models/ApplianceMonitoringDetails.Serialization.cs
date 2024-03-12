@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CpuDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CpuDetails))
             {
                 writer.WritePropertyName("cpuDetails"u8);
                 writer.WriteObjectValue(CpuDetails);
             }
-            if (options.Format != "W" && RamDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RamDetails))
             {
                 writer.WritePropertyName("ramDetails"u8);
                 writer.WriteObjectValue(RamDetails);
             }
-            if (options.Format != "W" && !(DatastoreSnapshot is ChangeTrackingList<DataStoreUtilizationDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
             {
                 writer.WritePropertyName("datastoreSnapshot"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisksReplicationDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
                 writer.WriteObjectValue(DisksReplicationDetails);
             }
-            if (options.Format != "W" && EsxiNfcBuffer != null)
+            if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
                 writer.WriteObjectValue(EsxiNfcBuffer);
             }
-            if (options.Format != "W" && NetworkBandwidth != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
             {
                 writer.WritePropertyName("networkBandwidth"u8);
                 writer.WriteObjectValue(NetworkBandwidth);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ApplianceResourceDetails> cpuDetails = default;
-            Optional<ApplianceResourceDetails> ramDetails = default;
+            ApplianceResourceDetails cpuDetails = default;
+            ApplianceResourceDetails ramDetails = default;
             IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot = default;
-            Optional<ApplianceResourceDetails> disksReplicationDetails = default;
-            Optional<ApplianceResourceDetails> esxiNfcBuffer = default;
-            Optional<ApplianceResourceDetails> networkBandwidth = default;
+            ApplianceResourceDetails disksReplicationDetails = default;
+            ApplianceResourceDetails esxiNfcBuffer = default;
+            ApplianceResourceDetails networkBandwidth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,12 +176,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplianceMonitoringDetails(
-                cpuDetails.Value,
-                ramDetails.Value,
+                cpuDetails,
+                ramDetails,
                 datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(),
-                disksReplicationDetails.Value,
-                esxiNfcBuffer.Value,
-                networkBandwidth.Value,
+                disksReplicationDetails,
+                esxiNfcBuffer,
+                networkBandwidth,
                 serializedAdditionalRawData);
         }
 

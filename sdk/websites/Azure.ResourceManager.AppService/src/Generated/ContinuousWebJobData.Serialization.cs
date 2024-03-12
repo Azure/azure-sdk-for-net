@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,59 +48,59 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (DetailedStatus != null)
+            if (Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailed_status"u8);
                 writer.WriteStringValue(DetailedStatus);
             }
-            if (LogUri != null)
+            if (Optional.IsDefined(LogUri))
             {
                 writer.WritePropertyName("log_url"u8);
                 writer.WriteStringValue(LogUri.AbsoluteUri);
             }
-            if (RunCommand != null)
+            if (Optional.IsDefined(RunCommand))
             {
                 writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ExtraInfoUri != null)
+            if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
-            if (WebJobType.HasValue)
+            if (Optional.IsDefined(WebJobType))
             {
                 writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (IsUsingSdk.HasValue)
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -162,20 +162,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContinuousWebJobStatus> status = default;
-            Optional<string> detailedStatus = default;
-            Optional<Uri> logUrl = default;
-            Optional<string> runCommand = default;
-            Optional<Uri> url = default;
-            Optional<Uri> extraInfoUrl = default;
-            Optional<WebJobType> webJobType = default;
-            Optional<string> error = default;
-            Optional<bool> usingSdk = default;
+            SystemData systemData = default;
+            ContinuousWebJobStatus? status = default;
+            string detailedStatus = default;
+            Uri logUrl = default;
+            string runCommand = default;
+            Uri url = default;
+            Uri extraInfoUrl = default;
+            WebJobType? webJobType = default;
+            string error = default;
+            bool? usingSdk = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -322,18 +322,18 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
-                detailedStatus.Value,
-                logUrl.Value,
-                runCommand.Value,
-                url.Value,
-                extraInfoUrl.Value,
-                Optional.ToNullable(webJobType),
-                error.Value,
-                Optional.ToNullable(usingSdk),
+                systemData,
+                status,
+                detailedStatus,
+                logUrl,
+                runCommand,
+                url,
+                extraInfoUrl,
+                webJobType,
+                error,
+                usingSdk,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

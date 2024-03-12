@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tables is ChangeTrackingList<SyncGroupSchemaTable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MasterSyncMemberName != null)
+            if (Optional.IsDefined(MasterSyncMemberName))
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IList<SyncGroupSchemaTable> tables = default;
-            Optional<string> masterSyncMemberName = default;
+            string masterSyncMemberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchema>.Write(ModelReaderWriterOptions options)

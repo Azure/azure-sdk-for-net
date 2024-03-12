@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (NetPayable != null)
+            if (Optional.IsDefined(NetPayable))
             {
                 writer.WritePropertyName("netPayable"u8);
                 writer.WriteObjectValue(NetPayable);
             }
-            if (RefundsTotal != null)
+            if (Optional.IsDefined(RefundsTotal))
             {
                 writer.WritePropertyName("refundsTotal"u8);
                 writer.WriteObjectValue(RefundsTotal);
             }
-            if (PurchasesTotal != null)
+            if (Optional.IsDefined(PurchasesTotal))
             {
                 writer.WritePropertyName("purchasesTotal"u8);
                 writer.WriteObjectValue(PurchasesTotal);
             }
-            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationToPurchaseExchange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanToPurchaseExchange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToReturnForExchange> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservationsToExchange))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyResult != null)
+            if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);
@@ -119,14 +120,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<PurchasePrice> netPayable = default;
-            Optional<PurchasePrice> refundsTotal = default;
-            Optional<PurchasePrice> purchasesTotal = default;
+            Guid? sessionId = default;
+            PurchasePrice netPayable = default;
+            PurchasePrice refundsTotal = default;
+            PurchasePrice purchasesTotal = default;
             IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase = default;
             IReadOnlyList<SavingsPlanToPurchaseExchange> savingsPlansToPurchase = default;
             IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange = default;
-            Optional<ExchangePolicyErrors> policyResult = default;
+            ExchangePolicyErrors policyResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,14 +226,14 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExchangeResultProperties(
-                Optional.ToNullable(sessionId),
-                netPayable.Value,
-                refundsTotal.Value,
-                purchasesTotal.Value,
+                sessionId,
+                netPayable,
+                refundsTotal,
+                purchasesTotal,
                 reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseExchange>(),
                 savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseExchange>(),
                 reservationsToExchange ?? new ChangeTrackingList<ReservationToReturnForExchange>(),
-                policyResult.Value,
+                policyResult,
                 serializedAdditionalRawData);
         }
 

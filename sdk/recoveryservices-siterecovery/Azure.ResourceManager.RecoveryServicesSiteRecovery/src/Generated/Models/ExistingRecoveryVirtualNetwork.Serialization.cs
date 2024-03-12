@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryVirtualNetworkId"u8);
             writer.WriteStringValue(RecoveryVirtualNetworkId);
-            if (RecoverySubnetName != null)
+            if (Optional.IsDefined(RecoverySubnetName))
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             ResourceIdentifier recoveryVirtualNetworkId = default;
-            Optional<string> recoverySubnetName = default;
+            string recoverySubnetName = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkId, recoverySubnetName.Value);
+            return new ExistingRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkId, recoverySubnetName);
         }
 
         BinaryData IPersistableModel<ExistingRecoveryVirtualNetwork>.Write(ModelReaderWriterOptions options)

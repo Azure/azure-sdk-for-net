@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ScopePath != null)
+            if (Optional.IsDefined(ScopePath))
             {
                 writer.WritePropertyName("scopePath"u8);
                 writer.WriteStringValue(ScopePath);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> scopePath = default;
+            string description = default;
+            string scopePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationScope(description.Value, scopePath.Value, serializedAdditionalRawData);
+            return new SecurityAutomationScope(description, scopePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationScope>.Write(ModelReaderWriterOptions options)

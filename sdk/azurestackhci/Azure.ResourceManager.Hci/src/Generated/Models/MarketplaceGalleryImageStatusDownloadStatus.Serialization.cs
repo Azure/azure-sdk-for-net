@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (DownloadSizeInMB.HasValue)
+            if (Optional.IsDefined(DownloadSizeInMB))
             {
                 writer.WritePropertyName("downloadSizeInMB"u8);
                 writer.WriteNumberValue(DownloadSizeInMB.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<long> downloadSizeInMB = default;
+            long? downloadSizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageStatusDownloadStatus(Optional.ToNullable(downloadSizeInMB), serializedAdditionalRawData);
+            return new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageStatusDownloadStatus>.Write(ModelReaderWriterOptions options)

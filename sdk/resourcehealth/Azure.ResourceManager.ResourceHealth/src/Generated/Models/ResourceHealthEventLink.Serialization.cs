@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (LinkType.HasValue)
+            if (Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (DisplayText != null)
+            if (Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteObjectValue(DisplayText);
             }
-            if (ExtensionName != null)
+            if (Optional.IsDefined(ExtensionName))
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (BladeName != null)
+            if (Optional.IsDefined(BladeName))
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<ResourceHealthEventLinkTypeValue> type = default;
-            Optional<ResourceHealthEventLinkDisplayText> displayText = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<BinaryData> parameters = default;
+            ResourceHealthEventLinkTypeValue? type = default;
+            ResourceHealthEventLinkDisplayText displayText = default;
+            string extensionName = default;
+            string bladeName = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,11 +150,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceHealthEventLink(
-                Optional.ToNullable(type),
-                displayText.Value,
-                extensionName.Value,
-                bladeName.Value,
-                parameters.Value,
+                type,
+                displayText,
+                extensionName,
+                bladeName,
+                parameters,
                 serializedAdditionalRawData);
         }
 

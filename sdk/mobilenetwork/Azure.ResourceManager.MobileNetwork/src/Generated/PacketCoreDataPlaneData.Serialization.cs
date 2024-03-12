@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneAccessInterface"u8);
             writer.WriteObjectValue(UserPlaneAccessInterface);
-            if (!(UserPlaneAccessVirtualIPv4Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);
                 writer.WriteStartArray();
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
             IList<string> userPlaneAccessVirtualIPv4Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 userPlaneAccessInterface,
                 userPlaneAccessVirtualIPv4Addresses ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

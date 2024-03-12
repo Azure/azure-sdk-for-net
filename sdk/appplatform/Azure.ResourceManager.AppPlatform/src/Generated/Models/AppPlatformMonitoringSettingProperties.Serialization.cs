@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (IsTraceEnabled.HasValue)
+            if (Optional.IsDefined(IsTraceEnabled))
             {
                 writer.WritePropertyName("traceEnabled"u8);
                 writer.WriteBooleanValue(IsTraceEnabled.Value);
             }
-            if (AppInsightsInstrumentationKey != null)
+            if (Optional.IsDefined(AppInsightsInstrumentationKey))
             {
                 writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
-            if (AppInsightsSamplingRate.HasValue)
+            if (Optional.IsDefined(AppInsightsSamplingRate))
             {
                 writer.WritePropertyName("appInsightsSamplingRate"u8);
                 writer.WriteNumberValue(AppInsightsSamplingRate.Value);
             }
-            if (AppInsightsAgentVersions != null)
+            if (Optional.IsDefined(AppInsightsAgentVersions))
             {
                 writer.WritePropertyName("appInsightsAgentVersions"u8);
                 writer.WriteObjectValue(AppInsightsAgentVersions);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformMonitoringSettingState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<bool> traceEnabled = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<double> appInsightsSamplingRate = default;
-            Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
+            AppPlatformMonitoringSettingState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            bool? traceEnabled = default;
+            string appInsightsInstrumentationKey = default;
+            double? appInsightsSamplingRate = default;
+            ApplicationInsightsAgentVersions appInsightsAgentVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformMonitoringSettingProperties(
-                Optional.ToNullable(provisioningState),
-                error.Value,
-                Optional.ToNullable(traceEnabled),
-                appInsightsInstrumentationKey.Value,
-                Optional.ToNullable(appInsightsSamplingRate),
-                appInsightsAgentVersions.Value,
+                provisioningState,
+                error,
+                traceEnabled,
+                appInsightsInstrumentationKey,
+                appInsightsSamplingRate,
+                appInsightsAgentVersions,
                 serializedAdditionalRawData);
         }
 

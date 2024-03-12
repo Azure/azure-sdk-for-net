@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TargetProtectionContainerId != null)
+            if (Optional.IsDefined(TargetProtectionContainerId))
             {
                 writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (ProviderSpecificContent != null)
+            if (Optional.IsDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificContent);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetProtectionContainerId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ReplicationProviderSpecificContainerMappingContent> providerSpecificContent = default;
+            ResourceIdentifier targetProtectionContainerId = default;
+            ResourceIdentifier policyId = default;
+            ReplicationProviderSpecificContainerMappingContent providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId.Value, policyId.Value, providerSpecificContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryCreateProtectionContainerMappingProperties(targetProtectionContainerId, policyId, providerSpecificContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

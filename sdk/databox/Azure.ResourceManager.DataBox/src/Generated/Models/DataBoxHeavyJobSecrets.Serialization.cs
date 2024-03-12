@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(CabinetPodSecrets is ChangeTrackingList<DataBoxHeavySecret> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CabinetPodSecrets))
             {
                 writer.WritePropertyName("cabinetPodSecrets"u8);
                 writer.WriteStartArray();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxHeavyJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, cabinetPodSecrets ?? new ChangeTrackingList<DataBoxHeavySecret>());
+            return new DataBoxHeavyJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData, cabinetPodSecrets ?? new ChangeTrackingList<DataBoxHeavySecret>());
         }
 
         BinaryData IPersistableModel<DataBoxHeavyJobSecrets>.Write(ModelReaderWriterOptions options)

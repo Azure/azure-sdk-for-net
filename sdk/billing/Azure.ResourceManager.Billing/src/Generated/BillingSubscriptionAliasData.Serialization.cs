@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoRenew.HasValue)
+            if (Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
-            if (BeneficiaryTenantId != null)
+            if (Optional.IsDefined(BeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
                 writer.WriteStringValue(BeneficiaryTenantId);
             }
-            if (BillingFrequency != null)
+            if (Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (BillingProfileId != null)
+            if (Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && !(BillingPolicies is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BillingPolicies))
             {
                 writer.WritePropertyName("billingPolicies"u8);
                 writer.WriteStartObject();
@@ -81,137 +81,137 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && BillingProfileDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
             {
                 writer.WritePropertyName("billingProfileDisplayName"u8);
                 writer.WriteStringValue(BillingProfileDisplayName);
             }
-            if (options.Format != "W" && BillingProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileName))
             {
                 writer.WritePropertyName("billingProfileName"u8);
                 writer.WriteStringValue(BillingProfileName);
             }
-            if (ConsumptionCostCenter != null)
+            if (Optional.IsDefined(ConsumptionCostCenter))
             {
                 writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
-            if (CustomerId != null)
+            if (Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (options.Format != "W" && CustomerDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomerDisplayName))
             {
                 writer.WritePropertyName("customerDisplayName"u8);
                 writer.WriteStringValue(CustomerDisplayName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && EnrollmentAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountId))
             {
                 writer.WritePropertyName("enrollmentAccountId"u8);
                 writer.WriteStringValue(EnrollmentAccountId);
             }
-            if (options.Format != "W" && EnrollmentAccountDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountDisplayName))
             {
                 writer.WritePropertyName("enrollmentAccountDisplayName"u8);
                 writer.WriteStringValue(EnrollmentAccountDisplayName);
             }
-            if (InvoiceSectionId != null)
+            if (Optional.IsDefined(InvoiceSectionId))
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (options.Format != "W" && InvoiceSectionDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionDisplayName))
             {
                 writer.WritePropertyName("invoiceSectionDisplayName"u8);
                 writer.WriteStringValue(InvoiceSectionDisplayName);
             }
-            if (options.Format != "W" && InvoiceSectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionName))
             {
                 writer.WritePropertyName("invoiceSectionName"u8);
                 writer.WriteStringValue(InvoiceSectionName);
             }
-            if (options.Format != "W" && LastMonthCharges != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
                 writer.WriteObjectValue(LastMonthCharges);
             }
-            if (options.Format != "W" && MonthToDateCharges != null)
+            if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
                 writer.WriteObjectValue(MonthToDateCharges);
             }
-            if (options.Format != "W" && NextBillingCycleDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
                 writer.WriteObjectValue(NextBillingCycleDetails);
             }
-            if (options.Format != "W" && OfferId != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && ProductCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductCategory))
             {
                 writer.WritePropertyName("productCategory"u8);
                 writer.WriteStringValue(ProductCategory);
             }
-            if (options.Format != "W" && ProductType != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductType))
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType);
             }
-            if (ProductTypeId != null)
+            if (Optional.IsDefined(ProductTypeId))
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
             }
-            if (options.Format != "W" && PurchaseOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurchaseOn))
             {
                 writer.WritePropertyName("purchaseDate"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "O");
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Reseller != null)
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller);
             }
-            if (options.Format != "W" && RenewalTermDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
                 writer.WriteObjectValue(RenewalTermDetails);
             }
-            if (options.Format != "W" && SkuDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {
                 writer.WritePropertyName("skuDescription"u8);
                 writer.WriteStringValue(SkuDescription);
             }
-            if (SkuId != null)
+            if (Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && !(SuspensionReasons is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuspensionReasons))
             {
                 writer.WritePropertyName("suspensionReasons"u8);
                 writer.WriteStartArray();
@@ -221,34 +221,34 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndArray();
             }
-            if (TermDuration.HasValue)
+            if (Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
             }
-            if (options.Format != "W" && TermStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TermStartOn))
             {
                 writer.WritePropertyName("termStartDate"u8);
                 writer.WriteStringValue(TermStartOn.Value, "O");
             }
-            if (options.Format != "W" && TermEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TermEndOn))
             {
                 writer.WritePropertyName("termEndDate"u8);
                 writer.WriteStringValue(TermEndOn.Value, "O");
             }
-            if (options.Format != "W" && BillingSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingSubscriptionId))
             {
                 writer.WritePropertyName("billingSubscriptionId"u8);
                 writer.WriteStringValue(BillingSubscriptionId);
             }
             writer.WritePropertyName("enrollmentAccountSubscriptionDetails"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionEnrollmentAccountStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionEnrollmentAccountStatus))
             {
                 writer.WritePropertyName("subscriptionEnrollmentAccountStatus"u8);
                 writer.WriteStringValue(SubscriptionEnrollmentAccountStatus.Value.ToString());
             }
-            if (options.Format != "W" && EnrollmentAccountStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountStartOn))
             {
                 writer.WritePropertyName("enrollmentAccountStartDate"u8);
                 writer.WriteStringValue(EnrollmentAccountStartOn.Value, "O");
@@ -296,45 +296,45 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BillingSubscriptionAutoRenewState> autoRenew = default;
-            Optional<string> beneficiaryTenantId = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
+            SystemData systemData = default;
+            BillingSubscriptionAutoRenewState? autoRenew = default;
+            string beneficiaryTenantId = default;
+            string billingFrequency = default;
+            ResourceIdentifier billingProfileId = default;
             IReadOnlyDictionary<string, string> billingPolicies = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> consumptionCostCenter = default;
-            Optional<string> customerId = default;
-            Optional<string> customerDisplayName = default;
-            Optional<string> displayName = default;
-            Optional<string> enrollmentAccountId = default;
-            Optional<string> enrollmentAccountDisplayName = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionDisplayName = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<BillingAmount> lastMonthCharges = default;
-            Optional<BillingAmount> monthToDateCharges = default;
-            Optional<NextBillingCycleDetails> nextBillingCycleDetails = default;
-            Optional<string> offerId = default;
-            Optional<string> productCategory = default;
-            Optional<string> productType = default;
-            Optional<string> productTypeId = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<long> quantity = default;
-            Optional<CreatedSubscriptionReseller> reseller = default;
-            Optional<SubscriptionRenewalTermDetails> renewalTermDetails = default;
-            Optional<string> skuDescription = default;
-            Optional<string> skuId = default;
-            Optional<BillingSubscriptionStatus> status = default;
-            Optional<string> subscriptionId = default;
+            string billingProfileDisplayName = default;
+            string billingProfileName = default;
+            string consumptionCostCenter = default;
+            string customerId = default;
+            string customerDisplayName = default;
+            string displayName = default;
+            string enrollmentAccountId = default;
+            string enrollmentAccountDisplayName = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionDisplayName = default;
+            string invoiceSectionName = default;
+            BillingAmount lastMonthCharges = default;
+            BillingAmount monthToDateCharges = default;
+            NextBillingCycleDetails nextBillingCycleDetails = default;
+            string offerId = default;
+            string productCategory = default;
+            string productType = default;
+            string productTypeId = default;
+            DateTimeOffset? purchaseDate = default;
+            long? quantity = default;
+            CreatedSubscriptionReseller reseller = default;
+            SubscriptionRenewalTermDetails renewalTermDetails = default;
+            string skuDescription = default;
+            string skuId = default;
+            BillingSubscriptionStatus? status = default;
+            string subscriptionId = default;
             IReadOnlyList<string> suspensionReasons = default;
-            Optional<TimeSpan> termDuration = default;
-            Optional<DateTimeOffset> termStartDate = default;
-            Optional<DateTimeOffset> termEndDate = default;
-            Optional<ResourceIdentifier> billingSubscriptionId = default;
-            Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
-            Optional<DateTimeOffset> enrollmentAccountStartDate = default;
+            TimeSpan? termDuration = default;
+            DateTimeOffset? termStartDate = default;
+            DateTimeOffset? termEndDate = default;
+            ResourceIdentifier billingSubscriptionId = default;
+            SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
+            DateTimeOffset? enrollmentAccountStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -673,45 +673,45 @@ namespace Azure.ResourceManager.Billing
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(autoRenew),
-                beneficiaryTenantId.Value,
-                billingFrequency.Value,
-                billingProfileId.Value,
+                systemData,
+                autoRenew,
+                beneficiaryTenantId,
+                billingFrequency,
+                billingProfileId,
                 billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
-                billingProfileDisplayName.Value,
-                billingProfileName.Value,
-                consumptionCostCenter.Value,
-                customerId.Value,
-                customerDisplayName.Value,
-                displayName.Value,
-                enrollmentAccountId.Value,
-                enrollmentAccountDisplayName.Value,
-                invoiceSectionId.Value,
-                invoiceSectionDisplayName.Value,
-                invoiceSectionName.Value,
-                lastMonthCharges.Value,
-                monthToDateCharges.Value,
-                nextBillingCycleDetails.Value,
-                offerId.Value,
-                productCategory.Value,
-                productType.Value,
-                productTypeId.Value,
-                Optional.ToNullable(purchaseDate),
-                Optional.ToNullable(quantity),
-                reseller.Value,
-                renewalTermDetails.Value,
-                skuDescription.Value,
-                skuId.Value,
-                Optional.ToNullable(status),
-                subscriptionId.Value,
+                billingProfileDisplayName,
+                billingProfileName,
+                consumptionCostCenter,
+                customerId,
+                customerDisplayName,
+                displayName,
+                enrollmentAccountId,
+                enrollmentAccountDisplayName,
+                invoiceSectionId,
+                invoiceSectionDisplayName,
+                invoiceSectionName,
+                lastMonthCharges,
+                monthToDateCharges,
+                nextBillingCycleDetails,
+                offerId,
+                productCategory,
+                productType,
+                productTypeId,
+                purchaseDate,
+                quantity,
+                reseller,
+                renewalTermDetails,
+                skuDescription,
+                skuId,
+                status,
+                subscriptionId,
                 suspensionReasons ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(termDuration),
-                Optional.ToNullable(termStartDate),
-                Optional.ToNullable(termEndDate),
-                Optional.ToNullable(subscriptionEnrollmentAccountStatus),
-                Optional.ToNullable(enrollmentAccountStartDate),
-                billingSubscriptionId.Value,
+                termDuration,
+                termStartDate,
+                termEndDate,
+                subscriptionEnrollmentAccountStatus,
+                enrollmentAccountStartDate,
+                billingSubscriptionId,
                 serializedAdditionalRawData);
         }
 

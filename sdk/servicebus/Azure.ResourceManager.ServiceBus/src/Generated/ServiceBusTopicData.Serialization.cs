@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,94 +48,94 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && AccessedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedAt"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (options.Format != "W" && SubscriptionCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionCount))
             {
                 writer.WritePropertyName("subscriptionCount"u8);
                 writer.WriteNumberValue(SubscriptionCount.Value);
             }
-            if (options.Format != "W" && CountDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
                 writer.WriteObjectValue(CountDetails);
             }
-            if (DefaultMessageTimeToLive.HasValue)
+            if (Optional.IsDefined(DefaultMessageTimeToLive))
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (MaxSizeInMegabytes.HasValue)
+            if (Optional.IsDefined(MaxSizeInMegabytes))
             {
                 writer.WritePropertyName("maxSizeInMegabytes"u8);
                 writer.WriteNumberValue(MaxSizeInMegabytes.Value);
             }
-            if (MaxMessageSizeInKilobytes.HasValue)
+            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
             {
                 writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
                 writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
             }
-            if (RequiresDuplicateDetection.HasValue)
+            if (Optional.IsDefined(RequiresDuplicateDetection))
             {
                 writer.WritePropertyName("requiresDuplicateDetection"u8);
                 writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
             }
-            if (DuplicateDetectionHistoryTimeWindow.HasValue)
+            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (EnableBatchedOperations.HasValue)
+            if (Optional.IsDefined(EnableBatchedOperations))
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (SupportOrdering.HasValue)
+            if (Optional.IsDefined(SupportOrdering))
             {
                 writer.WritePropertyName("supportOrdering"u8);
                 writer.WriteBooleanValue(SupportOrdering.Value);
             }
-            if (AutoDeleteOnIdle.HasValue)
+            if (Optional.IsDefined(AutoDeleteOnIdle))
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (EnablePartitioning.HasValue)
+            if (Optional.IsDefined(EnablePartitioning))
             {
                 writer.WritePropertyName("enablePartitioning"u8);
                 writer.WriteBooleanValue(EnablePartitioning.Value);
             }
-            if (EnableExpress.HasValue)
+            if (Optional.IsDefined(EnableExpress))
             {
                 writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);
@@ -179,28 +179,28 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInBytes = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<DateTimeOffset> accessedAt = default;
-            Optional<int> subscriptionCount = default;
-            Optional<MessageCountDetails> countDetails = default;
-            Optional<TimeSpan> defaultMessageTimeToLive = default;
-            Optional<int> maxSizeInMegabytes = default;
-            Optional<long> maxMessageSizeInKilobytes = default;
-            Optional<bool> requiresDuplicateDetection = default;
-            Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
-            Optional<bool> enableBatchedOperations = default;
-            Optional<ServiceBusMessagingEntityStatus> status = default;
-            Optional<bool> supportOrdering = default;
-            Optional<TimeSpan> autoDeleteOnIdle = default;
-            Optional<bool> enablePartitioning = default;
-            Optional<bool> enableExpress = default;
+            SystemData systemData = default;
+            long? sizeInBytes = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? accessedAt = default;
+            int? subscriptionCount = default;
+            MessageCountDetails countDetails = default;
+            TimeSpan? defaultMessageTimeToLive = default;
+            int? maxSizeInMegabytes = default;
+            long? maxMessageSizeInKilobytes = default;
+            bool? requiresDuplicateDetection = default;
+            TimeSpan? duplicateDetectionHistoryTimeWindow = default;
+            bool? enableBatchedOperations = default;
+            ServiceBusMessagingEntityStatus? status = default;
+            bool? supportOrdering = default;
+            TimeSpan? autoDeleteOnIdle = default;
+            bool? enablePartitioning = default;
+            bool? enableExpress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,25 +413,25 @@ namespace Azure.ResourceManager.ServiceBus
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(sizeInBytes),
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(updatedAt),
-                Optional.ToNullable(accessedAt),
-                Optional.ToNullable(subscriptionCount),
-                countDetails.Value,
-                Optional.ToNullable(defaultMessageTimeToLive),
-                Optional.ToNullable(maxSizeInMegabytes),
-                Optional.ToNullable(maxMessageSizeInKilobytes),
-                Optional.ToNullable(requiresDuplicateDetection),
-                Optional.ToNullable(duplicateDetectionHistoryTimeWindow),
-                Optional.ToNullable(enableBatchedOperations),
-                Optional.ToNullable(status),
-                Optional.ToNullable(supportOrdering),
-                Optional.ToNullable(autoDeleteOnIdle),
-                Optional.ToNullable(enablePartitioning),
-                Optional.ToNullable(enableExpress),
-                Optional.ToNullable(location),
+                systemData,
+                sizeInBytes,
+                createdAt,
+                updatedAt,
+                accessedAt,
+                subscriptionCount,
+                countDetails,
+                defaultMessageTimeToLive,
+                maxSizeInMegabytes,
+                maxMessageSizeInKilobytes,
+                requiresDuplicateDetection,
+                duplicateDetectionHistoryTimeWindow,
+                enableBatchedOperations,
+                status,
+                supportOrdering,
+                autoDeleteOnIdle,
+                enablePartitioning,
+                enableExpress,
+                location,
                 serializedAdditionalRawData);
         }
 

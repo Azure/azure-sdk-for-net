@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (HasError.HasValue)
+            if (Optional.IsDefined(HasError))
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (!(PolicyViolations is ChangeTrackingList<DevTestLabPolicyViolation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyViolations))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<bool> hasError = default;
+            bool? hasError = default;
             IReadOnlyList<DevTestLabPolicyViolation> policyViolations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabPolicySetResult(Optional.ToNullable(hasError), policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>(), serializedAdditionalRawData);
+            return new DevTestLabPolicySetResult(hasError, policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabPolicySetResult>.Write(ModelReaderWriterOptions options)

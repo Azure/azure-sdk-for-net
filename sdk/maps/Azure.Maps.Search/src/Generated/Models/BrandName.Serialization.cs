@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -27,7 +26,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new BrandName(name.Value);
+            return new BrandName(name);
         }
     }
 }

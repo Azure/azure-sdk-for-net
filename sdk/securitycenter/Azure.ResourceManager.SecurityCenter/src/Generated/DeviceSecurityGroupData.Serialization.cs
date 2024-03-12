@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ThresholdRules is ChangeTrackingList<ThresholdCustomAlertRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThresholdRules))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(TimeWindowRules is ChangeTrackingList<TimeWindowCustomAlertRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeWindowRules))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowlistRules is ChangeTrackingList<AllowlistCustomAlertRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowlistRules))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(DenylistRules is ChangeTrackingList<DenylistCustomAlertRule> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DenylistRules))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ThresholdCustomAlertRule> thresholdRules = default;
             IList<TimeWindowCustomAlertRule> timeWindowRules = default;
             IList<AllowlistCustomAlertRule> allowlistRules = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
                 timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
                 allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),

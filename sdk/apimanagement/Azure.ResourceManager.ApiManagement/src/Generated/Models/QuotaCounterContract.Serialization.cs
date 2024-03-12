@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(PeriodStartOn, "O");
             writer.WritePropertyName("periodEndTime"u8);
             writer.WriteStringValue(PeriodEndOn, "O");
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string periodKey = default;
             DateTimeOffset periodStartTime = default;
             DateTimeOffset periodEndTime = default;
-            Optional<QuotaCounterValueContractProperties> value = default;
+            QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 periodKey,
                 periodStartTime,
                 periodEndTime,
-                value.Value,
+                value,
                 serializedAdditionalRawData);
         }
 

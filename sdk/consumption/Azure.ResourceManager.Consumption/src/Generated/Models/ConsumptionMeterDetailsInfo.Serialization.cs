@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterName != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && MeterCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && MeterSubCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && ServiceFamily != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceFamily))
             {
                 writer.WritePropertyName("serviceFamily"u8);
                 writer.WriteStringValue(ServiceFamily);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<string> serviceFamily = default;
+            string meterName = default;
+            string meterCategory = default;
+            string meterSubCategory = default;
+            string unitOfMeasure = default;
+            string serviceFamily = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConsumptionMeterDetailsInfo(
-                meterName.Value,
-                meterCategory.Value,
-                meterSubCategory.Value,
-                unitOfMeasure.Value,
-                serviceFamily.Value,
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unitOfMeasure,
+                serviceFamily,
                 serializedAdditionalRawData);
         }
 

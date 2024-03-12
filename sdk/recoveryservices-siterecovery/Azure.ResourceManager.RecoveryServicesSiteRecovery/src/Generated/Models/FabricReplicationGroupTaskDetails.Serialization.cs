@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (SkippedReason != null)
+            if (Optional.IsDefined(SkippedReason))
             {
                 writer.WritePropertyName("skippedReason"u8);
                 writer.WriteStringValue(SkippedReason);
             }
-            if (SkippedReasonString != null)
+            if (Optional.IsDefined(SkippedReasonString))
             {
                 writer.WritePropertyName("skippedReasonString"u8);
                 writer.WriteStringValue(SkippedReasonString);
             }
-            if (JobTask != null)
+            if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> skippedReason = default;
-            Optional<string> skippedReasonString = default;
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            string skippedReason = default;
+            string skippedReasonString = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FabricReplicationGroupTaskDetails(instanceType, serializedAdditionalRawData, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            return new FabricReplicationGroupTaskDetails(instanceType, serializedAdditionalRawData, jobTask, skippedReason, skippedReasonString);
         }
 
         BinaryData IPersistableModel<FabricReplicationGroupTaskDetails>.Write(ModelReaderWriterOptions options)

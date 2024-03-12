@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Trend != null)
+            if (options.Format != "W" && Optional.IsDefined(Trend))
             {
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (!(Aggregates is ChangeTrackingList<ReservationUtilizationAggregates> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregates))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
+            string trend = default;
             IReadOnlyList<ReservationUtilizationAggregates> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPropertiesUtilization(trend.Value, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
+            return new ReservationPropertiesUtilization(trend, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPropertiesUtilization>.Write(ModelReaderWriterOptions options)

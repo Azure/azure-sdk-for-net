@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -44,29 +45,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HostPlatform.HasValue)
+            if (Optional.IsDefined(HostPlatform))
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (IotDeviceDetails != null)
+            if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
                 writer.WriteObjectValue(IotDeviceDetails);
             }
-            if (IotEdgeDeviceDetails != null)
+            if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
                 writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
-            if (!(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ShareMappings))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
@@ -76,22 +77,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IotEdgeAgentInfo != null)
+            if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
                 writer.WriteObjectValue(IotEdgeAgentInfo);
             }
-            if (options.Format != "W" && HostPlatformType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (ComputeResource != null)
+            if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
                 writer.WriteObjectValue(ComputeResource);
             }
-            if (RoleStatus.HasValue)
+            if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -139,15 +140,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
-            Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
+            SystemData systemData = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            EdgeIotDeviceInfo iotDeviceDetails = default;
+            EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
             IList<DataBoxEdgeMountPointMap> shareMappings = default;
-            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeComputeResourceInfo> computeResource = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            IotEdgeAgentInfo iotEdgeAgentInfo = default;
+            HostPlatformType? hostPlatformType = default;
+            EdgeComputeResourceInfo computeResource = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,17 +281,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(hostPlatform),
-                iotDeviceDetails.Value,
-                iotEdgeDeviceDetails.Value,
+                hostPlatform,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
                 shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
-                iotEdgeAgentInfo.Value,
-                Optional.ToNullable(hostPlatformType),
-                computeResource.Value,
-                Optional.ToNullable(roleStatus));
+                iotEdgeAgentInfo,
+                hostPlatformType,
+                computeResource,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<EdgeIotRole>.Write(ModelReaderWriterOptions options)

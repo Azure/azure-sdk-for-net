@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Relay.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryConnectionString != null)
+            if (Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (SecondaryConnectionString != null)
+            if (Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.Relay.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RelayAccessKeys(
-                primaryConnectionString.Value,
-                secondaryConnectionString.Value,
-                primaryKey.Value,
-                secondaryKey.Value,
-                keyName.Value,
+                primaryConnectionString,
+                secondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
                 serializedAdditionalRawData);
         }
 

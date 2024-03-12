@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tiers))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ApplicationGatewayRuleSetStatusOption> status = default;
+            ApplicationGatewayRuleSetStatusOption? status = default;
             IReadOnlyList<ApplicationGatewayTierType> tiers = default;
             IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayFirewallManifestRuleSet(
                 ruleSetType,
                 ruleSetVersion,
-                Optional.ToNullable(status),
+                status,
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
                 ruleGroups,
                 serializedAdditionalRawData);

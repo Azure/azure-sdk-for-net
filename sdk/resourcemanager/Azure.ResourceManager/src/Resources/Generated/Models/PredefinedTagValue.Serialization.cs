@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (TagValue != null)
+            if (Optional.IsDefined(TagValue))
             {
                 writer.WritePropertyName("tagValue"u8);
                 writer.WriteStringValue(TagValue);
             }
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagValue = default;
-            Optional<PredefinedTagCount> count = default;
+            string id = default;
+            string tagValue = default;
+            PredefinedTagCount count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTagValue(id.Value, tagValue.Value, count.Value, serializedAdditionalRawData);
+            return new PredefinedTagValue(id, tagValue, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTagValue>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataPartitionInfo is ChangeTrackingList<DataPartition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataPartitionInfo))
             {
                 writer.WritePropertyName("dataPartitionInfo"u8);
                 writer.WriteStartArray();

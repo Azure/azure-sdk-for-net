@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (StorageMb.HasValue)
+            if (Optional.IsDefined(StorageMb))
             {
                 writer.WritePropertyName("storageMb"u8);
                 writer.WriteNumberValue(StorageMb.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> version = default;
-            Optional<int> storageMb = default;
-            Optional<ServerSku> sku = default;
+            AzureLocation? location = default;
+            string version = default;
+            int? storageMb = default;
+            ServerSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerMetadata(Optional.ToNullable(location), version.Value, Optional.ToNullable(storageMb), sku.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerMetadata(location, version, storageMb, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerMetadata>.Write(ModelReaderWriterOptions options)

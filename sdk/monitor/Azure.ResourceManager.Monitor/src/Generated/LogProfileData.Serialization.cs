@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 if (StorageAccountId != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("storageAccountId");
                 }
             }
-            if (ServiceBusRuleId != null)
+            if (Optional.IsDefined(ServiceBusRuleId))
             {
                 if (ServiceBusRuleId != null)
                 {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> serviceBusRuleId = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
             IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
@@ -267,11 +267,11 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                storageAccountId.Value,
-                serviceBusRuleId.Value,
+                storageAccountId,
+                serviceBusRuleId,
                 locations,
                 categories,
                 retentionPolicy,

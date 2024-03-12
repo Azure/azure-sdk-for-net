@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (BillingRefundAmount != null)
+            if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
                 writer.WriteObjectValue(BillingRefundAmount);
             }
-            if (BillingInformation != null)
+            if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
                 writer.WriteObjectValue(BillingInformation);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> reservationId = default;
-            Optional<int> quantity = default;
-            Optional<PurchasePrice> billingRefundAmount = default;
-            Optional<BillingInformation> billingInformation = default;
-            Optional<ReservationOperationStatus> status = default;
+            ResourceIdentifier reservationId = default;
+            int? quantity = default;
+            PurchasePrice billingRefundAmount = default;
+            BillingInformation billingInformation = default;
+            ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationToReturnForExchange(
-                reservationId.Value,
-                Optional.ToNullable(quantity),
-                billingRefundAmount.Value,
-                billingInformation.Value,
-                Optional.ToNullable(status),
+                reservationId,
+                quantity,
+                billingRefundAmount,
+                billingInformation,
+                status,
                 serializedAdditionalRawData);
         }
 

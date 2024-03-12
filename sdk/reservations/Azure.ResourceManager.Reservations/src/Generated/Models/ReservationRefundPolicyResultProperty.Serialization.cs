@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ConsumedRefundsTotal != null)
+            if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
                 writer.WriteObjectValue(ConsumedRefundsTotal);
             }
-            if (MaxRefundLimit != null)
+            if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
                 writer.WriteObjectValue(MaxRefundLimit);
             }
-            if (!(PolicyErrors is ChangeTrackingList<ReservationRefundPolicyError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyErrors))
             {
                 writer.WritePropertyName("policyErrors"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> consumedRefundsTotal = default;
-            Optional<PurchasePrice> maxRefundLimit = default;
+            PurchasePrice consumedRefundsTotal = default;
+            PurchasePrice maxRefundLimit = default;
             IReadOnlyList<ReservationRefundPolicyError> policyErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, policyErrors ?? new ChangeTrackingList<ReservationRefundPolicyError>(), serializedAdditionalRawData);
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal, maxRefundLimit, policyErrors ?? new ChangeTrackingList<ReservationRefundPolicyError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundPolicyResultProperty>.Write(ModelReaderWriterOptions options)

@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Markings is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Markings))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(QosDefinitionCollection is ChangeTrackingList<DscpQosDefinition> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(QosDefinitionCollection))
             {
                 writer.WritePropertyName("qosDefinitionCollection"u8);
                 writer.WriteStartArray();
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && QosCollectionId != null)
+            if (options.Format != "W" && Optional.IsDefined(QosCollectionId))
             {
                 writer.WritePropertyName("qosCollectionId"u8);
                 writer.WriteStringValue(QosCollectionId);
             }
-            if (options.Format != "W" && !(AssociatedNetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
             {
                 writer.WritePropertyName("associatedNetworkInterfaces"u8);
                 writer.WriteStartArray();
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -195,23 +195,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<int> markings = default;
             IList<QosIPRange> sourceIPRanges = default;
             IList<QosIPRange> destinationIPRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
-            Optional<ProtocolType> protocol = default;
+            ProtocolType? protocol = default;
             IList<DscpQosDefinition> qosDefinitionCollection = default;
-            Optional<string> qosCollectionId = default;
+            string qosCollectionId = default;
             IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -420,24 +420,24 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DscpConfigurationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 markings ?? new ChangeTrackingList<int>(),
                 sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
-                Optional.ToNullable(protocol),
+                protocol,
                 qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(),
-                qosCollectionId.Value,
+                qosCollectionId,
                 associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options)

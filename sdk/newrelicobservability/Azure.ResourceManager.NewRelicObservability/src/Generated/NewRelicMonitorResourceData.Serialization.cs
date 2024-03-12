@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,64 +61,64 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && MonitoringStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && MarketplaceSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
             }
-            if (NewRelicAccountProperties != null)
+            if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
                 writer.WriteObjectValue(NewRelicAccountProperties);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
-            if (options.Format != "W" && LiftrResourceCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && LiftrResourcePreference.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
             }
-            if (OrgCreationSource.HasValue)
+            if (Optional.IsDefined(OrgCreationSource))
             {
                 writer.WritePropertyName("orgCreationSource"u8);
                 writer.WriteStringValue(OrgCreationSource.Value.ToString());
             }
-            if (AccountCreationSource.HasValue)
+            if (Optional.IsDefined(AccountCreationSource))
             {
                 writer.WritePropertyName("accountCreationSource"u8);
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
@@ -162,24 +162,24 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
-            Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<string> marketplaceSubscriptionId = default;
-            Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<NewRelicObservabilityUserInfo> userInfo = default;
-            Optional<NewRelicPlanDetails> planData = default;
-            Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
-            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
-            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            SystemData systemData = default;
+            NewRelicProvisioningState? provisioningState = default;
+            NewRelicObservabilityMonitoringStatus? monitoringStatus = default;
+            NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            string marketplaceSubscriptionId = default;
+            NewRelicAccountProperties newRelicAccountProperties = default;
+            NewRelicObservabilityUserInfo userInfo = default;
+            NewRelicPlanDetails planData = default;
+            NewRelicLiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
+            NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
+            NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -353,21 +353,21 @@ namespace Azure.ResourceManager.NewRelicObservability
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(monitoringStatus),
-                Optional.ToNullable(marketplaceSubscriptionStatus),
-                marketplaceSubscriptionId.Value,
-                newRelicAccountProperties.Value,
-                userInfo.Value,
-                planData.Value,
-                Optional.ToNullable(liftrResourceCategory),
-                Optional.ToNullable(liftrResourcePreference),
-                Optional.ToNullable(orgCreationSource),
-                Optional.ToNullable(accountCreationSource),
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                marketplaceSubscriptionId,
+                newRelicAccountProperties,
+                userInfo,
+                planData,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                orgCreationSource,
+                accountCreationSource,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,64 +27,64 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (DeploymentValues != null)
+            if (Optional.IsDefined(DeploymentValues))
             {
                 writer.WritePropertyName("deploymentValues"u8);
                 writer.WriteStringValue(DeploymentValues);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PublisherName != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && PublisherScope.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && NetworkFunctionDefinitionGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionGroupName))
             {
                 writer.WritePropertyName("networkFunctionDefinitionGroupName"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionGroupName);
             }
-            if (options.Format != "W" && NetworkFunctionDefinitionVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionVersion))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersion"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionVersion);
             }
-            if (options.Format != "W" && NetworkFunctionDefinitionOfferingLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
             {
                 writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);
             }
-            if (NetworkFunctionDefinitionVersionResourceReference != null)
+            if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
                 writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference);
             }
-            if (NfviType.HasValue)
+            if (Optional.IsDefined(NfviType))
             {
                 writer.WritePropertyName("nfviType"u8);
                 writer.WriteStringValue(NfviType.Value.ToString());
             }
-            if (NfviId != null)
+            if (Optional.IsDefined(NfviId))
             {
                 writer.WritePropertyName("nfviId"u8);
                 writer.WriteStringValue(NfviId);
             }
-            if (AllowSoftwareUpdate.HasValue)
+            if (Optional.IsDefined(AllowSoftwareUpdate))
             {
                 writer.WritePropertyName("allowSoftwareUpdate"u8);
                 writer.WriteBooleanValue(AllowSoftwareUpdate.Value);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
-            if (!(RoleOverrideValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RoleOverrideValues))
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
                 writer.WriteStartArray();
@@ -131,17 +132,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> deploymentValues = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> networkFunctionDefinitionGroupName = default;
-            Optional<string> networkFunctionDefinitionVersion = default;
-            Optional<string> networkFunctionDefinitionOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> networkFunctionDefinitionVersionResourceReference = default;
-            Optional<NfviType> nfviType = default;
-            Optional<ResourceIdentifier> nfviId = default;
-            Optional<bool> allowSoftwareUpdate = default;
+            string deploymentValues = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string networkFunctionDefinitionGroupName = default;
+            string networkFunctionDefinitionVersion = default;
+            string networkFunctionDefinitionOfferingLocation = default;
+            DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default;
+            NfviType? nfviType = default;
+            ResourceIdentifier nfviId = default;
+            bool? allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = default;
             IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -253,20 +254,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkFunctionValueWithoutSecrets(
-                Optional.ToNullable(provisioningState),
-                publisherName.Value,
-                Optional.ToNullable(publisherScope),
-                networkFunctionDefinitionGroupName.Value,
-                networkFunctionDefinitionVersion.Value,
-                networkFunctionDefinitionOfferingLocation.Value,
-                networkFunctionDefinitionVersionResourceReference.Value,
-                Optional.ToNullable(nfviType),
-                nfviId.Value,
-                Optional.ToNullable(allowSoftwareUpdate),
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
                 configurationType,
                 roleOverrideValues ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
-                deploymentValues.Value);
+                deploymentValues);
         }
 
         BinaryData IPersistableModel<NetworkFunctionValueWithoutSecrets>.Write(ModelReaderWriterOptions options)

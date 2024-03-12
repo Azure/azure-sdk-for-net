@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
-            if (SchemaId != null)
+            if (Optional.IsDefined(SchemaId))
             {
                 writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
-            if (TypeName != null)
+            if (Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (!(FormParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FormParameters))
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Examples is ChangeTrackingDictionary<string, ParameterExampleContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
@@ -98,8 +99,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string contentType = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
+            string schemaId = default;
+            string typeName = default;
             IList<ParameterContract> formParameters = default;
             IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,8 +158,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RepresentationContract(
                 contentType,
-                schemaId.Value,
-                typeName.Value,
+                schemaId,
+                typeName,
                 formParameters ?? new ChangeTrackingList<ParameterContract>(),
                 examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
                 serializedAdditionalRawData);

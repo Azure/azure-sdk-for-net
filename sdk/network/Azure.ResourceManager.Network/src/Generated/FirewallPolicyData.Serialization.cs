@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && !(RuleCollectionGroups is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RuleCollectionGroups))
             {
                 writer.WritePropertyName("ruleCollectionGroups"u8);
                 writer.WriteStartArray();
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (BasePolicy != null)
+            if (Optional.IsDefined(BasePolicy))
             {
                 writer.WritePropertyName("basePolicy"u8);
                 JsonSerializer.Serialize(writer, BasePolicy);
             }
-            if (options.Format != "W" && !(Firewalls is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Firewalls))
             {
                 writer.WritePropertyName("firewalls"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ChildPolicies is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildPolicies))
             {
                 writer.WritePropertyName("childPolicies"u8);
                 writer.WriteStartArray();
@@ -118,52 +118,52 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (ThreatIntelMode.HasValue)
+            if (Optional.IsDefined(ThreatIntelMode))
             {
                 writer.WritePropertyName("threatIntelMode"u8);
                 writer.WriteStringValue(ThreatIntelMode.Value.ToString());
             }
-            if (ThreatIntelWhitelist != null)
+            if (Optional.IsDefined(ThreatIntelWhitelist))
             {
                 writer.WritePropertyName("threatIntelWhitelist"u8);
                 writer.WriteObjectValue(ThreatIntelWhitelist);
             }
-            if (Insights != null)
+            if (Optional.IsDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteObjectValue(Insights);
             }
-            if (Snat != null)
+            if (Optional.IsDefined(Snat))
             {
                 writer.WritePropertyName("snat"u8);
                 writer.WriteObjectValue(Snat);
             }
-            if (Sql != null)
+            if (Optional.IsDefined(Sql))
             {
                 writer.WritePropertyName("sql"u8);
                 writer.WriteObjectValue(Sql);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (ExplicitProxy != null)
+            if (Optional.IsDefined(ExplicitProxy))
             {
                 writer.WritePropertyName("explicitProxy"u8);
                 writer.WriteObjectValue(ExplicitProxy);
             }
-            if (IntrusionDetection != null)
+            if (Optional.IsDefined(IntrusionDetection))
             {
                 writer.WritePropertyName("intrusionDetection"u8);
                 writer.WriteObjectValue(IntrusionDetection);
             }
-            if (TransportSecurity != null)
+            if (Optional.IsDefined(TransportSecurity))
             {
                 writer.WritePropertyName("transportSecurity"u8);
                 writer.WriteObjectValue(TransportSecurity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -207,29 +207,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> size = default;
+            string size = default;
             IReadOnlyList<WritableSubResource> ruleCollectionGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> basePolicy = default;
+            NetworkProvisioningState? provisioningState = default;
+            WritableSubResource basePolicy = default;
             IReadOnlyList<WritableSubResource> firewalls = default;
             IReadOnlyList<WritableSubResource> childPolicies = default;
-            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
-            Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
-            Optional<FirewallPolicyInsights> insights = default;
-            Optional<FirewallPolicySnat> snat = default;
-            Optional<FirewallPolicySQL> sql = default;
-            Optional<DnsSettings> dnsSettings = default;
-            Optional<FirewallPolicyExplicitProxy> explicitProxy = default;
-            Optional<FirewallPolicyIntrusionDetection> intrusionDetection = default;
-            Optional<FirewallPolicyTransportSecurity> transportSecurity = default;
-            Optional<FirewallPolicySku> sku = default;
+            AzureFirewallThreatIntelMode? threatIntelMode = default;
+            FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default;
+            FirewallPolicyInsights insights = default;
+            FirewallPolicySnat snat = default;
+            FirewallPolicySQL sql = default;
+            DnsSettings dnsSettings = default;
+            FirewallPolicyExplicitProxy explicitProxy = default;
+            FirewallPolicyIntrusionDetection intrusionDetection = default;
+            FirewallPolicyTransportSecurity transportSecurity = default;
+            FirewallPolicySku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -472,30 +472,30 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPolicyData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 identity,
-                size.Value,
+                size,
                 ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 basePolicy,
                 firewalls ?? new ChangeTrackingList<WritableSubResource>(),
                 childPolicies ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(threatIntelMode),
-                threatIntelWhitelist.Value,
-                insights.Value,
-                snat.Value,
-                sql.Value,
-                dnsSettings.Value,
-                explicitProxy.Value,
-                intrusionDetection.Value,
-                transportSecurity.Value,
-                sku.Value);
+                threatIntelMode,
+                threatIntelWhitelist,
+                insights,
+                snat,
+                sql,
+                dnsSettings,
+                explicitProxy,
+                intrusionDetection,
+                transportSecurity,
+                sku);
         }
 
         BinaryData IPersistableModel<FirewallPolicyData>.Write(ModelReaderWriterOptions options)

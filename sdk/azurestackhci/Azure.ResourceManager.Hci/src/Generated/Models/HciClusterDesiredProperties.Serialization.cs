@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (WindowsServerSubscription.HasValue)
+            if (Optional.IsDefined(WindowsServerSubscription))
             {
                 writer.WritePropertyName("windowsServerSubscription"u8);
                 writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
             }
-            if (DiagnosticLevel.HasValue)
+            if (Optional.IsDefined(DiagnosticLevel))
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            WindowsServerSubscription? windowsServerSubscription = default;
+            HciClusterDiagnosticLevel? diagnosticLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterDesiredProperties(Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(diagnosticLevel), serializedAdditionalRawData);
+            return new HciClusterDesiredProperties(windowsServerSubscription, diagnosticLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterDesiredProperties>.Write(ModelReaderWriterOptions options)

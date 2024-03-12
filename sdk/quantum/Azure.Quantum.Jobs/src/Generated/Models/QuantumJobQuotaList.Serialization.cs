@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Quantum.Jobs.Models
                 return null;
             }
             IReadOnlyList<QuantumJobQuota> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuantumJobQuotaList(value ?? new ChangeTrackingList<QuantumJobQuota>(), nextLink.Value);
+            return new QuantumJobQuotaList(value ?? new ChangeTrackingList<QuantumJobQuota>(), nextLink);
         }
     }
 }

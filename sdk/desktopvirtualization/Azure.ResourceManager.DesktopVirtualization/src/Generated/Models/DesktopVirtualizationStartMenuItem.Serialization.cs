@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -42,34 +43,34 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AppAlias != null)
+            if (Optional.IsDefined(AppAlias))
             {
                 writer.WritePropertyName("appAlias"u8);
                 writer.WriteStringValue(AppAlias);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (CommandLineArguments != null)
+            if (Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (IconPath != null)
+            if (Optional.IsDefined(IconPath))
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (IconIndex.HasValue)
+            if (Optional.IsDefined(IconIndex))
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> appAlias = default;
-            Optional<string> filePath = default;
-            Optional<string> commandLineArguments = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
+            SystemData systemData = default;
+            string appAlias = default;
+            string filePath = default;
+            string commandLineArguments = default;
+            string iconPath = default;
+            int? iconIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,12 +202,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                appAlias.Value,
-                filePath.Value,
-                commandLineArguments.Value,
-                iconPath.Value,
-                Optional.ToNullable(iconIndex),
+                systemData,
+                appAlias,
+                filePath,
+                commandLineArguments,
+                iconPath,
+                iconIndex,
                 serializedAdditionalRawData);
         }
 

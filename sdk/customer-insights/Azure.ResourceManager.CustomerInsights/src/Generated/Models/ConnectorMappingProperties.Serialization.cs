@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (FileFilter != null)
+            if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
-            if (HasHeader.HasValue)
+            if (Optional.IsDefined(HasHeader))
             {
                 writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> folderPath = default;
-            Optional<string> fileFilter = default;
-            Optional<bool> hasHeader = default;
+            string folderPath = default;
+            string fileFilter = default;
+            bool? hasHeader = default;
             ConnectorMappingErrorManagement errorManagement = default;
             ConnectorMappingFormat format = default;
             ConnectorMappingAvailability availability = default;
@@ -162,9 +163,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectorMappingProperties(
-                folderPath.Value,
-                fileFilter.Value,
-                Optional.ToNullable(hasHeader),
+                folderPath,
+                fileFilter,
+                hasHeader,
                 errorManagement,
                 format,
                 availability,

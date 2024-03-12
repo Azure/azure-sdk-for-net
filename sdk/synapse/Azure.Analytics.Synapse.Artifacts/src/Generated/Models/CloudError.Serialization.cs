@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IReadOnlyList<CloudError> details = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CloudError(code, message, target.Value, details ?? new ChangeTrackingList<CloudError>());
+            return new CloudError(code, message, target, details ?? new ChangeTrackingList<CloudError>());
         }
 
         internal partial class CloudErrorConverter : JsonConverter<CloudError>

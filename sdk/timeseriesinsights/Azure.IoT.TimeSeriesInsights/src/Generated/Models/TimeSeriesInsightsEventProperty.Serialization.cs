@@ -15,12 +15,12 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PropertyValueType.HasValue)
+            if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PropertyValueType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<TimeSeriesPropertyType> type = default;
+            string name = default;
+            TimeSeriesPropertyType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInsightsEventProperty(name.Value, Optional.ToNullable(type));
+            return new TimeSeriesInsightsEventProperty(name, type);
         }
     }
 }

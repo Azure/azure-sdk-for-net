@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (TapRuleActionType.HasValue)
+            if (Optional.IsDefined(TapRuleActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TapRuleActionType.Value.ToString());
             }
-            if (Truncate != null)
+            if (Optional.IsDefined(Truncate))
             {
                 writer.WritePropertyName("truncate"u8);
                 writer.WriteStringValue(Truncate);
             }
-            if (IsTimestampEnabled.HasValue)
+            if (Optional.IsDefined(IsTimestampEnabled))
             {
                 writer.WritePropertyName("isTimestampEnabled"u8);
                 writer.WriteStringValue(IsTimestampEnabled.Value.ToString());
             }
-            if (DestinationId != null)
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<TapRuleActionType> type = default;
-            Optional<string> truncate = default;
-            Optional<NetworkFabricBooleanValue> isTimestampEnabled = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<string> matchConfigurationName = default;
+            TapRuleActionType? type = default;
+            string truncate = default;
+            NetworkFabricBooleanValue? isTimestampEnabled = default;
+            ResourceIdentifier destinationId = default;
+            string matchConfigurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkTapRuleAction(
-                Optional.ToNullable(type),
-                truncate.Value,
-                Optional.ToNullable(isTimestampEnabled),
-                destinationId.Value,
-                matchConfigurationName.Value,
+                type,
+                truncate,
+                isTimestampEnabled,
+                destinationId,
+                matchConfigurationName,
                 serializedAdditionalRawData);
         }
 

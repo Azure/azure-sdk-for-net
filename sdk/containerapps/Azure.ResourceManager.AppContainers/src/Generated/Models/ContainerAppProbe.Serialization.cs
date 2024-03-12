@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (HttpGet != null)
+            if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (InitialDelaySeconds.HasValue)
+            if (Optional.IsDefined(InitialDelaySeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelaySeconds.Value);
             }
-            if (PeriodSeconds.HasValue)
+            if (Optional.IsDefined(PeriodSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodSeconds.Value);
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (TcpSocket != null)
+            if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
                 writer.WriteObjectValue(TcpSocket);
             }
-            if (TerminationGracePeriodSeconds.HasValue)
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (ProbeType.HasValue)
+            if (Optional.IsDefined(ProbeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProbeType.Value.ToString());
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> failureThreshold = default;
-            Optional<ContainerAppHttpRequestInfo> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> successThreshold = default;
-            Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<ContainerAppProbeType> type = default;
+            int? failureThreshold = default;
+            ContainerAppHttpRequestInfo httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? successThreshold = default;
+            ContainerAppTcpSocketRequestInfo tcpSocket = default;
+            long? terminationGracePeriodSeconds = default;
+            int? timeoutSeconds = default;
+            ContainerAppProbeType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppProbe(
-                Optional.ToNullable(failureThreshold),
-                httpGet.Value,
-                Optional.ToNullable(initialDelaySeconds),
-                Optional.ToNullable(periodSeconds),
-                Optional.ToNullable(successThreshold),
-                tcpSocket.Value,
-                Optional.ToNullable(terminationGracePeriodSeconds),
-                Optional.ToNullable(timeoutSeconds),
-                Optional.ToNullable(type),
+                failureThreshold,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                successThreshold,
+                tcpSocket,
+                terminationGracePeriodSeconds,
+                timeoutSeconds,
+                type,
                 serializedAdditionalRawData);
         }
 

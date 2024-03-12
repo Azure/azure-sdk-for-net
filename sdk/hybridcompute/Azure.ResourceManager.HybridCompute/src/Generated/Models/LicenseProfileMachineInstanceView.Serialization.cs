@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,49 +27,49 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LicenseStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LicenseStatus))
             {
                 writer.WritePropertyName("licenseStatus"u8);
                 writer.WriteStringValue(LicenseStatus.Value.ToString());
             }
-            if (options.Format != "W" && LicenseChannel != null)
+            if (options.Format != "W" && Optional.IsDefined(LicenseChannel))
             {
                 writer.WritePropertyName("licenseChannel"u8);
                 writer.WriteStringValue(LicenseChannel);
             }
-            if (EsuProfile != null)
+            if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
                 writer.WriteObjectValue(EsuProfile);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
-            if (SubscriptionStatus.HasValue)
+            if (Optional.IsDefined(SubscriptionStatus))
             {
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (ProductType.HasValue)
+            if (Optional.IsDefined(ProductType))
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToString());
             }
-            if (options.Format != "W" && BillingStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
             {
                 writer.WritePropertyName("billingStartDate"u8);
                 writer.WriteStringValue(BillingStartOn.Value, "O");
             }
-            if (options.Format != "W" && EnrollmentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && DisenrollmentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
             }
-            if (!(ProductFeatures is ChangeTrackingList<HybridComputeProductFeature> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProductFeatures))
             {
                 writer.WritePropertyName("productFeatures"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
             writer.WritePropertyName("softwareAssurance"u8);
             writer.WriteStartObject();
-            if (IsSoftwareAssuranceCustomer.HasValue)
+            if (Optional.IsDefined(IsSoftwareAssuranceCustomer))
             {
                 writer.WritePropertyName("softwareAssuranceCustomer"u8);
                 writer.WriteBooleanValue(IsSoftwareAssuranceCustomer.Value);
@@ -125,16 +126,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicenseStatus> licenseStatus = default;
-            Optional<string> licenseChannel = default;
-            Optional<LicenseProfileMachineInstanceViewEsuProperties> esuProfile = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<LicenseProfileProductType> productType = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
+            HybridComputeLicenseStatus? licenseStatus = default;
+            string licenseChannel = default;
+            LicenseProfileMachineInstanceViewEsuProperties esuProfile = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            LicenseProfileProductType? productType = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
             IList<HybridComputeProductFeature> productFeatures = default;
-            Optional<bool> softwareAssuranceCustomer = default;
+            bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,16 +262,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LicenseProfileMachineInstanceView(
-                Optional.ToNullable(licenseStatus),
-                licenseChannel.Value,
-                esuProfile.Value,
-                Optional.ToNullable(subscriptionStatus),
-                Optional.ToNullable(productType),
-                Optional.ToNullable(billingStartDate),
-                Optional.ToNullable(enrollmentDate),
-                Optional.ToNullable(disenrollmentDate),
+                licenseStatus,
+                licenseChannel,
+                esuProfile,
+                subscriptionStatus,
+                productType,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
                 productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
-                Optional.ToNullable(softwareAssuranceCustomer),
+                softwareAssuranceCustomer,
                 serializedAdditionalRawData);
         }
 

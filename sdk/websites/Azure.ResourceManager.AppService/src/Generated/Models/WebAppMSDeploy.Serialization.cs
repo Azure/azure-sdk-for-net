@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +48,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PackageUri != null)
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUri"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (DBType != null)
+            if (Optional.IsDefined(DBType))
             {
                 writer.WritePropertyName("dbType"u8);
                 writer.WriteStringValue(DBType);
             }
-            if (SetParametersXmlFileUri != null)
+            if (Optional.IsDefined(SetParametersXmlFileUri))
             {
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
                 writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
-            if (!(SetParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SetParameters))
             {
                 writer.WritePropertyName("setParameters"u8);
                 writer.WriteStartObject();
@@ -85,12 +86,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SkipAppData.HasValue)
+            if (Optional.IsDefined(SkipAppData))
             {
                 writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
-            if (IsAppOffline.HasValue)
+            if (Optional.IsDefined(IsAppOffline))
             {
                 writer.WritePropertyName("appOffline"u8);
                 writer.WriteBooleanValue(IsAppOffline.Value);
@@ -134,18 +135,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> packageUri = default;
-            Optional<string> connectionString = default;
-            Optional<string> dbType = default;
-            Optional<Uri> setParametersXmlFileUri = default;
+            SystemData systemData = default;
+            Uri packageUri = default;
+            string connectionString = default;
+            string dbType = default;
+            Uri setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
-            Optional<bool> skipAppData = default;
-            Optional<bool> appOffline = default;
+            bool? skipAppData = default;
+            bool? appOffline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,15 +262,15 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                packageUri.Value,
-                connectionString.Value,
-                dbType.Value,
-                setParametersXmlFileUri.Value,
+                systemData,
+                packageUri,
+                connectionString,
+                dbType,
+                setParametersXmlFileUri,
                 setParameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(skipAppData),
-                Optional.ToNullable(appOffline),
-                kind.Value,
+                skipAppData,
+                appOffline,
+                kind,
                 serializedAdditionalRawData);
         }
 

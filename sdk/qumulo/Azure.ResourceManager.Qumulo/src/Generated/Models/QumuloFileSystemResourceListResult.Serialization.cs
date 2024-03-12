@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 return null;
             }
             IReadOnlyList<QumuloFileSystemResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloFileSystemResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new QumuloFileSystemResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloFileSystemResourceListResult>.Write(ModelReaderWriterOptions options)

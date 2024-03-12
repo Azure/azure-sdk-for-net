@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -27,37 +28,37 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (options.Format != "W" && SshAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (options.Format != "W" && SshInBrowserUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SshInBrowserUri))
             {
                 writer.WritePropertyName("sshInBrowserUrl"u8);
                 writer.WriteStringValue(SshInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && RdpAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (options.Format != "W" && RdpInBrowserUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RdpInBrowserUri))
             {
                 writer.WritePropertyName("rdpInBrowserUrl"u8);
                 writer.WriteStringValue(RdpInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && AdminUsername != null)
+            if (options.Format != "W" && Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (options.Format != "W" && NonAdminUsername != null)
+            if (options.Format != "W" && Optional.IsDefined(NonAdminUsername))
             {
                 writer.WritePropertyName("nonAdminUsername"u8);
                 writer.WriteStringValue(NonAdminUsername);
@@ -100,13 +101,13 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> sshAuthority = default;
-            Optional<Uri> sshInBrowserUrl = default;
-            Optional<string> rdpAuthority = default;
-            Optional<Uri> rdpInBrowserUrl = default;
-            Optional<string> adminUsername = default;
-            Optional<string> nonAdminUsername = default;
+            IPAddress privateIPAddress = default;
+            string sshAuthority = default;
+            Uri sshInBrowserUrl = default;
+            string rdpAuthority = default;
+            Uri rdpInBrowserUrl = default;
+            string adminUsername = default;
+            string nonAdminUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,13 +166,13 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LabVirtualMachineConnectionProfile(
-                privateIPAddress.Value,
-                sshAuthority.Value,
-                sshInBrowserUrl.Value,
-                rdpAuthority.Value,
-                rdpInBrowserUrl.Value,
-                adminUsername.Value,
-                nonAdminUsername.Value,
+                privateIPAddress,
+                sshAuthority,
+                sshInBrowserUrl,
+                rdpAuthority,
+                rdpInBrowserUrl,
+                adminUsername,
+                nonAdminUsername,
                 serializedAdditionalRawData);
         }
 

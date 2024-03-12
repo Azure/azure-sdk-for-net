@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (!(InlineEventTypes is ChangeTrackingDictionary<string, InlineEventProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InlineEventTypes))
             {
                 writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventDefinitionKind> kind = default;
+            EventDefinitionKind? kind = default;
             IDictionary<string, InlineEventProperties> inlineEventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicEventTypeInfo(Optional.ToNullable(kind), inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
+            return new PartnerTopicEventTypeInfo(kind, inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicEventTypeInfo>.Write(ModelReaderWriterOptions options)

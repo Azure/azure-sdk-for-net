@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -44,34 +45,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DataSetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (DataWarehouseName != null)
+            if (Optional.IsDefined(DataWarehouseName))
             {
                 writer.WritePropertyName("dataWarehouseName"u8);
                 writer.WriteStringValue(DataWarehouseName);
             }
-            if (SchemaName != null)
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (SqlServerResourceId != null)
+            if (Optional.IsDefined(SqlServerResourceId))
             {
                 writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
@@ -119,12 +120,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<string> dataWarehouseName = default;
-            Optional<string> schemaName = default;
-            Optional<ResourceIdentifier> sqlServerResourceId = default;
-            Optional<string> tableName = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            string dataWarehouseName = default;
+            string schemaName = default;
+            ResourceIdentifier sqlServerResourceId = default;
+            string tableName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,14 +214,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(dataSetId),
-                dataWarehouseName.Value,
-                schemaName.Value,
-                sqlServerResourceId.Value,
-                tableName.Value);
+                dataSetId,
+                dataWarehouseName,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSet>.Write(ModelReaderWriterOptions options)

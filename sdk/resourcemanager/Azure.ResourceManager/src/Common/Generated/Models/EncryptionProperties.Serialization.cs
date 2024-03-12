@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -60,8 +61,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<EncryptionStatus> status = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            EncryptionStatus? status = default;
+            KeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties.Value);
+            return new EncryptionProperties(status, keyVaultProperties);
         }
 
         BinaryData IPersistableModel<EncryptionProperties>.Write(ModelReaderWriterOptions options)

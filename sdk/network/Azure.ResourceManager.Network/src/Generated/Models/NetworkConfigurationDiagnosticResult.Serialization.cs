@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Profile != null)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
             }
-            if (NetworkSecurityGroupResult != null)
+            if (Optional.IsDefined(NetworkSecurityGroupResult))
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
                 writer.WriteObjectValue(NetworkSecurityGroupResult);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkConfigurationDiagnosticProfile> profile = default;
-            Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
+            NetworkConfigurationDiagnosticProfile profile = default;
+            NetworkSecurityGroupResult networkSecurityGroupResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticResult(profile.Value, networkSecurityGroupResult.Value, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticResult(profile, networkSecurityGroupResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticResult>.Write(ModelReaderWriterOptions options)

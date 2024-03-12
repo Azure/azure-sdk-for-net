@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength.HasValue)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> maxTokenLength = default;
+            int? maxTokenLength = default;
             IList<string> stopwords = default;
             string odataType = default;
             string name = default;
@@ -84,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LuceneStandardAnalyzer(odataType, name, Optional.ToNullable(maxTokenLength), stopwords ?? new ChangeTrackingList<string>());
+            return new LuceneStandardAnalyzer(odataType, name, maxTokenLength, stopwords ?? new ChangeTrackingList<string>());
         }
     }
 }

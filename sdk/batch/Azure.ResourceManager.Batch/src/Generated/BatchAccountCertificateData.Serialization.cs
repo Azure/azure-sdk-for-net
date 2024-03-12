@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ThumbprintAlgorithm != null)
+            if (Optional.IsDefined(ThumbprintAlgorithm))
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningStateTransitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
                 writer.WritePropertyName("provisioningStateTransitionTime"u8);
                 writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && PreviousProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningState))
             {
                 writer.WritePropertyName("previousProvisioningState"u8);
                 writer.WriteStringValue(PreviousProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PreviousProvisioningStateTransitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningStateTransitOn))
             {
                 writer.WritePropertyName("previousProvisioningStateTransitionTime"u8);
                 writer.WriteStringValue(PreviousProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && PublicData != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicData))
             {
                 writer.WritePropertyName("publicData"u8);
                 writer.WriteStringValue(PublicData);
             }
-            if (options.Format != "W" && DeleteCertificateError != null)
+            if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
                 JsonSerializer.Serialize(writer, DeleteCertificateError);
@@ -140,20 +140,20 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
-            Optional<BatchAccountCertificateFormat> format = default;
-            Optional<BatchAccountCertificateProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Optional<BatchAccountCertificateProvisioningState> previousProvisioningState = default;
-            Optional<DateTimeOffset> previousProvisioningStateTransitionTime = default;
-            Optional<string> publicData = default;
-            Optional<ResponseError> deleteCertificateError = default;
+            SystemData systemData = default;
+            string thumbprintAlgorithm = default;
+            string thumbprint = default;
+            BatchAccountCertificateFormat? format = default;
+            BatchAccountCertificateProvisioningState? provisioningState = default;
+            DateTimeOffset? provisioningStateTransitionTime = default;
+            BatchAccountCertificateProvisioningState? previousProvisioningState = default;
+            DateTimeOffset? previousProvisioningStateTransitionTime = default;
+            string publicData = default;
+            ResponseError deleteCertificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,17 +282,17 @@ namespace Azure.ResourceManager.Batch
                 id,
                 name,
                 type,
-                systemData.Value,
-                thumbprintAlgorithm.Value,
-                thumbprint.Value,
-                Optional.ToNullable(format),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(provisioningStateTransitionTime),
-                Optional.ToNullable(previousProvisioningState),
-                Optional.ToNullable(previousProvisioningStateTransitionTime),
-                publicData.Value,
-                deleteCertificateError.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                thumbprintAlgorithm,
+                thumbprint,
+                format,
+                provisioningState,
+                provisioningStateTransitionTime,
+                previousProvisioningState,
+                previousProvisioningStateTransitionTime,
+                publicData,
+                deleteCertificateError,
+                etag,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (EnableRequestBuffering.HasValue)
+            if (Optional.IsDefined(EnableRequestBuffering))
             {
                 writer.WritePropertyName("enableRequestBuffering"u8);
                 writer.WriteBooleanValue(EnableRequestBuffering.Value);
             }
-            if (EnableResponseBuffering.HasValue)
+            if (Optional.IsDefined(EnableResponseBuffering))
             {
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> enableRequestBuffering = default;
-            Optional<bool> enableResponseBuffering = default;
+            bool? enableRequestBuffering = default;
+            bool? enableResponseBuffering = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayGlobalConfiguration(Optional.ToNullable(enableRequestBuffering), Optional.ToNullable(enableResponseBuffering), serializedAdditionalRawData);
+            return new ApplicationGatewayGlobalConfiguration(enableRequestBuffering, enableResponseBuffering, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayGlobalConfiguration>.Write(ModelReaderWriterOptions options)

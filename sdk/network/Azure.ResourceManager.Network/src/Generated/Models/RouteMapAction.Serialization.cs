@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (!(Parameters is ChangeTrackingList<RouteMapActionParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<RouteMapActionType> type = default;
+            RouteMapActionType? type = default;
             IList<RouteMapActionParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapAction(Optional.ToNullable(type), parameters ?? new ChangeTrackingList<RouteMapActionParameter>(), serializedAdditionalRawData);
+            return new RouteMapAction(type, parameters ?? new ChangeTrackingList<RouteMapActionParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapAction>.Write(ModelReaderWriterOptions options)

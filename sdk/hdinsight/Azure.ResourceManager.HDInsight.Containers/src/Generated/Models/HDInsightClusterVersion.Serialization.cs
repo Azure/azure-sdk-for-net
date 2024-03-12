@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterType != null)
+            if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
                 writer.WriteStringValue(ClusterType);
             }
-            if (ClusterVersion != null)
+            if (Optional.IsDefined(ClusterVersion))
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (OssVersion != null)
+            if (Optional.IsDefined(OssVersion))
             {
                 writer.WritePropertyName("ossVersion"u8);
                 writer.WriteStringValue(OssVersion);
             }
-            if (ClusterPoolVersion != null)
+            if (Optional.IsDefined(ClusterPoolVersion))
             {
                 writer.WritePropertyName("clusterPoolVersion"u8);
                 writer.WriteStringValue(ClusterPoolVersion);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
@@ -126,12 +127,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> clusterType = default;
-            Optional<string> clusterVersion = default;
-            Optional<string> ossVersion = default;
-            Optional<string> clusterPoolVersion = default;
-            Optional<bool> isPreview = default;
+            SystemData systemData = default;
+            string clusterType = default;
+            string clusterVersion = default;
+            string ossVersion = default;
+            string clusterPoolVersion = default;
+            bool? isPreview = default;
             IReadOnlyList<ClusterComponentItem> components = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,12 +227,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                clusterType.Value,
-                clusterVersion.Value,
-                ossVersion.Value,
-                clusterPoolVersion.Value,
-                Optional.ToNullable(isPreview),
+                systemData,
+                clusterType,
+                clusterVersion,
+                ossVersion,
+                clusterPoolVersion,
+                isPreview,
                 components ?? new ChangeTrackingList<ClusterComponentItem>(),
                 serializedAdditionalRawData);
         }

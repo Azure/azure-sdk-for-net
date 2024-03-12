@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,54 +66,54 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsDoubleEncryptionEnabled.HasValue)
+            if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
                 writer.WritePropertyName("isDoubleEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (IsAvailabilityZonesEnabled.HasValue)
+            if (Optional.IsDefined(IsAvailabilityZonesEnabled))
             {
                 writer.WritePropertyName("isAvailabilityZonesEnabled"u8);
                 writer.WriteBooleanValue(IsAvailabilityZonesEnabled.Value);
             }
-            if (BillingType.HasValue)
+            if (Optional.IsDefined(BillingType))
             {
                 writer.WritePropertyName("billingType"u8);
                 writer.WriteStringValue(BillingType.Value.ToString());
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "R");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (!(AssociatedWorkspaces is ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AssociatedWorkspaces))
             {
                 writer.WritePropertyName("associatedWorkspaces"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (CapacityReservationProperties != null)
+            if (Optional.IsDefined(CapacityReservationProperties))
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
                 writer.WriteObjectValue(CapacityReservationProperties);
@@ -167,24 +167,24 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<OperationalInsightsClusterSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            OperationalInsightsClusterSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> clusterId = default;
-            Optional<OperationalInsightsClusterEntityStatus> provisioningState = default;
-            Optional<bool> isDoubleEncryptionEnabled = default;
-            Optional<bool> isAvailabilityZonesEnabled = default;
-            Optional<OperationalInsightsBillingType> billingType = default;
-            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
-            Optional<DateTimeOffset> lastModifiedDate = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            Guid? clusterId = default;
+            OperationalInsightsClusterEntityStatus? provisioningState = default;
+            bool? isDoubleEncryptionEnabled = default;
+            bool? isAvailabilityZonesEnabled = default;
+            OperationalInsightsBillingType? billingType = default;
+            OperationalInsightsKeyVaultProperties keyVaultProperties = default;
+            DateTimeOffset? lastModifiedDate = default;
+            DateTimeOffset? createdDate = default;
             IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default;
-            Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
+            OperationalInsightsCapacityReservationProperties capacityReservationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -367,21 +367,21 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                Optional.ToNullable(clusterId),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(isDoubleEncryptionEnabled),
-                Optional.ToNullable(isAvailabilityZonesEnabled),
-                Optional.ToNullable(billingType),
-                keyVaultProperties.Value,
-                Optional.ToNullable(lastModifiedDate),
-                Optional.ToNullable(createdDate),
+                sku,
+                clusterId,
+                provisioningState,
+                isDoubleEncryptionEnabled,
+                isAvailabilityZonesEnabled,
+                billingType,
+                keyVaultProperties,
+                lastModifiedDate,
+                createdDate,
                 associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(),
-                capacityReservationProperties.Value,
+                capacityReservationProperties,
                 serializedAdditionalRawData);
         }
 

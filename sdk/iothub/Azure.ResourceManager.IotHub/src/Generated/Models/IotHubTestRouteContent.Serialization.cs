@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
             writer.WritePropertyName("route"u8);
             writer.WriteObjectValue(Route);
-            if (Twin != null)
+            if (Optional.IsDefined(Twin))
             {
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<RoutingMessage> message = default;
+            RoutingMessage message = default;
             RoutingRuleProperties route = default;
-            Optional<RoutingTwin> twin = default;
+            RoutingTwin twin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubTestRouteContent(message.Value, route, twin.Value, serializedAdditionalRawData);
+            return new IotHubTestRouteContent(message, route, twin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubTestRouteContent>.Write(ModelReaderWriterOptions options)

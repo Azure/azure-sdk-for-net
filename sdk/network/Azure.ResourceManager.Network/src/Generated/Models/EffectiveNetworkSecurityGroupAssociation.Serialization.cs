@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkManager != null)
+            if (Optional.IsDefined(NetworkManager))
             {
                 writer.WritePropertyName("networkManager"u8);
                 JsonSerializer.Serialize(writer, NetworkManager);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (NetworkInterface != null)
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 JsonSerializer.Serialize(writer, NetworkInterface);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> networkManager = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> networkInterface = default;
+            WritableSubResource networkManager = default;
+            WritableSubResource subnet = default;
+            WritableSubResource networkInterface = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

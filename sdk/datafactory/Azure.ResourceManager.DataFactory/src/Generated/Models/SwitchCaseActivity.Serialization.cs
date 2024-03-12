@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchCaseActivity(value.Value, activities ?? new ChangeTrackingList<PipelineActivity>(), serializedAdditionalRawData);
+            return new SwitchCaseActivity(value, activities ?? new ChangeTrackingList<PipelineActivity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwitchCaseActivity>.Write(ModelReaderWriterOptions options)

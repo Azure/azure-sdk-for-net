@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -44,39 +45,39 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ArmSkuName != null)
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (options.Format != "W" && BenefitId != null)
+            if (options.Format != "W" && Optional.IsDefined(BenefitId))
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
             }
-            if (options.Format != "W" && BenefitOrderId != null)
+            if (options.Format != "W" && Optional.IsDefined(BenefitOrderId))
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (BenefitType.HasValue)
+            if (Optional.IsDefined(BenefitType))
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
             }
-            if (options.Format != "W" && UsageOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageOn))
             {
                 writer.WritePropertyName("usageDate"u8);
                 writer.WriteStringValue(UsageOn.Value, "O");
             }
-            if (options.Format != "W" && UtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UtilizationPercentage))
             {
                 writer.WritePropertyName("utilizationPercentage"u8);
                 writer.WriteNumberValue(UtilizationPercentage.Value);
@@ -124,13 +125,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> utilizationPercentage = default;
+            SystemData systemData = default;
+            string armSkuName = default;
+            string benefitId = default;
+            string benefitOrderId = default;
+            BillingAccountBenefitKind? benefitType = default;
+            DateTimeOffset? usageDate = default;
+            decimal? utilizationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,15 +229,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                armSkuName.Value,
-                benefitId.Value,
-                benefitOrderId.Value,
-                Optional.ToNullable(benefitType),
-                Optional.ToNullable(usageDate),
-                Optional.ToNullable(utilizationPercentage));
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageDate,
+                utilizationPercentage);
         }
 
         BinaryData IPersistableModel<IncludedQuantityUtilizationSummary>.Write(ModelReaderWriterOptions options)

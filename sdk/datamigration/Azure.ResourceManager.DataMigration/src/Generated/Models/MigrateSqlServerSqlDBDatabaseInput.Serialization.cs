@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (TargetDatabaseName != null)
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (MakeSourceDBReadOnly.HasValue)
+            if (Optional.IsDefined(MakeSourceDBReadOnly))
             {
                 writer.WritePropertyName("makeSourceDbReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
             }
-            if (!(TableMap is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SchemaSetting != null)
+            if (Optional.IsDefined(SchemaSetting))
             {
                 writer.WritePropertyName("schemaSetting"u8);
 #if NET6_0_OR_GREATER
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
 #endif
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<bool> makeSourceDBReadOnly = default;
+            string name = default;
+            string targetDatabaseName = default;
+            bool? makeSourceDBReadOnly = default;
             IDictionary<string, string> tableMap = default;
-            Optional<BinaryData> schemaSetting = default;
-            Optional<string> id = default;
+            BinaryData schemaSetting = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,12 +172,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlDBDatabaseInput(
-                name.Value,
-                targetDatabaseName.Value,
-                Optional.ToNullable(makeSourceDBReadOnly),
+                name,
+                targetDatabaseName,
+                makeSourceDBReadOnly,
                 tableMap ?? new ChangeTrackingDictionary<string, string>(),
-                schemaSetting.Value,
-                id.Value,
+                schemaSetting,
+                id,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -32,22 +33,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExtensionType);
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (EnableAutomaticUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
 #endif
             }
-            if (ProtectedSettings != null)
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
 #endif
             }
-            if (!(ProvisionAfterExtensions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
@@ -122,11 +123,11 @@ namespace Azure.ResourceManager.Batch.Models
             string name = default;
             string publisher = default;
             string type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -212,11 +213,11 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 publisher,
                 type,
-                typeHandlerVersion.Value,
-                Optional.ToNullable(autoUpgradeMinorVersion),
-                Optional.ToNullable(enableAutomaticUpgrade),
-                settings.Value,
-                protectedSettings.Value,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

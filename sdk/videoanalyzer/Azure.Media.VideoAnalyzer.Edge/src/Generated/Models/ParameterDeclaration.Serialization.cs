@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,12 +20,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Default != null)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
@@ -40,8 +41,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             string name = default;
             ParameterType type = default;
-            Optional<string> description = default;
-            Optional<string> @default = default;
+            string description = default;
+            string @default = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +66,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ParameterDeclaration(name, type, description.Value, @default.Value);
+            return new ParameterDeclaration(name, type, description, @default);
         }
     }
 }

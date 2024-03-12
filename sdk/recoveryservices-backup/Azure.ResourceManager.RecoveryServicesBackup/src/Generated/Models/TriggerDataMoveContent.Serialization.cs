@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(DataMoveLevel.ToString());
             writer.WritePropertyName("correlationId"u8);
             writer.WriteStringValue(CorrelationId);
-            if (!(SourceContainerArmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DoesPauseGC.HasValue)
+            if (Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
                 writer.WriteBooleanValue(DoesPauseGC.Value);
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            Optional<bool> pauseGC = default;
+            bool? pauseGC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 dataMoveLevel,
                 correlationId,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(pauseGC),
+                pauseGC,
                 serializedAdditionalRawData);
         }
 

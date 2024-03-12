@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName.Value.ToString());
             }
-            if (options.Format != "W" && ServiceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceState))
             {
                 writer.WritePropertyName("serviceState"u8);
                 writer.WriteStringValue(ServiceState.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<OrchestrationServiceName> serviceName = default;
-            Optional<OrchestrationServiceState> serviceState = default;
+            OrchestrationServiceName? serviceName = default;
+            OrchestrationServiceState? serviceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrchestrationServiceSummary(Optional.ToNullable(serviceName), Optional.ToNullable(serviceState), serializedAdditionalRawData);
+            return new OrchestrationServiceSummary(serviceName, serviceState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrchestrationServiceSummary>.Write(ModelReaderWriterOptions options)

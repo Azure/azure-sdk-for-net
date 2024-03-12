@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (TestVmName != null)
+            if (Optional.IsDefined(TestVmName))
             {
                 writer.WritePropertyName("testVmName"u8);
                 writer.WriteStringValue(TestVmName);
             }
-            if (TestVmFriendlyName != null)
+            if (Optional.IsDefined(TestVmFriendlyName))
             {
                 writer.WritePropertyName("testVmFriendlyName"u8);
                 writer.WriteStringValue(TestVmFriendlyName);
             }
-            if (NetworkConnectionStatus != null)
+            if (Optional.IsDefined(NetworkConnectionStatus))
             {
                 writer.WritePropertyName("networkConnectionStatus"u8);
                 writer.WriteStringValue(NetworkConnectionStatus);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<string> testVmName = default;
-            Optional<string> testVmFriendlyName = default;
-            Optional<string> networkConnectionStatus = default;
-            Optional<string> networkFriendlyName = default;
-            Optional<string> subnet = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
+            string name = default;
+            string friendlyName = default;
+            string testVmName = default;
+            string testVmFriendlyName = default;
+            string networkConnectionStatus = default;
+            string networkFriendlyName = default;
+            string subnet = default;
+            ResourceIdentifier recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +183,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FailoverReplicationProtectedItemDetails(
-                name.Value,
-                friendlyName.Value,
-                testVmName.Value,
-                testVmFriendlyName.Value,
-                networkConnectionStatus.Value,
-                networkFriendlyName.Value,
-                subnet.Value,
-                recoveryPointId.Value,
-                Optional.ToNullable(recoveryPointTime),
+                name,
+                friendlyName,
+                testVmName,
+                testVmFriendlyName,
+                networkConnectionStatus,
+                networkFriendlyName,
+                subnet,
+                recoveryPointId,
+                recoveryPointTime,
                 serializedAdditionalRawData);
         }
 

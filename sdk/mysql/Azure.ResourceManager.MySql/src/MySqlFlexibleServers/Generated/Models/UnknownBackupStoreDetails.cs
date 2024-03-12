@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> The UnknownBackupStoreDetails. </summary>
+    /// <summary> Unknown version of BackupStoreDetails. </summary>
     internal partial class UnknownBackupStoreDetails : MySqlFlexibleServerBackupStoreDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupStoreDetails"/>. </summary>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (ScriptUri != null)
+            if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (CommandId != null)
+            if (Optional.IsDefined(CommandId))
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (ScriptUriManagedIdentity != null)
+            if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
                 writer.WriteObjectValue(ScriptUriManagedIdentity);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> script = default;
-            Optional<Uri> scriptUri = default;
-            Optional<string> commandId = default;
-            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
+            string script = default;
+            Uri scriptUri = default;
+            string commandId = default;
+            RunCommandManagedIdentity scriptUriManagedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value, scriptUriManagedIdentity.Value, serializedAdditionalRawData);
+            return new VirtualMachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandScriptSource>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (DiskSizeGiB.HasValue)
+            if (Optional.IsDefined(DiskSizeGiB))
             {
                 writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
             }
-            if (DiskName != null)
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<int> diskSizeGiB = default;
-            Optional<string> diskName = default;
-            Optional<DevTestLabStorageType> diskType = default;
+            int? diskSizeGiB = default;
+            string diskName = default;
+            DevTestLabStorageType? diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachNewDataDiskDetails(Optional.ToNullable(diskSizeGiB), diskName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
+            return new AttachNewDataDiskDetails(diskSizeGiB, diskName, diskType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachNewDataDiskDetails>.Write(ModelReaderWriterOptions options)

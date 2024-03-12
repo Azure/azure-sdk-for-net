@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && DefaultState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultState))
             {
                 writer.WritePropertyName("defaultState"u8);
                 writer.WriteStringValue(DefaultState.Value.ToString());
             }
-            if (options.Format != "W" && DefaultAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> ruleId = default;
-            Optional<ManagedRuleEnabledState> defaultState = default;
-            Optional<RuleMatchActionType> defaultAction = default;
-            Optional<string> description = default;
+            string ruleId = default;
+            ManagedRuleEnabledState? defaultState = default;
+            RuleMatchActionType? defaultAction = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleDefinition(ruleId.Value, Optional.ToNullable(defaultState), Optional.ToNullable(defaultAction), description.Value, serializedAdditionalRawData);
+            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleDefinition>.Write(ModelReaderWriterOptions options)

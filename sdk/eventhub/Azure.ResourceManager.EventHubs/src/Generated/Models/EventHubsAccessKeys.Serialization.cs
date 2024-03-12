@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (options.Format != "W" && SecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (options.Format != "W" && AliasPrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasPrimaryConnectionString))
             {
                 writer.WritePropertyName("aliasPrimaryConnectionString"u8);
                 writer.WriteStringValue(AliasPrimaryConnectionString);
             }
-            if (options.Format != "W" && AliasSecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasSecondaryConnectionString))
             {
                 writer.WritePropertyName("aliasSecondaryConnectionString"u8);
                 writer.WriteStringValue(AliasSecondaryConnectionString);
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
-            Optional<string> aliasPrimaryConnectionString = default;
-            Optional<string> aliasSecondaryConnectionString = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
+            string aliasPrimaryConnectionString = default;
+            string aliasSecondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,13 +153,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubsAccessKeys(
-                primaryConnectionString.Value,
-                secondaryConnectionString.Value,
-                aliasPrimaryConnectionString.Value,
-                aliasSecondaryConnectionString.Value,
-                primaryKey.Value,
-                secondaryKey.Value,
-                keyName.Value,
+                primaryConnectionString,
+                secondaryConnectionString,
+                aliasPrimaryConnectionString,
+                aliasSecondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
                 serializedAdditionalRawData);
         }
 

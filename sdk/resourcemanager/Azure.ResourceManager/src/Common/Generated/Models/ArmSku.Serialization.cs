@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -29,22 +30,22 @@ namespace Azure.ResourceManager.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -73,10 +74,10 @@ namespace Azure.ResourceManager.Models
                 return null;
             }
             string name = default;
-            Optional<ArmSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            ArmSkuTier? tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new ArmSku(name, tier, size, family, capacity);
         }
 
         BinaryData IPersistableModel<ArmSku>.Write(ModelReaderWriterOptions options)

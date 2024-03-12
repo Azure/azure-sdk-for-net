@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (CountIPv6.HasValue)
+            if (Optional.IsDefined(CountIPv6))
             {
                 writer.WritePropertyName("countIPv6"u8);
                 writer.WriteNumberValue(CountIPv6.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<int> countIPv6 = default;
+            int? count = default;
+            int? countIPv6 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(Optional.ToNullable(count), Optional.ToNullable(countIPv6), serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(count, countIPv6, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>.Write(ModelReaderWriterOptions options)

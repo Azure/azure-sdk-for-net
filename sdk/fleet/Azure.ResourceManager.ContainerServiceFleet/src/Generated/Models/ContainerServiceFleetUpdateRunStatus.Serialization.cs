@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && !(Stages is ChangeTrackingList<ContainerServiceFleetUpdateStageStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
             {
                 writer.WritePropertyName("stages"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NodeImageSelection != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
                 writer.WriteObjectValue(NodeImageSelection);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
+            ContainerServiceFleetUpdateStatus status = default;
             IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages = default;
-            Optional<NodeImageSelectionStatus> nodeImageSelection = default;
+            NodeImageSelectionStatus nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateRunStatus(status.Value, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateRunStatus(status, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunStatus>.Write(ModelReaderWriterOptions options)

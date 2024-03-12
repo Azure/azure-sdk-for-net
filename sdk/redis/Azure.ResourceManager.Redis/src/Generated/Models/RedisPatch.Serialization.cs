@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,39 +39,39 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RedisConfiguration != null)
+            if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
                 writer.WriteObjectValue(RedisConfiguration);
             }
-            if (RedisVersion != null)
+            if (Optional.IsDefined(RedisVersion))
             {
                 writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
-            if (EnableNonSslPort.HasValue)
+            if (Optional.IsDefined(EnableNonSslPort))
             {
                 writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
-            if (ReplicasPerMaster.HasValue)
+            if (Optional.IsDefined(ReplicasPerMaster))
             {
                 writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
-            if (ReplicasPerPrimary.HasValue)
+            if (Optional.IsDefined(ReplicasPerPrimary))
             {
                 writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
-            if (!(TenantSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TenantSettings))
             {
                 writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
@@ -81,27 +82,27 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ShardCount.HasValue)
+            if (Optional.IsDefined(ShardCount))
             {
                 writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (UpdateChannel.HasValue)
+            if (Optional.IsDefined(UpdateChannel))
             {
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -146,18 +147,18 @@ namespace Azure.ResourceManager.Redis.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<RedisCommonConfiguration> redisConfiguration = default;
-            Optional<string> redisVersion = default;
-            Optional<bool> enableNonSslPort = default;
-            Optional<int> replicasPerMaster = default;
-            Optional<int> replicasPerPrimary = default;
+            ManagedServiceIdentity identity = default;
+            RedisCommonConfiguration redisConfiguration = default;
+            string redisVersion = default;
+            bool? enableNonSslPort = default;
+            int? replicasPerMaster = default;
+            int? replicasPerPrimary = default;
             IDictionary<string, string> tenantSettings = default;
-            Optional<int> shardCount = default;
-            Optional<RedisTlsVersion> minimumTlsVersion = default;
-            Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<UpdateChannel> updateChannel = default;
-            Optional<RedisSku> sku = default;
+            int? shardCount = default;
+            RedisTlsVersion? minimumTlsVersion = default;
+            RedisPublicNetworkAccess? publicNetworkAccess = default;
+            UpdateChannel? updateChannel = default;
+            RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,17 +307,17 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                redisConfiguration.Value,
-                redisVersion.Value,
-                Optional.ToNullable(enableNonSslPort),
-                Optional.ToNullable(replicasPerMaster),
-                Optional.ToNullable(replicasPerPrimary),
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
                 tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(shardCount),
-                Optional.ToNullable(minimumTlsVersion),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(updateChannel),
-                sku.Value,
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
+                sku,
                 serializedAdditionalRawData);
         }
 

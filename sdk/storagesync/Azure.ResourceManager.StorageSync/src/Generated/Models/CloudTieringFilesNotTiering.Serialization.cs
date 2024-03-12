@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && TotalFileCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalFileCount))
             {
                 writer.WritePropertyName("totalFileCount"u8);
                 writer.WriteNumberValue(TotalFileCount.Value);
             }
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<FilesNotTieringError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalFileCount = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? totalFileCount = default;
             IReadOnlyList<FilesNotTieringError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringFilesNotTiering(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalFileCount), errors ?? new ChangeTrackingList<FilesNotTieringError>(), serializedAdditionalRawData);
+            return new CloudTieringFilesNotTiering(lastUpdatedTimestamp, totalFileCount, errors ?? new ChangeTrackingList<FilesNotTieringError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringFilesNotTiering>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AvailabilityLifecycle.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityLifecycle))
             {
                 writer.WritePropertyName("availabilityLifecycle"u8);
                 writer.WriteStringValue(AvailabilityLifecycle.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AvailabilityLifecycle> availabilityLifecycle = default;
-            Optional<string> version = default;
+            AvailabilityLifecycle? availabilityLifecycle = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableUpgrade(Optional.ToNullable(availabilityLifecycle), version.Value, serializedAdditionalRawData);
+            return new AvailableUpgrade(availabilityLifecycle, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableUpgrade>.Write(ModelReaderWriterOptions options)

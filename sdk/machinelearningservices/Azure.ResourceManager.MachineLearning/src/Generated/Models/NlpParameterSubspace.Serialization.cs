@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (GradientAccumulationSteps != null)
+            if (Optional.IsDefined(GradientAccumulationSteps))
             {
                 if (GradientAccumulationSteps != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationSteps");
                 }
             }
-            if (LearningRate != null)
+            if (Optional.IsDefined(LearningRate))
             {
                 if (LearningRate != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (LearningRateScheduler != null)
+            if (Optional.IsDefined(LearningRateScheduler))
             {
                 if (LearningRateScheduler != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRateScheduler");
                 }
             }
-            if (ModelName != null)
+            if (Optional.IsDefined(ModelName))
             {
                 if (ModelName != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (NumberOfEpochs != null)
+            if (Optional.IsDefined(NumberOfEpochs))
             {
                 if (NumberOfEpochs != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs");
                 }
             }
-            if (TrainingBatchSize != null)
+            if (Optional.IsDefined(TrainingBatchSize))
             {
                 if (TrainingBatchSize != null)
                 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize");
                 }
             }
-            if (ValidationBatchSize != null)
+            if (Optional.IsDefined(ValidationBatchSize))
             {
                 if (ValidationBatchSize != null)
                 {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize");
                 }
             }
-            if (WarmupRatio != null)
+            if (Optional.IsDefined(WarmupRatio))
             {
                 if (WarmupRatio != null)
                 {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupRatio");
                 }
             }
-            if (WeightDecay != null)
+            if (Optional.IsDefined(WeightDecay))
             {
                 if (WeightDecay != null)
                 {
@@ -172,15 +173,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> gradientAccumulationSteps = default;
-            Optional<string> learningRate = default;
-            Optional<string> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<string> numberOfEpochs = default;
-            Optional<string> trainingBatchSize = default;
-            Optional<string> validationBatchSize = default;
-            Optional<string> warmupRatio = default;
-            Optional<string> weightDecay = default;
+            string gradientAccumulationSteps = default;
+            string learningRate = default;
+            string learningRateScheduler = default;
+            string modelName = default;
+            string numberOfEpochs = default;
+            string trainingBatchSize = default;
+            string validationBatchSize = default;
+            string warmupRatio = default;
+            string weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,15 +283,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NlpParameterSubspace(
-                gradientAccumulationSteps.Value,
-                learningRate.Value,
-                learningRateScheduler.Value,
-                modelName.Value,
-                numberOfEpochs.Value,
-                trainingBatchSize.Value,
-                validationBatchSize.Value,
-                warmupRatio.Value,
-                weightDecay.Value,
+                gradientAccumulationSteps,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                numberOfEpochs,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupRatio,
+                weightDecay,
                 serializedAdditionalRawData);
         }
 

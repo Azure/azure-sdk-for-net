@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PatchId != null)
+            if (options.Format != "W" && Optional.IsDefined(PatchId))
             {
                 writer.WritePropertyName("patchId"u8);
                 writer.WriteStringValue(PatchId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && KbId != null)
+            if (options.Format != "W" && Optional.IsDefined(KbId))
             {
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
@@ -56,27 +57,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RebootBehavior.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootBehavior))
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (options.Format != "W" && ActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            if (options.Format != "W" && PublishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && AssessmentState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentState))
             {
                 writer.WritePropertyName("assessmentState"u8);
                 writer.WriteStringValue(AssessmentState.Value.ToString());
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> patchId = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> kbId = default;
+            string patchId = default;
+            string name = default;
+            string version = default;
+            string kbId = default;
             IReadOnlyList<string> classifications = default;
-            Optional<VmGuestPatchRebootBehavior> rebootBehavior = default;
-            Optional<string> activityId = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<PatchAssessmentState> assessmentState = default;
+            VmGuestPatchRebootBehavior? rebootBehavior = default;
+            string activityId = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            PatchAssessmentState? assessmentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,16 +216,16 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineSoftwarePatchProperties(
-                patchId.Value,
-                name.Value,
-                version.Value,
-                kbId.Value,
+                patchId,
+                name,
+                version,
+                kbId,
                 classifications ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(rebootBehavior),
-                activityId.Value,
-                Optional.ToNullable(publishedDate),
-                Optional.ToNullable(lastModifiedDateTime),
-                Optional.ToNullable(assessmentState),
+                rebootBehavior,
+                activityId,
+                publishedDate,
+                lastModifiedDateTime,
+                assessmentState,
                 serializedAdditionalRawData);
         }
 

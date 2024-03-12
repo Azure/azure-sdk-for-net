@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DateOn.HasValue)
+            if (Optional.IsDefined(DateOn))
             {
                 writer.WritePropertyName("dateTime"u8);
                 writer.WriteStringValue(DateOn.Value, "O");
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTime = default;
-            Optional<float> value = default;
+            DateTimeOffset? dateTime = default;
+            float? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(Optional.ToNullable(dateTime), Optional.ToNullable(value), serializedAdditionalRawData);
+            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateTime, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Write(ModelReaderWriterOptions options)

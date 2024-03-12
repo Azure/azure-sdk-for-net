@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsMountEndpointUpdateProperties(endpointType, description.Value, serializedAdditionalRawData);
+            return new NfsMountEndpointUpdateProperties(endpointType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NfsMountEndpointUpdateProperties>.Write(ModelReaderWriterOptions options)

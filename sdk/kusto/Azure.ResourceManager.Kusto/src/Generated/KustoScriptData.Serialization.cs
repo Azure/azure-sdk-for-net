@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ScriptUri != null)
+            if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (ScriptUriSasToken != null)
+            if (Optional.IsDefined(ScriptUriSasToken))
             {
                 writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
-            if (ScriptContent != null)
+            if (Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (ShouldContinueOnErrors.HasValue)
+            if (Optional.IsDefined(ShouldContinueOnErrors))
             {
                 writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> scriptUrl = default;
-            Optional<string> scriptUrlSasToken = default;
-            Optional<string> scriptContent = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<bool> continueOnErrors = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Uri scriptUrl = default;
+            string scriptUrlSasToken = default;
+            string scriptContent = default;
+            string forceUpdateTag = default;
+            bool? continueOnErrors = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Kusto
                 id,
                 name,
                 type,
-                systemData.Value,
-                scriptUrl.Value,
-                scriptUrlSasToken.Value,
-                scriptContent.Value,
-                forceUpdateTag.Value,
-                Optional.ToNullable(continueOnErrors),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                scriptUrl,
+                scriptUrlSasToken,
+                scriptContent,
+                forceUpdateTag,
+                continueOnErrors,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

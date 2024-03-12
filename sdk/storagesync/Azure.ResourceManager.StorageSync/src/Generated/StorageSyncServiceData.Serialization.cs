@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IncomingTrafficPolicy.HasValue)
+            if (Optional.IsDefined(IncomingTrafficPolicy))
             {
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
-            if (options.Format != "W" && StorageSyncServiceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageSyncServiceStatus))
             {
                 writer.WritePropertyName("storageSyncServiceStatus"u8);
                 writer.WriteNumberValue(StorageSyncServiceStatus.Value);
             }
-            if (options.Format != "W" && StorageSyncServiceUid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageSyncServiceUid))
             {
                 writer.WritePropertyName("storageSyncServiceUid"u8);
                 writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && LastWorkflowId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (options.Format != "W" && LastOperationName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<StorageSyncPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
-            Optional<int> storageSyncServiceStatus = default;
-            Optional<Guid> storageSyncServiceUid = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
+            SystemData systemData = default;
+            IncomingTrafficPolicy? incomingTrafficPolicy = default;
+            int? storageSyncServiceStatus = default;
+            Guid? storageSyncServiceUid = default;
+            string provisioningState = default;
+            string lastWorkflowId = default;
+            string lastOperationName = default;
             IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,15 +280,15 @@ namespace Azure.ResourceManager.StorageSync
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(incomingTrafficPolicy),
-                Optional.ToNullable(storageSyncServiceStatus),
-                Optional.ToNullable(storageSyncServiceUid),
-                provisioningState.Value,
-                lastWorkflowId.Value,
-                lastOperationName.Value,
+                incomingTrafficPolicy,
+                storageSyncServiceStatus,
+                storageSyncServiceUid,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
                 privateEndpointConnections ?? new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }

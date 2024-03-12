@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(DiskSecrets is ChangeTrackingList<DataBoxDiskSecret> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DiskSecrets))
             {
                 writer.WritePropertyName("diskSecrets"u8);
                 writer.WriteStartArray();
@@ -37,24 +38,24 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Passkey != null)
+            if (options.Format != "W" && Optional.IsDefined(Passkey))
             {
                 writer.WritePropertyName("passKey"u8);
                 writer.WriteStringValue(Passkey);
             }
-            if (options.Format != "W" && IsPasskeyUserDefined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPasskeyUserDefined))
             {
                 writer.WritePropertyName("isPasskeyUserDefined"u8);
                 writer.WriteBooleanValue(IsPasskeyUserDefined.Value);
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -98,11 +99,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             IReadOnlyList<DataBoxDiskSecret> diskSecrets = default;
-            Optional<string> passKey = default;
-            Optional<bool> isPasskeyUserDefined = default;
+            string passKey = default;
+            bool? isPasskeyUserDefined = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,12 +167,12 @@ namespace Azure.ResourceManager.DataBox.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxDiskJobSecrets(
                 jobSecretsType,
-                dcAccessSecurityCode.Value,
-                error.Value,
+                dcAccessSecurityCode,
+                error,
                 serializedAdditionalRawData,
                 diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
-                passKey.Value,
-                Optional.ToNullable(isPasskeyUserDefined));
+                passKey,
+                isPasskeyUserDefined);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobSecrets>.Write(ModelReaderWriterOptions options)

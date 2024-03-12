@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<string> updatedBy = default;
-            Optional<ManagementGroupParentCreateOptions> parent = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            string updatedBy = default;
+            ManagementGroupParentCreateOptions parent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateManagementGroupDetails(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, serializedAdditionalRawData);
+            return new CreateManagementGroupDetails(version, updatedTime, updatedBy, parent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateManagementGroupDetails>.Write(ModelReaderWriterOptions options)

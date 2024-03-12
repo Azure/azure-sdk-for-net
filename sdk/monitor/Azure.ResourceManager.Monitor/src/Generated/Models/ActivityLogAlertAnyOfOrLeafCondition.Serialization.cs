@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(AnyOf is ChangeTrackingList<AlertRuleLeafCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AnyOf))
             {
                 writer.WritePropertyName("anyOf"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Field != null)
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (EqualsValue != null)
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (!(ContainsAny is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainsAny))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
@@ -95,8 +96,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<AlertRuleLeafCondition> anyOf = default;
-            Optional<string> field = default;
-            Optional<string> @equals = default;
+            string field = default;
+            string @equals = default;
             IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
+            return new ActivityLogAlertAnyOfOrLeafCondition(field, @equals, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
 
         BinaryData IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(ModelReaderWriterOptions options)

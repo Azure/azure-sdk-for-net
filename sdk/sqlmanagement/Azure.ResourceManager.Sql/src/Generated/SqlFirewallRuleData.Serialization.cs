@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartIPAddress != null)
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress);
             }
-            if (EndIPAddress != null)
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> startIPAddress = default;
-            Optional<string> endIPAddress = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Sql
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlFirewallRuleData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                startIPAddress.Value,
-                endIPAddress.Value);
+                startIPAddress,
+                endIPAddress);
         }
 
         BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

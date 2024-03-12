@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (NumberOfPipelineNodes.HasValue)
+            if (Optional.IsDefined(NumberOfPipelineNodes))
             {
                 writer.WritePropertyName("numberOfPipelineNodes"u8);
                 writer.WriteNumberValue(NumberOfPipelineNodes.Value);
             }
-            if (NumberOfExternalNodes.HasValue)
+            if (Optional.IsDefined(NumberOfExternalNodes))
             {
                 writer.WritePropertyName("numberOfExternalNodes"u8);
                 writer.WriteNumberValue(NumberOfExternalNodes.Value);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<int> timeToLive = default;
-            Optional<int> numberOfPipelineNodes = default;
-            Optional<int> numberOfExternalNodes = default;
+            int? timeToLive = default;
+            int? numberOfPipelineNodes = default;
+            int? numberOfExternalNodes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineExternalComputeScaleProperties(Optional.ToNullable(timeToLive), Optional.ToNullable(numberOfPipelineNodes), Optional.ToNullable(numberOfExternalNodes), additionalProperties);
+            return new PipelineExternalComputeScaleProperties(timeToLive, numberOfPipelineNodes, numberOfExternalNodes, additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineExternalComputeScaleProperties>.Write(ModelReaderWriterOptions options)

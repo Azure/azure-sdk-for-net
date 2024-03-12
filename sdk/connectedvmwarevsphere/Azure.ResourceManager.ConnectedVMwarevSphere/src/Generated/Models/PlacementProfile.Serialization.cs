@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (ResourcePoolId != null)
+            if (Optional.IsDefined(ResourcePoolId))
             {
                 writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
-            if (ClusterId != null)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (HostId != null)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (DatastoreId != null)
+            if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> resourcePoolId = default;
-            Optional<string> clusterId = default;
-            Optional<string> hostId = default;
-            Optional<string> datastoreId = default;
+            string resourcePoolId = default;
+            string clusterId = default;
+            string hostId = default;
+            string datastoreId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
+            return new PlacementProfile(resourcePoolId, clusterId, hostId, datastoreId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)

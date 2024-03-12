@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -60,12 +61,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (options.Format != "W" && !(Children is ChangeTrackingList<ManagementGroupChildOptions> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
             {
                 if (Children != null)
                 {
@@ -121,12 +122,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ResourceType> type = default;
-            Optional<string> name = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<CreateManagementGroupDetails> details = default;
+            string id = default;
+            ResourceType? type = default;
+            string name = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            CreateManagementGroupDetails details = default;
             IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,12 +214,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagementGroupCreateOrUpdateContent(
-                id.Value,
-                Optional.ToNullable(type),
-                name.Value,
-                Optional.ToNullable(tenantId),
-                displayName.Value,
-                details.Value,
+                id,
+                type,
+                name,
+                tenantId,
+                displayName,
+                details,
                 children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
                 serializedAdditionalRawData);
         }

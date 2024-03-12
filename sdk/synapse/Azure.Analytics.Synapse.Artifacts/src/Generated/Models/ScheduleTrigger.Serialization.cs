@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -31,12 +32,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -72,8 +73,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
             IList<object> annotations = default;
             ScheduleTriggerRecurrence recurrence = default;
             IDictionary<string, object> additionalProperties = default;
@@ -156,8 +157,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ScheduleTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),

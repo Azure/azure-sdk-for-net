@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobTypes"/> is null. </exception>
         public ManagementPolicyFilter(IEnumerable<string> blobTypes)
         {
-            if (blobTypes == null)
-            {
-                throw new ArgumentNullException(nameof(blobTypes));
-            }
+            Argument.AssertNotNull(blobTypes, nameof(blobTypes));
 
             PrefixMatch = new ChangeTrackingList<string>();
             BlobTypes = blobTypes.ToList();

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,34 +20,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TreatEmptyAsNull != null)
+            if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
-            if (SkipHeaderLineCount != null)
+            if (Optional.IsDefined(SkipHeaderLineCount))
             {
                 writer.WritePropertyName("skipHeaderLineCount"u8);
                 writer.WriteObjectValue(SkipHeaderLineCount);
             }
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteObjectValue(Recursive);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -65,13 +66,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipHeaderLineCount = default;
-            Optional<object> recursive = default;
+            object treatEmptyAsNull = default;
+            object skipHeaderLineCount = default;
+            object recursive = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -140,13 +141,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new BlobSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
                 additionalProperties,
-                treatEmptyAsNull.Value,
-                skipHeaderLineCount.Value,
-                recursive.Value);
+                treatEmptyAsNull,
+                skipHeaderLineCount,
+                recursive);
         }
 
         internal partial class BlobSourceConverter : JsonConverter<BlobSource>

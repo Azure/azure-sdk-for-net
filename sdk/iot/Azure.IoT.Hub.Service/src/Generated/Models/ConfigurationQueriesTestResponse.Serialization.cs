@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> targetConditionError = default;
+            string targetConditionError = default;
             IReadOnlyDictionary<string, string> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationQueriesTestResponse(targetConditionError.Value, customMetricQueryErrors ?? new ChangeTrackingDictionary<string, string>());
+            return new ConfigurationQueriesTestResponse(targetConditionError, customMetricQueryErrors ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

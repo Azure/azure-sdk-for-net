@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("port");
                 }
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long?> port = default;
-            Optional<SapHealthState> health = default;
+            long? port = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayServerProperties(Optional.ToNullable(port), Optional.ToNullable(health), serializedAdditionalRawData);
+            return new GatewayServerProperties(port, health, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayServerProperties>.Write(ModelReaderWriterOptions options)

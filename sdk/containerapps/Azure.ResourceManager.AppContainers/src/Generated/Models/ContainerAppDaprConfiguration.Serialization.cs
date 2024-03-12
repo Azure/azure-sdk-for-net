@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (AppProtocol.HasValue)
+            if (Optional.IsDefined(AppProtocol))
             {
                 writer.WritePropertyName("appProtocol"u8);
                 writer.WriteStringValue(AppProtocol.Value.ToString());
             }
-            if (AppPort.HasValue)
+            if (Optional.IsDefined(AppPort))
             {
                 writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
-            if (HttpReadBufferSize.HasValue)
+            if (Optional.IsDefined(HttpReadBufferSize))
             {
                 writer.WritePropertyName("httpReadBufferSize"u8);
                 writer.WriteNumberValue(HttpReadBufferSize.Value);
             }
-            if (HttpMaxRequestSize.HasValue)
+            if (Optional.IsDefined(HttpMaxRequestSize))
             {
                 writer.WritePropertyName("httpMaxRequestSize"u8);
                 writer.WriteNumberValue(HttpMaxRequestSize.Value);
             }
-            if (LogLevel.HasValue)
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (IsApiLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsApiLoggingEnabled))
             {
                 writer.WritePropertyName("enableApiLogging"u8);
                 writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> appId = default;
-            Optional<ContainerAppProtocol> appProtocol = default;
-            Optional<int> appPort = default;
-            Optional<int> httpReadBufferSize = default;
-            Optional<int> httpMaxRequestSize = default;
-            Optional<ContainerAppDaprLogLevel> logLevel = default;
-            Optional<bool> enableApiLogging = default;
+            bool? enabled = default;
+            string appId = default;
+            ContainerAppProtocol? appProtocol = default;
+            int? appPort = default;
+            int? httpReadBufferSize = default;
+            int? httpMaxRequestSize = default;
+            ContainerAppDaprLogLevel? logLevel = default;
+            bool? enableApiLogging = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,14 +192,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppDaprConfiguration(
-                Optional.ToNullable(enabled),
-                appId.Value,
-                Optional.ToNullable(appProtocol),
-                Optional.ToNullable(appPort),
-                Optional.ToNullable(httpReadBufferSize),
-                Optional.ToNullable(httpMaxRequestSize),
-                Optional.ToNullable(logLevel),
-                Optional.ToNullable(enableApiLogging),
+                enabled,
+                appId,
+                appProtocol,
+                appPort,
+                httpReadBufferSize,
+                httpMaxRequestSize,
+                logLevel,
+                enableApiLogging,
                 serializedAdditionalRawData);
         }
 

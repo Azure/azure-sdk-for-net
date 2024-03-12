@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Validation != null)
+            if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteStringValue(Validation);
             }
-            if (ValidationKey != null)
+            if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Decryption != null)
+            if (Optional.IsDefined(Decryption))
             {
                 writer.WritePropertyName("decryption"u8);
                 writer.WriteStringValue(Decryption);
             }
-            if (DecryptionKey != null)
+            if (Optional.IsDefined(DecryptionKey))
             {
                 writer.WritePropertyName("decryptionKey"u8);
                 writer.WriteStringValue(DecryptionKey);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> validation = default;
-            Optional<string> validationKey = default;
-            Optional<string> decryption = default;
-            Optional<string> decryptionKey = default;
+            string validation = default;
+            string validationKey = default;
+            string decryption = default;
+            string decryptionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
+            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)

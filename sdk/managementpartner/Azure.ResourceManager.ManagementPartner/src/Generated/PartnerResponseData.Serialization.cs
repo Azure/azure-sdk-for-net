@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagementPartner
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteNumberValue(ETag.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.ManagementPartner
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PartnerId != null)
+            if (Optional.IsDefined(PartnerId))
             {
                 writer.WritePropertyName("partnerId"u8);
                 writer.WriteStringValue(PartnerId);
             }
-            if (PartnerName != null)
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.ManagementPartner
             {
                 return null;
             }
-            Optional<int> etag = default;
+            int? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> partnerId = default;
-            Optional<string> partnerName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> objectId = default;
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ManagementPartnerState> state = default;
+            SystemData systemData = default;
+            string partnerId = default;
+            string partnerName = default;
+            Guid? tenantId = default;
+            string objectId = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            DateTimeOffset? createdTime = default;
+            ManagementPartnerState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,16 +266,16 @@ namespace Azure.ResourceManager.ManagementPartner
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                partnerId.Value,
-                partnerName.Value,
-                Optional.ToNullable(tenantId),
-                objectId.Value,
-                Optional.ToNullable(version),
-                Optional.ToNullable(updatedTime),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(state),
+                systemData,
+                etag,
+                partnerId,
+                partnerName,
+                tenantId,
+                objectId,
+                version,
+                updatedTime,
+                createdTime,
+                state,
                 serializedAdditionalRawData);
         }
 

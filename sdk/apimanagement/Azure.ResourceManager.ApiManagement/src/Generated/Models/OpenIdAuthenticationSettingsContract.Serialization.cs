@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (OpenIdProviderId != null)
+            if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId"u8);
                 writer.WriteStringValue(OpenIdProviderId);
             }
-            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> openidProviderId = default;
+            string openidProviderId = default;
             IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), serializedAdditionalRawData);
+            return new OpenIdAuthenticationSettingsContract(openidProviderId, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdAuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)

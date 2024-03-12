@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PlanId != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && PlanDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (options.Format != "W" && !(Requesters is ChangeTrackingList<PlanRequesterInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Requesters))
             {
                 writer.WritePropertyName("requesters"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
+            string planId = default;
+            string planDisplayName = default;
             IReadOnlyList<PlanRequesterInfo> requesters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlanRequesterDetails(planId.Value, planDisplayName.Value, requesters ?? new ChangeTrackingList<PlanRequesterInfo>(), serializedAdditionalRawData);
+            return new PlanRequesterDetails(planId, planDisplayName, requesters ?? new ChangeTrackingList<PlanRequesterInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlanRequesterDetails>.Write(ModelReaderWriterOptions options)

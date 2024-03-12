@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,49 +72,49 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ImmutableId != null)
+            if (Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
             }
-            if (ConfigurationAccess != null)
+            if (Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
                 writer.WriteObjectValue(ConfigurationAccess);
             }
-            if (LogsIngestion != null)
+            if (Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
                 writer.WriteObjectValue(LogsIngestion);
             }
-            if (MetricsIngestion != null)
+            if (Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
                 writer.WriteObjectValue(MetricsIngestion);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("privateLinkScopedResources"u8);
                 writer.WriteStartArray();
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && FailoverConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverConfiguration))
             {
                 writer.WritePropertyName("failoverConfiguration"u8);
                 writer.WriteObjectValue(FailoverConfiguration);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -173,25 +173,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<DataCollectionEndpointResourceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            DataCollectionEndpointResourceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
-            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
-            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
-            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
-            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string immutableId = default;
+            DataCollectionEndpointConfigurationAccess configurationAccess = default;
+            DataCollectionEndpointLogsIngestion logsIngestion = default;
+            DataCollectionEndpointMetricsIngestion metricsIngestion = default;
+            DataCollectionEndpointNetworkAcls networkAcls = default;
+            DataCollectionEndpointProvisioningState? provisioningState = default;
             IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
-            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
-            Optional<DataCollectionEndpointMetadata> metadata = default;
+            DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
+            DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,22 +375,22 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(kind),
+                kind,
                 identity,
-                Optional.ToNullable(etag),
-                description.Value,
-                immutableId.Value,
-                configurationAccess.Value,
-                logsIngestion.Value,
-                metricsIngestion.Value,
-                networkAcls.Value,
-                Optional.ToNullable(provisioningState),
+                etag,
+                description,
+                immutableId,
+                configurationAccess,
+                logsIngestion,
+                metricsIngestion,
+                networkAcls,
+                provisioningState,
                 privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>(),
-                failoverConfiguration.Value,
-                metadata.Value,
+                failoverConfiguration,
+                metadata,
                 serializedAdditionalRawData);
         }
 

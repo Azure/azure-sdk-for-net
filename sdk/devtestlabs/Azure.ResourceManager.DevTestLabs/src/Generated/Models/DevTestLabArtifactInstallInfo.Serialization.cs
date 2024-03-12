@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactId != null)
+            if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            if (ArtifactTitle != null)
+            if (Optional.IsDefined(ArtifactTitle))
             {
                 writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
-            if (!(Parameters is ChangeTrackingList<DevTestLabArtifactParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,22 +47,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (DeploymentStatusMessage != null)
+            if (Optional.IsDefined(DeploymentStatusMessage))
             {
                 writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
-            if (VmExtensionStatusMessage != null)
+            if (Optional.IsDefined(VmExtensionStatusMessage))
             {
                 writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
-            if (InstallOn.HasValue)
+            if (Optional.IsDefined(InstallOn))
             {
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> artifactId = default;
-            Optional<string> artifactTitle = default;
+            string artifactId = default;
+            string artifactTitle = default;
             IList<DevTestLabArtifactParameter> parameters = default;
-            Optional<string> status = default;
-            Optional<string> deploymentStatusMessage = default;
-            Optional<string> vmExtensionStatusMessage = default;
-            Optional<DateTimeOffset> installTime = default;
+            string status = default;
+            string deploymentStatusMessage = default;
+            string vmExtensionStatusMessage = default;
+            DateTimeOffset? installTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,13 +171,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabArtifactInstallInfo(
-                artifactId.Value,
-                artifactTitle.Value,
+                artifactId,
+                artifactTitle,
                 parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(),
-                status.Value,
-                deploymentStatusMessage.Value,
-                vmExtensionStatusMessage.Value,
-                Optional.ToNullable(installTime),
+                status,
+                deploymentStatusMessage,
+                vmExtensionStatusMessage,
+                installTime,
                 serializedAdditionalRawData);
         }
 

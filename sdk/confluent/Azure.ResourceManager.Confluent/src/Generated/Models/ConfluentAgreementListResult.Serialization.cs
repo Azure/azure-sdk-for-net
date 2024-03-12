@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ConfluentAgreement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 return null;
             }
             IReadOnlyList<ConfluentAgreement> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink.Value, serializedAdditionalRawData);
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreementListResult>.Write(ModelReaderWriterOptions options)

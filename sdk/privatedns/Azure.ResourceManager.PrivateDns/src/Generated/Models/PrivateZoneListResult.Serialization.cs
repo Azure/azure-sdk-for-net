@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<PrivateDnsZoneData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 return null;
             }
             IReadOnlyList<PrivateDnsZoneData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateZoneListResult(value ?? new ChangeTrackingList<PrivateDnsZoneData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateZoneListResult(value ?? new ChangeTrackingList<PrivateDnsZoneData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateZoneListResult>.Write(ModelReaderWriterOptions options)

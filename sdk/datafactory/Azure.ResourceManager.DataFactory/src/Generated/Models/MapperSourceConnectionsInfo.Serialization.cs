@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (!(SourceEntities is ChangeTrackingList<MapperTable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceEntities))
             {
                 writer.WritePropertyName("sourceEntities"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Connection != null)
+            if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IList<MapperTable> sourceEntities = default;
-            Optional<MapperConnection> connection = default;
+            MapperConnection connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperSourceConnectionsInfo(sourceEntities ?? new ChangeTrackingList<MapperTable>(), connection.Value, serializedAdditionalRawData);
+            return new MapperSourceConnectionsInfo(sourceEntities ?? new ChangeTrackingList<MapperTable>(), connection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperSourceConnectionsInfo>.Write(ModelReaderWriterOptions options)

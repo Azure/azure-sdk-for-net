@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,44 +61,44 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && MaxSizeBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
-            if (!(Keys is ChangeTrackingDictionary<string, SqlDatabaseKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            long? maxSizeBytes = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? earliestRestoreDate = default;
+            SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -304,16 +304,16 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                databaseName.Value,
-                Optional.ToNullable(maxSizeBytes),
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(deletionDate),
-                Optional.ToNullable(earliestRestoreDate),
-                Optional.ToNullable(backupStorageRedundancy),
+                sku,
+                databaseName,
+                maxSizeBytes,
+                creationDate,
+                deletionDate,
+                earliestRestoreDate,
+                backupStorageRedundancy,
                 keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                 serializedAdditionalRawData);
         }

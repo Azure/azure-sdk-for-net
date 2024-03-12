@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdministratorConfiguration != null)
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (AgentOptions != null)
+            if (Optional.IsDefined(AgentOptions))
             {
                 writer.WritePropertyName("agentOptions"u8);
                 writer.WriteObjectValue(AgentOptions);
             }
-            if (AttachedNetworkConfiguration != null)
+            if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (!(Labels is ChangeTrackingList<KubernetesLabel> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(Mode.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Taints is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Taints))
             {
                 writer.WritePropertyName("taints"u8);
                 writer.WriteStartArray();
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpgradeSettings != null)
+            if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
@@ -122,16 +123,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<NetworkCloudAgentConfiguration> agentOptions = default;
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            NetworkCloudAgentConfiguration agentOptions = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
             IList<string> availabilityZones = default;
             long count = default;
             IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
             string name = default;
             IList<KubernetesLabel> taints = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,16 +243,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InitialAgentPoolConfiguration(
-                administratorConfiguration.Value,
-                agentOptions.Value,
-                attachedNetworkConfiguration.Value,
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 count,
                 labels ?? new ChangeTrackingList<KubernetesLabel>(),
                 mode,
                 name,
                 taints ?? new ChangeTrackingList<KubernetesLabel>(),
-                upgradeSettings.Value,
+                upgradeSettings,
                 vmSkuName,
                 serializedAdditionalRawData);
         }

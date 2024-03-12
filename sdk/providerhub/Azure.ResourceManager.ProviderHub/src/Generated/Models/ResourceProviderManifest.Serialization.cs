@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (ProviderAuthentication != null)
+            if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (ProviderVersion != null)
+            if (Optional.IsDefined(ProviderVersion))
             {
                 writer.WritePropertyName("providerVersion"u8);
                 writer.WriteStringValue(ProviderVersion);
             }
-            if (ProviderType.HasValue)
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -66,17 +67,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FeaturesRule != null)
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (RequestHeaderOptions != null)
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (!(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -86,12 +87,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Management != null)
+            if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
                 writer.WriteObjectValue(Management);
             }
-            if (!(Capabilities is ChangeTrackingList<ResourceProviderCapabilities> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
 #endif
             }
-            if (!(GlobalNotificationEndpoints is ChangeTrackingList<ResourceProviderEndpoint> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(GlobalNotificationEndpoints))
             {
                 writer.WritePropertyName("globalNotificationEndpoints"u8);
                 writer.WriteStartArray();
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReRegisterSubscriptionMetadata != null)
+            if (Optional.IsDefined(ReRegisterSubscriptionMetadata))
             {
                 writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
                 writer.WriteObjectValue(ReRegisterSubscriptionMetadata);
@@ -166,20 +167,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            ResourceProviderAuthentication providerAuthentication = default;
             IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations = default;
-            Optional<string> @namespace = default;
-            Optional<string> providerVersion = default;
-            Optional<ResourceProviderType> providerType = default;
+            string @namespace = default;
+            string providerVersion = default;
+            ResourceProviderType? providerType = default;
             IReadOnlyList<string> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            FeaturesRule featuresRule = default;
+            RequestHeaderOptions requestHeaderOptions = default;
             IReadOnlyList<ProviderResourceType> resourceTypes = default;
-            Optional<ResourceProviderManagement> management = default;
+            ResourceProviderManagement management = default;
             IReadOnlyList<ResourceProviderCapabilities> capabilities = default;
-            Optional<BinaryData> metadata = default;
+            BinaryData metadata = default;
             IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
-            Optional<ReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
+            ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,20 +335,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceProviderManifest(
-                providerAuthentication.Value,
+                providerAuthentication,
                 providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
-                @namespace.Value,
-                providerVersion.Value,
-                Optional.ToNullable(providerType),
+                @namespace,
+                providerVersion,
+                providerType,
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                featuresRule.Value,
-                requestHeaderOptions.Value,
+                featuresRule,
+                requestHeaderOptions,
                 resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
-                management.Value,
+                management,
                 capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
-                metadata.Value,
+                metadata,
                 globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
-                reRegisterSubscriptionMetadata.Value,
+                reRegisterSubscriptionMetadata,
                 serializedAdditionalRawData);
         }
 

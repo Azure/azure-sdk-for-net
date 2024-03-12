@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ConcurrentJobsLimit.HasValue)
+            if (Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<int> concurrentJobsLimit = default;
+            int? concurrentJobsLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateIntegrationRuntimeNodeContent(Optional.ToNullable(concurrentJobsLimit), serializedAdditionalRawData);
+            return new UpdateIntegrationRuntimeNodeContent(concurrentJobsLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateIntegrationRuntimeNodeContent>.Write(ModelReaderWriterOptions options)

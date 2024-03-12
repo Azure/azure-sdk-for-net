@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && PerItemErrorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PerItemErrorCount))
             {
                 writer.WritePropertyName("perItemErrorCount"u8);
                 writer.WriteNumberValue(PerItemErrorCount.Value);
             }
-            if (options.Format != "W" && AppliedItemCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppliedItemCount))
             {
                 writer.WritePropertyName("appliedItemCount"u8);
                 writer.WriteNumberValue(AppliedItemCount.Value);
             }
-            if (options.Format != "W" && TotalItemCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalItemCount))
             {
                 writer.WritePropertyName("totalItemCount"u8);
                 writer.WriteNumberValue(TotalItemCount.Value);
             }
-            if (options.Format != "W" && AppliedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppliedBytes))
             {
                 writer.WritePropertyName("appliedBytes"u8);
                 writer.WriteNumberValue(AppliedBytes.Value);
             }
-            if (options.Format != "W" && TotalBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytes))
             {
                 writer.WritePropertyName("totalBytes"u8);
                 writer.WriteNumberValue(TotalBytes.Value);
             }
-            if (options.Format != "W" && SyncMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            if (options.Format != "W" && SessionMinutesRemaining.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SessionMinutesRemaining))
             {
                 writer.WritePropertyName("sessionMinutesRemaining"u8);
                 writer.WriteNumberValue(SessionMinutesRemaining.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<long> perItemErrorCount = default;
-            Optional<long> appliedItemCount = default;
-            Optional<long> totalItemCount = default;
-            Optional<long> appliedBytes = default;
-            Optional<long> totalBytes = default;
-            Optional<ServerEndpointSyncMode> syncMode = default;
-            Optional<int> sessionMinutesRemaining = default;
+            DateTimeOffset? timestamp = default;
+            long? perItemErrorCount = default;
+            long? appliedItemCount = default;
+            long? totalItemCount = default;
+            long? appliedBytes = default;
+            long? totalBytes = default;
+            ServerEndpointSyncMode? syncMode = default;
+            int? sessionMinutesRemaining = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServerEndpointSyncActivityStatus(
-                Optional.ToNullable(timestamp),
-                Optional.ToNullable(perItemErrorCount),
-                Optional.ToNullable(appliedItemCount),
-                Optional.ToNullable(totalItemCount),
-                Optional.ToNullable(appliedBytes),
-                Optional.ToNullable(totalBytes),
-                Optional.ToNullable(syncMode),
-                Optional.ToNullable(sessionMinutesRemaining),
+                timestamp,
+                perItemErrorCount,
+                appliedItemCount,
+                totalItemCount,
+                appliedBytes,
+                totalBytes,
+                syncMode,
+                sessionMinutesRemaining,
                 serializedAdditionalRawData);
         }
 

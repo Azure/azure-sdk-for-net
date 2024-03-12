@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<HybridContainerServiceVmSkuCapabilities> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -41,17 +42,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Tier != null)
+            if (options.Format != "W" && Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
+            string resourceType = default;
             IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
+            string name = default;
+            string tier = default;
+            string size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,11 +145,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridContainerServiceVmSkuProperties(
-                resourceType.Value,
+                resourceType,
                 capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>(),
-                name.Value,
-                tier.Value,
-                size.Value,
+                name,
+                tier,
+                size,
                 serializedAdditionalRawData);
         }
 

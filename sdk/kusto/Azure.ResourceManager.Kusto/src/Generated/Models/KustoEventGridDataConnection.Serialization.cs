@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,74 +50,74 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (EventGridResourceId != null)
+            if (Optional.IsDefined(EventGridResourceId))
             {
                 writer.WritePropertyName("eventGridResourceId"u8);
                 writer.WriteStringValue(EventGridResourceId);
             }
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (MappingRuleName != null)
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (DataFormat.HasValue)
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (IsFirstRecordIgnored.HasValue)
+            if (Optional.IsDefined(IsFirstRecordIgnored))
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
                 writer.WriteBooleanValue(IsFirstRecordIgnored.Value);
             }
-            if (BlobStorageEventType.HasValue)
+            if (Optional.IsDefined(BlobStorageEventType))
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
                 writer.WriteStringValue(BlobStorageEventType.Value.ToString());
             }
-            if (ManagedIdentityResourceId != null)
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
-            if (options.Format != "W" && ManagedIdentityObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
                 writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
-            if (DatabaseRouting.HasValue)
+            if (Optional.IsDefined(DatabaseRouting))
             {
                 writer.WritePropertyName("databaseRouting"u8);
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -160,25 +161,25 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<ResourceIdentifier> eventGridResourceId = default;
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<KustoEventGridDataFormat> dataFormat = default;
-            Optional<bool> ignoreFirstRecord = default;
-            Optional<BlobStorageEventType> blobStorageEventType = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
-            Optional<Guid> managedIdentityObjectId = default;
-            Optional<KustoDatabaseRouting> databaseRouting = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            ResourceIdentifier eventGridResourceId = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string consumerGroup = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            KustoEventGridDataFormat? dataFormat = default;
+            bool? ignoreFirstRecord = default;
+            BlobStorageEventType? blobStorageEventType = default;
+            ResourceIdentifier managedIdentityResourceId = default;
+            Guid? managedIdentityObjectId = default;
+            KustoDatabaseRouting? databaseRouting = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,23 +349,23 @@ namespace Azure.ResourceManager.Kusto.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
+                systemData,
+                location,
                 kind,
                 serializedAdditionalRawData,
-                storageAccountResourceId.Value,
-                eventGridResourceId.Value,
-                eventHubResourceId.Value,
-                consumerGroup.Value,
-                tableName.Value,
-                mappingRuleName.Value,
-                Optional.ToNullable(dataFormat),
-                Optional.ToNullable(ignoreFirstRecord),
-                Optional.ToNullable(blobStorageEventType),
-                managedIdentityResourceId.Value,
-                Optional.ToNullable(managedIdentityObjectId),
-                Optional.ToNullable(databaseRouting),
-                Optional.ToNullable(provisioningState));
+                storageAccountResourceId,
+                eventGridResourceId,
+                eventHubResourceId,
+                consumerGroup,
+                tableName,
+                mappingRuleName,
+                dataFormat,
+                ignoreFirstRecord,
+                blobStorageEventType,
+                managedIdentityResourceId,
+                managedIdentityObjectId,
+                databaseRouting,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoEventGridDataConnection>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PartitionNames != null)
+            if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames"u8);
                 writer.WriteObjectValue(PartitionNames);
             }
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 writer.WriteObjectValue(PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
@@ -47,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionNames = default;
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionNames = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -90,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AmazonRdsForOraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new AmazonRdsForOraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class AmazonRdsForOraclePartitionSettingsConverter : JsonConverter<AmazonRdsForOraclePartitionSettings>

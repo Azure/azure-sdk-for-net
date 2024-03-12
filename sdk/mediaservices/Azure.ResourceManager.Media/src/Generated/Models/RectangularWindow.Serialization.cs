@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Left != null)
+            if (Optional.IsDefined(Left))
             {
                 writer.WritePropertyName("left"u8);
                 writer.WriteStringValue(Left);
             }
-            if (Top != null)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteStringValue(Top);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> left = default;
-            Optional<string> top = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            string left = default;
+            string top = default;
+            string width = default;
+            string height = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RectangularWindow(left.Value, top.Value, width.Value, height.Value, serializedAdditionalRawData);
+            return new RectangularWindow(left, top, width, height, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RectangularWindow>.Write(ModelReaderWriterOptions options)

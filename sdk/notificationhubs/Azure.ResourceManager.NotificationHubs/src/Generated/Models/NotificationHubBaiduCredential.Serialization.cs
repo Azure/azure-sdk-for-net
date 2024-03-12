@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaiduApiKey != null)
+            if (Optional.IsDefined(BaiduApiKey))
             {
                 writer.WritePropertyName("baiduApiKey"u8);
                 writer.WriteStringValue(BaiduApiKey);
             }
-            if (BaiduEndpoint != null)
+            if (Optional.IsDefined(BaiduEndpoint))
             {
                 writer.WritePropertyName("baiduEndPoint"u8);
                 writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
             }
-            if (BaiduSecretKey != null)
+            if (Optional.IsDefined(BaiduSecretKey))
             {
                 writer.WritePropertyName("baiduSecretKey"u8);
                 writer.WriteStringValue(BaiduSecretKey);
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> baiduApiKey = default;
-            Optional<Uri> baiduEndPoint = default;
-            Optional<string> baiduSecretKey = default;
+            string baiduApiKey = default;
+            Uri baiduEndPoint = default;
+            string baiduSecretKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubBaiduCredential(baiduApiKey.Value, baiduEndPoint.Value, baiduSecretKey.Value, serializedAdditionalRawData);
+            return new NotificationHubBaiduCredential(baiduApiKey, baiduEndPoint, baiduSecretKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubBaiduCredential>.Write(ModelReaderWriterOptions options)

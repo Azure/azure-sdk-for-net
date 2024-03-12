@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SampleSize.HasValue)
+            if (Optional.IsDefined(SampleSize))
             {
                 writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
-            if (SuccessfulSamplesRequired.HasValue)
+            if (Optional.IsDefined(SuccessfulSamplesRequired))
             {
                 writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
-            if (AdditionalLatencyMilliseconds.HasValue)
+            if (Optional.IsDefined(AdditionalLatencyMilliseconds))
             {
                 writer.WritePropertyName("additionalLatencyMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyMilliseconds.Value);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -102,13 +103,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> sampleSize = default;
-            Optional<int> successfulSamplesRequired = default;
-            Optional<int> additionalLatencyMilliseconds = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? sampleSize = default;
+            int? successfulSamplesRequired = default;
+            int? additionalLatencyMilliseconds = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,14 +192,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontDoorLoadBalancingSettingsData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(sampleSize),
-                Optional.ToNullable(successfulSamplesRequired),
-                Optional.ToNullable(additionalLatencyMilliseconds),
-                Optional.ToNullable(resourceState));
+                sampleSize,
+                successfulSamplesRequired,
+                additionalLatencyMilliseconds,
+                resourceState);
         }
 
         BinaryData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Write(ModelReaderWriterOptions options)

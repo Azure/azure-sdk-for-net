@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,17 +60,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (StrongType != null)
+            if (Optional.IsDefined(StrongType))
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
@@ -113,13 +114,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IList<string> dependsOn = default;
             IDictionary<string, string> tags = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
+            string displayName = default;
+            string description = default;
+            string strongType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,13 +201,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceGroupDefinition(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 dependsOn ?? new ChangeTrackingList<string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                displayName.Value,
-                description.Value,
-                strongType.Value,
+                displayName,
+                description,
+                strongType,
                 serializedAdditionalRawData);
         }
 

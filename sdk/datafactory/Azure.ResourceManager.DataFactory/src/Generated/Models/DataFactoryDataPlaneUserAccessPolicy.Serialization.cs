@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (AccessResourcePath != null)
+            if (Optional.IsDefined(AccessResourcePath))
             {
                 writer.WritePropertyName("accessResourcePath"u8);
                 writer.WriteStringValue(AccessResourcePath);
             }
-            if (ProfileName != null)
+            if (Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> permissions = default;
-            Optional<string> accessResourcePath = default;
-            Optional<string> profileName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expireTime = default;
+            string permissions = default;
+            string accessResourcePath = default;
+            string profileName = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expireTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataFactoryDataPlaneUserAccessPolicy(
-                permissions.Value,
-                accessResourcePath.Value,
-                profileName.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(expireTime),
+                permissions,
+                accessResourcePath,
+                profileName,
+                startTime,
+                expireTime,
                 serializedAdditionalRawData);
         }
 

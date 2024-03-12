@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Dynatrace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SingleSignOnState.HasValue)
+            if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (EnterpriseAppId.HasValue)
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId.Value);
             }
-            if (SingleSignOnUri != null)
+            if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (!(AadDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AadDomains))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Dynatrace
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DynatraceSingleSignOnState> singleSignOnState = default;
-            Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
+            SystemData systemData = default;
+            DynatraceSingleSignOnState? singleSignOnState = default;
+            Guid? enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
             IList<string> aadDomains = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Dynatrace
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(singleSignOnState),
-                Optional.ToNullable(enterpriseAppId),
-                singleSignOnUrl.Value,
+                systemData,
+                singleSignOnState,
+                enterpriseAppId,
+                singleSignOnUrl,
                 aadDomains ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

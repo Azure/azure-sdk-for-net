@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (IdentityUri != null)
+            if (Optional.IsDefined(IdentityUri))
             {
                 writer.WritePropertyName("identityUrl"u8);
                 writer.WriteStringValue(IdentityUri.AbsoluteUri);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string server = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> identity = default;
-            Optional<Uri> identityUrl = default;
+            string username = default;
+            string password = default;
+            string identity = default;
+            Uri identityUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +133,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerGroupImageRegistryCredential(
                 server,
-                username.Value,
-                password.Value,
-                identity.Value,
-                identityUrl.Value,
+                username,
+                password,
+                identity,
+                identityUrl,
                 serializedAdditionalRawData);
         }
 

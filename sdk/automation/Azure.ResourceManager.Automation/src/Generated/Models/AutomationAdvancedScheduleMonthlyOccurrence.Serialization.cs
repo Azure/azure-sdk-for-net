@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Occurrence.HasValue)
+            if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
-            if (Day.HasValue)
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<int> occurrence = default;
-            Optional<AutomationDayOfWeek> day = default;
+            int? occurrence = default;
+            AutomationDayOfWeek? day = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAdvancedScheduleMonthlyOccurrence(Optional.ToNullable(occurrence), Optional.ToNullable(day), serializedAdditionalRawData);
+            return new AutomationAdvancedScheduleMonthlyOccurrence(occurrence, day, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Write(ModelReaderWriterOptions options)

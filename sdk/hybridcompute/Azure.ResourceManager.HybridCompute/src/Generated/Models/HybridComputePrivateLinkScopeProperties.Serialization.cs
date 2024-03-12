@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && PrivateLinkScopeId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkScopeId))
             {
                 writer.WritePropertyName("privateLinkScopeId"u8);
                 writer.WriteStringValue(PrivateLinkScopeId);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnectionDataModel> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<string> provisioningState = default;
-            Optional<string> privateLinkScopeId = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
+            string provisioningState = default;
+            string privateLinkScopeId = default;
             IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>(), serializedAdditionalRawData);
+            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputePrivateLinkScopeProperties>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Interpolation.HasValue)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -41,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("distance"u8))
@@ -74,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DistanceScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), distance);
+            return new DistanceScoringFunction(type, fieldName, boost, interpolation, distance);
         }
     }
 }

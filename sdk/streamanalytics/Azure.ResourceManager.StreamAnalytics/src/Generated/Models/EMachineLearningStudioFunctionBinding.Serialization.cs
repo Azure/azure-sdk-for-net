@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,22 +31,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Inputs != null)
+            if (Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteObjectValue(Inputs);
             }
-            if (!(Outputs is ChangeTrackingList<MachineLearningStudioOutputColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> endpoint = default;
-            Optional<string> apiKey = default;
-            Optional<MachineLearningStudioInputs> inputs = default;
+            string endpoint = default;
+            string apiKey = default;
+            MachineLearningStudioInputs inputs = default;
             IList<MachineLearningStudioOutputColumn> outputs = default;
-            Optional<int> batchSize = default;
+            int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +178,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new EMachineLearningStudioFunctionBinding(
                 type,
                 serializedAdditionalRawData,
-                endpoint.Value,
-                apiKey.Value,
-                inputs.Value,
+                endpoint,
+                apiKey,
+                inputs,
                 outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(),
-                Optional.ToNullable(batchSize));
+                batchSize);
         }
 
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)

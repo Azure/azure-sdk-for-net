@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UniqueId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId.Value);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (!(LinkedResources is ChangeTrackingList<MapsLinkedResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedResources))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Cors != null)
+            if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<Guid> uniqueId = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> provisioningState = default;
+            Guid? uniqueId = default;
+            bool? disableLocalAuth = default;
+            string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
-            Optional<CorsRules> cors = default;
+            CorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,11 +157,11 @@ namespace Azure.ResourceManager.Maps.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MapsAccountProperties(
-                Optional.ToNullable(uniqueId),
-                Optional.ToNullable(disableLocalAuth),
-                provisioningState.Value,
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
-                cors.Value,
+                cors,
                 serializedAdditionalRawData);
         }
 

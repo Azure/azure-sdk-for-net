@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceId != null)
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> serviceId = default;
-            Optional<string> componentId = default;
+            string serviceId = default;
+            string componentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTreeInfo(serviceId.Value, componentId.Value, serializedAdditionalRawData);
+            return new ServiceTreeInfo(serviceId, componentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTreeInfo>.Write(ModelReaderWriterOptions options)

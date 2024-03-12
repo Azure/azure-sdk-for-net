@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DeploymentPreflightResourceType.HasValue)
+            if (Optional.IsDefined(DeploymentPreflightResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentPreflightResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> apiVersion = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            string apiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentPreflightResourceInfo(name.Value, Optional.ToNullable(type), Optional.ToNullable(location), apiVersion.Value, serializedAdditionalRawData);
+            return new DeploymentPreflightResourceInfo(name, type, location, apiVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentPreflightResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,22 +18,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (DeploymentId != null)
+            if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (AuthIdentity != null)
+            if (Optional.IsDefined(AuthIdentity))
             {
                 if (AuthIdentity != null)
                 {
@@ -46,17 +47,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -84,14 +85,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> resourceUri = default;
-            Optional<string> deploymentId = default;
-            Optional<string> apiKey = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            Uri resourceUri = default;
+            string deploymentId = default;
+            string apiKey = default;
+            SearchIndexerDataIdentity authIdentity = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -168,15 +169,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new AzureOpenAIEmbeddingSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                resourceUri.Value,
-                deploymentId.Value,
-                apiKey.Value,
-                authIdentity.Value);
+                resourceUri,
+                deploymentId,
+                apiKey,
+                authIdentity);
         }
     }
 }

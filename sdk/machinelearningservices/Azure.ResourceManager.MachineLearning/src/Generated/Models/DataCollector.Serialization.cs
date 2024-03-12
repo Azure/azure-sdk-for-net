@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (RequestLogging != null)
+            if (Optional.IsDefined(RequestLogging))
             {
                 if (RequestLogging != null)
                 {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestLogging");
                 }
             }
-            if (RollingRate.HasValue)
+            if (Optional.IsDefined(RollingRate))
             {
                 writer.WritePropertyName("rollingRate"u8);
                 writer.WriteStringValue(RollingRate.Value.ToString());
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, DataCollectionConfiguration> collections = default;
-            Optional<RequestLogging> requestLogging = default;
-            Optional<RollingRateType> rollingRate = default;
+            RequestLogging requestLogging = default;
+            RollingRateType? rollingRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollector(collections, requestLogging.Value, Optional.ToNullable(rollingRate), serializedAdditionalRawData);
+            return new DataCollector(collections, requestLogging, rollingRate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollector>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (PortRange != null)
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (PortReuseHoldTime != null)
+            if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (PinholeLimits.HasValue)
+            if (Optional.IsDefined(PinholeLimits))
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (PinholeTimeouts != null)
+            if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NaptState> enabled = default;
-            Optional<MobileNetworkPortRange> portRange = default;
-            Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
-            Optional<int> pinholeLimits = default;
-            Optional<PinholeTimeouts> pinholeTimeouts = default;
+            NaptState? enabled = default;
+            MobileNetworkPortRange portRange = default;
+            MobileNetworkPortReuseHoldTimes portReuseHoldTime = default;
+            int? pinholeLimits = default;
+            PinholeTimeouts pinholeTimeouts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NaptConfiguration(
-                Optional.ToNullable(enabled),
-                portRange.Value,
-                portReuseHoldTime.Value,
-                Optional.ToNullable(pinholeLimits),
-                pinholeTimeouts.Value,
+                enabled,
+                portRange,
+                portReuseHoldTime,
+                pinholeLimits,
+                pinholeTimeouts,
                 serializedAdditionalRawData);
         }
 

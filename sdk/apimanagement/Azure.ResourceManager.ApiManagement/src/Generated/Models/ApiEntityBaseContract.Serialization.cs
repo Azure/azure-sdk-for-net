@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AuthenticationSettings != null)
+            if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
-            if (SubscriptionKeyParameterNames != null)
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
-            if (ApiType.HasValue)
+            if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (ApiRevision != null)
+            if (Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (IsCurrent.HasValue)
+            if (Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (ApiRevisionDescription != null)
+            if (Optional.IsDefined(ApiRevisionDescription))
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (ApiVersionDescription != null)
+            if (Optional.IsDefined(ApiVersionDescription))
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (ApiVersionSetId != null)
+            if (Optional.IsDefined(ApiVersionSetId))
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (IsSubscriptionRequired.HasValue)
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (TermsOfServiceUri != null)
+            if (Optional.IsDefined(TermsOfServiceUri))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Contact != null)
+            if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
-            if (License != null)
+            if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
@@ -139,21 +140,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            Uri termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,21 +281,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiEntityBaseContract(
-                description.Value,
-                authenticationSettings.Value,
-                subscriptionKeyParameterNames.Value,
-                Optional.ToNullable(type),
-                apiRevision.Value,
-                apiVersion.Value,
-                Optional.ToNullable(isCurrent),
-                Optional.ToNullable(isOnline),
-                apiRevisionDescription.Value,
-                apiVersionDescription.Value,
-                apiVersionSetId.Value,
-                Optional.ToNullable(subscriptionRequired),
-                termsOfServiceUri.Value,
-                contact.Value,
-                license.Value,
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
                 serializedAdditionalRawData);
         }
 

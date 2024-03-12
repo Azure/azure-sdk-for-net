@@ -78,6 +78,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "flac",
     "hnsw",
     "ienumerable",
     "illumos",
@@ -441,6 +442,17 @@
       "filename": "**/sdk/defendereasm/**/*.cs",
       "words": [
         "easm"
+      ]
+    },
+    {
+      "filename": "**/sdk/easm/**/*",
+      "words": [
+        "easm",
+        "asns",
+        "cnames",
+        "alexa",
+        "whois",
+        "nxdomain"
       ]
     },
     {
@@ -1107,6 +1119,7 @@
         "Nysiis",
         "Phonetik",
         "Piqd",
+        "Rerank",
         "Reranker",
         "Rslp",
         "Soundex",
@@ -1330,6 +1343,12 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/confluent/**/*.cs",
+      "words": [
+        "Byok"
       ]
     }
   ],

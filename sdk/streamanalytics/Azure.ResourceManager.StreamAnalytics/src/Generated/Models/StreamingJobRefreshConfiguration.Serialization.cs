@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (RefreshInterval != null)
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval);
             }
-            if (RefreshType.HasValue)
+            if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> pathPattern = default;
-            Optional<string> dateFormat = default;
-            Optional<string> timeFormat = default;
-            Optional<string> refreshInterval = default;
-            Optional<DataRefreshType> refreshType = default;
+            string pathPattern = default;
+            string dateFormat = default;
+            string timeFormat = default;
+            string refreshInterval = default;
+            DataRefreshType? refreshType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StreamingJobRefreshConfiguration(
-                pathPattern.Value,
-                dateFormat.Value,
-                timeFormat.Value,
-                refreshInterval.Value,
-                Optional.ToNullable(refreshType),
+                pathPattern,
+                dateFormat,
+                timeFormat,
+                refreshInterval,
+                refreshType,
                 serializedAdditionalRawData);
         }
 

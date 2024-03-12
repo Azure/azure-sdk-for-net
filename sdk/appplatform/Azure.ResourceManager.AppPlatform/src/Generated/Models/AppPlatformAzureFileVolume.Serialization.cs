@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (IsReadOnly.HasValue)
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (!(MountOptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string shareName = default;
             UnderlyingResourceType type = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             IList<string> mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformAzureFileVolume(
                 type,
                 mountPath,
-                Optional.ToNullable(readOnly),
+                readOnly,
                 mountOptions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 shareName);

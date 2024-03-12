@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsOrganizationDefault.HasValue)
+            if (Optional.IsDefined(IsOrganizationDefault))
             {
                 writer.WritePropertyName("isOrganizationDefault"u8);
                 writer.WriteBooleanValue(IsOrganizationDefault.Value);
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Rules is ChangeTrackingList<RoleManagementPolicyRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(EffectiveRules is ChangeTrackingList<RoleManagementPolicyRule> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveRules))
             {
                 writer.WritePropertyName("effectiveRules"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PolicyProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyProperties))
             {
                 writer.WritePropertyName("policyProperties"u8);
                 writer.WriteObjectValue(PolicyProperties);
@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isOrganizationDefault = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
+            SystemData systemData = default;
+            string scope = default;
+            string displayName = default;
+            string description = default;
+            bool? isOrganizationDefault = default;
+            RoleManagementPrincipal lastModifiedBy = default;
+            DateTimeOffset? lastModifiedDateTime = default;
             IList<RoleManagementPolicyRule> rules = default;
             IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
-            Optional<RoleManagementPolicyProperties> policyProperties = default;
+            RoleManagementPolicyProperties policyProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,16 +286,16 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                scope.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(isOrganizationDefault),
-                lastModifiedBy.Value,
-                Optional.ToNullable(lastModifiedDateTime),
+                systemData,
+                scope,
+                displayName,
+                description,
+                isOrganizationDefault,
+                lastModifiedBy,
+                lastModifiedDateTime,
                 rules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
                 effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
-                policyProperties.Value,
+                policyProperties,
                 serializedAdditionalRawData);
         }
 

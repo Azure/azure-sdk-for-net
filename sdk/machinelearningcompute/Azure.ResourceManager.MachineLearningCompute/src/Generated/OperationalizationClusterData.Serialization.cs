@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<ErrorResponseWrapper> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
             {
                 writer.WritePropertyName("provisioningErrors"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 }
                 writer.WriteEndArray();
             }
-            if (ClusterType.HasValue)
+            if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
                 writer.WriteStringValue(ClusterType.Value.ToString());
             }
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (ContainerRegistry != null)
+            if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteObjectValue(ContainerRegistry);
             }
-            if (ContainerService != null)
+            if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
                 writer.WriteObjectValue(ContainerService);
             }
-            if (AppInsights != null)
+            if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
                 writer.WriteObjectValue(AppInsights);
             }
-            if (GlobalServiceConfiguration != null)
+            if (Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
                 writer.WriteObjectValue(GlobalServiceConfiguration);
@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.MachineLearningCompute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<OperationStatus> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            OperationStatus? provisioningState = default;
             IReadOnlyList<ErrorResponseWrapper> provisioningErrors = default;
-            Optional<ClusterType> clusterType = default;
-            Optional<StorageAccountProperties> storageAccount = default;
-            Optional<ContainerRegistryProperties> containerRegistry = default;
-            Optional<AcsClusterProperties> containerService = default;
-            Optional<AppInsightsProperties> appInsights = default;
-            Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
+            ClusterType? clusterType = default;
+            StorageAccountProperties storageAccount = default;
+            ContainerRegistryProperties containerRegistry = default;
+            AcsClusterProperties containerService = default;
+            AppInsightsProperties appInsights = default;
+            GlobalServiceConfiguration globalServiceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,20 +348,20 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(modifiedOn),
-                Optional.ToNullable(provisioningState),
+                description,
+                createdOn,
+                modifiedOn,
+                provisioningState,
                 provisioningErrors ?? new ChangeTrackingList<ErrorResponseWrapper>(),
-                Optional.ToNullable(clusterType),
-                storageAccount.Value,
-                containerRegistry.Value,
-                containerService.Value,
-                appInsights.Value,
-                globalServiceConfiguration.Value,
+                clusterType,
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                globalServiceConfiguration,
                 serializedAdditionalRawData);
         }
 

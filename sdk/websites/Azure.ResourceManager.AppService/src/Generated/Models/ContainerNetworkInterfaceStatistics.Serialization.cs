@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (RxBytes.HasValue)
+            if (Optional.IsDefined(RxBytes))
             {
                 writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
-            if (RxPackets.HasValue)
+            if (Optional.IsDefined(RxPackets))
             {
                 writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
-            if (RxErrors.HasValue)
+            if (Optional.IsDefined(RxErrors))
             {
                 writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
-            if (RxDropped.HasValue)
+            if (Optional.IsDefined(RxDropped))
             {
                 writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
-            if (TxBytes.HasValue)
+            if (Optional.IsDefined(TxBytes))
             {
                 writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
-            if (TxPackets.HasValue)
+            if (Optional.IsDefined(TxPackets))
             {
                 writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
-            if (TxErrors.HasValue)
+            if (Optional.IsDefined(TxErrors))
             {
                 writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
-            if (TxDropped.HasValue)
+            if (Optional.IsDefined(TxDropped))
             {
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> rxBytes = default;
-            Optional<long> rxPackets = default;
-            Optional<long> rxErrors = default;
-            Optional<long> rxDropped = default;
-            Optional<long> txBytes = default;
-            Optional<long> txPackets = default;
-            Optional<long> txErrors = default;
-            Optional<long> txDropped = default;
+            long? rxBytes = default;
+            long? rxPackets = default;
+            long? rxErrors = default;
+            long? rxDropped = default;
+            long? txBytes = default;
+            long? txPackets = default;
+            long? txErrors = default;
+            long? txDropped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerNetworkInterfaceStatistics(
-                Optional.ToNullable(rxBytes),
-                Optional.ToNullable(rxPackets),
-                Optional.ToNullable(rxErrors),
-                Optional.ToNullable(rxDropped),
-                Optional.ToNullable(txBytes),
-                Optional.ToNullable(txPackets),
-                Optional.ToNullable(txErrors),
-                Optional.ToNullable(txDropped),
+                rxBytes,
+                rxPackets,
+                rxErrors,
+                rxDropped,
+                txBytes,
+                txPackets,
+                txErrors,
+                txDropped,
                 serializedAdditionalRawData);
         }
 

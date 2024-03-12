@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,39 +38,39 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DomainNameLabel != null)
+            if (Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (PublicIPAllocationMethod != null)
+            if (Optional.IsDefined(PublicIPAllocationMethod))
             {
                 writer.WritePropertyName("publicIpAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -113,14 +114,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> domainNameLabel = default;
-            Optional<string> fqdn = default;
-            Optional<string> publicIPAllocationMethod = default;
-            Optional<string> sku = default;
-            Optional<string> zones = default;
+            string domainNameLabel = default;
+            string fqdn = default;
+            string publicIPAllocationMethod = default;
+            string sku = default;
+            string zones = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,15 +188,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PublicIPAddressResourceSettings(
                 resourceType,
-                targetResourceName.Value,
-                targetResourceGroupName.Value,
+                targetResourceName,
+                targetResourceGroupName,
                 serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                domainNameLabel.Value,
-                fqdn.Value,
-                publicIPAllocationMethod.Value,
-                sku.Value,
-                zones.Value);
+                domainNameLabel,
+                fqdn,
+                publicIPAllocationMethod,
+                sku,
+                zones);
         }
 
         BinaryData IPersistableModel<PublicIPAddressResourceSettings>.Write(ModelReaderWriterOptions options)

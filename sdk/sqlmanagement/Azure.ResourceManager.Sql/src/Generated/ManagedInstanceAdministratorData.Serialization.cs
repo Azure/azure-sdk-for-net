@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Sid.HasValue)
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ManagedInstanceAdministratorType> administratorType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
+            SystemData systemData = default;
+            ManagedInstanceAdministratorType? administratorType = default;
+            string login = default;
+            Guid? sid = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(administratorType),
-                login.Value,
-                Optional.ToNullable(sid),
-                Optional.ToNullable(tenantId),
+                systemData,
+                administratorType,
+                login,
+                sid,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

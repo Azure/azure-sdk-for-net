@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(SourceAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPorts is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Protocols is ChangeTrackingList<AzureFirewallNetworkRuleProtocol> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -76,22 +77,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TranslatedAddress != null)
+            if (Optional.IsDefined(TranslatedAddress))
             {
                 writer.WritePropertyName("translatedAddress"u8);
                 writer.WriteStringValue(TranslatedAddress);
             }
-            if (TranslatedPort != null)
+            if (Optional.IsDefined(TranslatedPort))
             {
                 writer.WritePropertyName("translatedPort"u8);
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (TranslatedFqdn != null)
+            if (Optional.IsDefined(TranslatedFqdn))
             {
                 writer.WritePropertyName("translatedFqdn"u8);
                 writer.WriteStringValue(TranslatedFqdn);
             }
-            if (!(SourceIPGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -139,15 +140,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             IList<string> sourceAddresses = default;
             IList<string> destinationAddresses = default;
             IList<string> destinationPorts = default;
             IList<AzureFirewallNetworkRuleProtocol> protocols = default;
-            Optional<string> translatedAddress = default;
-            Optional<string> translatedPort = default;
-            Optional<string> translatedFqdn = default;
+            string translatedAddress = default;
+            string translatedPort = default;
+            string translatedFqdn = default;
             IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -255,15 +256,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureFirewallNatRule(
-                name.Value,
-                description.Value,
+                name,
+                description,
                 sourceAddresses ?? new ChangeTrackingList<string>(),
                 destinationAddresses ?? new ChangeTrackingList<string>(),
                 destinationPorts ?? new ChangeTrackingList<string>(),
                 protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
-                translatedAddress.Value,
-                translatedPort.Value,
-                translatedFqdn.Value,
+                translatedAddress,
+                translatedPort,
+                translatedFqdn,
                 sourceIPGroups ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

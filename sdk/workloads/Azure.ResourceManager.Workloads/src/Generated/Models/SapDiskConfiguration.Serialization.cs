@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (RecommendedConfiguration != null)
+            if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
                 writer.WriteObjectValue(RecommendedConfiguration);
             }
-            if (!(SupportedConfigurations is ChangeTrackingList<SupportedConfigurationsDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
                 writer.WritePropertyName("supportedConfigurations"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
+            DiskVolumeConfiguration recommendedConfiguration = default;
             IReadOnlyList<SupportedConfigurationsDiskDetails> supportedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiskConfiguration(recommendedConfiguration.Value, supportedConfigurations ?? new ChangeTrackingList<SupportedConfigurationsDiskDetails>(), serializedAdditionalRawData);
+            return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations ?? new ChangeTrackingList<SupportedConfigurationsDiskDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfiguration>.Write(ModelReaderWriterOptions options)

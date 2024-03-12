@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteObjectValue(Parameters);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (TaskName != null)
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -35,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             AbstractiveSummarizationTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -54,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationLROTask(taskName.Value, kind, parameters);
+            return new AbstractiveSummarizationLROTask(taskName, kind, parameters);
         }
     }
 }

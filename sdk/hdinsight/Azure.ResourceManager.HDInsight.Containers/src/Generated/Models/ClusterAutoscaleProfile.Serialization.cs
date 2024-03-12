@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (GracefulDecommissionTimeout.HasValue)
+            if (Optional.IsDefined(GracefulDecommissionTimeout))
             {
                 writer.WritePropertyName("gracefulDecommissionTimeout"u8);
                 writer.WriteNumberValue(GracefulDecommissionTimeout.Value);
             }
-            if (AutoscaleType.HasValue)
+            if (Optional.IsDefined(AutoscaleType))
             {
                 writer.WritePropertyName("autoscaleType"u8);
                 writer.WriteStringValue(AutoscaleType.Value.ToString());
             }
-            if (ScheduleBasedConfig != null)
+            if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
                 writer.WriteObjectValue(ScheduleBasedConfig);
             }
-            if (LoadBasedConfig != null)
+            if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
                 writer.WriteObjectValue(LoadBasedConfig);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> gracefulDecommissionTimeout = default;
-            Optional<ClusterAutoscaleType> autoscaleType = default;
-            Optional<ScheduleBasedConfig> scheduleBasedConfig = default;
-            Optional<LoadBasedConfig> loadBasedConfig = default;
+            int? gracefulDecommissionTimeout = default;
+            ClusterAutoscaleType? autoscaleType = default;
+            ScheduleBasedConfig scheduleBasedConfig = default;
+            LoadBasedConfig loadBasedConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterAutoscaleProfile(
                 enabled,
-                Optional.ToNullable(gracefulDecommissionTimeout),
-                Optional.ToNullable(autoscaleType),
-                scheduleBasedConfig.Value,
-                loadBasedConfig.Value,
+                gracefulDecommissionTimeout,
+                autoscaleType,
+                scheduleBasedConfig,
+                loadBasedConfig,
                 serializedAdditionalRawData);
         }
 

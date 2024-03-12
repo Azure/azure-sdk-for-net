@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (FileShare != null)
+            if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
                 writer.WriteObjectValue(FileShare);
             }
-            if (AzureBlob != null)
+            if (Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
                 writer.WriteObjectValue(AzureBlob);
             }
-            if (options.Format != "W" && FileStorageType != null)
+            if (options.Format != "W" && Optional.IsDefined(FileStorageType))
             {
                 writer.WritePropertyName("fileStorageType"u8);
                 writer.WriteStringValue(FileStorageType);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SqlFileShare> fileShare = default;
-            Optional<AzureBlob> azureBlob = default;
-            Optional<string> fileStorageType = default;
+            SqlFileShare fileShare = default;
+            AzureBlob azureBlob = default;
+            string fileStorageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceLocation(fileShare.Value, azureBlob.Value, fileStorageType.Value, serializedAdditionalRawData);
+            return new SourceLocation(fileShare, azureBlob, fileStorageType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceLocation>.Write(ModelReaderWriterOptions options)

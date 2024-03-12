@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (PreprocessingComponentId != null)
+            if (Optional.IsDefined(PreprocessingComponentId))
             {
                 if (PreprocessingComponentId != null)
                 {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowOffset, "P");
             writer.WritePropertyName("windowSize"u8);
             writer.WriteStringValue(WindowSize, "P");
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {
@@ -116,11 +117,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> preprocessingComponentId = default;
+            string preprocessingComponentId = default;
             TimeSpan windowOffset = default;
             TimeSpan windowSize = default;
             IDictionary<string, string> columns = default;
-            Optional<string> dataContext = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -196,12 +197,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TrailingInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
-                dataContext.Value,
+                dataContext,
                 inputDataType,
                 jobInputType,
                 uri,
                 serializedAdditionalRawData,
-                preprocessingComponentId.Value,
+                preprocessingComponentId,
                 windowOffset,
                 windowSize);
         }

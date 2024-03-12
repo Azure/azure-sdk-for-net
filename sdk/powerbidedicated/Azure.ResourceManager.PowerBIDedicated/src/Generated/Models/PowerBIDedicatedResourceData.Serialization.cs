@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SystemData != null)
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PowerBIDedicatedResourceData(
-                id.Value,
-                name.Value,
-                type.Value,
+                id,
+                name,
+                type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData.Value,
+                systemData,
                 serializedAdditionalRawData);
         }
 

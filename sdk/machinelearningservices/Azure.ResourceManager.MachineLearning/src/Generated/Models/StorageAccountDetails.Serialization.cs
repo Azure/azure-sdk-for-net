@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SystemCreatedStorageAccount != null)
+            if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
                 if (SystemCreatedStorageAccount != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedStorageAccount");
                 }
             }
-            if (UserCreatedStorageAccount != null)
+            if (Optional.IsDefined(UserCreatedStorageAccount))
             {
                 if (UserCreatedStorageAccount != null)
                 {
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<SystemCreatedStorageAccount> systemCreatedStorageAccount = default;
-            Optional<UserCreatedStorageAccount> userCreatedStorageAccount = default;
+            SystemCreatedStorageAccount systemCreatedStorageAccount = default;
+            UserCreatedStorageAccount userCreatedStorageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountDetails(systemCreatedStorageAccount.Value, userCreatedStorageAccount.Value, serializedAdditionalRawData);
+            return new StorageAccountDetails(systemCreatedStorageAccount, userCreatedStorageAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountDetails>.Write(ModelReaderWriterOptions options)

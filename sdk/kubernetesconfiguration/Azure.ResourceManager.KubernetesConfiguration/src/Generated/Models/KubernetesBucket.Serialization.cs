@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (BucketName != null)
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
                 writer.WriteStringValue(BucketName);
             }
-            if (UseInsecureCommunication.HasValue)
+            if (Optional.IsDefined(UseInsecureCommunication))
             {
                 writer.WritePropertyName("insecure"u8);
                 writer.WriteBooleanValue(UseInsecureCommunication.Value);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 if (AccessKey != null)
                 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accessKey");
                 }
             }
-            if (LocalAuthRef != null)
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {
@@ -127,13 +128,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> bucketName = default;
-            Optional<bool> insecure = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<string> accessKey = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            string bucketName = default;
+            bool? insecure = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            string accessKey = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,13 +209,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesBucket(
-                url.Value,
-                bucketName.Value,
-                Optional.ToNullable(insecure),
-                Optional.ToNullable(timeoutInSeconds),
-                Optional.ToNullable(syncIntervalInSeconds),
-                accessKey.Value,
-                localAuthRef.Value,
+                url,
+                bucketName,
+                insecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
                 serializedAdditionalRawData);
         }
 

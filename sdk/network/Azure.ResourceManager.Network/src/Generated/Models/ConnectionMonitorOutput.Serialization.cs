@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (OutputType.HasValue)
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (WorkspaceSettings != null)
+            if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings"u8);
                 writer.WriteObjectValue(WorkspaceSettings);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<OutputType> type = default;
-            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
+            OutputType? type = default;
+            ConnectionMonitorWorkspaceSettings workspaceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorOutput(Optional.ToNullable(type), workspaceSettings.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorOutput(type, workspaceSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorOutput>.Write(ModelReaderWriterOptions options)

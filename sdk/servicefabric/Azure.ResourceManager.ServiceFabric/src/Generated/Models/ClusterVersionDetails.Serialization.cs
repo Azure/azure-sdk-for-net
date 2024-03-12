@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (CodeVersion != null)
+            if (Optional.IsDefined(CodeVersion))
             {
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (SupportExpireOn.HasValue)
+            if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (Environment.HasValue)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<string> codeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ClusterEnvironment> environment = default;
+            string codeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+            return new ClusterVersionDetails(codeVersion, supportExpiryUtc, environment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterVersionDetails>.Write(ModelReaderWriterOptions options)

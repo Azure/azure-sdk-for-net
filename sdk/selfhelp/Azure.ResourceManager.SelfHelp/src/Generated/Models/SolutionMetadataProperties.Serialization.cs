@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (options.Format != "W" && SolutionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SolutionType))
             {
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && !(RequiredInputs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredInputs))
             {
                 writer.WritePropertyName("requiredInputs"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SolutionType> solutionType = default;
-            Optional<string> description = default;
+            string solutionId = default;
+            SolutionType? solutionType = default;
+            string description = default;
             IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, requiredInputs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionMetadataProperties>.Write(ModelReaderWriterOptions options)

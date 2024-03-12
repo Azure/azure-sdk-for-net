@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("shareId"u8);
             writer.WriteStringValue(ShareId);
-            if (options.Format != "W" && RoleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RoleId))
             {
                 writer.WritePropertyName("roleId"u8);
                 writer.WriteStringValue(RoleId);
             }
-            if (options.Format != "W" && MountPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(MountPoint))
             {
                 writer.WritePropertyName("mountPoint"u8);
                 writer.WriteStringValue(MountPoint);
             }
-            if (options.Format != "W" && MountType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MountType))
             {
                 writer.WritePropertyName("mountType"u8);
                 writer.WriteStringValue(MountType.Value.ToString());
             }
-            if (options.Format != "W" && RoleType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("roleType"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier shareId = default;
-            Optional<ResourceIdentifier> roleId = default;
-            Optional<string> mountPoint = default;
-            Optional<DataBoxEdgeMountType> mountType = default;
-            Optional<DataBoxEdgeRoleType> roleType = default;
+            ResourceIdentifier roleId = default;
+            string mountPoint = default;
+            DataBoxEdgeMountType? mountType = default;
+            DataBoxEdgeRoleType? roleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,10 +141,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxEdgeMountPointMap(
                 shareId,
-                roleId.Value,
-                mountPoint.Value,
-                Optional.ToNullable(mountType),
-                Optional.ToNullable(roleType),
+                roleId,
+                mountPoint,
+                mountType,
+                roleType,
                 serializedAdditionalRawData);
         }
 

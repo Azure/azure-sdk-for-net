@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
-            if (ContentFilterResults != null)
+            if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
             CompletionsFinishReason? finishReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
             return new Choice(
                 text,
                 index,
-                contentFilterResults.Value,
+                contentFilterResults,
                 logprobs,
                 finishReason,
                 serializedAdditionalRawData);

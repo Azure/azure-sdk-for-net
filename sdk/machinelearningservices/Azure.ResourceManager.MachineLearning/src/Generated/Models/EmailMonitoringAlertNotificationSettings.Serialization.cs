@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EmailNotificationSetting != null)
+            if (Optional.IsDefined(EmailNotificationSetting))
             {
                 if (EmailNotificationSetting != null)
                 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NotificationSetting> emailNotificationSetting = default;
+            NotificationSetting emailNotificationSetting = default;
             MonitoringAlertNotificationType alertNotificationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailMonitoringAlertNotificationSettings(alertNotificationType, serializedAdditionalRawData, emailNotificationSetting.Value);
+            return new EmailMonitoringAlertNotificationSettings(alertNotificationType, serializedAdditionalRawData, emailNotificationSetting);
         }
 
         BinaryData IPersistableModel<EmailMonitoringAlertNotificationSettings>.Write(ModelReaderWriterOptions options)

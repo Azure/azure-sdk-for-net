@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PartitionNames != null)
+            if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames"u8);
 #if NET6_0_OR_GREATER
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
@@ -92,10 +93,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> partitionNames = default;
-            Optional<DataFactoryElement<string>> partitionColumnName = default;
-            Optional<DataFactoryElement<string>> partitionUpperBound = default;
-            Optional<DataFactoryElement<string>> partitionLowerBound = default;
+            BinaryData partitionNames = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            DataFactoryElement<string> partitionUpperBound = default;
+            DataFactoryElement<string> partitionLowerBound = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, serializedAdditionalRawData);
+            return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OraclePartitionSettings>.Write(ModelReaderWriterOptions options)

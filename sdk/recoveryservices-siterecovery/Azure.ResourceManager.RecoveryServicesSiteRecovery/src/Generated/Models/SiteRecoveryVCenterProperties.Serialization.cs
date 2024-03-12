@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,57 +28,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (InternalId != null)
+            if (Optional.IsDefined(InternalId))
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);
             }
-            if (LastHeartbeatReceivedOn.HasValue)
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (DiscoveryStatus != null)
+            if (Optional.IsDefined(DiscoveryStatus))
             {
                 writer.WritePropertyName("discoveryStatus"u8);
                 writer.WriteStringValue(DiscoveryStatus);
             }
-            if (ProcessServerId.HasValue)
+            if (Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (InfrastructureId != null)
+            if (Optional.IsDefined(InfrastructureId))
             {
                 writer.WritePropertyName("infrastructureId"u8);
                 writer.WriteStringValue(InfrastructureId);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (FabricArmResourceName != null)
+            if (Optional.IsDefined(FabricArmResourceName))
             {
                 writer.WritePropertyName("fabricArmResourceName"u8);
                 writer.WriteStringValue(FabricArmResourceName);
             }
-            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -125,16 +126,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> internalId = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> discoveryStatus = default;
-            Optional<Guid> processServerId = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> infrastructureId = default;
-            Optional<string> port = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> fabricArmResourceName = default;
+            string friendlyName = default;
+            string internalId = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string discoveryStatus = default;
+            Guid? processServerId = default;
+            IPAddress ipAddress = default;
+            string infrastructureId = default;
+            string port = default;
+            string runAsAccountId = default;
+            string fabricArmResourceName = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,16 +224,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryVCenterProperties(
-                friendlyName.Value,
-                internalId.Value,
-                Optional.ToNullable(lastHeartbeat),
-                discoveryStatus.Value,
-                Optional.ToNullable(processServerId),
-                ipAddress.Value,
-                infrastructureId.Value,
-                port.Value,
-                runAsAccountId.Value,
-                fabricArmResourceName.Value,
+                friendlyName,
+                internalId,
+                lastHeartbeat,
+                discoveryStatus,
+                processServerId,
+                ipAddress,
+                infrastructureId,
+                port,
+                runAsAccountId,
+                fabricArmResourceName,
                 healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
                 serializedAdditionalRawData);
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -22,12 +23,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             string operationId = default;
             DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -93,12 +94,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new OperationSummary(
                 operationId,
                 status,
-                Optional.ToNullable(percentCompleted),
+                percentCompleted,
                 createdDateTime,
                 lastUpdatedDateTime,
                 kind,
                 resourceLocation,
-                apiVersion.Value,
+                apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }

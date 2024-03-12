@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData);
+            return new UnknownRuleCondition(odataType, dataSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleCondition>.Write(ModelReaderWriterOptions options)

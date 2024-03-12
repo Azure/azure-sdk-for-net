@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (DisksPerNode.HasValue)
+            if (Optional.IsDefined(DisksPerNode))
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
-            if (options.Format != "W" && StorageAccountType != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType);
             }
-            if (options.Format != "W" && DiskSizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> disksPerNode = default;
-            Optional<string> storageAccountType = default;
-            Optional<int> diskSizeGB = default;
+            int? disksPerNode = default;
+            string storageAccountType = default;
+            int? diskSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB), serializedAdditionalRawData);
+            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterDataDiskGroup>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<FrontDoorExperimentState> enabledState = default;
+            FrontDoorExperimentState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorNetworkExperimentProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorNetworkExperimentProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), enabledState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorNetworkExperimentProfilePatch>.Write(ModelReaderWriterOptions options)

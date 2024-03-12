@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionTagOverride != null)
+            if (Optional.IsDefined(RetentionTagOverride))
             {
                 writer.WritePropertyName("retentionTagOverride"u8);
                 writer.WriteStringValue(RetentionTagOverride);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> retentionTagOverride = default;
+            string retentionTagOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdhocBackupTriggerSetting(retentionTagOverride.Value, serializedAdditionalRawData);
+            return new AdhocBackupTriggerSetting(retentionTagOverride, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdhocBackupTriggerSetting>.Write(ModelReaderWriterOptions options)

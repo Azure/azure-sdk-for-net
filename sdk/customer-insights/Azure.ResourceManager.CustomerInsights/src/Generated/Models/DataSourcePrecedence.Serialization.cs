@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,34 +27,34 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Precedence.HasValue)
+            if (Optional.IsDefined(Precedence))
             {
                 writer.WritePropertyName("precedence"u8);
                 writer.WriteNumberValue(Precedence.Value);
             }
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DataSourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSourceType))
             {
                 writer.WritePropertyName("dataSourceType"u8);
                 writer.WriteStringValue(DataSourceType.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Id.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (options.Format != "W" && DataSourceReferenceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataSourceReferenceId))
             {
                 writer.WritePropertyName("dataSourceReferenceId"u8);
                 writer.WriteStringValue(DataSourceReferenceId);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> precedence = default;
-            Optional<string> name = default;
-            Optional<DataSourceType> dataSourceType = default;
-            Optional<Status> status = default;
-            Optional<int> id = default;
-            Optional<string> dataSourceReferenceId = default;
+            int? precedence = default;
+            string name = default;
+            DataSourceType? dataSourceType = default;
+            Status? status = default;
+            int? id = default;
+            string dataSourceReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,12 +173,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataSourcePrecedence(
-                Optional.ToNullable(precedence),
-                name.Value,
-                Optional.ToNullable(dataSourceType),
-                Optional.ToNullable(status),
-                Optional.ToNullable(id),
-                dataSourceReferenceId.Value,
+                precedence,
+                name,
+                dataSourceType,
+                status,
+                id,
+                dataSourceReferenceId,
                 serializedAdditionalRawData);
         }
 

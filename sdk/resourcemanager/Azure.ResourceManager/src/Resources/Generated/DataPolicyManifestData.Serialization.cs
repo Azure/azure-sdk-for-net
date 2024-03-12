@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Namespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteStartArray();
@@ -60,17 +61,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyMode != null)
+            if (Optional.IsDefined(PolicyMode))
             {
                 writer.WritePropertyName("policyMode"u8);
                 writer.WriteStringValue(PolicyMode);
             }
-            if (IsBuiltInOnly.HasValue)
+            if (Optional.IsDefined(IsBuiltInOnly))
             {
                 writer.WritePropertyName("isBuiltInOnly"u8);
                 writer.WriteBooleanValue(IsBuiltInOnly.Value);
             }
-            if (!(ResourceTypeAliases is ChangeTrackingList<ResourceTypeAliases> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeAliases))
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Effects is ChangeTrackingList<DataPolicyManifestEffect> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Effects))
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(FieldValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldValues))
             {
                 writer.WritePropertyName("fieldValues"u8);
                 writer.WriteStartArray();
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("resourceFunctions"u8);
             writer.WriteStartObject();
-            if (!(Standard is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Standard))
             {
                 writer.WritePropertyName("standard"u8);
                 writer.WriteStartArray();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomDefinitions is ChangeTrackingList<DataManifestCustomResourceFunctionDefinition> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDefinitions))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();
@@ -165,10 +166,10 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> namespaces = default;
-            Optional<string> policyMode = default;
-            Optional<bool> isBuiltInOnly = default;
+            string policyMode = default;
+            bool? isBuiltInOnly = default;
             IReadOnlyList<ResourceTypeAliases> resourceTypeAliases = default;
             IReadOnlyList<DataPolicyManifestEffect> effects = default;
             IReadOnlyList<string> fieldValues = default;
@@ -334,10 +335,10 @@ namespace Azure.ResourceManager.Resources
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 namespaces ?? new ChangeTrackingList<string>(),
-                policyMode.Value,
-                Optional.ToNullable(isBuiltInOnly),
+                policyMode,
+                isBuiltInOnly,
                 resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
                 effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(),
                 fieldValues ?? new ChangeTrackingList<string>(),

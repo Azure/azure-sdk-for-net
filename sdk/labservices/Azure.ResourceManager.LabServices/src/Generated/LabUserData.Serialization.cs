@@ -43,46 +43,46 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdditionalUsageQuota.HasValue)
+            if (Optional.IsDefined(AdditionalUsageQuota))
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (options.Format != "W" && RegistrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationState))
             {
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState.Value.ToSerialString());
             }
-            if (options.Format != "W" && InvitationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvitationState))
             {
                 writer.WritePropertyName("invitationState"u8);
                 writer.WriteStringValue(InvitationState.Value.ToSerialString());
             }
-            if (options.Format != "W" && InvitationSentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvitationSentOn))
             {
                 writer.WritePropertyName("invitationSent"u8);
                 writer.WriteStringValue(InvitationSentOn.Value, "O");
             }
-            if (options.Format != "W" && TotalUsage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteStringValue(TotalUsage.Value, "P");
@@ -129,15 +129,15 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TimeSpan> additionalUsageQuota = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            TimeSpan? additionalUsageQuota = default;
+            LabServicesProvisioningState? provisioningState = default;
+            string displayName = default;
             string email = default;
-            Optional<LabUserRegistrationState> registrationState = default;
-            Optional<LabUserInvitationState> invitationState = default;
-            Optional<DateTimeOffset> invitationSent = default;
-            Optional<TimeSpan> totalUsage = default;
+            LabUserRegistrationState? registrationState = default;
+            LabUserInvitationState? invitationState = default;
+            DateTimeOffset? invitationSent = default;
+            TimeSpan? totalUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,15 +252,15 @@ namespace Azure.ResourceManager.LabServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(additionalUsageQuota),
-                Optional.ToNullable(provisioningState),
-                displayName.Value,
+                systemData,
+                additionalUsageQuota,
+                provisioningState,
+                displayName,
                 email,
-                Optional.ToNullable(registrationState),
-                Optional.ToNullable(invitationState),
-                Optional.ToNullable(invitationSent),
-                Optional.ToNullable(totalUsage),
+                registrationState,
+                invitationState,
+                invitationSent,
+                totalUsage,
                 serializedAdditionalRawData);
         }
 

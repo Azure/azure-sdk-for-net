@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (ServiceCidr != null)
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (DnsServiceIP != null)
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (DockerBridgeCidr != null)
+            if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> dnsServiceIP = default;
-            Optional<string> dockerBridgeCidr = default;
+            ResourceIdentifier subnetId = default;
+            string serviceCidr = default;
+            string dnsServiceIP = default;
+            string dockerBridgeCidr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAksNetworkingConfiguration(subnetId.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value, serializedAdditionalRawData);
+            return new MachineLearningAksNetworkingConfiguration(subnetId, serviceCidr, dnsServiceIP, dockerBridgeCidr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAksNetworkingConfiguration>.Write(ModelReaderWriterOptions options)

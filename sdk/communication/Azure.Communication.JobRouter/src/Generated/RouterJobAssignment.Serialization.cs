@@ -32,19 +32,19 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("assignmentId"u8);
                 writer.WriteStringValue(AssignmentId);
             }
-            if (WorkerId != null)
+            if (Optional.IsDefined(WorkerId))
             {
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
             writer.WritePropertyName("assignedAt"u8);
             writer.WriteStringValue(AssignedAt, "O");
-            if (CompletedAt.HasValue)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (ClosedAt.HasValue)
+            if (Optional.IsDefined(ClosedAt))
             {
                 writer.WritePropertyName("closedAt"u8);
                 writer.WriteStringValue(ClosedAt.Value, "O");
@@ -88,10 +88,10 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             string assignmentId = default;
-            Optional<string> workerId = default;
+            string workerId = default;
             DateTimeOffset assignedAt = default;
-            Optional<DateTimeOffset> completedAt = default;
-            Optional<DateTimeOffset> closedAt = default;
+            DateTimeOffset? completedAt = default;
+            DateTimeOffset? closedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,10 +137,10 @@ namespace Azure.Communication.JobRouter
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RouterJobAssignment(
                 assignmentId,
-                workerId.Value,
+                workerId,
                 assignedAt,
-                Optional.ToNullable(completedAt),
-                Optional.ToNullable(closedAt),
+                completedAt,
+                closedAt,
                 serializedAdditionalRawData);
         }
 

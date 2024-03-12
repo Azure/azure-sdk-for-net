@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (IgnoreMissingVnetServiceEndpoint.HasValue)
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            WritableSubResource subnet = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnet, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
+            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnet, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkRuleSetVirtualNetworkRules>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IP != null)
+            if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> ip = default;
-            Optional<string> port = default;
+            string ip = default;
+            string port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyServerProperties(ip.Value, port.Value, serializedAdditionalRawData);
+            return new ProxyServerProperties(ip, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyServerProperties>.Write(ModelReaderWriterOptions options)
