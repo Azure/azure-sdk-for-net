@@ -57,7 +57,7 @@ function Invoke-Block([scriptblock]$cmd) {
 try {
     Write-Host "Initialize npx cache"
     Invoke-Block {
-        & npm exec --yes -- autorest --version
+        & npx autorest@ --version
     }
 
     if ($ProjectDirectory -and -not $ServiceDirectory)
