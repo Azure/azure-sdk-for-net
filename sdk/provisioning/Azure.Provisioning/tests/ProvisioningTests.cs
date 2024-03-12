@@ -22,7 +22,7 @@ using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
-using Azure.Provisioning.search;
+using Azure.Provisioning.Search;
 using Azure.Provisioning.ServiceBus;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -30,6 +30,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Search.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
@@ -389,7 +390,7 @@ namespace Azure.Provisioning.Tests
         public async Task Search()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            var search = new SearchService(infrastructure);
+            var search = new SearchService(infrastructure, sku: SearchSkuName.Standard);
             search.AssignRole(RoleDefinition.SearchServiceContributor, Guid.Empty);
             search.AssignRole(RoleDefinition.SearchIndexDataContributor, Guid.Empty);
             search.AssignProperty(data => data.ReplicaCount, "1");

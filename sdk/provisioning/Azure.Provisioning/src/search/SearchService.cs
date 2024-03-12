@@ -8,7 +8,7 @@ using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
-namespace Azure.Provisioning.search
+namespace Azure.Provisioning.Search
 {
     /// <summary>
     /// Represents a search service resource.

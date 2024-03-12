@@ -8,7 +8,7 @@ resource searchService_cwdgn2HGu 'Microsoft.Search/searchServices@2023-11-01' = 
   name: toLower(take(concat('search', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
-    name: 'free'
+    name: 'standard'
   }
   properties: {
     replicaCount: 1
