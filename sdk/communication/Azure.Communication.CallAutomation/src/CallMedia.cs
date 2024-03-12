@@ -399,13 +399,14 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
+                //ToDo: Media team needs to fix the options.Loop since StartHoldMusicRequestInternal does not have Lopp anymore.
+                // and work on the StartHoldMusicRequestInternal.operationCallbackUri
                 var request = new StartHoldMusicRequestInternal(
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
-                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
-                {
-                    Loop = options.Loop,
-                    OperationContext = options.OperationContext,
-                };
+                    TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    options.OperationContext,
+                    null
+                    );
 
                 return CallMediaRestClient.StartHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
             }
@@ -428,13 +429,13 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
+                //ToDo: Media team needs to fix the options.Loop since StartHoldMusicRequestInternal does not have Lopp anymore.
+                // and work on the StartHoldMusicRequestInternal.operationCallbackUri
                 var request = new StartHoldMusicRequestInternal(
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant),
-                    TranslatePlaySourceToInternal(options.PlaySourceInfo))
-                {
-                    Loop = options.Loop,
-                    OperationContext = options.OperationContext,
-                };
+                    TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    options.OperationContext,
+                    null);
 
                 return await CallMediaRestClient.StartHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
