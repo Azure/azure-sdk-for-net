@@ -49,6 +49,11 @@ namespace Azure.Provisioning.Authorization
         public static RoleDefinition ServiceBusDataOwner { get; } = new RoleDefinition("090c5cfd-751d-490a-894a-3ce6f1109419");
 
         /// <summary>
+        /// Event Hubs data owner role.
+        /// </summary>
+        public static RoleDefinition EventHubsDataOwner { get; } = new RoleDefinition("f526a384-b230-433a-b45c-95f59c4a2dec");
+
+        /// <summary>
         /// App configuration data owner role.
         /// </summary>
         public static RoleDefinition AppConfigurationDataOwner { get; } = new RoleDefinition("5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b");

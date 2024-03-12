@@ -20,6 +20,7 @@ using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
+using Azure.Provisioning.EventHubs;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.Search;
@@ -387,6 +388,19 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task EventHubs()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var account = new EventHubsNamespace(infrastructure);
+            var hub = new EventHub(infrastructure, parent: account);
+            var consumerGroup = new EventHubsConsumerGroup(infrastructure, parent: hub);
+            account.AssignRole(RoleDefinition.EventHubsDataOwner, Guid.Empty);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task Search()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -722,6 +736,19 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(AppServicePlan.FromExisting(infra, "'existingAppServicePlan'", rg));
             infra.AddResource(WebSiteConfigLogs.FromExisting(infra, "'existingWebSiteConfigLogs'", web));
             infra.AddResource(WebSitePublishingCredentialPolicy.FromExisting(infra, "'existingWebSitePublishingCredentialPolicy'", web));
+
+            var sb = ServiceBusNamespace.FromExisting(infra, "'existingSbNamespace'", rg);
+            infra.AddResource(ServiceBusQueue.FromExisting(infra, "'existingSbQueue'", sb));
+            var topic = ServiceBusTopic.FromExisting(infra, "'existingSbTopic'", sb);
+            infra.AddResource(topic);
+            infra.AddResource(ServiceBusSubscription.FromExisting(infra, "'existingSbSubscription'", topic));
+
+            infra.AddResource(SearchService.FromExisting(infra, "'existingSearch'", rg));
+
+            var eh = EventHubsNamespace.FromExisting(infra, "'existingEhNamespace'", rg);
+            var hub = EventHub.FromExisting(infra, "'existingHub'", eh);
+            infra.AddResource(hub);
+            infra.AddResource(EventHubsConsumerGroup.FromExisting(infra, "'existingEhConsumerGroup'", hub));
 
             infra.Build(GetOutputPath());
 
