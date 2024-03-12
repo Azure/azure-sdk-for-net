@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmVirtualMachineTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineTemplateName, ScVmmVirtualMachineTemplateData data, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmVirtualMachineTemplateResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineTemplateName, ScVmmVirtualMachineTemplateData data, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual async Task<Response<ScVmmVirtualMachineTemplateResource>> GetAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<ScVmmVirtualMachineTemplateResource> Get(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScVmmVirtualMachineTemplateResource>> GetIfExistsAsync(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineTemplateName"/> is null. </exception>
         public virtual NullableResponse<ScVmmVirtualMachineTemplateResource> GetIfExists(string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineTemplateName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineTemplateName));
-            }
-            if (virtualMachineTemplateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineTemplateName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineTemplateName, nameof(virtualMachineTemplateName));
 
             using var scope = _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics.CreateScope("ScVmmVirtualMachineTemplateCollection.GetIfExists");
             scope.Start();

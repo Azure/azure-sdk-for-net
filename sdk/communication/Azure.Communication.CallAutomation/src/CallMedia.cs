@@ -400,6 +400,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
+                //ToDo: Media team needs to fix the options.Loop since StartHoldMusicRequestInternal does not have Lopp anymore.
+                // and work on the StartHoldMusicRequestInternal.operationCallbackUri
                 var request = new StartHoldMusicRequestInternal(
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {

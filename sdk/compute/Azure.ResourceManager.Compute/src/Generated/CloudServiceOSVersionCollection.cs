@@ -84,14 +84,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual async Task<Response<CloudServiceOSVersionResource>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.Get");
             scope.Start();
@@ -136,14 +129,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<CloudServiceOSVersionResource> Get(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.Get");
             scope.Start();
@@ -248,14 +234,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.Exists");
             scope.Start();
@@ -298,14 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.Exists");
             scope.Start();
@@ -348,14 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudServiceOSVersionResource>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetIfExists");
             scope.Start();
@@ -400,14 +365,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual NullableResponse<CloudServiceOSVersionResource> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
         {
-            if (osVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(osVersionName));
-            }
-            if (osVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(osVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
             using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionCollection.GetIfExists");
             scope.Start();

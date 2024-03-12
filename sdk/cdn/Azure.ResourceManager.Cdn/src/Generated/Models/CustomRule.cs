@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -54,14 +55,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
         public CustomRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (matchConditions == null)
-            {
-                throw new ArgumentNullException(nameof(matchConditions));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
 
             Name = name;
             Priority = priority;

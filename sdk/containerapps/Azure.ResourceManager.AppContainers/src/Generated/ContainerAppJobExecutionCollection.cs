@@ -85,14 +85,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppJobExecutionResource>> GetAsync(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.Get");
             scope.Start();
@@ -137,14 +130,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual Response<ContainerAppJobExecutionResource> Get(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.Get");
             scope.Start();
@@ -251,14 +237,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.Exists");
             scope.Start();
@@ -301,14 +280,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.Exists");
             scope.Start();
@@ -351,14 +323,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppJobExecutionResource>> GetIfExistsAsync(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.GetIfExists");
             scope.Start();
@@ -403,14 +368,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppJobExecutionResource> GetIfExists(string jobExecutionName, CancellationToken cancellationToken = default)
         {
-            if (jobExecutionName == null)
-            {
-                throw new ArgumentNullException(nameof(jobExecutionName));
-            }
-            if (jobExecutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobExecutionName));
-            }
+            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
 
             using var scope = _containerAppJobExecutionClientDiagnostics.CreateScope("ContainerAppJobExecutionCollection.GetIfExists");
             scope.Start();

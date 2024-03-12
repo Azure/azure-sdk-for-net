@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public CustomerSubscriptionDetails(string quotaId)
         {
-            if (quotaId == null)
-            {
-                throw new ArgumentNullException(nameof(quotaId));
-            }
+            Argument.AssertNotNull(quotaId, nameof(quotaId));
 
             RegisteredFeatures = new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>();
             QuotaId = quotaId;

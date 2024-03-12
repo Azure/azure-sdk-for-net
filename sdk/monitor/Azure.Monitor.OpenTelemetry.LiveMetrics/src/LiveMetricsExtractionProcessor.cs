@@ -53,19 +53,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
                     foreach (ref readonly var tag in @event.EnumerateTagObjects())
                     {
-                        // TODO: see if these can be cached
                         if (tag.Value == null)
                         {
                             continue;
                         }
                         else if (tag.Key == SemanticConventions.AttributeExceptionType)
                         {
-                            exceptionType = tag.Value.ToString();
+                            exceptionType = tag.Value.ToString()!;
                             continue;
                         }
                         else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
                         {
-                            exceptionMessage = tag.Value.ToString();
+                            exceptionMessage = tag.Value.ToString()!;
                             continue;
                         }
                     }

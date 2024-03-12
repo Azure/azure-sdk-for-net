@@ -18,10 +18,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public AzureDataExplorerDataConnectionPayload(AzureDataExplorerDataConnectionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Kind = "azureDataExplorer";
             Properties = properties;

@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET AzureMonitor OpenTelemetry Live Metrics</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Live Metrics</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure Monitor OpenTelemetry live Metrics ApplicationInsights</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);LIVE_METRICS_EXPORTER;</DefineConstants>
@@ -14,7 +14,6 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" VersionOverride="1.6.0" />
-    <!--<PackageReference Include="System.Diagnostics.PerformanceCounter" VersionOverride="7.0.0" />-->
   </ItemGroup>
 
   <!-- Shared sorce from Azure.Monitor.OpenTelemetry.Exporter -->

@@ -21,14 +21,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
         public PreBuiltResult(IEnumerable<DocumentError> errors, string modelVersion)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             Errors = errors.ToList();
             ModelVersion = modelVersion;

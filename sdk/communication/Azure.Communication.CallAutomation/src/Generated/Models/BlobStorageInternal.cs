@@ -17,10 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
         public BlobStorageInternal(string containerUri)
         {
-            if (containerUri == null)
-            {
-                throw new ArgumentNullException(nameof(containerUri));
-            }
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
 
             ContainerUri = containerUri;
         }

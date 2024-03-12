@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string description = default;
             DataFactoryElement<IList<DatasetDataElement>> structure = default;
             DataFactoryElement<BinaryData> schema = default;
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricManagedNodeTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nodeTypeName, ServiceFabricManagedNodeTypeData data, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricManagedNodeTypeResource> CreateOrUpdate(WaitUntil waitUntil, string nodeTypeName, ServiceFabricManagedNodeTypeData data, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetAsync(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> Get(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricManagedNodeTypeResource>> GetIfExistsAsync(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricManagedNodeTypeResource> GetIfExists(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            if (nodeTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeTypeName));
-            }
-            if (nodeTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(nodeTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(nodeTypeName, nameof(nodeTypeName));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeCollection.GetIfExists");
             scope.Start();

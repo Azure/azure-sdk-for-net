@@ -52,10 +52,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="license"/> is null. </exception>
         internal ContentFilterCitedDetectionResult(bool filtered, bool detected, string license)
         {
-            if (license == null)
-            {
-                throw new ArgumentNullException(nameof(license));
-            }
+            Argument.AssertNotNull(license, nameof(license));
 
             Filtered = filtered;
             Detected = detected;

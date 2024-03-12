@@ -217,8 +217,17 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                        AuthenticationResult result = await Client.AcquireTokenSilentAsync(
+                            requestContext.Scopes,
+                            requestContext.Claims,
+                            Record,
+                            tenantId,
+                            requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                            null,
+#endif
+                            async,
+                            cancellationToken)
                             .ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

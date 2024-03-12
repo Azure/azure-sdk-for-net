@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,18 +54,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storageUri"/> is null. </exception>
         public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
-            if (storageId == null)
-            {
-                throw new ArgumentNullException(nameof(storageId));
-            }
-            if (storageUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageUri));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            Argument.AssertNotNull(storageId, nameof(storageId));
+            Argument.AssertNotNull(storageUri, nameof(storageUri));
 
             TargetResourceId = targetResourceId;
             StorageId = storageId;

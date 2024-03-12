@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FileShareResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string shareName, FileShareData data, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FileShareResource> CreateOrUpdate(WaitUntil waitUntil, string shareName, FileShareData data, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +182,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<FileShareResource>> GetAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
@@ -256,14 +229,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<FileShareResource> Get(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Get");
             scope.Start();
@@ -376,14 +342,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
@@ -428,14 +387,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual Response<bool> Exists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.Exists");
             scope.Start();
@@ -480,14 +432,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual async Task<NullableResponse<FileShareResource>> GetIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();
@@ -534,14 +479,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
         public virtual NullableResponse<FileShareResource> GetIfExists(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (shareName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareName));
-            }
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareCollection.GetIfExists");
             scope.Start();

@@ -199,10 +199,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatabaseAdvancedThreatProtectionResource>> UpdateAsync(WaitUntil waitUntil, DatabaseAdvancedThreatProtectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("DatabaseAdvancedThreatProtectionResource.Update");
             scope.Start();
@@ -248,10 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatabaseAdvancedThreatProtectionResource> Update(WaitUntil waitUntil, DatabaseAdvancedThreatProtectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("DatabaseAdvancedThreatProtectionResource.Update");
             scope.Start();

@@ -32,6 +32,15 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
+            if (LogProbabilityInfo != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteObjectValue(LogProbabilityInfo);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
+            }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
@@ -102,6 +111,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             ChatResponseMessage message = default;
+            ChatChoiceLogProbabilityInfo logprobs = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
             ChatFinishDetails finishDetails = default;
@@ -119,6 +129,16 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -180,6 +200,7 @@ namespace Azure.AI.OpenAI
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChatChoice(
                 message,
+                logprobs,
                 index,
                 finishReason,
                 finishDetails,
