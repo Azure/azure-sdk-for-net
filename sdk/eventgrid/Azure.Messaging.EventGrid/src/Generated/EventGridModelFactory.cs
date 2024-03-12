@@ -4134,5 +4134,34 @@ namespace Azure.Messaging.EventGrid
 
             return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output?.ToList(), failureMessage);
         }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionAddedEventData ApiCenterApiDefinitionAddedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
+        {
+            return new ApiCenterApiDefinitionAddedEventData(title, description, specification);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiSpecification"/>. </summary>
+        /// <param name="name"> Specification name. </param>
+        /// <param name="version"> Specification version. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiSpecification"/> instance for mocking. </returns>
+        public static ApiCenterApiSpecification ApiCenterApiSpecification(string name = null, string version = null)
+        {
+            return new ApiCenterApiSpecification(name, version);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/>. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
+        {
+            return new ApiCenterApiDefinitionUpdatedEventData(title, description, specification);
+        }
     }
 }

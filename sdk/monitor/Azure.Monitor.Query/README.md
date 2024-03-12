@@ -604,7 +604,54 @@ foreach (MetricResult metric in result.Value.Metrics)
 }
 ```
 
+#### Metrics Query Resources
+
+A user can also query metrics from multiple resources at once using the `QueryResources` method of `MetricsClient`. This uses a different API than the `MetricsQueryClient` and requires that a user pass in a regional endpoint when instantiating the client (for example, "https://westus3.metrics.monitor.azure.com").
+
+Note, each resource must be in the same region as the endpoint passed in when instantiating the client, and each resource must be in the same Azure subscription. Furthermore, the metric namespace that contains the metrics to be queried must also be passed. A list of metric namespaces can be found [here][metric_namespaces].
+
+```C# Snippet:QueryResourcesMetrics
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+foreach (var value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Metrics.Count);
+}
+```
+
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
+
+The `QueryResources` method also has an Options bag `MetricsQueryResourcesOptions` in which the user can specify extra properties to filter the results. An example below shows the `RollUpBy` and `OrderBy` properties.
+
+```C# Snippet:QueryResourcesMetricsWithOptions
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+{
+    OrderBy = "sum asc",
+    RollUpBy = { "RollUpBy=City" }
+};
+
+Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts",
+    options).ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+foreach (var value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Metrics.Count);
+}
+```
 
 #### Register the client with dependency injection
 
