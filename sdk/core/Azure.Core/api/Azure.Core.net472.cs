@@ -130,7 +130,7 @@ namespace Azure
     public partial class Operation
     {
         protected Operation() { }
-        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions options = null) { }
+        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions options = null) { }
         public virtual bool HasCompleted { get { throw null; } }
         public virtual string Id { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
