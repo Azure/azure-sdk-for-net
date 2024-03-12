@@ -274,8 +274,8 @@ The Azure Monitor Distro enables metric collection and collects several metrics 
 If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
 
 ```C#
-builder.Services.ConfigureOpenTelemetryMeterProvider(b =>
-    b.AddView(instrumentName: "http.server.active_requests", MetricStreamConfiguration.Drop)
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrumentName: "http.server.active_requests", MetricStreamConfiguration.Drop)
     );
 ```
 
