@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="track">
         /// Detailed information about a track in the asset.
-        /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AudioTrack"/>, <see cref="Models.TextTrack"/> and <see cref="VideoTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
@@ -361,6 +361,14 @@ namespace Azure.ResourceManager.Media.Models
                 track,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaAssetTrackBase"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.MediaAssetTrackBase"/> instance for mocking. </returns>
+        public static MediaAssetTrackBase MediaAssetTrackBase(string odataType = null)
+        {
+            return new UnknownTrackBase(odataType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Media.ContentKeyPolicyData"/>. </summary>
@@ -416,18 +424,34 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="name"> The Policy Option description. </param>
         /// <param name="configuration">
         /// The key delivery configuration.
-        /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
         /// </param>
         /// <param name="restriction">
         /// The requirements that must be met to deliver keys with this configuration
-        /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ContentKeyPolicyOption"/> instance for mocking. </returns>
         public static ContentKeyPolicyOption ContentKeyPolicyOption(Guid? policyOptionId = null, string name = null, ContentKeyPolicyConfiguration configuration = null, ContentKeyPolicyRestriction restriction = null)
         {
             return new ContentKeyPolicyOption(policyOptionId, name, configuration, restriction, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyConfiguration"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.ContentKeyPolicyConfiguration"/> instance for mocking. </returns>
+        public static ContentKeyPolicyConfiguration ContentKeyPolicyConfiguration(string odataType = null)
+        {
+            return new UnknownContentKeyPolicyConfiguration(odataType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyRestriction"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.ContentKeyPolicyRestriction"/> instance for mocking. </returns>
+        public static ContentKeyPolicyRestriction ContentKeyPolicyRestriction(string odataType = null)
+        {
+            return new UnknownContentKeyPolicyRestriction(odataType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Media.MediaTransformData"/>. </summary>
@@ -456,6 +480,14 @@ namespace Azure.ResourceManager.Media.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MediaTransformPreset"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.MediaTransformPreset"/> instance for mocking. </returns>
+        public static MediaTransformPreset MediaTransformPreset(string odataType = null)
+        {
+            return new UnknownPreset(odataType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Media.MediaJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -466,7 +498,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="description"> Optional customer supplied description of the Job. </param>
         /// <param name="input">
         /// The inputs for the Job.
-        /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
@@ -503,12 +535,20 @@ namespace Azure.ResourceManager.Media.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobInputBasicProperties"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.MediaJobInputBasicProperties"/> instance for mocking. </returns>
+        public static MediaJobInputBasicProperties MediaJobInputBasicProperties(string odataType = null)
+        {
+            return new UnknownJobInput(odataType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
-        /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
@@ -890,11 +930,98 @@ namespace Azure.ResourceManager.Media.Models
                 hlsSettings);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.ContentKeyPolicyPlayReadyContentKeyLocation"/> instance for mocking. </returns>
+        public static ContentKeyPolicyPlayReadyContentKeyLocation ContentKeyPolicyPlayReadyContentKeyLocation(string odataType = null)
+        {
+            return new UnknownContentKeyPolicyPlayReadyContentKeyLocation(odataType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContentKeyPolicyRestrictionTokenKey"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.ContentKeyPolicyRestrictionTokenKey"/> instance for mocking. </returns>
+        public static ContentKeyPolicyRestrictionTokenKey ContentKeyPolicyRestrictionTokenKey(string odataType = null)
+        {
+            return new UnknownContentKeyPolicyRestrictionTokenKey(odataType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaCodecBase"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
+        /// <returns> A new <see cref="Models.MediaCodecBase"/> instance for mocking. </returns>
+        public static MediaCodecBase MediaCodecBase(string odataType = null, string label = null)
+        {
+            return new UnknownCodec(odataType, label, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrackDescriptor"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.TrackDescriptor"/> instance for mocking. </returns>
+        public static TrackDescriptor TrackDescriptor(string odataType = null)
+        {
+            return new UnknownTrackDescriptor(odataType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaJobInputDefinition"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="includedTracks">
+        /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.
+        /// Please note <see cref="Models.TrackDescriptor"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AudioTrackDescriptor"/>, <see cref="SelectAudioTrackByAttribute"/>, <see cref="SelectAudioTrackById"/>, <see cref="SelectVideoTrackByAttribute"/>, <see cref="SelectVideoTrackById"/> and <see cref="VideoTrackDescriptor"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.MediaJobInputDefinition"/> instance for mocking. </returns>
+        public static MediaJobInputDefinition MediaJobInputDefinition(string odataType = null, IEnumerable<TrackDescriptor> includedTracks = null)
+        {
+            includedTracks ??= new List<TrackDescriptor>();
+
+            return new UnknownInputDefinition(odataType, includedTracks?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaOverlayBase"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
+        /// <param name="start"> The start position, with reference to the input video, at which the overlay starts. The value should be in ISO 8601 format. For example, PT05S to start the overlay at 5 seconds into the input video. If not specified the overlay starts from the beginning of the input video. </param>
+        /// <param name="end"> The end position, with reference to the input video, at which the overlay ends. The value should be in ISO 8601 format. For example, PT30S to end the overlay at 30 seconds into the input video. If not specified or the value is greater than the input video duration, the overlay will be applied until the end of the input video if the overlay media duration is greater than the input video duration, else the overlay will last as long as the overlay media duration. </param>
+        /// <param name="fadeInDuration"> The duration over which the overlay fades in onto the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade in (same as PT0S). </param>
+        /// <param name="fadeOutDuration"> The duration over which the overlay fades out of the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade out (same as PT0S). </param>
+        /// <param name="audioGainLevel"> The gain level of audio in the overlay. The value should be in the range [0, 1.0]. The default is 1.0. </param>
+        /// <returns> A new <see cref="Models.MediaOverlayBase"/> instance for mocking. </returns>
+        public static MediaOverlayBase MediaOverlayBase(string odataType = null, string inputLabel = null, TimeSpan? start = null, TimeSpan? end = null, TimeSpan? fadeInDuration = null, TimeSpan? fadeOutDuration = null, double? audioGainLevel = null)
+        {
+            return new UnknownOverlay(
+                odataType,
+                inputLabel,
+                start,
+                end,
+                fadeInDuration,
+                fadeOutDuration,
+                audioGainLevel,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MediaFormatBase"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="filenamePattern"> The file naming pattern used for the creation of output files. The following macros are supported in the file name: {Basename} - An expansion macro that will use the name of the input video file. If the base name(the file suffix is not included) of the input video file is less than 32 characters long, the base name of input video files will be used. If the length of base name of the input video file exceeds 32 characters, the base name is truncated to the first 32 characters in total length. {Extension} - The appropriate extension for this format. {Label} - The label assigned to the codec/layer. {Index} - A unique index for thumbnails. Only applicable to thumbnails. {AudioStream} - string "Audio" plus audio stream number(start from 1). {Bitrate} - The audio/video bitrate in kbps. Not applicable to thumbnails. {Codec} - The type of the audio/video codec. {Resolution} - The video resolution. Any unsubstituted macros will be collapsed and removed from the filename. </param>
+        /// <returns> A new <see cref="Models.MediaFormatBase"/> instance for mocking. </returns>
+        public static MediaFormatBase MediaFormatBase(string odataType = null, string filenamePattern = null)
+        {
+            return new UnknownFormat(odataType, filenamePattern, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClipTime"/>. </summary>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <returns> A new <see cref="Models.ClipTime"/> instance for mocking. </returns>
+        public static ClipTime ClipTime(string odataType = null)
+        {
+            return new UnknownClipTime(odataType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MediaJobOutputAsset"/>. </summary>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
-        /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>

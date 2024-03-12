@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of an analysis summary.
-        /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/> and <see cref="Models.FirmwareSummary"/>.
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisSummaryData"/> instance for mocking. </returns>
@@ -346,6 +346,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisSummaryProperties"/>. </summary>
+        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <returns> A new <see cref="Models.FirmwareAnalysisSummaryProperties"/> instance for mocking. </returns>
+        public static FirmwareAnalysisSummaryProperties FirmwareAnalysisSummaryProperties(string summaryType = "Unknown")
+        {
+            return new UnknownSummaryResourceProperties(summaryType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
