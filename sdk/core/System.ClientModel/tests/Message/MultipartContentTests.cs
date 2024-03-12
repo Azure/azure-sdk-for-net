@@ -373,6 +373,10 @@ internal class MultipartContentTests : SyncAsyncTestBase
         httpContent.Add(new StringContent("Hello World!\r\n"), "text/plain");
         httpContent.Add(new StreamContent(inputStream), "application/octet-stream");
 
+        foreach (var header in httpContent.Headers)
+        {
+        }
+
 #if NET6_0_OR_GREATER
         Stream contentStream = httpContent.ReadAsStream();
         BinaryContent content = BinaryContent.FromStream(contentStream);

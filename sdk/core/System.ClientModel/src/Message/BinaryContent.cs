@@ -4,7 +4,10 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,6 +20,8 @@ namespace System.ClientModel;
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+
+    private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
@@ -54,6 +59,37 @@ public abstract class BinaryContent : IDisposable
         => new StreamBinaryContent(stream);
 
     /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the <see cref="FileStream"/> opened from the provided
+    /// <paramref name="path"/>.
+    /// </summary>
+    /// <param name="path">The path to the file containing the content
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the <see cref="FileStream"/> opened from the provided
+    /// <paramref name="path"/>.</returns>
+    /// <remarks>The caller is responsible for calling <see cref="Dispose"/>
+    /// on the instance returned from this method.</remarks>
+    public static BinaryContent FromPath(string path)
+        => new StreamBinaryContent(File.OpenRead(path));
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static BinaryContent FromString(string value)
+        => new BinaryDataBinaryContent(s_UTF8NoBomEncoding.GetBytes(value));
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="parts"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataContent(IEnumerable<(BinaryContent Content, PipelineRequestHeaders Headers)> parts)
+        => new MultipartFormDataBinaryContent(parts);
+
+    /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
     /// </summary>
     /// <param name="length">The length of the underlying data.</param>
@@ -82,7 +118,7 @@ public abstract class BinaryContent : IDisposable
 
     private sealed class BinaryDataBinaryContent : BinaryContent
     {
-        private readonly ReadOnlyMemory<byte> _bytes;
+        internal readonly ReadOnlyMemory<byte> _bytes;
 
         public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes)
         {
@@ -208,7 +244,7 @@ public abstract class BinaryContent : IDisposable
     {
         private const int CopyToBufferSize = 81920;
 
-        private readonly Stream _stream;
+        internal readonly Stream _stream;
         private readonly long _origin;
 
         public StreamBinaryContent(Stream stream)
@@ -276,6 +312,124 @@ public abstract class BinaryContent : IDisposable
         public override void Dispose()
         {
             _stream.Dispose();
+        }
+    }
+
+    //private sealed class MultipartFormDataPart : BinaryContent
+    //{
+    //    public MultipartFormDataPart(BinaryContent content, PipelineRequestHeaders headers)
+    //    {
+    //        Content = content;
+    //        Headers = headers;
+    //    }
+
+    //    public BinaryContent Content { get; }
+    //    public PipelineRequestHeaders Headers { get; }
+    //}
+
+    internal sealed class MultipartFormDataBinaryContent : BinaryContent
+    {
+        private static Random _random = new();
+        private static readonly char[] _boundaryValues = "()+,-./0123456789:=?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
+        private MultipartFormDataContent _multipartContent;
+
+        public MultipartFormDataBinaryContent(IEnumerable<(BinaryContent Content, PipelineRequestHeaders Headers)> parts)
+        {
+            _multipartContent = new MultipartFormDataContent(CreateBoundary());
+
+            AddParts(parts);
+        }
+
+        private void AddParts(IEnumerable<(BinaryContent Content, PipelineRequestHeaders Headers)> parts)
+        {
+            foreach (var part in parts)
+            {
+                AddPart(part);
+            }
+        }
+
+        private void AddPart((BinaryContent Content, PipelineRequestHeaders Headers) part)
+        {
+            BinaryContent content = part.Content;
+            PipelineRequestHeaders headers = part.Headers;
+
+            HttpContent httpContent = content switch
+            {
+                StreamBinaryContent streamContent => new StreamContent(streamContent._stream),
+
+                // TODO: Make more efficient
+                BinaryDataBinaryContent binaryDataContent => new ByteArrayContent(binaryDataContent._bytes.ToArray()),
+
+                // ModelBinaryContent?
+
+                _ => throw new NotImplementedException(),
+            };
+
+            // TODO: pull values out of headers ...
+            _multipartContent.Add(httpContent, )
+        }
+
+        public void AddHeaders(PipelineRequest request)
+        {
+            if (_multipartContent.Headers.ContentType is not null)
+            {
+                // TODO: Is there a way not to call ToString?
+                request.Headers.Set("Content-Type", _multipartContent.Headers.ContentType.ToString());
+            }
+
+            if (_multipartContent.Headers.ContentLength is long contentLength)
+            {
+                // TODO: Is there a way not to call ToString?
+                request.Headers.Set("Content-Length", contentLength.ToString());
+            }
+        }
+
+        private static string CreateBoundary()
+        {
+            // TODO: test it.
+
+            Span<char> chars = new char[70];
+
+            byte[] random = new byte[70];
+            _random.NextBytes(random);
+
+            int mask = _boundaryValues.Length - 1;
+            for (int i = 0; i < 70; i++)
+            {
+                chars[i] = _boundaryValues[random[i] & mask];
+            }
+
+            return chars.ToString();
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            if (_multipartContent.Headers.ContentLength is long contentLength)
+            {
+                length = contentLength;
+                return true;
+            }
+
+            length = 0;
+            return false;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+        {
+            // TODO: Can we do better than sync-over-async?
+            // This approach, using the netstandard2.0 API also doesn't use the CT.
+            Stream contentStream = _multipartContent.ReadAsStreamAsync().Result;
+            contentStream.CopyTo(contentStream, cancellationToken);
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+        }
+        public override void Dispose()
+        {
+            _multipartContent.Dispose();
         }
     }
 }
