@@ -22,6 +22,7 @@ using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
+using Azure.Provisioning.Search;
 using Azure.Provisioning.ServiceBus;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -29,6 +30,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Search.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
@@ -379,6 +381,24 @@ namespace Azure.Provisioning.Tests
             account.AssignRole(RoleDefinition.ServiceBusDataOwner, Guid.Empty);
             account.AddOutput("endpoint", "'Endpoint=${{{0}}}'", data => data.ServiceBusEndpoint);
             account.AddOutput("expression", "uniqueString({0})", data => data.ServiceBusEndpoint);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task Search()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var search = new SearchService(infrastructure, sku: SearchSkuName.Standard);
+            search.AssignRole(RoleDefinition.SearchServiceContributor, Guid.Empty);
+            search.AssignRole(RoleDefinition.SearchIndexDataContributor, Guid.Empty);
+            search.AssignProperty(data => data.ReplicaCount, "1");
+            search.AssignProperty(data => data.PartitionCount, "1");
+            search.AssignProperty(data => data.HostingMode, "'default'");
+            search.AssignProperty(data => data.IsLocalAuthDisabled, "true");
+
+            search.AddOutput("connectionString", "'Endpoint=https://${{{0}}}.search.windows.net'", data => data.Name);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
