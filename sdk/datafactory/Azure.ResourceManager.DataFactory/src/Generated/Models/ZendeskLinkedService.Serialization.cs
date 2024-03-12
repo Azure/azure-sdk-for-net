@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             ZendeskAuthenticationType authenticationType = default;
             DataFactoryElement<string> url = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
-            DataFactorySecretBaseDefinition apiToken = default;
+            DataFactorySecret password = default;
+            DataFactorySecret apiToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("apiToken"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            apiToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            apiToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

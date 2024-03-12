@@ -106,6 +106,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupFeatureValidationContentBase"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.BackupFeatureValidationContentBase"/> instance for mocking. </returns>
+        public static BackupFeatureValidationContentBase BackupFeatureValidationContentBase(string objectType = null)
+        {
+            return new UnknownFeatureValidationRequestBase(objectType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupFeatureValidationResultBase"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.BackupFeatureValidationResultBase"/> instance for mocking. </returns>
+        public static BackupFeatureValidationResultBase BackupFeatureValidationResultBase(string objectType = null)
+        {
+            return new UnknownFeatureValidationResponseBase(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -113,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// BaseBackupPolicyResource properties
-        /// Please note <see cref="DataProtectionBackupPolicyPropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupPolicyPropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleBasedBackupPolicy"/>.
         /// </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupPolicyData"/> instance for mocking. </returns>
@@ -126,6 +142,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupPolicyPropertiesBase"/>. </summary>
+        /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
+        /// <param name="objectType"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupPolicyPropertiesBase"/> instance for mocking. </returns>
+        public static DataProtectionBackupPolicyPropertiesBase DataProtectionBackupPolicyPropertiesBase(IEnumerable<string> dataSourceTypes = null, string objectType = null)
+        {
+            dataSourceTypes ??= new List<string>();
+
+            return new UnknownBaseBackupPolicy(dataSourceTypes?.ToList(), objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupInstanceData"/>. </summary>
@@ -161,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -189,6 +216,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BaseResourceProperties"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.BaseResourceProperties"/> instance for mocking. </returns>
+        public static BaseResourceProperties BaseResourceProperties(string objectType = "Unknown")
+        {
+            return new UnknownBaseResourceProperties(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.BackupInstancePolicyInfo"/>. </summary>
         /// <param name="policyId"></param>
         /// <param name="policyVersion"></param>
@@ -197,6 +232,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupInstancePolicyInfo BackupInstancePolicyInfo(ResourceIdentifier policyId = null, string policyVersion = null, BackupInstancePolicySettings policyParameters = null)
         {
             return new BackupInstancePolicyInfo(policyId, policyVersion, policyParameters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataStoreSettings"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
+        /// <returns> A new <see cref="Models.DataStoreSettings"/> instance for mocking. </returns>
+        public static DataStoreSettings DataStoreSettings(string objectType = null, DataStoreType dataStoreType = default)
+        {
+            return new UnknownDataStoreParameters(objectType, dataStoreType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupDataSourceSettings"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.BackupDataSourceSettings"/> instance for mocking. </returns>
+        public static BackupDataSourceSettings BackupDataSourceSettings(string objectType = null)
+        {
+            return new UnknownBackupDatasourceParameters(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupInstanceProtectionStatusDetails"/>. </summary>
@@ -208,12 +260,28 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupInstanceProtectionStatusDetails(errorDetails, status, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupAuthCredentials"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupAuthCredentials"/> instance for mocking. </returns>
+        public static DataProtectionBackupAuthCredentials DataProtectionBackupAuthCredentials(string objectType = null)
+        {
+            return new UnknownAuthCredentials(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationJobExtendedInfo"/>. </summary>
         /// <param name="jobIdentifier"> Name or Arm Id of the job created for this operation. </param>
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
         public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobIdentifier = null)
         {
             return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", serializedAdditionalRawData: null, jobIdentifier);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationExtendedInfo"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.DataProtectionOperationExtendedInfo"/> instance for mocking. </returns>
+        public static DataProtectionOperationExtendedInfo DataProtectionOperationExtendedInfo(string objectType = null)
+        {
+            return new UnknownOperationExtendedInfo(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/>. </summary>
@@ -223,7 +291,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// AzureBackupRecoveryPointResource properties
-        /// Please note <see cref="DataProtectionBackupRecoveryPointProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupRecoveryPointProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/> instance for mocking. </returns>
@@ -236,6 +304,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupRecoveryPointProperties"/>. </summary>
+        /// <param name="objectType"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupRecoveryPointProperties"/> instance for mocking. </returns>
+        public static DataProtectionBackupRecoveryPointProperties DataProtectionBackupRecoveryPointProperties(string objectType = null)
+        {
+            return new UnknownAzureBackupRecoveryPoint(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRestoreContent"/>. </summary>
@@ -497,7 +573,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -631,6 +707,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupDeleteSetting"/>. </summary>
+        /// <param name="duration"> Duration of deletion after given timespan. </param>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupDeleteSetting"/> instance for mocking. </returns>
+        public static DataProtectionBackupDeleteSetting DataProtectionBackupDeleteSetting(TimeSpan duration = default, string objectType = null)
+        {
+            return new UnknownDeleteOption(duration, objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="eTag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
@@ -639,6 +724,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupRetentionTag DataProtectionBackupRetentionTag(ETag? eTag = null, string id = null, string tagName = null)
         {
             return new DataProtectionBackupRetentionTag(eTag, id, tagName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupTriggerContext"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupTriggerContext"/> instance for mocking. </returns>
+        public static DataProtectionBackupTriggerContext DataProtectionBackupTriggerContext(string objectType = null)
+        {
+            return new UnknownTriggerContext(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
@@ -698,6 +791,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationExpireOn,
                 rehydrationStatus,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupSettingsBase"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupSettingsBase"/> instance for mocking. </returns>
+        public static DataProtectionBackupSettingsBase DataProtectionBackupSettingsBase(string objectType = null)
+        {
+            return new UnknownBackupParameters(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>. </summary>
@@ -782,6 +883,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 recoverOn);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBasePolicyRule"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="objectType"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBasePolicyRule"/> instance for mocking. </returns>
+        public static DataProtectionBasePolicyRule DataProtectionBasePolicyRule(string name = null, string objectType = null)
+        {
+            return new UnknownBasePolicyRule(name, objectType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupCopySetting"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupCopySetting"/> instance for mocking. </returns>
+        public static DataProtectionBackupCopySetting DataProtectionBackupCopySetting(string objectType = null)
+        {
+            return new UnknownCopyOption(objectType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupCriteria"/> instance for mocking. </returns>
+        public static DataProtectionBackupCriteria DataProtectionBackupCriteria(string objectType = null)
+        {
+            return new UnknownBackupCriteria(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.BackupFeatureValidationResult"/>. </summary>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>
@@ -805,19 +931,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupSupportedFeature(featureName, supportStatus, exposureControlledFeatures?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ItemLevelRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.ItemLevelRestoreCriteria"/> instance for mocking. </returns>
+        public static ItemLevelRestoreCriteria ItemLevelRestoreCriteria(string objectType = null)
+        {
+            return new UnknownItemLevelRestoreCriteria(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ItemLevelRestoreTargetInfo"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
         /// <param name="restoreCriteria">
         /// Restore Criteria
-        /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/> and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
         /// </param>
         /// <param name="datasourceInfo"> Information of target DS. </param>
         /// <param name="datasourceSetInfo"> Information of target DS Set. </param>
         /// <param name="datasourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ItemLevelRestoreTargetInfo"/> instance for mocking. </returns>
@@ -964,7 +1098,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceSetInfo"> Information of target DS Set. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
         /// <returns> A new <see cref="Models.RestoreTargetInfo"/> instance for mocking. </returns>

@@ -380,6 +380,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SourceShareSynchronizationSetting"/>. </summary>
+        /// <param name="kind"> Kind of synchronization setting on share. </param>
+        /// <returns> A new <see cref="Models.SourceShareSynchronizationSetting"/> instance for mocking. </returns>
+        public static SourceShareSynchronizationSetting SourceShareSynchronizationSetting(string kind = "Unknown")
+        {
+            return new UnknownSourceShareSynchronizationSetting(kind, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DataShare.ShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

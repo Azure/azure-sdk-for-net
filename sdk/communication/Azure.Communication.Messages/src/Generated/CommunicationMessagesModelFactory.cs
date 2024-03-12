@@ -122,6 +122,14 @@ namespace Azure.Communication.Messages
             return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateBindings"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a template bindings type. </param>
+        /// <returns> A new <see cref="Messages.MessageTemplateBindings"/> instance for mocking. </returns>
+        public static MessageTemplateBindings MessageTemplateBindings(string kind = null)
+        {
+            return new UnknownMessageTemplateBindings(kind, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateText"/>. </summary>
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The text value. </param>
