@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeviceRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.AssetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="events"> Array of events that are part of the asset. Each event can reference an asset type capability and have per-event configuration. See below for more details about the definition of the events element. </param>
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.AssetData"/> instance for mocking. </returns>
-        public static AssetData AssetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string uuid = null, string assetType = null, bool? enabled = null, string externalAssetId = null, string displayName = null, string description = null, Uri assetEndpointProfileUri = null, int? version = null, string manufacturer = null, Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, Uri documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, string defaultDataPointsConfiguration = null, string defaultEventsConfiguration = null, IEnumerable<DataPoint> dataPoints = null, IEnumerable<Event> events = null, AssetStatus status = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryExtendedLocation extendedLocation = null, string uuid = null, string assetType = null, bool? enabled = null, string externalAssetId = null, string displayName = null, string description = null, Uri assetEndpointProfileUri = null, int? version = null, string manufacturer = null, Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, Uri documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, string defaultDataPointsConfiguration = null, string defaultEventsConfiguration = null, IEnumerable<DataPoint> dataPoints = null, IEnumerable<AssetEvent> events = null, AssetStatus status = null, DeviceRegistryProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             attributes ??= new Dictionary<string, BinaryData>();
             dataPoints ??= new List<DataPoint>();
-            events ??= new List<Event>();
+            events ??= new List<AssetEvent>();
 
-            return new AssetData(
+            return new DeviceRegistryAssetData(
                 id,
                 name,
                 resourceType,
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new AssetStatusError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.AssetEndpointProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="transportAuthenticationOwnCertificates"> Defines the authentication mechanism for the southbound connector connecting to the shop floor/OT device. </param>
         /// <param name="additionalConfiguration"> Contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.AssetEndpointProfileData"/> instance for mocking. </returns>
-        public static AssetEndpointProfileData AssetEndpointProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string uuid = null, Uri targetAddress = null, UserAuthentication userAuthentication = null, IEnumerable<OwnCertificate> transportAuthenticationOwnCertificates = null, string additionalConfiguration = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryExtendedLocation extendedLocation = null, string uuid = null, Uri targetAddress = null, UserAuthentication userAuthentication = null, IEnumerable<OwnCertificate> transportAuthenticationOwnCertificates = null, string additionalConfiguration = null, DeviceRegistryProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             transportAuthenticationOwnCertificates ??= new List<OwnCertificate>();
 
-            return new AssetEndpointProfileData(
+            return new DeviceRegistryAssetEndpointProfileData(
                 id,
                 name,
                 resourceType,

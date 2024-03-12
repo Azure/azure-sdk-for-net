@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
-    /// A class representing the Asset data model.
+    /// A class representing the DeviceRegistryAsset data model.
     /// Asset definition.
     /// </summary>
-    public partial class AssetData : TrackedResourceData
+    public partial class DeviceRegistryAssetData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,21 +51,21 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public AssetData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
+        public DeviceRegistryAssetData(AzureLocation location, DeviceRegistryExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
             DataPoints = new ChangeTrackingList<DataPoint>();
-            Events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<AssetEvent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string uuid, string assetType, bool? enabled, string externalAssetId, string displayName, string description, Uri assetEndpointProfileUri, int? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDataPointsConfiguration, string defaultEventsConfiguration, IList<DataPoint> dataPoints, IList<Event> events, AssetStatus status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceRegistryAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistryExtendedLocation extendedLocation, string uuid, string assetType, bool? enabled, string externalAssetId, string displayName, string description, Uri assetEndpointProfileUri, int? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDataPointsConfiguration, string defaultEventsConfiguration, IList<DataPoint> dataPoints, IList<AssetEvent> events, AssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Uuid = uuid;
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetData"/> for deserialization. </summary>
-        internal AssetData()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetData"/> for deserialization. </summary>
+        internal DeviceRegistryAssetData()
         {
         }
 
         /// <summary> The extended location. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public DeviceRegistryExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Globally unique, immutable, non-reusable id. </summary>
         public string Uuid { get; }
         /// <summary> Resource path to asset type (model) definition. </summary>
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <summary> Array of data points that are part of the asset. Each data point can reference an asset type capability and have per-data point configuration. See below for more details for the definition of the dataPoints element. </summary>
         public IList<DataPoint> DataPoints { get; }
         /// <summary> Array of events that are part of the asset. Each event can reference an asset type capability and have per-event configuration. See below for more details about the definition of the events element. </summary>
-        public IList<Event> Events { get; }
+        public IList<AssetEvent> Events { get; }
         /// <summary> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </summary>
         public AssetStatus Status { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }
 }

@@ -14,16 +14,16 @@ using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class AssetEndpointProfilePatch : IUtf8JsonSerializable, IJsonModel<AssetEndpointProfilePatch>
+    public partial class DeviceRegistryAssetEndpointProfilePatch : IUtf8JsonSerializable, IJsonModel<DeviceRegistryAssetEndpointProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetEndpointProfilePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetEndpointProfilePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AssetEndpointProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceRegistryAssetEndpointProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetEndpointProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             writer.WriteEndObject();
         }
 
-        AssetEndpointProfilePatch IJsonModel<AssetEndpointProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceRegistryAssetEndpointProfilePatch IJsonModel<DeviceRegistryAssetEndpointProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetEndpointProfilePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetEndpointProfilePatch(document.RootElement, options);
+            return DeserializeDeviceRegistryAssetEndpointProfilePatch(document.RootElement, options);
         }
 
-        internal static AssetEndpointProfilePatch DeserializeAssetEndpointProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeviceRegistryAssetEndpointProfilePatch DeserializeDeviceRegistryAssetEndpointProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetEndpointProfilePatch(
+            return new DeviceRegistryAssetEndpointProfilePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 targetAddress,
                 userAuthentication,
@@ -181,35 +181,35 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AssetEndpointProfilePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssetEndpointProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{options.Format}' format.");
             }
         }
 
-        AssetEndpointProfilePatch IPersistableModel<AssetEndpointProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeviceRegistryAssetEndpointProfilePatch IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAssetEndpointProfilePatch(document.RootElement, options);
+                        return DeserializeDeviceRegistryAssetEndpointProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetEndpointProfilePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfilePatch)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssetEndpointProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

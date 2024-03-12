@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
-    public partial class Sample_AssetResource
+    public partial class Sample_DeviceRegistryAssetResource
     {
         // List Assets in a Subscription.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAssets_ListAssetsInASubscription()
+        public async Task GetDeviceRegistryAssets_ListAssetsInASubscription()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assets/List_Assets_Subscription.json
             // this example is just showing the usage of "Assets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AssetResource item in subscriptionResource.GetAssetsAsync())
+            await foreach (DeviceRegistryAssetResource item in subscriptionResource.GetDeviceRegistryAssetsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetData resourceData = item.Data;
+                DeviceRegistryAssetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
+            // this example assumes you already have this DeviceRegistryAssetResource created on azure
+            // for more information of creating DeviceRegistryAssetResource, please refer to the document of DeviceRegistryAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
+            ResourceIdentifier deviceRegistryAssetResourceId = DeviceRegistryAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            DeviceRegistryAssetResource deviceRegistryAsset = client.GetDeviceRegistryAssetResource(deviceRegistryAssetResourceId);
 
             // invoke the operation
-            AssetResource result = await asset.GetAsync();
+            DeviceRegistryAssetResource result = await deviceRegistryAsset.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
+            // this example assumes you already have this DeviceRegistryAssetResource created on azure
+            // for more information of creating DeviceRegistryAssetResource, please refer to the document of DeviceRegistryAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
+            ResourceIdentifier deviceRegistryAssetResourceId = DeviceRegistryAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            DeviceRegistryAssetResource deviceRegistryAsset = client.GetDeviceRegistryAssetResource(deviceRegistryAssetResourceId);
 
             // invoke the operation
-            AssetResource result = await asset.GetAsync();
+            DeviceRegistryAssetResource result = await deviceRegistryAsset.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -126,26 +126,26 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
+            // this example assumes you already have this DeviceRegistryAssetResource created on azure
+            // for more information of creating DeviceRegistryAssetResource, please refer to the document of DeviceRegistryAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
+            ResourceIdentifier deviceRegistryAssetResourceId = DeviceRegistryAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            DeviceRegistryAssetResource deviceRegistryAsset = client.GetDeviceRegistryAssetResource(deviceRegistryAssetResourceId);
 
             // invoke the operation
-            AssetPatch patch = new AssetPatch()
+            DeviceRegistryAssetPatch patch = new DeviceRegistryAssetPatch()
             {
                 Enabled = false,
                 DisplayName = "NewAssetDisplayName",
             };
-            ArmOperation<AssetResource> lro = await asset.UpdateAsync(WaitUntil.Completed, patch);
-            AssetResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetResource> lro = await deviceRegistryAsset.UpdateAsync(WaitUntil.Completed, patch);
+            DeviceRegistryAssetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -163,16 +163,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
+            // this example assumes you already have this DeviceRegistryAssetResource created on azure
+            // for more information of creating DeviceRegistryAssetResource, please refer to the document of DeviceRegistryAssetResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
+            ResourceIdentifier deviceRegistryAssetResourceId = DeviceRegistryAssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            DeviceRegistryAssetResource deviceRegistryAsset = client.GetDeviceRegistryAssetResource(deviceRegistryAssetResourceId);
 
             // invoke the operation
-            await asset.DeleteAsync(WaitUntil.Completed);
+            await deviceRegistryAsset.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

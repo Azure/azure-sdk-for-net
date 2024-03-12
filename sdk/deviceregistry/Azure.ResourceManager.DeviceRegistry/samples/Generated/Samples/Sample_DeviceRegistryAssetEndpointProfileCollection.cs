@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
-    public partial class Sample_AssetEndpointProfileCollection
+    public partial class Sample_DeviceRegistryAssetEndpointProfileCollection
     {
         // List Asset Endpoint Profiles in a Resource Group.
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+            // get the collection of this DeviceRegistryAssetEndpointProfileResource
+            DeviceRegistryAssetEndpointProfileCollection collection = resourceGroupResource.GetDeviceRegistryAssetEndpointProfiles();
 
             // invoke the operation and iterate over the result
-            await foreach (AssetEndpointProfileResource item in collection.GetAllAsync())
+            await foreach (DeviceRegistryAssetEndpointProfileResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetEndpointProfileData resourceData = item.Data;
+                DeviceRegistryAssetEndpointProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+            // get the collection of this DeviceRegistryAssetEndpointProfileResource
+            DeviceRegistryAssetEndpointProfileCollection collection = resourceGroupResource.GetDeviceRegistryAssetEndpointProfiles();
 
             // invoke the operation
             string assetEndpointProfileName = "my-assetendpointprofile";
-            AssetEndpointProfileResource result = await collection.GetAsync(assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource result = await collection.GetAsync(assetEndpointProfileName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetEndpointProfileData resourceData = result.Data;
+            DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+            // get the collection of this DeviceRegistryAssetEndpointProfileResource
+            DeviceRegistryAssetEndpointProfileCollection collection = resourceGroupResource.GetDeviceRegistryAssetEndpointProfiles();
 
             // invoke the operation
             string assetEndpointProfileName = "my-assetendpointprofile";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+            // get the collection of this DeviceRegistryAssetEndpointProfileResource
+            DeviceRegistryAssetEndpointProfileCollection collection = resourceGroupResource.GetDeviceRegistryAssetEndpointProfiles();
 
             // invoke the operation
             string assetEndpointProfileName = "my-assetendpointprofile";
-            NullableResponse<AssetEndpointProfileResource> response = await collection.GetIfExistsAsync(assetEndpointProfileName);
-            AssetEndpointProfileResource result = response.HasValue ? response.Value : null;
+            NullableResponse<DeviceRegistryAssetEndpointProfileResource> response = await collection.GetIfExistsAsync(assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetEndpointProfileData resourceData = result.Data;
+                DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+            // get the collection of this DeviceRegistryAssetEndpointProfileResource
+            DeviceRegistryAssetEndpointProfileCollection collection = resourceGroupResource.GetDeviceRegistryAssetEndpointProfiles();
 
             // invoke the operation
             string assetEndpointProfileName = "my-assetendpointprofile";
-            AssetEndpointProfileData data = new AssetEndpointProfileData(new AzureLocation("West Europe"), new ExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            DeviceRegistryAssetEndpointProfileData data = new DeviceRegistryAssetEndpointProfileData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
                 TargetAddress = new Uri("https://www.example.com/myTargetAddress"),
                 UserAuthentication = new UserAuthentication(UserAuthenticationMode.Anonymous),
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 ["site"] = "building-1",
 },
             };
-            ArmOperation<AssetEndpointProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, data);
-            AssetEndpointProfileResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetEndpointProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, data);
+            DeviceRegistryAssetEndpointProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetEndpointProfileData resourceData = result.Data;
+            DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

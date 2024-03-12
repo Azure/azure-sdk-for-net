@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="AssetListResult"/>. </summary>
         /// <param name="value"> The Asset items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssetListResult(IEnumerable<AssetData> value)
+        internal AssetListResult(IEnumerable<DeviceRegistryAssetData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="value"> The Asset items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetListResult(IReadOnlyList<AssetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetListResult(IReadOnlyList<DeviceRegistryAssetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> The Asset items on this page. </summary>
-        public IReadOnlyList<AssetData> Value { get; }
+        public IReadOnlyList<DeviceRegistryAssetData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

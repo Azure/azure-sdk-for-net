@@ -7,12 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DeviceRegistry;
+using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.DeviceRegistry.Models
+namespace Azure.ResourceManager.DeviceRegistry
 {
-    /// <summary> The type used for update operations of the AssetEndpointProfile. </summary>
-    public partial class AssetEndpointProfilePatch
+    /// <summary>
+    /// A class representing the DeviceRegistryAssetEndpointProfile data model.
+    /// Asset Endpoint Profile definition.
+    /// </summary>
+    public partial class DeviceRegistryAssetEndpointProfileData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,49 +51,69 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssetEndpointProfilePatch"/>. </summary>
-        public AssetEndpointProfilePatch()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetEndpointProfileData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
+        public DeviceRegistryAssetEndpointProfileData(AzureLocation location, DeviceRegistryExtendedLocation extendedLocation) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            ExtendedLocation = extendedLocation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetEndpointProfilePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetEndpointProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
         /// <param name="userAuthentication"> Defines the client authentication mechanism to the server. </param>
         /// <param name="transportAuthentication"> Defines the authentication mechanism for the southbound connector connecting to the shop floor/OT device. </param>
         /// <param name="additionalConfiguration"> Contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetEndpointProfilePatch(IDictionary<string, string> tags, Uri targetAddress, UserAuthenticationUpdate userAuthentication, TransportAuthenticationUpdate transportAuthentication, string additionalConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistryExtendedLocation extendedLocation, string uuid, Uri targetAddress, UserAuthentication userAuthentication, TransportAuthentication transportAuthentication, string additionalConfiguration, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
+            ExtendedLocation = extendedLocation;
+            Uuid = uuid;
             TargetAddress = targetAddress;
             UserAuthentication = userAuthentication;
             TransportAuthentication = transportAuthentication;
             AdditionalConfiguration = additionalConfiguration;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetEndpointProfileData"/> for deserialization. </summary>
+        internal DeviceRegistryAssetEndpointProfileData()
+        {
+        }
+
+        /// <summary> The extended location. </summary>
+        public DeviceRegistryExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Globally unique, immutable, non-reusable id. </summary>
+        public string Uuid { get; }
         /// <summary> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </summary>
         public Uri TargetAddress { get; set; }
         /// <summary> Defines the client authentication mechanism to the server. </summary>
-        public UserAuthenticationUpdate UserAuthentication { get; set; }
+        public UserAuthentication UserAuthentication { get; set; }
         /// <summary> Defines the authentication mechanism for the southbound connector connecting to the shop floor/OT device. </summary>
-        internal TransportAuthenticationUpdate TransportAuthentication { get; set; }
+        internal TransportAuthentication TransportAuthentication { get; set; }
         /// <summary> Defines a reference to a secret which contains all certificates and private keys that can be used by the southbound connector connecting to the shop floor/OT device. The accepted extensions are .der for certificates and .pfx/.pem for private keys. </summary>
         public IList<OwnCertificate> TransportAuthenticationOwnCertificates
         {
-            get
-            {
-                if (TransportAuthentication is null)
-                    TransportAuthentication = new TransportAuthenticationUpdate();
-                return TransportAuthentication.OwnCertificates;
-            }
+            get => TransportAuthentication is null ? default : TransportAuthentication.OwnCertificates;
+            set => TransportAuthentication = new TransportAuthentication(value);
         }
 
         /// <summary> Contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </summary>
         public string AdditionalConfiguration { get; set; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }
 }

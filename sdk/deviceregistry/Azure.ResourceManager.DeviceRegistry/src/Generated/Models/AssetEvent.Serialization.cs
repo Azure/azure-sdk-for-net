@@ -14,16 +14,16 @@ using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class Event : IUtf8JsonSerializable, IJsonModel<Event>
+    public partial class AssetEvent : IUtf8JsonSerializable, IJsonModel<AssetEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Event>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<Event>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssetEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Event)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetEvent)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             writer.WriteEndObject();
         }
 
-        Event IJsonModel<Event>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AssetEvent IJsonModel<AssetEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Event)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetEvent)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvent(document.RootElement, options);
+            return DeserializeAssetEvent(document.RootElement, options);
         }
 
-        internal static Event DeserializeEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AssetEvent DeserializeAssetEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Event(
+            return new AssetEvent(
                 name,
                 eventNotifier,
                 capabilityId,
@@ -140,35 +140,35 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Event>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AssetEvent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetEvent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Event)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetEvent)} does not support '{options.Format}' format.");
             }
         }
 
-        Event IPersistableModel<Event>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AssetEvent IPersistableModel<AssetEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetEvent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEvent(document.RootElement, options);
+                        return DeserializeAssetEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Event)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetEvent)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Event>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssetEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The extended location. </summary>
-    public partial class ExtendedLocation
+    public partial class DeviceRegistryExtendedLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryExtendedLocation"/>. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocationType"/> or <paramref name="name"/> is null. </exception>
-        public ExtendedLocation(string extendedLocationType, string name)
+        public DeviceRegistryExtendedLocation(string extendedLocationType, string name)
         {
             Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
             Argument.AssertNotNull(name, nameof(name));
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryExtendedLocation"/>. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedLocation(string extendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryExtendedLocation(string extendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtendedLocationType = extendedLocationType;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/> for deserialization. </summary>
-        internal ExtendedLocation()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryExtendedLocation"/> for deserialization. </summary>
+        internal DeviceRegistryExtendedLocation()
         {
         }
 

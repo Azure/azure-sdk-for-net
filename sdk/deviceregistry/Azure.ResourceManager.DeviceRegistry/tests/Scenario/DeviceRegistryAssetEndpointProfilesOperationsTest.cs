@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
-            var extendedLocation = new ExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
+            var extendedLocation = new DeviceRegistryExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
-            var assetEndpointProfilesCollection = rg.GetAssetEndpointProfiles();
+            var assetEndpointProfilesCollection = rg.GetDeviceRegistryAssetEndpointProfiles();
 
             // Create DeviceRegistry AssetEndpointProfile
-            var assetEndpointProfileData = new AssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
+            var assetEndpointProfileData = new DeviceRegistryAssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
             {
                 TargetAddress = new Uri("opc.tcp://aep-uri"),
                 UserAuthentication = new UserAuthentication
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Update DeviceRegistry AssetEndpointProfile
             var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
-            var assetPatchData = new AssetEndpointProfilePatch
+            var assetPatchData = new DeviceRegistryAssetEndpointProfilePatch
             {
                 AdditionalConfiguration = "{\"foo\":\"bar\"}"
             };

@@ -8,6 +8,7 @@ csharp: true
 library-name: DeviceRegistry
 namespace: Azure.ResourceManager.DeviceRegistry
 require: https://github.com/Azure/azure-rest-api-specs/blob/7b097c7e91a72a8930b94282274158b71e604695/specification/deviceregistry/resource-manager/readme.md
+#tag: package-preview-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +22,14 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  Event: AssetEvent
+
+prepend-rp-prefix:
+  - Asset
+  - AssetEndpointProfile
+  - ExtendedLocation
+  - ProvisioningState
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -52,5 +60,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - remove-operation: 'OperationStatus_Get'
 
 ```

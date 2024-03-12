@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
-            var extendedLocation = new ExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
+            var extendedLocation = new DeviceRegistryExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
-            var assetsCollection = rg.GetAssets();
+            var assetsCollection = rg.GetDeviceRegistryAssets();
 
             // Create DeviceRegistry Asset
-            var assetData = new AssetData(AzureLocation.WestUS, extendedLocation)
+            var assetData = new DeviceRegistryAssetData(AzureLocation.WestUS, extendedLocation)
             {
                 Description = "This is an asset.",
                 AssetEndpointProfileUri = new Uri("http://assetendpointprofileref"),
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Update DeviceRegistry Asset
             var asset = assetReadResponse.Value;
-            var assetPatchData = new AssetPatch
+            var assetPatchData = new DeviceRegistryAssetPatch
             {
                 Description = "This is a patched Asset."
             };

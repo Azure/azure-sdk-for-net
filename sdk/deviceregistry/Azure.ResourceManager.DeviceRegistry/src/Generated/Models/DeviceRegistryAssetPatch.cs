@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The type used for update operations of the Asset. </summary>
-    public partial class AssetPatch
+    public partial class DeviceRegistryAssetPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssetPatch"/>. </summary>
-        public AssetPatch()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetPatch"/>. </summary>
+        public DeviceRegistryAssetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
             DataPoints = new ChangeTrackingList<DataPoint>();
-            Events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<AssetEvent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAssetPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="assetType"> Resource path to asset type (model) definition. </param>
         /// <param name="enabled"> Enabled/Disabled status of the asset. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="dataPoints"> Array of data points that are part of the asset. Each data point can reference an asset type capability and have per-data point configuration. See below for more details for the definition of the dataPoints element. </param>
         /// <param name="events"> Array of events that are part of the asset. Each event can reference an asset type capability and have per-event configuration. See below for more details about the definition of the events element. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetPatch(IDictionary<string, string> tags, string assetType, bool? enabled, string displayName, string description, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDataPointsConfiguration, string defaultEventsConfiguration, IList<DataPoint> dataPoints, IList<Event> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryAssetPatch(IDictionary<string, string> tags, string assetType, bool? enabled, string displayName, string description, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDataPointsConfiguration, string defaultEventsConfiguration, IList<DataPoint> dataPoints, IList<AssetEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             AssetType = assetType;
@@ -162,6 +162,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Array of data points that are part of the asset. Each data point can reference an asset type capability and have per-data point configuration. See below for more details for the definition of the dataPoints element. </summary>
         public IList<DataPoint> DataPoints { get; }
         /// <summary> Array of events that are part of the asset. Each event can reference an asset type capability and have per-event configuration. See below for more details about the definition of the events element. </summary>
-        public IList<Event> Events { get; }
+        public IList<AssetEvent> Events { get; }
     }
 }

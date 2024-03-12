@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
+    public partial class DeviceRegistryExtendedLocation : IUtf8JsonSerializable, IJsonModel<DeviceRegistryExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryExtendedLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceRegistryExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryExtendedLocation)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             writer.WriteEndObject();
         }
 
-        ExtendedLocation IJsonModel<ExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceRegistryExtendedLocation IJsonModel<DeviceRegistryExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryExtendedLocation)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtendedLocation(document.RootElement, options);
+            return DeserializeDeviceRegistryExtendedLocation(document.RootElement, options);
         }
 
-        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeviceRegistryExtendedLocation DeserializeDeviceRegistryExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedLocation(type, name, serializedAdditionalRawData);
+            return new DeviceRegistryExtendedLocation(type, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceRegistryExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryExtendedLocation)} does not support '{options.Format}' format.");
             }
         }
 
-        ExtendedLocation IPersistableModel<ExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeviceRegistryExtendedLocation IPersistableModel<DeviceRegistryExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExtendedLocation(document.RootElement, options);
+                        return DeserializeDeviceRegistryExtendedLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryExtendedLocation)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceRegistryExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

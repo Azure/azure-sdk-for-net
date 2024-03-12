@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
-    public partial class Sample_AssetEndpointProfileResource
+    public partial class Sample_DeviceRegistryAssetEndpointProfileResource
     {
         // List Asset Endpoint Profiles in a Subscription.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAssetEndpointProfiles_ListAssetEndpointProfilesInASubscription()
+        public async Task GetDeviceRegistryAssetEndpointProfiles_ListAssetEndpointProfilesInASubscription()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assetEndpointProfiles/List_AssetEndpointProfiles_Subscription.json
             // this example is just showing the usage of "AssetEndpointProfiles_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AssetEndpointProfileResource item in subscriptionResource.GetAssetEndpointProfilesAsync())
+            await foreach (DeviceRegistryAssetEndpointProfileResource item in subscriptionResource.GetDeviceRegistryAssetEndpointProfilesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetEndpointProfileData resourceData = item.Data;
+                DeviceRegistryAssetEndpointProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetEndpointProfileResource created on azure
-            // for more information of creating AssetEndpointProfileResource, please refer to the document of AssetEndpointProfileResource
+            // this example assumes you already have this DeviceRegistryAssetEndpointProfileResource created on azure
+            // for more information of creating DeviceRegistryAssetEndpointProfileResource, please refer to the document of DeviceRegistryAssetEndpointProfileResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetEndpointProfileName = "my-assetendpointprofile";
-            ResourceIdentifier assetEndpointProfileResourceId = AssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
-            AssetEndpointProfileResource assetEndpointProfile = client.GetAssetEndpointProfileResource(assetEndpointProfileResourceId);
+            ResourceIdentifier deviceRegistryAssetEndpointProfileResourceId = DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource deviceRegistryAssetEndpointProfile = client.GetDeviceRegistryAssetEndpointProfileResource(deviceRegistryAssetEndpointProfileResourceId);
 
             // invoke the operation
-            AssetEndpointProfileResource result = await assetEndpointProfile.GetAsync();
+            DeviceRegistryAssetEndpointProfileResource result = await deviceRegistryAssetEndpointProfile.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetEndpointProfileData resourceData = result.Data;
+            DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,25 +95,25 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetEndpointProfileResource created on azure
-            // for more information of creating AssetEndpointProfileResource, please refer to the document of AssetEndpointProfileResource
+            // this example assumes you already have this DeviceRegistryAssetEndpointProfileResource created on azure
+            // for more information of creating DeviceRegistryAssetEndpointProfileResource, please refer to the document of DeviceRegistryAssetEndpointProfileResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetEndpointProfileName = "my-assetendpointprofile";
-            ResourceIdentifier assetEndpointProfileResourceId = AssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
-            AssetEndpointProfileResource assetEndpointProfile = client.GetAssetEndpointProfileResource(assetEndpointProfileResourceId);
+            ResourceIdentifier deviceRegistryAssetEndpointProfileResourceId = DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource deviceRegistryAssetEndpointProfile = client.GetDeviceRegistryAssetEndpointProfileResource(deviceRegistryAssetEndpointProfileResourceId);
 
             // invoke the operation
-            AssetEndpointProfilePatch patch = new AssetEndpointProfilePatch()
+            DeviceRegistryAssetEndpointProfilePatch patch = new DeviceRegistryAssetEndpointProfilePatch()
             {
                 TargetAddress = new Uri("https://www.example.com/myTargetAddress"),
             };
-            ArmOperation<AssetEndpointProfileResource> lro = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, patch);
-            AssetEndpointProfileResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetEndpointProfileResource> lro = await deviceRegistryAssetEndpointProfile.UpdateAsync(WaitUntil.Completed, patch);
+            DeviceRegistryAssetEndpointProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetEndpointProfileData resourceData = result.Data;
+            DeviceRegistryAssetEndpointProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AssetEndpointProfileResource created on azure
-            // for more information of creating AssetEndpointProfileResource, please refer to the document of AssetEndpointProfileResource
+            // this example assumes you already have this DeviceRegistryAssetEndpointProfileResource created on azure
+            // for more information of creating DeviceRegistryAssetEndpointProfileResource, please refer to the document of DeviceRegistryAssetEndpointProfileResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string assetEndpointProfileName = "my-assetendpointprofile";
-            ResourceIdentifier assetEndpointProfileResourceId = AssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
-            AssetEndpointProfileResource assetEndpointProfile = client.GetAssetEndpointProfileResource(assetEndpointProfileResourceId);
+            ResourceIdentifier deviceRegistryAssetEndpointProfileResourceId = DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            DeviceRegistryAssetEndpointProfileResource deviceRegistryAssetEndpointProfile = client.GetDeviceRegistryAssetEndpointProfileResource(deviceRegistryAssetEndpointProfileResourceId);
 
             // invoke the operation
-            await assetEndpointProfile.DeleteAsync(WaitUntil.Completed);
+            await deviceRegistryAssetEndpointProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

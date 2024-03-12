@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the event properties. </summary>
-    public partial class Event
+    public partial class AssetEvent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Event"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetEvent"/>. </summary>
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventNotifier"/> is null. </exception>
-        public Event(string eventNotifier)
+        public AssetEvent(string eventNotifier)
         {
             Argument.AssertNotNull(eventNotifier, nameof(eventNotifier));
 
             EventNotifier = eventNotifier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Event"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetEvent"/>. </summary>
         /// <param name="name"> The name of the event. </param>
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <param name="capabilityId"> The path to the type definition of the capability (e.g. DTMI, OPC UA information model node id, etc.), for example dtmi:com:example:Robot:_contents:__prop1;1. </param>
         /// <param name="observabilityMode"> An indication of how the event should be mapped to OpenTelemetry. </param>
         /// <param name="eventConfiguration"> Protocol-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Event(string name, string eventNotifier, string capabilityId, EventsObservabilityMode? observabilityMode, string eventConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetEvent(string name, string eventNotifier, string capabilityId, EventsObservabilityMode? observabilityMode, string eventConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EventNotifier = eventNotifier;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Event"/> for deserialization. </summary>
-        internal Event()
+        /// <summary> Initializes a new instance of <see cref="AssetEvent"/> for deserialization. </summary>
+        internal AssetEvent()
         {
         }
 

@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssetEndpointProfileResource"/> and their operations.
-    /// Each <see cref="AssetEndpointProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="AssetEndpointProfileCollection"/> instance call the GetAssetEndpointProfiles method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> and their operations.
+    /// Each <see cref="DeviceRegistryAssetEndpointProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DeviceRegistryAssetEndpointProfileCollection"/> instance call the GetDeviceRegistryAssetEndpointProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AssetEndpointProfileCollection : ArmCollection, IEnumerable<AssetEndpointProfileResource>, IAsyncEnumerable<AssetEndpointProfileResource>
+    public partial class DeviceRegistryAssetEndpointProfileCollection : ArmCollection, IEnumerable<DeviceRegistryAssetEndpointProfileResource>, IAsyncEnumerable<DeviceRegistryAssetEndpointProfileResource>
     {
-        private readonly ClientDiagnostics _assetEndpointProfileClientDiagnostics;
-        private readonly AssetEndpointProfilesRestOperations _assetEndpointProfileRestClient;
+        private readonly ClientDiagnostics _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics;
+        private readonly AssetEndpointProfilesRestOperations _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AssetEndpointProfileCollection"/> class for mocking. </summary>
-        protected AssetEndpointProfileCollection()
+        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryAssetEndpointProfileCollection"/> class for mocking. </summary>
+        protected DeviceRegistryAssetEndpointProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AssetEndpointProfileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceRegistryAssetEndpointProfileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AssetEndpointProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DeviceRegistryAssetEndpointProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _assetEndpointProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", AssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AssetEndpointProfileResource.ResourceType, out string assetEndpointProfileApiVersion);
-            _assetEndpointProfileRestClient = new AssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, assetEndpointProfileApiVersion);
+            _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceRegistryAssetEndpointProfileResource.ResourceType, out string deviceRegistryAssetEndpointProfileAssetEndpointProfilesApiVersion);
+            _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient = new AssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetEndpointProfileAssetEndpointProfilesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AssetEndpointProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceRegistryAssetEndpointProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetEndpointProfileName, DeviceRegistryAssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.CreateOrUpdate");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _assetEndpointProfileRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation<AssetEndpointProfileResource>(new AssetEndpointProfileOperationSource(Client), _assetEndpointProfileClientDiagnostics, Pipeline, _assetEndpointProfileRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileOperationSource(Client), _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AssetEndpointProfileResource> CreateOrUpdate(WaitUntil waitUntil, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceRegistryAssetEndpointProfileResource> CreateOrUpdate(WaitUntil waitUntil, string assetEndpointProfileName, DeviceRegistryAssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.CreateOrUpdate");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _assetEndpointProfileRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data, cancellationToken);
-                var operation = new DeviceRegistryArmOperation<AssetEndpointProfileResource>(new AssetEndpointProfileOperationSource(Client), _assetEndpointProfileClientDiagnostics, Pipeline, _assetEndpointProfileRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data, cancellationToken);
+                var operation = new DeviceRegistryArmOperation<DeviceRegistryAssetEndpointProfileResource>(new DeviceRegistryAssetEndpointProfileOperationSource(Client), _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,18 +177,18 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
-        public virtual async Task<Response<AssetEndpointProfileResource>> GetAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceRegistryAssetEndpointProfileResource>> GetAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Get");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _assetEndpointProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
+                var response = await _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceRegistryAssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,18 +222,18 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
-        public virtual Response<AssetEndpointProfileResource> Get(string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceRegistryAssetEndpointProfileResource> Get(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Get");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _assetEndpointProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken);
+                var response = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeviceRegistryAssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,17 +259,17 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssetEndpointProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _assetEndpointProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assetEndpointProfileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssetEndpointProfileResource(Client, AssetEndpointProfileData.DeserializeAssetEndpointProfileData(e)), _assetEndpointProfileClientDiagnostics, Pipeline, "AssetEndpointProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "DeviceRegistryAssetEndpointProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,17 +289,17 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssetEndpointProfileResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceRegistryAssetEndpointProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _assetEndpointProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assetEndpointProfileRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssetEndpointProfileResource(Client, AssetEndpointProfileData.DeserializeAssetEndpointProfileData(e)), _assetEndpointProfileClientDiagnostics, Pipeline, "AssetEndpointProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryAssetEndpointProfileResource(Client, DeviceRegistryAssetEndpointProfileData.DeserializeDeviceRegistryAssetEndpointProfileData(e)), _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics, Pipeline, "DeviceRegistryAssetEndpointProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Exists");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _assetEndpointProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,11 +374,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Exists");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _assetEndpointProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken);
+                var response = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,18 +413,18 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
-        public virtual async Task<NullableResponse<AssetEndpointProfileResource>> GetIfExistsAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DeviceRegistryAssetEndpointProfileResource>> GetIfExistsAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.GetIfExists");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _assetEndpointProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AssetEndpointProfileResource>(response.GetRawResponse());
-                return Response.FromValue(new AssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DeviceRegistryAssetEndpointProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceRegistryAssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,18 +458,18 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
-        public virtual NullableResponse<AssetEndpointProfileResource> GetIfExists(string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DeviceRegistryAssetEndpointProfileResource> GetIfExists(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
-            using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.GetIfExists");
+            using var scope = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesClientDiagnostics.CreateScope("DeviceRegistryAssetEndpointProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _assetEndpointProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken);
+                var response = _deviceRegistryAssetEndpointProfileAssetEndpointProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, assetEndpointProfileName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AssetEndpointProfileResource>(response.GetRawResponse());
-                return Response.FromValue(new AssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<DeviceRegistryAssetEndpointProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceRegistryAssetEndpointProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        IEnumerator<AssetEndpointProfileResource> IEnumerable<AssetEndpointProfileResource>.GetEnumerator()
+        IEnumerator<DeviceRegistryAssetEndpointProfileResource> IEnumerable<DeviceRegistryAssetEndpointProfileResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AssetEndpointProfileResource> IAsyncEnumerable<AssetEndpointProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DeviceRegistryAssetEndpointProfileResource> IAsyncEnumerable<DeviceRegistryAssetEndpointProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

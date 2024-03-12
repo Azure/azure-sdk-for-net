@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="AssetEndpointProfileListResult"/>. </summary>
         /// <param name="value"> The AssetEndpointProfile items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssetEndpointProfileListResult(IEnumerable<AssetEndpointProfileData> value)
+        internal AssetEndpointProfileListResult(IEnumerable<DeviceRegistryAssetEndpointProfileData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="value"> The AssetEndpointProfile items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetEndpointProfileListResult(IReadOnlyList<AssetEndpointProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetEndpointProfileListResult(IReadOnlyList<DeviceRegistryAssetEndpointProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> The AssetEndpointProfile items on this page. </summary>
-        public IReadOnlyList<AssetEndpointProfileData> Value { get; }
+        public IReadOnlyList<DeviceRegistryAssetEndpointProfileData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

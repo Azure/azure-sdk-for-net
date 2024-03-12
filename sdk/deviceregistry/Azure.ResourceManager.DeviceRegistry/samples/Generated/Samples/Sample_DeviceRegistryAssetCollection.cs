@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
-    public partial class Sample_AssetCollection
+    public partial class Sample_DeviceRegistryAssetCollection
     {
         // List Assets in a Resource Group.
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation and iterate over the result
-            await foreach (AssetResource item in collection.GetAllAsync())
+            await foreach (DeviceRegistryAssetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetData resourceData = item.Data;
+                DeviceRegistryAssetData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            AssetResource result = await collection.GetAsync(assetName);
+            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            NullableResponse<AssetResource> response = await collection.GetIfExistsAsync(assetName);
-            AssetResource result = response.HasValue ? response.Value : null;
+            NullableResponse<DeviceRegistryAssetResource> response = await collection.GetIfExistsAsync(assetName);
+            DeviceRegistryAssetResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetData resourceData = result.Data;
+                DeviceRegistryAssetData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -181,16 +181,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            AssetResource result = await collection.GetAsync(assetName);
+            DeviceRegistryAssetResource result = await collection.GetAsync(assetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
@@ -245,13 +245,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            NullableResponse<AssetResource> response = await collection.GetIfExistsAsync(assetName);
-            AssetResource result = response.HasValue ? response.Value : null;
+            NullableResponse<DeviceRegistryAssetResource> response = await collection.GetIfExistsAsync(assetName);
+            DeviceRegistryAssetResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AssetData resourceData = result.Data;
+                DeviceRegistryAssetData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            AssetData data = new AssetData(new AzureLocation("West Europe"), new ExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
                 AssetType = "MyAssetType",
                 Enabled = true,
@@ -326,12 +326,12 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                 Events =
 {
-new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
 ObservabilityMode = EventsObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
 ObservabilityMode = EventsObservabilityMode.Log,
@@ -343,12 +343,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
 ["site"] = "building-1",
 },
             };
-            ArmOperation<AssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            AssetResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -373,12 +373,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            AssetData data = new AssetData(new AzureLocation("West Europe"), new ExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
                 AssetType = "MyAssetType",
                 Enabled = true,
@@ -411,12 +411,12 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                 Events =
 {
-new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
 ObservabilityMode = EventsObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
 ObservabilityMode = EventsObservabilityMode.Log,
@@ -428,12 +428,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
 ["site"] = "building-1",
 },
             };
-            ArmOperation<AssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            AssetResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -458,12 +458,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AssetResource
-            AssetCollection collection = resourceGroupResource.GetAssets();
+            // get the collection of this DeviceRegistryAssetResource
+            DeviceRegistryAssetCollection collection = resourceGroupResource.GetDeviceRegistryAssets();
 
             // invoke the operation
             string assetName = "my-asset";
-            AssetData data = new AssetData(new AzureLocation("West Europe"), new ExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            DeviceRegistryAssetData data = new DeviceRegistryAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
                 AssetType = "MyAssetType",
                 Enabled = true,
@@ -496,12 +496,12 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                 Events =
 {
-new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__temperature;1",
 ObservabilityMode = EventsObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-},new Event("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new AssetEvent("nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 CapabilityId = "dtmi:com:example:Thermostat:__pressure;1",
 ObservabilityMode = EventsObservabilityMode.Log,
@@ -513,12 +513,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
 ["site"] = "building-1",
 },
             };
-            ArmOperation<AssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
-            AssetResource result = lro.Value;
+            ArmOperation<DeviceRegistryAssetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetName, data);
+            DeviceRegistryAssetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
+            DeviceRegistryAssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
