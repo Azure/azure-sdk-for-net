@@ -307,6 +307,41 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestMessage"/>. </summary>
+        /// <param name="role"> The chat role associated with this message. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestMessage"/> instance for mocking. </returns>
+        public static ChatRequestMessage ChatRequestMessage(string role = "Unknown")
+        {
+            return new UnknownChatRequestMessage(role, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionConfiguration"/>. </summary>
+        /// <param name="type">
+        ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AzureChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static AzureChatExtensionConfiguration AzureChatExtensionConfiguration(string type = "Unknown")
+        {
+            return new UnknownAzureChatExtensionConfiguration(type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsResponseFormat"/>. </summary>
+        /// <param name="type"> The discriminated type for the response format. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsResponseFormat"/> instance for mocking. </returns>
+        public static ChatCompletionsResponseFormat ChatCompletionsResponseFormat(string type = null)
+        {
+            return new UnknownChatCompletionsResponseFormat(type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsToolDefinition"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsToolDefinition ChatCompletionsToolDefinition(string type = null)
+        {
+            return new UnknownChatCompletionsToolDefinition(type, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
@@ -370,6 +405,15 @@ namespace Azure.AI.OpenAI
                 functionCall,
                 azureExtensionsContext,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsToolCall"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsToolCall"/> instance for mocking. </returns>
+        public static ChatCompletionsToolCall ChatCompletionsToolCall(string type = null, string id = null)
+        {
+            return new UnknownChatCompletionsToolCall(type, id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionsMessageContext"/>. </summary>
@@ -440,6 +484,14 @@ namespace Azure.AI.OpenAI
             utf8ByteValues ??= new List<int>();
 
             return new ChatTokenLogProbabilityInfo(token, logProbability, utf8ByteValues?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatFinishDetails"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="OpenAI.ChatFinishDetails"/> instance for mocking. </returns>
+        public static ChatFinishDetails ChatFinishDetails(string type = null)
+        {
+            return new UnknownChatFinishDetails(type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatEnhancements"/>. </summary>
@@ -629,6 +681,14 @@ namespace Azure.AI.OpenAI
             return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageContentItem"/>. </summary>
+        /// <param name="type"> The discriminated object type. </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageContentItem"/> instance for mocking. </returns>
+        public static ChatMessageContentItem ChatMessageContentItem(string type = null)
+        {
+            return new UnknownChatMessageContentItem(type, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>
         /// <returns> A new <see cref="OpenAI.ChatMessageTextContentItem"/> instance for mocking. </returns>
@@ -715,6 +775,22 @@ namespace Azure.AI.OpenAI
         public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
         {
             return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataAuthenticationOptions"/>. </summary>
+        /// <param name="type"> The authentication type. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataAuthenticationOptions OnYourDataAuthenticationOptions(string type = "Unknown")
+        {
+            return new UnknownOnYourDataAuthenticationOptions(type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataVectorizationSource"/>. </summary>
+        /// <param name="type"> The type of vectorization source to use. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataVectorizationSource"/> instance for mocking. </returns>
+        public static OnYourDataVectorizationSource OnYourDataVectorizationSource(string type = "Unknown")
+        {
+            return new UnknownOnYourDataVectorizationSource(type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
