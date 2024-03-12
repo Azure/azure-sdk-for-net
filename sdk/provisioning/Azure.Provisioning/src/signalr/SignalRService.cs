@@ -8,7 +8,6 @@ using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 
-// cspell:ignore signalr
 namespace Azure.Provisioning.SignalR
 {
     /// <summary>
