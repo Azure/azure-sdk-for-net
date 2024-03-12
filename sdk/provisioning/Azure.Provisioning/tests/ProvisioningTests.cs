@@ -618,7 +618,8 @@ namespace Azure.Provisioning.Tests
         public async Task AppConfiguration()
         {
             var infra = new TestInfrastructure();
-            infra.AddAppConfigurationStore();
+            var appConfig = new AppConfigurationStore(infra, "standard");
+            appConfig.AssignRole(RoleDefinition.AppConfigurationDataOwner, Guid.Empty);
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync();
