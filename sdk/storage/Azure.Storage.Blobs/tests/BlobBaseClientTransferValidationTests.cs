@@ -37,7 +37,10 @@ namespace Azure.Storage.Blobs.Tests
             StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
             StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
-            var disposingContainer = await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
+            var disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                service: service,
+                containerName: containerName,
+                publicAccessType: PublicAccessType.None);
 
             disposingContainer.Container.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
             disposingContainer.Container.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
