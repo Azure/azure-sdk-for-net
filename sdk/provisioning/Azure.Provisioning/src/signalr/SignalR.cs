@@ -1,0 +1,52 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.Provisioning.ResourceManager;
+using Azure.ResourceManager.SignalR;
+using Azure.ResourceManager.SignalR.Models;
+
+namespace Azure.Provisioning.SignalR
+{
+    /// <summary>
+    /// Represents a SignalR.
+    /// </summary>
+    public class SignalR : Resource<SignalRData>
+    {
+        private const string ResourceTypeName = "Microsoft.SignalRService/signalR";
+        private static readonly Func<string, SignalRData> Empty = (name) => ArmSignalRModelFactory.SignalRData();
+        internal const string DefaultVersion = "2023-02-01";
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SignalR"/> class.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="sku">The SKU.</param>
+        /// <param name="allowedOrigins">The allowed origins.</param>
+        /// <param name="serviceMode">The service mode.</param>
+        /// <param name="parent">The parent.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="location">The location.</param>
+        public SignalR(IConstruct scope, SignalRResourceSku? sku = default, IEnumerable<string>? allowedOrigins = default, string serviceMode = "Default", ResourceGroup? parent = default, string name = "signalr", string version = DefaultVersion, AzureLocation? location = default)
+            : this(scope, sku, parent, name, false, (name) => ArmSignalRModelFactory.SignalRData(
+                name: name,
+                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
+                sku: sku ?? new SignalRResourceSku("Free_F1") { Capacity = 1 },
+                corsAllowedOrigins: allowedOrigins ?? new string[] { "*" },
+                features: new SignalRFeature[] { new SignalRFeature(SignalRFeatureFlag.ServiceMode, serviceMode) }))
+        {
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
+        }
+
+        private SignalR(IConstruct scope, SignalRResourceSku? sku = default, ResourceGroup? parent = default, string name = "signalr", bool isExisting = false, Func<string, SignalRData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
+    }
+}

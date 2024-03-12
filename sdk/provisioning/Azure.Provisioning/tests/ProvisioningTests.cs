@@ -32,6 +32,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search.Models;
+using Azure.ResourceManager.SignalR.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
@@ -413,6 +414,19 @@ namespace Azure.Provisioning.Tests
             search.AssignProperty(data => data.IsLocalAuthDisabled, "true");
 
             search.AddOutput("connectionString", "'Endpoint=https://${{{0}}}.search.windows.net'", data => data.Name);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task SignalR()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var signalR = new SignalR.SignalR(infrastructure, sku: new SignalRResourceSku("Standard_S1"), serviceMode: "Serverless");
+            signalR.AssignRole(RoleDefinition.SignalRAppServer, Guid.Empty);
+
+            signalR.AddOutput("hostName", data => data.HostName);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);

@@ -68,6 +68,11 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition SearchIndexDataContributor { get; } = new RoleDefinition("8ebe5a00-799e-43f5-93ac-243d3dce84a7");
 
+        /// <summary>
+        /// SignalR App Server role.
+        /// </summary>
+        public static RoleDefinition SignalRAppServer { get; } = new RoleDefinition("420fcaa2-552c-430f-98ca-3264be4806c7");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 

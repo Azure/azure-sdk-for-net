@@ -24,6 +24,7 @@
     <PackageReference Include="Azure.ResourceManager.ServiceBus" />
     <PackageReference Include="Azure.ResourceManager.Search" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
+    <PackageReference Include="Azure.ResourceManager.SignalR" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
