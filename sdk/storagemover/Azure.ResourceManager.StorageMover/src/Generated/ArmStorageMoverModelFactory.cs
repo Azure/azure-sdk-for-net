@@ -123,6 +123,15 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new UnknownEndpointBaseProperties(endpointType, description, provisioningState, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.EndpointBaseUpdateProperties"/>. </summary>
+        /// <param name="endpointType"> The Endpoint resource type. </param>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <returns> A new <see cref="Models.EndpointBaseUpdateProperties"/> instance for mocking. </returns>
+        public static EndpointBaseUpdateProperties EndpointBaseUpdateProperties(string endpointType = "Unknown", string description = null)
+        {
+            return new UnknownEndpointBaseUpdateProperties(endpointType, description, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -347,6 +356,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 host,
                 shareName,
                 credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StorageMoverCredentials"/>. </summary>
+        /// <param name="credentialType"> The Credentials type. </param>
+        /// <returns> A new <see cref="Models.StorageMoverCredentials"/> instance for mocking. </returns>
+        public static StorageMoverCredentials StorageMoverCredentials(string credentialType = "Unknown")
+        {
+            return new UnknownCredentials(credentialType, serializedAdditionalRawData: null);
         }
     }
 }

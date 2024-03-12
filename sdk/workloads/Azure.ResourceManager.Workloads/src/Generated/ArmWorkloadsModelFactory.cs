@@ -45,6 +45,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SapSizingRecommendationResult"/>. </summary>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
+        /// <returns> A new <see cref="Models.SapSizingRecommendationResult"/> instance for mocking. </returns>
+        public static SapSizingRecommendationResult SapSizingRecommendationResult(string deploymentType = "Unknown")
+        {
+            return new UnknownSapSizingRecommendationResult(deploymentType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SapSupportedSkusContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
@@ -159,7 +167,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
-        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="Models.DiscoveryConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupName"> Managed resource group configuration. </param>
@@ -191,6 +199,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 provisioningState,
                 errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SapConfiguration"/>. </summary>
+        /// <param name="configurationType"> The configuration Type. </param>
+        /// <returns> A new <see cref="Models.SapConfiguration"/> instance for mocking. </returns>
+        public static SapConfiguration SapConfiguration(string configurationType = "Unknown")
+        {
+            return new UnknownSapConfiguration(configurationType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapVirtualInstanceErrorDetail"/>. </summary>
@@ -504,7 +520,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings">
         /// Defines the provider specific properties.
-        /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Workloads.SapProviderInstanceData"/> instance for mocking. </returns>
@@ -520,6 +536,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 errors,
                 providerSettings,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderSpecificProperties"/>. </summary>
+        /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
+        /// <returns> A new <see cref="Models.ProviderSpecificProperties"/> instance for mocking. </returns>
+        public static ProviderSpecificProperties ProviderSpecificProperties(string providerType = null)
+        {
+            return new UnknownProviderSpecificProperties(providerType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Workloads.SapLandscapeMonitorData"/>. </summary>
@@ -544,6 +568,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 grouping,
                 topMetricsThresholds?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SapOSConfiguration"/>. </summary>
+        /// <param name="osType"> The OS Type. </param>
+        /// <returns> A new <see cref="Models.SapOSConfiguration"/> instance for mocking. </returns>
+        public static SapOSConfiguration SapOSConfiguration(string osType = "Unknown")
+        {
+            return new UnknownOSConfiguration(osType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SingleServerRecommendationResult"/>. </summary>
@@ -573,6 +605,47 @@ namespace Azure.ResourceManager.Workloads.Models
                 centralServerInstanceCount,
                 applicationServerVmSku,
                 applicationServerInstanceCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SingleServerCustomResourceNames"/>. </summary>
+        /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
+        /// <returns> A new <see cref="Models.SingleServerCustomResourceNames"/> instance for mocking. </returns>
+        public static SingleServerCustomResourceNames SingleServerCustomResourceNames(string namingPatternType = "Unknown")
+        {
+            return new UnknownSingleServerCustomResourceNames(namingPatternType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InfrastructureConfiguration"/>. </summary>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
+        /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
+        /// <returns> A new <see cref="Models.InfrastructureConfiguration"/> instance for mocking. </returns>
+        public static InfrastructureConfiguration InfrastructureConfiguration(string deploymentType = "Unknown", string appResourceGroup = null)
+        {
+            return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileShareConfiguration"/>. </summary>
+        /// <param name="configurationType"> The type of file share config. </param>
+        /// <returns> A new <see cref="Models.FileShareConfiguration"/> instance for mocking. </returns>
+        public static FileShareConfiguration FileShareConfiguration(string configurationType = "Unknown")
+        {
+            return new UnknownFileShareConfiguration(configurationType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ThreeTierCustomResourceNames"/>. </summary>
+        /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
+        /// <returns> A new <see cref="Models.ThreeTierCustomResourceNames"/> instance for mocking. </returns>
+        public static ThreeTierCustomResourceNames ThreeTierCustomResourceNames(string namingPatternType = "Unknown")
+        {
+            return new UnknownThreeTierCustomResourceNames(namingPatternType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SapSoftwareConfiguration"/>. </summary>
+        /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
+        /// <returns> A new <see cref="Models.SapSoftwareConfiguration"/> instance for mocking. </returns>
+        public static SapSoftwareConfiguration SapSoftwareConfiguration(string softwareInstallationType = "Unknown")
+        {
+            return new UnknownSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiscoveryConfiguration"/>. </summary>

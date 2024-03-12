@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="outputDataType"> Describes the output of a function. </param>
         /// <param name="binding">
         /// The physical binding of the function. For example, in the Azure Machine Learning web service’s case, this describes the endpoint.
-        /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
         /// <returns> A new <see cref="Models.StreamingJobFunctionProperties"/> instance for mocking. </returns>
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null,
                 binding,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingJobFunctionBinding"/>. </summary>
+        /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <returns> A new <see cref="Models.StreamingJobFunctionBinding"/> instance for mocking. </returns>
+        public static StreamingJobFunctionBinding StreamingJobFunctionBinding(string functionBindingType = null)
+        {
+            return new UnknownFunctionBinding(functionBindingType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsSubResource"/>. </summary>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new StreamAnalyticsResourceTestStatus(status, code, message, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        /// <returns> A new <see cref="Models.FunctionRetrieveDefaultDefinitionContent"/> instance for mocking. </returns>
+        public static FunctionRetrieveDefaultDefinitionContent FunctionRetrieveDefaultDefinitionContent(string bindingType = null)
+        {
+            return new UnknownFunctionRetrieveDefaultDefinitionParameters(bindingType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StreamAnalytics.StreamingJobInputData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
@@ -119,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroFormatSerialization"/>, <see cref="CsvFormatSerialization"/>, <see cref="CustomClrFormatSerialization"/>, <see cref="JsonFormatSerialization"/> and <see cref="ParquetFormatSerialization"/>.
         /// </param>
         /// <param name="diagnosticsConditions"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsDataSerialization"/>. </summary>
+        /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <returns> A new <see cref="Models.StreamAnalyticsDataSerialization"/> instance for mocking. </returns>
+        public static StreamAnalyticsDataSerialization StreamAnalyticsDataSerialization(string eventSerializationType = "Unknown")
+        {
+            return new UnknownSerialization(eventSerializationType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.StreamingJobDiagnosticCondition"/>. </summary>
         /// <param name="since"> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </param>
         /// <param name="code"> The opaque diagnostic code. </param>
@@ -159,14 +183,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="datasource">
         /// Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
         /// </param>
         /// <param name="timeFrame"> The time frame for filtering Stream Analytics job outputs. </param>
         /// <param name="sizeWindow"> The size window to constrain a Stream Analytics output to. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroFormatSerialization"/>, <see cref="CsvFormatSerialization"/>, <see cref="CustomClrFormatSerialization"/>, <see cref="JsonFormatSerialization"/> and <see cref="ParquetFormatSerialization"/>.
         /// </param>
         /// <param name="diagnosticsConditions"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
@@ -192,6 +216,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 etag,
                 lastOutputEventTimestamps?.ToList(),
                 watermarkSettings);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StreamingJobOutputDataSource"/>. </summary>
+        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <returns> A new <see cref="Models.StreamingJobOutputDataSource"/> instance for mocking. </returns>
+        public static StreamingJobOutputDataSource StreamingJobOutputDataSource(string outputDataSourceType = null)
+        {
+            return new UnknownOutputDataSource(outputDataSourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LastOutputEventTimestamp"/>. </summary>
@@ -580,7 +612,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="outputDataType"> Describes the output of a function. </param>
         /// <param name="binding">
         /// The physical binding of the function. For example, in the Azure Machine Learning web service’s case, this describes the endpoint.
-        /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ScalarFunctionProperties"/> instance for mocking. </returns>
@@ -603,7 +635,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="outputDataType"> Describes the output of a function. </param>
         /// <param name="binding">
         /// The physical binding of the function. For example, in the Azure Machine Learning web service’s case, this describes the endpoint.
-        /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
         /// <returns> A new <see cref="Models.AggregateFunctionProperties"/> instance for mocking. </returns>
@@ -623,7 +655,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of <see cref="Models.StreamInputProperties"/>. </summary>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroFormatSerialization"/>, <see cref="CsvFormatSerialization"/>, <see cref="CustomClrFormatSerialization"/>, <see cref="JsonFormatSerialization"/> and <see cref="ParquetFormatSerialization"/>.
         /// </param>
         /// <param name="diagnosticsConditions"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
@@ -633,7 +665,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="watermarkMode"> Settings which determine whether to read watermark events. </param>
         /// <param name="datasource">
         /// Describes an input data source that contains stream data. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GatewayMessageBusStreamInputDataSource"/>, <see cref="IoTHubStreamInputDataSource"/>, <see cref="EventGridStreamInputDataSource"/>, <see cref="EventHubV2StreamInputDataSource"/>, <see cref="EventHubStreamInputDataSource"/>, <see cref="BlobStreamInputDataSource"/> and <see cref="RawStreamInputDataSource"/>.
         /// </param>
         /// <returns> A new <see cref="Models.StreamInputProperties"/> instance for mocking. </returns>
@@ -653,10 +685,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 datasource);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StreamInputDataSource"/>. </summary>
+        /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <returns> A new <see cref="Models.StreamInputDataSource"/> instance for mocking. </returns>
+        public static StreamInputDataSource StreamInputDataSource(string streamInputDataSourceType = null)
+        {
+            return new UnknownStreamInputDataSource(streamInputDataSourceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ReferenceInputProperties"/>. </summary>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroFormatSerialization"/>, <see cref="CsvFormatSerialization"/>, <see cref="CustomClrFormatSerialization"/>, <see cref="JsonFormatSerialization"/> and <see cref="ParquetFormatSerialization"/>.
         /// </param>
         /// <param name="diagnosticsConditions"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
@@ -666,7 +706,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="watermarkMode"> Settings which determine whether to read watermark events. </param>
         /// <param name="datasource">
         /// Describes an input data source that contains reference data. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReferenceInputProperties"/> instance for mocking. </returns>
@@ -684,6 +724,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null,
                 datasource);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReferenceInputDataSource"/>. </summary>
+        /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <returns> A new <see cref="Models.ReferenceInputDataSource"/> instance for mocking. </returns>
+        public static ReferenceInputDataSource ReferenceInputDataSource(string referenceInputDataSourceType = null)
+        {
+            return new UnknownReferenceInputDataSource(referenceInputDataSourceType, serializedAdditionalRawData: null);
         }
     }
 }
