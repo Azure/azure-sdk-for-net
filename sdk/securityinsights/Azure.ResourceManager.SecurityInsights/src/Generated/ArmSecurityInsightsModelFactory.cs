@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
         /// <param name="actions">
         /// The actions to execute when the automation rule is triggered.
-        /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The last time the automation rule was updated. </param>
@@ -139,6 +139,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 createdBy,
                 etag,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAutomationRuleCondition"/>. </summary>
+        /// <param name="conditionType"></param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAutomationRuleCondition"/> instance for mocking. </returns>
+        public static SecurityInsightsAutomationRuleCondition SecurityInsightsAutomationRuleCondition(string conditionType = "Unknown")
+        {
+            return new UnknownAutomationRuleCondition(conditionType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAutomationRuleAction"/>. </summary>
+        /// <param name="order"></param>
+        /// <param name="actionType"> The type of the automation rule action. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsAutomationRuleAction"/> instance for mocking. </returns>
+        public static SecurityInsightsAutomationRuleAction SecurityInsightsAutomationRuleAction(int order = default, string actionType = "Unknown")
+        {
+            return new UnknownAutomationRuleAction(order, actionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsClientInfo"/>. </summary>

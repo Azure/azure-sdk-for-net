@@ -692,6 +692,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPersistentDisk(sizeInGB, usedInGB, mountPath, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AppCustomPersistentDiskProperties"/>. </summary>
+        /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
+        /// <param name="mountPath"> The mount path of the persistent disk. </param>
+        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
+        /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
+        /// <returns> A new <see cref="Models.AppCustomPersistentDiskProperties"/> instance for mocking. </returns>
+        public static AppCustomPersistentDiskProperties AppCustomPersistentDiskProperties(string underlyingResourceType = "Unknown", string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null)
+        {
+            mountOptions ??= new List<string>();
+
+            return new UnknownCustomPersistentDiskProperties(underlyingResourceType, mountPath, isReadOnly, mountOptions?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AppVnetAddons"/>. </summary>
         /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
         /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
@@ -752,7 +765,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the storage resource payload.
-        /// Please note <see cref="AppPlatformStorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AppPlatformStorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppPlatformStorageAccount"/>.
         /// </param>
         /// <returns> A new <see cref="AppPlatform.AppPlatformStorageData"/> instance for mocking. </returns>
@@ -765,6 +778,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformStorageProperties"/>. </summary>
+        /// <param name="storageType"> The type of the storage. </param>
+        /// <returns> A new <see cref="Models.AppPlatformStorageProperties"/> instance for mocking. </returns>
+        public static AppPlatformStorageProperties AppPlatformStorageProperties(string storageType = "Unknown")
+        {
+            return new UnknownStorageProperties(storageType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppPlatform.AppPlatformCertificateData"/>. </summary>
@@ -888,7 +909,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentProperties"/>. </summary>
         /// <param name="source">
         /// Uploaded source information of the deployment.
-        /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppPlatformBuildResultUserSourceInfo"/>, <see cref="AppPlatformCustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="AppPlatformUploadedUserSourceInfo"/>.
         /// </param>
         /// <param name="deploymentSettings"> Deployment settings of the Deployment. </param>
@@ -909,6 +930,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 isActive,
                 instances?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppPlatformUserSourceInfo"/>. </summary>
+        /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
+        /// <param name="version"> Version of the source. </param>
+        /// <returns> A new <see cref="Models.AppPlatformUserSourceInfo"/> instance for mocking. </returns>
+        public static AppPlatformUserSourceInfo AppPlatformUserSourceInfo(string userSourceInfoType = null, string version = null)
+        {
+            return new UnknownUserSourceInfo(userSourceInfoType, version, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppInstanceProbeAction"/>. </summary>
+        /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
+        /// <returns> A new <see cref="Models.AppInstanceProbeAction"/> instance for mocking. </returns>
+        public static AppInstanceProbeAction AppInstanceProbeAction(string probeActionType = "Unknown")
+        {
+            return new UnknownProbeAction(probeActionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppPlatformDeploymentInstance"/>. </summary>

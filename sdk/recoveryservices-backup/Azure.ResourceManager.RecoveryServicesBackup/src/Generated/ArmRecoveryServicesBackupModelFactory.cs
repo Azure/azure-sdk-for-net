@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.FeatureSupportContent"/>. </summary>
+        /// <param name="featureType"> backup support feature type. </param>
+        /// <returns> A new <see cref="Models.FeatureSupportContent"/> instance for mocking. </returns>
+        public static FeatureSupportContent FeatureSupportContent(string featureType = null)
+        {
+            return new UnknownFeatureSupportRequest(featureType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.VmResourceFeatureSupportResult"/>. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
         /// <returns> A new <see cref="Models.VmResourceFeatureSupportResult"/> instance for mocking. </returns>
@@ -115,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionIntentResource properties
-        /// Please note <see cref="BackupGenericProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadSqlAutoProtectionIntent"/> and <see cref="RecoveryServiceVaultProtectionIntent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -133,6 +141,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 location,
                 properties,
                 eTag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectionIntent"/>. </summary>
+        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
+        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
+        /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
+        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
+        /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <returns> A new <see cref="Models.BackupGenericProtectionIntent"/> instance for mocking. </returns>
+        public static BackupGenericProtectionIntent BackupGenericProtectionIntent(string protectionIntentItemType = "Unknown", BackupManagementType? backupManagementType = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier itemId = null, ResourceIdentifier policyId = null, BackupProtectionStatus? protectionState = null)
+        {
+            return new UnknownProtectionIntent(
+                protectionIntentItemType,
+                backupManagementType,
+                sourceResourceId,
+                itemId,
+                policyId,
+                protectionState,
                 serializedAdditionalRawData: null);
         }
 
@@ -401,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// RecoveryPointResource properties
-        /// Please note <see cref="BackupGenericRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -422,6 +450,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericRecoveryPoint"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupGenericRecoveryPoint"/> instance for mocking. </returns>
+        public static BackupGenericRecoveryPoint BackupGenericRecoveryPoint(string objectType = null)
+        {
+            return new UnknownRecoveryPoint(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -431,7 +467,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// RestoreRequestResource properties
-        /// Please note <see cref="RestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareRestoreContent"/>, <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreContent"/>, <see cref="WorkloadSqlRestoreWithRehydrateContent"/>, <see cref="IaasVmRestoreContent"/> and <see cref="IaasVmRestoreWithRehydrationContent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -452,6 +488,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RestoreContent"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.RestoreContent"/> instance for mocking. </returns>
+        public static RestoreContent RestoreContent(string objectType = null)
+        {
+            return new UnknownRestoreRequest(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -461,7 +505,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionPolicyResource properties
-        /// Please note <see cref="BackupGenericProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -482,6 +526,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectionPolicy"/>. </summary>
+        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
+        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <returns> A new <see cref="Models.BackupGenericProtectionPolicy"/> instance for mocking. </returns>
+        public static BackupGenericProtectionPolicy BackupGenericProtectionPolicy(int? protectedItemsCount = null, string backupManagementType = null, IEnumerable<string> resourceGuardOperationRequests = null)
+        {
+            resourceGuardOperationRequests ??= new List<string>();
+
+            return new UnknownProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -491,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// JobResource properties
-        /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -512,6 +568,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericJob"/>. </summary>
+        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
+        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
+        /// <param name="operation"> The operation name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="activityId"> ActivityId of job. </param>
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupGenericJob"/> instance for mocking. </returns>
+        public static BackupGenericJob BackupGenericJob(string entityFriendlyName = null, BackupManagementType? backupManagementType = null, string operation = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string activityId = null, string jobType = null)
+        {
+            return new UnknownJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startOn,
+                endOn,
+                activityId,
+                jobType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -521,7 +601,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupEngineBaseResource properties
-        /// Please note <see cref="BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -542,6 +622,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericEngine"/>. </summary>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="backupEngineType"> Type of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
+        /// <returns> A new <see cref="Models.BackupGenericEngine"/> instance for mocking. </returns>
+        public static BackupGenericEngine BackupGenericEngine(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string backupEngineState = null, string healthStatus = null, string backupEngineType = "Unknown", bool? canReRegister = null, string backupEngineId = null, string dpmVersion = null, string azureBackupAgentVersion = null, bool? isAzureBackupAgentUpgradeAvailable = null, bool? isDpmUpgradeAvailable = null, BackupEngineExtendedInfo extendedInfo = null)
+        {
+            return new UnknownBackupEngineBase(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                backupEngineType,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -551,7 +665,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectableContainerResource properties
-        /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -572,6 +686,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainer"/>. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
+        /// <returns> A new <see cref="Models.ProtectableContainer"/> instance for mocking. </returns>
+        public static ProtectableContainer ProtectableContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string healthStatus = null, string containerId = null)
+        {
+            return new UnknownProtectableContainer(
+                friendlyName,
+                backupManagementType,
+                default,
+                healthStatus,
+                containerId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -581,7 +712,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectionContainerResource properties
-        /// Please note <see cref="BackupGenericProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupGenericProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="SqlContainer"/>, <see cref="WorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -602,6 +733,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectionContainer"/>. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <returns> A new <see cref="Models.BackupGenericProtectionContainer"/> instance for mocking. </returns>
+        public static BackupGenericProtectionContainer BackupGenericProtectionContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null)
+        {
+            return new UnknownProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -611,7 +761,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadItemResource properties
-        /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -632,6 +782,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadItem"/>. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="workloadItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <returns> A new <see cref="Models.WorkloadItem"/> instance for mocking. </returns>
+        public static WorkloadItem WorkloadItem(string backupManagementType = null, string workloadType = null, string workloadItemType = null, string friendlyName = null, BackupProtectionStatus? protectionState = null)
+        {
+            return new UnknownWorkloadItem(
+                backupManagementType,
+                workloadType,
+                workloadItemType,
+                friendlyName,
+                protectionState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TriggerBackupContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -641,7 +809,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupRequestResource properties
-        /// Please note <see cref="BackupContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BackupContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/> and <see cref="IaasVmBackupContent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -662,6 +830,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BackupContent"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupContent"/> instance for mocking. </returns>
+        public static BackupContent BackupContent(string objectType = null)
+        {
+            return new UnknownBackupRequest(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProvisionIlrConnectionContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -671,7 +847,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ILRRequestResource properties
-        /// Please note <see cref="IlrContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.IlrContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProvisionIlrContent"/> and <see cref="IaasVmIlrRegistrationContent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -692,6 +868,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.IlrContent"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.IlrContent"/> instance for mocking. </returns>
+        public static IlrContent IlrContent(string objectType = null)
+        {
+            return new UnknownIlrRequest(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItemResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -701,7 +885,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
-        /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
@@ -719,6 +903,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 location,
                 properties,
                 eTag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItem"/>. </summary>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="protectableItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <returns> A new <see cref="Models.WorkloadProtectableItem"/> instance for mocking. </returns>
+        public static WorkloadProtectableItem WorkloadProtectableItem(string backupManagementType = null, string workloadType = null, string protectableItemType = null, string friendlyName = null, BackupProtectionStatus? protectionState = null)
+        {
+            return new UnknownWorkloadProtectableItem(
+                backupManagementType,
+                workloadType,
+                protectableItemType,
+                friendlyName,
+                protectionState,
                 serializedAdditionalRawData: null);
         }
 
@@ -774,6 +976,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static FetchTieringCostInfoContent FetchTieringCostInfoContent(RecoveryPointTierType sourceTierType = default, RecoveryPointTierType targetTierType = default, string objectType = null)
         {
             return new UnknownFetchTieringCostInfoRequest(sourceTierType, targetTierType, objectType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TieringCostInfo"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.TieringCostInfo"/> instance for mocking. </returns>
+        public static TieringCostInfo TieringCostInfo(string objectType = null)
+        {
+            return new UnknownTieringCostInfo(objectType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItem"/>. </summary>
@@ -867,6 +1077,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceState,
                 resourceStateSyncOn,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupSchedulePolicy"/>. </summary>
+        /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupSchedulePolicy"/> instance for mocking. </returns>
+        public static BackupSchedulePolicy BackupSchedulePolicy(string schedulePolicyType = null)
+        {
+            return new UnknownSchedulePolicy(schedulePolicyType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupRetentionPolicy"/>. </summary>
+        /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <returns> A new <see cref="Models.BackupRetentionPolicy"/> instance for mocking. </returns>
+        public static BackupRetentionPolicy BackupRetentionPolicy(string retentionPolicyType = null)
+        {
+            return new UnknownRetentionPolicy(retentionPolicyType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IaasClassicComputeVmProtectedItem"/>. </summary>

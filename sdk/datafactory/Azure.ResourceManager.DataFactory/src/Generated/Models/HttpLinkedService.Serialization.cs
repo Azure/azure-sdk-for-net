@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> url = default;
             HttpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<IDictionary<string, string>> authHeaders = default;
             DataFactoryElement<string> embeddedCertData = default;
             DataFactoryElement<string> certThumbprint = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))

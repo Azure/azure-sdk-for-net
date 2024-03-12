@@ -39,6 +39,14 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.ToolDefinition"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Assistants.ToolDefinition"/> instance for mocking. </returns>
+        public static ToolDefinition ToolDefinition(string type = null)
+        {
+            return new UnknownToolDefinition(type, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.ThreadInitializationMessage"/>. </summary>
         /// <param name="role"> The role associated with the assistant thread message. Currently, only 'user' is supported when providing initial messages to a new thread. </param>
         /// <param name="content"> The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via a separate call to the create message API. </param>
@@ -54,6 +62,14 @@ namespace Azure.AI.OpenAI.Assistants
             metadata ??= new Dictionary<string, string>();
 
             return new ThreadInitializationMessage(role, content, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.MessageContent"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Assistants.MessageContent"/> instance for mocking. </returns>
+        public static MessageContent MessageContent(string type = null)
+        {
+            return new UnknownMessageContent(type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.CreateRunOptions"/>. </summary>
@@ -80,6 +96,14 @@ namespace Azure.AI.OpenAI.Assistants
                 overrideTools?.ToList(),
                 metadata,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredAction"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Assistants.RequiredAction"/> instance for mocking. </returns>
+        public static RequiredAction RequiredAction(string type = null)
+        {
+            return new UnknownRequiredAction(type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunError"/>. </summary>
@@ -114,6 +138,14 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepDetails"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Assistants.RunStepDetails"/> instance for mocking. </returns>
+        public static RunStepDetails RunStepDetails(string type = "Unknown")
+        {
+            return new UnknownRunStepDetails(type, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
         /// <param name="code"> The error code for this error. </param>
         /// <param name="message"> The human-readable text associated with this error. </param>
@@ -139,6 +171,14 @@ namespace Azure.AI.OpenAI.Assistants
         public static RunStepToolCall RunStepToolCall(string type = null, string id = null)
         {
             return new UnknownRunStepToolCall(type, id, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepCodeInterpreterToolCallOutput"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <returns> A new <see cref="Assistants.RunStepCodeInterpreterToolCallOutput"/> instance for mocking. </returns>
+        public static RunStepCodeInterpreterToolCallOutput RunStepCodeInterpreterToolCallOutput(string type = null)
+        {
+            return new UnknownRunStepCodeInterpreterToolCallOutput(type, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepRetrievalToolCall"/>. </summary>

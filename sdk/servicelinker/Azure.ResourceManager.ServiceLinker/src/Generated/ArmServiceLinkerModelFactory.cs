@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="targetService">
         /// The target service properties
-        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
-        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
@@ -55,15 +55,31 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.TargetServiceBaseInfo"/>. </summary>
+        /// <param name="targetServiceType"> The target service type. </param>
+        /// <returns> A new <see cref="Models.TargetServiceBaseInfo"/> instance for mocking. </returns>
+        public static TargetServiceBaseInfo TargetServiceBaseInfo(string targetServiceType = "Unknown")
+        {
+            return new UnknownTargetServiceBase(targetServiceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AuthBaseInfo"/>. </summary>
+        /// <param name="authType"> The authentication type. </param>
+        /// <returns> A new <see cref="Models.AuthBaseInfo"/> instance for mocking. </returns>
+        public static AuthBaseInfo AuthBaseInfo(string authType = "Unknown")
+        {
+            return new UnknownAuthInfoBase(authType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.LinkerResourcePatch"/>. </summary>
         /// <param name="targetService">
         /// The target service properties
-        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
         /// </param>
         /// <param name="authInfo">
         /// The authentication type.
-        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
@@ -150,6 +166,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static SourceConfiguration SourceConfiguration(string name = null, string value = null)
         {
             return new SourceConfiguration(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureResourceBaseProperties"/>. </summary>
+        /// <param name="azureResourceType"> The azure resource type. </param>
+        /// <returns> A new <see cref="Models.AzureResourceBaseProperties"/> instance for mocking. </returns>
+        public static AzureResourceBaseProperties AzureResourceBaseProperties(string azureResourceType = "Unknown")
+        {
+            return new UnknownAzureResourcePropertiesBase(azureResourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecretBaseInfo"/>. </summary>
+        /// <param name="secretType"> The secret type. </param>
+        /// <returns> A new <see cref="Models.SecretBaseInfo"/> instance for mocking. </returns>
+        public static SecretBaseInfo SecretBaseInfo(string secretType = "Unknown")
+        {
+            return new UnknownSecretInfoBase(secretType, serializedAdditionalRawData: null);
         }
     }
 }

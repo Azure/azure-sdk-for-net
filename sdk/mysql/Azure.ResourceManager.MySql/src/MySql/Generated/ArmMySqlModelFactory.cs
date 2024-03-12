@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="properties">
         /// Properties of the server.
-        /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.MySqlServerPropertiesForDefaultCreate"/>, <see cref="Models.MySqlServerPropertiesForGeoRestore"/>, <see cref="Models.MySqlServerPropertiesForRestore"/> and <see cref="Models.MySqlServerPropertiesForReplica"/>.
         /// </param>
         /// <param name="location"> The location the resource resides in. </param>
@@ -39,6 +39,28 @@ namespace Azure.ResourceManager.MySql.Models
                 properties,
                 location,
                 tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlServerPropertiesForCreate"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
+        /// <returns> A new <see cref="Models.MySqlServerPropertiesForCreate"/> instance for mocking. </returns>
+        public static MySqlServerPropertiesForCreate MySqlServerPropertiesForCreate(MySqlServerVersion? version = null, MySqlSslEnforcementEnum? sslEnforcement = null, MySqlMinimalTlsVersionEnum? minimalTlsVersion = null, MySqlInfrastructureEncryption? infrastructureEncryption = null, MySqlPublicNetworkAccessEnum? publicNetworkAccess = null, MySqlStorageProfile storageProfile = null, string createMode = "Unknown")
+        {
+            return new UnknownServerPropertiesForCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
                 serializedAdditionalRawData: null);
         }
 

@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of cluster job.
-        /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.FlinkJobProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ClusterJob"/> instance for mocking. </returns>
@@ -271,6 +271,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 systemData,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterJobProperties"/>. </summary>
+        /// <param name="jobType"> Type of cluster job. </param>
+        /// <returns> A new <see cref="Models.ClusterJobProperties"/> instance for mocking. </returns>
+        public static ClusterJobProperties ClusterJobProperties(string jobType = "Unknown")
+        {
+            return new UnknownClusterJobProperties(jobType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterServiceConfigResult"/>. </summary>

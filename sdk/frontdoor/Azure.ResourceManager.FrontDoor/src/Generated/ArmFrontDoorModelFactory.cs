@@ -211,6 +211,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RouteConfiguration"/>. </summary>
+        /// <param name="odataType"></param>
+        /// <returns> A new <see cref="Models.RouteConfiguration"/> instance for mocking. </returns>
+        public static RouteConfiguration RouteConfiguration(string odataType = null)
+        {
+            return new UnknownRouteConfiguration(odataType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RoutingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="routeConfiguration">
         /// A reference to the routing configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
         /// </param>
         /// <param name="rulesEngineId"> A reference to a specific Rules Engine Configuration to apply to this route. </param>

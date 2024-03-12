@@ -758,12 +758,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="createdOn"> UTC Date and time when project was created. </param>
         /// <param name="sourceConnectionInfo">
         /// Information for connecting to source
-        /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
         /// </param>
         /// <param name="targetConnectionInfo">
         /// Information for connecting to target
-        /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
@@ -791,6 +791,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 databasesInfo?.ToList(),
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionInfo"/>. </summary>
+        /// <param name="connectionInfoType"> Type of connection info. </param>
+        /// <param name="userName"> User name. </param>
+        /// <param name="password"> Password credential. </param>
+        /// <returns> A new <see cref="Models.ConnectionInfo"/> instance for mocking. </returns>
+        public static ConnectionInfo ConnectionInfo(string connectionInfoType = null, string userName = null, string password = null)
+        {
+            return new UnknownConnectionInfo(connectionInfoType, userName, password, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Quota"/>. </summary>

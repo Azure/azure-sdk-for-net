@@ -616,12 +616,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <param name="rules">
         /// The rule applied to the policy.
-        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="effectiveRules">
         /// The readonly computed rule applied to the policy.
-        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyProperties"> Additional properties of scope. </param>
@@ -648,6 +648,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPolicyRule"/>. </summary>
+        /// <param name="id"> The id of the rule. </param>
+        /// <param name="ruleType"> The type of rule. </param>
+        /// <param name="target"> The target of the current rule. </param>
+        /// <returns> A new <see cref="Models.RoleManagementPolicyRule"/> instance for mocking. </returns>
+        public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = null, string ruleType = "Unknown", RoleManagementPolicyRuleTarget target = null)
+        {
+            return new UnknownRoleManagementPolicyRule(id, ruleType, target, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPolicyProperties"/>. </summary>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
@@ -668,7 +678,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="policyId"> The policy id role management policy assignment. </param>
         /// <param name="effectiveRules">
         /// The readonly computed rule applied to the policy.
-        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>

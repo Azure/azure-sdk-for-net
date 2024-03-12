@@ -348,6 +348,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.PartitionSchemeDescription"/>. </summary>
+        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <returns> A new <see cref="Models.PartitionSchemeDescription"/> instance for mocking. </returns>
+        public static PartitionSchemeDescription PartitionSchemeDescription(string partitionScheme = "Unknown")
+        {
+            return new UnknownPartitionSchemeDescription(partitionScheme, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServicePlacementPolicyDescription"/>. </summary>
+        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <returns> A new <see cref="Models.ServicePlacementPolicyDescription"/> instance for mocking. </returns>
+        public static ServicePlacementPolicyDescription ServicePlacementPolicyDescription(string policyType = "Unknown")
+        {
+            return new UnknownServicePlacementPolicyDescription(policyType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

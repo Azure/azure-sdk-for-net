@@ -67,6 +67,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupStoreDetails"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupStoreDetails"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupStoreDetails MySqlFlexibleServerBackupStoreDetails(string objectType = null)
+        {
+            return new UnknownBackupStoreDetails(objectType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupSettings"/>. </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="backupFormat"> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </param>

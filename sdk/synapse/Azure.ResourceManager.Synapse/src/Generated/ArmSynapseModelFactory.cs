@@ -2641,6 +2641,30 @@ namespace Azure.ResourceManager.Synapse.Models
                 ssisProperties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSecretBase"/>. </summary>
+        /// <param name="secretBaseType"> Type of the secret. </param>
+        /// <returns> A new <see cref="Models.SynapseSecretBase"/> instance for mocking. </returns>
+        public static SynapseSecretBase SynapseSecretBase(string secretBaseType = null)
+        {
+            return new UnknownSecretBase(secretBaseType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseCustomSetupBase"/>. </summary>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <returns> A new <see cref="Models.SynapseCustomSetupBase"/> instance for mocking. </returns>
+        public static SynapseCustomSetupBase SynapseCustomSetupBase(string customSetupBaseType = null)
+        {
+            return new UnknownCustomSetupBase(customSetupBaseType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseLinkedIntegrationRuntimeType"/>. </summary>
+        /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <returns> A new <see cref="Models.SynapseLinkedIntegrationRuntimeType"/> instance for mocking. </returns>
+        public static SynapseLinkedIntegrationRuntimeType SynapseLinkedIntegrationRuntimeType(string authorizationType = null)
+        {
+            return new UnknownLinkedIntegrationRuntimeType(authorizationType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             BinaryData connectionProperties = default;
             DataFactoryElement<string> endpoint = default;
-            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

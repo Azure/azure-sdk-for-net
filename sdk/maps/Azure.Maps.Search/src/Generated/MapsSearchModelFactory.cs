@@ -34,6 +34,13 @@ namespace Azure.Maps.Search.Models
             return new PolygonObject(providerId, geometryData);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonObject"/>. </summary>
+        /// <returns> A new <see cref="Models.GeoJsonObject"/> instance for mocking. </returns>
+        public static GeoJsonObject GeoJsonObject()
+        {
+            return new UnknownGeoJsonObject(default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategorySet"/>. </summary>
         /// <param name="id"> Category ID. </param>
         /// <returns> A new <see cref="Models.PointOfInterestCategorySet"/> instance for mocking. </returns>

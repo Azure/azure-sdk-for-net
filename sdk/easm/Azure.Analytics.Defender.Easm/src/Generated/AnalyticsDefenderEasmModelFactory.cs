@@ -129,6 +129,24 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.DataConnectionPayload"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <param name="name"> The name of data connection. </param>
+        /// <param name="content"> The type of data the data connection will transfer. </param>
+        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <returns> A new <see cref="Easm.DataConnectionPayload"/> instance for mocking. </returns>
+        public static DataConnectionPayload DataConnectionPayload(string kind = null, string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null)
+        {
+            return new UnknownDataConnectionPayload(
+                kind,
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.ValidateResult"/>. </summary>
         /// <param name="error"> This is the top-level error object whose code matches the x-ms-error-code response header. </param>
         /// <returns> A new <see cref="Easm.ValidateResult"/> instance for mocking. </returns>

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
         /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
@@ -185,6 +185,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 partitionDescription,
                 servicePackageActivationMode,
                 serviceDnsName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicePartitionScheme"/>. </summary>
+        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <returns> A new <see cref="Models.ManagedServicePartitionScheme"/> instance for mocking. </returns>
+        public static ManagedServicePartitionScheme ManagedServicePartitionScheme(string partitionScheme = "Unknown")
+        {
+            return new UnknownPartition(partitionScheme, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicePlacementPolicy"/>. </summary>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <returns> A new <see cref="Models.ManagedServicePlacementPolicy"/> instance for mocking. </returns>
+        public static ManagedServicePlacementPolicy ManagedServicePlacementPolicy(string servicePlacementPolicyType = "Unknown")
+        {
+            return new UnknownServicePlacementPolicy(servicePlacementPolicyType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceScalingMechanism"/>. </summary>
+        /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceScalingMechanism"/> instance for mocking. </returns>
+        public static ManagedServiceScalingMechanism ManagedServiceScalingMechanism(string kind = "Unknown")
+        {
+            return new UnknownScalingMechanism(kind, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceScalingTrigger"/>. </summary>
+        /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceScalingTrigger"/> instance for mocking. </returns>
+        public static ManagedServiceScalingTrigger ManagedServiceScalingTrigger(string kind = "Unknown")
+        {
+            return new UnknownScalingTrigger(kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
@@ -584,7 +616,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
         /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
@@ -593,7 +625,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
@@ -647,7 +679,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
         /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
@@ -656,7 +688,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ManagedServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>

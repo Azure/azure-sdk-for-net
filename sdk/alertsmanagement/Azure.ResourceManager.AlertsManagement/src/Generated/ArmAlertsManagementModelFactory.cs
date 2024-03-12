@@ -41,16 +41,42 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AlertProcessingRuleRecurrence"/>. </summary>
+        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
+        /// <param name="startOn"> Start time for recurrence. </param>
+        /// <param name="endOn"> End time for recurrence. </param>
+        /// <returns> A new <see cref="Models.AlertProcessingRuleRecurrence"/> instance for mocking. </returns>
+        public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = "Unknown", TimeSpan? startOn = null, TimeSpan? endOn = null)
+        {
+            return new UnknownRecurrence(recurrenceType, startOn, endOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AlertProcessingRuleAction"/>. </summary>
+        /// <param name="actionType"> Action that should be applied. </param>
+        /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
+        public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = "Unknown")
+        {
+            return new UnknownAction(actionType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertMetadata"/>. </summary>
         /// <param name="properties">
         /// alert meta data property bag
-        /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.MonitorServiceList"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
         {
             return new ServiceAlertMetadata(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertMetadataProperties"/>. </summary>
+        /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertMetadataProperties"/> instance for mocking. </returns>
+        public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = "Unknown")
+        {
+            return new UnknownAlertsMetaDataProperties(metadataIdentifier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagement.ServiceAlertData"/>. </summary>

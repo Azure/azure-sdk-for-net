@@ -415,6 +415,38 @@ namespace Azure.Health.Insights.RadiologyInsights
             return new FindingInference("finding", extension?.ToList(), serializedAdditionalRawData: null, finding);
         }
 
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4DomainResource"/>. </summary>
+        /// <param name="resourceType"> The type of resource. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
+        /// <param name="contained"> Contained, inline Resources. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4DomainResource"/> instance for mocking. </returns>
+        public static FhirR4DomainResource FhirR4DomainResource(string resourceType = null, string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+            contained ??= new List<FhirR4Resource>();
+            extension ??= new List<FhirR4Extension>();
+            modifierExtension ??= new List<FhirR4Extension>();
+
+            return new UnknownFhirR4DomainResource(
+                resourceType,
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties,
+                text,
+                contained?.ToList(),
+                extension?.ToList(),
+                modifierExtension?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Narrative"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
@@ -594,6 +626,14 @@ namespace Azure.Health.Insights.RadiologyInsights
                 isGuideline,
                 isHedging,
                 recommendedProcedure);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ProcedureRecommendation"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <returns> A new <see cref="RadiologyInsights.ProcedureRecommendation"/> instance for mocking. </returns>
+        public static ProcedureRecommendation ProcedureRecommendation(string kind = null)
+        {
+            return new UnknownProcedureRecommendation(kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.GenericProcedureRecommendation"/>. </summary>

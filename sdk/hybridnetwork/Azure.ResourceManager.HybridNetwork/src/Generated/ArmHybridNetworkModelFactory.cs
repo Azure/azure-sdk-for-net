@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
@@ -106,6 +106,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaResourceReference,
                 configurationType,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResourceIdReference"/>. </summary>
+        /// <param name="idType"> The resource reference arm id type. </param>
+        /// <returns> A new <see cref="Models.DeploymentResourceIdReference"/> instance for mocking. </returns>
+        public static DeploymentResourceIdReference DeploymentResourceIdReference(string idType = "Unknown")
+        {
+            return new UnknownDeploymentResourceIdReference(idType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionData"/>. </summary>
@@ -149,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
@@ -514,7 +522,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
         /// <param name="resourceElementTemplates">
         /// List of resource element template
-        /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/> instance for mocking. </returns>
@@ -532,6 +540,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfvisFromSite,
                 resourceElementTemplates?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceElementTemplate"/>. </summary>
+        /// <param name="name"> Name of the resource element template. </param>
+        /// <param name="resourceElementType"> The resource element template type. </param>
+        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <returns> A new <see cref="Models.ResourceElementTemplate"/> instance for mocking. </returns>
+        public static ResourceElementTemplate ResourceElementTemplate(string name = null, string resourceElementType = "Unknown", DependsOnProfile dependsOnProfile = null)
+        {
+            return new UnknownResourceElementTemplate(name, resourceElementType, dependsOnProfile, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.PublisherData"/>. </summary>
@@ -647,6 +665,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ArtifactAccessCredential"/>. </summary>
+        /// <param name="credentialType"> The credential type. </param>
+        /// <returns> A new <see cref="Models.ArtifactAccessCredential"/> instance for mocking. </returns>
+        public static ArtifactAccessCredential ArtifactAccessCredential(string credentialType = "Unknown")
+        {
+            return new UnknownArtifactAccessCredential(credentialType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactListOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -714,7 +740,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
         /// <param name="nfvis">
         /// List of NFVIs
-        /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </param>
         /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
@@ -725,6 +751,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             siteNetworkServiceReferences ??= new List<WritableSubResource>();
 
             return new SitePropertiesFormat(provisioningState, nfvis?.ToList(), siteNetworkServiceReferences?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NFVIs"/>. </summary>
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="nfviType"> The NFVI type. </param>
+        /// <returns> A new <see cref="Models.NFVIs"/> instance for mocking. </returns>
+        public static NFVIs NFVIs(string name = null, string nfviType = "Unknown")
+        {
+            return new UnknownNFVIs(name, nfviType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteNetworkServiceData"/>. </summary>
@@ -766,7 +801,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
         /// <param name="networkServiceDesignVersionResourceReference">
         /// The network service design version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
@@ -853,7 +888,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="secretConfigurationValue"> Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string. </param>
@@ -880,7 +915,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
@@ -908,7 +943,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
@@ -947,7 +982,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
@@ -984,7 +1019,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionTemplate">
         /// Containerized network function template.
-        /// Please note <see cref="ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
@@ -1000,6 +1035,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 networkFunctionTemplate);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionTemplate"/>. </summary>
+        /// <param name="nfviType"> The network function type. </param>
+        /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionTemplate"/> instance for mocking. </returns>
+        public static ContainerizedNetworkFunctionTemplate ContainerizedNetworkFunctionTemplate(string nfviType = "Unknown")
+        {
+            return new UnknownContainerizedNetworkFunctionTemplate(nfviType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
@@ -1007,7 +1050,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionTemplate">
         /// Virtual network function template.
-        /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
         /// </param>
         /// <returns> A new <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
@@ -1021,6 +1064,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 NetworkFunctionType.VirtualNetworkFunction,
                 serializedAdditionalRawData: null,
                 networkFunctionTemplate);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionTemplate"/>. </summary>
+        /// <param name="nfviType"> The network function type. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkFunctionTemplate"/> instance for mocking. </returns>
+        public static VirtualNetworkFunctionTemplate VirtualNetworkFunctionTemplate(string nfviType = "Unknown")
+        {
+            return new UnknownVirtualNetworkFunctionTemplate(nfviType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureArcKubernetesNetworkFunctionApplication"/>. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureArcKubernetesNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureArcKubernetesNetworkFunctionApplication AzureArcKubernetesNetworkFunctionApplication(string name = null, DependsOnProfile dependsOnProfile = null, string artifactType = "Unknown")
+        {
+            return new UnknownAzureArcKubernetesNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData: null, artifactType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureCoreNetworkFunctionApplication"/>. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureCoreNetworkFunctionApplication AzureCoreNetworkFunctionApplication(string name = null, DependsOnProfile dependsOnProfile = null, string artifactType = "Unknown")
+        {
+            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData: null, artifactType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureOperatorNexusNetworkFunctionApplication"/>. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureOperatorNexusNetworkFunctionApplication AzureOperatorNexusNetworkFunctionApplication(string name = null, DependsOnProfile dependsOnProfile = null, string artifactType = "Unknown")
+        {
+            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData: null, artifactType);
         }
     }
 }

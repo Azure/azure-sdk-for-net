@@ -30,6 +30,17 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfTonesResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.BaseDialog"/>. </summary>
+        /// <param name="kind"> Determines the type of the dialog. </param>
+        /// <param name="context"> Dialog context. </param>
+        /// <returns> A new <see cref="CallAutomation.BaseDialog"/> instance for mocking. </returns>
+        public static BaseDialog BaseDialog(string kind = "Unknown", IDictionary<string, object> context = null)
+        {
+            context ??= new Dictionary<string, object>();
+
+            return new UnknownDialog(kind, context);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantResult"/> instance for mocking. </returns>

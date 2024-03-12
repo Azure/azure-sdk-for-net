@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="backupPolicy">
         /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
         /// </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
@@ -209,6 +209,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountBackupPolicy"/>. </summary>
+        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
+        /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
+        /// <returns> A new <see cref="Models.CosmosDBAccountBackupPolicy"/> instance for mocking. </returns>
+        public static CosmosDBAccountBackupPolicy CosmosDBAccountBackupPolicy(string backupPolicyType = "Unknown", BackupPolicyMigrationState migrationState = null)
+        {
+            return new UnknownBackupPolicy(backupPolicyType, migrationState, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseAccountKeysMetadata"/>. </summary>
         /// <param name="primaryMasterKeyGeneratedOn"> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="secondaryMasterKeyGeneratedOn"> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </param>
@@ -244,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageSchemaType"> Analytical storage specific properties. </param>
         /// <param name="backupPolicy">
         /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
         /// </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
@@ -342,7 +351,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="backupPolicy">
         /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
         /// </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
@@ -2066,12 +2075,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="jobName"> Job Name. </param>
         /// <param name="source">
         /// Source DataStore details
-        /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="destination">
         /// Destination DataStore details
-        /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="status"> Job Status. </param>
@@ -2096,6 +2105,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataTransferDataSourceSink"/>. </summary>
+        /// <param name="component"></param>
+        /// <returns> A new <see cref="Models.DataTransferDataSourceSink"/> instance for mocking. </returns>
+        public static DataTransferDataSourceSink DataTransferDataSourceSink(string component = "Unknown")
+        {
+            return new UnknownDataTransferDataSourceSink(component, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CosmosDB.DataTransferJobGetResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2104,12 +2121,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="jobName"> Job Name. </param>
         /// <param name="source">
         /// Source DataStore details
-        /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="destination">
         /// Destination DataStore details
-        /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </param>
         /// <param name="status"> Job Status. </param>

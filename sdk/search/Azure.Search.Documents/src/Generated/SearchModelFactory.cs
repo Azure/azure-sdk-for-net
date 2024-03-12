@@ -93,6 +93,14 @@ namespace Azure.Search.Documents.Models
             return new AutocompleteResults(coverage, results?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerDataIdentity"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataIdentity"/> instance for mocking. </returns>
+        public static SearchIndexerDataIdentity SearchIndexerDataIdentity(string oDataType = null)
+        {
+            return new UnknownSearchIndexerDataIdentity(oDataType);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>

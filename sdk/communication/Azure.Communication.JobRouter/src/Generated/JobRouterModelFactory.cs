@@ -33,6 +33,17 @@ namespace Azure.Communication.JobRouter
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.DistributionMode"/>. </summary>
+        /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
+        /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionMode"/> instance for mocking. </returns>
+        public static DistributionMode DistributionMode(int minConcurrentOffers = default, int maxConcurrentOffers = default, bool? bypassSelectors = null, string kind = "Unknown")
+        {
+            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a classification policy. </param>
@@ -58,6 +69,30 @@ namespace Azure.Communication.JobRouter
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.QueueSelectorAttachment"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.QueueSelectorAttachment"/> instance for mocking. </returns>
+        public static QueueSelectorAttachment QueueSelectorAttachment(string kind = "Unknown")
+        {
+            return new UnknownQueueSelectorAttachment(kind, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterRule"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
+        /// <returns> A new <see cref="JobRouter.RouterRule"/> instance for mocking. </returns>
+        public static RouterRule RouterRule(string kind = "Unknown")
+        {
+            return new UnknownRouterRule(kind, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.WorkerSelectorAttachment"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <returns> A new <see cref="JobRouter.WorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static WorkerSelectorAttachment WorkerSelectorAttachment(string kind = "Unknown")
+        {
+            return new UnknownWorkerSelectorAttachment(kind, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of an exception policy. </param>
@@ -81,6 +116,14 @@ namespace Azure.Communication.JobRouter
             actions ??= new List<ExceptionAction>();
 
             return new ExceptionRule(id, trigger, actions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionTrigger"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionTrigger"/> instance for mocking. </returns>
+        public static ExceptionTrigger ExceptionTrigger(string kind = "Unknown")
+        {
+            return new UnknownExceptionTrigger(kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionAction"/>. </summary>
@@ -117,6 +160,14 @@ namespace Azure.Communication.JobRouter
         public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
         {
             return new RouterJobNote(message, addedAt, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.JobMatchingMode"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        /// <returns> A new <see cref="JobRouter.JobMatchingMode"/> instance for mocking. </returns>
+        public static JobMatchingMode JobMatchingMode(string kind = "Unknown")
+        {
+            return new UnknownJobMatchingMode(kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>

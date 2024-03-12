@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="actions">
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
@@ -167,6 +167,45 @@ namespace Azure.ResourceManager.Monitor.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AlertRuleCondition"/>. </summary>
+        /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
+        /// <param name="dataSource">
+        /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
+        /// Please note <see cref="Models.RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.AlertRuleCondition"/> instance for mocking. </returns>
+        public static AlertRuleCondition AlertRuleCondition(string odataType = null, RuleDataSource dataSource = null)
+        {
+            return new UnknownRuleCondition(odataType, dataSource, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuleDataSource"/>. </summary>
+        /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
+        /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
+        /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
+        /// <param name="resourceLocation"> the location of the resource. </param>
+        /// <param name="metricNamespace"> the namespace of the metric. </param>
+        /// <returns> A new <see cref="Models.RuleDataSource"/> instance for mocking. </returns>
+        public static RuleDataSource RuleDataSource(string odataType = null, ResourceIdentifier resourceId = null, ResourceIdentifier legacyResourceId = null, string resourceLocation = null, string metricNamespace = null)
+        {
+            return new UnknownRuleDataSource(
+                odataType,
+                resourceId,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AlertRuleAction"/>. </summary>
+        /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
+        /// <returns> A new <see cref="Models.AlertRuleAction"/> instance for mocking. </returns>
+        public static AlertRuleAction AlertRuleAction(string odataType = null)
+        {
+            return new UnknownRuleAction(odataType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AlertRulePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="name"> the name of the alert rule. </param>
@@ -175,17 +214,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="actions">
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>

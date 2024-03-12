@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="partnerTopicInfo"> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </param>
         /// <param name="partnerDestinationInfo">
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
@@ -79,6 +79,42 @@ namespace Azure.ResourceManager.EventGrid.Models
                 readinessState,
                 expireOnIfNotActivated,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerDestinationInfo"/>. </summary>
+        /// <param name="azureSubscriptionId">
+        /// Azure subscription ID of the subscriber. The partner destination associated with the channel will be
+        /// created under this Azure subscription.
+        /// </param>
+        /// <param name="resourceGroupName">
+        /// Azure Resource Group of the subscriber. The partner destination associated with the channel will be
+        /// created under this resource group.
+        /// </param>
+        /// <param name="name"> Name of the partner destination associated with the channel. </param>
+        /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
+        /// <param name="endpointServiceContext"> Additional context of the partner destination endpoint. </param>
+        /// <param name="resourceMoveChangeHistory"> Change history of the resource move. </param>
+        /// <returns> A new <see cref="Models.PartnerDestinationInfo"/> instance for mocking. </returns>
+        public static PartnerDestinationInfo PartnerDestinationInfo(string azureSubscriptionId = null, string resourceGroupName = null, string name = null, string endpointType = "Unknown", string endpointServiceContext = null, IEnumerable<ResourceMoveChangeHistory> resourceMoveChangeHistory = null)
+        {
+            resourceMoveChangeHistory ??= new List<ResourceMoveChangeHistory>();
+
+            return new UnknownPartnerDestinationInfo(
+                azureSubscriptionId,
+                resourceGroupName,
+                name,
+                endpointType,
+                endpointServiceContext,
+                resourceMoveChangeHistory?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerUpdateDestinationInfo"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
+        /// <returns> A new <see cref="Models.PartnerUpdateDestinationInfo"/> instance for mocking. </returns>
+        public static PartnerUpdateDestinationInfo PartnerUpdateDestinationInfo(string endpointType = "Unknown")
+        {
+            return new UnknownPartnerUpdateDestinationInfo(endpointType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventSubscriptionFullUri"/>. </summary>
@@ -168,7 +204,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="inputSchemaMapping">
         /// Information about the InputSchemaMapping which specified the info about mapping event payload.
-        /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventGridJsonInputSchemaMapping"/>.
         /// </param>
         /// <param name="metricResourceId"> Metric resource id for the Event Grid Domain Resource. </param>
@@ -256,6 +292,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.EventGridInputSchemaMapping"/>. </summary>
+        /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
+        /// <returns> A new <see cref="Models.EventGridInputSchemaMapping"/> instance for mocking. </returns>
+        public static EventGridInputSchemaMapping EventGridInputSchemaMapping(string inputSchemaMappingType = "Unknown")
+        {
+            return new UnknownInputSchemaMapping(inputSchemaMappingType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.EventGridDomainSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the domain. </param>
         /// <param name="key2"> Shared access key2 for the domain. </param>
@@ -283,6 +327,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DeliveryAttributeMapping"/>. </summary>
+        /// <param name="name"> Name of the delivery attribute or header. </param>
+        /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
+        /// <returns> A new <see cref="Models.DeliveryAttributeMapping"/> instance for mocking. </returns>
+        public static DeliveryAttributeMapping DeliveryAttributeMapping(string name = null, string mappingType = "Unknown")
+        {
+            return new UnknownDeliveryAttributeMapping(name, mappingType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="EventGrid.NamespaceTopicEventSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -307,6 +360,31 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DeadLetterDestination"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
+        /// <returns> A new <see cref="Models.DeadLetterDestination"/> instance for mocking. </returns>
+        public static DeadLetterDestination DeadLetterDestination(string endpointType = "Unknown")
+        {
+            return new UnknownDeadLetterDestination(endpointType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EventSubscriptionDestination"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
+        /// <returns> A new <see cref="Models.EventSubscriptionDestination"/> instance for mocking. </returns>
+        public static EventSubscriptionDestination EventSubscriptionDestination(string endpointType = "Unknown")
+        {
+            return new UnknownEventSubscriptionDestination(endpointType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EventGridFilter"/>. </summary>
+        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
+        /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <returns> A new <see cref="Models.EventGridFilter"/> instance for mocking. </returns>
+        public static EventGridFilter EventGridFilter(string operatorType = "Unknown", string key = null)
+        {
+            return new UnknownFilter(operatorType, key, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -317,7 +395,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="destination">
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
-        /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="Models.WebHookEventSubscriptionDestination"/>.
         /// </param>
         /// <param name="deliveryWithResourceIdentity">
@@ -332,7 +410,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deadLetterDestination">
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
-        /// Please note <see cref="DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </param>
         /// <param name="deadLetterWithResourceIdentity">
@@ -361,6 +439,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 deadLetterDestination,
                 deadLetterWithResourceIdentity,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AdvancedFilter"/>. </summary>
+        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
+        /// <param name="key"> The field/property in the event based on which you want to filter. </param>
+        /// <returns> A new <see cref="Models.AdvancedFilter"/> instance for mocking. </returns>
+        public static AdvancedFilter AdvancedFilter(string operatorType = "Unknown", string key = null)
+        {
+            return new UnknownAdvancedFilter(operatorType, key, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridNamespaceData"/>. </summary>
@@ -450,6 +537,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StaticRoutingEnrichment"/>. </summary>
+        /// <param name="key"> Static routing enrichment key. </param>
+        /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
+        /// <returns> A new <see cref="Models.StaticRoutingEnrichment"/> instance for mocking. </returns>
+        public static StaticRoutingEnrichment StaticRoutingEnrichment(string key = null, string valueType = "Unknown")
+        {
+            return new UnknownStaticRoutingEnrichment(key, valueType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NamespaceSharedAccessKeys"/>. </summary>
@@ -838,7 +934,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the topic. </param>
         /// <param name="inputSchemaMapping">
         /// This enables publishing using custom event schemas. An InputSchemaMapping can be specified to map various properties of a source schema to various required properties of the EventGridEvent schema.
-        /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventGridJsonInputSchemaMapping"/>.
         /// </param>
         /// <param name="metricResourceId"> Metric resource id for the topic. </param>
@@ -1024,6 +1120,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerClientAuthentication"/>. </summary>
+        /// <param name="clientAuthenticationType"> Type of client authentication. </param>
+        /// <returns> A new <see cref="Models.PartnerClientAuthentication"/> instance for mocking. </returns>
+        public static PartnerClientAuthentication PartnerClientAuthentication(string clientAuthenticationType = "Unknown")
+        {
+            return new UnknownPartnerClientAuthentication(clientAuthenticationType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.WebHookEventSubscriptionDestination"/>. </summary>
         /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
@@ -1033,7 +1137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="deliveryAttributeMappings">
         /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>

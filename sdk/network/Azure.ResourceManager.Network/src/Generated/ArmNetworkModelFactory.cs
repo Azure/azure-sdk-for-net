@@ -3490,7 +3490,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
@@ -3509,6 +3509,16 @@ namespace Azure.ResourceManager.Network.Models
                 priority,
                 ruleCollections?.ToList(),
                 provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallPolicyRuleCollectionInfo"/>. </summary>
+        /// <param name="ruleCollectionType"> The type of the rule collection. </param>
+        /// <param name="name"> The name of the rule collection. </param>
+        /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
+        /// <returns> A new <see cref="Models.FirewallPolicyRuleCollectionInfo"/> instance for mocking. </returns>
+        public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = "Unknown", string name = null, int? priority = null)
+        {
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IdpsSignatureListResult"/>. </summary>
@@ -7617,6 +7627,16 @@ namespace Azure.ResourceManager.Network.Models
                 groupByUserSession?.ToList(),
                 action,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallPolicyRule"/>. </summary>
+        /// <param name="name"> Name of the rule. </param>
+        /// <param name="description"> Description of the rule. </param>
+        /// <param name="ruleType"> Rule Type. </param>
+        /// <returns> A new <see cref="Models.FirewallPolicyRule"/> instance for mocking. </returns>
+        public static FirewallPolicyRule FirewallPolicyRule(string name = null, string description = null, string ruleType = "Unknown")
+        {
+            return new UnknownFirewallPolicyRule(name, description, ruleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActiveSecurityAdminRule"/>. </summary>
