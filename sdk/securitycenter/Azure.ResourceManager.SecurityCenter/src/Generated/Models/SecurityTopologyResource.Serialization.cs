@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,19 +48,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CalculatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CalculatedOn))
             {
                 writer.WritePropertyName("calculatedDateTime"u8);
                 writer.WriteStringValue(CalculatedOn.Value, "O");
             }
-            if (options.Format != "W" && !(TopologyResources is ChangeTrackingList<TopologySingleResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TopologyResources))
             {
                 writer.WritePropertyName("topologyResources"u8);
                 writer.WriteStartArray();

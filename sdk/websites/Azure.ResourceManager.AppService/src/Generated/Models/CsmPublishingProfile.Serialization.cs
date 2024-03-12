@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (IsIncludeDisasterRecoveryEndpoints.HasValue)
+            if (Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
             {
                 writer.WritePropertyName("includeDisasterRecoveryEndpoints"u8);
                 writer.WriteBooleanValue(IsIncludeDisasterRecoveryEndpoints.Value);

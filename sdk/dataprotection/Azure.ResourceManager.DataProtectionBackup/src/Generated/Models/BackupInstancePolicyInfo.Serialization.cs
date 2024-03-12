@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            if (options.Format != "W" && PolicyVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyVersion))
             {
                 writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
-            if (PolicyParameters != null)
+            if (Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (AppLocation.HasValue)
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (InfrastructureConfiguration != null)
+            if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (SoftwareConfiguration != null)
+            if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
             }
-            if (OSSapConfiguration != null)
+            if (Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
                 writer.WriteObjectValue(OSSapConfiguration);

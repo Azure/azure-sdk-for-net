@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The ModelStatus. </summary>
     public readonly partial struct ModelStatus : IEquatable<ModelStatus>
     {
         private readonly string _value;

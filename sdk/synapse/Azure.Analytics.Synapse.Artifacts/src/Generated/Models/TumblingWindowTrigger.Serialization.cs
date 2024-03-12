@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,12 +24,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Pipeline);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -51,24 +52,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            if (EndTime.HasValue)
+            if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (Delay != null)
+            if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
                 writer.WriteObjectValue(Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
-            if (RetryPolicy != null)
+            if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (!(DependsOn is ChangeTrackingList<DependencyReference> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();

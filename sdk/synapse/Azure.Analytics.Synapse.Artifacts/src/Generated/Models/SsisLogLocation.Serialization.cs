@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,12 +25,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (AccessCredential != null)
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (LogRefreshInterval != null)
+            if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 writer.WriteObjectValue(LogRefreshInterval);

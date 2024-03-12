@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class VectorSearchUsingFieldBuilder : SearchTestBase
     {
         public VectorSearchUsingFieldBuilder(bool async, SearchClientOptions.ServiceVersion serviceVersion)

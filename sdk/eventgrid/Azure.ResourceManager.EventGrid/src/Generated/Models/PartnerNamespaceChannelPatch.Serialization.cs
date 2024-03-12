@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExpireOnIfNotActivated.HasValue)
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
-            if (PartnerDestinationInfo != null)
+            if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
                 writer.WriteObjectValue(PartnerDestinationInfo);
             }
-            if (PartnerTopicInfo != null)
+            if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);

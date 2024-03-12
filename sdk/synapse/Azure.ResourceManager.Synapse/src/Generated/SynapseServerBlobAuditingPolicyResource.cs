@@ -198,10 +198,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseServerBlobAuditingPolicyResource>> UpdateAsync(WaitUntil waitUntil, SynapseServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseServerBlobAuditingPolicyResource.Update");
             scope.Start();
@@ -247,10 +244,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseServerBlobAuditingPolicyResource> Update(WaitUntil waitUntil, SynapseServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseServerBlobAuditingPolicyResource.Update");
             scope.Start();

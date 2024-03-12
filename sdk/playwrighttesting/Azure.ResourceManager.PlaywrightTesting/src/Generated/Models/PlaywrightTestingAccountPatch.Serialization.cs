@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PlaywrightTesting;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RegionalAffinity.HasValue)
+            if (Optional.IsDefined(RegionalAffinity))
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (ScalableExecution.HasValue)
+            if (Optional.IsDefined(ScalableExecution))
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Reporting.HasValue)
+            if (Optional.IsDefined(Reporting))
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());

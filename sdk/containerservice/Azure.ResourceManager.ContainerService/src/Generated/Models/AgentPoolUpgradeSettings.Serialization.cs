@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (MaxSurge != null)
+            if (Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
             }
-            if (DrainTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(DrainTimeoutInMinutes))
             {
                 writer.WritePropertyName("drainTimeoutInMinutes"u8);
                 writer.WriteNumberValue(DrainTimeoutInMinutes.Value);

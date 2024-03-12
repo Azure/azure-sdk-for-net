@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ValidationResponse != null)
+            if (Optional.IsDefined(ValidationResponse))
             {
                 writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StringId != null)
+            if (options.Format != "W" && Optional.IsDefined(StringId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(StringId);

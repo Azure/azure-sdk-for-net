@@ -22,18 +22,9 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceInternal source, string callbackUri)
         {
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
             Source = source;

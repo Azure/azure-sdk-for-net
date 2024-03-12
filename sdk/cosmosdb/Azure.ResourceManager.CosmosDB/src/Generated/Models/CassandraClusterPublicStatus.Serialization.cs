@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (ReaperStatus != null)
+            if (Optional.IsDefined(ReaperStatus))
             {
                 writer.WritePropertyName("reaperStatus"u8);
                 writer.WriteObjectValue(ReaperStatus);
             }
-            if (!(ConnectionErrors is ChangeTrackingList<CassandraConnectionError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionErrors))
             {
                 writer.WritePropertyName("connectionErrors"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Errors is ChangeTrackingList<CassandraError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataCenters is ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataCenters))
             {
                 writer.WritePropertyName("dataCenters"u8);
                 writer.WriteStartArray();

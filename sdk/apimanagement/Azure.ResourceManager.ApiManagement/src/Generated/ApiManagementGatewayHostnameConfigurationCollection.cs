@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementGatewayHostnameConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hcId, ApiManagementGatewayHostnameConfigurationData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementGatewayHostnameConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string hcId, ApiManagementGatewayHostnameConfigurationData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGatewayHostnameConfigurationResource>> GetAsync(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual Response<ApiManagementGatewayHostnameConfigurationResource> Get(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.Get");
             scope.Start();
@@ -370,14 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.Exists");
             scope.Start();
@@ -420,14 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual Response<bool> Exists(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.Exists");
             scope.Start();
@@ -470,14 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementGatewayHostnameConfigurationResource>> GetIfExistsAsync(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.GetIfExists");
             scope.Start();
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hcId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementGatewayHostnameConfigurationResource> GetIfExists(string hcId, CancellationToken cancellationToken = default)
         {
-            if (hcId == null)
-            {
-                throw new ArgumentNullException(nameof(hcId));
-            }
-            if (hcId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hcId));
-            }
+            Argument.AssertNotNullOrEmpty(hcId, nameof(hcId));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationCollection.GetIfExists");
             scope.Start();

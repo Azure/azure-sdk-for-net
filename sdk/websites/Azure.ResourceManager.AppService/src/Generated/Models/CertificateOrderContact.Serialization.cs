@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (NameFirst != null)
+            if (Optional.IsDefined(NameFirst))
             {
                 writer.WritePropertyName("nameFirst"u8);
                 writer.WriteStringValue(NameFirst);
             }
-            if (NameLast != null)
+            if (Optional.IsDefined(NameLast))
             {
                 writer.WritePropertyName("nameLast"u8);
                 writer.WriteStringValue(NameLast);
             }
-            if (Phone != null)
+            if (Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);

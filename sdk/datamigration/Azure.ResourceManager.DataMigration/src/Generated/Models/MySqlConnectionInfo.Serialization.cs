@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -28,36 +29,36 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (EncryptConnection.HasValue)
+            if (Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Authentication.HasValue)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            if (AdditionalSettings != null)
+            if (Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);

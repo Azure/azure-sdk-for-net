@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionInMb.HasValue)
+            if (Optional.IsDefined(RetentionInMb))
             {
                 writer.WritePropertyName("retentionInMb"u8);
                 writer.WriteNumberValue(RetentionInMb.Value);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

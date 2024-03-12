@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (CloudServiceConfiguration != null)
+            if (Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
                 writer.WriteObjectValue(CloudServiceConfiguration);
             }
-            if (VmConfiguration != null)
+            if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VmConfiguration);

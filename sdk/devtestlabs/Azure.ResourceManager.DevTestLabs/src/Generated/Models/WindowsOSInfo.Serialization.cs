@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (WindowsOSState.HasValue)
+            if (Optional.IsDefined(WindowsOSState))
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());

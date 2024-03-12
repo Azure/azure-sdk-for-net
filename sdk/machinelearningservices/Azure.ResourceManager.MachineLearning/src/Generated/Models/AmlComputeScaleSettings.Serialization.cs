@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
-            if (MinNodeCount.HasValue)
+            if (Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (NodeIdleTimeBeforeScaleDown.HasValue)
+            if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {

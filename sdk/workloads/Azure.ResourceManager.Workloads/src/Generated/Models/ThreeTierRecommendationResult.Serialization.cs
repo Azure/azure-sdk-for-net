@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DBVmSku != null)
+            if (Optional.IsDefined(DBVmSku))
             {
                 writer.WritePropertyName("dbVmSku"u8);
                 writer.WriteStringValue(DBVmSku);
             }
-            if (DatabaseInstanceCount.HasValue)
+            if (Optional.IsDefined(DatabaseInstanceCount))
             {
                 writer.WritePropertyName("databaseInstanceCount"u8);
                 writer.WriteNumberValue(DatabaseInstanceCount.Value);
             }
-            if (CentralServerVmSku != null)
+            if (Optional.IsDefined(CentralServerVmSku))
             {
                 writer.WritePropertyName("centralServerVmSku"u8);
                 writer.WriteStringValue(CentralServerVmSku);
             }
-            if (CentralServerInstanceCount.HasValue)
+            if (Optional.IsDefined(CentralServerInstanceCount))
             {
                 writer.WritePropertyName("centralServerInstanceCount"u8);
                 writer.WriteNumberValue(CentralServerInstanceCount.Value);
             }
-            if (ApplicationServerVmSku != null)
+            if (Optional.IsDefined(ApplicationServerVmSku))
             {
                 writer.WritePropertyName("applicationServerVmSku"u8);
                 writer.WriteStringValue(ApplicationServerVmSku);
             }
-            if (ApplicationServerInstanceCount.HasValue)
+            if (Optional.IsDefined(ApplicationServerInstanceCount))
             {
                 writer.WritePropertyName("applicationServerInstanceCount"u8);
                 writer.WriteNumberValue(ApplicationServerInstanceCount.Value);

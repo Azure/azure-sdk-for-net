@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ImageName);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
-            if (ImageRepository != null)
+            if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
                 writer.WriteObjectValue(ImageRepository);

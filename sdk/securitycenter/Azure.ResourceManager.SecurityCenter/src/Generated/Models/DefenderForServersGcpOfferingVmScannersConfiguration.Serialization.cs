@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ScanningMode.HasValue)
+            if (Optional.IsDefined(ScanningMode))
             {
                 writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (!(ExclusionTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionTags))
             {
                 writer.WritePropertyName("exclusionTags"u8);
                 writer.WriteStartObject();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PhysicalPartitionStorageInfoCollectionValue is ChangeTrackingList<PhysicalPartitionStorageInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue))
             {
                 writer.WritePropertyName("physicalPartitionStorageInfoCollection"u8);
                 writer.WriteStartArray();

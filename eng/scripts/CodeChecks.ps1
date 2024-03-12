@@ -55,6 +55,11 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
+    Write-Host "Restore ./node_modules"
+    Invoke-Block {
+        & npm ci --prefix $RepoRoot
+    }
+
     if ($ProjectDirectory -and -not $ServiceDirectory)
     {
         if ($ProjectDirectory -match "sdk[\\/](?<projectdir>.*)[\\/]src")
@@ -87,9 +92,13 @@ try {
                         }
             }
 
+        $debugLogging = $env:SYSTEM_DEBUG -eq "true"
+        $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+        $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
+
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments
         }
     }
 

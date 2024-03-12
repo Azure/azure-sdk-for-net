@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<DataFlowStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Destinations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TransformKql != null)
+            if (Optional.IsDefined(TransformKql))
             {
                 writer.WritePropertyName("transformKql"u8);
                 writer.WriteStringValue(TransformKql);
             }
-            if (OutputStream != null)
+            if (Optional.IsDefined(OutputStream))
             {
                 writer.WritePropertyName("outputStream"u8);
                 writer.WriteStringValue(OutputStream);
             }
-            if (BuiltInTransform != null)
+            if (Optional.IsDefined(BuiltInTransform))
             {
                 writer.WritePropertyName("builtInTransform"u8);
                 writer.WriteStringValue(BuiltInTransform);

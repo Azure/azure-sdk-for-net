@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsWindowEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWindowEnabled))
             {
                 writer.WritePropertyName("isWindowEnabled"u8);
                 writer.WriteBooleanValue(IsWindowEnabled.Value);
             }
-            if (options.Format != "W" && IsRegionReady.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRegionReady))
             {
                 writer.WritePropertyName("isRegionReady"u8);
                 writer.WriteBooleanValue(IsRegionReady.Value);
             }
-            if (options.Format != "W" && IsWindowActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWindowActive))
             {
                 writer.WritePropertyName("isWindowActive"u8);
                 writer.WriteBooleanValue(IsWindowActive.Value);
             }
-            if (options.Format != "W" && CanApplyUpdates.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CanApplyUpdates))
             {
                 writer.WritePropertyName("canApplyUpdates"u8);
                 writer.WriteBooleanValue(CanApplyUpdates.Value);
             }
-            if (options.Format != "W" && LastWindowStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStatusUpdatedOn))
             {
                 writer.WritePropertyName("lastWindowStatusUpdateAtUTC"u8);
                 writer.WriteStringValue(LastWindowStatusUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastWindowStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStartOn))
             {
                 writer.WritePropertyName("lastWindowStartTimeUTC"u8);
                 writer.WriteStringValue(LastWindowStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastWindowEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowEndOn))
             {
                 writer.WritePropertyName("lastWindowEndTimeUTC"u8);
                 writer.WriteStringValue(LastWindowEndOn.Value, "O");

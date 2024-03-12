@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
+            string operationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ExecuteRuleStatus(operationId.Value);
+            return new ExecuteRuleStatus(operationId);
         }
 
         BinaryData IPersistableModel<ExecuteRuleStatus>.Write(ModelReaderWriterOptions options)

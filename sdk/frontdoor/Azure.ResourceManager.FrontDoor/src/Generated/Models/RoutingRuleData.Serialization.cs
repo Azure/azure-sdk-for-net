@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -27,24 +28,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(FrontendEndpoints is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendEndpoints))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AcceptedProtocols is ChangeTrackingList<FrontDoorProtocol> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AcceptedProtocols))
             {
                 writer.WritePropertyName("acceptedProtocols"u8);
                 writer.WriteStartArray();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternsToMatch is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternsToMatch))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
@@ -74,27 +75,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (RouteConfiguration != null)
+            if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
                 writer.WriteObjectValue(RouteConfiguration);
             }
-            if (RulesEngine != null)
+            if (Optional.IsDefined(RulesEngine))
             {
                 writer.WritePropertyName("rulesEngine"u8);
                 JsonSerializer.Serialize(writer, RulesEngine);
             }
-            if (WebApplicationFirewallPolicyLink != null)
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());

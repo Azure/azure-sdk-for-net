@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (WindowsParameters != null)
+            if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (LinuxParameters != null)
+            if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);

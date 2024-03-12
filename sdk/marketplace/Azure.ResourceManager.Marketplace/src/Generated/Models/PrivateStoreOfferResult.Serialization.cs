@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -27,42 +28,42 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UniqueOfferId != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueOfferId))
             {
                 writer.WritePropertyName("uniqueOfferId"u8);
                 writer.WriteStringValue(UniqueOfferId);
             }
-            if (options.Format != "W" && OfferDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferDisplayName))
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (options.Format != "W" && PublisherDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherDisplayName))
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && PrivateStoreId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (!(SpecificPlanIdsLimitation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
             {
                 writer.WritePropertyName("specificPlanIdsLimitation"u8);
                 writer.WriteStartArray();
@@ -72,12 +73,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsUpdateSuppressedDueToIdempotence.HasValue)
+            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
                 writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
-            if (!(IconFileUris is ChangeTrackingDictionary<string, Uri> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IconFileUris))
             {
                 writer.WritePropertyName("iconFileUris"u8);
                 writer.WriteStartObject();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Plans is ChangeTrackingList<PrivateStorePlan> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();

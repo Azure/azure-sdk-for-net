@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,44 +48,44 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ContactAdmin != null)
+            if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
                 writer.WriteObjectValue(ContactAdmin);
             }
-            if (ContactBilling != null)
+            if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
                 writer.WriteObjectValue(ContactBilling);
             }
-            if (ContactRegistrant != null)
+            if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
                 writer.WriteObjectValue(ContactRegistrant);
             }
-            if (ContactTech != null)
+            if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
                 writer.WriteObjectValue(ContactTech);
             }
-            if (options.Format != "W" && RegistrationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -94,37 +95,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsDomainPrivacyEnabled.HasValue)
+            if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
                 writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastRenewedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRenewedOn))
             {
                 writer.WritePropertyName("lastRenewedTime"u8);
                 writer.WriteStringValue(LastRenewedOn.Value, "O");
             }
-            if (IsAutoRenew.HasValue)
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (options.Format != "W" && IsReadyForDnsRecordManagement.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReadyForDnsRecordManagement))
             {
                 writer.WritePropertyName("readyForDnsRecordManagement"u8);
                 writer.WriteBooleanValue(IsReadyForDnsRecordManagement.Value);
             }
-            if (options.Format != "W" && !(ManagedHostNames is ChangeTrackingList<AppServiceHostName> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedHostNames))
             {
                 writer.WritePropertyName("managedHostNames"u8);
                 writer.WriteStartArray();
@@ -134,12 +135,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Consent != null)
+            if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
                 writer.WriteObjectValue(Consent);
             }
-            if (options.Format != "W" && !(DomainNotRenewableReasons is ChangeTrackingList<DomainNotRenewableReason> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
             {
                 writer.WritePropertyName("domainNotRenewableReasons"u8);
                 writer.WriteStartArray();
@@ -149,22 +150,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DnsType.HasValue)
+            if (Optional.IsDefined(DnsType))
             {
                 writer.WritePropertyName("dnsType"u8);
                 writer.WriteStringValue(DnsType.Value.ToSerialString());
             }
-            if (DnsZoneId != null)
+            if (Optional.IsDefined(DnsZoneId))
             {
                 writer.WritePropertyName("dnsZoneId"u8);
                 writer.WriteStringValue(DnsZoneId);
             }
-            if (TargetDnsType.HasValue)
+            if (Optional.IsDefined(TargetDnsType))
             {
                 writer.WritePropertyName("targetDnsType"u8);
                 writer.WriteStringValue(TargetDnsType.Value.ToSerialString());
             }
-            if (AuthCode != null)
+            if (Optional.IsDefined(AuthCode))
             {
                 writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);

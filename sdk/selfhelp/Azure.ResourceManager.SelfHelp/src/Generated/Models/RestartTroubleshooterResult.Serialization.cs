@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TroubleshooterResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(TroubleshooterResourceName))
             {
                 writer.WritePropertyName("troubleshooterResourceName"u8);
                 writer.WriteStringValue(TroubleshooterResourceName);

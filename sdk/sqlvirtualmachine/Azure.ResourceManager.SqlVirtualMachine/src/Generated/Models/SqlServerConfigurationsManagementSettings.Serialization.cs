@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (SqlConnectivityUpdateSettings != null)
+            if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
                 writer.WriteObjectValue(SqlConnectivityUpdateSettings);
             }
-            if (SqlWorkloadTypeUpdateSettings != null)
+            if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
                 writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
             }
-            if (SqlStorageUpdateSettings != null)
+            if (Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
                 writer.WriteObjectValue(SqlStorageUpdateSettings);
             }
-            if (AdditionalFeaturesServerConfigurations != null)
+            if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
                 writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
             }
-            if (SqlInstanceSettings != null)
+            if (Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings);

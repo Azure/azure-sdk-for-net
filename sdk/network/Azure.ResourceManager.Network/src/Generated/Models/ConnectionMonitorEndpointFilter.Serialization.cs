@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (FilterType.HasValue)
+            if (Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FilterType.Value.ToString());
             }
-            if (!(Items is ChangeTrackingList<ConnectionMonitorEndpointFilterItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();

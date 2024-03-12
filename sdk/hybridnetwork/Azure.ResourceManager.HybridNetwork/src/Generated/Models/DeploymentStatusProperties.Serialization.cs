@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (NextExpectedUpdateOn.HasValue)
+            if (Optional.IsDefined(NextExpectedUpdateOn))
             {
                 writer.WritePropertyName("nextExpectedUpdateAt"u8);
                 writer.WriteStringValue(NextExpectedUpdateOn.Value, "O");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PassName.HasValue)
+            if (Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
                 writer.WriteStringValue(PassName.Value.ToString());
             }
-            if (ComponentName.HasValue)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName.Value.ToString());
             }
-            if (SettingName.HasValue)
+            if (Optional.IsDefined(SettingName))
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);

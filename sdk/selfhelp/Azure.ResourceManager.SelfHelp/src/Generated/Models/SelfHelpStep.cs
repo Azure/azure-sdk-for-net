@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {

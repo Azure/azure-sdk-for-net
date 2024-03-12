@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VaultCriticalOperation != null)
+            if (options.Format != "W" && Optional.IsDefined(VaultCriticalOperation))
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (options.Format != "W" && RequestResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestResourceType))
             {
                 writer.WritePropertyName("requestResourceType"u8);
                 writer.WriteStringValue(RequestResourceType.Value);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public ContainerResourceRequirements(ContainerResourceRequestsContent requests)
         {
-            if (requests == null)
-            {
-                throw new ArgumentNullException(nameof(requests));
-            }
+            Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests;
         }

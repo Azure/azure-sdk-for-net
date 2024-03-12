@@ -21,18 +21,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="class"/> is null. </exception>
         public CustomLabelClassificationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ClassificationResult> @class) : base(id, warnings, @class)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (@class == null)
-            {
-                throw new ArgumentNullException(nameof(@class));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(@class, nameof(@class));
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomLabelClassificationResultDocumentsItem"/>. </summary>

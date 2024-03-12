@@ -84,18 +84,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomAssessmentAutomationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customAssessmentAutomationName, CustomAssessmentAutomationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CustomAssessmentAutomationResource> CreateOrUpdate(WaitUntil waitUntil, string customAssessmentAutomationName, CustomAssessmentAutomationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual async Task<Response<CustomAssessmentAutomationResource>> GetAsync(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual Response<CustomAssessmentAutomationResource> Get(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.Get");
             scope.Start();
@@ -364,14 +330,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.Exists");
             scope.Start();
@@ -414,14 +373,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual Response<bool> Exists(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.Exists");
             scope.Start();
@@ -464,14 +416,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual async Task<NullableResponse<CustomAssessmentAutomationResource>> GetIfExistsAsync(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetIfExists");
             scope.Start();
@@ -516,14 +461,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
         public virtual NullableResponse<CustomAssessmentAutomationResource> GetIfExists(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
         {
-            if (customAssessmentAutomationName == null)
-            {
-                throw new ArgumentNullException(nameof(customAssessmentAutomationName));
-            }
-            if (customAssessmentAutomationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customAssessmentAutomationName));
-            }
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetIfExists");
             scope.Start();

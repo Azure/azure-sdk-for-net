@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (!(Targets is ChangeTrackingList<BatchDiskEncryptionTarget> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();

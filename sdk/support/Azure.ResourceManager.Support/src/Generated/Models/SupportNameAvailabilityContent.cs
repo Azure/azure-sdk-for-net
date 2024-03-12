@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SupportNameAvailabilityContent(string name, SupportResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;

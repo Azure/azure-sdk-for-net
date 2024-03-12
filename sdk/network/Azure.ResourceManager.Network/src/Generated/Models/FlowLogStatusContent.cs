@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public FlowLogStatusContent(ResourceIdentifier targetResourceId)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
 
             TargetResourceId = targetResourceId;
         }

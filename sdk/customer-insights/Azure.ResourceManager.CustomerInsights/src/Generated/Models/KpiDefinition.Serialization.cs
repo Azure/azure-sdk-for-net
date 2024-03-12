@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(EntityType.ToSerialString());
             writer.WritePropertyName("entityTypeName"u8);
             writer.WriteStringValue(EntityTypeName);
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && KpiName != null)
+            if (options.Format != "W" && Optional.IsDefined(KpiName))
             {
                 writer.WritePropertyName("kpiName"u8);
                 writer.WriteStringValue(KpiName);
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             writer.WritePropertyName("calculationWindow"u8);
             writer.WriteStringValue(CalculationWindow.ToSerialString());
-            if (CalculationWindowFieldName != null)
+            if (Optional.IsDefined(CalculationWindowFieldName))
             {
                 writer.WritePropertyName("calculationWindowFieldName"u8);
                 writer.WriteStringValue(CalculationWindowFieldName);
@@ -73,17 +74,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(Function.ToSerialString());
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (!(GroupBy is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStartArray();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(GroupByMetadata is ChangeTrackingList<KpiGroupByMetadata> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupByMetadata))
             {
                 writer.WritePropertyName("groupByMetadata"u8);
                 writer.WriteStartArray();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ParticipantProfilesMetadata is ChangeTrackingList<KpiParticipantProfilesMetadata> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParticipantProfilesMetadata))
             {
                 writer.WritePropertyName("participantProfilesMetadata"u8);
                 writer.WriteStartArray();
@@ -113,17 +114,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ThresHolds != null)
+            if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
                 writer.WriteObjectValue(ThresHolds);
             }
-            if (!(Aliases is ChangeTrackingList<KpiAlias> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extracts is ChangeTrackingList<KpiExtract> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Extracts))
             {
                 writer.WritePropertyName("extracts"u8);
                 writer.WriteStartArray();

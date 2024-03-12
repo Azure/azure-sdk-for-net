@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DnsResourceReferences is ChangeTrackingList<DnsResourceReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResourceReferences))
             {
                 writer.WritePropertyName("dnsResourceReferences"u8);
                 writer.WriteStartArray();

@@ -132,10 +132,7 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("MockableDigitalTwinsSubscriptionResource.CheckDigitalTwinsNameAvailability");
             scope.Start();
@@ -178,10 +175,7 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DigitalTwinsDescriptionDigitalTwinsClientDiagnostics.CreateScope("MockableDigitalTwinsSubscriptionResource.CheckDigitalTwinsNameAvailability");
             scope.Start();

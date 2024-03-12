@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (ServiceCidr != null)
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (DnsServiceIP != null)
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (DockerBridgeCidr != null)
+            if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AppCertificateResource>> UpdateAsync(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Update");
             scope.Start();
@@ -326,10 +323,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AppCertificateResource> Update(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Update");
             scope.Start();

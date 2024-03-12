@@ -9,6 +9,7 @@ using System;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -17,19 +18,19 @@ namespace Azure.Storage.Queues.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (StartsOn.HasValue)
+            if (Common.Optional.IsDefined(StartsOn))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(StartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (ExpiresOn.HasValue)
+            if (Common.Optional.IsDefined(ExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(ExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Permissions != null)
+            if (Common.Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AvailableSsoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AvailableSsoUri))
             {
                 writer.WritePropertyName("ssoUriValue"u8);
                 writer.WriteStringValue(AvailableSsoUri.AbsoluteUri);

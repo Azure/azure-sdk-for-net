@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {

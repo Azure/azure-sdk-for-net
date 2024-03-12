@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && AlertType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && AppearedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppearedOn))
             {
                 writer.WritePropertyName("appearedAtDateTime"u8);
                 writer.WriteStringValue(AppearedOn.Value, "O");
             }
-            if (options.Format != "W" && Recommendation != null)
+            if (options.Format != "W" && Optional.IsDefined(Recommendation))
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartObject();

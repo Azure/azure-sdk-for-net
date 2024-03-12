@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
-            if (ProtectedAccountKeyName2 != null)
+            if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
                 writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);

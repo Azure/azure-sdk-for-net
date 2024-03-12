@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && MaxAccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
             {
                 writer.WritePropertyName("maxAccountCount"u8);
                 writer.WriteNumberValue(MaxAccountCount.Value);
             }
-            if (options.Format != "W" && AccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountCount))
             {
                 writer.WritePropertyName("accountCount"u8);
                 writer.WriteNumberValue(AccountCount.Value);
             }
-            if (options.Format != "W" && IsUnderMigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteBooleanValue(IsUnderMigrationState.Value);

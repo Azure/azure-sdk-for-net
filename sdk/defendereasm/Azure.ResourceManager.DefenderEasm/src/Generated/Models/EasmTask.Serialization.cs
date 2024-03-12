@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
@@ -42,49 +43,49 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StartedAt != null)
+            if (Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt);
             }
-            if (CompletedAt != null)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt);
             }
-            if (LastPolledAt != null)
+            if (Optional.IsDefined(LastPolledAt))
             {
                 writer.WritePropertyName("lastPolledAt"u8);
                 writer.WriteStringValue(LastPolledAt);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Phase != null)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER

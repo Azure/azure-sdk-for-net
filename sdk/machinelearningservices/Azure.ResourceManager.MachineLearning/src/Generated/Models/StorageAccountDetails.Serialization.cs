@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SystemCreatedStorageAccount != null)
+            if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
                 if (SystemCreatedStorageAccount != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedStorageAccount");
                 }
             }
-            if (UserCreatedStorageAccount != null)
+            if (Optional.IsDefined(UserCreatedStorageAccount))
             {
                 if (UserCreatedStorageAccount != null)
                 {

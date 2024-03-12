@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ReportUri.HasValue)
+            if (Optional.IsDefined(ReportUri))
             {
                 writer.WritePropertyName("reportUrl"u8);
                 writer.WriteStringValue(ReportUri.Value.ToString());
             }
-            if (SecondaryReportUri.HasValue)
+            if (Optional.IsDefined(SecondaryReportUri))
             {
                 writer.WritePropertyName("secondaryReportUrl"u8);
                 writer.WriteStringValue(SecondaryReportUri.Value.ToString());
             }
-            if (ValidUntil.HasValue)
+            if (Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");

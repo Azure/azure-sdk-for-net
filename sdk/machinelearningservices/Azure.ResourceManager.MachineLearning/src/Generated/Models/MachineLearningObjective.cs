@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
         public MachineLearningObjective(MachineLearningGoal goal, string primaryMetric)
         {
-            if (primaryMetric == null)
-            {
-                throw new ArgumentNullException(nameof(primaryMetric));
-            }
+            Argument.AssertNotNull(primaryMetric, nameof(primaryMetric));
 
             Goal = goal;
             PrimaryMetric = primaryMetric;

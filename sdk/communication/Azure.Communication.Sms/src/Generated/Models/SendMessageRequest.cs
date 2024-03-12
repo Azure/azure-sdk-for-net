@@ -22,18 +22,9 @@ namespace Azure.Communication.Sms.Models
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
         public SendMessageRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message)
         {
-            if (@from == null)
-            {
-                throw new ArgumentNullException(nameof(@from));
-            }
-            if (smsRecipients == null)
-            {
-                throw new ArgumentNullException(nameof(smsRecipients));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(smsRecipients, nameof(smsRecipients));
+            Argument.AssertNotNull(message, nameof(message));
 
             From = @from;
             SmsRecipients = smsRecipients.ToList();

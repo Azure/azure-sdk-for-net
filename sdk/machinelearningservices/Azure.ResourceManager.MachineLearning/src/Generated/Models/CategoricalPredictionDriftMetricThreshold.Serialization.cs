@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Metric.ToString());
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 if (Threshold != null)
                 {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -42,44 +43,44 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RequestId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId.Value);
             }
-            if (options.Format != "W" && OperationType != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType);
             }
-            if (options.Format != "W" && FromBackupResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(FromBackupResourceId))
             {
                 writer.WritePropertyName("fromBackupResourceId"u8);
                 writer.WriteStringValue(FromBackupResourceId);
             }
-            if (options.Format != "W" && ToBackupResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ToBackupResourceId))
             {
                 writer.WritePropertyName("toBackupResourceId"u8);
                 writer.WriteStringValue(ToBackupResourceId);
             }
-            if (options.Format != "W" && TargetBackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetBackupStorageRedundancy))
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (ZoneA.HasValue)
+            if (Optional.IsDefined(ZoneA))
             {
                 writer.WritePropertyName("zoneA"u8);
                 writer.WriteNumberValue(ZoneA.Value);
             }
-            if (ZoneB.HasValue)
+            if (Optional.IsDefined(ZoneB))
             {
                 writer.WritePropertyName("zoneB"u8);
                 writer.WriteNumberValue(ZoneB.Value);
