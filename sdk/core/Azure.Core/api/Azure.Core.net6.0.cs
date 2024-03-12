@@ -130,7 +130,7 @@ namespace Azure
     public partial class Operation
     {
         protected Operation() { }
-        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions options = null) { }
+        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions options = null) { }
         public virtual bool HasCompleted { get { throw null; } }
         public virtual string Id { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -153,7 +153,7 @@ namespace Azure
     public partial class Operation<T> : Azure.Operation where T : notnull
     {
         protected Operation() { }
-        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions options = null) { }
+        public Operation(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions options = null) { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T Value { get { throw null; } }
         public virtual Azure.Response<T> WaitForCompletion(Azure.Core.DelayStrategy delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
