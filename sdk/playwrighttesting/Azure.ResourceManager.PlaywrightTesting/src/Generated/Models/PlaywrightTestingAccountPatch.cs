@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PlaywrightTesting;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkFunction;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
