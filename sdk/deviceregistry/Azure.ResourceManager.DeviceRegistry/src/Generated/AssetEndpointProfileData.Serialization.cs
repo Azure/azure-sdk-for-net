@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,39 +58,39 @@ namespace Azure.ResourceManager.DeviceRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (TargetAddress != null)
+            if (Optional.IsDefined(TargetAddress))
             {
                 writer.WritePropertyName("targetAddress"u8);
                 writer.WriteStringValue(TargetAddress.AbsoluteUri);
             }
-            if (UserAuthentication != null)
+            if (Optional.IsDefined(UserAuthentication))
             {
                 writer.WritePropertyName("userAuthentication"u8);
                 writer.WriteObjectValue(UserAuthentication);
             }
-            if (TransportAuthentication != null)
+            if (Optional.IsDefined(TransportAuthentication))
             {
                 writer.WritePropertyName("transportAuthentication"u8);
                 writer.WriteObjectValue(TransportAuthentication);
             }
-            if (AdditionalConfiguration != null)
+            if (Optional.IsDefined(AdditionalConfiguration))
             {
                 writer.WritePropertyName("additionalConfiguration"u8);
                 writer.WriteStringValue(AdditionalConfiguration);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<Uri> targetAddress = default;
-            Optional<UserAuthentication> userAuthentication = default;
-            Optional<TransportAuthentication> transportAuthentication = default;
-            Optional<string> additionalConfiguration = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            Uri targetAddress = default;
+            UserAuthentication userAuthentication = default;
+            TransportAuthentication transportAuthentication = default;
+            string additionalConfiguration = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,16 +267,16 @@ namespace Azure.ResourceManager.DeviceRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                uuid.Value,
-                targetAddress.Value,
-                userAuthentication.Value,
-                transportAuthentication.Value,
-                additionalConfiguration.Value,
-                Optional.ToNullable(provisioningState),
+                uuid,
+                targetAddress,
+                userAuthentication,
+                transportAuthentication,
+                additionalConfiguration,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

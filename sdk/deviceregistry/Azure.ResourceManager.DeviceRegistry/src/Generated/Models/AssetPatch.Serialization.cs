@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,67 +40,67 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AssetType != null)
+            if (Optional.IsDefined(AssetType))
             {
                 writer.WritePropertyName("assetType"u8);
                 writer.WriteStringValue(AssetType);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Manufacturer != null)
+            if (Optional.IsDefined(Manufacturer))
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (ManufacturerUri != null)
+            if (Optional.IsDefined(ManufacturerUri))
             {
                 writer.WritePropertyName("manufacturerUri"u8);
                 writer.WriteStringValue(ManufacturerUri.AbsoluteUri);
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (ProductCode != null)
+            if (Optional.IsDefined(ProductCode))
             {
                 writer.WritePropertyName("productCode"u8);
                 writer.WriteStringValue(ProductCode);
             }
-            if (HardwareRevision != null)
+            if (Optional.IsDefined(HardwareRevision))
             {
                 writer.WritePropertyName("hardwareRevision"u8);
                 writer.WriteStringValue(HardwareRevision);
             }
-            if (SoftwareRevision != null)
+            if (Optional.IsDefined(SoftwareRevision))
             {
                 writer.WritePropertyName("softwareRevision"u8);
                 writer.WriteStringValue(SoftwareRevision);
             }
-            if (DocumentationUri != null)
+            if (Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUri"u8);
                 writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (!(Attributes is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -122,17 +123,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DefaultDataPointsConfiguration != null)
+            if (Optional.IsDefined(DefaultDataPointsConfiguration))
             {
                 writer.WritePropertyName("defaultDataPointsConfiguration"u8);
                 writer.WriteStringValue(DefaultDataPointsConfiguration);
             }
-            if (DefaultEventsConfiguration != null)
+            if (Optional.IsDefined(DefaultEventsConfiguration))
             {
                 writer.WritePropertyName("defaultEventsConfiguration"u8);
                 writer.WriteStringValue(DefaultEventsConfiguration);
             }
-            if (!(DataPoints is ChangeTrackingList<DataPoint> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataPoints))
             {
                 writer.WritePropertyName("dataPoints"u8);
                 writer.WriteStartArray();
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Events is ChangeTrackingList<Event> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -192,21 +193,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> assetType = default;
-            Optional<bool> enabled = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> manufacturer = default;
-            Optional<Uri> manufacturerUri = default;
-            Optional<string> model = default;
-            Optional<string> productCode = default;
-            Optional<string> hardwareRevision = default;
-            Optional<string> softwareRevision = default;
-            Optional<Uri> documentationUri = default;
-            Optional<string> serialNumber = default;
+            string assetType = default;
+            bool? enabled = default;
+            string displayName = default;
+            string description = default;
+            string manufacturer = default;
+            Uri manufacturerUri = default;
+            string model = default;
+            string productCode = default;
+            string hardwareRevision = default;
+            string softwareRevision = default;
+            Uri documentationUri = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> attributes = default;
-            Optional<string> defaultDataPointsConfiguration = default;
-            Optional<string> defaultEventsConfiguration = default;
+            string defaultDataPointsConfiguration = default;
+            string defaultEventsConfiguration = default;
             IList<DataPoint> dataPoints = default;
             IList<Event> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -378,21 +379,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssetPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                assetType.Value,
-                Optional.ToNullable(enabled),
-                displayName.Value,
-                description.Value,
-                manufacturer.Value,
-                manufacturerUri.Value,
-                model.Value,
-                productCode.Value,
-                hardwareRevision.Value,
-                softwareRevision.Value,
-                documentationUri.Value,
-                serialNumber.Value,
+                assetType,
+                enabled,
+                displayName,
+                description,
+                manufacturer,
+                manufacturerUri,
+                model,
+                productCode,
+                hardwareRevision,
+                softwareRevision,
+                documentationUri,
+                serialNumber,
                 attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                defaultDataPointsConfiguration.Value,
-                defaultEventsConfiguration.Value,
+                defaultDataPointsConfiguration,
+                defaultEventsConfiguration,
                 dataPoints ?? new ChangeTrackingList<DataPoint>(),
                 events ?? new ChangeTrackingList<Event>(),
                 serializedAdditionalRawData);

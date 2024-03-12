@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (CapabilityId != null)
+            if (Optional.IsDefined(CapabilityId))
             {
                 writer.WritePropertyName("capabilityId"u8);
                 writer.WriteStringValue(CapabilityId);
             }
-            if (ObservabilityMode.HasValue)
+            if (Optional.IsDefined(ObservabilityMode))
             {
                 writer.WritePropertyName("observabilityMode"u8);
                 writer.WriteStringValue(ObservabilityMode.Value.ToString());
             }
-            if (DataPointConfiguration != null)
+            if (Optional.IsDefined(DataPointConfiguration))
             {
                 writer.WritePropertyName("dataPointConfiguration"u8);
                 writer.WriteStringValue(DataPointConfiguration);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             string dataSource = default;
-            Optional<string> capabilityId = default;
-            Optional<DataPointsObservabilityMode> observabilityMode = default;
-            Optional<string> dataPointConfiguration = default;
+            string capabilityId = default;
+            DataPointsObservabilityMode? observabilityMode = default;
+            string dataPointConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,11 +132,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataPoint(
-                name.Value,
+                name,
                 dataSource,
-                capabilityId.Value,
-                Optional.ToNullable(observabilityMode),
-                dataPointConfiguration.Value,
+                capabilityId,
+                observabilityMode,
+                dataPointConfiguration,
                 serializedAdditionalRawData);
         }
 

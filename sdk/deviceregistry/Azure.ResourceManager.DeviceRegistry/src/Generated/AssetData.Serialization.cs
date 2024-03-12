@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,94 +58,94 @@ namespace Azure.ResourceManager.DeviceRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (AssetType != null)
+            if (Optional.IsDefined(AssetType))
             {
                 writer.WritePropertyName("assetType"u8);
                 writer.WriteStringValue(AssetType);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (ExternalAssetId != null)
+            if (Optional.IsDefined(ExternalAssetId))
             {
                 writer.WritePropertyName("externalAssetId"u8);
                 writer.WriteStringValue(ExternalAssetId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AssetEndpointProfileUri != null)
+            if (Optional.IsDefined(AssetEndpointProfileUri))
             {
                 writer.WritePropertyName("assetEndpointProfileUri"u8);
                 writer.WriteStringValue(AssetEndpointProfileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Manufacturer != null)
+            if (Optional.IsDefined(Manufacturer))
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (ManufacturerUri != null)
+            if (Optional.IsDefined(ManufacturerUri))
             {
                 writer.WritePropertyName("manufacturerUri"u8);
                 writer.WriteStringValue(ManufacturerUri.AbsoluteUri);
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (ProductCode != null)
+            if (Optional.IsDefined(ProductCode))
             {
                 writer.WritePropertyName("productCode"u8);
                 writer.WriteStringValue(ProductCode);
             }
-            if (HardwareRevision != null)
+            if (Optional.IsDefined(HardwareRevision))
             {
                 writer.WritePropertyName("hardwareRevision"u8);
                 writer.WriteStringValue(HardwareRevision);
             }
-            if (SoftwareRevision != null)
+            if (Optional.IsDefined(SoftwareRevision))
             {
                 writer.WritePropertyName("softwareRevision"u8);
                 writer.WriteStringValue(SoftwareRevision);
             }
-            if (DocumentationUri != null)
+            if (Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUri"u8);
                 writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (!(Attributes is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -168,17 +168,17 @@ namespace Azure.ResourceManager.DeviceRegistry
                 }
                 writer.WriteEndObject();
             }
-            if (DefaultDataPointsConfiguration != null)
+            if (Optional.IsDefined(DefaultDataPointsConfiguration))
             {
                 writer.WritePropertyName("defaultDataPointsConfiguration"u8);
                 writer.WriteStringValue(DefaultDataPointsConfiguration);
             }
-            if (DefaultEventsConfiguration != null)
+            if (Optional.IsDefined(DefaultEventsConfiguration))
             {
                 writer.WritePropertyName("defaultEventsConfiguration"u8);
                 writer.WriteStringValue(DefaultEventsConfiguration);
             }
-            if (!(DataPoints is ChangeTrackingList<DataPoint> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataPoints))
             {
                 writer.WritePropertyName("dataPoints"u8);
                 writer.WriteStartArray();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (!(Events is ChangeTrackingList<Event> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.DeviceRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -253,30 +253,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<string> assetType = default;
-            Optional<bool> enabled = default;
-            Optional<string> externalAssetId = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> assetEndpointProfileUri = default;
-            Optional<int> version = default;
-            Optional<string> manufacturer = default;
-            Optional<Uri> manufacturerUri = default;
-            Optional<string> model = default;
-            Optional<string> productCode = default;
-            Optional<string> hardwareRevision = default;
-            Optional<string> softwareRevision = default;
-            Optional<Uri> documentationUri = default;
-            Optional<string> serialNumber = default;
+            SystemData systemData = default;
+            string uuid = default;
+            string assetType = default;
+            bool? enabled = default;
+            string externalAssetId = default;
+            string displayName = default;
+            string description = default;
+            Uri assetEndpointProfileUri = default;
+            int? version = default;
+            string manufacturer = default;
+            Uri manufacturerUri = default;
+            string model = default;
+            string productCode = default;
+            string hardwareRevision = default;
+            string softwareRevision = default;
+            Uri documentationUri = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> attributes = default;
-            Optional<string> defaultDataPointsConfiguration = default;
-            Optional<string> defaultEventsConfiguration = default;
+            string defaultDataPointsConfiguration = default;
+            string defaultEventsConfiguration = default;
             IList<DataPoint> dataPoints = default;
             IList<Event> events = default;
-            Optional<AssetStatus> status = default;
-            Optional<ProvisioningState> provisioningState = default;
+            AssetStatus status = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -528,33 +528,33 @@ namespace Azure.ResourceManager.DeviceRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                uuid.Value,
-                assetType.Value,
-                Optional.ToNullable(enabled),
-                externalAssetId.Value,
-                displayName.Value,
-                description.Value,
-                assetEndpointProfileUri.Value,
-                Optional.ToNullable(version),
-                manufacturer.Value,
-                manufacturerUri.Value,
-                model.Value,
-                productCode.Value,
-                hardwareRevision.Value,
-                softwareRevision.Value,
-                documentationUri.Value,
-                serialNumber.Value,
+                uuid,
+                assetType,
+                enabled,
+                externalAssetId,
+                displayName,
+                description,
+                assetEndpointProfileUri,
+                version,
+                manufacturer,
+                manufacturerUri,
+                model,
+                productCode,
+                hardwareRevision,
+                softwareRevision,
+                documentationUri,
+                serialNumber,
                 attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                defaultDataPointsConfiguration.Value,
-                defaultEventsConfiguration.Value,
+                defaultDataPointsConfiguration,
+                defaultEventsConfiguration,
                 dataPoints ?? new ChangeTrackingList<DataPoint>(),
                 events ?? new ChangeTrackingList<Event>(),
-                status.Value,
-                Optional.ToNullable(provisioningState),
+                status,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

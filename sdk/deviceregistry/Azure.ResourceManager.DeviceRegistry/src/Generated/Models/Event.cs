@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="eventNotifier"/> is null. </exception>
         public Event(string eventNotifier)
         {
-            if (eventNotifier == null)
-            {
-                throw new ArgumentNullException(nameof(eventNotifier));
-            }
+            Argument.AssertNotNull(eventNotifier, nameof(eventNotifier));
 
             EventNotifier = eventNotifier;
         }

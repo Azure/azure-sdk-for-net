@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AssetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AssetResource> CreateOrUpdate(WaitUntil waitUntil, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<AssetResource>> GetAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<AssetResource> Get(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<bool> Exists(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssetResource>> GetIfExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual NullableResponse<AssetResource> GetIfExists(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.GetIfExists");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (CertThumbprint != null)
+            if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 writer.WriteStringValue(CertThumbprint);
             }
-            if (CertSecretReference != null)
+            if (Optional.IsDefined(CertSecretReference))
             {
                 writer.WritePropertyName("certSecretReference"u8);
                 writer.WriteStringValue(CertSecretReference);
             }
-            if (CertPasswordReference != null)
+            if (Optional.IsDefined(CertPasswordReference))
             {
                 writer.WritePropertyName("certPasswordReference"u8);
                 writer.WriteStringValue(CertPasswordReference);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Optional<string> certThumbprint = default;
-            Optional<string> certSecretReference = default;
-            Optional<string> certPasswordReference = default;
+            string certThumbprint = default;
+            string certSecretReference = default;
+            string certPasswordReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OwnCertificate(certThumbprint.Value, certSecretReference.Value, certPasswordReference.Value, serializedAdditionalRawData);
+            return new OwnCertificate(certThumbprint, certSecretReference, certPasswordReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OwnCertificate>.Write(ModelReaderWriterOptions options)

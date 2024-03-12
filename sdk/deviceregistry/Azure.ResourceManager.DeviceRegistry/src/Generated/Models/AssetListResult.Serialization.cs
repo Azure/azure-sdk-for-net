@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             IReadOnlyList<AssetData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AssetListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetListResult>.Write(ModelReaderWriterOptions options)

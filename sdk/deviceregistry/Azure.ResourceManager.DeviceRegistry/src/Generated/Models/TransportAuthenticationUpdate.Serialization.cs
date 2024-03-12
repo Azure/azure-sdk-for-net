@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (!(OwnCertificates is ChangeTrackingList<OwnCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OwnCertificates))
             {
                 writer.WritePropertyName("ownCertificates"u8);
                 writer.WriteStartArray();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="usernameReference"/> or <paramref name="passwordReference"/> is null. </exception>
         public UsernamePasswordCredentials(string usernameReference, string passwordReference)
         {
-            if (usernameReference == null)
-            {
-                throw new ArgumentNullException(nameof(usernameReference));
-            }
-            if (passwordReference == null)
-            {
-                throw new ArgumentNullException(nameof(passwordReference));
-            }
+            Argument.AssertNotNull(usernameReference, nameof(usernameReference));
+            Argument.AssertNotNull(passwordReference, nameof(passwordReference));
 
             UsernameReference = usernameReference;
             PasswordReference = passwordReference;

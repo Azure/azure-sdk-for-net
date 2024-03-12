@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocationType"/> or <paramref name="name"/> is null. </exception>
         public ExtendedLocation(string extendedLocationType, string name)
         {
-            if (extendedLocationType == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocationType));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
+            Argument.AssertNotNull(name, nameof(name));
 
             ExtendedLocationType = extendedLocationType;
             Name = name;

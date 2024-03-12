@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AssetEndpointProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AssetEndpointProfileResource> CreateOrUpdate(WaitUntil waitUntil, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual async Task<Response<AssetEndpointProfileResource>> GetAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual Response<AssetEndpointProfileResource> Get(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual Response<bool> Exists(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssetEndpointProfileResource>> GetIfExistsAsync(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetEndpointProfileName"/> is null. </exception>
         public virtual NullableResponse<AssetEndpointProfileResource> GetIfExists(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            if (assetEndpointProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(assetEndpointProfileName));
-            }
-            if (assetEndpointProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
 
             using var scope = _assetEndpointProfileClientDiagnostics.CreateScope("AssetEndpointProfileCollection.GetIfExists");
             scope.Start();

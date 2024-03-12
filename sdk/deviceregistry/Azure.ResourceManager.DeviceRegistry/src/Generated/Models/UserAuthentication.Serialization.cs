@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (UsernamePasswordCredentials != null)
+            if (Optional.IsDefined(UsernamePasswordCredentials))
             {
                 writer.WritePropertyName("usernamePasswordCredentials"u8);
                 writer.WriteObjectValue(UsernamePasswordCredentials);
             }
-            if (X509Credentials != null)
+            if (Optional.IsDefined(X509Credentials))
             {
                 writer.WritePropertyName("x509Credentials"u8);
                 writer.WriteObjectValue(X509Credentials);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             UserAuthenticationMode mode = default;
-            Optional<UsernamePasswordCredentials> usernamePasswordCredentials = default;
-            Optional<X509Credentials> x509Credentials = default;
+            UsernamePasswordCredentials usernamePasswordCredentials = default;
+            X509Credentials x509Credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAuthentication(mode, usernamePasswordCredentials.Value, x509Credentials.Value, serializedAdditionalRawData);
+            return new UserAuthentication(mode, usernamePasswordCredentials, x509Credentials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAuthentication>.Write(ModelReaderWriterOptions options)

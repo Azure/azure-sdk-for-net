@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("eventNotifier"u8);
             writer.WriteStringValue(EventNotifier);
-            if (CapabilityId != null)
+            if (Optional.IsDefined(CapabilityId))
             {
                 writer.WritePropertyName("capabilityId"u8);
                 writer.WriteStringValue(CapabilityId);
             }
-            if (ObservabilityMode.HasValue)
+            if (Optional.IsDefined(ObservabilityMode))
             {
                 writer.WritePropertyName("observabilityMode"u8);
                 writer.WriteStringValue(ObservabilityMode.Value.ToString());
             }
-            if (EventConfiguration != null)
+            if (Optional.IsDefined(EventConfiguration))
             {
                 writer.WritePropertyName("eventConfiguration"u8);
                 writer.WriteStringValue(EventConfiguration);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             string eventNotifier = default;
-            Optional<string> capabilityId = default;
-            Optional<EventsObservabilityMode> observabilityMode = default;
-            Optional<string> eventConfiguration = default;
+            string capabilityId = default;
+            EventsObservabilityMode? observabilityMode = default;
+            string eventConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,11 +132,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Event(
-                name.Value,
+                name,
                 eventNotifier,
-                capabilityId.Value,
-                Optional.ToNullable(observabilityMode),
-                eventConfiguration.Value,
+                capabilityId,
+                observabilityMode,
+                eventConfiguration,
                 serializedAdditionalRawData);
         }
 

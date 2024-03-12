@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (CertificateReference != null)
+            if (Optional.IsDefined(CertificateReference))
             {
                 writer.WritePropertyName("certificateReference"u8);
                 writer.WriteStringValue(CertificateReference);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Optional<string> certificateReference = default;
+            string certificateReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X509CredentialsUpdate(certificateReference.Value, serializedAdditionalRawData);
+            return new X509CredentialsUpdate(certificateReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X509CredentialsUpdate>.Write(ModelReaderWriterOptions options)

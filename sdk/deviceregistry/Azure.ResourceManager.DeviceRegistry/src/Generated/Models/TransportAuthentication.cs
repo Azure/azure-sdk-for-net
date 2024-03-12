@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ownCertificates"/> is null. </exception>
         public TransportAuthentication(IEnumerable<OwnCertificate> ownCertificates)
         {
-            if (ownCertificates == null)
-            {
-                throw new ArgumentNullException(nameof(ownCertificates));
-            }
+            Argument.AssertNotNull(ownCertificates, nameof(ownCertificates));
 
             OwnCertificates = ownCertificates.ToList();
         }

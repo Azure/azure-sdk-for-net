@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (UsernameReference != null)
+            if (Optional.IsDefined(UsernameReference))
             {
                 writer.WritePropertyName("usernameReference"u8);
                 writer.WriteStringValue(UsernameReference);
             }
-            if (PasswordReference != null)
+            if (Optional.IsDefined(PasswordReference))
             {
                 writer.WritePropertyName("passwordReference"u8);
                 writer.WriteStringValue(PasswordReference);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Optional<string> usernameReference = default;
-            Optional<string> passwordReference = default;
+            string usernameReference = default;
+            string passwordReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsernamePasswordCredentialsUpdate(usernameReference.Value, passwordReference.Value, serializedAdditionalRawData);
+            return new UsernamePasswordCredentialsUpdate(usernameReference, passwordReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsernamePasswordCredentialsUpdate>.Write(ModelReaderWriterOptions options)

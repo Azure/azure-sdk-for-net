@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public AssetData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();

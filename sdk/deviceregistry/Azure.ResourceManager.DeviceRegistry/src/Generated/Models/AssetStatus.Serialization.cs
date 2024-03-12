@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (!(Errors is ChangeTrackingList<AssetStatusError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             IReadOnlyList<AssetStatusError> errors = default;
-            Optional<int> version = default;
+            int? version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetStatus(errors ?? new ChangeTrackingList<AssetStatusError>(), Optional.ToNullable(version), serializedAdditionalRawData);
+            return new AssetStatus(errors ?? new ChangeTrackingList<AssetStatusError>(), version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetStatus>.Write(ModelReaderWriterOptions options)

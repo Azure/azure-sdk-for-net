@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateReference"/> is null. </exception>
         public X509Credentials(string certificateReference)
         {
-            if (certificateReference == null)
-            {
-                throw new ArgumentNullException(nameof(certificateReference));
-            }
+            Argument.AssertNotNull(certificateReference, nameof(certificateReference));
 
             CertificateReference = certificateReference;
         }
