@@ -413,9 +413,10 @@ namespace Azure.Provisioning.ServiceBus
 }
 namespace Azure.Provisioning.SignalR
 {
-    public partial class SignalR : Azure.Provisioning.Resource<Azure.ResourceManager.SignalR.SignalRData>
+    public partial class SignalRService : Azure.Provisioning.Resource<Azure.ResourceManager.SignalR.SignalRData>
     {
-        public SignalR(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.SignalR.Models.SignalRResourceSku? sku = null, System.Collections.Generic.IEnumerable<string>? allowedOrigins = null, string serviceMode = "Default", Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "signalr", string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.SignalR.SignalRData>)) { }
+        public SignalRService(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.SignalR.Models.SignalRResourceSku? sku = null, System.Collections.Generic.IEnumerable<string>? allowedOrigins = null, string serviceMode = "Default", Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "signalr", string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.SignalR.SignalRData>)) { }
+        public static Azure.Provisioning.SignalR.SignalRService FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
 }
