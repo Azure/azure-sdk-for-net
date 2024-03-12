@@ -124,7 +124,7 @@ namespace Azure.Provisioning.AppConfiguration
     }
     public partial class AppConfigurationStore : Azure.Provisioning.Resource<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData>
     {
-        public AppConfigurationStore(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData>)) { }
+        public AppConfigurationStore(Azure.Provisioning.IConstruct scope, string skuName = "free", Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData>)) { }
         public static Azure.Provisioning.AppConfiguration.AppConfigurationStore FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
@@ -184,9 +184,12 @@ namespace Azure.Provisioning.Authorization
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleDefinition(string value) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleDefinition AppConfigurationDataOwner { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition CognitiveServicesOpenAIContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition EventHubsDataOwner { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition KeyVaultAdministrator { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition SearchIndexDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition SearchServiceContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition ServiceBusDataOwner { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageBlobDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageQueueDataContributor { get { throw null; } }
@@ -369,6 +372,15 @@ namespace Azure.Provisioning.Resources
         public DeploymentScript(Azure.Provisioning.IConstruct scope, string resourceName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = "2020-10-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.Models.AzureCliScript>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.Resources.DeploymentScript FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
+    }
+}
+namespace Azure.Provisioning.Search
+{
+    public partial class SearchService : Azure.Provisioning.Resource<Azure.ResourceManager.Search.SearchServiceData>
+    {
+        public SearchService(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Search.Models.SearchSkuName? sku = default(Azure.ResourceManager.Search.Models.SearchSkuName?), Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "search", string version = "2023-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Search.SearchServiceData>)) { }
+        public static Azure.Provisioning.Search.SearchService FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.ServiceBus

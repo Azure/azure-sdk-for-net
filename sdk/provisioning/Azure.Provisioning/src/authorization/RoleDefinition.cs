@@ -53,6 +53,21 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition EventHubsDataOwner { get; } = new RoleDefinition("f526a384-b230-433a-b45c-95f59c4a2dec");
 
+        /// <summary>
+        /// App configuration data owner role.
+        /// </summary>
+        public static RoleDefinition AppConfigurationDataOwner { get; } = new RoleDefinition("5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b");
+
+        /// <summary>
+        /// Search service contributor role.
+        /// </summary>
+        public static RoleDefinition SearchServiceContributor { get; } = new RoleDefinition("7ca78c08-252a-4471-8644-bb5ff32d4ba0");
+
+        /// <summary>
+        /// Search index data contributor role.
+        /// </summary>
+        public static RoleDefinition SearchIndexDataContributor { get; } = new RoleDefinition("8ebe5a00-799e-43f5-93ac-243d3dce84a7");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 
