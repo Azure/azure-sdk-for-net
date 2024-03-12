@@ -1956,6 +1956,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("This test needs to be re-recorded")]
         public async Task LinkedService_Spark_Create()
         {
             await LinkedSerivceCreate("spark", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
@@ -1965,7 +1966,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     ServerType = SparkServerType.SharkServer,
                     ThriftTransportProtocol = SparkThriftTransportProtocol.Binary,
                     Username = "admin",
-                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "HuF3pmB3tylfer63MAbxTAGeVFyteGa+YIHFKPc2IguJqXwUOtvFUwMOeeX/ARhsUlt3xhS7b6XmNfGx2HVk5A=="),
+                    Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeKey"),
                     HttpPath = "/",
                     EnableSsl = true,
                     UseSystemTrustStore = true,
