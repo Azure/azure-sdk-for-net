@@ -4,8 +4,9 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Azure.Core
 
         private string? _lastKnownLocation;
         private string _nextRequestUri;
+        private string? _operationId;
 
         public static IOperation Create(
             HttpPipeline pipeline,
@@ -38,7 +40,7 @@ namespace Azure.Core
             bool skipApiVersionOverride = false,
             string? apiVersionOverrideValue = null)
         {
-            string? apiVersionStr = null;
+            string? apiVersionStr;
             if (apiVersionOverrideValue is not null)
             {
                 apiVersionStr = apiVersionOverrideValue;
@@ -70,6 +72,59 @@ namespace Azure.Core
             return new OperationToOperationOfT<T>(operationSource, operation);
         }
 
+        public static IOperation<T> Create<T>(
+            IOperationSource<T> operationSource,
+            IOperation operation)
+            => new OperationToOperationOfT<T>(operationSource, operation);
+
+        public string? OperationId => _operationId;
+
+        public static IOperation Create(
+            HttpPipeline pipeline,
+            RehydrationToken? rehydrationToken,
+            string? apiVersionOverride = null)
+        {
+            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
+            {
+                throw new InvalidOperationException("Invalid initial URI from rehydration token");
+            }
+
+            if (!lroDetails.TryGetValue("nextRequestUri", out var nextRequestUri))
+            {
+                throw new InvalidOperationException("Invalid next request URI from rehydration token");
+            }
+
+            RequestMethod requestMethod = new RequestMethod(lroDetails["requestMethod"]);
+            string lastKnownLocation = lroDetails["lastKnownLocation"];
+
+            OperationFinalStateVia finalStateVia;
+            if (Enum.IsDefined(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]))
+            {
+                finalStateVia = (OperationFinalStateVia)Enum.Parse(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]);
+            }
+            else
+            {
+                finalStateVia = OperationFinalStateVia.Location;
+            }
+
+            HeaderSource headerSource;
+            if (Enum.IsDefined(typeof(HeaderSource), lroDetails["headerSource"]))
+            {
+                headerSource = (HeaderSource)Enum.Parse(typeof(HeaderSource), lroDetails["headerSource"]);
+            }
+            else
+            {
+                headerSource = HeaderSource.None;
+            }
+
+            string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
+
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
+        }
+
         private NextLinkOperationImplementation(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -80,6 +135,13 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
         {
+            AssertNotNull(pipeline, nameof(pipeline));
+            AssertNotNull(requestMethod, nameof(requestMethod));
+            AssertNotNull(startRequestUri, nameof(startRequestUri));
+            AssertNotNull(nextRequestUri, nameof(nextRequestUri));
+            AssertNotNull(headerSource, nameof(headerSource));
+            AssertNotNull(finalStateVia, nameof(finalStateVia));
+
             _requestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
@@ -88,6 +150,53 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
+            _operationId = ParseOperationId(nextRequestUri);
+        }
+
+        private static string? ParseOperationId(string nextRequestUri)
+        {
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            {
+                return uri.Segments.LastOrDefault();
+            }
+            return null;
+        }
+
+        public RehydrationToken GetRehydrationToken()
+            => GetRehydrationToken(_requestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
+
+        public static RehydrationToken GetRehydrationToken(
+            RequestMethod requestMethod,
+            Uri startRequestUri,
+            Response response,
+            OperationFinalStateVia finalStateVia,
+            bool skipApiVersionOverride = false,
+            string? apiVersionOverrideValue = null)
+        {
+            string? apiVersionStr;
+            if (apiVersionOverrideValue is not null)
+            {
+                apiVersionStr = apiVersionOverrideValue;
+            }
+            else
+            {
+                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
+            }
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
+            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString());
+        }
+
+        public static RehydrationToken GetRehydrationToken(
+            RequestMethod requestMethod,
+            Uri startRequestUri,
+            string nextRequestUri,
+            string headerSource,
+            string? lastKnownLocation,
+            string finalStateVia)
+        {
+            var data = BinaryData.FromObjectAsJson(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
@@ -307,7 +416,7 @@ namespace Azure.Core
 
             if (response.Status is >= 200 and <= 204)
             {
-                if (response.ContentStream is {Length: > 0})
+                if (response.ContentStream is { Length: > 0 })
                 {
                     try
                     {
@@ -397,6 +506,14 @@ namespace Azure.Core
 
             nextRequestUri = requestUri.AbsoluteUri;
             return HeaderSource.None;
+        }
+
+        private static void AssertNotNull<T>(T value, string name)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(name);
+            }
         }
 
         private enum HeaderSource
