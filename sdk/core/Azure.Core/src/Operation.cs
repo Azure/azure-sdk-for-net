@@ -33,7 +33,7 @@ namespace Azure
         /// <param name="pipeline">The Http pipeline.</param>
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
-        public Operation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null)
+        public Operation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
         {
             AssertNotNull(pipeline, nameof(pipeline));
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
