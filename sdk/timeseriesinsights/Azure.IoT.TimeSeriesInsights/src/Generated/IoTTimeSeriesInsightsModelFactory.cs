@@ -68,6 +68,15 @@ namespace Azure.IoT.TimeSeriesInsights
             return new TimeSeriesIdProperty(name, type);
         }
 
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.TimeSeriesVariable"/>. </summary>
+        /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesVariable"/> instance for mocking. </returns>
+        public static TimeSeriesVariable TimeSeriesVariable(string kind = null, TimeSeriesExpression filter = null)
+        {
+            return new UnknownVariable(kind, filter);
+        }
+
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsights.InstancesOperationResult"/>. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>

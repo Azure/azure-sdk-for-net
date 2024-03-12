@@ -431,6 +431,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowResource(id, name, type, etag, properties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntime"/>. </summary>
+        /// <param name="type"> Type of integration runtime. </param>
+        /// <param name="description"> Integration runtime description. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntime"/> instance for mocking. </returns>
+        public static IntegrationRuntime IntegrationRuntime(string type = "Unknown", string description = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownIntegrationRuntime(type, description, additionalProperties);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.CreateDataFlowDebugSessionResponse"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
@@ -465,6 +477,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 startTime,
                 timeToLiveInMinutes,
                 lastActivityTime,
+                additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LinkedService"/>. </summary>
+        /// <param name="type"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.LinkedService"/> instance for mocking. </returns>
+        public static LinkedService LinkedService(string type = null, IntegrationRuntimeReference connectVia = null, string description = null, IDictionary<string, ParameterSpecification> parameters = null, IEnumerable<object> annotations = null, IDictionary<string, object> additionalProperties = null)
+        {
+            parameters ??= new Dictionary<string, ParameterSpecification>();
+            annotations ??= new List<object>();
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters,
+                annotations?.ToList(),
                 additionalProperties);
         }
 
@@ -527,7 +562,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeResource"/> instance for mocking. </returns>
@@ -615,7 +650,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties">
         /// Properties of linked service.
-        /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonMWSLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDbLinkedService"/>, <see cref="CosmosDbMongoDbApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDbLinkedService"/>, <see cref="MongoDbAtlasLinkedService"/>, <see cref="MongoDbV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PowerBIWorkspaceLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
         /// </param>
         /// <returns> A new <see cref="Models.LinkedServiceResource"/> instance for mocking. </returns>
@@ -632,7 +667,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> The description of the pipeline. </param>
         /// <param name="activities">
         /// List of activities in pipeline.
-        /// Please note <see cref="Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="SqlPoolStoredProcedureActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </param>
         /// <param name="parameters"> List of parameters for pipeline. </param>
@@ -665,6 +700,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations?.ToList(),
                 runDimensions,
                 folder,
+                additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Activity"/>. </summary>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="type"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.Activity"/> instance for mocking. </returns>
+        public static Activity Activity(string name = null, string type = null, string description = null, ActivityState? state = null, ActivityOnInactiveMarkAs? onInactiveMarkAs = null, IEnumerable<ActivityDependency> dependsOn = null, IEnumerable<UserProperty> userProperties = null, IDictionary<string, object> additionalProperties = null)
+        {
+            dependsOn ??= new List<ActivityDependency>();
+            userProperties ??= new List<UserProperty>();
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn?.ToList(),
+                userProperties?.ToList(),
                 additionalProperties);
         }
 
@@ -1305,6 +1367,160 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 requestedStartTime,
                 requestedEndTime,
                 rerunConcurrency);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatasetLocation"/>. </summary>
+        /// <param name="type"> Type of dataset storage location. </param>
+        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.DatasetLocation"/> instance for mocking. </returns>
+        public static DatasetLocation DatasetLocation(string type = null, object folderPath = null, object fileName = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownDatasetLocation(type, folderPath, fileName, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatasetStorageFormat"/>. </summary>
+        /// <param name="type"> Type of dataset storage format. </param>
+        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.DatasetStorageFormat"/> instance for mocking. </returns>
+        public static DatasetStorageFormat DatasetStorageFormat(string type = null, object serializer = null, object deserializer = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownDatasetStorageFormat(type, serializer, deserializer, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StoreReadSettings"/>. </summary>
+        /// <param name="type"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.StoreReadSettings"/> instance for mocking. </returns>
+        public static StoreReadSettings StoreReadSettings(string type = null, object maxConcurrentConnections = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownStoreReadSettings(type, maxConcurrentConnections, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StoreWriteSettings"/>. </summary>
+        /// <param name="type"> The write setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.StoreWriteSettings"/> instance for mocking. </returns>
+        public static StoreWriteSettings StoreWriteSettings(string type = null, object maxConcurrentConnections = null, object copyBehavior = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownStoreWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FormatReadSettings"/>. </summary>
+        /// <param name="type"> The read setting type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FormatReadSettings"/> instance for mocking. </returns>
+        public static FormatReadSettings FormatReadSettings(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownFormatReadSettings(type, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CompressionReadSettings"/>. </summary>
+        /// <param name="type"> The Compression setting type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.CompressionReadSettings"/> instance for mocking. </returns>
+        public static CompressionReadSettings CompressionReadSettings(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownCompressionReadSettings(type, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FormatWriteSettings"/>. </summary>
+        /// <param name="type"> The write setting type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FormatWriteSettings"/> instance for mocking. </returns>
+        public static FormatWriteSettings FormatWriteSettings(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownFormatWriteSettings(type, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CopySource"/>. </summary>
+        /// <param name="type"> Copy source type. </param>
+        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.CopySource"/> instance for mocking. </returns>
+        public static CopySource CopySource(string type = null, object sourceRetryCount = null, object sourceRetryWait = null, object maxConcurrentConnections = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownCopySource(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CopySink"/>. </summary>
+        /// <param name="type"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.CopySink"/> instance for mocking. </returns>
+        public static CopySink CopySink(string type = null, object writeBatchSize = null, object writeBatchTimeout = null, object sinkRetryCount = null, object sinkRetryWait = null, object maxConcurrentConnections = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownCopySink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportSettings"/>. </summary>
+        /// <param name="type"> The export setting type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.ExportSettings"/> instance for mocking. </returns>
+        public static ExportSettings ExportSettings(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownExportSettings(type, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ImportSettings"/>. </summary>
+        /// <param name="type"> The import setting type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.ImportSettings"/> instance for mocking. </returns>
+        public static ImportSettings ImportSettings(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownImportSettings(type, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CopyTranslator"/>. </summary>
+        /// <param name="type"> Copy translator type. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.CopyTranslator"/> instance for mocking. </returns>
+        public static CopyTranslator CopyTranslator(string type = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new UnknownCopyTranslator(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MultiplePipelineTrigger"/>. </summary>
