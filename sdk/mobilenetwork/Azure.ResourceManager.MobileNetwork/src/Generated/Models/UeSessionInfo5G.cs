@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -57,22 +58,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dnn"/>, <paramref name="qosFlow"/>, <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public UeSessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IEnumerable<UeQOSFlow> qosFlow, string uplink, string downlink, int sst)
         {
-            if (dnn == null)
-            {
-                throw new ArgumentNullException(nameof(dnn));
-            }
-            if (qosFlow == null)
-            {
-                throw new ArgumentNullException(nameof(qosFlow));
-            }
-            if (uplink == null)
-            {
-                throw new ArgumentNullException(nameof(uplink));
-            }
-            if (downlink == null)
-            {
-                throw new ArgumentNullException(nameof(downlink));
-            }
+            Argument.AssertNotNull(dnn, nameof(dnn));
+            Argument.AssertNotNull(qosFlow, nameof(qosFlow));
+            Argument.AssertNotNull(uplink, nameof(uplink));
+            Argument.AssertNotNull(downlink, nameof(downlink));
 
             PduSessionId = pduSessionId;
             Dnn = dnn;

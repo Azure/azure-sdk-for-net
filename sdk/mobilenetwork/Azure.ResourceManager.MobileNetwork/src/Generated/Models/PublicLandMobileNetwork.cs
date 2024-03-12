@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>
         public PublicLandMobileNetwork(string mcc, string mnc) : base(mcc, mnc)
         {
-            if (mcc == null)
-            {
-                throw new ArgumentNullException(nameof(mcc));
-            }
-            if (mnc == null)
-            {
-                throw new ArgumentNullException(nameof(mnc));
-            }
+            Argument.AssertNotNull(mcc, nameof(mcc));
+            Argument.AssertNotNull(mnc, nameof(mnc));
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicLandMobileNetwork"/>. </summary>

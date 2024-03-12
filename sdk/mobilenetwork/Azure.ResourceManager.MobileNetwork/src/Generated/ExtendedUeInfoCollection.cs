@@ -77,14 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual async Task<Response<ExtendedUeInfoResource>> GetAsync(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.Get");
             scope.Start();
@@ -129,14 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual Response<ExtendedUeInfoResource> Get(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.Get");
             scope.Start();
@@ -181,14 +167,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.Exists");
             scope.Start();
@@ -231,14 +210,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual Response<bool> Exists(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.Exists");
             scope.Start();
@@ -281,14 +253,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual async Task<NullableResponse<ExtendedUeInfoResource>> GetIfExistsAsync(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.GetIfExists");
             scope.Start();
@@ -333,14 +298,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         public virtual NullableResponse<ExtendedUeInfoResource> GetIfExists(string ueId, CancellationToken cancellationToken = default)
         {
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var scope = _extendedUeInfoExtendedUeInformationClientDiagnostics.CreateScope("ExtendedUeInfoCollection.GetIfExists");
             scope.Start();

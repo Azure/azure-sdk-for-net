@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ratType"u8);
             writer.WriteStringValue(RatType.ToString());
-            if (LastReadOn.HasValue)
+            if (Optional.IsDefined(LastReadOn))
             {
                 writer.WritePropertyName("lastReadAt"u8);
                 writer.WriteStringValue(LastReadOn.Value, "O");
@@ -37,12 +38,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("supi"u8);
             writer.WriteStringValue(Supi);
-            if (Pei != null)
+            if (Optional.IsDefined(Pei))
             {
                 writer.WritePropertyName("pei"u8);
                 writer.WriteStringValue(Pei);
             }
-            if (!(SessionInfo is ChangeTrackingList<UeSessionInfo5G> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SessionInfo))
             {
                 writer.WritePropertyName("sessionInfo"u8);
                 writer.WriteStartArray();
@@ -54,27 +55,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             writer.WritePropertyName("connectionInfo"u8);
             writer.WriteStartObject();
-            if (PerUeTnla != null)
+            if (Optional.IsDefined(PerUeTnla))
             {
                 writer.WritePropertyName("perUeTnla"u8);
                 writer.WriteStringValue(PerUeTnla);
             }
-            if (AmfUeNgapId.HasValue)
+            if (Optional.IsDefined(AmfUeNgapId))
             {
                 writer.WritePropertyName("amfUeNgapId"u8);
                 writer.WriteNumberValue(AmfUeNgapId.Value);
             }
-            if (RanUeNgapId.HasValue)
+            if (Optional.IsDefined(RanUeNgapId))
             {
                 writer.WritePropertyName("ranUeNgapId"u8);
                 writer.WriteNumberValue(RanUeNgapId.Value);
             }
-            if (LastVisitedTai != null)
+            if (Optional.IsDefined(LastVisitedTai))
             {
                 writer.WritePropertyName("lastVisitedTai"u8);
                 writer.WriteStringValue(LastVisitedTai);
             }
-            if (!(AllowedNssai is ChangeTrackingList<Snssai> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedNssai))
             {
                 writer.WritePropertyName("allowedNssai"u8);
                 writer.WriteStartArray();
@@ -84,66 +85,66 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UeState.HasValue)
+            if (Optional.IsDefined(UeState))
             {
                 writer.WritePropertyName("ueState"u8);
                 writer.WriteStringValue(UeState.Value.ToString());
             }
-            if (RrcEstablishmentCause.HasValue)
+            if (Optional.IsDefined(RrcEstablishmentCause))
             {
                 writer.WritePropertyName("rrcEstablishmentCause"u8);
                 writer.WriteStringValue(RrcEstablishmentCause.Value.ToString());
             }
-            if (UeUsageSetting.HasValue)
+            if (Optional.IsDefined(UeUsageSetting))
             {
                 writer.WritePropertyName("ueUsageSetting"u8);
                 writer.WriteStringValue(UeUsageSetting.Value.ToString());
             }
-            if (LastActivityOn.HasValue)
+            if (Optional.IsDefined(LastActivityOn))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
             }
             writer.WritePropertyName("globalRanNodeId"u8);
             writer.WriteStartObject();
-            if (NgeNbId != null)
+            if (Optional.IsDefined(NgeNbId))
             {
                 writer.WritePropertyName("ngeNbId"u8);
                 writer.WriteStringValue(NgeNbId);
             }
-            if (ENbId != null)
+            if (Optional.IsDefined(ENbId))
             {
                 writer.WritePropertyName("eNbId"u8);
                 writer.WriteStringValue(ENbId);
             }
-            if (N3IwfId != null)
+            if (Optional.IsDefined(N3IwfId))
             {
                 writer.WritePropertyName("n3IwfId"u8);
                 writer.WriteStringValue(N3IwfId);
             }
-            if (WagfId != null)
+            if (Optional.IsDefined(WagfId))
             {
                 writer.WritePropertyName("wagfId"u8);
                 writer.WriteStringValue(WagfId);
             }
-            if (TngfId != null)
+            if (Optional.IsDefined(TngfId))
             {
                 writer.WritePropertyName("tngfId"u8);
                 writer.WriteStringValue(TngfId);
             }
-            if (Nid != null)
+            if (Optional.IsDefined(Nid))
             {
                 writer.WritePropertyName("nid"u8);
                 writer.WriteStringValue(Nid);
             }
             writer.WritePropertyName("gNbId"u8);
             writer.WriteStartObject();
-            if (BitLength.HasValue)
+            if (Optional.IsDefined(BitLength))
             {
                 writer.WritePropertyName("bitLength"u8);
                 writer.WriteNumberValue(BitLength.Value);
             }
-            if (GNBValue != null)
+            if (Optional.IsDefined(GNBValue))
             {
                 writer.WritePropertyName("gNBValue"u8);
                 writer.WriteStringValue(GNBValue);
@@ -151,12 +152,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
             writer.WritePropertyName("plmnId"u8);
             writer.WriteStartObject();
-            if (MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc != null)
+            if (Optional.IsDefined(MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc))
             {
                 writer.WritePropertyName("mcc"u8);
                 writer.WriteStringValue(MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc);
             }
-            if (MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc != null)
+            if (Optional.IsDefined(MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc))
             {
                 writer.WritePropertyName("mnc"u8);
                 writer.WriteStringValue(MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc);
@@ -165,24 +166,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
             writer.WritePropertyName("locationInfo"u8);
             writer.WriteStartObject();
-            if (LocationType != null)
+            if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("locationType"u8);
                 writer.WriteStringValue(LocationType);
             }
-            if (Tac != null)
+            if (Optional.IsDefined(Tac))
             {
                 writer.WritePropertyName("tac"u8);
                 writer.WriteStringValue(Tac);
             }
             writer.WritePropertyName("plmn"u8);
             writer.WriteStartObject();
-            if (MccInfoConnectionInfoLocationInfoPlmnMcc != null)
+            if (Optional.IsDefined(MccInfoConnectionInfoLocationInfoPlmnMcc))
             {
                 writer.WritePropertyName("mcc"u8);
                 writer.WriteStringValue(MccInfoConnectionInfoLocationInfoPlmnMcc);
             }
-            if (MncInfoConnectionInfoLocationInfoPlmnMnc != null)
+            if (Optional.IsDefined(MncInfoConnectionInfoLocationInfoPlmnMnc))
             {
                 writer.WritePropertyName("mnc"u8);
                 writer.WriteStringValue(MncInfoConnectionInfoLocationInfoPlmnMnc);
@@ -251,33 +252,33 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             RatType ratType = default;
-            Optional<DateTimeOffset> lastReadAt = default;
+            DateTimeOffset? lastReadAt = default;
             string supi = default;
-            Optional<string> pei = default;
+            string pei = default;
             IList<UeSessionInfo5G> sessionInfo = default;
-            Optional<string> perUeTnla = default;
-            Optional<long> amfUeNgapId = default;
-            Optional<int> ranUeNgapId = default;
-            Optional<string> lastVisitedTai = default;
+            string perUeTnla = default;
+            long? amfUeNgapId = default;
+            int? ranUeNgapId = default;
+            string lastVisitedTai = default;
             IList<Snssai> allowedNssai = default;
-            Optional<UeState> ueState = default;
-            Optional<RrcEstablishmentCause> rrcEstablishmentCause = default;
-            Optional<UeUsageSetting> ueUsageSetting = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
-            Optional<string> ngeNbId = default;
-            Optional<string> eNbId = default;
-            Optional<string> n3IwfId = default;
-            Optional<string> wagfId = default;
-            Optional<string> tngfId = default;
-            Optional<string> nid = default;
-            Optional<int> bitLength = default;
-            Optional<string> gnbValue = default;
-            Optional<string> mcc = default;
-            Optional<string> mnc = default;
-            Optional<string> locationType = default;
-            Optional<string> tac = default;
-            Optional<string> mcc0 = default;
-            Optional<string> mnc0 = default;
+            UeState? ueState = default;
+            RrcEstablishmentCause? rrcEstablishmentCause = default;
+            UeUsageSetting? ueUsageSetting = default;
+            DateTimeOffset? lastActivityTime = default;
+            string ngeNbId = default;
+            string eNbId = default;
+            string n3IwfId = default;
+            string wagfId = default;
+            string tngfId = default;
+            string nid = default;
+            int? bitLength = default;
+            string gnbValue = default;
+            string mcc = default;
+            string mnc = default;
+            string locationType = default;
+            string tac = default;
+            string mcc0 = default;
+            string mnc0 = default;
             int fivegTmsi = default;
             int regionId = default;
             int setId = default;
@@ -636,34 +637,34 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UeInfo5G(
                 ratType,
-                Optional.ToNullable(lastReadAt),
+                lastReadAt,
                 serializedAdditionalRawData,
                 supi,
-                pei.Value,
+                pei,
                 sessionInfo ?? new ChangeTrackingList<UeSessionInfo5G>(),
-                perUeTnla.Value,
-                Optional.ToNullable(amfUeNgapId),
-                Optional.ToNullable(ranUeNgapId),
-                lastVisitedTai.Value,
+                perUeTnla,
+                amfUeNgapId,
+                ranUeNgapId,
+                lastVisitedTai,
                 allowedNssai ?? new ChangeTrackingList<Snssai>(),
-                Optional.ToNullable(ueState),
-                Optional.ToNullable(rrcEstablishmentCause),
-                Optional.ToNullable(ueUsageSetting),
-                Optional.ToNullable(lastActivityTime),
-                ngeNbId.Value,
-                eNbId.Value,
-                n3IwfId.Value,
-                wagfId.Value,
-                tngfId.Value,
-                nid.Value,
-                Optional.ToNullable(bitLength),
-                gnbValue.Value,
-                mcc.Value,
-                mnc.Value,
-                locationType.Value,
-                tac.Value,
-                mcc0.Value,
-                mnc0.Value,
+                ueState,
+                rrcEstablishmentCause,
+                ueUsageSetting,
+                lastActivityTime,
+                ngeNbId,
+                eNbId,
+                n3IwfId,
+                wagfId,
+                tngfId,
+                nid,
+                bitLength,
+                gnbValue,
+                mcc,
+                mnc,
+                locationType,
+                tac,
+                mcc0,
+                mnc0,
                 fivegTmsi,
                 regionId,
                 setId,

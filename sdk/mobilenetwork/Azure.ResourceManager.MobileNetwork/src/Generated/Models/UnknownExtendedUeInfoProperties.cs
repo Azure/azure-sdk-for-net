@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The UnknownExtendedUeInfoProperties. </summary>
+    /// <summary> Unknown version of ExtendedUeInfoProperties. </summary>
     internal partial class UnknownExtendedUeInfoProperties : ExtendedUeInfoProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExtendedUeInfoProperties"/>. </summary>

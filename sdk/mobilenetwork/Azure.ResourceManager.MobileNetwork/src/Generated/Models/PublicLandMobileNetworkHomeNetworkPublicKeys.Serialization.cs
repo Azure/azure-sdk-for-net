@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(ProfileA is ChangeTrackingList<HomeNetworkPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProfileA))
             {
                 writer.WritePropertyName("profileA"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProfileB is ChangeTrackingList<HomeNetworkPublicKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ProfileB))
             {
                 writer.WritePropertyName("profileB"u8);
                 writer.WriteStartArray();

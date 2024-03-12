@@ -338,10 +338,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="ExtendedUeInfoResource"/> object. </returns>
         public static ExtendedUeInfoResource GetExtendedUeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetExtendedUeInfoResource(id);
         }

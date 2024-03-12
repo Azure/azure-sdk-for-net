@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(PdnType.ToString());
             writer.WritePropertyName("ueIpAddress"u8);
             writer.WriteStartObject();
-            if (IPV4Addr != null)
+            if (Optional.IsDefined(IPV4Addr))
             {
                 writer.WritePropertyName("ipV4Addr"u8);
                 writer.WriteStringValue(IPV4Addr);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             int ebi = default;
             string apn = default;
             PdnType pdnType = default;
-            Optional<string> ipV4Addr = default;
+            string ipV4Addr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UeSessionInfo4G(ebi, apn, pdnType, ipV4Addr.Value, serializedAdditionalRawData);
+            return new UeSessionInfo4G(ebi, apn, pdnType, ipV4Addr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UeSessionInfo4G>.Write(ModelReaderWriterOptions options)

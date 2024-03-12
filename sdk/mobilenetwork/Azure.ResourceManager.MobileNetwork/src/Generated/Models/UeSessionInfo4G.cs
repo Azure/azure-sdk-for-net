@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="apn"/> is null. </exception>
         public UeSessionInfo4G(int ebi, string apn, PdnType pdnType)
         {
-            if (apn == null)
-            {
-                throw new ArgumentNullException(nameof(apn));
-            }
+            Argument.AssertNotNull(apn, nameof(apn));
 
             Ebi = ebi;
             Apn = apn;

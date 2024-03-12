@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
             writer.WritePropertyName("ueIpAddress"u8);
             writer.WriteStartObject();
-            if (IPV4Addr != null)
+            if (Optional.IsDefined(IPV4Addr))
             {
                 writer.WritePropertyName("ipV4Addr"u8);
                 writer.WriteStringValue(IPV4Addr);
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Sd != null)
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
@@ -108,9 +109,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             IList<UeQOSFlow> qosFlow = default;
             string uplink = default;
             string downlink = default;
-            Optional<string> ipV4Addr = default;
+            string ipV4Addr = default;
             int sst = default;
-            Optional<string> sd = default;
+            string sd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,9 +215,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 qosFlow,
                 uplink,
                 downlink,
-                ipV4Addr.Value,
+                ipV4Addr,
                 sst,
-                sd.Value,
+                sd,
                 serializedAdditionalRawData);
         }
 

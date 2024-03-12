@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Dnn != null)
+            if (Optional.IsDefined(Dnn))
             {
                 writer.WritePropertyName("dnn"u8);
                 writer.WriteStringValue(Dnn);
             }
             writer.WritePropertyName("ueIpAddress"u8);
             writer.WriteStartObject();
-            if (IPV4Addr != null)
+            if (Optional.IsDefined(IPV4Addr))
             {
                 writer.WritePropertyName("ipV4Addr"u8);
                 writer.WriteStringValue(IPV4Addr);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> dnn = default;
-            Optional<string> ipV4Addr = default;
+            string dnn = default;
+            string ipV4Addr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnnIPPair(dnn.Value, ipV4Addr.Value, serializedAdditionalRawData);
+            return new DnnIPPair(dnn, ipV4Addr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnnIPPair>.Write(ModelReaderWriterOptions options)

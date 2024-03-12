@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(RatType.ToString());
             writer.WritePropertyName("ueState"u8);
             writer.WriteStringValue(UeState.ToString());
-            if (!(UeIPAddresses is ChangeTrackingList<DnnIPPair> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UeIPAddresses))
             {
                 writer.WritePropertyName("ueIpAddresses"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastReadOn.HasValue)
+            if (Optional.IsDefined(LastReadOn))
             {
                 writer.WritePropertyName("lastReadAt"u8);
                 writer.WriteStringValue(LastReadOn.Value, "O");
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             RatType ratType = default;
             UeState ueState = default;
             IList<DnnIPPair> ueIPAddresses = default;
-            Optional<DateTimeOffset> lastReadAt = default;
+            DateTimeOffset? lastReadAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,11 +199,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 ratType,
                 ueState,
                 ueIPAddresses ?? new ChangeTrackingList<DnnIPPair>(),
-                Optional.ToNullable(lastReadAt),
+                lastReadAt,
                 serializedAdditionalRawData);
         }
 

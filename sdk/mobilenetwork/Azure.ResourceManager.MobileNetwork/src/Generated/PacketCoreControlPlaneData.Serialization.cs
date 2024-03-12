@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
 #endif
             }
-            if (options.Format != "W" && HomeNetworkPrivateKeysProvisioning != null)
+            if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
             {
                 writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
                 writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning);

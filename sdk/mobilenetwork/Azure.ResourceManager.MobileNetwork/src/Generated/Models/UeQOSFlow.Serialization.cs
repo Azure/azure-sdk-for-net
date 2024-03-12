@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteNumberValue(Fiveqi);
             writer.WritePropertyName("gbr"u8);
             writer.WriteStartObject();
-            if (UplinkGbrUplink != null)
+            if (Optional.IsDefined(UplinkGbrUplink))
             {
                 writer.WritePropertyName("uplink"u8);
                 writer.WriteStringValue(UplinkGbrUplink);
             }
-            if (DownlinkGbrDownlink != null)
+            if (Optional.IsDefined(DownlinkGbrDownlink))
             {
                 writer.WritePropertyName("downlink"u8);
                 writer.WriteStringValue(DownlinkGbrDownlink);
@@ -45,12 +46,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
             writer.WritePropertyName("mbr"u8);
             writer.WriteStartObject();
-            if (UplinkMbrUplink != null)
+            if (Optional.IsDefined(UplinkMbrUplink))
             {
                 writer.WritePropertyName("uplink"u8);
                 writer.WriteStringValue(UplinkMbrUplink);
             }
-            if (DownlinkMbrDownlink != null)
+            if (Optional.IsDefined(DownlinkMbrDownlink))
             {
                 writer.WritePropertyName("downlink"u8);
                 writer.WriteStringValue(DownlinkMbrDownlink);
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             int qfi = default;
             int fiveqi = default;
-            Optional<string> uplink = default;
-            Optional<string> downlink = default;
-            Optional<string> uplink0 = default;
-            Optional<string> downlink0 = default;
+            string uplink = default;
+            string downlink = default;
+            string uplink0 = default;
+            string downlink0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,10 +168,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new UeQOSFlow(
                 qfi,
                 fiveqi,
-                uplink.Value,
-                downlink.Value,
-                uplink0.Value,
-                downlink0.Value,
+                uplink,
+                downlink,
+                uplink0,
+                downlink0,
                 serializedAdditionalRawData);
         }
 

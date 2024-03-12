@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
             writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
-            if (!(PublicLandMobileNetworks is ChangeTrackingList<PublicLandMobileNetwork> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicLandMobileNetworks))
             {
                 writer.WritePropertyName("publicLandMobileNetworks"u8);
                 writer.WriteStartArray();

@@ -69,38 +69,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExtendedUeInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, ueId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +102,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExtendedUeInfoData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (packetCoreControlPlaneName == null)
-            {
-                throw new ArgumentNullException(nameof(packetCoreControlPlaneName));
-            }
-            if (packetCoreControlPlaneName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(packetCoreControlPlaneName));
-            }
-            if (ueId == null)
-            {
-                throw new ArgumentNullException(nameof(ueId));
-            }
-            if (ueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ueId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
+            Argument.AssertNotNullOrEmpty(ueId, nameof(ueId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, ueId);
             _pipeline.Send(message, cancellationToken);

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -24,18 +24,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imsi"/>, <paramref name="mccInfoGutiPlmnMcc"/> or <paramref name="mncInfoGutiPlmnMnc"/> is null. </exception>
         public UeInfo4G(string imsi, int mTmsi, int groupId, int code, string mccInfoGutiPlmnMcc, string mncInfoGutiPlmnMnc)
         {
-            if (imsi == null)
-            {
-                throw new ArgumentNullException(nameof(imsi));
-            }
-            if (mccInfoGutiPlmnMcc == null)
-            {
-                throw new ArgumentNullException(nameof(mccInfoGutiPlmnMcc));
-            }
-            if (mncInfoGutiPlmnMnc == null)
-            {
-                throw new ArgumentNullException(nameof(mncInfoGutiPlmnMnc));
-            }
+            Argument.AssertNotNull(imsi, nameof(imsi));
+            Argument.AssertNotNull(mccInfoGutiPlmnMcc, nameof(mccInfoGutiPlmnMcc));
+            Argument.AssertNotNull(mncInfoGutiPlmnMnc, nameof(mncInfoGutiPlmnMnc));
 
             Imsi = imsi;
             SessionInfo = new ChangeTrackingList<UeSessionInfo4G>();

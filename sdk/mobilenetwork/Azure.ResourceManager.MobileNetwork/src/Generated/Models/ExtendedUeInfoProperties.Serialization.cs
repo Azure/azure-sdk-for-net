@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ratType"u8);
             writer.WriteStringValue(RatType.ToString());
-            if (LastReadOn.HasValue)
+            if (Optional.IsDefined(LastReadOn))
             {
                 writer.WritePropertyName("lastReadAt"u8);
                 writer.WriteStringValue(LastReadOn.Value, "O");

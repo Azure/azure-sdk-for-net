@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ratType"u8);
             writer.WriteStringValue(RatType.ToString());
-            if (LastReadOn.HasValue)
+            if (Optional.IsDefined(LastReadOn))
             {
                 writer.WritePropertyName("lastReadAt"u8);
                 writer.WriteStringValue(LastReadOn.Value, "O");
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             RatType ratType = "Unknown";
-            Optional<DateTimeOffset> lastReadAt = default;
+            DateTimeOffset? lastReadAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExtendedUeInfoProperties(ratType, Optional.ToNullable(lastReadAt), serializedAdditionalRawData);
+            return new UnknownExtendedUeInfoProperties(ratType, lastReadAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedUeInfoProperties>.Write(ModelReaderWriterOptions options)

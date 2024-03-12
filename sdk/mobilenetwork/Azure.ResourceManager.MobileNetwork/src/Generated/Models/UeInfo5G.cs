@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -25,18 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="supi"/>, <paramref name="mccInfoFivegGutiPlmnMcc"/> or <paramref name="mncInfoFivegGutiPlmnMnc"/> is null. </exception>
         public UeInfo5G(string supi, int fivegTmsi, int regionId, int setId, int pointer, string mccInfoFivegGutiPlmnMcc, string mncInfoFivegGutiPlmnMnc)
         {
-            if (supi == null)
-            {
-                throw new ArgumentNullException(nameof(supi));
-            }
-            if (mccInfoFivegGutiPlmnMcc == null)
-            {
-                throw new ArgumentNullException(nameof(mccInfoFivegGutiPlmnMcc));
-            }
-            if (mncInfoFivegGutiPlmnMnc == null)
-            {
-                throw new ArgumentNullException(nameof(mncInfoFivegGutiPlmnMnc));
-            }
+            Argument.AssertNotNull(supi, nameof(supi));
+            Argument.AssertNotNull(mccInfoFivegGutiPlmnMcc, nameof(mccInfoFivegGutiPlmnMcc));
+            Argument.AssertNotNull(mncInfoFivegGutiPlmnMnc, nameof(mncInfoFivegGutiPlmnMnc));
 
             Supi = supi;
             SessionInfo = new ChangeTrackingList<UeSessionInfo5G>();

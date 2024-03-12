@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (HomeNetworkPublicKeys != null)
+            if (Optional.IsDefined(HomeNetworkPublicKeys))
             {
                 writer.WritePropertyName("homeNetworkPublicKeys"u8);
                 writer.WriteObjectValue(HomeNetworkPublicKeys);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<PublicLandMobileNetworkHomeNetworkPublicKeys> homeNetworkPublicKeys = default;
+            PublicLandMobileNetworkHomeNetworkPublicKeys homeNetworkPublicKeys = default;
             string mcc = default;
             string mnc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicLandMobileNetwork(mcc, mnc, serializedAdditionalRawData, homeNetworkPublicKeys.Value);
+            return new PublicLandMobileNetwork(mcc, mnc, serializedAdditionalRawData, homeNetworkPublicKeys);
         }
 
         BinaryData IPersistableModel<PublicLandMobileNetwork>.Write(ModelReaderWriterOptions options)
