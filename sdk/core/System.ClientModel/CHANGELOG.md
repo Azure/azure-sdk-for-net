@@ -1,10 +1,20 @@
 # Release History
 
-## 1.0.0 (2024-01-03)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
-- Initial release of ModelReaderWriter APIs for reading and writing models in different formats.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2024-01-03)
+
+### Features Added
+
+- Initial release of building blocks for clients that call cloud services.
 
 ## 1.0.0-beta.2 (2023-12-14)
 

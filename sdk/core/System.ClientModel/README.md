@@ -14,7 +14,7 @@ it will be installed for you when you install one of the client libraries using 
 Install the client library for .NET with [NuGet](https://www.nuget.org/packages/System.ClientModel).
 
 ```dotnetcli
-dotnet add package System.ClientModel
+dotnet add package System.ClientModel --prerelease
 ```
 
 ### Prerequisites
