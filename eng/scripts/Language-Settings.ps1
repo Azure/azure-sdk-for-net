@@ -623,22 +623,11 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     $lines | Out-File $projectListOverrideFile -Encoding UTF8
     Write-Host "`n"
 
-    # Initialize npm and npx cache
-    Write-Host "##[group]Initializing npm and npx cache"
+    # Install autorest locally
+    Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
 
-    ## Generate code in sdk/template to prime the npx and npm cache
-    Push-Location "$RepoRoot/sdk/template/Azure.Template/src"
-    try {
-      Write-Host "Building then resetting sdk/template/Azure.Template/src"
-      Invoke-LoggedCommand "dotnet build /t:GenerateCode"
-      Invoke-LoggedCommand "git restore ."
-      Invoke-LoggedCommand "git clean . --force"
-    }
-    finally {
-      Pop-Location
-    }
+    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
 
-    ## Run npm install over emitter-package.json in a temp folder to prime the npm cache
     $tempFolder = New-TemporaryFile
     $tempFolder | Remove-Item -Force
     New-Item $tempFolder -ItemType Directory -Force | Out-Null
@@ -658,13 +647,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
       $tempFolder | Remove-Item -Force -Recurse
     }
 
-    Write-Host "##[endgroup]"
-
     # Generate projects
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
     $summaryArgs = $showSummary ? "/v:n /ds" : ""
-
-    Invoke-LoggedCommand "npx autorest --version"
 
     Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
   }

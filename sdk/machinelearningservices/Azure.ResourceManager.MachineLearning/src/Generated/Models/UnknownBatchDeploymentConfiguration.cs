@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownBatchDeploymentConfiguration. </summary>
+    /// <summary> Unknown version of BatchDeploymentConfiguration. </summary>
     internal partial class UnknownBatchDeploymentConfiguration : BatchDeploymentConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/>. </summary>

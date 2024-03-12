@@ -35,6 +35,8 @@
     <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup>

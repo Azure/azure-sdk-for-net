@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownValidationRequest. </summary>
+    /// <summary> Unknown version of ValidationRequest. </summary>
     internal partial class UnknownValidationRequest : DataBoxValidationContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownValidationRequest"/>. </summary>

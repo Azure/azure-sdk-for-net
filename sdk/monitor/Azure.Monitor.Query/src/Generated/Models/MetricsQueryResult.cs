@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
     {
         /// <summary> Initializes a new instance of <see cref="MetricsQueryResult"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="metrics"> the value of the collection. </param>
+        /// <param name="metrics"> The value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="metrics"/> is null. </exception>
         internal MetricsQueryResult(string timespan, IEnumerable<MetricResult> metrics)
         {
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
         /// </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
-        /// <param name="metrics"> the value of the collection. </param>
+        /// <param name="metrics"> The value of the collection. </param>
         internal MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
             Cost = cost;
