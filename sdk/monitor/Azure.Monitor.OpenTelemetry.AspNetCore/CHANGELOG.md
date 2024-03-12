@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2024-03-12)
 
 ### Features Added
 
@@ -21,8 +21,6 @@
 
 * Added NET6 target framework.
   ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
-
-### Breaking Changes
 
 ### Bugs Fixed
 
