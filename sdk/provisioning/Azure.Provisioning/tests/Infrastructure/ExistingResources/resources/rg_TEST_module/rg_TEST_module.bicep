@@ -73,6 +73,38 @@ resource appServicePlan_D5p3EVvRT 'Microsoft.Web/serverfarms@2021-02-01' existin
   name: 'existingAppServicePlan'
 }
 
+resource serviceBusNamespace_0J6N7TWQp 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {
+  name: 'existingSbNamespace'
+}
+
+resource serviceBusQueue_YWGfZ7Jp4 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' existing = {
+  name: '${serviceBusNamespace_0J6N7TWQp}/existingSbQueue'
+}
+
+resource serviceBusTopic_xubvxdBtk 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' existing = {
+  name: '${serviceBusNamespace_0J6N7TWQp}/existingSbTopic'
+}
+
+resource serviceBusSubscription_EnDkO3Vba 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' existing = {
+  name: '${serviceBusTopic_xubvxdBtk}/existingSbSubscription'
+}
+
+resource searchService_Szsp3FYvd 'Microsoft.Search/searchServices@2023-11-01' existing = {
+  name: 'existingSearch'
+}
+
+resource eventHubsNamespace_dQTmc5DUS 'Microsoft.EventHub/namespaces@2021-11-01' existing = {
+  name: 'existingEhNamespace'
+}
+
+resource eventHub_H6DI0xDvi 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' existing = {
+  name: '${eventHubsNamespace_dQTmc5DUS}/existingHub'
+}
+
+resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' existing = {
+  name: '${eventHub_H6DI0xDvi}/existingEhConsumerGroup'
+}
+
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_C2Aq73IJb
   name: 'appsettings'
