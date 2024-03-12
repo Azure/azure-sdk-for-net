@@ -61,6 +61,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServerBackupV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerBackupV2Resource.CreateResourceIdentifier" /> to create a <see cref="ServerBackupV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerBackupV2Resource"/> object. </returns>
+        public virtual ServerBackupV2Resource GetServerBackupV2Resource(ResourceIdentifier id)
+        {
+            ServerBackupV2Resource.ValidateResourceId(id);
+            return new ServerBackupV2Resource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MySqlFlexibleServerConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MySqlFlexibleServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -109,6 +121,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AdvancedThreatProtectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create an <see cref="AdvancedThreatProtectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionResource"/> object. </returns>
+        public virtual AdvancedThreatProtectionResource GetAdvancedThreatProtectionResource(ResourceIdentifier id)
+        {
+            AdvancedThreatProtectionResource.ValidateResourceId(id);
+            return new AdvancedThreatProtectionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MySqlFlexibleServersCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MySqlFlexibleServersCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersCapabilityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -118,6 +142,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         {
             MySqlFlexibleServersCapabilityResource.ValidateResourceId(id);
             return new MySqlFlexibleServersCapabilityResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceResource"/> object. </returns>
+        public virtual MaintenanceResource GetMaintenanceResource(ResourceIdentifier id)
+        {
+            MaintenanceResource.ValidateResourceId(id);
+            return new MaintenanceResource(Client, id);
         }
     }
 }
