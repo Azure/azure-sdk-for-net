@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="clientAppGroupIdentifier"> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </param>
         /// <param name="policies">
         /// List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic.
-        /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
         /// </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -534,6 +534,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 policies?.ToList(),
                 location,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EventHubsApplicationGroupPolicy"/>. </summary>
+        /// <param name="name"> The Name of this policy. </param>
+        /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
+        /// <returns> A new <see cref="Models.EventHubsApplicationGroupPolicy"/> instance for mocking. </returns>
+        public static EventHubsApplicationGroupPolicy EventHubsApplicationGroupPolicy(string name = null, string applicationGroupPolicyType = "Unknown")
+        {
+            return new UnknownEventHubsApplicationGroupPolicy(name, applicationGroupPolicyType, serializedAdditionalRawData: null);
         }
     }
 }
