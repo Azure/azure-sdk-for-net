@@ -19,6 +19,11 @@ namespace System.ClientModel.Primitives
         /// Default options for writing models into XML format.
         /// </summary>
         public static ModelReaderWriterOptions Xml => s_xmlOptions ??= new ModelReaderWriterOptions("X");
+        private static ModelReaderWriterOptions? s_multipartFormDataOptions;
+        /// <summary>
+        /// Default options for writing models into XML format.
+        /// </summary>
+        public static ModelReaderWriterOptions MultipartFormData => s_multipartFormDataOptions ??= new ModelReaderWriterOptions("MPFD");
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
