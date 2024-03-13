@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Search
     {
         // https://learn.microsoft.com/azure/templates/microsoft.search/2023-11-01/searchservices?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Search/searchServices";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/src/Generated/RestOperations/ServicesRestOperations.cs#L36
         private const string DefaultVersion = "2023-11-01";
 
         private static readonly Func<string, SearchServiceData> Empty = (name) => ArmSearchModelFactory.SearchServiceData();
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.Search
             string name = "search",
             string version = DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmSearchModelFactory.SearchServiceData(
+            : this(scope, parent, name, version, (name) => ArmSearchModelFactory.SearchServiceData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: sku ?? SearchSkuName.Basic))
@@ -50,8 +51,8 @@ namespace Azure.Provisioning.Search
             ResourceGroup? parent,
             string name,
             string version = DefaultVersion,
-            bool isExisting = false,
-            Func<string, SearchServiceData>? creator = null)
+            Func<string, SearchServiceData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

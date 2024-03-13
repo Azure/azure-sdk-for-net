@@ -14,9 +14,10 @@ namespace Azure.Provisioning.Storage
     /// </summary>
     public class StorageAccount : Resource<StorageAccountData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.storage/2023-01-01/storageaccounts?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.storage/2022-09-01/storageaccounts?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Storage/storageAccounts";
-        internal const string DefaultVersion = "2023-01-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/src/Generated/RestOperations/BlobContainersRestOperations.cs#L36
+        internal const string DefaultVersion = "2022-09-01";
 
         private static readonly Func<string, StorageAccountData> Empty = (name) => ArmStorageModelFactory.StorageAccountData();
 
@@ -30,7 +31,7 @@ namespace Azure.Provisioning.Storage
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         public StorageAccount(IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string name = "sa", string version = DefaultVersion)
-            : this(scope, parent, name, version, false, (name) => ArmStorageModelFactory.StorageAccountData(
+            : this(scope, parent, name, version, (name) => ArmStorageModelFactory.StorageAccountData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -42,7 +43,12 @@ namespace Azure.Provisioning.Storage
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private StorageAccount(IConstruct scope, ResourceGroup? parent, string name, string version = DefaultVersion, bool isExisting = true, Func<string, StorageAccountData>? creator = null)
+        private StorageAccount(IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            Func<string, StorageAccountData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

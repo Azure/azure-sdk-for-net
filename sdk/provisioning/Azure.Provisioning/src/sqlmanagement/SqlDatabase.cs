@@ -25,14 +25,20 @@ namespace Azure.Provisioning.Sql
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = SqlServer.DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, location, false, (name) => ArmSqlModelFactory.SqlDatabaseData(
+            : this(scope, parent, name, version, location, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 
-        private SqlDatabase(IConstruct scope, SqlServer? parent, string name, string version = SqlServer.DefaultVersion, AzureLocation? location = default, bool isExisting = false, Func<string, SqlDatabaseData>? creator = null)
+        private SqlDatabase(IConstruct scope,
+            SqlServer? parent,
+            string name,
+            string version = SqlServer.DefaultVersion,
+            AzureLocation? location = default,
+            Func<string, SqlDatabaseData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

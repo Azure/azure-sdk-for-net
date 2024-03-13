@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Redis
     {
         // https://learn.microsoft.com/azure/templates/microsoft.cache/2023-08-01/redis?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Cache/Redis";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/redis/Azure.ResourceManager.Redis/src/Generated/RestOperations/RedisRestOperations.cs#L36
         private const string DefaultVersion = "2023-08-01";
 
         private static readonly Func<string, RedisData> Empty = (name) => ArmRedisModelFactory.RedisData(updateChannel: null);
@@ -36,7 +37,7 @@ namespace Azure.Provisioning.Redis
             string name = "redis",
             string version = DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmRedisModelFactory.RedisData(
+            : this(scope, parent, name, version, (name) => ArmRedisModelFactory.RedisData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 enableNonSslPort: false,
@@ -53,8 +54,8 @@ namespace Azure.Provisioning.Redis
             ResourceGroup? parent,
             string name,
             string version = DefaultVersion,
-            bool isExisting = false,
-            Func<string, RedisData>? creator = null)
+            Func<string, RedisData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
         {
         }

@@ -139,7 +139,7 @@ resource webSiteConfigLogs_GwVSHGFxS 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2021-11-01' = {
+resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2020-11-01-preview' = {
   name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
   location: location
   properties: {
@@ -151,7 +151,7 @@ resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2021-11-01' = {
   }
 }
 
-resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2021-11-01' = {
+resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
   parent: sqlServer_9wIHMU1zj
   name: 'db'
   location: location
@@ -159,7 +159,7 @@ resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2021-11-01' = {
   }
 }
 
-resource sqlFirewallRule_S9t9pYi6A 'Microsoft.Sql/servers/firewallRules@2021-11-01' = {
+resource sqlFirewallRule_S9t9pYi6A 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
   parent: sqlServer_9wIHMU1zj
   name: 'firewallRule'
   properties: {

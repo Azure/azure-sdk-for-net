@@ -22,13 +22,18 @@ namespace Azure.Provisioning.Storage
         /// <param name="parent">The parent.</param>
         /// <param name="version">The version.</param>
         public BlobService(IConstruct scope, StorageAccount? parent = null, string version = StorageAccount.DefaultVersion)
-            : this(scope, parent, "default", version, false, (name) => ArmStorageModelFactory.BlobServiceData(
+            : this(scope, parent, "default", version, (name) => ArmStorageModelFactory.BlobServiceData(
                 name: name,
                 resourceType: ResourceTypeName))
         {
         }
 
-        private BlobService(IConstruct scope, StorageAccount? parent, string name, string version = StorageAccount.DefaultVersion, bool isExisting = false, Func<string, BlobServiceData>? creator = null)
+        private BlobService(IConstruct scope,
+            StorageAccount? parent,
+            string name,
+            string version = StorageAccount.DefaultVersion,
+            Func<string, BlobServiceData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

@@ -27,8 +27,13 @@ namespace Azure.Provisioning.ServiceBus
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public ServiceBusQueue(IConstruct scope, bool? requiresSession = default, ServiceBusNamespace? parent = null, string name = "queue", string version = ServiceBusNamespace.DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmServiceBusModelFactory.ServiceBusQueueData(
+        public ServiceBusQueue(IConstruct scope,
+            bool? requiresSession = default,
+            ServiceBusNamespace? parent = null,
+            string name = "queue",
+            string version = ServiceBusNamespace.DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, (name) => ArmServiceBusModelFactory.ServiceBusQueueData(
                 name: name,
                 requiresSession: requiresSession,
                 resourceType: ResourceTypeName,
@@ -36,8 +41,13 @@ namespace Azure.Provisioning.ServiceBus
         {
         }
 
-        private ServiceBusQueue(IConstruct scope, ServiceBusNamespace? parent = null, string name = "queue", string version = ServiceBusNamespace.DefaultVersion, bool isExisting = true, Func<string, ServiceBusQueueData>? creator = null)
-            : base(scope, parent, name, ResourceTypeName, ServiceBusNamespace.DefaultVersion, creator ?? Empty, isExisting)
+        private ServiceBusQueue(IConstruct scope,
+            ServiceBusNamespace? parent = null,
+            string name = "queue",
+            string version = ServiceBusNamespace.DefaultVersion,
+            Func<string, ServiceBusQueueData>? creator = null,
+            bool isExisting = false)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 

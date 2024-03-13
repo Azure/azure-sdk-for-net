@@ -17,6 +17,8 @@ namespace Azure.Provisioning.KeyVaults
     {
         // https://learn.microsoft.com/azure/templates/microsoft.keyvault/2022-07-01/vaults?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/RestOperations/VaultsRestOperations.cs#L36
+        // TODO the version used in ARM library doesn't exist in the docs so we are using the latest documented version
         internal const string DefaultVersion = "2022-07-01";
 
         private static readonly Func<string, KeyVaultData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultData();

@@ -14,8 +14,11 @@ namespace Azure.Provisioning.Resources
     /// </summary>
     public class DeploymentScript : Resource<AzureCliScript>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.resources/2020-10-01/deploymentscripts?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Resources/deploymentScripts";
-        private const string _defaultVersion = "2020-10-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resources/Azure.ResourceManager.Resources/src/Generated/RestOperations/DeploymentScriptsRestOperations.cs#L36
+        private const string DefaultVersion = "2020-10-01";
+
         private static readonly Func<string, AzureCliScript> Empty = (name) => ArmResourcesModelFactory.AzureCliScript();
 
         /// <summary>
@@ -27,8 +30,8 @@ namespace Azure.Provisioning.Resources
         /// <param name="scriptContent">The script content.</param>
         /// <param name="version">The resource version.</param>
         /// <param name="location">The resource location.</param>
-        public DeploymentScript(IConstruct scope, string resourceName, IEnumerable<ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = _defaultVersion, AzureLocation? location = default)
-            : base(scope, null, resourceName, ResourceTypeName, version, (name) => ArmResourcesModelFactory.AzureCliScript(
+        public DeploymentScript(IConstruct scope, string resourceName, IEnumerable<ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = DefaultVersion, AzureLocation? location = default)
+            : this(scope, null, resourceName, version, (name) => ArmResourcesModelFactory.AzureCliScript(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -53,8 +56,8 @@ namespace Azure.Provisioning.Resources
         /// <param name="sqlAdminPasswordSecret">The sql admin password secret.</param>
         /// <param name="version">The resource version.</param>
         /// <param name="location">The resource location.</param>
-        public DeploymentScript(IConstruct scope, string resourceName, Resource database, Parameter databaseServerName, Parameter appUserPasswordSecret, Parameter sqlAdminPasswordSecret, string version = _defaultVersion, AzureLocation? location = default)
-            : base(scope, null, resourceName, ResourceTypeName, version, (name) => ArmResourcesModelFactory.AzureCliScript(
+        public DeploymentScript(IConstruct scope, string resourceName, Resource database, Parameter databaseServerName, Parameter appUserPasswordSecret, Parameter sqlAdminPasswordSecret, string version = DefaultVersion, AzureLocation? location = default)
+            : this(scope, null, resourceName, version, (name) => ArmResourcesModelFactory.AzureCliScript(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -85,8 +88,7 @@ namespace Azure.Provisioning.Resources
                         SCRIPT_END
 
                         ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql
-                        """),
-                  false)
+                        """))
         {
             AssignProperty(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
             AssignProperty(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);
@@ -103,8 +105,8 @@ namespace Azure.Provisioning.Resources
         public static DeploymentScript FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new DeploymentScript(scope, parent: parent, name: name, isExisting: true);
 
-        private DeploymentScript(IConstruct scope, string name, ResourceGroup? parent = null, bool isExisting = false)
-            : base(scope, parent, name, ResourceTypeName, _defaultVersion, Empty, isExisting)
+        private DeploymentScript(IConstruct scope, ResourceGroup? parent, string name, string version = DefaultVersion, Func<string, AzureCliScript>? creator = null, bool isExisting = false)
+            : base(scope, parent, name, ResourceTypeName, DefaultVersion, creator ?? Empty, isExisting)
         {
         }
 

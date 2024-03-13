@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource eventHubsNamespace_LmeDkjUWO 'Microsoft.EventHub/namespaces@2021-11-01' = {
+resource eventHubsNamespace_LmeDkjUWO 'Microsoft.EventHub/namespaces@2022-10-01-preview' = {
   name: toLower(take(concat('eh', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
@@ -15,7 +15,7 @@ resource eventHubsNamespace_LmeDkjUWO 'Microsoft.EventHub/namespaces@2021-11-01'
   }
 }
 
-resource eventHub_ELtptvi1s 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
+resource eventHub_ELtptvi1s 'Microsoft.EventHub/namespaces/eventhubs@2022-10-01-preview' = {
   parent: eventHubsNamespace_LmeDkjUWO
   name: 'hub'
   location: location
@@ -23,7 +23,7 @@ resource eventHub_ELtptvi1s 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01'
   }
 }
 
-resource eventHubsConsumerGroup_rQSsNNay3 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
+resource eventHubsConsumerGroup_rQSsNNay3 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2022-10-01-preview' = {
   parent: eventHub_ELtptvi1s
   name: 'cg'
   location: location

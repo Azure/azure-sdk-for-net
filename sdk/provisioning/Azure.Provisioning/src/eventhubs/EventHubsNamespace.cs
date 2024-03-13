@@ -14,9 +14,10 @@ namespace Azure.Provisioning.EventHubs
     /// </summary>
     public class EventHubsNamespace : Resource<EventHubsNamespaceData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.eventhub/2021-11-01/namespaces?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.eventhub/2022-10-01-preview/namespaces?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.EventHub/namespaces";
-        internal const string DefaultVersion = "2021-11-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.ResourceManager.EventHubs/src/Generated/RestOperations/NamespacesRestOperations.cs#L36
+        internal const string DefaultVersion = "2022-10-01-preview";
 
         private static readonly Func<string, EventHubsNamespaceData> Empty = (name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
 
@@ -51,7 +52,7 @@ namespace Azure.Provisioning.EventHubs
             ResourceGroup? parent,
             string name,
             string version = DefaultVersion,
-            bool isExisting = true,
+            bool isExisting = false,
             Func<string, EventHubsNamespaceData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {

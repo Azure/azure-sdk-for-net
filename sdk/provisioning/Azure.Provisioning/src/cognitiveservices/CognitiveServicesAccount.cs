@@ -16,6 +16,7 @@ namespace Azure.Provisioning.CognitiveServices
     {
         // https://learn.microsoft.com/azure/templates/microsoft.cognitiveservices/2023-05-01/accounts?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.CognitiveServices/accounts";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/src/Generated/RestOperations/AccountsRestOperations.cs#L36
         private const string DefaultVersion = "2023-05-01";
 
         private static readonly Func<string, CognitiveServicesAccountData> Empty = (name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountData();

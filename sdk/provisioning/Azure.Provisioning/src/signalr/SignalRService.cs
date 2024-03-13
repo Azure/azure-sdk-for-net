@@ -15,9 +15,10 @@ namespace Azure.Provisioning.SignalR
     /// </summary>
     public class SignalRService : Resource<SignalRData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.signalrservice/2023-02-01/signalr?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.signalrservice/2022-02-01/signalr?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.SignalRService/signalR";
-        private const string DefaultVersion = "2023-02-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Azure.ResourceManager.SignalR/src/Generated/RestOperations/SignalRRestOperations.cs#L36
+        private const string DefaultVersion = "2022-02-01";
 
         private static readonly Func<string, SignalRData> Empty = (name) => ArmSignalRModelFactory.SignalRData();
 

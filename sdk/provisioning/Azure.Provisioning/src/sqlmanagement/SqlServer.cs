@@ -14,9 +14,10 @@ namespace Azure.Provisioning.Sql
     /// </summary>
     public class SqlServer : Resource<SqlServerData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.sql/2021-11-01/servers?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/azure/templates/microsoft.sql/2020-11-01-preview/servers?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Sql/servers";
-        internal const string DefaultVersion = "2021-11-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/sqlmanagement/Azure.ResourceManager.Sql/src/Generated/RestOperations/ServerRestOperations.cs#L36
+        internal const string DefaultVersion = "2020-11-01-preview";
 
         private static readonly Func<string, SqlServerData> Empty = (name) => ArmSqlModelFactory.SqlServerData();
 
@@ -39,7 +40,7 @@ namespace Azure.Provisioning.Sql
             ResourceGroup? parent = null,
             string version = DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, name, parent, version, false, (name) => ArmSqlModelFactory.SqlServerData(
+            : this(scope, name, parent, version, (name) => ArmSqlModelFactory.SqlServerData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
@@ -74,8 +75,8 @@ namespace Azure.Provisioning.Sql
             string name,
             ResourceGroup? parent,
             string version = DefaultVersion,
-            bool isExisting = false,
-            Func<string, SqlServerData>? creator = null)
+            Func<string, SqlServerData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

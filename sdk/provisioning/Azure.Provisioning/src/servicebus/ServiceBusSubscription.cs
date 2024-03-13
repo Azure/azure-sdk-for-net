@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ServiceBus
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public ServiceBusSubscription(IConstruct scope, bool? requiresSession = default, ServiceBusTopic? parent = null, string name = "subscription", string version = ServiceBusNamespace.DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmServiceBusModelFactory.ServiceBusSubscriptionData(
+            : this(scope, parent, name, version, (name) => ArmServiceBusModelFactory.ServiceBusSubscriptionData(
                 name: name,
                 requiresSession: requiresSession,
                 resourceType: ResourceTypeName,
@@ -34,7 +34,12 @@ namespace Azure.Provisioning.ServiceBus
         {
         }
 
-        private ServiceBusSubscription(IConstruct scope, ServiceBusTopic? parent = null, string name = "subscription", string version = ServiceBusNamespace.DefaultVersion, bool isExisting = true, Func<string, ServiceBusSubscriptionData>? creator = null)
+        private ServiceBusSubscription(IConstruct scope,
+            ServiceBusTopic? parent = null,
+            string name = "subscription",
+            string version = ServiceBusNamespace.DefaultVersion,
+            Func<string, ServiceBusSubscriptionData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

@@ -15,9 +15,10 @@ namespace Azure.Provisioning.PostgreSql
     /// </summary>
     public class PostgreSqlFlexibleServer : Resource<PostgreSqlFlexibleServerData>
     {
-        // https://learn.microsoft.com/en-us/azure/templates/microsoft.dbforpostgresql/2022-12-01/flexibleservers?pivots=deployment-language-bicep
+        // https://learn.microsoft.com/en-us/azure/templates/microsoft.dbforpostgresql/2023-03-01-preview/flexibleservers?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers";
-        internal const string DefaultVersion = "2022-12-01";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/postgresql/Azure.ResourceManager.PostgreSql/src/PostgreSqlFlexibleServers/Generated/RestOperations/ServersRestOperations.cs#L37
+        internal const string DefaultVersion = "2023-03-01-preview";
 
         private static readonly Func<string, PostgreSqlFlexibleServerData> Empty = (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
 
