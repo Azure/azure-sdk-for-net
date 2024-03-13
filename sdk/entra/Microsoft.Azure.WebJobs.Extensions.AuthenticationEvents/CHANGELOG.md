@@ -14,9 +14,12 @@
 
 ### Bugs Fixed
 
+	- Made the request validation errors return 400 and the response validation errors return 500.
+
 ### Other Changes
 
 - Cleaned out unused methods.
+- Renamed MiscTests.cs to RequestResponseModelTests.cs
 
 ## 1.0.0-beta.5 (2023-12-07)
 
