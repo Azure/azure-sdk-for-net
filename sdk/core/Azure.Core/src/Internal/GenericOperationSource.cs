@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    internal class GenericOperationSource<T> : IOperationSource<T>
+    internal class GenericOperationSource<T> : IOperationSource<T> where T : notnull
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
             => CreateResult(response);
