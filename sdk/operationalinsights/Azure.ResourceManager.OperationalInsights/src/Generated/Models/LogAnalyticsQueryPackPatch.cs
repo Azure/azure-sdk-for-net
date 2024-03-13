@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

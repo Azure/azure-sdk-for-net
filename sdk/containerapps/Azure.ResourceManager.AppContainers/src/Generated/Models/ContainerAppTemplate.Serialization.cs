@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -227,6 +230,201 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionSuffix), out propertyOverride);
+            if (Optional.IsDefined(RevisionSuffix) || hasPropertyOverride)
+            {
+                builder.Append("  revisionSuffix: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RevisionSuffix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RevisionSuffix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RevisionSuffix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TerminationGracePeriodSeconds), out propertyOverride);
+            if (Optional.IsDefined(TerminationGracePeriodSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  terminationGracePeriodSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TerminationGracePeriodSeconds.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitContainers), out propertyOverride);
+            if (Optional.IsCollectionDefined(InitContainers) || hasPropertyOverride)
+            {
+                if (InitContainers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  initContainers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in InitContainers)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  initContainers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Containers), out propertyOverride);
+            if (Optional.IsCollectionDefined(Containers) || hasPropertyOverride)
+            {
+                if (Containers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  containers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Containers)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  containers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scale), out propertyOverride);
+            if (Optional.IsDefined(Scale) || hasPropertyOverride)
+            {
+                builder.Append("  scale: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Volumes), out propertyOverride);
+            if (Optional.IsCollectionDefined(Volumes) || hasPropertyOverride)
+            {
+                if (Volumes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  volumes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Volumes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  volumes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBinds), out propertyOverride);
+            if (Optional.IsCollectionDefined(ServiceBinds) || hasPropertyOverride)
+            {
+                if (ServiceBinds.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  serviceBinds: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceBinds)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  serviceBinds: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,6 +433,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support '{options.Format}' format.");
             }
@@ -251,6 +451,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppTemplate(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support '{options.Format}' format.");
             }

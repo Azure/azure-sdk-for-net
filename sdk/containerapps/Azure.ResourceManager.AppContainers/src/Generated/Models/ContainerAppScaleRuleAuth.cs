@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name of the secret from which to pull the auth params. </summary>
+        [WirePath("secretRef")]
         public string SecretRef { get; set; }
         /// <summary> Trigger Parameter that uses the secret. </summary>
+        [WirePath("triggerParameter")]
         public string TriggerParameter { get; set; }
     }
 }

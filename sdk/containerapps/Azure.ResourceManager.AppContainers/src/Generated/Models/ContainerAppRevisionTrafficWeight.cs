@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name of a revision. </summary>
+        [WirePath("revisionName")]
         public string RevisionName { get; set; }
         /// <summary> Traffic weight assigned to a revision. </summary>
+        [WirePath("weight")]
         public int? Weight { get; set; }
         /// <summary> Indicates that the traffic weight belongs to a latest stable revision. </summary>
+        [WirePath("latestRevision")]
         public bool? IsLatestRevision { get; set; }
         /// <summary> Associates a traffic label with a revision. </summary>
+        [WirePath("label")]
         public string Label { get; set; }
     }
 }

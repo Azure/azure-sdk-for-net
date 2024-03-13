@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The metadata from search results. </summary>
+        [WirePath("metadata")]
         public SearchMetadata Metadata { get; }
         /// <summary> The array of result values. </summary>
+        [WirePath("value")]
         public IReadOnlyList<OperationalInsightsSearchSchemaValue> Value { get; }
     }
 }

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Scale Rule Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Azure Queue based scaling. </summary>
+        [WirePath("azureQueue")]
         public ContainerAppQueueScaleRule AzureQueue { get; set; }
         /// <summary> Custom scale rule. </summary>
+        [WirePath("custom")]
         public ContainerAppCustomScaleRule Custom { get; set; }
         /// <summary> HTTP requests based scaling. </summary>
+        [WirePath("http")]
         public ContainerAppHttpScaleRule Http { get; set; }
         /// <summary> Tcp requests based scaling. </summary>
+        [WirePath("tcp")]
         public ContainerAppTcpScaleRule Tcp { get; set; }
     }
 }

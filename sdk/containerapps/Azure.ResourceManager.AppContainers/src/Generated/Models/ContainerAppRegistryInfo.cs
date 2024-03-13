@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> registry server Url. </summary>
+        [WirePath("registryUrl")]
         public string RegistryServer { get; set; }
         /// <summary> registry username. </summary>
+        [WirePath("registryUserName")]
         public string RegistryUserName { get; set; }
         /// <summary> registry secret. </summary>
+        [WirePath("registryPassword")]
         public string RegistryPassword { get; set; }
     }
 }

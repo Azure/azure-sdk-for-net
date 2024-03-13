@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Rendering type. </summary>
+        [WirePath("type")]
         public int? DiagnosticRenderingType { get; set; }
         /// <summary> Title of the table. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
         /// <summary> Description of the table. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Flag if the table should be rendered. </summary>
+        [WirePath("isVisible")]
         public bool? IsVisible { get; set; }
     }
 }

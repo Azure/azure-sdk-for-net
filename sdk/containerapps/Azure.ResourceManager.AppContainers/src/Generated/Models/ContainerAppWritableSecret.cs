@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Secret Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Secret Value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </summary>
+        [WirePath("identity")]
         public string Identity { get; set; }
         /// <summary> Azure Key Vault URL pointing to the secret referenced by the container app. </summary>
+        [WirePath("keyVaultUrl")]
         public Uri KeyVaultUri { get; set; }
     }
 }

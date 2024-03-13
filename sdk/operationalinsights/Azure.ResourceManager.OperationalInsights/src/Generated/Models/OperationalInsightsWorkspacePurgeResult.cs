@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>
+        [WirePath("operationId")]
         public string OperationStringId { get; }
     }
 }
