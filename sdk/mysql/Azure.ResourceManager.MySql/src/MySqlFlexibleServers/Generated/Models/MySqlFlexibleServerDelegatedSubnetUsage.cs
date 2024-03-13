@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> name of the subnet. </summary>
+        [WirePath("subnetName")]
         public string SubnetName { get; }
         /// <summary> Number of used delegated subnets. </summary>
+        [WirePath("usage")]
         public long? Usage { get; }
     }
 }

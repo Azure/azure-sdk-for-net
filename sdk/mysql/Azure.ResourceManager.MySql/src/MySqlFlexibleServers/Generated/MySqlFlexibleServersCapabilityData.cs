@@ -78,10 +78,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> supported geo backup regions. </summary>
+        [WirePath("properties.supportedGeoBackupRegions")]
         public IReadOnlyList<string> SupportedGeoBackupRegions { get; }
         /// <summary> A list of supported flexible server editions. </summary>
+        [WirePath("properties.supportedFlexibleServerEditions")]
         public IReadOnlyList<ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get; }
         /// <summary> A list of supported server versions. </summary>
+        [WirePath("properties.supportedServerVersions")]
         public IReadOnlyList<ServerVersionCapabilityV2> SupportedServerVersions { get; }
     }
 }

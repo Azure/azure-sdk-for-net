@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Max storage size allowed for a server. </summary>
+        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
         /// <summary> Storage IOPS for a server. </summary>
+        [WirePath("iops")]
         public int? Iops { get; set; }
         /// <summary> Enable Storage Auto Grow or not. </summary>
+        [WirePath("autoGrow")]
         public MySqlFlexibleServerEnableStatusEnum? AutoGrow { get; set; }
         /// <summary> Enable Log On Disk or not. </summary>
+        [WirePath("logOnDisk")]
         public MySqlFlexibleServerEnableStatusEnum? LogOnDisk { get; set; }
         /// <summary> The sku name of the server storage. </summary>
+        [WirePath("storageSku")]
         public string StorageSku { get; }
         /// <summary> Enable IO Auto Scaling or not. </summary>
+        [WirePath("autoIoScaling")]
         public MySqlFlexibleServerEnableStatusEnum? AutoIoScaling { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Virtual network resource id. </summary>
+        [WirePath("virtualNetworkResourceId")]
         public ResourceIdentifier VirtualNetworkResourceId { get; set; }
     }
 }

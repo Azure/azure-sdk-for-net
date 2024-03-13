@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Query identifier unique to the server. </summary>
+        [WirePath("properties.queryId")]
         public string QueryId { get; set; }
         /// <summary> Query text. </summary>
+        [WirePath("properties.queryText")]
         public string QueryText { get; set; }
     }
 }

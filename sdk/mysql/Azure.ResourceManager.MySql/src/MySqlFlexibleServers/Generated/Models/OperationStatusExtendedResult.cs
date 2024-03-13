@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public IReadOnlyDictionary<string, BinaryData> Properties { get; }
     }
 }

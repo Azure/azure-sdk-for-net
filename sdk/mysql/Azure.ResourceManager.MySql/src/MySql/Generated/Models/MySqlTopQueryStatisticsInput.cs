@@ -93,16 +93,22 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Max number of top queries to return. </summary>
+        [WirePath("properties.numberOfTopQueries")]
         public int NumberOfTopQueries { get; }
         /// <summary> Aggregation function name. </summary>
+        [WirePath("properties.aggregationFunction")]
         public string AggregationFunction { get; }
         /// <summary> Observed metric name. </summary>
+        [WirePath("properties.observedMetric")]
         public string ObservedMetric { get; }
         /// <summary> Observation start time. </summary>
+        [WirePath("properties.observationStartTime")]
         public DateTimeOffset ObservationStartOn { get; }
         /// <summary> Observation end time. </summary>
+        [WirePath("properties.observationEndTime")]
         public DateTimeOffset ObservationEndOn { get; }
         /// <summary> Aggregation interval type in ISO 8601 format. </summary>
+        [WirePath("properties.aggregationWindow")]
         public string AggregationWindow { get; }
     }
 }

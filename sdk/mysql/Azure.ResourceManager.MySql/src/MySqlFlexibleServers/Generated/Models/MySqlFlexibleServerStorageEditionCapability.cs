@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> storage edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The minimal supported storage size. </summary>
+        [WirePath("minStorageSize")]
         public long? MinStorageSize { get; }
         /// <summary> The maximum supported storage size. </summary>
+        [WirePath("maxStorageSize")]
         public long? MaxStorageSize { get; }
         /// <summary> Minimal backup retention days. </summary>
+        [WirePath("minBackupRetentionDays")]
         public long? MinBackupRetentionDays { get; }
         /// <summary> Maximum backup retention days. </summary>
+        [WirePath("maxBackupRetentionDays")]
         public long? MaxBackupRetentionDays { get; }
     }
 }

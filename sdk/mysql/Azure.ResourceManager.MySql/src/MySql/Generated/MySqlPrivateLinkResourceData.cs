@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties")]
         public MySqlPrivateLinkResourceProperties Properties { get; }
     }
 }

@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The name of the sku, e.g. Standard_D32s_v3. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier of the particular SKU, e.g. GeneralPurpose. </summary>
+        [WirePath("tier")]
         public MySqlFlexibleServerSkuTier Tier { get; set; }
     }
 }

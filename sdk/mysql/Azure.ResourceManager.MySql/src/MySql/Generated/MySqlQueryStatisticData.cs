@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Database query identifier. </summary>
+        [WirePath("properties.queryId")]
         public string QueryId { get; set; }
         /// <summary> Observation start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Observation end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Aggregation function name. </summary>
+        [WirePath("properties.aggregationFunction")]
         public string AggregationFunction { get; set; }
         /// <summary> The list of database names. </summary>
+        [WirePath("properties.databaseNames")]
         public IList<string> DatabaseNames { get; }
         /// <summary> Number of query executions in this time interval. </summary>
+        [WirePath("properties.queryExecutionCount")]
         public long? QueryExecutionCount { get; set; }
         /// <summary> Metric name. </summary>
+        [WirePath("properties.metricName")]
         public string MetricName { get; set; }
         /// <summary> Metric display name. </summary>
+        [WirePath("properties.metricDisplayName")]
         public string MetricDisplayName { get; set; }
         /// <summary> Metric value. </summary>
+        [WirePath("properties.metricValue")]
         public double? MetricValue { get; set; }
         /// <summary> Metric value unit. </summary>
+        [WirePath("properties.metricValueUnit")]
         public string MetricValueUnit { get; set; }
     }
 }

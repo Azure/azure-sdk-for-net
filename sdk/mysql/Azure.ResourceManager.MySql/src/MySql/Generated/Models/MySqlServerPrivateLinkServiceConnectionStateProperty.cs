@@ -77,10 +77,13 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public MySqlPrivateLinkServiceConnectionStateStatus Status { get; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The actions required for private link service connection. </summary>
+        [WirePath("actionsRequired")]
         public MySqlPrivateLinkServiceConnectionStateRequiredAction? ActionsRequired { get; }
     }
 }

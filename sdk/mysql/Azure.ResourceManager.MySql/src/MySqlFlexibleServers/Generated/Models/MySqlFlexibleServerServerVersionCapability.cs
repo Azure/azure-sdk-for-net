@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> server version. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> A list of supported Skus. </summary>
+        [WirePath("supportedSkus")]
         public IReadOnlyList<MySqlFlexibleServerSkuCapability> SupportedSkus { get; }
     }
 }

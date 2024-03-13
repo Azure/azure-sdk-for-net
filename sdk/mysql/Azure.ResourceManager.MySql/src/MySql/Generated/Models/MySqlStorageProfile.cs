@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Backup retention days for the server. </summary>
+        [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
         /// <summary> Enable Geo-redundant or not for server backup. </summary>
+        [WirePath("geoRedundantBackup")]
         public MySqlGeoRedundantBackup? GeoRedundantBackup { get; set; }
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("storageMB")]
         public int? StorageInMB { get; set; }
         /// <summary> Enable Storage Auto Grow. </summary>
+        [WirePath("storageAutogrow")]
         public MySqlStorageAutogrow? StorageAutogrow { get; set; }
     }
 }

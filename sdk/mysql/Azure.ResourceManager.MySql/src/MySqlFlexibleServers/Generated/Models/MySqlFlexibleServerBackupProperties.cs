@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Backup retention days for the server. </summary>
+        [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
         /// <summary> Whether or not geo redundant backup is enabled. </summary>
+        [WirePath("geoRedundantBackup")]
         public MySqlFlexibleServerEnableStatusEnum? GeoRedundantBackup { get; set; }
         /// <summary> Earliest restore point creation time (ISO8601 format). </summary>
+        [WirePath("earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

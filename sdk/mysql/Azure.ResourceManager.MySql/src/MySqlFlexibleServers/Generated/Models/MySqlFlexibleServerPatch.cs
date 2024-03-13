@@ -85,28 +85,40 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public MySqlFlexibleServerSku Sku { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> Server version. </summary>
+        [WirePath("properties.version")]
         public MySqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage related properties of a server. </summary>
+        [WirePath("properties.storage")]
         public MySqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup related properties of a server. </summary>
+        [WirePath("properties.backup")]
         public MySqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability related properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
         public MySqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Maintenance window of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> The replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public MySqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> The Data Encryption for CMK. </summary>
+        [WirePath("properties.dataEncryption")]
         public MySqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> Network related properties of a server. </summary>
+        [WirePath("properties.network")]
         public MySqlFlexibleServerNetwork Network { get; set; }
     }
 }
