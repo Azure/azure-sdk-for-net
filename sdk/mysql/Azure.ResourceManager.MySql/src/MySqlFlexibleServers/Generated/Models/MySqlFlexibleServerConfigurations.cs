@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The list of server configurations. </summary>
+        [WirePath("values")]
         public IReadOnlyList<MySqlFlexibleServerConfigurationData> Values { get; }
     }
 }

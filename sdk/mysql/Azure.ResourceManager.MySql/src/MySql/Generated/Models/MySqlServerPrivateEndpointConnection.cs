@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Resource Id of the private endpoint connection. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Private endpoint connection properties. </summary>
+        [WirePath("properties")]
         public MySqlServerPrivateEndpointConnectionProperties Properties { get; }
     }
 }

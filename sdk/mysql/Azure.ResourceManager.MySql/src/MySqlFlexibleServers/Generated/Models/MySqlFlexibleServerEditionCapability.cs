@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Server edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> A list of supported storage editions. </summary>
+        [WirePath("supportedStorageEditions")]
         public IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
         /// <summary> A list of supported server versions. </summary>
+        [WirePath("supportedServerVersions")]
         public IReadOnlyList<MySqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
     }
 }

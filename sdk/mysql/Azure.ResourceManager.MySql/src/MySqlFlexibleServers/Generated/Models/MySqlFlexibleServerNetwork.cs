@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </summary>
+        [WirePath("publicNetworkAccess")]
         public MySqlFlexibleServerEnableStatusEnum? PublicNetworkAccess { get; set; }
         /// <summary> Delegated subnet resource id used to setup vnet for a server. </summary>
+        [WirePath("delegatedSubnetResourceId")]
         public ResourceIdentifier DelegatedSubnetResourceId { get; set; }
         /// <summary> Private DNS zone resource id. </summary>
+        [WirePath("privateDnsZoneResourceId")]
         public ResourceIdentifier PrivateDnsZoneResourceId { get; set; }
     }
 }

@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The location name. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> The subscription id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> A list of delegated subnet usage. </summary>
+        [WirePath("delegatedSubnetsUsage")]
         public IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
     }
 }

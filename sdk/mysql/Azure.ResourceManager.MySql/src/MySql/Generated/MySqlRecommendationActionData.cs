@@ -84,20 +84,28 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Advisor name. </summary>
+        [WirePath("properties.advisorName")]
         public string AdvisorName { get; set; }
         /// <summary> Recommendation action session identifier. </summary>
+        [WirePath("properties.sessionId")]
         public Guid? SessionId { get; set; }
         /// <summary> Recommendation action identifier. </summary>
+        [WirePath("properties.actionId")]
         public int? ActionId { get; set; }
         /// <summary> Recommendation action creation time. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Recommendation action expiration time. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Recommendation action reason. </summary>
+        [WirePath("properties.reason")]
         public string Reason { get; set; }
         /// <summary> Recommendation action type. </summary>
+        [WirePath("properties.recommendationType")]
         public string RecommendationType { get; set; }
         /// <summary> Recommendation action details. </summary>
+        [WirePath("properties.details")]
         public IDictionary<string, string> Details { get; }
     }
 }

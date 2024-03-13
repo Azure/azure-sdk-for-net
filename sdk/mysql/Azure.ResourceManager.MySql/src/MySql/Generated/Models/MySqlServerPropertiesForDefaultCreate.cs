@@ -52,8 +52,10 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). The login name is required when updating password. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
     }
 }

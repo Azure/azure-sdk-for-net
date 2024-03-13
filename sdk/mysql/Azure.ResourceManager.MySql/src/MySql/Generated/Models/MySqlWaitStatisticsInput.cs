@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Observation start time. </summary>
+        [WirePath("properties.observationStartTime")]
         public DateTimeOffset ObservationStartOn { get; }
         /// <summary> Observation end time. </summary>
+        [WirePath("properties.observationEndTime")]
         public DateTimeOffset ObservationEndOn { get; }
         /// <summary> Aggregation interval type in ISO 8601 format. </summary>
+        [WirePath("properties.aggregationWindow")]
         public string AggregationWindow { get; }
     }
 }

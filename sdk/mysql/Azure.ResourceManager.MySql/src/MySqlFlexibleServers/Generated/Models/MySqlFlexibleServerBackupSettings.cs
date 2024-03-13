@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The name of the backup. </summary>
+        [WirePath("backupName")]
         public string BackupName { get; }
         /// <summary> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </summary>
+        [WirePath("backupFormat")]
         public MySqlFlexibleServerBackupFormat? BackupFormat { get; set; }
     }
 }

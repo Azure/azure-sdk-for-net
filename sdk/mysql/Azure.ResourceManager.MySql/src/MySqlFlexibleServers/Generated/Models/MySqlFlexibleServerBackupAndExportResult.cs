@@ -81,20 +81,28 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The operation status. </summary>
+        [WirePath("status")]
         public MySqlFlexibleServerBackupAndExportOperationStatus? Status { get; set; }
         /// <summary> Start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Operation progress (0-100). </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; set; }
         /// <summary> Size of datasource in bytes. </summary>
+        [WirePath("properties.datasourceSizeInBytes")]
         public long? DatasourceSizeInBytes { get; set; }
         /// <summary> Data transferred in bytes. </summary>
+        [WirePath("properties.dataTransferredInBytes")]
         public long? DataTransferredInBytes { get; set; }
         /// <summary> Metadata related to backup to be stored for restoring resource in key-value pairs. </summary>
+        [WirePath("properties.backupMetadata")]
         public string BackupMetadata { get; set; }
         /// <summary> The error object. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; set; }
     }
 }

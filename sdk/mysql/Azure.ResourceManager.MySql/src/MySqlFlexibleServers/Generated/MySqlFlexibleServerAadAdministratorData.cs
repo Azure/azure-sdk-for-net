@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Type of the sever administrator. </summary>
+        [WirePath("properties.administratorType")]
         public MySqlFlexibleServerAdministratorType? AdministratorType { get; set; }
         /// <summary> Login name of the server administrator. </summary>
+        [WirePath("properties.login")]
         public string Login { get; set; }
         /// <summary> SID (object ID) of the server administrator. </summary>
+        [WirePath("properties.sid")]
         public string Sid { get; set; }
         /// <summary> Tenant ID of the administrator. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The resource id of the identity used for AAD Authentication. </summary>
+        [WirePath("properties.identityResourceId")]
         public ResourceIdentifier IdentityResourceId { get; set; }
     }
 }

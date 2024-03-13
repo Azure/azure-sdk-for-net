@@ -85,22 +85,31 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Observation start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Observation end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Wait event name. </summary>
+        [WirePath("properties.eventName")]
         public string EventName { get; set; }
         /// <summary> Wait event type name. </summary>
+        [WirePath("properties.eventTypeName")]
         public string EventTypeName { get; set; }
         /// <summary> Database query identifier. </summary>
+        [WirePath("properties.queryId")]
         public long? QueryId { get; set; }
         /// <summary> Database Name. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Database user identifier. </summary>
+        [WirePath("properties.userId")]
         public long? UserId { get; set; }
         /// <summary> Wait event count observed in this time interval. </summary>
+        [WirePath("properties.count")]
         public long? Count { get; set; }
         /// <summary> Total time of wait in milliseconds in this time interval. </summary>
+        [WirePath("properties.totalTimeInMs")]
         public double? TotalTimeInMinutes { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The Gtid set of server. </summary>
+        [WirePath("gtidSet")]
         public string GtidSet { get; set; }
     }
 }

@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The list of server configurations. </summary>
+        [WirePath("value")]
         public IList<MySqlConfigurationData> Values { get; }
     }
 }

@@ -86,8 +86,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public IPAddress StartIPAddress { get; set; }
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public IPAddress EndIPAddress { get; set; }
     }
 }
