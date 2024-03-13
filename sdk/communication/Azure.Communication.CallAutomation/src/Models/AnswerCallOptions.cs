@@ -32,16 +32,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
-        /// Live Transcription Configuration.
-        /// </summary>
-        public TranscriptionOptions TranscriptionOptions { get; set; }
-
-        /// <summary>
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
@@ -55,11 +45,5 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The caller ID number which is a phone number that will be used when inviting a pstn target.
-        /// Required only when this is an incoming voip call and there will be a transfer call request to a PSTN target.
-        /// </summary>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
     }
 }

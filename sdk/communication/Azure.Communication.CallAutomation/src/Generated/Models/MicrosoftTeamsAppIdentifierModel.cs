@@ -38,6 +38,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The Id of the Microsoft Teams application. </summary>
         public string AppId { get; set; }
         /// <summary> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </summary>
-        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
+        internal CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }
