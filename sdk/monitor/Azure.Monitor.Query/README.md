@@ -48,6 +48,25 @@ var client = new LogsQueryClient(new DefaultAzureCredential());
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 ```
 
+### Configure client for Azure sovereign cloud
+
+By default, `LogsQueryClient` and `MetricsQueryClient` are configured to connect to the Azure public cloud. To connect to a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
+
+```C# Snippet:CreateClientsWithOptions
+MetricsQueryClientOptions metricsQueryClientOptions = new MetricsQueryClientOptions()
+{
+    Audience = MetricsQueryAudience.AzureGovernment
+};
+MetricsQueryClient metricsQueryClient = new MetricsQueryClient(new DefaultAzureCredential(), metricsQueryClientOptions);
+
+LogsQueryClientOptions logsQueryClientOptions = new LogsQueryClientOptions()
+{
+    Audience = LogsQueryAudience.AzureChina
+};
+LogsQueryClient logsQueryClient = new LogsQueryClient(new DefaultAzureCredential(), logsQueryClientOptions);
+```
+
+
 ### Execute the query
 
 For examples of Logs and Metrics queries, see the [Examples](#examples) section.
