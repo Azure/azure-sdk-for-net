@@ -1,16 +1,19 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0 (2024-03-06)
 
 ### Features Added
 
+- Improve Salesforce V2 properties.
+- Add ServiceNowV2 linkedService, dataSet.
+- Add GoogleBigQuery linkedService, dataSet.
+- Add PostgreSqlV2 linkedService, dataSet.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix headers and schema definition.
+- Fix DataFactoryResource.GetPipelineRuns cannot do pagination.
 
 ## 1.0.0-beta.6 (2024-01-26)
 
