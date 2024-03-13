@@ -149,7 +149,7 @@ namespace Azure.Core.Tests
             var operation = new Operation(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.Null(operation.GetRawResponse());
+            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
             Assert.False(operation.HasCompleted);
         }
 

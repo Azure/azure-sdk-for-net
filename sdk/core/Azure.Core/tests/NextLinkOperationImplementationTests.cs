@@ -56,7 +56,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowOnInvalidUri()
         {
-            Assert.Throws<InvalidOperationException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default(RehydrationToken)));
+            Assert.Throws<ArgumentException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default(RehydrationToken)));
         }
 
         [Test]
