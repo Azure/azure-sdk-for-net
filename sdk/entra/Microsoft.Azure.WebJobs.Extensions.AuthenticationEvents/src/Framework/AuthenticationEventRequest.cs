@@ -69,11 +69,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 Response = new TResponse();
             }
 
-            Response.StatusCode = exception is AuthenticationEventTriggerValidationException ex ?
-                ex.ExceptionStatusCode
-                : System.Net.HttpStatusCode.InternalServerError;
-            Response.ReasonPhrase = exception is AuthenticationEventTriggerValidationException authEx ?
-                authEx.ReasonPhrase : "Internal Server Error";
+            if (exception is AuthenticationEventTriggerValidationException ex)
+            {
+                Response.StatusCode = ex.ExceptionStatusCode;
+                Response.ReasonPhrase = ex.ReasonPhrase;
+            }
+            else
+            {
+                Response.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                Response.ReasonPhrase = "Internal Server Error";
+            }
+
             Response.Body = Helpers.GetFailedResponsePayload(exception);
 
             return Task.FromResult<AuthenticationEventResponse>(Response);
