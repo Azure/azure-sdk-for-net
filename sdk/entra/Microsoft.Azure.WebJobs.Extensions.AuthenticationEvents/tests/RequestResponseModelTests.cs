@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
     /// <summary>Tests the OnTokenIssuanceStart request and response for the csharp object model for version preview_10_01_2021</summary>
     [TestFixture]
-    public class MiscTests
+    public class RequestResponseModelTests
     {
         /// <summary>Runs 10000 calls to the library concurrently with success payload and response</summary>
         [Test]
@@ -65,11 +65,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
         /// <summary>Test the request object to verify the correct HttpStatusCode is respond</summary>
         [Test]
-        [TestCase(RequestStatusType.Successful, HttpStatusCode.OK)]
-        [TestCase(RequestStatusType.Failed, HttpStatusCode.BadRequest)]
-        [TestCase(RequestStatusType.ValidationError, HttpStatusCode.BadRequest)]
-        [TestCase(RequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized)]
-        public async Task TokenIssuanceStartRequestValidationTest(RequestStatusType requestStatusType, HttpStatusCode httpStatusCode)
+        [TestCase(RequestStatusType.Successful, HttpStatusCode.OK, "OK")]
+        [TestCase(RequestStatusType.Failed, HttpStatusCode.BadRequest, "Bad Request")]
+        [TestCase(RequestStatusType.ValidationError, HttpStatusCode.BadRequest, "Bad Request")]
+        [TestCase(RequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized, "Unauthorized")]
+        public async Task TokenIssuanceStartRequestValidationTest(RequestStatusType requestStatusType, HttpStatusCode httpStatusCode, string reasonPhrase)
         {
             HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
             {
@@ -88,6 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(httpStatusCode, httpResponseMessage.StatusCode);
+            Assert.AreEqual(reasonPhrase, httpResponseMessage.ReasonPhrase);
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model when the response is set to null</summary>

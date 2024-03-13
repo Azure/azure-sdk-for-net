@@ -72,7 +72,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             Response.StatusCode = exception is AuthenticationEventTriggerValidationException ex ?
                 ex.ExceptionStatusCode
                 : System.Net.HttpStatusCode.InternalServerError;
-            Response.ReasonPhrase = string.Empty;
+            Response.ReasonPhrase = exception is AuthenticationEventTriggerValidationException authEx ?
+                authEx.ReasonPhrase : "Internal Server Error";
             Response.Body = Helpers.GetFailedResponsePayload(exception);
 
             return Task.FromResult<AuthenticationEventResponse>(Response);
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             // Set response as unauthorized when token is invalid
             Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
-            Response.ReasonPhrase = string.Empty;
+            Response.ReasonPhrase = "Unauthorized";
             Response.Body = string.Empty;
         }
     }
