@@ -14,7 +14,10 @@ namespace Azure.Provisioning.CognitiveServices
     /// </summary>
     public class CognitiveServicesAccount : Resource<CognitiveServicesAccountData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.cognitiveservices/2023-05-01/accounts?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.CognitiveServices/accounts";
+        private const string DefaultVersion = "2023-05-01";
+
         private static readonly Func<string, CognitiveServicesAccountData> Empty = (name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountData();
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace Azure.Provisioning.CognitiveServices
             CognitiveServicesSku? sku = default,
             ResourceGroup? parent = default,
             string name = "cs",
-            string version = "2023-05-01",
+            string version = DefaultVersion,
             AzureLocation? location = default)
             : this(scope, parent, name, version, false, (name) =>
                 ArmCognitiveServicesModelFactory.CognitiveServicesAccountData(
@@ -50,7 +53,7 @@ namespace Azure.Provisioning.CognitiveServices
             IConstruct scope,
             ResourceGroup? parent = default,
             string name = "cosmosDB",
-            string version = "2023-04-15",
+            string version = DefaultVersion,
             bool isExisting = false,
             Func<string, CognitiveServicesAccountData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)

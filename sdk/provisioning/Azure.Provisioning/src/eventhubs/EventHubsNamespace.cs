@@ -14,9 +14,11 @@ namespace Azure.Provisioning.EventHubs
     /// </summary>
     public class EventHubsNamespace : Resource<EventHubsNamespaceData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.eventhub/2021-11-01/namespaces?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.EventHub/namespaces";
-        private static readonly Func<string, EventHubsNamespaceData> Empty = (name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
         internal const string DefaultVersion = "2021-11-01";
+
+        private static readonly Func<string, EventHubsNamespaceData> Empty = (name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHubsNamespace"/>.
@@ -27,7 +29,13 @@ namespace Azure.Provisioning.EventHubs
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public EventHubsNamespace(IConstruct scope, EventHubsSku? sku = default, ResourceGroup? parent = null, string name = "eh", string version = DefaultVersion, AzureLocation? location = default)
+        public EventHubsNamespace(
+            IConstruct scope,
+            EventHubsSku? sku = default,
+            ResourceGroup? parent = null,
+            string name = "eh",
+            string version = DefaultVersion,
+            AzureLocation? location = default)
             : this(scope, parent, name, version, false, (name) => ArmEventHubsModelFactory.EventHubsNamespaceData(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -38,7 +46,13 @@ namespace Azure.Provisioning.EventHubs
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private EventHubsNamespace(IConstruct scope, ResourceGroup? parent = null, string name = "eh", string version = DefaultVersion, bool isExisting = true, Func<string, EventHubsNamespaceData>? creator = null)
+        private EventHubsNamespace(
+            IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            bool isExisting = true,
+            Func<string, EventHubsNamespaceData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

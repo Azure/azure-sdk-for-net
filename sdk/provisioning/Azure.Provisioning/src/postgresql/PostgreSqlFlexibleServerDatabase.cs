@@ -34,8 +34,8 @@ namespace Azure.Provisioning.PostgreSql
 
         private PostgreSqlFlexibleServerDatabase(
             IConstruct scope,
-            PostgreSqlFlexibleServer? parent = default,
-            string name = "db",
+            PostgreSqlFlexibleServer? parent,
+            string name,
             string version = PostgreSqlFlexibleServer.DefaultVersion,
             bool isExisting = false,
             Func<string, PostgreSqlFlexibleServerDatabaseData>? creator = null)

@@ -48,7 +48,7 @@ resource postgreSqlFlexibleServerDatabase_GXcWWJhWh 'Microsoft.DBforPostgreSQL/f
   }
 }
 
-resource postgreSqlFirewallRule_wheM1oYbH 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
+resource postgreSqlFirewallRule_wheM1oYbH 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01' = {
   parent: postgreSqlFlexibleServer_mZ8PC2Gce
   name: 'fw'
   properties: {
@@ -57,7 +57,7 @@ resource postgreSqlFirewallRule_wheM1oYbH 'Microsoft.DBforPostgreSQL/flexibleSer
   }
 }
 
-resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: p
   location: location
   properties: {
@@ -70,7 +70,7 @@ resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_5t0GshPLB
   name: 'connectionString'
   location: location

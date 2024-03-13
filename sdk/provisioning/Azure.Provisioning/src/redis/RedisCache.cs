@@ -14,7 +14,10 @@ namespace Azure.Provisioning.Redis
     /// </summary>
     public class RedisCache : Resource<RedisData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.cache/2023-08-01/redis?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Cache/Redis";
+        private const string DefaultVersion = "2023-08-01";
+
         private static readonly Func<string, RedisData> Empty = (name) => ArmRedisModelFactory.RedisData(updateChannel: null);
 
         /// <summary>
@@ -24,9 +27,16 @@ namespace Azure.Provisioning.Redis
         /// <param name="sku"></param>
         /// <param name="parent"></param>
         /// <param name="name"></param>
+        /// <param name="version"></param>
         /// <param name="location"></param>
-        public RedisCache(IConstruct scope, RedisSku? sku = default, ResourceGroup? parent = default, string name = "redis", AzureLocation? location = default)
-            : this(scope, sku, parent, name, false, (name) => ArmRedisModelFactory.RedisData(
+        public RedisCache(
+            IConstruct scope,
+            RedisSku? sku = default,
+            ResourceGroup? parent = default,
+            string name = "redis",
+            string version = DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, false, (name) => ArmRedisModelFactory.RedisData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 enableNonSslPort: false,
@@ -38,7 +48,13 @@ namespace Azure.Provisioning.Redis
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private RedisCache(IConstruct scope, RedisSku? sku = default, ResourceGroup? parent = default, string name = "redis", bool isExisting = false, Func<string, RedisData>? creator = null)
+        private RedisCache(
+            IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            bool isExisting = false,
+            Func<string, RedisData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
         {
         }
@@ -55,7 +71,7 @@ namespace Azure.Provisioning.Redis
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
-        /// <returns>The KeyVault instance.</returns>
+        /// <returns>The RedisCache instance.</returns>
         public static RedisCache FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new RedisCache(scope, parent: parent, name: name, isExisting: true);
 

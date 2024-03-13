@@ -9,19 +9,19 @@ resource appConfigurationStore_4FWfd15sH 'Microsoft.AppConfiguration/configurati
   name: existingAppConfig
 }
 
-resource keyVault_78IwnSu6G 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+resource keyVault_78IwnSu6G 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: 'existingVault'
 }
 
-resource keyVaultSecret_ChWKOL5pG 'Microsoft.KeyVault/vaults/secrets@2023-02-01' existing = {
+resource keyVaultSecret_ChWKOL5pG 'Microsoft.KeyVault/vaults/secrets@2022-07-01' existing = {
   name: '${keyVault_78IwnSu6G}/existingSecret'
 }
 
-resource storageAccount_LhqOcwcwC 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+resource storageAccount_LhqOcwcwC 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
   name: 'existingStorage'
 }
 
-resource blobService_KtyZZZEH1 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
+resource blobService_KtyZZZEH1 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' existing = {
   name: '${storageAccount_LhqOcwcwC}/existingBlobService'
 }
 
@@ -41,15 +41,15 @@ resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleS
   name: 'existingPostgreSql'
 }
 
-resource sqlServer_O1efuGmrm 'Microsoft.Sql/servers@2022-08-01-preview' existing = {
+resource sqlServer_O1efuGmrm 'Microsoft.Sql/servers@2021-11-01' existing = {
   name: 'existingSqlServer'
 }
 
-resource sqlDatabase_YeJoBPp10 'Microsoft.Sql/servers/databases@2022-08-01-preview' existing = {
+resource sqlDatabase_YeJoBPp10 'Microsoft.Sql/servers/databases@2021-11-01' existing = {
   name: '${sqlServer_O1efuGmrm}/${existingSqlDatabase}'
 }
 
-resource sqlFirewallRule_SFMW2DxVf 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' existing = {
+resource sqlFirewallRule_SFMW2DxVf 'Microsoft.Sql/servers/firewallRules@2021-11-01' existing = {
   name: '${sqlServer_O1efuGmrm}/existingSqlFirewallRule'
 }
 
@@ -105,7 +105,7 @@ resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhu
   name: '${eventHub_H6DI0xDvi}/existingEhConsumerGroup'
 }
 
-resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2020-06-01' existing = {
+resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2023-02-01' existing = {
   name: 'existingSignalR'
 }
 

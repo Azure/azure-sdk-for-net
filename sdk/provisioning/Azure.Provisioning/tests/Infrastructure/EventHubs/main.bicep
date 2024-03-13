@@ -23,9 +23,9 @@ resource eventHub_ELtptvi1s 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01'
   }
 }
 
-resource eventHubsConsumerGroup_gMkCNeWuK 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
+resource eventHubsConsumerGroup_rQSsNNay3 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
   parent: eventHub_ELtptvi1s
-  name: 'hub'
+  name: 'cg'
   location: location
   properties: {
   }

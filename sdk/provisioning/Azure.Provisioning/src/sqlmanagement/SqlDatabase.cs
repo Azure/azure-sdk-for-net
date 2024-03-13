@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Sql
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default)
+        public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = SqlServer.DefaultVersion, AzureLocation? location = default)
             : this(scope, parent, name, version, location, false, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -32,7 +32,7 @@ namespace Azure.Provisioning.Sql
         {
         }
 
-        private SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default, bool isExisting = false, Func<string, SqlDatabaseData>? creator = null)
+        private SqlDatabase(IConstruct scope, SqlServer? parent, string name, string version = SqlServer.DefaultVersion, AzureLocation? location = default, bool isExisting = false, Func<string, SqlDatabaseData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

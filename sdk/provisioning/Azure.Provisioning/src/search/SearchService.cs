@@ -15,9 +15,11 @@ namespace Azure.Provisioning.Search
     /// </summary>
     public class SearchService : Resource<SearchServiceData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.search/2023-11-01/searchservices?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Search/searchServices";
+        private const string DefaultVersion = "2023-11-01";
+
         private static readonly Func<string, SearchServiceData> Empty = (name) => ArmSearchModelFactory.SearchServiceData();
-        internal const string DefaultVersion = "2023-11-01";
 
         /// <summary>
         /// Creates a new instance of the <see cref="SearchService"/> class.
@@ -28,8 +30,14 @@ namespace Azure.Provisioning.Search
         /// <param name="name"></param>
         /// <param name="version"></param>
         /// <param name="location"></param>
-        public SearchService(IConstruct scope, SearchSkuName? sku = default, ResourceGroup? parent = default, string name = "search", string version = DefaultVersion, AzureLocation? location = default)
-            : this(scope, sku, parent, name, version, false, (name) => ArmSearchModelFactory.SearchServiceData(
+        public SearchService(
+            IConstruct scope,
+            SearchSkuName? sku = default,
+            ResourceGroup? parent = default,
+            string name = "search",
+            string version = DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, false, (name) => ArmSearchModelFactory.SearchServiceData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: sku ?? SearchSkuName.Basic))
@@ -37,18 +45,24 @@ namespace Azure.Provisioning.Search
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private SearchService(IConstruct scope, SearchSkuName? sku = default, ResourceGroup? parent = default, string name = "search", string version = DefaultVersion, bool isExisting = false, Func<string, SearchServiceData>? creator = null)
+        private SearchService(
+            IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            bool isExisting = false,
+            Func<string, SearchServiceData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="RedisCache"/> class referencing an existing instance.
+        /// Creates a new instance of the <see cref="SearchService"/> class referencing an existing instance.
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
-        /// <returns>The KeyVault instance.</returns>
+        /// <returns>The SearchService instance.</returns>
         public static SearchService FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new SearchService(scope, parent: parent, name: name, isExisting: true);
 

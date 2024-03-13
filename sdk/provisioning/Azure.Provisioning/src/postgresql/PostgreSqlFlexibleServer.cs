@@ -15,8 +15,10 @@ namespace Azure.Provisioning.PostgreSql
     /// </summary>
     public class PostgreSqlFlexibleServer : Resource<PostgreSqlFlexibleServerData>
     {
+        // https://learn.microsoft.com/en-us/azure/templates/microsoft.dbforpostgresql/2022-12-01/flexibleservers?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers";
         internal const string DefaultVersion = "2022-12-01";
+
         private static readonly Func<string, PostgreSqlFlexibleServerData> Empty = (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
 
         /// <summary>
@@ -73,8 +75,8 @@ namespace Azure.Provisioning.PostgreSql
 
         private PostgreSqlFlexibleServer(
             IConstruct scope,
-            ResourceGroup? parent = default,
-            string name = "postgres",
+            ResourceGroup? parent,
+            string name,
             string version = DefaultVersion,
             bool isExisting = false,
             Func<string, PostgreSqlFlexibleServerData>? creator = null)

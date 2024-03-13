@@ -14,7 +14,10 @@ namespace Azure.Provisioning.Sql
     /// </summary>
     public class SqlServer : Resource<SqlServerData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.sql/2021-11-01/servers?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Sql/servers";
+        internal const string DefaultVersion = "2021-11-01";
+
         private static readonly Func<string, SqlServerData> Empty = (name) => ArmSqlModelFactory.SqlServerData();
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Azure.Provisioning.Sql
             Parameter? administratorPassword = default,
             SqlServerAdministrator? administrator = default,
             ResourceGroup? parent = null,
-            string version = "2022-08-01-preview",
+            string version = DefaultVersion,
             AzureLocation? location = default)
             : this(scope, name, parent, version, false, (name) => ArmSqlModelFactory.SqlServerData(
                 name: name,
@@ -69,8 +72,8 @@ namespace Azure.Provisioning.Sql
         private SqlServer(
             IConstruct scope,
             string name,
-            ResourceGroup? parent = null,
-            string version = "2022-08-01-preview",
+            ResourceGroup? parent,
+            string version = DefaultVersion,
             bool isExisting = false,
             Func<string, SqlServerData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)

@@ -14,7 +14,10 @@ namespace Azure.Provisioning.CosmosDB
     /// </summary>
     public class CosmosDBAccount : Resource<CosmosDBAccountData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.documentdb/2023-04-15/databaseaccounts?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.DocumentDB/databaseAccounts";
+        internal const string DefaultVersion = "2023-04-15";
+
         private static readonly Func<string, CosmosDBAccountData> Empty = (name) => ArmCosmosDBModelFactory.CosmosDBAccountData();
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace Azure.Provisioning.CosmosDB
             IEnumerable<CosmosDBAccountLocation>? accountLocations = default,
             ResourceGroup? parent = default,
             string name = "cosmosDB",
-            string version = "2023-04-15",
+            string version = DefaultVersion,
             AzureLocation? location = default)
             : this(scope, parent, name, version, location, false, (name) => ArmCosmosDBModelFactory.CosmosDBAccountData(
                 name: name,
@@ -55,9 +58,9 @@ namespace Azure.Provisioning.CosmosDB
 
         private CosmosDBAccount(
             IConstruct scope,
-            ResourceGroup? parent = default,
-            string name = "cosmosDB",
-            string version = "2023-04-15",
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
             AzureLocation? location = default,
             bool isExisting = false,
             Func<string, CosmosDBAccountData>? creator = null)

@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource signalRService_MEdeBSjcP 'Microsoft.SignalRService/signalR@2020-06-01' = {
+resource signalRService_MEdeBSjcP 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: toLower(take(concat('signalr', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
