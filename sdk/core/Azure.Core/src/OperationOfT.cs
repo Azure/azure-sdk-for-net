@@ -32,7 +32,7 @@ namespace Azure
         {
         }
 
-        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of Operation for mocking. </summary>
         protected Operation()
         {
         }

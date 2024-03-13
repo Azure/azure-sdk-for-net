@@ -88,12 +88,12 @@ namespace Azure.Core
             var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
             {
-                throw new InvalidOperationException("Invalid initial URI from rehydration token");
+                throw new ArgumentException("Invalid initial URI from rehydration token");
             }
 
             if (!lroDetails.TryGetValue("nextRequestUri", out var nextRequestUri))
             {
-                throw new InvalidOperationException("Invalid next request URI from rehydration token");
+                throw new ArgumentException("Invalid next request URI from rehydration token");
             }
 
             RequestMethod requestMethod = new RequestMethod(lroDetails["requestMethod"]);
