@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,8 +23,9 @@ namespace Azure.ResourceManager.ManagementGroups
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
-        private readonly RehydrationToken? _rehydrationToken;
+        private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly string _operationId;
 
         /// <summary> Initializes a new instance of ManagementGroupsArmOperation for mocking. </summary>
         protected ManagementGroupsArmOperation()
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.ManagementGroups
         internal ManagementGroupsArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal.Succeeded(response);
-            _rehydrationToken = rehydrationToken;
+            _completeRehydrationToken = rehydrationToken;
+            _operationId = GetOperationId(rehydrationToken);
         }
 
         internal ManagementGroupsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -40,22 +45,38 @@ namespace Azure.ResourceManager.ManagementGroups
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
             {
                 _nextLinkOperation = nextLinkOperationValue;
+                _operationId = _nextLinkOperation.OperationId;
             }
             else
             {
-                _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+                _operationId = GetOperationId(_completeRehydrationToken);
             }
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ManagementGroupsArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
+        private string GetOperationId(RehydrationToken? rehydrationToken)
+        {
+            if (rehydrationToken is null)
+            {
+                return null;
+            }
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            var nextRequestUri = lroDetails["nextRequestUri"];
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            {
+                return uri.Segments.LastOrDefault();
+            }
+            else
+            {
+                return null;
+            }
+        }
         /// <inheritdoc />
-#pragma warning disable CA1822
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
-#pragma warning restore CA1822
+        public override string Id => _operationId ?? null;
 
         /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _rehydrationToken;
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

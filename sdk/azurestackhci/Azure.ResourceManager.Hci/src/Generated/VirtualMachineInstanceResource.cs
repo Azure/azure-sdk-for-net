@@ -293,10 +293,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineInstanceResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualMachineInstanceClientDiagnostics.CreateScope("VirtualMachineInstanceResource.Update");
             scope.Start();
@@ -342,10 +339,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineInstanceResource> Update(WaitUntil waitUntil, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _virtualMachineInstanceClientDiagnostics.CreateScope("VirtualMachineInstanceResource.Update");
             scope.Start();
@@ -391,10 +385,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineInstanceClientDiagnostics.CreateScope("VirtualMachineInstanceResource.CreateOrUpdate");
             scope.Start();
@@ -440,10 +431,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineInstanceResource> CreateOrUpdate(WaitUntil waitUntil, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineInstanceClientDiagnostics.CreateScope("VirtualMachineInstanceResource.CreateOrUpdate");
             scope.Start();

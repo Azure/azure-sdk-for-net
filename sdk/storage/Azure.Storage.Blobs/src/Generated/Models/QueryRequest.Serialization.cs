@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -21,11 +22,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Expression");
             writer.WriteValue(Expression);
             writer.WriteEndElement();
-            if (InputSerialization != null)
+            if (Common.Optional.IsDefined(InputSerialization))
             {
                 writer.WriteObjectValue(InputSerialization, "InputSerialization");
             }
-            if (OutputSerialization != null)
+            if (Common.Optional.IsDefined(OutputSerialization))
             {
                 writer.WriteObjectValue(OutputSerialization, "OutputSerialization");
             }

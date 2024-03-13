@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -54,99 +54,99 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningStateTransitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
                 writer.WritePropertyName("provisioningStateTransitionTime"u8);
                 writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && AllocationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AllocationState))
             {
                 writer.WritePropertyName("allocationState"u8);
                 writer.WriteStringValue(AllocationState.Value.ToSerialString());
             }
-            if (options.Format != "W" && AllocationStateTransitionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AllocationStateTransitionOn))
             {
                 writer.WritePropertyName("allocationStateTransitionTime"u8);
                 writer.WriteStringValue(AllocationStateTransitionOn.Value, "O");
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (DeploymentConfiguration != null)
+            if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
                 writer.WriteObjectValue(DeploymentConfiguration);
             }
-            if (options.Format != "W" && CurrentDedicatedNodes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
                 writer.WritePropertyName("currentDedicatedNodes"u8);
                 writer.WriteNumberValue(CurrentDedicatedNodes.Value);
             }
-            if (options.Format != "W" && CurrentLowPriorityNodes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentLowPriorityNodes))
             {
                 writer.WritePropertyName("currentLowPriorityNodes"u8);
                 writer.WriteNumberValue(CurrentLowPriorityNodes.Value);
             }
-            if (ScaleSettings != null)
+            if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
-            if (options.Format != "W" && AutoScaleRun != null)
+            if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
                 writer.WriteObjectValue(AutoScaleRun);
             }
-            if (InterNodeCommunication.HasValue)
+            if (Optional.IsDefined(InterNodeCommunication))
             {
                 writer.WritePropertyName("interNodeCommunication"u8);
                 writer.WriteStringValue(InterNodeCommunication.Value.ToSerialString());
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (TaskSlotsPerNode.HasValue)
+            if (Optional.IsDefined(TaskSlotsPerNode))
             {
                 writer.WritePropertyName("taskSlotsPerNode"u8);
                 writer.WriteNumberValue(TaskSlotsPerNode.Value);
             }
-            if (TaskSchedulingPolicy != null)
+            if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
                 writer.WriteObjectValue(TaskSchedulingPolicy);
             }
-            if (!(UserAccounts is ChangeTrackingList<BatchUserAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAccounts))
             {
                 writer.WritePropertyName("userAccounts"u8);
                 writer.WriteStartArray();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingList<BatchAccountPoolMetadataItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (StartTask != null)
+            if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask);
             }
-            if (!(Certificates is ChangeTrackingList<BatchCertificateReference> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationPackages is ChangeTrackingList<BatchApplicationPackageReference> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationPackages))
             {
                 writer.WritePropertyName("applicationPackages"u8);
                 writer.WriteStartArray();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationLicenses is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationLicenses))
             {
                 writer.WritePropertyName("applicationLicenses"u8);
                 writer.WriteStartArray();
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResizeOperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
             {
                 writer.WritePropertyName("resizeOperationStatus"u8);
                 writer.WriteObjectValue(ResizeOperationStatus);
             }
-            if (!(MountConfiguration is ChangeTrackingList<BatchMountConfiguration> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(MountConfiguration))
             {
                 writer.WritePropertyName("mountConfiguration"u8);
                 writer.WriteStartArray();
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (TargetNodeCommunicationMode.HasValue)
+            if (Optional.IsDefined(TargetNodeCommunicationMode))
             {
                 writer.WritePropertyName("targetNodeCommunicationMode"u8);
                 writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && CurrentNodeCommunicationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCommunicationMode))
             {
                 if (CurrentNodeCommunicationMode != null)
                 {
@@ -233,7 +233,12 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("currentNodeCommunicationMode");
                 }
             }
-            if (!(ResourceTags is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsDefined(UpgradePolicy))
+            {
+                writer.WritePropertyName("upgradePolicy"u8);
+                writer.WriteObjectValue(UpgradePolicy);
+            }
+            if (Optional.IsCollectionDefined(ResourceTags))
             {
                 writer.WritePropertyName("resourceTags"u8);
                 writer.WriteStartObject();
@@ -316,6 +321,7 @@ namespace Azure.ResourceManager.Batch
             IList<BatchMountConfiguration> mountConfiguration = default;
             NodeCommunicationMode? targetNodeCommunicationMode = default;
             NodeCommunicationMode? currentNodeCommunicationMode = default;
+            UpgradePolicy upgradePolicy = default;
             IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -638,6 +644,15 @@ namespace Azure.ResourceManager.Batch
                             currentNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
                             continue;
                         }
+                        if (property0.NameEquals("upgradePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("resourceTags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -694,6 +709,7 @@ namespace Azure.ResourceManager.Batch
                 mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(),
                 targetNodeCommunicationMode,
                 currentNodeCommunicationMode,
+                upgradePolicy,
                 resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 etag,
                 serializedAdditionalRawData);

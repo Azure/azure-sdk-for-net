@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,67 +27,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CategoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CategoryName))
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && ControlId != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlId))
             {
                 writer.WritePropertyName("controlId"u8);
                 writer.WriteStringValue(ControlId);
             }
-            if (options.Format != "W" && ControlName != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlName))
             {
                 writer.WritePropertyName("controlName"u8);
                 writer.WriteStringValue(ControlName);
             }
-            if (options.Format != "W" && ControlType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ControlType))
             {
                 writer.WritePropertyName("controlType"u8);
                 writer.WriteStringValue(ControlType.Value.ToString());
             }
-            if (options.Format != "W" && ComplianceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && PolicyDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDisplayName))
             {
                 writer.WritePropertyName("policyDisplayName"u8);
                 writer.WriteStringValue(PolicyDisplayName);
             }
-            if (options.Format != "W" && PolicyDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDescription))
             {
                 writer.WritePropertyName("policyDescription"u8);
                 writer.WriteStringValue(PolicyDescription);
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && StatusChangeDate != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusChangeDate))
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeDate);

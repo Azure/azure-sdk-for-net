@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -22,18 +23,9 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/> or <paramref name="properties"/> is null. </exception>
         internal BlobItemInternal(BlobName name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Common.Argument.AssertNotNull(name, nameof(name));
+            Common.Argument.AssertNotNull(snapshot, nameof(snapshot));
+            Common.Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Deleted = deleted;

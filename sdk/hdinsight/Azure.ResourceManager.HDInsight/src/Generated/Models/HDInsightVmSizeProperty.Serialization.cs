@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Cores.HasValue)
+            if (Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (DataDiskStorageTier != null)
+            if (Optional.IsDefined(DataDiskStorageTier))
             {
                 writer.WritePropertyName("dataDiskStorageTier"u8);
                 writer.WriteStringValue(DataDiskStorageTier);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (MemoryInMB.HasValue)
+            if (Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMb"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (IsSupportedByVirtualMachines.HasValue)
+            if (Optional.IsDefined(IsSupportedByVirtualMachines))
             {
                 writer.WritePropertyName("supportedByVirtualMachines"u8);
                 writer.WriteBooleanValue(IsSupportedByVirtualMachines.Value);
             }
-            if (IsSupportedByWebWorkerRoles.HasValue)
+            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
             {
                 writer.WritePropertyName("supportedByWebWorkerRoles"u8);
                 writer.WriteBooleanValue(IsSupportedByWebWorkerRoles.Value);
             }
-            if (VirtualMachineResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("virtualMachineResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMB.Value);
             }
-            if (WebWorkerResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);

@@ -508,10 +508,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevOpsConfigurationResource>> UpdateAsync(WaitUntil waitUntil, DevOpsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsConfigurationClientDiagnostics.CreateScope("DevOpsConfigurationResource.Update");
             scope.Start();
@@ -557,10 +554,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevOpsConfigurationResource> Update(WaitUntil waitUntil, DevOpsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsConfigurationClientDiagnostics.CreateScope("DevOpsConfigurationResource.Update");
             scope.Start();
@@ -606,10 +600,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevOpsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DevOpsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsConfigurationClientDiagnostics.CreateScope("DevOpsConfigurationResource.CreateOrUpdate");
             scope.Start();
@@ -655,10 +646,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevOpsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, DevOpsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsConfigurationClientDiagnostics.CreateScope("DevOpsConfigurationResource.CreateOrUpdate");
             scope.Start();
@@ -874,14 +862,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
         public virtual async Task<Response<OperationStatusResult>> GetDevOpsOperationResultAsync(string operationResultId, CancellationToken cancellationToken = default)
         {
-            if (operationResultId == null)
-            {
-                throw new ArgumentNullException(nameof(operationResultId));
-            }
-            if (operationResultId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationResultId));
-            }
+            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
 
             using var scope = _devOpsOperationResultsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetDevOpsOperationResult");
             scope.Start();
@@ -920,14 +901,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
         public virtual Response<OperationStatusResult> GetDevOpsOperationResult(string operationResultId, CancellationToken cancellationToken = default)
         {
-            if (operationResultId == null)
-            {
-                throw new ArgumentNullException(nameof(operationResultId));
-            }
-            if (operationResultId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationResultId));
-            }
+            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
 
             using var scope = _devOpsOperationResultsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetDevOpsOperationResult");
             scope.Start();

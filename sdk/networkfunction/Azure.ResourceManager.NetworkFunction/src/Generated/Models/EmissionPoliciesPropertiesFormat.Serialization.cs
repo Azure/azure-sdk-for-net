@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
 
             writer.WriteStartObject();
-            if (EmissionType.HasValue)
+            if (Optional.IsDefined(EmissionType))
             {
                 writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
-            if (!(EmissionDestinations is ChangeTrackingList<EmissionPolicyDestination> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EmissionDestinations))
             {
                 writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();

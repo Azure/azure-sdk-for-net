@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (UsageModel != null)
+            if (Optional.IsDefined(UsageModel))
             {
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
-            if (VerificationDelayInSeconds.HasValue)
+            if (Optional.IsDefined(VerificationDelayInSeconds))
             {
                 writer.WritePropertyName("verificationTimer"u8);
                 writer.WriteNumberValue(VerificationDelayInSeconds.Value);
             }
-            if (WriteBackDelayInSeconds.HasValue)
+            if (Optional.IsDefined(WriteBackDelayInSeconds))
             {
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);

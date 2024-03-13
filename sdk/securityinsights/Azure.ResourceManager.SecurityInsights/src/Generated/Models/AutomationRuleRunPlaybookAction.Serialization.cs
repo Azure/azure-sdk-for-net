@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ActionConfiguration != null)
+            if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);

@@ -21,18 +21,9 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="detectedLanguage"/> or <paramref name="warnings"/> is null. </exception>
         internal DocumentLanguage(string id, DetectedLanguage detectedLanguage, IEnumerable<TextAnalyticsWarning> warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (detectedLanguage == null)
-            {
-                throw new ArgumentNullException(nameof(detectedLanguage));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(detectedLanguage, nameof(detectedLanguage));
+            Argument.AssertNotNull(warnings, nameof(warnings));
 
             Id = id;
             DetectedLanguage = detectedLanguage;

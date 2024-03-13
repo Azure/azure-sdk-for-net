@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
-            if (AutoUpgradePolicy != null)
+            if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
             }
-            if (options.Format != "W" && TargetMaxThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {
                 writer.WritePropertyName("targetMaxThroughput"u8);
                 writer.WriteNumberValue(TargetMaxThroughput.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (MeterParameter != null)
+            if (Optional.IsDefined(MeterParameter))
             {
                 writer.WritePropertyName("meterParameter"u8);
                 writer.WriteStringValue(MeterParameter);
             }
-            if (Meter != null)
+            if (Optional.IsDefined(Meter))
             {
                 writer.WritePropertyName("meter"u8);
                 writer.WriteStringValue(Meter);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);

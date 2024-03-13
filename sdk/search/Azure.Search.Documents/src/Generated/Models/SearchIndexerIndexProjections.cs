@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selectors"/> is null. </exception>
         public SearchIndexerIndexProjections(IEnumerable<SearchIndexerIndexProjectionSelector> selectors)
         {
-            if (selectors == null)
-            {
-                throw new ArgumentNullException(nameof(selectors));
-            }
+            Argument.AssertNotNull(selectors, nameof(selectors));
 
             Selectors = selectors.ToList();
         }

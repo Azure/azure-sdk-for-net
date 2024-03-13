@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetIqn != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetIqn))
             {
                 writer.WritePropertyName("targetIqn"u8);
                 writer.WriteStringValue(TargetIqn);
             }
-            if (options.Format != "W" && TargetPortalHostname != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetPortalHostname))
             {
                 writer.WritePropertyName("targetPortalHostname"u8);
                 writer.WriteStringValue(TargetPortalHostname);
             }
-            if (options.Format != "W" && TargetPortalPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetPortalPort))
             {
                 writer.WritePropertyName("targetPortalPort"u8);
                 writer.WriteNumberValue(TargetPortalPort.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

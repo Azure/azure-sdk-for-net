@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (WaitType != null)
+            if (Optional.IsDefined(WaitType))
             {
                 writer.WritePropertyName("waitType"u8);
                 writer.WriteStringValue(WaitType);
             }
-            if (WaitTimeMs.HasValue)
+            if (Optional.IsDefined(WaitTimeMs))
             {
                 writer.WritePropertyName("waitTimeMs"u8);
                 writer.WriteNumberValue(WaitTimeMs.Value);
             }
-            if (WaitCount.HasValue)
+            if (Optional.IsDefined(WaitCount))
             {
                 writer.WritePropertyName("waitCount"u8);
                 writer.WriteNumberValue(WaitCount.Value);

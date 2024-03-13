@@ -82,10 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceStartStopScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedInstanceStartStopScheduleName startStopScheduleName, ManagedInstanceStartStopScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceStartStopScheduleResource> CreateOrUpdate(WaitUntil waitUntil, ManagedInstanceStartStopScheduleName startStopScheduleName, ManagedInstanceStartStopScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
             scope.Start();

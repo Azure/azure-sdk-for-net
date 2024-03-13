@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStringValue(ShareStatus.ToString());
             writer.WritePropertyName("monitoringStatus"u8);
             writer.WriteStringValue(MonitoringStatus.ToString());
-            if (AzureContainerInfo != null)
+            if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
                 writer.WriteObjectValue(AzureContainerInfo);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
-            if (!(UserAccessRights is ChangeTrackingList<UserAccessRight> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAccessRights))
             {
                 writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClientAccessRights is ChangeTrackingList<ClientAccessRight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientAccessRights))
             {
                 writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (RefreshDetails != null)
+            if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && !(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (DataPolicy.HasValue)
+            if (Optional.IsDefined(DataPolicy))
             {
                 writer.WritePropertyName("dataPolicy"u8);
                 writer.WriteStringValue(DataPolicy.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (VolumeLabel != null)
+            if (Optional.IsDefined(VolumeLabel))
             {
                 writer.WritePropertyName("volumeLabel"u8);
                 writer.WriteStringValue(VolumeLabel);
             }
-            if (OnlyExcludeIfSingleVolume != null)
+            if (Optional.IsDefined(OnlyExcludeIfSingleVolume))
             {
                 writer.WritePropertyName("onlyExcludeIfSingleVolume"u8);
                 writer.WriteStringValue(OnlyExcludeIfSingleVolume);

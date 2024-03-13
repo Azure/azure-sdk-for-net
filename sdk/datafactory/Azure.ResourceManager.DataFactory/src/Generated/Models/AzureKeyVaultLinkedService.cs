@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="baseUri"/> is null. </exception>
         public AzureKeyVaultLinkedService(DataFactoryElement<string> baseUri)
         {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException(nameof(baseUri));
-            }
+            Argument.AssertNotNull(baseUri, nameof(baseUri));
 
             BaseUri = baseUri;
             LinkedServiceType = "AzureKeyVault";

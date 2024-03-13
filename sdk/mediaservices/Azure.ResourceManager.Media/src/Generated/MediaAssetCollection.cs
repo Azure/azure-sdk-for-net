@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaAssetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetName, MediaAssetData data, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaAssetResource> CreateOrUpdate(WaitUntil waitUntil, string assetName, MediaAssetData data, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<MediaAssetResource>> GetAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<MediaAssetResource> Get(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.Get");
             scope.Start();
@@ -368,14 +334,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.Exists");
             scope.Start();
@@ -418,14 +377,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<bool> Exists(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaAssetResource>> GetIfExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual NullableResponse<MediaAssetResource> GetIfExists(string assetName, CancellationToken cancellationToken = default)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
-            if (assetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
-            }
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetIfExists");
             scope.Start();

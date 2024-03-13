@@ -18,14 +18,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
         internal PhoneNumberAdministrativeDivision(string localizedName, string abbreviatedName)
         {
-            if (localizedName == null)
-            {
-                throw new ArgumentNullException(nameof(localizedName));
-            }
-            if (abbreviatedName == null)
-            {
-                throw new ArgumentNullException(nameof(abbreviatedName));
-            }
+            Argument.AssertNotNull(localizedName, nameof(localizedName));
+            Argument.AssertNotNull(abbreviatedName, nameof(abbreviatedName));
 
             LocalizedName = localizedName;
             AbbreviatedName = abbreviatedName;

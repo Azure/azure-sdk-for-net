@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(EntityRecognitionTasks is ChangeTrackingList<EntitiesTask> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EntityRecognitionTasks))
             {
                 writer.WritePropertyName("entityRecognitionTasks"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (!(EntityRecognitionPiiTasks is ChangeTrackingList<PiiTask> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
             {
                 writer.WritePropertyName("entityRecognitionPiiTasks"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeyPhraseExtractionTasks is ChangeTrackingList<KeyPhrasesTask> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
             {
                 writer.WritePropertyName("keyPhraseExtractionTasks"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (!(EntityLinkingTasks is ChangeTrackingList<EntityLinkingTask> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EntityLinkingTasks))
             {
                 writer.WritePropertyName("entityLinkingTasks"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (!(SentimentAnalysisTasks is ChangeTrackingList<SentimentAnalysisTask> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
             {
                 writer.WritePropertyName("sentimentAnalysisTasks"u8);
                 writer.WriteStartArray();

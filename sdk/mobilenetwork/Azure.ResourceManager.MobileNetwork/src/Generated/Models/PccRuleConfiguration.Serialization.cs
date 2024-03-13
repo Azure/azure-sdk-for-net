@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("rulePrecedence"u8);
             writer.WriteNumberValue(RulePrecedence);
-            if (RuleQosPolicy != null)
+            if (Optional.IsDefined(RuleQosPolicy))
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
                 writer.WriteObjectValue(RuleQosPolicy);
             }
-            if (TrafficControl.HasValue)
+            if (Optional.IsDefined(TrafficControl))
             {
                 writer.WritePropertyName("trafficControl"u8);
                 writer.WriteStringValue(TrafficControl.Value.ToString());

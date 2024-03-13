@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Grain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteNumberValue(Grain.Value);
             }
-            if (options.Format != "W" && GrainUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(GrainUnit))
             {
                 writer.WritePropertyName("grainUnit"u8);
                 writer.WriteStringValue(GrainUnit);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && ValueUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueUnit))
             {
                 writer.WritePropertyName("valueUnit"u8);
                 writer.WriteStringValue(ValueUnit);

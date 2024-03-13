@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CheckCertificateRevocationListOnReceive);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
-            if (SigningAlgorithm.HasValue)
+            if (Optional.IsDefined(SigningAlgorithm))
             {
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());

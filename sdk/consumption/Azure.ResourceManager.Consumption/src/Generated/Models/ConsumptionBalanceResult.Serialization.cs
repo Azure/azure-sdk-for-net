@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,79 +60,79 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && BeginningBalance.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BeginningBalance))
             {
                 writer.WritePropertyName("beginningBalance"u8);
                 writer.WriteNumberValue(BeginningBalance.Value);
             }
-            if (options.Format != "W" && EndingBalance.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndingBalance))
             {
                 writer.WritePropertyName("endingBalance"u8);
                 writer.WriteNumberValue(EndingBalance.Value);
             }
-            if (options.Format != "W" && NewPurchases.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NewPurchases))
             {
                 writer.WritePropertyName("newPurchases"u8);
                 writer.WriteNumberValue(NewPurchases.Value);
             }
-            if (options.Format != "W" && Adjustments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
             {
                 writer.WritePropertyName("adjustments"u8);
                 writer.WriteNumberValue(Adjustments.Value);
             }
-            if (options.Format != "W" && Utilized.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Utilized))
             {
                 writer.WritePropertyName("utilized"u8);
                 writer.WriteNumberValue(Utilized.Value);
             }
-            if (options.Format != "W" && ServiceOverage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceOverage))
             {
                 writer.WritePropertyName("serviceOverage"u8);
                 writer.WriteNumberValue(ServiceOverage.Value);
             }
-            if (options.Format != "W" && ChargesBilledSeparately.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && TotalOverage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalOverage))
             {
                 writer.WritePropertyName("totalOverage"u8);
                 writer.WriteNumberValue(TotalOverage.Value);
             }
-            if (options.Format != "W" && TotalUsage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (options.Format != "W" && AzureMarketplaceServiceCharges.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureMarketplaceServiceCharges))
             {
                 writer.WritePropertyName("azureMarketplaceServiceCharges"u8);
                 writer.WriteNumberValue(AzureMarketplaceServiceCharges.Value);
             }
-            if (BillingFrequency.HasValue)
+            if (Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency.Value.ToString());
             }
-            if (options.Format != "W" && IsPriceHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPriceHidden))
             {
                 writer.WritePropertyName("priceHidden"u8);
                 writer.WriteBooleanValue(IsPriceHidden.Value);
             }
-            if (options.Format != "W" && !(NewPurchasesDetails is ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
             {
                 writer.WritePropertyName("newPurchasesDetails"u8);
                 writer.WriteStartArray();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AdjustmentDetails is ChangeTrackingList<ConsumptionBalanceAdjustmentDetail> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdjustmentDetails))
             {
                 writer.WritePropertyName("adjustmentDetails"u8);
                 writer.WriteStartArray();
