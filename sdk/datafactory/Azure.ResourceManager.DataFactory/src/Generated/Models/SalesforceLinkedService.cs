@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="securityToken"> The security token is optional to remotely access Salesforce instance. </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SalesforceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactorySecretBaseDefinition securityToken, DataFactoryElement<string> apiVersion, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SalesforceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecret password, DataFactorySecret securityToken, DataFactoryElement<string> apiVersion, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             EnvironmentUri = environmentUri;
             Username = username;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password for Basic authentication of the Salesforce instance. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The security token is optional to remotely access Salesforce instance. </summary>
-        public DataFactorySecretBaseDefinition SecurityToken { get; set; }
+        public DataFactorySecret SecurityToken { get; set; }
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ApiVersion { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

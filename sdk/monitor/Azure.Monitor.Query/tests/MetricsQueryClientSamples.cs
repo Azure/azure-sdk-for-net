@@ -240,5 +240,23 @@ namespace Azure.Monitor.Query.Tests
             }
             #endregion
         }
+
+        [Test]
+        public void CreateClientsWithOptions()
+        {
+            #region Snippet:CreateClientsWithOptions
+            MetricsQueryClientOptions metricsQueryClientOptions = new MetricsQueryClientOptions()
+            {
+                Audience = MetricsQueryAudience.AzureGovernment
+            };
+            MetricsQueryClient metricsQueryClient = new MetricsQueryClient(new DefaultAzureCredential(), metricsQueryClientOptions);
+
+            LogsQueryClientOptions logsQueryClientOptions = new LogsQueryClientOptions()
+            {
+                Audience = LogsQueryAudience.AzureChina
+            };
+            LogsQueryClient logsQueryClient = new LogsQueryClient(new DefaultAzureCredential(), logsQueryClientOptions);
+            #endregion
+        }
     }
 }
