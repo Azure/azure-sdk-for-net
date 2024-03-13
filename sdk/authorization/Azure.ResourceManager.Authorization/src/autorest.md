@@ -121,6 +121,10 @@ directive:
   - remove-operation: 'RoleAssignments_ListForSubscription'
   - remove-operation: 'RoleAssignments_ListForResourceGroup'
   - remove-operation: 'RoleAssignments_ListForResource'
+  - remove-operation: 'DenyAssignments_ListForResource'
+  - remove-operation: 'DenyAssignments_ListForResourceGroup'
+  - remove-operation: 'DenyAssignments_List'
+
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
     where: $.paths['/{roleAssignmentId}']
