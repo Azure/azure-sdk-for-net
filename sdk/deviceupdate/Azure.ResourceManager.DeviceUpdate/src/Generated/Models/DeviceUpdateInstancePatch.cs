@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DeviceUpdate;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {

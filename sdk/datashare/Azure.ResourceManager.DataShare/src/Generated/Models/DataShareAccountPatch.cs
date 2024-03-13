@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataShare;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {

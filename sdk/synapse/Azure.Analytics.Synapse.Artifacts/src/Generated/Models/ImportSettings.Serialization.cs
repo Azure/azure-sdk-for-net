@@ -38,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element);
                     case "AzureDatabricksDeltaLakeImportCommand": return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element);
+                    case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element);
                 }
             }
             return UnknownImportSettings.DeserializeUnknownImportSettings(element);

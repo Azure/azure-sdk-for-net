@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Advisor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {

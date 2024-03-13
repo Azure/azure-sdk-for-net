@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DeviceProvisioningServices;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {

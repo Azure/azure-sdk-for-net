@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MySql;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {

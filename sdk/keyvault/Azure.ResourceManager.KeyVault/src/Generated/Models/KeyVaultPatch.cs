@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KeyVault;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {

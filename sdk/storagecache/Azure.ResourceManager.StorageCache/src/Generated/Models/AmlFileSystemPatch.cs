@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageCache;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {

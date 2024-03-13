@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> httpPath = default;
             HBaseAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> allowHostNameCNMismatch = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))

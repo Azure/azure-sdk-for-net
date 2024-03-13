@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Messaging.EventGrid;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {

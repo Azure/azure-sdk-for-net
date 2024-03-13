@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HealthcareApis;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
