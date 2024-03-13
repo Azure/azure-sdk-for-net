@@ -22,7 +22,7 @@ public class MultipartContentBenchmark
     {
         FileStream fileStream = File.OpenRead(_fileName);
 
-        System.ClientModel.Primitives.MultipartContent content = new(boundary: "f8c75cdd-b0a1-4b5d-9807-bff78e26d083"u8);
+        System.ClientModel.Primitives.MultipartContentPrototype content = new(boundary: "f8c75cdd-b0a1-4b5d-9807-bff78e26d083"u8);
         content.Add(BinaryContent.FromBinaryData(BinaryData.FromString("Hello World!\r\n")), ("Content-Type", "text/plain"));
         content.Add(BinaryContent.FromStream(fileStream), ("Content-Type", "application/octet-stream"));
 

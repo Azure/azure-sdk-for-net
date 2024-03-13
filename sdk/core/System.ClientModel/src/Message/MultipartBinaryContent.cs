@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,244 +13,154 @@ namespace System.ClientModel.Primitives;
 /// Provides a collection of <see cref="BinaryContent"/> instances that are
 /// formatted using the multipart/* content type specification.
 /// </summary>
-public partial class MultipartBinaryContent : BinaryContent, IDisposable
+public sealed class MultipartBinaryContent : BinaryContent, IDisposable
 {
-    private const string CrLf = "\r\n";
-    private const string ColonSpace = ": ";
-    private const string DashDash = "--";
-
-    private protected static readonly byte[] s_crLfBytes = Encoding.UTF8.GetBytes(CrLf);
-    private protected static readonly byte[] s_colonSpaceBytes = Encoding.UTF8.GetBytes(ColonSpace);
-    private protected static readonly byte[] s_dashDashBytes = Encoding.UTF8.GetBytes(DashDash);
-
-    private readonly List<MultipartContentSubpart> _subparts = new();
     private readonly string _boundary;
-    private readonly string _contentType;
 
-    /// <summary>
-    /// The boundary string for the multipart content, which is used to separate the body parts.
-    /// </summary>
-    public string Boundary => _boundary;
+    private static readonly Random _random = new();
+    private static readonly char[] _boundaryValues = "()+,-./0123456789:=?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-    /// <summary>
-    /// The boundary string for the multipart content, which is used to separate the body parts.
-    /// </summary>
-    public string ContentType => _contentType;
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="MultipartBinaryContent"/> class with a randomly generated boundary and default subtype of multipart/mixed.
-    /// </summary>
-    public MultipartBinaryContent() : this("mixed", Guid.NewGuid().ToString())
-    {
-    }
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="MultipartBinaryContent"/> class with the specified subtype and a randomly generated boundary.
-    /// </summary>
-    /// <param name="subtype">The subtype of the multipart content.</param>
-    public MultipartBinaryContent(string subtype) : this(subtype, Guid.NewGuid().ToString())
-    {
-    }
+    // TODO: I think we want to use MultipartContent and not MultipartFormDataContent
+    // and let callers specify the functional pieces needed for the latter, but we should
+    // validate this at the end of the exercise.
+    private readonly MultipartContentAdapter _multipartContent;
 
     /// <summary>
     /// Creates a new instance of the <see cref="MultipartBinaryContent"/> class with the specified boundary.
     /// </summary>
     /// <param name="subtype">The subtype of the multipart content.</param>
-    /// <param name="boundary">The boundary string for the multipart content, which is used to separate the body parts.</param>
-    public MultipartBinaryContent(string subtype, string boundary)
+    public MultipartBinaryContent(string subtype)
     {
-        ValidateBoundary(boundary);
-        ValidateSubtype(subtype);
+        _boundary = CreateBoundary();
+        _multipartContent = new MultipartContentAdapter(subtype, _boundary);
 
-        _boundary = boundary;
-
-        if (!boundary.StartsWith("\"") && boundary.Contains(':'))
-        {
-            _contentType = $"multipart/{subtype}; boundary=\"{_boundary}\"";
-        }
-        else
-        {
-            _contentType = $"multipart/{subtype}; boundary={_boundary}";
-        }
+        // TODO: what does subtype do?  I had thought this was e.g. 'form-data'
+        // but now I am wondering if this is available for the parts on not
+        // the top-level media type.
     }
 
     /// <summary>
-    /// Adds a new <see cref="BinaryContent"/> instance to the collection of <see cref="BinaryContent"/> objects that get
-    /// formatted into multipart/* content.
+    /// TBD.
     /// </summary>
-    /// <param name="part">The <see cref="BinaryContent"/> to add to the collection.</param>
-    public void Add(BinaryContent part) => Add(part, Array.Empty<(string, string)>());
-
-    /// <summary>
-    /// Adds a new <see cref="BinaryContent"/> instance to the collection of <see cref="BinaryContent"/> objects that get
-    /// formatted into multipart/* content.
-    /// </summary>
-    /// <param name="part">The <see cref="BinaryContent"/> to add to the collection.</param>
-    /// <param name="headers">The headers to add to this <see cref="BinaryContent"/>'s section.</param>
-    public void Add(BinaryContent part, (string Name, string Value)[] headers)
+    public void Add(string value, IEnumerable<(string Name, string Value)> headers)
     {
-        if (part == null)
-        {
-            throw new ArgumentNullException(nameof(part));
-        }
+        // TODO: is array of tuples preferred for headers?
 
-        _subparts.Add(new MultipartContentSubpart(part, headers));
-    }
+        // TODO: should we pass `mediaType` to constructor?  If so, which header
+        // would we get that from in order to make sure the header ends up correct
+        // in the final content stream?
 
-    private static void ValidateSubtype(string subtype)
-    {
-        var allowedValues = new string[] { "mixed", "form-data" };
-        if (!allowedValues.Contains(subtype, StringComparer.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException($"The format of value '{subtype}' is invalid. The value must be 'mixed' or 'form-data'.", nameof(subtype));
-        }
-    }
+        StringContent content = new StringContent(value);
 
-    private static void ValidateBoundary(string boundary)
-    {
-        if (string.IsNullOrWhiteSpace(boundary))
-        {
-            throw new ArgumentException("Value cannot be null or empty.", nameof(boundary));
-        }
-
-        // RFC 2046 Section 5.1.1
-
-        if (boundary.Length > 70)
-        {
-            throw new ArgumentOutOfRangeException(nameof(boundary), boundary, $"The field cannot be longer than {70} characters.");
-        }
-
-        if (boundary.EndsWith(" ", StringComparison.InvariantCultureIgnoreCase))
-        {
-            throw new ArgumentException($"The format of value '{boundary}' is invalid. '{boundary}' cannot end in a space", nameof(boundary));
-        }
-
-        foreach (char ch in boundary)
-        {
-            const string AllowedMarks = @"'()+_,-./:=? ";
-            if (!(('0' <= ch && ch <= '9') || // Digit.
-                    ('a' <= ch && ch <= 'z') || // alpha.
-                    ('A' <= ch && ch <= 'Z') || // ALPHA.
-                    AllowedMarks.Contains(char.ToString(ch)))) // Marks.
-            {
-                throw new ArgumentException($"The format of value '{boundary}' is invalid.", nameof(boundary));
-            }
-        }
+        // TODO: in order to format the content headers for MPFD correctly, I think
+        // we need to call the overloads on that type.  We can either check the media
+        // type in the constuctor and create MultipartFormDataContent, or have the
+        // ClientModel type be specific to that and always use it.  The latter means
+        // we would avoid a downcast on each call to Add.
     }
 
     /// <summary>
-    /// TODO.
+    /// TBD.
     /// </summary>
-    /// <param name="length"></param>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
     /// <returns></returns>
+    public bool TryGetHeaderValue(string name, out string? value)
+    {
+        if (_multipartContent.Headers.TryGetValues(name, out IEnumerable<string>? values) &&
+            values is IEnumerable<string> headerValues)
+        {
+            // TODO: optimize this using Span<char> or alternate approach
+            int i = 0;
+            value = string.Empty;
+            foreach (string headerValue in headerValues)
+            {
+                value += headerValue;
+                if (i > 0)
+                {
+                    value += ";";
+                }
+                i++;
+            }
+
+            return true;
+        }
+
+        value = default;
+        return false;
+    }
+
+    /// <inheritdoc/>
     public override bool TryComputeLength(out long length)
-    {
-        var boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}").Length;
+        => _multipartContent.TryComputeContentLength(out length);
 
-        // Footer boundary
-        long multipartLength = 0;
-        multipartLength += (boundaryBytes + s_dashDashBytes.Length);
-
-        // Subparts
-        foreach (var part in _subparts)
-        {
-            long partLength = 0;
-            var couldComputeLength = part.Content.TryComputeLength(out partLength);
-            if (!couldComputeLength)
-            {
-                // exit if we fail at any point
-                length = 0;
-                return false;
-            }
-
-            partLength += boundaryBytes;
-            partLength += s_crLfBytes.Length; // before headers
-            partLength += part.Headers.Sum(h => Encoding.UTF8.GetBytes(h.Name).Length + s_colonSpaceBytes.Length + Encoding.UTF8.GetBytes(h.Value).Length + s_crLfBytes.Length);
-            partLength += s_crLfBytes.Length; // after headers
-
-            multipartLength += partLength;
-        }
-
-        length = multipartLength;
-        return true;
-    }
-
-    /// <summary>
-    /// TODO
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public async override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
-    {
-        var firstBoundary = true;
-        byte[] boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}");
-        byte[] firstBoundaryBytes = Encoding.UTF8.GetBytes($"{DashDash}{_boundary}");
+        => await _multipartContent.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
-        // Write the subparts to stream
-        foreach (var part in _subparts)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Don't write a new line if this is the first boundary. This helps to avoid extra new lines
-            // both at the beginning of the request and when using nested multipart content.
-            if (firstBoundary)
-            {
-                await stream.WriteAsync(firstBoundaryBytes, 0, firstBoundaryBytes.Length).ConfigureAwait(false);
-                firstBoundary = false;
-            }
-            else
-            {
-                await stream.WriteAsync(boundaryBytes, 0, boundaryBytes.Length).ConfigureAwait(false);
-            }
-            await part.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-        }
-        byte[] endBoundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}--{_boundary}--");
-        await stream.WriteAsync(endBoundaryBytes, 0, endBoundaryBytes.Length).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc/>
     public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
     {
-        var firstBoundary = true;
-        byte[] boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}");
-        byte[] firstBoundaryBytes = Encoding.UTF8.GetBytes($"{DashDash}{_boundary}");
+        // TODO: confirm that this method does what I think it does
+        _multipartContent.WriteTo(stream, cancellationToken);
+    }
 
-        // Write the subparts to stream
-        foreach (var part in _subparts)
+    /// <inheritdoc/>
+    public override void Dispose()
+    {
+        // TODO: implement Dispose according to standard pattern
+        _multipartContent.Dispose();
+    }
+
+    private static string CreateBoundary()
+    {
+        // TODO: test it.
+
+        Span<char> chars = new char[70];
+
+        byte[] random = new byte[70];
+        _random.NextBytes(random);
+
+        int mask = _boundaryValues.Length - 1;
+        for (int i = 0; i < 70; i++)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Don't write a new line if this is the first boundary. This helps to avoid extra new lines
-            // both at the beginning of the request and when using nested multipart content.
-            if (firstBoundary)
-            {
-                stream.Write(firstBoundaryBytes, 0, firstBoundaryBytes.Length);
-                firstBoundary = false;
-            }
-            else
-            {
-                stream.Write(boundaryBytes, 0, boundaryBytes.Length);
-            }
-            part.WriteTo(stream, cancellationToken);
+            chars[i] = _boundaryValues[random[i] & mask];
         }
-        byte[] endBoundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}{DashDash}");
-        stream.Write(endBoundaryBytes, 0, endBoundaryBytes.Length);
+
+        return chars.ToString();
     }
 
     /// <summary>
-    /// Releases the unmanaged resources and disposes of the managed resources used by the <see cref="Primitives.MultipartBinaryContent"/>.
+    /// Allow access to protected methods from this type.
     /// </summary>
-    public override void Dispose()
+    private class MultipartContentAdapter : MultipartContent
     {
-        foreach (var subpart in _subparts)
+        public MultipartContentAdapter(string subpart, string boundary) : base(subpart, boundary)
         {
-            subpart.Content.Dispose();
         }
-        _subparts.Clear();
+
+        public bool TryComputeContentLength(out long length)
+            => TryComputeLength(out length);
+
+        public void WriteTo(Stream stream, CancellationToken cancellationToken)
+        {
+#if NET6_0_OR_GREATER
+            SerializeToStream(stream, context: default, cancellationToken);
+#else
+            // TODO: confirm that this does what I expect
+            // TODO: Handle cancellation token?
+            SerializeToStreamAsync(stream, context: default).RunSynchronously();
+#endif
+        }
+
+        public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+        {
+#if NET6_0_OR_GREATER
+            await SerializeToStreamAsync(stream, context: default, cancellationToken).ConfigureAwait(false);
+#else
+            // TODO: Handle cancellation token?
+            await SerializeToStreamAsync(stream, context: default).ConfigureAwait(false);
+#endif
+        }
     }
 }

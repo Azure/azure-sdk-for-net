@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591 // XML comments
 
-public partial class MultipartContent : BinaryContent
+public partial class MultipartContentPrototype : BinaryContent
 {
     private const string CRLF = "\r\n";
     private const string EOMPC = "==";
@@ -21,7 +21,7 @@ public partial class MultipartContent : BinaryContent
     private List<Part> _parts = new List<Part>();
     private byte[] _boundary;
 
-    public MultipartContent(ReadOnlySpan<byte> boundary)
+    public MultipartContentPrototype(ReadOnlySpan<byte> boundary)
     {
         ValidateBoundary(boundary);
         int length = boundary.Length + CRLF.Length;
@@ -30,7 +30,7 @@ public partial class MultipartContent : BinaryContent
         "\r\n"u8.CopyTo(_boundary.AsSpan(boundary.Length));
     }
 
-    public MultipartContent(string boundary)
+    public MultipartContentPrototype(string boundary)
     {
         int length = boundary.Length + CRLF.Length;
         _boundary = new byte[length];
@@ -39,14 +39,14 @@ public partial class MultipartContent : BinaryContent
         "\r\n"u8.CopyTo(_boundary.AsSpan(utf8Length));
     }
 
-    public MultipartContent() : this(Guid.NewGuid().ToString()) { }
+    public MultipartContentPrototype() : this(Guid.NewGuid().ToString()) { }
 
     public void Add(BinaryContent content, params (string Name, string Value)[] headers)
     {
         int bufferLength = 0;
         foreach ((string Name, string Value) header in headers)
         {
-            bufferLength += MultipartContent.GetLength(header.Name, header.Value);
+            bufferLength += MultipartContentPrototype.GetLength(header.Name, header.Value);
             ThrowIfNotAscii(header.Name);
             ThrowIfNotAscii(header.Value);
         }
@@ -55,9 +55,9 @@ public partial class MultipartContent : BinaryContent
         int written = 0;
         foreach ((string Name, string Value) header in headers)
         {
-            written += MultipartContent.WriteHeader(bytes, written, header.Name, header.Value);
+            written += MultipartContentPrototype.WriteHeader(bytes, written, header.Name, header.Value);
         }
-        written += MultipartContent.WriteCRLF(bytes.AsSpan(written));
+        written += MultipartContentPrototype.WriteCRLF(bytes.AsSpan(written));
         var part = new Part(content, bytes);
         _parts.Add(part);
     }
@@ -67,13 +67,13 @@ public partial class MultipartContent : BinaryContent
         ReadOnlySpan<byte> header2Name, ReadOnlySpan<byte> header2Value,
         ReadOnlySpan<byte> header3Name, ReadOnlySpan<byte> header3Value)
     {
-        int bufferLength = MultipartContent.GetLength(header1Name, header1Value) + MultipartContent.GetLength(header2Name, header2Value) + MultipartContent.GetLength(header3Name, header3Value) + "\r\n".Length;
+        int bufferLength = MultipartContentPrototype.GetLength(header1Name, header1Value) + MultipartContentPrototype.GetLength(header2Name, header2Value) + MultipartContentPrototype.GetLength(header3Name, header3Value) + "\r\n".Length;
         byte[] bytes = new byte[bufferLength];
         int written = 0;
         written += WriteHeader(bytes.AsSpan(written), header1Name, header1Value);
         written += WriteHeader(bytes.AsSpan(written), header2Name, header2Value);
         written += WriteHeader(bytes.AsSpan(written), header3Name, header3Value);
-        written += MultipartContent.WriteCRLF(bytes.AsSpan(written));
+        written += MultipartContentPrototype.WriteCRLF(bytes.AsSpan(written));
         var part = new Part(content, bytes);
         _parts.Add(part);
     }
@@ -81,23 +81,23 @@ public partial class MultipartContent : BinaryContent
         ReadOnlySpan<byte> header1Name, ReadOnlySpan<byte> header1Value,
         ReadOnlySpan<byte> header2Name, ReadOnlySpan<byte> header2Value)
     {
-        int bufferLength = MultipartContent.GetLength(header1Name, header1Value) + MultipartContent.GetLength(header2Name, header2Value) + "\r\n".Length;
+        int bufferLength = MultipartContentPrototype.GetLength(header1Name, header1Value) + MultipartContentPrototype.GetLength(header2Name, header2Value) + "\r\n".Length;
         byte[] bytes = new byte[bufferLength];
         int written = 0;
         written += WriteHeader(bytes.AsSpan(written), header1Name, header1Value);
         written += WriteHeader(bytes.AsSpan(written), header2Name, header2Value);
-        written += MultipartContent.WriteCRLF(bytes.AsSpan(written));
+        written += MultipartContentPrototype.WriteCRLF(bytes.AsSpan(written));
         var part = new Part(content, bytes);
         _parts.Add(part);
     }
     public void Add(BinaryContent content,
         ReadOnlySpan<byte> headerName, ReadOnlySpan<byte> headerValue)
     {
-        int bufferLength = MultipartContent.GetLength(headerName, headerValue) + "\r\n".Length;
+        int bufferLength = MultipartContentPrototype.GetLength(headerName, headerValue) + "\r\n".Length;
         byte[] bytes = new byte[bufferLength];
         int written = 0;
         written += WriteHeader(bytes, headerName, headerValue);
-        MultipartContent.WriteCRLF(bytes.AsSpan(written));
+        MultipartContentPrototype.WriteCRLF(bytes.AsSpan(written));
         var part = new Part(content, bytes);
         _parts.Add(part);
     }
