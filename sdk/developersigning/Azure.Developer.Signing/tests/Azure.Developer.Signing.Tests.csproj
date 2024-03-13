@@ -11,7 +11,7 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Developer.Signing.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -21,9 +21,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
