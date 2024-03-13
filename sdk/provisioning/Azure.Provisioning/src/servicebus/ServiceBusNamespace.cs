@@ -15,9 +15,12 @@ namespace Azure.Provisioning.ServiceBus
     /// </summary>
     public class ServiceBusNamespace : Resource<ServiceBusNamespaceData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.servicebus/2022-10-01-preview/namespaces?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.ServiceBus/namespaces";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/src/Generated/RestOperations/NamespacesRestOperations.cs#L36C42-L36C60
+        internal const string DefaultVersion = "2022-10-01-preview";
+
         private static readonly Func<string, ServiceBusNamespaceData> Empty = (name) => ArmServiceBusModelFactory.ServiceBusNamespaceData();
-        internal const string DefaultVersion = "2021-11-01";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusNamespace"/>.
@@ -28,8 +31,13 @@ namespace Azure.Provisioning.ServiceBus
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public ServiceBusNamespace(IConstruct scope, ServiceBusSku? sku = default, ResourceGroup? parent = null, string name = "sb", string version = DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmServiceBusModelFactory.ServiceBusNamespaceData(
+        public ServiceBusNamespace(IConstruct scope,
+            ServiceBusSku? sku = default,
+            ResourceGroup? parent = null,
+            string name = "sb",
+            string version = DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, (name) => ArmServiceBusModelFactory.ServiceBusNamespaceData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -39,7 +47,12 @@ namespace Azure.Provisioning.ServiceBus
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private ServiceBusNamespace(IConstruct scope, ResourceGroup? parent = null, string name = "sb", string version = DefaultVersion, bool isExisting = true, Func<string, ServiceBusNamespaceData>? creator = null)
+        private ServiceBusNamespace(IConstruct scope,
+            ResourceGroup? parent = null,
+            string name = "sb",
+            string version = DefaultVersion,
+            Func<string, ServiceBusNamespaceData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

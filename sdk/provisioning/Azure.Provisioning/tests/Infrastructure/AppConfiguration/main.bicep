@@ -13,5 +13,3 @@ module rg_TEST_module './resources/rg_TEST_module/rg_TEST_module.bicep' = {
   name: 'rg_TEST_module'
   scope: resourceGroup_I6QNkoPsb
 }
-
-output appConfigurationStore_4WdTZ5u6X_endpoint string = rg_TEST_module.outputs.appConfigurationStore_4WdTZ5u6X_endpoint

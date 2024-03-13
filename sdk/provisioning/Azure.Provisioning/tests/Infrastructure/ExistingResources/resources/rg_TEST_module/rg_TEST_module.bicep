@@ -9,11 +9,11 @@ resource appConfigurationStore_4FWfd15sH 'Microsoft.AppConfiguration/configurati
   name: existingAppConfig
 }
 
-resource keyVault_78IwnSu6G 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+resource keyVault_78IwnSu6G 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: 'existingVault'
 }
 
-resource keyVaultSecret_ChWKOL5pG 'Microsoft.KeyVault/vaults/secrets@2023-02-01' existing = {
+resource keyVaultSecret_ChWKOL5pG 'Microsoft.KeyVault/vaults/secrets@2022-07-01' existing = {
   name: '${keyVault_78IwnSu6G}/existingSecret'
 }
 
@@ -37,15 +37,15 @@ resource webSitePublishingCredentialPolicy_thziHKVBm 'Microsoft.Web/sites/basicP
   name: '${webSite_C2Aq73IJb}/existingWebSitePublishingCredentialPolicy'
 }
 
-resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' existing = {
+resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' existing = {
   name: 'existingPostgreSql'
 }
 
-resource sqlServer_O1efuGmrm 'Microsoft.Sql/servers@2022-08-01-preview' existing = {
+resource sqlServer_O1efuGmrm 'Microsoft.Sql/servers@2020-11-01-preview' existing = {
   name: 'existingSqlServer'
 }
 
-resource sqlDatabase_YeJoBPp10 'Microsoft.Sql/servers/databases@2022-08-01-preview' existing = {
+resource sqlDatabase_YeJoBPp10 'Microsoft.Sql/servers/databases@2020-11-01-preview' existing = {
   name: '${sqlServer_O1efuGmrm}/${existingSqlDatabase}'
 }
 
@@ -73,19 +73,19 @@ resource appServicePlan_D5p3EVvRT 'Microsoft.Web/serverfarms@2021-02-01' existin
   name: 'existingAppServicePlan'
 }
 
-resource serviceBusNamespace_0J6N7TWQp 'Microsoft.ServiceBus/namespaces@2021-11-01' existing = {
+resource serviceBusNamespace_0J6N7TWQp 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
   name: 'existingSbNamespace'
 }
 
-resource serviceBusQueue_YWGfZ7Jp4 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' existing = {
+resource serviceBusQueue_YWGfZ7Jp4 'Microsoft.ServiceBus/namespaces/queues@2022-10-01-preview' existing = {
   name: '${serviceBusNamespace_0J6N7TWQp}/existingSbQueue'
 }
 
-resource serviceBusTopic_xubvxdBtk 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' existing = {
+resource serviceBusTopic_xubvxdBtk 'Microsoft.ServiceBus/namespaces/topics@2022-10-01-preview' existing = {
   name: '${serviceBusNamespace_0J6N7TWQp}/existingSbTopic'
 }
 
-resource serviceBusSubscription_EnDkO3Vba 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' existing = {
+resource serviceBusSubscription_EnDkO3Vba 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2022-10-01-preview' existing = {
   name: '${serviceBusTopic_xubvxdBtk}/existingSbSubscription'
 }
 
@@ -93,19 +93,19 @@ resource searchService_Szsp3FYvd 'Microsoft.Search/searchServices@2023-11-01' ex
   name: 'existingSearch'
 }
 
-resource eventHubsNamespace_dQTmc5DUS 'Microsoft.EventHub/namespaces@2021-11-01' existing = {
+resource eventHubsNamespace_dQTmc5DUS 'Microsoft.EventHub/namespaces@2022-10-01-preview' existing = {
   name: 'existingEhNamespace'
 }
 
-resource eventHub_H6DI0xDvi 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' existing = {
+resource eventHub_H6DI0xDvi 'Microsoft.EventHub/namespaces/eventhubs@2022-10-01-preview' existing = {
   name: '${eventHubsNamespace_dQTmc5DUS}/existingHub'
 }
 
-resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' existing = {
+resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2022-10-01-preview' existing = {
   name: '${eventHub_H6DI0xDvi}/existingEhConsumerGroup'
 }
 
-resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2020-06-01' existing = {
+resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2022-02-01' existing = {
   name: 'existingSignalR'
 }
 

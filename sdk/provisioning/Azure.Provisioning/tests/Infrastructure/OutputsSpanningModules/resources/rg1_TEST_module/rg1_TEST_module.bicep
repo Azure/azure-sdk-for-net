@@ -45,7 +45,7 @@ resource applicationSettingsResource_lzuRUWkeF 'Microsoft.Web/sites/config@2021-
   name: 'appsettings'
 }
 
-resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   properties: {

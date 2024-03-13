@@ -15,9 +15,12 @@ namespace Azure.Provisioning.SignalR
     /// </summary>
     public class SignalRService : Resource<SignalRData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.signalrservice/2022-02-01/signalr?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.SignalRService/signalR";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Azure.ResourceManager.SignalR/src/Generated/RestOperations/SignalRRestOperations.cs#L36
+        private const string DefaultVersion = "2022-02-01";
+
         private static readonly Func<string, SignalRData> Empty = (name) => ArmSignalRModelFactory.SignalRData();
-        internal const string DefaultVersion = "2023-02-01";
 
         /// <summary>
         /// Creates a new instance of the <see cref="SignalRService"/> class.
@@ -30,8 +33,16 @@ namespace Azure.Provisioning.SignalR
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public SignalRService(IConstruct scope, SignalRResourceSku? sku = default, IEnumerable<string>? allowedOrigins = default, string serviceMode = "Default", ResourceGroup? parent = default, string name = "signalr", string version = DefaultVersion, AzureLocation? location = default)
-            : this(scope, sku, parent, name, false, (name) => ArmSignalRModelFactory.SignalRData(
+        public SignalRService(
+            IConstruct scope,
+            SignalRResourceSku? sku = default,
+            IEnumerable<string>? allowedOrigins = default,
+            string serviceMode = "Default",
+            ResourceGroup? parent = default,
+            string name = "signalr",
+            string version = DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, false, (name) => ArmSignalRModelFactory.SignalRData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: sku ?? new SignalRResourceSku("Free_F1") { Capacity = 1 },
@@ -41,8 +52,14 @@ namespace Azure.Provisioning.SignalR
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private SignalRService(IConstruct scope, SignalRResourceSku? sku = default, ResourceGroup? parent = default, string name = "signalr", bool isExisting = false, Func<string, SignalRData>? creator = null)
-            : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
+        private SignalRService(
+            IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            bool isExisting = false,
+            Func<string, SignalRData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 

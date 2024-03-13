@@ -29,6 +29,7 @@ namespace Azure.Provisioning.Authorization
                 // will be overriden
                 resource.Name,
                 ResourceType,
+                // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/authorization/Azure.ResourceManager.Authorization/src/Generated/RestOperations/RoleAssignmentsRestOperations.cs#L36
                 "2022-04-01",
                 (name) => ArmAuthorizationModelFactory.RoleAssignmentData(
                     name: name,

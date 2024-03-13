@@ -14,7 +14,11 @@ namespace Azure.Provisioning.Sql
     /// </summary>
     public class SqlServer : Resource<SqlServerData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.sql/2020-11-01-preview/servers?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Sql/servers";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/sqlmanagement/Azure.ResourceManager.Sql/src/Generated/RestOperations/ServerRestOperations.cs#L36
+        internal const string DefaultVersion = "2020-11-01-preview";
+
         private static readonly Func<string, SqlServerData> Empty = (name) => ArmSqlModelFactory.SqlServerData();
 
         /// <summary>
@@ -34,9 +38,9 @@ namespace Azure.Provisioning.Sql
             Parameter? administratorPassword = default,
             SqlServerAdministrator? administrator = default,
             ResourceGroup? parent = null,
-            string version = "2022-08-01-preview",
+            string version = DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, name, parent, version, false, (name) => ArmSqlModelFactory.SqlServerData(
+            : this(scope, name, parent, version, (name) => ArmSqlModelFactory.SqlServerData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
@@ -69,10 +73,10 @@ namespace Azure.Provisioning.Sql
         private SqlServer(
             IConstruct scope,
             string name,
-            ResourceGroup? parent = null,
-            string version = "2022-08-01-preview",
-            bool isExisting = false,
-            Func<string, SqlServerData>? creator = null)
+            ResourceGroup? parent,
+            string version = DefaultVersion,
+            Func<string, SqlServerData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

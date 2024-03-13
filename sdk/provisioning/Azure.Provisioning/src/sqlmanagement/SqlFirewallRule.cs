@@ -22,8 +22,8 @@ namespace Azure.Provisioning.Sql
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public SqlFirewallRule(IConstruct scope, SqlServer? parent = default, string name = "fw", string version = "2020-11-01-preview")
-            : this(scope, parent, name, version, false, (name) => ArmSqlModelFactory.SqlFirewallRuleData(
+        public SqlFirewallRule(IConstruct scope, SqlServer? parent = default, string name = "fw", string version = SqlServer.DefaultVersion)
+            : this(scope, parent, name, version, (name) => ArmSqlModelFactory.SqlFirewallRuleData(
                 name: name,
                 resourceType: ResourceTypeName,
                 startIPAddress: "0.0.0.1",
@@ -32,7 +32,12 @@ namespace Azure.Provisioning.Sql
         {
         }
 
-        private SqlFirewallRule(IConstruct scope, SqlServer? parent = default, string name = "fw", string version = "2020-11-01-preview", bool isExisting = false, Func<string, SqlFirewallRuleData>? creator = null)
+        private SqlFirewallRule(IConstruct scope,
+            SqlServer? parent,
+            string name,
+            string version = SqlServer.DefaultVersion,
+            Func<string, SqlFirewallRuleData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

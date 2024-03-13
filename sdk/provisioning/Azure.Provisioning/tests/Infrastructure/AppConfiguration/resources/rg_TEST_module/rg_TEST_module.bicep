@@ -18,5 +18,3 @@ resource roleAssignment_S9dOTzUjk 'Microsoft.Authorization/roleAssignments@2022-
     principalType: 'ServicePrincipal'
   }
 }
-
-output appConfigurationStore_4WdTZ5u6X_endpoint string = appConfigurationStore_4WdTZ5u6X.properties.endpoint

@@ -24,16 +24,25 @@ namespace Azure.Provisioning.EventHubs
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public EventHubsConsumerGroup(IConstruct scope, EventHub? parent = null, string name = "hub", string version = EventHubsNamespace.DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmEventHubsModelFactory.EventHubsConsumerGroupData(
+        public EventHubsConsumerGroup(IConstruct scope,
+            EventHub? parent = null,
+            string name = "cg",
+            string version = EventHubsNamespace.DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, (name) => ArmEventHubsModelFactory.EventHubsConsumerGroupData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 
-        private EventHubsConsumerGroup(IConstruct scope, EventHub? parent = null, string name = "hub", string version = EventHubsNamespace.DefaultVersion, bool isExisting = true, Func<string, EventHubsConsumerGroupData>? creator = null)
-            : base(scope, parent, name, ResourceTypeName, EventHubsNamespace.DefaultVersion, creator ?? Empty, isExisting)
+        private EventHubsConsumerGroup(IConstruct scope,
+            EventHub? parent,
+            string name,
+            string version = EventHubsNamespace.DefaultVersion,
+            Func<string, EventHubsConsumerGroupData>? creator = null,
+            bool isExisting = false)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 

@@ -14,7 +14,11 @@ namespace Azure.Provisioning.AppConfiguration
     /// </summary>
     public class AppConfigurationStore : Resource<AppConfigurationStoreData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.appconfiguration/2023-03-01/configurationstores?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.AppConfiguration/configurationStores";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/RestOperations/ConfigurationStoresRestOperations.cs#L36
+        private const string DefaultVersion = "2023-03-01";
+
         private static readonly Func<string, AppConfigurationStoreData> Empty = (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData();
 
         /// <summary>
@@ -26,18 +30,22 @@ namespace Azure.Provisioning.AppConfiguration
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public AppConfigurationStore(IConstruct scope, string skuName = "free",  ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData(
+        public AppConfigurationStore(IConstruct scope, string skuName = "free",  ResourceGroup? parent = null, string name = "store", string version = DefaultVersion, AzureLocation? location = default)
+            : this(scope, parent, name, version, (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: skuName))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
-            AddOutput($"{Name}_endpoint", store => store.Endpoint);
         }
 
-        private AppConfigurationStore(IConstruct scope, ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", bool isExisting = false, Func<string, AppConfigurationStoreData>? creator = null)
+        private AppConfigurationStore(IConstruct scope,
+            ResourceGroup? parent,
+            string name,
+            string version = DefaultVersion,
+            Func<string, AppConfigurationStoreData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }

@@ -71,7 +71,7 @@ resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource keyVault_nM2Vqwgtg 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_nM2Vqwgtg 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   properties: {
@@ -113,7 +113,7 @@ resource roleAssignment_vMr1hl6oa 'Microsoft.Authorization/roleAssignments@2022-
   }
 }
 
-resource keyVaultSecret_EG4xNeA1a 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_EG4xNeA1a 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_nM2Vqwgtg
   name: 'sqlAdminPassword'
   properties: {
@@ -121,7 +121,7 @@ resource keyVaultSecret_EG4xNeA1a 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_ynz4glpCA 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_ynz4glpCA 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_nM2Vqwgtg
   name: 'appUserPassword'
   properties: {
@@ -129,7 +129,7 @@ resource keyVaultSecret_ynz4glpCA 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_YQnCy7jra 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_YQnCy7jra 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_nM2Vqwgtg
   name: 'connectionString'
   properties: {
@@ -137,7 +137,7 @@ resource keyVaultSecret_YQnCy7jra 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2022-08-01-preview' = {
+resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2020-11-01-preview' = {
   name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   properties: {
@@ -149,7 +149,7 @@ resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_xPxoW7iwr 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+resource sqlDatabase_xPxoW7iwr 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
   parent: sqlServer_dQT7Agxxb
   name: 'db'
   location: 'westus'

@@ -20,15 +20,21 @@ namespace Azure.Provisioning.Storage
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="parent">The parent.</param>
-        public BlobService(IConstruct scope, StorageAccount? parent = null)
-            : this(scope, parent, null, false, (name) => ArmStorageModelFactory.BlobServiceData(
-                name: name ?? "default",
+        /// <param name="version">The version.</param>
+        public BlobService(IConstruct scope, StorageAccount? parent = null, string version = StorageAccount.DefaultVersion)
+            : this(scope, parent, "default", version, (name) => ArmStorageModelFactory.BlobServiceData(
+                name: name,
                 resourceType: ResourceTypeName))
         {
         }
 
-        private BlobService(IConstruct scope, StorageAccount? parent = null, string? name = null, bool isExisting = false, Func<string, BlobServiceData>? creator = null)
-            : base(scope, parent, name ?? "default", ResourceTypeName, "2022-09-01", creator ?? Empty, isExisting)
+        private BlobService(IConstruct scope,
+            StorageAccount? parent,
+            string name,
+            string version = StorageAccount.DefaultVersion,
+            Func<string, BlobServiceData>? creator = null,
+            bool isExisting = false)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 
@@ -38,7 +44,7 @@ namespace Azure.Provisioning.Storage
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
-        /// <returns>The KeyVault instance.</returns>
+        /// <returns>The BlobService instance.</returns>
         public static BlobService FromExisting(IConstruct scope, string name, StorageAccount parent)
             => new BlobService(scope, parent: parent, name: name, isExisting: true);
 

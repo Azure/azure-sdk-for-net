@@ -18,7 +18,7 @@ resource redisCache_YE3v6ym48 'Microsoft.Cache/Redis@2020-06-01' = {
   }
 }
 
-resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: location
   properties: {
@@ -31,7 +31,7 @@ resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_5t0GshPLB
   name: 'connectionString'
   location: location

@@ -32,9 +32,9 @@ namespace Azure.Provisioning.CosmosDB
             ExtendedCosmosDBSqlDatabaseResourceInfo? databaseResourceInfo = null,
             CosmosDBSqlDatabasePropertiesConfig? propertiesConfig = default,
             string name = "db",
-            string version = "2022-05-15",
+            string version = CosmosDBAccount.DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, parent, name, version, location, false, (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData(
+            : this(scope, parent, name, version, false, (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -45,10 +45,9 @@ namespace Azure.Provisioning.CosmosDB
 
         private CosmosDBSqlDatabase(
             IConstruct scope,
-            CosmosDBAccount? parent = default,
-            string name = "db",
-            string version = "2023-04-15",
-            AzureLocation? location = default,
+            CosmosDBAccount? parent,
+            string name,
+            string version = CosmosDBAccount.DefaultVersion,
             bool isExisting = false,
             Func<string, CosmosDBSqlDatabaseData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)

@@ -15,7 +15,12 @@ namespace Azure.Provisioning.KeyVaults
     /// </summary>
     public class KeyVault : Resource<KeyVaultData>
     {
+        // https://learn.microsoft.com/azure/templates/microsoft.keyvault/2022-07-01/vaults?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.ResourceManager.KeyVault/src/Generated/RestOperations/VaultsRestOperations.cs#L36
+        // TODO the version used in ARM library doesn't exist in the docs so we are using the latest documented version
+        internal const string DefaultVersion = "2022-07-01";
+
         private static readonly Func<string, KeyVaultData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultData();
 
         /// <summary>
@@ -36,7 +41,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         /// <param name="parent"></param>
-        public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
+        public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = DefaultVersion, AzureLocation? location = default)
             : this(scope, parent, name, version, false, (name) => ArmKeyVaultModelFactory.KeyVaultData(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -64,7 +69,7 @@ namespace Azure.Provisioning.KeyVaults
             }
         }
 
-        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", bool isExisting = false, Func<string, KeyVaultData>? creator = null)
+        private KeyVault(IConstruct scope, ResourceGroup? parent, string name, string version = DefaultVersion, bool isExisting = false, Func<string, KeyVaultData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting: isExisting)
         {
         }

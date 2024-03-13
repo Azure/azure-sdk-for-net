@@ -32,8 +32,8 @@ namespace Azure.Provisioning.EventHubs
         {
         }
 
-        private EventHub(IConstruct scope, EventHubsNamespace? parent = null, string name = "hub", string version = EventHubsNamespace.DefaultVersion, bool isExisting = true, Func<string, EventHubData>? creator = null)
-            : base(scope, parent, name, ResourceTypeName, EventHubsNamespace.DefaultVersion, creator ?? Empty, isExisting)
+        private EventHub(IConstruct scope, EventHubsNamespace? parent, string name, string version = EventHubsNamespace.DefaultVersion, bool isExisting = true, Func<string, EventHubData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 

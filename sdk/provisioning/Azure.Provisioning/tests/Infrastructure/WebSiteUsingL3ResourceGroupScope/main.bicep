@@ -23,7 +23,7 @@ resource appServicePlan_PxkuWnuWL 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_GLHqcGjrx 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_GLHqcGjrx 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: location
   tags: {
@@ -59,7 +59,7 @@ resource keyVaultAddAccessPolicy_7TZqao49e 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_GLHqcGjrx
   name: 'sqlAdminPassword'
   location: location
@@ -68,7 +68,7 @@ resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_GLHqcGjrx
   name: 'appUserPassword'
   location: location
@@ -77,7 +77,7 @@ resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_zxjawLUWb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_zxjawLUWb 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: keyVault_GLHqcGjrx
   name: 'connectionString'
   location: location
@@ -139,7 +139,7 @@ resource webSiteConfigLogs_GwVSHGFxS 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2022-08-01-preview' = {
+resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2020-11-01-preview' = {
   name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
   location: location
   properties: {
@@ -151,7 +151,7 @@ resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
   parent: sqlServer_9wIHMU1zj
   name: 'db'
   location: location

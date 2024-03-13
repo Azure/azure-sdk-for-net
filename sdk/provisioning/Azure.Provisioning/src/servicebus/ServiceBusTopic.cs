@@ -24,15 +24,24 @@ namespace Azure.Provisioning.ServiceBus
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public ServiceBusTopic(IConstruct scope, ServiceBusNamespace? parent = null, string name = "topic", string version = ServiceBusNamespace.DefaultVersion, AzureLocation? location = default)
-            : this(scope, parent, name, version, false, (name) => ArmServiceBusModelFactory.ServiceBusTopicData(
+        public ServiceBusTopic(IConstruct scope,
+            ServiceBusNamespace? parent = null,
+            string name = "topic",
+            string version = ServiceBusNamespace.DefaultVersion,
+            AzureLocation? location = default)
+            : this(scope, parent, name, version, (name) => ArmServiceBusModelFactory.ServiceBusTopicData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 
-        private ServiceBusTopic(IConstruct scope, ServiceBusNamespace? parent = null, string name = "topic", string version = ServiceBusNamespace.DefaultVersion, bool isExisting = true, Func<string, ServiceBusTopicData>? creator = null)
+        private ServiceBusTopic(IConstruct scope,
+            ServiceBusNamespace? parent = null,
+            string name = "topic",
+            string version = ServiceBusNamespace.DefaultVersion,
+            Func<string, ServiceBusTopicData>? creator = null,
+            bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
