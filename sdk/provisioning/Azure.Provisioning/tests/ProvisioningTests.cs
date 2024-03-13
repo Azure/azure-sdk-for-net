@@ -25,6 +25,7 @@ using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.Search;
 using Azure.Provisioning.ServiceBus;
+using Azure.Provisioning.SignalR;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -32,6 +33,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search.Models;
+using Azure.ResourceManager.SignalR.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
@@ -419,6 +421,19 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task SignalR()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var signalR = new SignalRService(infrastructure, sku: new SignalRResourceSku("Standard_S1"), serviceMode: "Serverless");
+            signalR.AssignRole(RoleDefinition.SignalRAppServer, Guid.Empty);
+
+            signalR.AddOutput("hostName", data => data.HostName);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
@@ -749,6 +764,8 @@ namespace Azure.Provisioning.Tests
             var hub = EventHub.FromExisting(infra, "'existingHub'", eh);
             infra.AddResource(hub);
             infra.AddResource(EventHubsConsumerGroup.FromExisting(infra, "'existingEhConsumerGroup'", hub));
+
+            infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
 
             infra.Build(GetOutputPath());
 

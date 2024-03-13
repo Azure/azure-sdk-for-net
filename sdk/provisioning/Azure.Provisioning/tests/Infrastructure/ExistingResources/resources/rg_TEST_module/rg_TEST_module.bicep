@@ -105,6 +105,10 @@ resource eventHubsConsumerGroup_YKe70TLwz 'Microsoft.EventHub/namespaces/eventhu
   name: '${eventHub_H6DI0xDvi}/existingEhConsumerGroup'
 }
 
+resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2020-06-01' existing = {
+  name: 'existingSignalR'
+}
+
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_C2Aq73IJb
   name: 'appsettings'

@@ -191,6 +191,7 @@ namespace Azure.Provisioning.Authorization
         public static Azure.Provisioning.Authorization.RoleDefinition SearchIndexDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition SearchServiceContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition ServiceBusDataOwner { get { throw null; } }
+        public static Azure.Provisioning.Authorization.RoleDefinition SignalRAppServer { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageBlobDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageQueueDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageTableDataContributor { get { throw null; } }
@@ -408,6 +409,15 @@ namespace Azure.Provisioning.ServiceBus
         public ServiceBusTopic(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ServiceBus.ServiceBusNamespace? parent = null, string name = "topic", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusTopicData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.ServiceBus.ServiceBusTopic FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ServiceBus.ServiceBusNamespace parent) { throw null; }
+    }
+}
+namespace Azure.Provisioning.SignalR
+{
+    public partial class SignalRService : Azure.Provisioning.Resource<Azure.ResourceManager.SignalR.SignalRData>
+    {
+        public SignalRService(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.SignalR.Models.SignalRResourceSku? sku = null, System.Collections.Generic.IEnumerable<string>? allowedOrigins = null, string serviceMode = "Default", Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "signalr", string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.SignalR.SignalRData>)) { }
+        public static Azure.Provisioning.SignalR.SignalRService FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.Sql
