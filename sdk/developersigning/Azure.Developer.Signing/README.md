@@ -23,7 +23,7 @@ dotnet add package Azure.Developer.Signing --prerelease
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 6.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). It is recommended that you compile using the latest [.NET SDK](https://dotnet.microsoft.com/download) 6.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
 To have the capability to perform signing actions a Signing Account, Certificate Profile and Identity Validation must be created. These resources can be created using the Azure portal or the Azure CLI.
 
@@ -31,7 +31,7 @@ To have the capability to perform signing actions a Signing Account, Certificate
 
 To access the client, you can use the [Token Credential authentication](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) method provided by Standard Azure Active Directory. The identity interacting with the resource must have the role of `Code Signing Certificate Profile Signer` on the resource. These roles need to be assigned from the Azure portal or by using the Azure CLI.
 
-To use Azure Active Directory authentication, add the Azure Identity package:
+To use Entra ID authentication, add the Azure Identity package:
 
 `dotnet add package Azure.Identity`
 
@@ -41,9 +41,9 @@ You will also need to register a new AAD application, or run locally or in an en
 
 This library interacts with the Azure Developer Signing service using two principal concepts, these are:
 
-`Trusted Signing Accounts` – A Signing Account is the logical container holding certificate profiles and identity validations and is considered a Azure Developer Signing resource.
-`Certificate Profile` – A Certificate Profile is the template with the information that is used in the issued certificates. It is a sub-resource to a Code Signing Account resource.
-`Identity Validation` - An Identity Validation resource is the identity of the legal business or individual. This information will be in the Subject Name of the certificates and therefore is a pre-requisite resource to be able to create a Certificate Profile.
+- `Trusted Signing Accounts` – A Signing Account is the logical container holding certificate profiles and identity validations and is considered a Azure Developer Signing resource.
+- `Certificate Profile` – A Certificate Profile is the template with the information that is used in the issued certificates. It is a sub-resource to a Code Signing Account resource.
+- `Identity Validation` - An Identity Validation resource is the identity of the legal business or individual. This information will be in the Subject Name of the certificates and therefore is a pre-requisite resource to be able to create a Certificate Profile.
 
 Since the interaction of the client is at the certificate profile level, the client is designed to interact with this entity. A region must be provided to ensure the request is routed to the specific appropiate environment.
 
@@ -90,7 +90,7 @@ Sign the digest corresponding to a file using an algorithm.
     JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 ```
 
-### List Available customer EKUs
+### List available customer extended key usages (EKUs)
 
 Request all the available customer extended key usages from a certificate profile.
 
@@ -109,7 +109,7 @@ Request all the available customer extended key usages from a certificate profil
     }
 ```
 
-### Download Root Certificate
+### Download the root certificate
 
 Request the sign root certificate from a certificate profile.
 
