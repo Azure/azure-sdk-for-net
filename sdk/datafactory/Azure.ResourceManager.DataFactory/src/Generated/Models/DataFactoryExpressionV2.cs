@@ -12,7 +12,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Nested representation of a complex expression. </summary>
-    public partial class ExpressionV2
+    public partial class DataFactoryExpressionV2
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExpressionV2"/>. </summary>
-        public ExpressionV2()
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpressionV2"/>. </summary>
+        public DataFactoryExpressionV2()
         {
-            Operands = new ChangeTrackingList<ExpressionV2>();
+            Operands = new ChangeTrackingList<DataFactoryExpressionV2>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpressionV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryExpressionV2"/>. </summary>
         /// <param name="v2Type"> Type of expressions supported by the system. Type: string. </param>
         /// <param name="value"> Value for Constant/Field Type: string. </param>
         /// <param name="operator"> Expression operator value Type: string. </param>
         /// <param name="operands"> List of nested expressions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressionV2(ExpressionV2Type? v2Type, string value, string @operator, IList<ExpressionV2> operands, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataFactoryExpressionV2(DataFactoryExpressionV2Type? v2Type, string value, string @operator, IList<DataFactoryExpressionV2> operands, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             V2Type = v2Type;
             Value = value;
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of expressions supported by the system. Type: string. </summary>
-        public ExpressionV2Type? V2Type { get; set; }
+        public DataFactoryExpressionV2Type? V2Type { get; set; }
         /// <summary> Value for Constant/Field Type: string. </summary>
         public string Value { get; set; }
         /// <summary> Expression operator value Type: string. </summary>
         public string Operator { get; set; }
         /// <summary> List of nested expressions. </summary>
-        public IList<ExpressionV2> Operands { get; }
+        public IList<DataFactoryExpressionV2> Operands { get; }
     }
 }

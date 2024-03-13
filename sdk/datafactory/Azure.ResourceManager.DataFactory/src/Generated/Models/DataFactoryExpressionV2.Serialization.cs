@@ -14,16 +14,16 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExpressionV2 : IUtf8JsonSerializable, IJsonModel<ExpressionV2>
+    public partial class DataFactoryExpressionV2 : IUtf8JsonSerializable, IJsonModel<DataFactoryExpressionV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryExpressionV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ExpressionV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataFactoryExpressionV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        ExpressionV2 IJsonModel<ExpressionV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataFactoryExpressionV2 IJsonModel<DataFactoryExpressionV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpressionV2(document.RootElement, options);
+            return DeserializeDataFactoryExpressionV2(document.RootElement, options);
         }
 
-        internal static ExpressionV2 DeserializeExpressionV2(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataFactoryExpressionV2 DeserializeDataFactoryExpressionV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            ExpressionV2Type? type = default;
+            DataFactoryExpressionV2Type? type = default;
             string value = default;
             string @operator = default;
-            IList<ExpressionV2> operands = default;
+            IList<DataFactoryExpressionV2> operands = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    type = new ExpressionV2Type(property.Value.GetString());
+                    type = new DataFactoryExpressionV2Type(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ExpressionV2> array = new List<ExpressionV2>();
+                    List<DataFactoryExpressionV2> array = new List<DataFactoryExpressionV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeExpressionV2(item, options));
+                        array.Add(DeserializeDataFactoryExpressionV2(item, options));
                     }
                     operands = array;
                     continue;
@@ -137,38 +137,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionV2(type, value, @operator, operands ?? new ChangeTrackingList<ExpressionV2>(), serializedAdditionalRawData);
+            return new DataFactoryExpressionV2(type, value, @operator, operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExpressionV2>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataFactoryExpressionV2>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support '{options.Format}' format.");
             }
         }
 
-        ExpressionV2 IPersistableModel<ExpressionV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataFactoryExpressionV2 IPersistableModel<DataFactoryExpressionV2>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExpressionV2(document.RootElement, options);
+                        return DeserializeDataFactoryExpressionV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExpressionV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataFactoryExpressionV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

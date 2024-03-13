@@ -3155,6 +3155,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType left, Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataFactoryExpressionV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>
+    {
+        public DataFactoryExpressionV2() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2> Operands { get { throw null; } }
+        public string Operator { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type? V2Type { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataFactoryExpressionV2Type : System.IEquatable<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataFactoryExpressionV2Type(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type Binary { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type Constant { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type Field { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type Unary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type left, Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type left, Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataFactoryFlowletProperties : Azure.ResourceManager.DataFactory.Models.DataFactoryDataFlowProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryFlowletProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DataFactoryFlowletProperties>
     {
         public DataFactoryFlowletProperties() { }
@@ -4873,39 +4906,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.ExposureControlResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ExpressionV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>
-    {
-        public ExpressionV2() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ExpressionV2> Operands { get { throw null; } }
-        public string Operator { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.ExpressionV2Type? V2Type { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        Azure.ResourceManager.DataFactory.Models.ExpressionV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataFactory.Models.ExpressionV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ExpressionV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpressionV2Type : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ExpressionV2Type>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExpressionV2Type(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.ExpressionV2Type Binary { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ExpressionV2Type Constant { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ExpressionV2Type Field { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ExpressionV2Type Unary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.ExpressionV2Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ExpressionV2Type left, Azure.ResourceManager.DataFactory.Models.ExpressionV2Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.ExpressionV2Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ExpressionV2Type left, Azure.ResourceManager.DataFactory.Models.ExpressionV2Type right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class FactoryGitHubClientSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.FactoryGitHubClientSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.FactoryGitHubClientSecret>
     {
@@ -9792,7 +9792,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ServiceNowV2Source : Azure.ResourceManager.DataFactory.Models.TabularSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source>
     {
         public ServiceNowV2Source() { }
-        public Azure.ResourceManager.DataFactory.Models.ExpressionV2 Expression { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2 Expression { get { throw null; } set { } }
         Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2Source>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -22,7 +22,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -286,6 +286,8 @@ prepend-rp-prefix:
   - ScriptAction
   - ScriptActivity
   - ScriptType
+  - ExpressionV2
+  - ExpressionV2Type
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun

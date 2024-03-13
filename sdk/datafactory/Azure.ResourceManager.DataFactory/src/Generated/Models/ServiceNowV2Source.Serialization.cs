@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            ExpressionV2 expression = default;
+            DataFactoryExpressionV2 expression = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
             string type = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    expression = ExpressionV2.DeserializeExpressionV2(property.Value, options);
+                    expression = DataFactoryExpressionV2.DeserializeDataFactoryExpressionV2(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

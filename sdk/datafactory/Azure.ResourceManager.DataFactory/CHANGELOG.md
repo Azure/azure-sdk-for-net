@@ -1,6 +1,8 @@
 # Release History
 
-## 1.0.0 (2024-03-06)
+## 1.0.0 (2024-03-14)
+
+This release is the first stable release of the Data Factory Management client library.
 
 ### Features Added
 
