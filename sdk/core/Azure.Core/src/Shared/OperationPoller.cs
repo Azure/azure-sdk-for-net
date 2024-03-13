@@ -83,7 +83,7 @@ namespace Azure.Core
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
                 if (operation.HasCompleted)
                 {
-                    return operation.RawResponse!;
+                    return operation.RawResponse;
                 }
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitterStrategy(delayHint.Value) : _delayStrategy;
