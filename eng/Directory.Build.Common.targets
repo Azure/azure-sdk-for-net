@@ -213,7 +213,6 @@
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
