@@ -14,7 +14,7 @@
 
 ### Bugs Fixed
 
-	- Made the request validation errors return 400 and the response validation errors return 500.
+- Made the request validation errors return 400 and the response validation errors return 500.
 
 ### Other Changes
 
