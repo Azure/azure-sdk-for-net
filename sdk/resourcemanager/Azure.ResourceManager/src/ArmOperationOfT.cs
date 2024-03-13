@@ -22,7 +22,7 @@ namespace Azure.ResourceManager
         private readonly NextLinkOperationImplementation? _nextLinkOperation;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
+        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken, ArmClientOptions? options = null)
         {
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 

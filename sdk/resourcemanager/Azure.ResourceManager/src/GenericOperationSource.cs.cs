@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -13,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T>
+    internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T>
     {
         private readonly ArmClient _client;
         private readonly bool _isResource;
@@ -32,17 +33,7 @@ namespace Azure.ResourceManager
 
         private T CreateResult(Response response)
         {
-            object data;
-            MemoryStream memoryStream = response.ContentStream as MemoryStream;
-            if (memoryStream is not null)
-            {
-                data = ModelReaderWriter.Read(BinaryData.FromStream(memoryStream), typeof(T));
-            }
-            else
-            {
-                data = ModelReaderWriter.Read(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), typeof(T));
-            }
-
+            object data = ModelReaderWriter.Read(response.Content, typeof(T));
             return _isResource
                 ? (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, data }, null)
                 : (T)data;

@@ -23,7 +23,6 @@ namespace Azure.Core
         private readonly HeaderSource _headerSource;
         private readonly Uri _startRequestUri;
         private readonly OperationFinalStateVia _finalStateVia;
-        private readonly RequestMethod _requestMethod;
         private readonly HttpPipeline _pipeline;
         private readonly string? _apiVersion;
 
@@ -75,6 +74,9 @@ namespace Azure.Core
             IOperationSource<T> operationSource,
             IOperation operation)
             => new OperationToOperationOfT<T>(operationSource, operation);
+
+        public string? OperationId { get; }
+        public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
             HttpPipeline pipeline,
@@ -139,7 +141,7 @@ namespace Azure.Core
             AssertNotNull(headerSource, nameof(headerSource));
             AssertNotNull(finalStateVia, nameof(finalStateVia));
 
-            _requestMethod = requestMethod;
+            RequestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
             _nextRequestUri = nextRequestUri;
@@ -147,10 +149,20 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
+            OperationId = ParseOperationId(nextRequestUri);
+        }
+
+        private static string? ParseOperationId(string nextRequestUri)
+        {
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            {
+                return uri.Segments.LastOrDefault();
+            }
+            return null;
         }
 
         public RehydrationToken GetRehydrationToken()
-            => GetRehydrationToken(_requestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
+            => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
 
         public static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
@@ -182,7 +194,7 @@ namespace Azure.Core
             string? lastKnownLocation,
             string finalStateVia)
         {
-            var data = BinaryData.FromObjectAsJson(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            var data = new BinaryData(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
@@ -203,7 +215,7 @@ namespace Azure.Core
                     ? await GetResponseAsync(async, finalUri, cancellationToken).ConfigureAwait(false)
                     : response;
 
-                return GetOperationStateFromFinalResponse(_requestMethod, finalResponse);
+                return GetOperationStateFromFinalResponse(RequestMethod, finalResponse);
             }
 
             UpdateNextRequestUri(response.Headers);
@@ -322,7 +334,7 @@ namespace Azure.Core
             }
 
             // Set final uri as null if initial request is a delete method.
-            if (_requestMethod == RequestMethod.Delete)
+            if (RequestMethod == RequestMethod.Delete)
             {
                 return null;
             }
@@ -332,7 +344,7 @@ namespace Azure.Core
             {
                 case OperationFinalStateVia.LocationOverride when !string.IsNullOrEmpty(_lastKnownLocation):
                     return _lastKnownLocation;
-                case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when _requestMethod == RequestMethod.Post:
+                case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when RequestMethod == RequestMethod.Post:
                     return null;
                 case OperationFinalStateVia.OriginalUri:
                     return _startRequestUri.AbsoluteUri;
@@ -345,7 +357,7 @@ namespace Azure.Core
             }
 
             // If initial request is PUT or PATCH, return initial request Uri
-            if (_requestMethod == RequestMethod.Put || _requestMethod == RequestMethod.Patch)
+            if (RequestMethod == RequestMethod.Put || RequestMethod == RequestMethod.Patch)
             {
                 return _startRequestUri.AbsoluteUri;
             }

@@ -5,22 +5,13 @@
 
 #nullable enable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public class ArmOperation : Operation
-{
-        private readonly OperationInternal? _operation;
-        private readonly NextLinkOperationImplementation? _nextLinkOperation;
-
+    {
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
         protected ArmOperation()
         {
@@ -29,58 +20,10 @@ namespace Azure.ResourceManager
         /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="rehydrationToken"> The id of the ArmOperation. </param>
-        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
+        /// <param name="options">The Arm client operations.</param>
+        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken, ArmClientOptions? options = null)
+            : base(client.Pipeline, rehydrationToken, options)
         {
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-            Argument.AssertNotNull(client, nameof(client));
-
-            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
-            var clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
-
-            // RequestMethod is needed to check for fake delete operation
-            _operation = new OperationInternal(_nextLinkOperation, clientDiagnostics, null, requestMethod: GetRequestMethod(rehydrationToken));
         }
-
-        private RequestMethod? GetRequestMethod(RehydrationToken? rehydrationToken)
-        {
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
-            return new RequestMethod(lroDetails["requestMethod"]);
-        }
-
-        /// <inheritdoc />
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
-
-#pragma warning disable CA1822
-        /// <inheritdoc />
-        public override string Id => throw new NotSupportedException();
-#pragma warning restore CA1822
-
-        /// <inheritdoc />
-        public override bool HasCompleted => _operation!.HasCompleted;
-
-        /// <inheritdoc />
-        public override Response GetRawResponse() => _operation!.RawResponse;
-
-        /// <inheritdoc />
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation!.UpdateStatus(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation!.UpdateStatusAsync(cancellationToken);
-
-        /// <inheritdoc />
-        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation!.WaitForCompletionResponse(cancellationToken);
-
-        /// <inheritdoc />
-        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation!.WaitForCompletionResponse(pollingInterval, cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation!.WaitForCompletionResponseAsync(cancellationToken);
-
-        /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation!.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }
