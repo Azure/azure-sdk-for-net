@@ -104,7 +104,7 @@ namespace Azure.Core
                 : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
         }
 
-        public override Response? RawResponse => _internalOperation.RawResponse;
+        public override Response RawResponse => _internalOperation.RawResponse;
 
         public override bool HasCompleted => _internalOperation.HasCompleted;
 
