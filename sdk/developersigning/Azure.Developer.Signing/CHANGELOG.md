@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (2024-01-09)
+## 1.0.0-beta.1 (Unreleased)
 
 Initial release of the Azure developer signing library
 
