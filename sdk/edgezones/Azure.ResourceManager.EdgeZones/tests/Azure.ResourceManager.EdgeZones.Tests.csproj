@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.EdgeZones.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
 </Project>
