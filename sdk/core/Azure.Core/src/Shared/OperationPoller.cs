@@ -4,11 +4,9 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Shared;
 
 namespace Azure.Core
 {
@@ -85,7 +83,7 @@ namespace Azure.Core
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
                 if (operation.HasCompleted)
                 {
-                    return operation.RawResponse;
+                    return operation.RawResponse!;
                 }
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitterStrategy(delayHint.Value) : _delayStrategy;

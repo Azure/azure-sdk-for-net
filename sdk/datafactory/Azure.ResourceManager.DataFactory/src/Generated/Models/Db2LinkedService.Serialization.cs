@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> database = default;
             Db2AuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> packageCollection = default;
             DataFactoryElement<string> certificateCommonName = default;
             string encryptedCredential = default;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("packageCollection"u8))

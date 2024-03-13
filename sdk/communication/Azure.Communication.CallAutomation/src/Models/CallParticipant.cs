@@ -28,5 +28,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Is participant muted. </summary>
         public bool IsMuted { get; }
+
+        /// <summary> Is participant on hold. </summary>
+        public bool IsOnHold { get; }
     }
 }

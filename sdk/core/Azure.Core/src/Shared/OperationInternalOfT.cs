@@ -121,7 +121,7 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
 
-        public override Response RawResponse => (_stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse) ?? throw new InvalidOperationException("The operation does not have a response yet. Please call UpdateStatus or WaitForCompletion first.");
+        public override Response? RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
 
         public override bool HasCompleted => _stateLock.HasValue;
 

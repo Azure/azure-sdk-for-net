@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountName = default;
-            DataFactorySecretBaseDefinition accessKey = default;
+            DataFactorySecret accessKey = default;
             DataFactoryElement<string> batchUri = default;
             DataFactoryElement<string> poolName = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("batchUri"u8))
