@@ -22,7 +22,7 @@ namespace Azure
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of Operation for mocking. </summary>
         protected Operation()
         {
         }

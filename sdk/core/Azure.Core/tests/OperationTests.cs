@@ -142,13 +142,29 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ConstructOperationTest()
+        public void ConstructOperationForRehydration()
         {
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = new Operation(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
+            Assert.Null(operation.GetRawResponse());
+            Assert.False(operation.HasCompleted);
+        }
+
+        [Test]
+        public void ConstructOperationOfTForRehydration()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = new Operation<int>(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.Null(operation.GetRawResponse());
+            Assert.False(operation.HasCompleted);
+            Assert.Throws<InvalidOperationException>(() => { var value = operation.Value; });
+            Assert.False(operation.HasValue);
         }
 
         private class MockClientOptions : ClientOptions

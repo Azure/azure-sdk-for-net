@@ -22,6 +22,8 @@ namespace Azure
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
+        private readonly OperationInternal<T> _operation;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Operation"/> class.
         /// </summary>
@@ -30,6 +32,16 @@ namespace Azure
         /// <param name="options">The client options.</param>
         public Operation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null) : base(pipeline, rehydrationToken, options)
         {
+            if (rehydrationToken is null)
+            {
+                throw new ArgumentNullException(nameof(rehydrationToken));
+            }
+
+            IOperationSource<T> source = new GenericOperationSource<T>();
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, operation);
+            var clientDiagnostics = new ClientDiagnostics(options ?? ClientOptions.Default);
+            _operation = new OperationInternal<T>(nextLinkOperation!, clientDiagnostics, null);
         }
 
         /// <summary> Initializes a new instance of Operation for mocking. </summary>
@@ -43,12 +55,12 @@ namespace Azure
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public virtual T Value { get; }
+        public virtual T Value => _operation.Value;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public virtual bool HasValue { get; }
+        public virtual bool HasValue => _operation.HasValue;
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.

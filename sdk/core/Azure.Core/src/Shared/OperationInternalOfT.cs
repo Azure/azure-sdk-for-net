@@ -286,7 +286,7 @@ namespace Azure.Core
                 return state.RawResponse;
             }
 
-            // if this is a fake delete lro with 404, just return empty response with 204
+            // if this is a fake delete LRO with 404, just return empty response with 204
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
                 return new EmptyResponse(HttpStatusCode.NoContent);
@@ -295,7 +295,10 @@ namespace Azure.Core
             throw state.OperationFailedException!;
         }
 
-        private class EmptyResponse : Response
+        /// <summary>
+        /// This is only used for fake delete LRO, we just want to return an empty response with 204 to the user for this case.
+        /// </summary>
+        private sealed class EmptyResponse : Response
         {
             public EmptyResponse(HttpStatusCode status)
             {
