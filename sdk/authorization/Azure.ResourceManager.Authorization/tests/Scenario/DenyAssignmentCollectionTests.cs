@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         [Test]
         public async Task Get()
         {
-            var randomGuid = (Guid.NewGuid()).ToString();
+            var randomGuid = "00000000-0000-4000-8000-0000075bcd15";
             var scope = DefaultSubscription.Id;
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             try
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         [Test]
         public async Task Exists()
         {
-            var randomGuid = (Guid.NewGuid()).ToString();
+            var randomGuid = "00000000-0000-4000-8000-0000075bcd15";
             var scope = DefaultSubscription.Id;
             var denyAssignmentCollection = Client.GetDenyAssignments(scope);
             Assert.IsFalse(await denyAssignmentCollection.ExistsAsync(randomGuid));
