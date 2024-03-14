@@ -19,14 +19,14 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A Class representing a Maintenance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMaintenanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMaintenance method.
+    /// A Class representing a MySqlFlexibleServerMaintenance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerMaintenanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerMaintenanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerMaintenance method.
     /// </summary>
-    public partial class MaintenanceResource : ArmResource
+    public partial class MySqlFlexibleServerMaintenanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MaintenanceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServerMaintenanceResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serverName"> The serverName. </param>
@@ -37,35 +37,35 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _maintenanceClientDiagnostics;
-        private readonly MaintenancesRestOperations _maintenanceRestClient;
-        private readonly MaintenanceData _data;
+        private readonly ClientDiagnostics _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics;
+        private readonly MaintenancesRestOperations _mySqlFlexibleServerMaintenanceMaintenancesRestClient;
+        private readonly MySqlFlexibleServerMaintenanceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/maintenances";
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceResource"/> class for mocking. </summary>
-        protected MaintenanceResource()
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerMaintenanceResource"/> class for mocking. </summary>
+        protected MySqlFlexibleServerMaintenanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerMaintenanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceResource(ArmClient client, MaintenanceData data) : this(client, data.Id)
+        internal MySqlFlexibleServerMaintenanceResource(ArmClient client, MySqlFlexibleServerMaintenanceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerMaintenanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MySqlFlexibleServerMaintenanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _maintenanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string maintenanceApiVersion);
-            _maintenanceRestClient = new MaintenancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceApiVersion);
+            _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string mySqlFlexibleServerMaintenanceMaintenancesApiVersion);
+            _mySqlFlexibleServerMaintenanceMaintenancesRestClient = new MaintenancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerMaintenanceMaintenancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MaintenanceData Data
+        public virtual MySqlFlexibleServerMaintenanceData Data
         {
             get
             {
@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerMaintenanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceResource.Get");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _maintenanceRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerMaintenanceMaintenancesRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,21 +149,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerMaintenanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceResource.Get");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Get");
             scope.Start();
             try
             {
-                var response = _maintenanceRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _mySqlFlexibleServerMaintenanceMaintenancesRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="patch"> The required parameters for update maintenance on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<MaintenanceResource>> UpdateAsync(WaitUntil waitUntil, MaintenancePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerMaintenanceResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceResource.Update");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _maintenanceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MaintenanceResource>(new MaintenanceOperationSource(Client), _maintenanceClientDiagnostics, Pipeline, _maintenanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _mySqlFlexibleServerMaintenanceMaintenancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(new MySqlFlexibleServerMaintenanceOperationSource(Client), _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics, Pipeline, _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,16 +243,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="patch"> The required parameters for update maintenance on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<MaintenanceResource> Update(WaitUntil waitUntil, MaintenancePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerMaintenanceResource> Update(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceResource.Update");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Update");
             scope.Start();
             try
             {
-                var response = _maintenanceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MaintenanceResource>(new MaintenanceOperationSource(Client), _maintenanceClientDiagnostics, Pipeline, _maintenanceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _mySqlFlexibleServerMaintenanceMaintenancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(new MySqlFlexibleServerMaintenanceOperationSource(Client), _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics, Pipeline, _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

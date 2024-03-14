@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, string backupName, ServerBackupV2Data data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, string backupName, MySqlFlexibleServerBackupV2Data data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, ServerBackupV2Data data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string serverName, string backupName, ServerBackupV2Data data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string serverName, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

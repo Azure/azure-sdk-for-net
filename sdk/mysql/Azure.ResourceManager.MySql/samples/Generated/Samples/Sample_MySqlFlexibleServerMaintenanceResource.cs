@@ -16,7 +16,7 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_MaintenanceResource
+    public partial class Sample_MySqlFlexibleServerMaintenanceResource
     {
         // Read a maintenance
         [NUnit.Framework.Test]
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MaintenanceResource created on azure
-            // for more information of creating MaintenanceResource, please refer to the document of MaintenanceResource
+            // this example assumes you already have this MySqlFlexibleServerMaintenanceResource created on azure
+            // for more information of creating MySqlFlexibleServerMaintenanceResource, please refer to the document of MySqlFlexibleServerMaintenanceResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string maintenanceName = "_T9Q-TS8";
-            ResourceIdentifier maintenanceResourceId = MaintenanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, maintenanceName);
-            MaintenanceResource maintenance = client.GetMaintenanceResource(maintenanceResourceId);
+            ResourceIdentifier mySqlFlexibleServerMaintenanceResourceId = MySqlFlexibleServerMaintenanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, maintenanceName);
+            MySqlFlexibleServerMaintenanceResource mySqlFlexibleServerMaintenance = client.GetMySqlFlexibleServerMaintenanceResource(mySqlFlexibleServerMaintenanceResourceId);
 
             // invoke the operation
-            MaintenanceResource result = await maintenance.GetAsync();
+            MySqlFlexibleServerMaintenanceResource result = await mySqlFlexibleServerMaintenance.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MaintenanceData resourceData = result.Data;
+            MySqlFlexibleServerMaintenanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -63,26 +63,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MaintenanceResource created on azure
-            // for more information of creating MaintenanceResource, please refer to the document of MaintenanceResource
+            // this example assumes you already have this MySqlFlexibleServerMaintenanceResource created on azure
+            // for more information of creating MySqlFlexibleServerMaintenanceResource, please refer to the document of MySqlFlexibleServerMaintenanceResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string maintenanceName = "_T9Q-TS8";
-            ResourceIdentifier maintenanceResourceId = MaintenanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, maintenanceName);
-            MaintenanceResource maintenance = client.GetMaintenanceResource(maintenanceResourceId);
+            ResourceIdentifier mySqlFlexibleServerMaintenanceResourceId = MySqlFlexibleServerMaintenanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, maintenanceName);
+            MySqlFlexibleServerMaintenanceResource mySqlFlexibleServerMaintenance = client.GetMySqlFlexibleServerMaintenanceResource(mySqlFlexibleServerMaintenanceResourceId);
 
             // invoke the operation
-            MaintenancePatch patch = new MaintenancePatch()
+            MySqlFlexibleServerMaintenancePatch patch = new MySqlFlexibleServerMaintenancePatch()
             {
                 MaintenanceStartOn = DateTimeOffset.Parse("2024-01-20T00:00:00"),
             };
-            ArmOperation<MaintenanceResource> lro = await maintenance.UpdateAsync(WaitUntil.Completed, patch);
-            MaintenanceResource result = lro.Value;
+            ArmOperation<MySqlFlexibleServerMaintenanceResource> lro = await mySqlFlexibleServerMaintenance.UpdateAsync(WaitUntil.Completed, patch);
+            MySqlFlexibleServerMaintenanceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MaintenanceData resourceData = result.Data;
+            MySqlFlexibleServerMaintenanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

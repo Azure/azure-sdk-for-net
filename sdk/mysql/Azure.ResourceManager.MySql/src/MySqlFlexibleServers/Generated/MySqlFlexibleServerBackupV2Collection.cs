@@ -21,33 +21,33 @@ using Azure.ResourceManager.MySql;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServerBackupV2Resource"/> and their operations.
-    /// Each <see cref="ServerBackupV2Resource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get a <see cref="ServerBackupV2Collection"/> instance call the GetServerBackupV2s method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerBackupV2Resource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerBackupV2Resource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerBackupV2Collection"/> instance call the GetMySqlFlexibleServerBackupV2s method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class ServerBackupV2Collection : ArmCollection, IEnumerable<ServerBackupV2Resource>, IAsyncEnumerable<ServerBackupV2Resource>
+    public partial class MySqlFlexibleServerBackupV2Collection : ArmCollection, IEnumerable<MySqlFlexibleServerBackupV2Resource>, IAsyncEnumerable<MySqlFlexibleServerBackupV2Resource>
     {
-        private readonly ClientDiagnostics _serverBackupV2LongRunningBackupClientDiagnostics;
-        private readonly LongRunningBackupRestOperations _serverBackupV2LongRunningBackupRestClient;
-        private readonly ClientDiagnostics _serverBackupV2LongRunningBackupsClientDiagnostics;
-        private readonly LongRunningBackupsRestOperations _serverBackupV2LongRunningBackupsRestClient;
+        private readonly ClientDiagnostics _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics;
+        private readonly LongRunningBackupRestOperations _mySqlFlexibleServerBackupV2LongRunningBackupRestClient;
+        private readonly ClientDiagnostics _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics;
+        private readonly LongRunningBackupsRestOperations _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServerBackupV2Collection"/> class for mocking. </summary>
-        protected ServerBackupV2Collection()
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerBackupV2Collection"/> class for mocking. </summary>
+        protected MySqlFlexibleServerBackupV2Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServerBackupV2Collection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerBackupV2Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServerBackupV2Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MySqlFlexibleServerBackupV2Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverBackupV2LongRunningBackupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerBackupV2Resource.ResourceType, out string serverBackupV2LongRunningBackupApiVersion);
-            _serverBackupV2LongRunningBackupRestClient = new LongRunningBackupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverBackupV2LongRunningBackupApiVersion);
-            _serverBackupV2LongRunningBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerBackupV2Resource.ResourceType, out string serverBackupV2LongRunningBackupsApiVersion);
-            _serverBackupV2LongRunningBackupsRestClient = new LongRunningBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverBackupV2LongRunningBackupsApiVersion);
+            _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MySqlFlexibleServerBackupV2Resource.ResourceType, out string mySqlFlexibleServerBackupV2LongRunningBackupApiVersion);
+            _mySqlFlexibleServerBackupV2LongRunningBackupRestClient = new LongRunningBackupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerBackupV2LongRunningBackupApiVersion);
+            _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MySqlFlexibleServerBackupV2Resource.ResourceType, out string mySqlFlexibleServerBackupV2LongRunningBackupsApiVersion);
+            _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient = new LongRunningBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerBackupV2LongRunningBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerBackupV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, ServerBackupV2Data data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerBackupV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverBackupV2LongRunningBackupClientDiagnostics.CreateScope("ServerBackupV2Collection.CreateOrUpdate");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverBackupV2LongRunningBackupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<ServerBackupV2Resource>(new ServerBackupV2OperationSource(Client), _serverBackupV2LongRunningBackupClientDiagnostics, Pipeline, _serverBackupV2LongRunningBackupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _mySqlFlexibleServerBackupV2LongRunningBackupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(new MySqlFlexibleServerBackupV2OperationSource(Client), _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics, Pipeline, _mySqlFlexibleServerBackupV2LongRunningBackupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerBackupV2Resource> CreateOrUpdate(WaitUntil waitUntil, string backupName, ServerBackupV2Data data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerBackupV2Resource> CreateOrUpdate(WaitUntil waitUntil, string backupName, MySqlFlexibleServerBackupV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serverBackupV2LongRunningBackupClientDiagnostics.CreateScope("ServerBackupV2Collection.CreateOrUpdate");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverBackupV2LongRunningBackupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<ServerBackupV2Resource>(new ServerBackupV2OperationSource(Client), _serverBackupV2LongRunningBackupClientDiagnostics, Pipeline, _serverBackupV2LongRunningBackupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _mySqlFlexibleServerBackupV2LongRunningBackupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(new MySqlFlexibleServerBackupV2OperationSource(Client), _mySqlFlexibleServerBackupV2LongRunningBackupClientDiagnostics, Pipeline, _mySqlFlexibleServerBackupV2LongRunningBackupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<ServerBackupV2Resource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerBackupV2Resource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.Get");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.Get");
             scope.Start();
             try
             {
-                var response = await _serverBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,18 +227,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual Response<ServerBackupV2Resource> Get(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerBackupV2Resource> Get(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.Get");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.Get");
             scope.Start();
             try
             {
-                var response = _serverBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
+                var response = _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,17 +264,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerBackupV2Resource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerBackupV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerBackupV2Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServerBackupV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBackupV2LongRunningBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverBackupV2LongRunningBackupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerBackupV2Resource(Client, ServerBackupV2Data.DeserializeServerBackupV2Data(e)), _serverBackupV2LongRunningBackupsClientDiagnostics, Pipeline, "ServerBackupV2Collection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerBackupV2Resource(Client, MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(e)), _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics, Pipeline, "MySqlFlexibleServerBackupV2Collection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,17 +294,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerBackupV2Resource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerBackupV2Resource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlFlexibleServerBackupV2Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServerBackupV2Resource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBackupV2LongRunningBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverBackupV2LongRunningBackupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerBackupV2Resource(Client, ServerBackupV2Data.DeserializeServerBackupV2Data(e)), _serverBackupV2LongRunningBackupsClientDiagnostics, Pipeline, "ServerBackupV2Collection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerBackupV2Resource(Client, MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(e)), _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics, Pipeline, "MySqlFlexibleServerBackupV2Collection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.Exists");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.Exists");
             scope.Start();
             try
             {
-                var response = await _serverBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.Exists");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.Exists");
             scope.Start();
             try
             {
-                var response = _serverBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,18 +418,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ServerBackupV2Resource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MySqlFlexibleServerBackupV2Resource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.GetIfExists");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ServerBackupV2Resource>(response.GetRawResponse());
-                return Response.FromValue(new ServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServerBackupV2Resource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,18 +463,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual NullableResponse<ServerBackupV2Resource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MySqlFlexibleServerBackupV2Resource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _serverBackupV2LongRunningBackupsClientDiagnostics.CreateScope("ServerBackupV2Collection.GetIfExists");
+            using var scope = _mySqlFlexibleServerBackupV2LongRunningBackupsClientDiagnostics.CreateScope("MySqlFlexibleServerBackupV2Collection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServerBackupV2LongRunningBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ServerBackupV2Resource>(response.GetRawResponse());
-                return Response.FromValue(new ServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServerBackupV2Resource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerBackupV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        IEnumerator<ServerBackupV2Resource> IEnumerable<ServerBackupV2Resource>.GetEnumerator()
+        IEnumerator<MySqlFlexibleServerBackupV2Resource> IEnumerable<MySqlFlexibleServerBackupV2Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerBackupV2Resource> IAsyncEnumerable<ServerBackupV2Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MySqlFlexibleServerBackupV2Resource> IAsyncEnumerable<MySqlFlexibleServerBackupV2Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

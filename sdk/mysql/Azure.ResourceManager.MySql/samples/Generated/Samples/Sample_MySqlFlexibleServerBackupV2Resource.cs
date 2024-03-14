@@ -15,7 +15,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_ServerBackupV2Resource
+    public partial class Sample_MySqlFlexibleServerBackupV2Resource
     {
         // Create backup for a server
         [NUnit.Framework.Test]
@@ -30,23 +30,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerBackupV2Resource created on azure
-            // for more information of creating ServerBackupV2Resource, please refer to the document of ServerBackupV2Resource
+            // this example assumes you already have this MySqlFlexibleServerBackupV2Resource created on azure
+            // for more information of creating MySqlFlexibleServerBackupV2Resource, please refer to the document of MySqlFlexibleServerBackupV2Resource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             string backupName = "testback";
-            ResourceIdentifier serverBackupV2ResourceId = ServerBackupV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            ServerBackupV2Resource serverBackupV2 = client.GetServerBackupV2Resource(serverBackupV2ResourceId);
+            ResourceIdentifier mySqlFlexibleServerBackupV2ResourceId = MySqlFlexibleServerBackupV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
+            MySqlFlexibleServerBackupV2Resource mySqlFlexibleServerBackupV2 = client.GetMySqlFlexibleServerBackupV2Resource(mySqlFlexibleServerBackupV2ResourceId);
 
             // invoke the operation
-            ServerBackupV2Data data = new ServerBackupV2Data();
-            ArmOperation<ServerBackupV2Resource> lro = await serverBackupV2.UpdateAsync(WaitUntil.Completed, data);
-            ServerBackupV2Resource result = lro.Value;
+            MySqlFlexibleServerBackupV2Data data = new MySqlFlexibleServerBackupV2Data();
+            ArmOperation<MySqlFlexibleServerBackupV2Resource> lro = await mySqlFlexibleServerBackupV2.UpdateAsync(WaitUntil.Completed, data);
+            MySqlFlexibleServerBackupV2Resource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerBackupV2Data resourceData = result.Data;
+            MySqlFlexibleServerBackupV2Data resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServerBackupV2Resource created on azure
-            // for more information of creating ServerBackupV2Resource, please refer to the document of ServerBackupV2Resource
+            // this example assumes you already have this MySqlFlexibleServerBackupV2Resource created on azure
+            // for more information of creating MySqlFlexibleServerBackupV2Resource, please refer to the document of MySqlFlexibleServerBackupV2Resource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             string backupName = "daily_20210615T160516";
-            ResourceIdentifier serverBackupV2ResourceId = ServerBackupV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            ServerBackupV2Resource serverBackupV2 = client.GetServerBackupV2Resource(serverBackupV2ResourceId);
+            ResourceIdentifier mySqlFlexibleServerBackupV2ResourceId = MySqlFlexibleServerBackupV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
+            MySqlFlexibleServerBackupV2Resource mySqlFlexibleServerBackupV2 = client.GetMySqlFlexibleServerBackupV2Resource(mySqlFlexibleServerBackupV2ResourceId);
 
             // invoke the operation
-            ServerBackupV2Resource result = await serverBackupV2.GetAsync();
+            MySqlFlexibleServerBackupV2Resource result = await mySqlFlexibleServerBackupV2.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerBackupV2Data resourceData = result.Data;
+            MySqlFlexibleServerBackupV2Data resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

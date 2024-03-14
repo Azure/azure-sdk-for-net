@@ -34,8 +34,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         private CheckNameAvailabilityWithoutLocationRestOperations _checkNameAvailabilityWithoutLocationRestClient;
         private ClientDiagnostics _operationResultsClientDiagnostics;
         private OperationResultsRestOperations _operationResultsRestClient;
-        private ClientDiagnostics _operationProgressClientDiagnostics;
-        private OperationProgressRestOperations _operationProgressRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersSubscriptionResource"/> class for mocking. </summary>
         protected MockableMySqlFlexibleServersSubscriptionResource()
@@ -61,8 +59,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         private CheckNameAvailabilityWithoutLocationRestOperations CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OperationProgressClientDiagnostics => _operationProgressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationProgressRestOperations OperationProgressRestClient => _operationProgressRestClient ??= new OperationProgressRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -559,86 +555,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             try
             {
                 var response = OperationResultsRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationProgress/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationProgress_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationProgressResult>> GetOperationProgresAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationProgressClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.GetOperationProgres");
-            scope.Start();
-            try
-            {
-                var response = await OperationProgressRestClient.GetAsync(Id.SubscriptionId, locationName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationProgress/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationProgress_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationProgressResult> GetOperationProgres(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationProgressClientDiagnostics.CreateScope("MockableMySqlFlexibleServersSubscriptionResource.GetOperationProgres");
-            scope.Start();
-            try
-            {
-                var response = OperationProgressRestClient.Get(Id.SubscriptionId, locationName, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

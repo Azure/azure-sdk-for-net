@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceListResult"/>. </summary>
         internal MaintenanceListResult()
         {
-            Value = new ChangeTrackingList<MaintenanceData>();
+            Value = new ChangeTrackingList<MySqlFlexibleServerMaintenanceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceListResult"/>. </summary>
         /// <param name="value"> The list of maintenances in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceListResult(IReadOnlyList<MaintenanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaintenanceListResult(IReadOnlyList<MySqlFlexibleServerMaintenanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The list of maintenances in a server. </summary>
-        public IReadOnlyList<MaintenanceData> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServerMaintenanceData> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

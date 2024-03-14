@@ -16,16 +16,16 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MaintenanceData : IUtf8JsonSerializable, IJsonModel<MaintenanceData>
+    public partial class MySqlFlexibleServerMaintenanceData : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerMaintenanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerMaintenanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MaintenanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerMaintenanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        MaintenanceData IJsonModel<MaintenanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MySqlFlexibleServerMaintenanceData IJsonModel<MySqlFlexibleServerMaintenanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceData(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement, options);
         }
 
-        internal static MaintenanceData DeserializeMaintenanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MySqlFlexibleServerMaintenanceData DeserializeMySqlFlexibleServerMaintenanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            MaintenanceType? maintenanceType = default;
-            MaintenanceState? maintenanceState = default;
+            MySqlFlexibleServerMaintenanceType? maintenanceType = default;
+            MySqlFlexibleServerMaintenanceState? maintenanceState = default;
             DateTimeOffset? maintenanceStartTime = default;
             DateTimeOffset? maintenanceEndTime = default;
             DateTimeOffset? maintenanceExecutionStartTime = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             DateTimeOffset? maintenanceAvailableScheduleMaxTime = default;
             string maintenanceTitle = default;
             string maintenanceDescription = default;
-            MaintenanceProvisioningState? provisioningState = default;
+            MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            maintenanceType = new MaintenanceType(property0.Value.GetString());
+                            maintenanceType = new MySqlFlexibleServerMaintenanceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maintenanceState"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            maintenanceState = new MaintenanceState(property0.Value.GetString());
+                            maintenanceState = new MySqlFlexibleServerMaintenanceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maintenanceStartTime"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            provisioningState = new MaintenanceProvisioningState(property0.Value.GetString());
+                            provisioningState = new MySqlFlexibleServerMaintenanceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceData(
+            return new MySqlFlexibleServerMaintenanceData(
                 id,
                 name,
                 type,
@@ -316,35 +316,35 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MaintenanceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MySqlFlexibleServerMaintenanceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceData)} does not support '{options.Format}' format.");
             }
         }
 
-        MaintenanceData IPersistableModel<MaintenanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MySqlFlexibleServerMaintenanceData IPersistableModel<MySqlFlexibleServerMaintenanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMaintenanceData(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MaintenanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerMaintenanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

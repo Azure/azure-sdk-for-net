@@ -15,15 +15,15 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_ServerBackupV2Collection
+    public partial class Sample_MySqlFlexibleServerMaintenanceCollection
     {
-        // Create backup for a server
+        // Read a maintenance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateBackupForAServer()
+        public async Task Get_ReadAMaintenance()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Backups/preview/2023-10-01-preview/examples/LongRunningBackup.json
-            // this example is just showing the usage of "LongRunningBackup_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Maintenance/preview/2023-10-01-preview/examples/MaintenanceRead.json
+            // this example is just showing the usage of "Maintenances_Read" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,33 +34,31 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
-            string serverName = "mysqltestserver";
+            string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this ServerBackupV2Resource
-            ServerBackupV2Collection collection = mySqlFlexibleServer.GetServerBackupV2s();
+            // get the collection of this MySqlFlexibleServerMaintenanceResource
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
-            string backupName = "testback";
-            ServerBackupV2Data data = new ServerBackupV2Data();
-            ArmOperation<ServerBackupV2Resource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, data);
-            ServerBackupV2Resource result = lro.Value;
+            string maintenanceName = "_T9Q-TS8";
+            MySqlFlexibleServerMaintenanceResource result = await collection.GetAsync(maintenanceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerBackupV2Data resourceData = result.Data;
+            MySqlFlexibleServerMaintenanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a backup for a server
+        // Read a maintenance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetABackupForAServer()
+        public async Task Exists_ReadAMaintenance()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Backups/preview/2023-10-01-preview/examples/LongRunningBackupGet.json
-            // this example is just showing the usage of "LongRunningBackups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Maintenance/preview/2023-10-01-preview/examples/MaintenanceRead.json
+            // this example is just showing the usage of "Maintenances_Read" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -71,62 +69,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
-            string serverName = "mysqltestserver";
+            string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this ServerBackupV2Resource
-            ServerBackupV2Collection collection = mySqlFlexibleServer.GetServerBackupV2s();
+            // get the collection of this MySqlFlexibleServerMaintenanceResource
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
-            string backupName = "daily_20210615T160516";
-            ServerBackupV2Resource result = await collection.GetAsync(backupName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ServerBackupV2Data resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a backup for a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetABackupForAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Backups/preview/2023-10-01-preview/examples/LongRunningBackupGet.json
-            // this example is just showing the usage of "LongRunningBackups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "mysqltestserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
-
-            // get the collection of this ServerBackupV2Resource
-            ServerBackupV2Collection collection = mySqlFlexibleServer.GetServerBackupV2s();
-
-            // invoke the operation
-            string backupName = "daily_20210615T160516";
-            bool result = await collection.ExistsAsync(backupName);
+            string maintenanceName = "_T9Q-TS8";
+            bool result = await collection.ExistsAsync(maintenanceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a backup for a server
+        // Read a maintenance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetABackupForAServer()
+        public async Task GetIfExists_ReadAMaintenance()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Backups/preview/2023-10-01-preview/examples/LongRunningBackupGet.json
-            // this example is just showing the usage of "LongRunningBackups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Maintenance/preview/2023-10-01-preview/examples/MaintenanceRead.json
+            // this example is just showing the usage of "Maintenances_Read" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -137,17 +100,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
-            string serverName = "mysqltestserver";
+            string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this ServerBackupV2Resource
-            ServerBackupV2Collection collection = mySqlFlexibleServer.GetServerBackupV2s();
+            // get the collection of this MySqlFlexibleServerMaintenanceResource
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
-            string backupName = "daily_20210615T160516";
-            NullableResponse<ServerBackupV2Resource> response = await collection.GetIfExistsAsync(backupName);
-            ServerBackupV2Resource result = response.HasValue ? response.Value : null;
+            string maintenanceName = "_T9Q-TS8";
+            NullableResponse<MySqlFlexibleServerMaintenanceResource> response = await collection.GetIfExistsAsync(maintenanceName);
+            MySqlFlexibleServerMaintenanceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -157,19 +120,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServerBackupV2Data resourceData = result.Data;
+                MySqlFlexibleServerMaintenanceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
         }
 
-        // List backups for a server
+        // List maintenances on a server
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListBackupsForAServer()
+        public async Task GetAll_ListMaintenancesOnAServer()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Backups/preview/2023-10-01-preview/examples/LongRunningBackupsListByServer.json
-            // this example is just showing the usage of "LongRunningBackups_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/Maintenance/preview/2023-10-01-preview/examples/MaintenancesListByServer.json
+            // this example is just showing the usage of "Maintenances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -180,19 +143,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
-            string serverName = "mysqltestserver";
+            string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
-            // get the collection of this ServerBackupV2Resource
-            ServerBackupV2Collection collection = mySqlFlexibleServer.GetServerBackupV2s();
+            // get the collection of this MySqlFlexibleServerMaintenanceResource
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation and iterate over the result
-            await foreach (ServerBackupV2Resource item in collection.GetAllAsync())
+            await foreach (MySqlFlexibleServerMaintenanceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServerBackupV2Data resourceData = item.Data;
+                MySqlFlexibleServerMaintenanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

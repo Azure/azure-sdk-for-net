@@ -14,10 +14,10 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the Maintenance data model.
+    /// A class representing the MySqlFlexibleServerMaintenance data model.
     /// Represents a maintenance.
     /// </summary>
-    public partial class MaintenanceData : ResourceData
+    public partial class MySqlFlexibleServerMaintenanceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceData"/>. </summary>
-        public MaintenanceData()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
+        public MySqlFlexibleServerMaintenanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="maintenanceDescription"> The maintenance description. </param>
         /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceType? maintenanceType, MaintenanceState? maintenanceState, DateTimeOffset? maintenanceStartOn, DateTimeOffset? maintenanceEndOn, DateTimeOffset? maintenanceExecutionStartOn, DateTimeOffset? maintenanceExecutionEndOn, DateTimeOffset? maintenanceAvailableScheduleMinOn, DateTimeOffset? maintenanceAvailableScheduleMaxOn, string maintenanceTitle, string maintenanceDescription, MaintenanceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerMaintenanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlFlexibleServerMaintenanceType? maintenanceType, MySqlFlexibleServerMaintenanceState? maintenanceState, DateTimeOffset? maintenanceStartOn, DateTimeOffset? maintenanceEndOn, DateTimeOffset? maintenanceExecutionStartOn, DateTimeOffset? maintenanceExecutionEndOn, DateTimeOffset? maintenanceAvailableScheduleMinOn, DateTimeOffset? maintenanceAvailableScheduleMaxOn, string maintenanceTitle, string maintenanceDescription, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MaintenanceType = maintenanceType;
             MaintenanceState = maintenanceState;
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> A string defines maintenance type. </summary>
-        public MaintenanceType? MaintenanceType { get; }
+        public MySqlFlexibleServerMaintenanceType? MaintenanceType { get; }
         /// <summary> A string describes the maintenance status. </summary>
-        public MaintenanceState? MaintenanceState { get; }
+        public MySqlFlexibleServerMaintenanceState? MaintenanceState { get; }
         /// <summary> The start time for a maintenance. </summary>
         public DateTimeOffset? MaintenanceStartOn { get; set; }
         /// <summary> The end time for a maintenance. </summary>
@@ -110,6 +110,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> The maintenance description. </summary>
         public string MaintenanceDescription { get; }
         /// <summary> Provisioning state of the Maintenance. </summary>
-        public MaintenanceProvisioningState? ProvisioningState { get; }
+        public MySqlFlexibleServerMaintenanceProvisioningState? ProvisioningState { get; }
     }
 }

@@ -14,10 +14,10 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the ServerBackupV2 data model.
+    /// A class representing the MySqlFlexibleServerBackupV2 data model.
     /// Server backup properties
     /// </summary>
-    public partial class ServerBackupV2Data : ResourceData
+    public partial class MySqlFlexibleServerBackupV2Data : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerBackupV2Data"/>. </summary>
-        public ServerBackupV2Data()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupV2Data"/>. </summary>
+        public MySqlFlexibleServerBackupV2Data()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerBackupV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="source"> Backup source. </param>
         /// <param name="provisioningState"> The provisioning state of backup resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupNameV2, BackupType? backupType, DateTimeOffset? completedOn, string source, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupNameV2, MySqlFlexibleServerBackupType? backupType, DateTimeOffset? completedOn, string source, MySqlFlexibleServerBackupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupNameV2 = backupNameV2;
             BackupType = backupType;
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Backup name. </summary>
         public string BackupNameV2 { get; set; }
         /// <summary> Gets or sets the backup type. </summary>
-        public BackupType? BackupType { get; set; }
+        public MySqlFlexibleServerBackupType? BackupType { get; set; }
         /// <summary> Backup completed time (ISO8601 format). </summary>
         public DateTimeOffset? CompletedOn { get; set; }
         /// <summary> Backup source. </summary>
         public string Source { get; set; }
         /// <summary> The provisioning state of backup resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MySqlFlexibleServerBackupProvisioningState? ProvisioningState { get; }
     }
 }

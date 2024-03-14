@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerBackupV2Data>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerBackupV2Data>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        ServerBackupV2Data value = default;
+                        MySqlFlexibleServerBackupV2Data value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerBackupV2Data.DeserializeServerBackupV2Data(document.RootElement);
+                        value = MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerBackupV2Data)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerBackupV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerBackupV2Data> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerBackupV2Data> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        ServerBackupV2Data value = default;
+                        MySqlFlexibleServerBackupV2Data value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerBackupV2Data.DeserializeServerBackupV2Data(document.RootElement);
+                        value = MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerBackupV2Data)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerBackupV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

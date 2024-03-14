@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetMySqlFlexibleServerBackups().Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerBackupV2Resources in the MySqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of ServerBackupV2Resources and their operations over a ServerBackupV2Resource. </returns>
-        public virtual ServerBackupV2Collection GetServerBackupV2s()
+        /// <summary> Gets a collection of MySqlFlexibleServerBackupV2Resources in the MySqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServerBackupV2Resources and their operations over a MySqlFlexibleServerBackupV2Resource. </returns>
+        public virtual MySqlFlexibleServerBackupV2Collection GetMySqlFlexibleServerBackupV2s()
         {
-            return GetCachedClient(client => new ServerBackupV2Collection(client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerBackupV2Collection(client, Id));
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerBackupV2Resource>> GetServerBackupV2Async(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerBackupV2Resource>> GetMySqlFlexibleServerBackupV2Async(string backupName, CancellationToken cancellationToken = default)
         {
-            return await GetServerBackupV2s().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetMySqlFlexibleServerBackupV2s().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerBackupV2Resource"/></description>
+        /// <description><see cref="MySqlFlexibleServerBackupV2Resource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerBackupV2Resource> GetServerBackupV2(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerBackupV2Resource> GetMySqlFlexibleServerBackupV2(string backupName, CancellationToken cancellationToken = default)
         {
-            return GetServerBackupV2s().Get(backupName, cancellationToken);
+            return GetMySqlFlexibleServerBackupV2s().Get(backupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MySqlFlexibleServerConfigurationResources in the MySqlFlexibleServer. </summary>
@@ -586,11 +586,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceResources in the MySqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of MaintenanceResources and their operations over a MaintenanceResource. </returns>
-        public virtual MaintenanceCollection GetMaintenances()
+        /// <summary> Gets a collection of MySqlFlexibleServerMaintenanceResources in the MySqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of MySqlFlexibleServerMaintenanceResources and their operations over a MySqlFlexibleServerMaintenanceResource. </returns>
+        public virtual MySqlFlexibleServerMaintenanceCollection GetMySqlFlexibleServerMaintenances()
         {
-            return GetCachedClient(client => new MaintenanceCollection(client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerMaintenanceCollection(client, Id));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -619,9 +619,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceResource>> GetMaintenanceAsync(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerMaintenanceResource>> GetMySqlFlexibleServerMaintenanceAsync(string maintenanceName, CancellationToken cancellationToken = default)
         {
-            return await GetMaintenances().GetAsync(maintenanceName, cancellationToken).ConfigureAwait(false);
+            return await GetMySqlFlexibleServerMaintenances().GetAsync(maintenanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -650,9 +650,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceResource> GetMaintenance(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerMaintenanceResource> GetMySqlFlexibleServerMaintenance(string maintenanceName, CancellationToken cancellationToken = default)
         {
-            return GetMaintenances().Get(maintenanceName, cancellationToken);
+            return GetMySqlFlexibleServerMaintenances().Get(maintenanceName, cancellationToken);
         }
 
         /// <summary>

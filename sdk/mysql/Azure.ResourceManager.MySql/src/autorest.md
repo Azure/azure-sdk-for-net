@@ -243,6 +243,7 @@ rename-mapping:
   Database: MySqlFlexibleServerDatabase
   FirewallRule: MySqlFlexibleServerFirewallRule
   ServerBackup: MySqlFlexibleServerBackup
+  ServerBackupV2: MySqlFlexibleServerBackupV2
   Server: MySqlFlexibleServer
   ServerVersion: MySqlFlexibleServerVersion
   EnableStatusEnum: MySqlFlexibleServerEnableStatusEnum
@@ -306,6 +307,12 @@ rename-mapping:
   ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
   ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
   ValidateBackupResponse: MySqlFlexibleServerValidateBackupResult
+  Maintenance: MySqlFlexibleServerMaintenance
+  MaintenanceType: MySqlFlexibleServerMaintenanceType
+  MaintenanceState: MySqlFlexibleServerMaintenanceState
+  MaintenanceProvisioningState: MySqlFlexibleServerMaintenanceProvisioningState
+  BackupType: MySqlFlexibleServerBackupType
+  ProvisioningState: MySqlFlexibleServerBackupProvisioningState
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
@@ -314,6 +321,7 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
+  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >

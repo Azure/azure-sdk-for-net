@@ -16,16 +16,16 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class ServerBackupV2Data : IUtf8JsonSerializable, IJsonModel<ServerBackupV2Data>
+    public partial class MySqlFlexibleServerBackupV2Data : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupV2Data>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerBackupV2Data>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupV2Data>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ServerBackupV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerBackupV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerBackupV2Data)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupV2Data)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        ServerBackupV2Data IJsonModel<ServerBackupV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MySqlFlexibleServerBackupV2Data IJsonModel<MySqlFlexibleServerBackupV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerBackupV2Data)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupV2Data)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServerBackupV2Data(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement, options);
         }
 
-        internal static ServerBackupV2Data DeserializeServerBackupV2Data(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MySqlFlexibleServerBackupV2Data DeserializeMySqlFlexibleServerBackupV2Data(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceType type = default;
             SystemData systemData = default;
             string backupNameV2 = default;
-            BackupType? backupType = default;
+            MySqlFlexibleServerBackupType? backupType = default;
             DateTimeOffset? completedTime = default;
             string source = default;
-            ProvisioningState? provisioningState = default;
+            MySqlFlexibleServerBackupProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            backupType = new BackupType(property0.Value.GetString());
+                            backupType = new MySqlFlexibleServerBackupType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("completedTime"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MySqlFlexibleServerBackupProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerBackupV2Data(
+            return new MySqlFlexibleServerBackupV2Data(
                 id,
                 name,
                 type,
@@ -220,35 +220,35 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServerBackupV2Data>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MySqlFlexibleServerBackupV2Data>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerBackupV2Data)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupV2Data)} does not support '{options.Format}' format.");
             }
         }
 
-        ServerBackupV2Data IPersistableModel<ServerBackupV2Data>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MySqlFlexibleServerBackupV2Data IPersistableModel<MySqlFlexibleServerBackupV2Data>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupV2Data>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServerBackupV2Data(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerBackupV2Data)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupV2Data)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServerBackupV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerBackupV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

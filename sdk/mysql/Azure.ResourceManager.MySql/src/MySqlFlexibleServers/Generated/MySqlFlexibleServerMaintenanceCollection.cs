@@ -21,28 +21,28 @@ using Azure.ResourceManager.MySql;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenanceResource"/> and their operations.
-    /// Each <see cref="MaintenanceResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get a <see cref="MaintenanceCollection"/> instance call the GetMaintenances method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerMaintenanceResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerMaintenanceResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerMaintenanceCollection"/> instance call the GetMySqlFlexibleServerMaintenances method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
-    public partial class MaintenanceCollection : ArmCollection, IEnumerable<MaintenanceResource>, IAsyncEnumerable<MaintenanceResource>
+    public partial class MySqlFlexibleServerMaintenanceCollection : ArmCollection, IEnumerable<MySqlFlexibleServerMaintenanceResource>, IAsyncEnumerable<MySqlFlexibleServerMaintenanceResource>
     {
-        private readonly ClientDiagnostics _maintenanceClientDiagnostics;
-        private readonly MaintenancesRestOperations _maintenanceRestClient;
+        private readonly ClientDiagnostics _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics;
+        private readonly MaintenancesRestOperations _mySqlFlexibleServerMaintenanceMaintenancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceCollection"/> class for mocking. </summary>
-        protected MaintenanceCollection()
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerMaintenanceCollection"/> class for mocking. </summary>
+        protected MySqlFlexibleServerMaintenanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerMaintenanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MaintenanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MySqlFlexibleServerMaintenanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _maintenanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MaintenanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MaintenanceResource.ResourceType, out string maintenanceApiVersion);
-            _maintenanceRestClient = new MaintenancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceApiVersion);
+            _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerMaintenanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MySqlFlexibleServerMaintenanceResource.ResourceType, out string mySqlFlexibleServerMaintenanceMaintenancesApiVersion);
+            _mySqlFlexibleServerMaintenanceMaintenancesRestClient = new MaintenancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerMaintenanceMaintenancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,18 +79,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceResource>> GetAsync(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlFlexibleServerMaintenanceResource>> GetAsync(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.Get");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _maintenanceRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerMaintenanceMaintenancesRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
-        public virtual Response<MaintenanceResource> Get(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlFlexibleServerMaintenanceResource> Get(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.Get");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _maintenanceRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken);
+                var response = _mySqlFlexibleServerMaintenanceMaintenancesRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerMaintenanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServerMaintenanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _maintenanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MaintenanceResource(Client, MaintenanceData.DeserializeMaintenanceData(e)), _maintenanceClientDiagnostics, Pipeline, "MaintenanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerMaintenanceResource(Client, MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(e)), _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics, Pipeline, "MySqlFlexibleServerMaintenanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,17 +191,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlFlexibleServerMaintenanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServerMaintenanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _maintenanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MaintenanceResource(Client, MaintenanceData.DeserializeMaintenanceData(e)), _maintenanceClientDiagnostics, Pipeline, "MaintenanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerMaintenanceMaintenancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerMaintenanceResource(Client, MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(e)), _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics, Pipeline, "MySqlFlexibleServerMaintenanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.Exists");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _maintenanceRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerMaintenanceMaintenancesRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.Exists");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _maintenanceRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServerMaintenanceMaintenancesRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
-        public virtual async Task<NullableResponse<MaintenanceResource>> GetIfExistsAsync(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MySqlFlexibleServerMaintenanceResource>> GetIfExistsAsync(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.GetIfExists");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _maintenanceRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mySqlFlexibleServerMaintenanceMaintenancesRestClient.ReadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MaintenanceResource>(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServerMaintenanceResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MaintenanceResource"/></description>
+        /// <description><see cref="MySqlFlexibleServerMaintenanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,18 +360,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceName"/> is null. </exception>
-        public virtual NullableResponse<MaintenanceResource> GetIfExists(string maintenanceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MySqlFlexibleServerMaintenanceResource> GetIfExists(string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceName, nameof(maintenanceName));
 
-            using var scope = _maintenanceClientDiagnostics.CreateScope("MaintenanceCollection.GetIfExists");
+            using var scope = _mySqlFlexibleServerMaintenanceMaintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _maintenanceRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken);
+                var response = _mySqlFlexibleServerMaintenanceMaintenancesRestClient.Read(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maintenanceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MaintenanceResource>(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<MySqlFlexibleServerMaintenanceResource>(response.GetRawResponse());
+                return Response.FromValue(new MySqlFlexibleServerMaintenanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
-        IEnumerator<MaintenanceResource> IEnumerable<MaintenanceResource>.GetEnumerator()
+        IEnumerator<MySqlFlexibleServerMaintenanceResource> IEnumerable<MySqlFlexibleServerMaintenanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MaintenanceResource> IAsyncEnumerable<MaintenanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MySqlFlexibleServerMaintenanceResource> IAsyncEnumerable<MySqlFlexibleServerMaintenanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents a maintenance update parameter. </summary>
-    public partial class MaintenancePatch
+    public partial class MySqlFlexibleServerMaintenancePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenancePatch"/>. </summary>
-        public MaintenancePatch()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenancePatch"/>. </summary>
+        public MySqlFlexibleServerMaintenancePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenancePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenancePatch"/>. </summary>
         /// <param name="maintenanceStartOn"> The start time for a maintenance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenancePatch(DateTimeOffset? maintenanceStartOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerMaintenancePatch(DateTimeOffset? maintenanceStartOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaintenanceStartOn = maintenanceStartOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MaintenanceData> value = default;
+            IReadOnlyList<MySqlFlexibleServerMaintenanceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MaintenanceData> array = new List<MaintenanceData>();
+                    List<MySqlFlexibleServerMaintenanceData> array = new List<MySqlFlexibleServerMaintenanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceData.DeserializeMaintenanceData(item, options));
+                        array.Add(MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceListResult(value ?? new ChangeTrackingList<MaintenanceData>(), nextLink, serializedAdditionalRawData);
+            return new MaintenanceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerMaintenanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceListResult>.Write(ModelReaderWriterOptions options)

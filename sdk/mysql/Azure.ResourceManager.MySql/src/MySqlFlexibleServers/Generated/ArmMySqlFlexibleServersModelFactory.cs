@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerValidateBackupResult(numberOfContainers, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.ServerBackupV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
         /// <param name="source"> Backup source. </param>
         /// <param name="provisioningState"> The provisioning state of backup resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.ServerBackupV2Data"/> instance for mocking. </returns>
-        public static ServerBackupV2Data ServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, BackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
         {
-            return new ServerBackupV2Data(
+            return new MySqlFlexibleServerBackupV2Data(
                 id,
                 name,
                 resourceType,
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MaintenanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -693,10 +693,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maintenanceTitle"> The maintenance title. </param>
         /// <param name="maintenanceDescription"> The maintenance description. </param>
         /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
-        /// <returns> A new <see cref="FlexibleServers.MaintenanceData"/> instance for mocking. </returns>
-        public static MaintenanceData MaintenanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MaintenanceType? maintenanceType = null, MaintenanceState? maintenanceState = null, DateTimeOffset? maintenanceStartOn = null, DateTimeOffset? maintenanceEndOn = null, DateTimeOffset? maintenanceExecutionStartOn = null, DateTimeOffset? maintenanceExecutionEndOn = null, DateTimeOffset? maintenanceAvailableScheduleMinOn = null, DateTimeOffset? maintenanceAvailableScheduleMaxOn = null, string maintenanceTitle = null, string maintenanceDescription = null, MaintenanceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerMaintenanceData MySqlFlexibleServerMaintenanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerMaintenanceType? maintenanceType = null, MySqlFlexibleServerMaintenanceState? maintenanceState = null, DateTimeOffset? maintenanceStartOn = null, DateTimeOffset? maintenanceEndOn = null, DateTimeOffset? maintenanceExecutionStartOn = null, DateTimeOffset? maintenanceExecutionEndOn = null, DateTimeOffset? maintenanceAvailableScheduleMinOn = null, DateTimeOffset? maintenanceAvailableScheduleMaxOn = null, string maintenanceTitle = null, string maintenanceDescription = null, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = null)
         {
-            return new MaintenanceData(
+            return new MySqlFlexibleServerMaintenanceData(
                 id,
                 name,
                 resourceType,

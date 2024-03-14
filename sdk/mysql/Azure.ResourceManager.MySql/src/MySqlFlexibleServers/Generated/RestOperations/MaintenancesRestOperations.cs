@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceData>> ReadAsync(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerMaintenanceData>> ReadAsync(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MaintenanceData value = default;
+                        MySqlFlexibleServerMaintenanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceData.DeserializeMaintenanceData(document.RootElement);
+                        value = MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerMaintenanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceData> Read(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerMaintenanceData> Read(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -114,19 +114,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MaintenanceData value = default;
+                        MySqlFlexibleServerMaintenanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceData.DeserializeMaintenanceData(document.RootElement);
+                        value = MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServerMaintenanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MaintenancePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MySqlFlexibleServerMaintenancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="maintenanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MaintenancePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="maintenanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="maintenanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MaintenancePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
