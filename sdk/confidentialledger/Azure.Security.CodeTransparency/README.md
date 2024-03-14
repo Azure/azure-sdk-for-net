@@ -41,7 +41,7 @@ Before submitting the cose file, the service must be configured with the relevan
 
 To submit the signature, use the following code:
 
-```C# Snippet:CodeTransparencySample0_Submission
+```C# Snippet:CodeTransparencySubmission
 CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
@@ -54,7 +54,7 @@ BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
 
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
-```C# Snippet:CodeTransparencySample0_Verification
+```C# Snippet:CodeTransparencyVerification
 CcfReceiptVerifier.RunVerification(signatureWithReceipt.ToArray());
 ```
 
