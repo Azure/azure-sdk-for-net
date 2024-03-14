@@ -17,6 +17,7 @@ using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
+using Azure.Provisioning.ApplicationInsights;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
@@ -428,6 +429,17 @@ namespace Azure.Provisioning.Tests
             signalR.AssignRole(RoleDefinition.SignalRAppServer, Guid.Empty);
 
             signalR.AddOutput("hostName", data => data.HostName);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task AppInsights()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            _ = new ApplicationInsightsComponent(infrastructure);
+
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
