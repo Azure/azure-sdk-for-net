@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Developer.DevCenter
 {
     public partial class DevCenterClient
-    {
+    { 
         private readonly DevCenterClientOptions _options;
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
@@ -18,14 +18,8 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DevCenterClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             _options = options ?? new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(_options, true);
