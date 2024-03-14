@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (IsPrimarySideScript.HasValue)
+            if (Optional.IsDefined(IsPrimarySideScript))
             {
                 writer.WritePropertyName("isPrimarySideScript"u8);
                 writer.WriteBooleanValue(IsPrimarySideScript.Value);

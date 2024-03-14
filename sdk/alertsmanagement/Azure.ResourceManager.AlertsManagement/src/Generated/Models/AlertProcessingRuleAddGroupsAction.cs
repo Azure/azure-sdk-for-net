@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupIds"/> is null. </exception>
         public AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds)
         {
-            if (actionGroupIds == null)
-            {
-                throw new ArgumentNullException(nameof(actionGroupIds));
-            }
+            Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
 
             ActionGroupIds = actionGroupIds.ToList();
             ActionType = AlertProcessingRuleActionType.AddActionGroups;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
             writer.WriteStringValue(MatchingMethod.ToString());
-            if (!(GroupByEntities is ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupByEntities))
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(GroupByAlertDetails is ChangeTrackingList<SecurityInsightsAlertDetail> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupByAlertDetails))
             {
                 writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(GroupByCustomDetails is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupByCustomDetails))
             {
                 writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();

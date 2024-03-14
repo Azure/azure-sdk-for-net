@@ -296,10 +296,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AutomationRunbookResource>> UpdateAsync(AutomationRunbookPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.Update");
             scope.Start();
@@ -341,10 +338,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AutomationRunbookResource> Update(AutomationRunbookPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.Update");
             scope.Start();
@@ -747,14 +741,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual async Task<Response<AutomationJobStream>> GetTestJobStreamAsync(string jobStreamId, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStream");
             scope.Start();
@@ -793,14 +780,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual Response<AutomationJobStream> GetTestJobStream(string jobStreamId, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStream");
             scope.Start();
@@ -892,10 +872,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RunbookTestJob>> CreateTestJobAsync(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
             scope.Start();
@@ -933,10 +910,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RunbookTestJob> CreateTestJob(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
             scope.Start();
@@ -1251,14 +1225,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AutomationRunbookResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.AddTag");
             scope.Start();
@@ -1319,14 +1287,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AutomationRunbookResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.AddTag");
             scope.Start();
@@ -1386,10 +1348,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AutomationRunbookResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.SetTags");
             scope.Start();
@@ -1446,10 +1405,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AutomationRunbookResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.SetTags");
             scope.Start();
@@ -1506,10 +1462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AutomationRunbookResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.RemoveTag");
             scope.Start();
@@ -1569,10 +1522,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AutomationRunbookResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.RemoveTag");
             scope.Start();

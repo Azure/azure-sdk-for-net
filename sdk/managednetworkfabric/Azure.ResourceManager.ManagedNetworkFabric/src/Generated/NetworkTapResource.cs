@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkTapResource>> UpdateAsync(WaitUntil waitUntil, NetworkTapPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkTapResource> Update(WaitUntil waitUntil, NetworkTapPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.Update");
             scope.Start();
@@ -381,10 +375,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeState");
             scope.Start();
@@ -430,10 +421,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeState");
             scope.Start();
@@ -563,14 +551,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkTapResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.AddTag");
             scope.Start();
@@ -631,14 +613,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkTapResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.AddTag");
             scope.Start();
@@ -698,10 +674,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkTapResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.SetTags");
             scope.Start();
@@ -758,10 +731,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkTapResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.SetTags");
             scope.Start();
@@ -818,10 +788,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkTapResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.RemoveTag");
             scope.Start();
@@ -881,10 +848,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkTapResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.RemoveTag");
             scope.Start();

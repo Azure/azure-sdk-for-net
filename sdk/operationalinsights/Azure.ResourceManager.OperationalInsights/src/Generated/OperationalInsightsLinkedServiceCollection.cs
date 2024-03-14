@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsLinkedServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServiceName, OperationalInsightsLinkedServiceData data, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsLinkedServiceResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServiceName, OperationalInsightsLinkedServiceData data, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsLinkedServiceResource>> GetAsync(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual Response<OperationalInsightsLinkedServiceResource> Get(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<OperationalInsightsLinkedServiceResource>> GetIfExistsAsync(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual NullableResponse<OperationalInsightsLinkedServiceResource> GetIfExists(string linkedServiceName, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics.CreateScope("OperationalInsightsLinkedServiceCollection.GetIfExists");
             scope.Start();

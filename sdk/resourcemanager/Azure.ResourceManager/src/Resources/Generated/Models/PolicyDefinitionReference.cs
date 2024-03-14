@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
         {
-            if (policyDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionId));
-            }
+            Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
 
             PolicyDefinitionId = policyDefinitionId;
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameterValue>();

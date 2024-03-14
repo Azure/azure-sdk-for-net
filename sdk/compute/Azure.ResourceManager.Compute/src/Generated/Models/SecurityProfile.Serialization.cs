@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (UefiSettings != null)
+            if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (EncryptionAtHost.HasValue)
+            if (Optional.IsDefined(EncryptionAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (SecurityType.HasValue)
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (EncryptionIdentity != null)
+            if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
             }
-            if (ProxyAgentSettings != null)
+            if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
                 writer.WriteObjectValue(ProxyAgentSettings);

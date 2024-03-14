@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<HybridComputeExtensionValueResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.Get");
             scope.Start();
@@ -144,14 +137,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<HybridComputeExtensionValueResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.Get");
             scope.Start();
@@ -254,14 +240,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.Exists");
             scope.Start();
@@ -304,14 +283,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.Exists");
             scope.Start();
@@ -354,14 +326,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridComputeExtensionValueResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.GetIfExists");
             scope.Start();
@@ -406,14 +371,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual NullableResponse<HybridComputeExtensionValueResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueCollection.GetIfExists");
             scope.Start();

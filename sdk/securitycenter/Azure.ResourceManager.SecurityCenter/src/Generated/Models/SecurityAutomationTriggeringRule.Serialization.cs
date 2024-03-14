@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (PropertyJPath != null)
+            if (Optional.IsDefined(PropertyJPath))
             {
                 writer.WritePropertyName("propertyJPath"u8);
                 writer.WriteStringValue(PropertyJPath);
             }
-            if (PropertyType.HasValue)
+            if (Optional.IsDefined(PropertyType))
             {
                 writer.WritePropertyName("propertyType"u8);
                 writer.WriteStringValue(PropertyType.Value.ToString());
             }
-            if (ExpectedValue != null)
+            if (Optional.IsDefined(ExpectedValue))
             {
                 writer.WritePropertyName("expectedValue"u8);
                 writer.WriteStringValue(ExpectedValue);
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,34 +38,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ScheduledType.HasValue)
+            if (Optional.IsDefined(ScheduledType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduledType.Value.ToString());
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

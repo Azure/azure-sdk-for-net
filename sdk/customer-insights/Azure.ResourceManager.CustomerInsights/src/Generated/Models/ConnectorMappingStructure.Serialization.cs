@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PropertyName);
             writer.WritePropertyName("columnName"u8);
             writer.WriteStringValue(ColumnName);
-            if (CustomFormatSpecifier != null)
+            if (Optional.IsDefined(CustomFormatSpecifier))
             {
                 writer.WritePropertyName("customFormatSpecifier"u8);
                 writer.WriteStringValue(CustomFormatSpecifier);
             }
-            if (IsEncrypted.HasValue)
+            if (Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);

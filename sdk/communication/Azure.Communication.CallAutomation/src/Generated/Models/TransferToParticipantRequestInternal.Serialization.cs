@@ -17,25 +17,30 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (CustomCallingContext != null)
+            if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
                 writer.WriteObjectValue(CustomCallingContext);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Transferee != null)
+            if (Optional.IsDefined(Transferee))
             {
                 writer.WritePropertyName("transferee"u8);
                 writer.WriteObjectValue(Transferee);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
+            }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
             }
             writer.WriteEndObject();
         }

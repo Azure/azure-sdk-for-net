@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (!(Config is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Identity != null)
+            if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);

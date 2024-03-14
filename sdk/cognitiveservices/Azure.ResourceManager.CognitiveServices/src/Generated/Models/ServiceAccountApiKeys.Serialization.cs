@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Key1 != null)
+            if (Optional.IsDefined(Key1))
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1);
             }
-            if (Key2 != null)
+            if (Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);

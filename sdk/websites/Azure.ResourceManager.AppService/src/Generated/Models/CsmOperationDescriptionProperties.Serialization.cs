@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceSpecification != null)
+            if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
                 writer.WriteObjectValue(ServiceSpecification);

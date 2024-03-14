@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (QuoteAllText != null)
+            if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 JsonSerializer.Serialize(writer, QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             JsonSerializer.Serialize(writer, FileExtension);
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);

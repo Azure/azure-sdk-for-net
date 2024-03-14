@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (DataDirPath != null)
+            if (Optional.IsDefined(DataDirPath))
             {
                 writer.WritePropertyName("dataDirPath"u8);
                 writer.WriteStringValue(DataDirPath);

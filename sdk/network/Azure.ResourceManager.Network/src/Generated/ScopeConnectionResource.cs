@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScopeConnectionResource>> UpdateAsync(WaitUntil waitUntil, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScopeConnectionResource> Update(WaitUntil waitUntil, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionResource.Update");
             scope.Start();

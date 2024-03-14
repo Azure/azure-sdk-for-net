@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (MonitorWorkspaceResourceId != null)
+            if (Optional.IsDefined(MonitorWorkspaceResourceId))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);

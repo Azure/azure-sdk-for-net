@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyKey != null)
+            if (Optional.IsDefined(PolicyKey))
             {
                 writer.WritePropertyName("policyKey"u8);
                 writer.WriteStringValue(PolicyKey);

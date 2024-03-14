@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();

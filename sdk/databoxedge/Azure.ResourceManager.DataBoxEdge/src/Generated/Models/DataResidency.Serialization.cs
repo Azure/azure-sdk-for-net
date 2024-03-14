@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (ResidencyType.HasValue)
+            if (Optional.IsDefined(ResidencyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResidencyType.Value.ToString());

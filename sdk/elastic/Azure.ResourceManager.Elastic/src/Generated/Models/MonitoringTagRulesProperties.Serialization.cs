@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);

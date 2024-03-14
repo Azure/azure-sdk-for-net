@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);

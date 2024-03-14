@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceHealthStatus.HasValue)
+            if (Optional.IsDefined(ResourceHealthStatus))
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (!(ResourceHealthDetails is ChangeTrackingList<ResourceHealthDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceHealthDetails))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();

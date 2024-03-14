@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (RebootSetting.HasValue)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (BypassPlatformSafetyChecksOnUserSchedule.HasValue)
+            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
             {
                 writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
                 writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);

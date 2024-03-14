@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (InventoryItemName != null)
+            if (Optional.IsDefined(InventoryItemName))
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);

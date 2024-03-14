@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Problem != null)
+            if (Optional.IsDefined(Problem))
             {
                 writer.WritePropertyName("problem"u8);
                 writer.WriteStringValue(Problem);
             }
-            if (Solution != null)
+            if (Optional.IsDefined(Solution))
             {
                 writer.WritePropertyName("solution"u8);
                 writer.WriteStringValue(Solution);

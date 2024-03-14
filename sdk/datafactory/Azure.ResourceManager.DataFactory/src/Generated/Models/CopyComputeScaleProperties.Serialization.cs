@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (DataIntegrationUnit.HasValue)
+            if (Optional.IsDefined(DataIntegrationUnit))
             {
                 writer.WritePropertyName("dataIntegrationUnit"u8);
                 writer.WriteNumberValue(DataIntegrationUnit.Value);
             }
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);

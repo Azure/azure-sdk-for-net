@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -17,17 +18,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (SystemData != null)
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

@@ -18,14 +18,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="source"/> is null. </exception>
         public TimeSeriesHierarchy(string name, TimeSeriesHierarchySource source)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(source, nameof(source));
 
             Name = name;
             Source = source;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -58,14 +59,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceId"/> is null. </exception>
         public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
         {
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
-            if (metricResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(metricResourceId));
-            }
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(metricResourceId, nameof(metricResourceId));
 
             MetricName = metricName;
             MetricResourceId = metricResourceId;

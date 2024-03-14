@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (QuotaChangeRequestSubType != null)
+            if (Optional.IsDefined(QuotaChangeRequestSubType))
             {
                 writer.WritePropertyName("quotaChangeRequestSubType"u8);
                 writer.WriteStringValue(QuotaChangeRequestSubType);
             }
-            if (QuotaChangeRequestVersion != null)
+            if (Optional.IsDefined(QuotaChangeRequestVersion))
             {
                 writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
-            if (!(QuotaChangeRequests is ChangeTrackingList<SupportQuotaChangeContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QuotaChangeRequests))
             {
                 writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();

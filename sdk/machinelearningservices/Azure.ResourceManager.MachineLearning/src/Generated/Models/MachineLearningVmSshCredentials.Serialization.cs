@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (PublicKeyData != null)
+            if (Optional.IsDefined(PublicKeyData))
             {
                 writer.WritePropertyName("publicKeyData"u8);
                 writer.WriteStringValue(PublicKeyData);
             }
-            if (PrivateKeyData != null)
+            if (Optional.IsDefined(PrivateKeyData))
             {
                 writer.WritePropertyName("privateKeyData"u8);
                 writer.WriteStringValue(PrivateKeyData);

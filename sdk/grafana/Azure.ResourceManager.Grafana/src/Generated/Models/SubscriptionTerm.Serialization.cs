@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (TermUnit != null)
+            if (Optional.IsDefined(TermUnit))
             {
                 writer.WritePropertyName("termUnit"u8);
                 writer.WriteStringValue(TermUnit);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");

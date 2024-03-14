@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tables is ChangeTrackingList<SyncGroupSchemaTable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MasterSyncMemberName != null)
+            if (Optional.IsDefined(MasterSyncMemberName))
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Authorization != null)
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (AutoDiscovery.HasValue)
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (!(TopLevelInventoryList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TopLevelInventoryList))
             {
                 writer.WritePropertyName("topLevelInventoryList"u8);
                 writer.WriteStartArray();

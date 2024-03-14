@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,72 +27,72 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && DurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Databases != null)
+            if (Optional.IsDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && DatabaseSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseSummary))
             {
                 writer.WritePropertyName("databaseSummary"u8);
                 writer.WriteStringValue(DatabaseSummary);
             }
-            if (MigrationReportResult != null)
+            if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
                 writer.WriteObjectValue(MigrationReportResult);
             }
-            if (options.Format != "W" && SourceServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && SourceServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && TargetServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && TargetServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastStorageUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
                 writer.WriteStringValue(LastStorageUpdate.Value, "O");
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

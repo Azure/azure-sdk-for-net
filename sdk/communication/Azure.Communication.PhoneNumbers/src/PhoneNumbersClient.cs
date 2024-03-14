@@ -748,10 +748,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }
@@ -805,10 +801,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }

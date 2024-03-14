@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (GroupName != null)
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mediaLink"/> is null. </exception>
         public UserArtifactSource(string mediaLink)
         {
-            if (mediaLink == null)
-            {
-                throw new ArgumentNullException(nameof(mediaLink));
-            }
+            Argument.AssertNotNull(mediaLink, nameof(mediaLink));
 
             MediaLink = mediaLink;
         }

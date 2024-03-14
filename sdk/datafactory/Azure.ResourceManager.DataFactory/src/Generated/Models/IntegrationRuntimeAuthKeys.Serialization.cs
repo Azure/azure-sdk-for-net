@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (AuthKey1 != null)
+            if (Optional.IsDefined(AuthKey1))
             {
                 writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
-            if (AuthKey2 != null)
+            if (Optional.IsDefined(AuthKey2))
             {
                 writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);

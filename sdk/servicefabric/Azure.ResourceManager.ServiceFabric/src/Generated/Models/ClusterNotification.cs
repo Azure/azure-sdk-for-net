@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -54,10 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="notificationTargets"/> is null. </exception>
         public ClusterNotification(bool isEnabled, ClusterNotificationCategory notificationCategory, ClusterNotificationLevel notificationLevel, IEnumerable<ClusterNotificationTarget> notificationTargets)
         {
-            if (notificationTargets == null)
-            {
-                throw new ArgumentNullException(nameof(notificationTargets));
-            }
+            Argument.AssertNotNull(notificationTargets, nameof(notificationTargets));
 
             IsEnabled = isEnabled;
             NotificationCategory = notificationCategory;

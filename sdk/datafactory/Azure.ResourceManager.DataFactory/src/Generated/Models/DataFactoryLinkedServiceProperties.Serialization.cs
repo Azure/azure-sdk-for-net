@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -159,6 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FtpServer": return FtpServerLinkedService.DeserializeFtpServerLinkedService(element, options);
                     case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element, options);
                     case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element, options);
+                    case "GoogleBigQueryV2": return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element, options);
                     case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element, options);
                     case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element, options);
                     case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element, options);
@@ -191,6 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element, options);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element, options);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element, options);
+                    case "PostgreSqlV2": return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element, options);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element, options);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element, options);
@@ -209,6 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element, options);
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element, options);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element, options);
+                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element, options);
                     case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element, options);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element, options);

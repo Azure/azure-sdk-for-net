@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkWatcherResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkWatcherName, NetworkWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkWatcherResource> CreateOrUpdate(WaitUntil waitUntil, string networkWatcherName, NetworkWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual async Task<Response<NetworkWatcherResource>> GetAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Response<NetworkWatcherResource> Get(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Get");
             scope.Start();
@@ -361,14 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
             scope.Start();
@@ -411,14 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.Exists");
             scope.Start();
@@ -461,14 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkWatcherResource>> GetIfExistsAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
             scope.Start();
@@ -513,14 +458,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
         public virtual NullableResponse<NetworkWatcherResource> GetIfExists(string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var scope = _networkWatcherClientDiagnostics.CreateScope("NetworkWatcherCollection.GetIfExists");
             scope.Start();

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -58,29 +58,29 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DataMaskingState.HasValue)
+            if (Optional.IsDefined(DataMaskingState))
             {
                 writer.WritePropertyName("dataMaskingState"u8);
                 writer.WriteStringValue(DataMaskingState.Value.ToSerialString());
             }
-            if (ExemptPrincipals != null)
+            if (Optional.IsDefined(ExemptPrincipals))
             {
                 writer.WritePropertyName("exemptPrincipals"u8);
                 writer.WriteStringValue(ExemptPrincipals);
             }
-            if (options.Format != "W" && ApplicationPrincipals != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationPrincipals))
             {
                 writer.WritePropertyName("applicationPrincipals"u8);
                 writer.WriteStringValue(ApplicationPrincipals);
             }
-            if (options.Format != "W" && MaskingLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(MaskingLevel))
             {
                 writer.WritePropertyName("maskingLevel"u8);
                 writer.WriteStringValue(MaskingLevel);

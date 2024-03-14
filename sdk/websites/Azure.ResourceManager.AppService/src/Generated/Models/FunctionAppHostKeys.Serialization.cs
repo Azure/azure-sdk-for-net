@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (MasterKey != null)
+            if (Optional.IsDefined(MasterKey))
             {
                 writer.WritePropertyName("masterKey"u8);
                 writer.WriteStringValue(MasterKey);
             }
-            if (!(FunctionKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FunctionKeys))
             {
                 writer.WritePropertyName("functionKeys"u8);
                 writer.WriteStartObject();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(SystemKeys is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemKeys))
             {
                 writer.WritePropertyName("systemKeys"u8);
                 writer.WriteStartObject();

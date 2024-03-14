@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudHsmClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudHsmClusterName, CloudHsmClusterData data, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CloudHsmClusterResource> CreateOrUpdate(WaitUntil waitUntil, string cloudHsmClusterName, CloudHsmClusterData data, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<Response<CloudHsmClusterResource>> GetAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual Response<CloudHsmClusterResource> Get(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
             scope.Start();
@@ -415,14 +374,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
             scope.Start();
@@ -465,14 +417,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudHsmClusterResource>> GetIfExistsAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
             scope.Start();
@@ -517,14 +462,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual NullableResponse<CloudHsmClusterResource> GetIfExists(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
             scope.Start();

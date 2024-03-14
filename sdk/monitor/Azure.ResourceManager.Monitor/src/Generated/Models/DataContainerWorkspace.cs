@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="customerId"/> is null. </exception>
         internal DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(customerId, nameof(customerId));
 
             Id = id;
             Location = location;

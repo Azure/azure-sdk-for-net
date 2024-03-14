@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Tag != null)
+            if (options.Format != "W" && Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && ObjectIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectIdentifier))
             {
                 writer.WritePropertyName("objectIdentifier"u8);
                 writer.WriteStringValue(ObjectIdentifier);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Upn != null)
+            if (options.Format != "W" && Optional.IsDefined(Upn))
             {
                 writer.WritePropertyName("upn"u8);
                 writer.WriteStringValue(Upn);

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CrossTableTransaction.HasValue)
+            if (Optional.IsDefined(CrossTableTransaction))
             {
                 writer.WritePropertyName("crossTableTransaction"u8);
                 writer.WriteBooleanValue(CrossTableTransaction.Value);
             }
-            if (DropExistingTargetTableOnStart.HasValue)
+            if (Optional.IsDefined(DropExistingTargetTableOnStart))
             {
                 writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
             }
-            if (ActionOnExistingTargetTable.HasValue)
+            if (Optional.IsDefined(ActionOnExistingTargetTable))
             {
                 writer.WritePropertyName("actionOnExistingTargetTable"u8);
                 writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());

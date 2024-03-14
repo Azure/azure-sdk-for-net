@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (AccountId != null)
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);

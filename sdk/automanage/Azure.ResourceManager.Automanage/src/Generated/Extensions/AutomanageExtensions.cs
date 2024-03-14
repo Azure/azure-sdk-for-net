@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageVmConfigurationProfileAssignmentResources and their operations over a AutomanageVmConfigurationProfileAssignmentResource. </returns>
         public static AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignments(scope);
         }
@@ -95,10 +92,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageVmConfigurationProfileAssignmentResource>> GetAutomanageVmConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -137,10 +131,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageVmConfigurationProfileAssignmentResource> GetAutomanageVmConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
@@ -158,10 +149,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHcrpConfigurationProfileAssignmentResources and their operations over a AutomanageHcrpConfigurationProfileAssignmentResource. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignments(scope);
         }
@@ -200,10 +188,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageHcrpConfigurationProfileAssignmentResource>> GetAutomanageHcrpConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -242,10 +227,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageHcrpConfigurationProfileAssignmentResource> GetAutomanageHcrpConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
@@ -263,10 +245,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentResource. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignments(scope);
         }
@@ -305,10 +284,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAutomanageHciClusterConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -347,10 +323,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageHciClusterConfigurationProfileAssignmentResource> GetAutomanageHciClusterConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
@@ -369,10 +342,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageBestPracticeResource"/> object. </returns>
         public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageBestPracticeResource(id);
         }
@@ -391,10 +361,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource"/> object. </returns>
         public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileResource(id);
         }
@@ -413,10 +380,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource"/> object. </returns>
         public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileVersionResource(id);
         }
@@ -435,10 +399,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentResource(id);
         }
@@ -457,10 +418,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentResource(id);
         }
@@ -479,10 +437,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentResource(id);
         }
@@ -501,10 +456,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentReportResource(id);
         }
@@ -523,10 +475,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentReportResource(id);
         }
@@ -545,10 +494,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(id);
         }
@@ -565,10 +511,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
         public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
@@ -606,10 +549,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfileAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
         }
@@ -647,10 +587,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfile(configurationProfileName, cancellationToken);
         }
@@ -686,10 +623,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
@@ -725,10 +659,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
@@ -760,10 +691,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
         }
@@ -795,10 +723,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipals(cancellationToken);
         }
@@ -829,10 +754,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -863,10 +785,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
@@ -883,10 +802,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
         public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractices();
         }
@@ -924,10 +840,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
@@ -965,10 +878,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractice(bestPracticeName, cancellationToken);
         }

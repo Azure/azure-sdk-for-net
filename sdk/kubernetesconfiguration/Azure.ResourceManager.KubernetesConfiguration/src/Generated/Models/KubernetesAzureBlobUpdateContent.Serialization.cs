@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 if (ContainerName != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("containerName");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (ServicePrincipal != null)
+            if (Optional.IsDefined(ServicePrincipal))
             {
                 if (ServicePrincipal != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("servicePrincipal");
                 }
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 if (AccountKey != null)
                 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accountKey");
                 }
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 if (SasToken != null)
                 {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sasToken");
                 }
             }
-            if (ManagedIdentity != null)
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 if (ManagedIdentity != null)
                 {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("managedIdentity");
                 }
             }
-            if (LocalAuthRef != null)
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
         public VMwareCbtContainerMappingContent(ResourceIdentifier storageAccountId, string targetLocation)
         {
-            if (storageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountId));
-            }
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            Argument.AssertNotNull(targetLocation, nameof(targetLocation));
 
             StorageAccountId = storageAccountId;
             TargetLocation = targetLocation;

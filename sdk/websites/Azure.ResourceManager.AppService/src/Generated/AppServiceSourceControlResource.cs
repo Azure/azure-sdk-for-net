@@ -195,10 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppServiceSourceControlResource>> UpdateAsync(WaitUntil waitUntil, AppServiceSourceControlData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
             scope.Start();
@@ -244,10 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppServiceSourceControlResource> Update(WaitUntil waitUntil, AppServiceSourceControlData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appServiceSourceControlClientDiagnostics.CreateScope("AppServiceSourceControlResource.Update");
             scope.Start();

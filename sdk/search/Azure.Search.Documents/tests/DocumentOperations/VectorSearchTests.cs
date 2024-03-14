@@ -239,6 +239,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
         public async Task UpdatingVectorProfileNameThrows()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -519,6 +520,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
         public async Task CreateIndexUsingFieldBuilder()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

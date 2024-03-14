@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (KekDetails != null)
+            if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
                 writer.WriteObjectValue(KekDetails);
             }
-            if (BekDetails != null)
+            if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
                 writer.WriteObjectValue(BekDetails);
             }
-            if (EncryptionMechanism != null)
+            if (Optional.IsDefined(EncryptionMechanism))
             {
                 writer.WritePropertyName("encryptionMechanism"u8);
                 writer.WriteStringValue(EncryptionMechanism);

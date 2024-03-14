@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExternalServiceFabricId != null)
+            if (Optional.IsDefined(ExternalServiceFabricId))
             {
                 writer.WritePropertyName("externalServiceFabricId"u8);
                 writer.WriteStringValue(ExternalServiceFabricId);
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (options.Format != "W" && ApplicableSchedule != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
             {
                 writer.WritePropertyName("applicableSchedule"u8);
                 writer.WriteObjectValue(ApplicableSchedule);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlanIds))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();

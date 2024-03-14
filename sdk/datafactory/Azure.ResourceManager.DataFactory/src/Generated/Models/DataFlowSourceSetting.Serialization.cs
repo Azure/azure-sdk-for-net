@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit.HasValue)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);

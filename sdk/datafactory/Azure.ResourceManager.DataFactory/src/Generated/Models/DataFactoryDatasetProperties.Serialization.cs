@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,24 +29,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -161,6 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element, options);
                     case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
                     case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element, options);
+                    case "GoogleBigQueryV2Object": return GoogleBigQueryV2ObjectDataset.DeserializeGoogleBigQueryV2ObjectDataset(element, options);
                     case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element, options);
                     case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element, options);
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
@@ -190,6 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element, options);
                     case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element, options);
                     case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
+                    case "PostgreSqlV2Table": return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element, options);
                     case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element, options);
                     case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element, options);
                     case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
@@ -208,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
+                    case "ServiceNowV2Object": return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element, options);

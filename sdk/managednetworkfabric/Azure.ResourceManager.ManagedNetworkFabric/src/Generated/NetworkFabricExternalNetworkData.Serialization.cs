@@ -43,66 +43,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (ImportRoutePolicyId != null)
+            if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (ExportRoutePolicyId != null)
+            if (Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (options.Format != "W" && NetworkToNetworkInterconnectId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkToNetworkInterconnectId))
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
-            if (OptionBProperties != null)
+            if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (OptionAProperties != null)
+            if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());

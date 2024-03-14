@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Quantum
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Quantum
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Providers is ChangeTrackingList<Provider> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Quantum
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Usable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Usable))
             {
                 writer.WritePropertyName("usable"u8);
                 writer.WriteStringValue(Usable.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
             }
-            if (options.Format != "W" && EndpointUri != null)
+            if (options.Format != "W" && Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);

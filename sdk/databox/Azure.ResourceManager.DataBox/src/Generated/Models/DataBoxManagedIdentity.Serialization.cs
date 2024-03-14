@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityType != null)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType);
             }
-            if (UserAssigned != null)
+            if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
                 writer.WriteObjectValue(UserAssigned);

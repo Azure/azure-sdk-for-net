@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,18 +88,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, MySqlFlexibleServerData data, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,18 +137,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlFlexibleServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, MySqlFlexibleServerData data, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.CreateOrUpdate");
             scope.Start();
@@ -189,7 +170,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,14 +184,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<MySqlFlexibleServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.Get");
             scope.Start();
@@ -241,7 +215,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,14 +229,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<MySqlFlexibleServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.Get");
             scope.Start();
@@ -293,7 +260,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +290,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +320,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,14 +331,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An async collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerResource> GetReplicasAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
@@ -391,7 +351,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,14 +362,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerResource> GetReplicas(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicasRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, serverName);
@@ -429,7 +382,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,14 +396,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.Exists");
             scope.Start();
@@ -479,7 +425,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,14 +439,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.Exists");
             scope.Start();
@@ -529,7 +468,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -543,14 +482,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlFlexibleServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.GetIfExists");
             scope.Start();
@@ -581,7 +513,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -595,14 +527,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual NullableResponse<MySqlFlexibleServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerCollection.GetIfExists");
             scope.Start();

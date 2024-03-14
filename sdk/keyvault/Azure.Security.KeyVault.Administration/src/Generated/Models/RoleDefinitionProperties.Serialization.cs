@@ -16,22 +16,22 @@ namespace Azure.Security.KeyVault.Administration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RoleName != null)
+            if (Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RoleType.HasValue)
+            if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
-            if (!(Permissions is ChangeTrackingList<KeyVaultPermission> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AssignableScopes is ChangeTrackingList<KeyVaultRoleScope> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();

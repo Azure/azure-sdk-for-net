@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (GroundStationName != null)
+            if (Optional.IsDefined(GroundStationName))
             {
                 writer.WritePropertyName("groundStation"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");

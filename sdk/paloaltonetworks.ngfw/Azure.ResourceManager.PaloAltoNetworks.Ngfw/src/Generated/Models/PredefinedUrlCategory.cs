@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>
         internal PredefinedUrlCategory(string action, string name)
         {
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(action, nameof(action));
+            Argument.AssertNotNull(name, nameof(name));
 
             Action = action;
             Name = name;

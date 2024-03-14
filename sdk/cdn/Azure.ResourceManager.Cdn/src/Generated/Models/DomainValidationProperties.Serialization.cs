@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ValidationToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationToken))
             {
                 writer.WritePropertyName("validationToken"u8);
                 writer.WriteStringValue(ValidationToken);
             }
-            if (options.Format != "W" && ExpiresOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");

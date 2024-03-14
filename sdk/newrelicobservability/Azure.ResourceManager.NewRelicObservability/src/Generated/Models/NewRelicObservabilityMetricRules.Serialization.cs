@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (SendMetrics.HasValue)
+            if (Optional.IsDefined(SendMetrics))
             {
                 writer.WritePropertyName("sendMetrics"u8);
                 writer.WriteStringValue(SendMetrics.Value.ToString());
             }
-            if (!(FilteringTags is ChangeTrackingList<NewRelicObservabilityFilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserEmail != null)
+            if (Optional.IsDefined(UserEmail))
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);

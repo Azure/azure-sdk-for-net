@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public ReportConfigComparisonExpression(string name, ComparisonOperatorType @operator, IEnumerable<string> values)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(values, nameof(values));
 
             Name = name;
             Operator = @operator;

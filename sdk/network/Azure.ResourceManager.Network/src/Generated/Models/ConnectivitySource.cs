@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectivitySource(ResourceIdentifier resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
         }

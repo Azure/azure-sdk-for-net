@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ApplicationName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);

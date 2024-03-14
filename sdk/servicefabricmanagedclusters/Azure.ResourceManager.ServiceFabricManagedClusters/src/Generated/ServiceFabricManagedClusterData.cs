@@ -60,10 +60,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public ServiceFabricManagedClusterData(AzureLocation location, ServiceFabricManagedClustersSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();

@@ -24,22 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="confidenceScores"/> or <paramref name="sentences"/> is null. </exception>
         public SentimentDocumentResult(string id, IEnumerable<DocumentWarning> warnings, TextSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentimentInternal> sentences) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (confidenceScores == null)
-            {
-                throw new ArgumentNullException(nameof(confidenceScores));
-            }
-            if (sentences == null)
-            {
-                throw new ArgumentNullException(nameof(sentences));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
+            Argument.AssertNotNull(sentences, nameof(sentences));
 
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;

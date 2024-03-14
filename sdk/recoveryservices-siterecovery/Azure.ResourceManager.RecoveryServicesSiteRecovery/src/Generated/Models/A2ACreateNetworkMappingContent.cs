@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
         public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)
         {
-            if (primaryNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(primaryNetworkId));
-            }
+            Argument.AssertNotNull(primaryNetworkId, nameof(primaryNetworkId));
 
             PrimaryNetworkId = primaryNetworkId;
             InstanceType = "AzureToAzure";

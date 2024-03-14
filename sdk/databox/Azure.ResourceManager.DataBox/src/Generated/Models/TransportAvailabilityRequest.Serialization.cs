@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (SkuName.HasValue)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName.Value.ToSerialString());

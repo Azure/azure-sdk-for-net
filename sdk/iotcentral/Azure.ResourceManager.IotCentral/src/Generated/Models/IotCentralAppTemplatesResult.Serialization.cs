@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<IotCentralAppTemplate> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

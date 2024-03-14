@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (TargetPlatform.HasValue)
+            if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (CheckPermissionsGroup.HasValue)
+            if (Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (IsOfflineMigration.HasValue)
+            if (Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);

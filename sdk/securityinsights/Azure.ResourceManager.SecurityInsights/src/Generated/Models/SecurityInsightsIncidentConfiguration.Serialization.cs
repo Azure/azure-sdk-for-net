@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("createIncident"u8);
             writer.WriteBooleanValue(IsIncidentCreated);
-            if (GroupingConfiguration != null)
+            if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
                 writer.WriteObjectValue(GroupingConfiguration);

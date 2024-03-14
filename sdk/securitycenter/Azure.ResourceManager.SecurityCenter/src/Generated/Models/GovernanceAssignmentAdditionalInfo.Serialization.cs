@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (TicketNumber.HasValue)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
-            if (TicketLink != null)
+            if (Optional.IsDefined(TicketLink))
             {
                 writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
-            if (TicketStatus != null)
+            if (Optional.IsDefined(TicketStatus))
             {
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);

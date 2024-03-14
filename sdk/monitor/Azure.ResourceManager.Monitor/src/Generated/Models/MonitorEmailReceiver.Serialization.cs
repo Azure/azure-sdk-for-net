@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecretBaseDefinition consumerSecret, DataFactorySecretBaseDefinition accessToken, DataFactorySecretBaseDefinition accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> companyId, DataFactoryElement<string> consumerKey, DataFactorySecret consumerSecret, DataFactorySecret accessToken, DataFactorySecret accessTokenSecret, DataFactoryElement<bool> useEncryptedEndpoints, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The consumer key for OAuth 1.0 authentication. </summary>
         public DataFactoryElement<string> ConsumerKey { get; set; }
         /// <summary> The consumer secret for OAuth 1.0 authentication. </summary>
-        public DataFactorySecretBaseDefinition ConsumerSecret { get; set; }
+        public DataFactorySecret ConsumerSecret { get; set; }
         /// <summary> The access token for OAuth 1.0 authentication. </summary>
-        public DataFactorySecretBaseDefinition AccessToken { get; set; }
+        public DataFactorySecret AccessToken { get; set; }
         /// <summary> The access token secret for OAuth 1.0 authentication. </summary>
-        public DataFactorySecretBaseDefinition AccessTokenSecret { get; set; }
+        public DataFactorySecret AccessTokenSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

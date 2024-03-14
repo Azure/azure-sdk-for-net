@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -15,17 +16,17 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SymmetricKey != null)
+            if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
             }
-            if (X509Thumbprint != null)
+            if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
                 writer.WriteObjectValue(X509Thumbprint);
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());

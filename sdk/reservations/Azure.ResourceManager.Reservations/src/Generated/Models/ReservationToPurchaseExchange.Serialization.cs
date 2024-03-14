@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ReservationOrderId != null)
+            if (Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

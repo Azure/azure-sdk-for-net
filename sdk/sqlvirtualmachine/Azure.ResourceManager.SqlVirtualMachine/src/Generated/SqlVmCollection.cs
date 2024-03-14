@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlVmResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVmName, SqlVmData data, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual async Task<Response<SqlVmResource>> GetAsync(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual Response<SqlVmResource> Get(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual Response<bool> Exists(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlVmResource>> GetIfExistsAsync(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         public virtual NullableResponse<SqlVmResource> GetIfExists(string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (sqlVmName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmName));
-            }
-            if (sqlVmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmName, nameof(sqlVmName));
 
             using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmCollection.GetIfExists");
             scope.Start();
