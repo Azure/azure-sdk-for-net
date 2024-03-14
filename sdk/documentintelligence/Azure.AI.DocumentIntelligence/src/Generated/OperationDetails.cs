@@ -50,18 +50,15 @@ namespace Azure.AI.DocumentIntelligence
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
+        protected OperationDetails(OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
-            OperationId = operationId;
             Status = status;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -70,25 +67,25 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
+        /// <param name="kind"> Type of operation. </param>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationDetails(OperationKind kind, string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Kind = kind;
             OperationId = operationId;
             Status = status;
             PercentCompleted = percentCompleted;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            Kind = kind;
             ResourceLocation = resourceLocation;
             ApiVersion = apiVersion;
             Tags = tags;
@@ -101,6 +98,8 @@ namespace Azure.AI.DocumentIntelligence
         {
         }
 
+        /// <summary> Type of operation. </summary>
+        internal OperationKind Kind { get; set; }
         /// <summary> Operation ID. </summary>
         public string OperationId { get; }
         /// <summary> Operation status.  notStarted, running, completed, or failed. </summary>
@@ -111,8 +110,6 @@ namespace Azure.AI.DocumentIntelligence
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary> Type of operation. </summary>
-        internal OperationKind Kind { get; set; }
         /// <summary> URL of the resource targeted by this operation. </summary>
         public Uri ResourceLocation { get; }
         /// <summary> API version used to create this operation. </summary>

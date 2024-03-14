@@ -508,11 +508,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
         }
 
@@ -527,11 +527,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
         }
 
@@ -568,12 +568,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("percentCompleted").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -595,12 +595,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("percentCompleted").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -986,11 +986,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             foreach (BinaryData item in client.GetOperations(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             }
         }
@@ -1006,11 +1006,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             }
         }
@@ -1052,12 +1052,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             foreach (BinaryData item in client.GetOperations(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -1080,12 +1080,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -1752,7 +1752,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1777,7 +1777,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1801,7 +1801,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1820,7 +1820,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1840,7 +1840,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1886,7 +1886,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 targetModelId = "<targetModelId>",
                 targetModelLocation = "http://localhost:3000",
                 accessToken = "<accessToken>",
-                expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                expirationDateTime = "2022-05-10T18:57:31.2311892Z",
             });
             Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
             BinaryData responseData = operation.Value;
@@ -1931,7 +1931,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }
@@ -1950,7 +1950,7 @@ new ComponentDocumentModelDetails("<modelId>")
                 "<targetModelId>",
                 new Uri("http://localhost:3000"),
                 "<accessToken>",
-                DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
             DocumentModelDetails responseData = operation.Value;
         }

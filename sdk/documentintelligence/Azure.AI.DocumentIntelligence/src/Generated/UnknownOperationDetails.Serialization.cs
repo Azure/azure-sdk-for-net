@@ -27,8 +27,13 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("operationId"u8);
-            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(PercentCompleted))
@@ -40,8 +45,6 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
             if (Optional.IsDefined(ApiVersion))
@@ -103,12 +106,12 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
+            OperationKind kind = "Unknown";
             string operationId = default;
             OperationStatus status = default;
             int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            OperationKind kind = "Unknown";
             Uri resourceLocation = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
@@ -117,6 +120,11 @@ namespace Azure.AI.DocumentIntelligence
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new OperationKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
@@ -144,11 +152,6 @@ namespace Azure.AI.DocumentIntelligence
                 if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
                     lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new OperationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"u8))
@@ -191,12 +194,12 @@ namespace Azure.AI.DocumentIntelligence
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownOperationDetails(
+                kind,
                 operationId,
                 status,
                 percentCompleted,
                 createdDateTime,
                 lastUpdatedDateTime,
-                kind,
                 resourceLocation,
                 apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
