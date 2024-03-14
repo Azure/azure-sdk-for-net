@@ -120,7 +120,7 @@ function Uploaded-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $revi
 
 function GetAPI-TokenFileName($packageName) 
 {
-    $reviewTokenFileName = "${packageName}_${Language}.json"
+    $reviewTokenFileName = "${packageName}_${LanguageShort}.json"
     $tokenFilePath = Join-Path $ArtifactPath $reviewTokenFileName
     if (Test-Path $tokenFilePath) {
         Write-Host "Review token file is present at $tokenFilePath"

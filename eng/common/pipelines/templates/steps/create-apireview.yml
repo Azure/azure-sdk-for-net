@@ -24,7 +24,7 @@ steps:
           -ArtifactPath ${{parameters.ArtifactPath}}
           -ArtifactName ${{ parameters.ArtifactName }}
           -APIKey $(azuresdk-apiview-apikey)
-          -PackageNameFilter ${{parameters.PackageName}}
+          -PackageName ${{parameters.PackageName}}
           -SourceBranch $(Build.SourceBranchName)
           -DefaultBranch $(DefaultBranch)
           -ConfigFileDir '${{parameters.ConfigFileDir}}'
