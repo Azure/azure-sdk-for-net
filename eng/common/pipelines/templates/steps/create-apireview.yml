@@ -2,7 +2,7 @@ parameters:
   ArtifactPath: $(Build.ArtifactStagingDirectory)
   Artifacts: []
   ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
-  MarkPackageAsShipped: false
+  MarkPackageAsShipped: $false
   APIViewHostUrl: 'https://apiview.dev/'
   GenerateApiReviewForManualOnly: false
   ArtifactName: 'packages'
