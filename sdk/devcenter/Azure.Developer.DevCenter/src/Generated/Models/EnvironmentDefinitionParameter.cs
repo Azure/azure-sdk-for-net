@@ -56,10 +56,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal EnvironmentDefinitionParameter(string id, EnvironmentDefinitionParameterType parameterType, bool required)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             ParameterType = parameterType;

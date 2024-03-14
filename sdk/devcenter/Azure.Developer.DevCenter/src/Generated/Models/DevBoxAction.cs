@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         internal DevBoxAction(DevBoxActionType actionType, string sourceId)
         {
-            if (sourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceId));
-            }
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             ActionType = actionType;
             SourceId = sourceId;

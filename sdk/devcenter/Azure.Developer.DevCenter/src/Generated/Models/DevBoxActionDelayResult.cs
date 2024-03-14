@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus result)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
+            Argument.AssertNotNull(actionName, nameof(actionName));
 
             ActionName = actionName;
             Result = result;

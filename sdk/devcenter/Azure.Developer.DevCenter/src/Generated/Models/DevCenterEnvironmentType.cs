@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -57,14 +58,8 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
         internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (deploymentTargetId == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentTargetId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
 
             Name = name;
             DeploymentTargetId = deploymentTargetId;

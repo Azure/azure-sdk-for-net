@@ -52,14 +52,8 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="catalogName"/> is null. </exception>
         internal EnvironmentDefinition(string id, string catalogName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(catalogName, nameof(catalogName));
 
             Id = id;
             CatalogName = catalogName;
