@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Synapse;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
