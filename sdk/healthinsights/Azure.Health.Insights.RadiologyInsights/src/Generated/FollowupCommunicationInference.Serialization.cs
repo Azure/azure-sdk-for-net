@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("wasAcknowledged"u8);
             writer.WriteBooleanValue(WasAcknowledged);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             IReadOnlyList<DateTimeOffset> dateTime = default;
             IReadOnlyList<MedicalProfessionalType> recipient = default;
             bool wasAcknowledged = default;
-            string kind = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
