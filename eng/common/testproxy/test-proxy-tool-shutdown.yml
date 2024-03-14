@@ -4,7 +4,6 @@ steps:
     displayName: 'Shut down the testproxy - windows'
     condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
 
-  # nohup does NOT continue beyond the current session if you use it within powershell
   - bash: |
       kill -9 $(PROXY_PID)
     displayName: "Shut down the testproxy - linux/mac"
