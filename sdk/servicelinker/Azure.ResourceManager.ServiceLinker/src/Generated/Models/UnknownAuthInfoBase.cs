@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The UnknownAuthInfoBase. </summary>
+    /// <summary> Unknown version of AuthInfoBase. </summary>
     internal partial class UnknownAuthInfoBase : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/>. </summary>

@@ -105,7 +105,7 @@ namespace Azure.Core
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WritePropertyName("headerSource"u8);
-            writer.WriteStringValue(HeaderSource.ToString());
+            writer.WriteStringValue(HeaderSource);
             writer.WritePropertyName("nextRequestUri"u8);
             writer.WriteStringValue(NextRequestUri);
             writer.WritePropertyName("initialUri"u8);
@@ -115,7 +115,7 @@ namespace Azure.Core
             writer.WritePropertyName("lastKnownLocation"u8);
             writer.WriteStringValue(LastKnownLocation);
             writer.WritePropertyName("finalStateVia"u8);
-            writer.WriteStringValue(FinalStateVia.ToString());
+            writer.WriteStringValue(FinalStateVia);
             writer.WriteEndObject();
         }
 
