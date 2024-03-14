@@ -35,7 +35,32 @@ You can get a valid Bearer token if the service authentication is configured to 
 
 ## Examples
 
-You can familiarize yourself with different APIs by observing our [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
+There are two main use cases for this service: submitting a cose signature envelope and verifying the cryptographic submission receipt. The receipt proves that the signature file was successfully accepted.
+
+Before submitting the cose file, the service must be configured with the relevant Certificate Authority certificate to be able to accept it.
+
+To submit the signature, use the following code:
+
+```C# Snippet:CodeTransparencySample0_Submission
+CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+FileStream fileStream = File.OpenRead("signature.cose");
+BinaryData content = BinaryData.FromStream(fileStream);
+Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
+Response<GetOperationResult> operationResult = await operation.WaitForCompletionAsync();
+Console.WriteLine($"The entry id to use to get the entry and receipt is {{{operationResult.Value.EntryId}}}");
+Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(operationResult.Value.EntryId, true);
+BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
+```
+
+Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
+
+```C# Snippet:CodeTransparencySample0_Verification
+CcfReceiptVerifier.RunVerification(signatureWithReceipt.ToArray());
+```
+
+If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.
+
+To learn more about other APIs, please refer to our [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.CodeTransparency/samples).
 
 ### Key concepts
 
