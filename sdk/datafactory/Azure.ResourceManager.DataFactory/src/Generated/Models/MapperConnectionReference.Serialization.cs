@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectionName != null)
+            if (Optional.IsDefined(ConnectionName))
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (ConnectionType.HasValue)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());

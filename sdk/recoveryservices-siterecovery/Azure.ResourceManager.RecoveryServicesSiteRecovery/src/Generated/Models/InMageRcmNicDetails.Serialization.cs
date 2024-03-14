@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,67 +28,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NicId != null)
+            if (options.Format != "W" && Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (IsPrimaryNic != null)
+            if (Optional.IsDefined(IsPrimaryNic))
             {
                 writer.WritePropertyName("isPrimaryNic"u8);
                 writer.WriteStringValue(IsPrimaryNic);
             }
-            if (IsSelectedForFailover != null)
+            if (Optional.IsDefined(IsSelectedForFailover))
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (options.Format != "W" && SourceIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
             {
                 writer.WritePropertyName("sourceIPAddress"u8);
                 writer.WriteStringValue(SourceIPAddress.ToString());
             }
-            if (options.Format != "W" && SourceIPAddressType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddressType))
             {
                 writer.WritePropertyName("sourceIPAddressType"u8);
                 writer.WriteStringValue(SourceIPAddressType.Value.ToString());
             }
-            if (options.Format != "W" && SourceNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceNetworkId))
             {
                 writer.WritePropertyName("sourceNetworkId"u8);
                 writer.WriteStringValue(SourceNetworkId);
             }
-            if (options.Format != "W" && SourceSubnetName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceSubnetName))
             {
                 writer.WritePropertyName("sourceSubnetName"u8);
                 writer.WriteStringValue(SourceSubnetName);
             }
-            if (TargetIPAddress != null)
+            if (Optional.IsDefined(TargetIPAddress))
             {
                 writer.WritePropertyName("targetIPAddress"u8);
                 writer.WriteStringValue(TargetIPAddress.ToString());
             }
-            if (TargetIPAddressType.HasValue)
+            if (Optional.IsDefined(TargetIPAddressType))
             {
                 writer.WritePropertyName("targetIPAddressType"u8);
                 writer.WriteStringValue(TargetIPAddressType.Value.ToString());
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TestIPAddress != null)
+            if (Optional.IsDefined(TestIPAddress))
             {
                 writer.WritePropertyName("testIPAddress"u8);
                 writer.WriteStringValue(TestIPAddress.ToString());
             }
-            if (TestIPAddressType.HasValue)
+            if (Optional.IsDefined(TestIPAddressType))
             {
                 writer.WritePropertyName("testIPAddressType"u8);
                 writer.WriteStringValue(TestIPAddressType.Value.ToString());

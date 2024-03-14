@@ -36,6 +36,9 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs">
+      <LinkBase>Shared\Azure.Core</LinkBase>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, AgFoodPlatformPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AgFoodPlatformPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AgFoodPlatformPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, AgFoodPlatformPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("AgFoodPlatformPrivateEndpointConnectionResource.Update");
             scope.Start();

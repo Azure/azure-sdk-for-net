@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (PreferredManagementResourceId != null)
+            if (Optional.IsDefined(PreferredManagementResourceId))
             {
                 writer.WritePropertyName("preferredManagementResourceId"u8);
                 writer.WriteStringValue(PreferredManagementResourceId);

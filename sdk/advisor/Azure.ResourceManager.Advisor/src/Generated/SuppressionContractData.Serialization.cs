@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SuppressionId != null)
+            if (Optional.IsDefined(SuppressionId))
             {
                 writer.WritePropertyName("suppressionId"u8);
                 writer.WriteStringValue(SuppressionId);
             }
-            if (Ttl != null)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteStringValue(Ttl);
             }
-            if (options.Format != "W" && ExpirationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
                 writer.WriteStringValue(ExpirationTimeStamp.Value, "O");

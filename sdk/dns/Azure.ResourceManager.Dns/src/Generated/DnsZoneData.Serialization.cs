@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Dns
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxNumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
             {
                 writer.WritePropertyName("maxNumberOfRecordSets"u8);
                 writer.WriteNumberValue(MaxNumberOfRecords.Value);
             }
-            if (options.Format != "W" && MaxNumberOfRecordsPerRecord.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecordsPerRecord))
             {
                 if (MaxNumberOfRecordsPerRecord != null)
                 {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Dns
                     writer.WriteNull("maxNumberOfRecordsPerRecordSet");
                 }
             }
-            if (options.Format != "W" && NumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
             {
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (ZoneType.HasValue)
+            if (Optional.IsDefined(ZoneType))
             {
                 writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
-            if (!(RegistrationVirtualNetworks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
             {
                 writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResolutionVirtualNetworks is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
             {
                 writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();

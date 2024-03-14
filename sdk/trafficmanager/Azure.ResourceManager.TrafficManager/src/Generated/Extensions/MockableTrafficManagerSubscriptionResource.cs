@@ -78,10 +78,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();
@@ -123,10 +120,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
             scope.Start();

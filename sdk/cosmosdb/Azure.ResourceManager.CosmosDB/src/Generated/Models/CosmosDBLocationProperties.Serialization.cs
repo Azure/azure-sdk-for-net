@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DoesSupportAvailabilityZone.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("supportsAvailabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (options.Format != "W" && IsResidencyRestricted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResidencyRestricted))
             {
                 writer.WritePropertyName("isResidencyRestricted"u8);
                 writer.WriteBooleanValue(IsResidencyRestricted.Value);
             }
-            if (options.Format != "W" && !(BackupStorageRedundancies is ChangeTrackingList<CosmosDBBackupStorageRedundancy> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageRedundancies))
             {
                 writer.WritePropertyName("backupStorageRedundancies"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsSubscriptionRegionAccessAllowedForRegular.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular))
             {
                 writer.WritePropertyName("isSubscriptionRegionAccessAllowedForRegular"u8);
                 writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForRegular.Value);
             }
-            if (options.Format != "W" && IsSubscriptionRegionAccessAllowedForAz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz))
             {
                 writer.WritePropertyName("isSubscriptionRegionAccessAllowedForAz"u8);
                 writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForAz.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProductFamilyDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductFamilyDisplayName))
             {
                 writer.WritePropertyName("productFamilyDisplayName"u8);
                 writer.WriteStringValue(ProductFamilyDisplayName);
             }
-            if (options.Format != "W" && ConfigurationDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationDisplayName))
             {
                 writer.WritePropertyName("configurationDisplayName"u8);
                 writer.WriteStringValue(ConfigurationDisplayName);

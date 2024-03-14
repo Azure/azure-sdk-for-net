@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, ServiceBusPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ServiceBusPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, ServiceBusPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ServiceBusPrivateEndpointConnectionResource.Update");
             scope.Start();

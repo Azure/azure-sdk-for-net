@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Topic != null)
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);

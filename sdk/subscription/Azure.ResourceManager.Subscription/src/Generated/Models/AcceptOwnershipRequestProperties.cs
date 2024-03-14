@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public AcceptOwnershipRequestProperties(string displayName)
         {
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual async Task<Response<ResourceRecommendationBaseResource>> GetAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
@@ -122,14 +115,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual Response<ResourceRecommendationBaseResource> Get(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
@@ -240,14 +226,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
@@ -290,14 +269,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual Response<bool> Exists(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
@@ -340,14 +312,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceRecommendationBaseResource>> GetIfExistsAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();
@@ -392,14 +357,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
         public virtual NullableResponse<ResourceRecommendationBaseResource> GetIfExists(string recommendationId, CancellationToken cancellationToken = default)
         {
-            if (recommendationId == null)
-            {
-                throw new ArgumentNullException(nameof(recommendationId));
-            }
-            if (recommendationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendationId));
-            }
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();

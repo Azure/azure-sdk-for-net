@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Foldername != null)
+            if (Optional.IsDefined(Foldername))
             {
                 writer.WritePropertyName("foldername"u8);
                 writer.WriteStringValue(Foldername);
             }
-            if (AzureStorageResourceUri != null)
+            if (Optional.IsDefined(AzureStorageResourceUri))
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);

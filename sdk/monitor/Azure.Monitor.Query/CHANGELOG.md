@@ -7,9 +7,12 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Enable national cloud support for US Gov and China clouds
 
 ### Other Changes
+- Enable national cloud support for US Gov and China clouds
+- `MetricsBatchQueryClient` renamed to `MetricsClient`
+- `QueryBatch` renamed to `QueryResources` in `MetricsClient`
+- `MetricsBatchResult` renamed to `MetricsQueryResourcesResult` in `MetricsClient`
 
 ## 1.3.0-beta.2 (2023-12-05)
 

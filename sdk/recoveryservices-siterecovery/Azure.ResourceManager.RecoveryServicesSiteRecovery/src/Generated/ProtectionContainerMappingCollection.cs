@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ProtectionContainerMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mappingName, ProtectionContainerMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ProtectionContainerMappingResource> CreateOrUpdate(WaitUntil waitUntil, string mappingName, ProtectionContainerMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<Response<ProtectionContainerMappingResource>> GetAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual Response<ProtectionContainerMappingResource> Get(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual Response<bool> Exists(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProtectionContainerMappingResource>> GetIfExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
         public virtual NullableResponse<ProtectionContainerMappingResource> GetIfExists(string mappingName, CancellationToken cancellationToken = default)
         {
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
             scope.Start();

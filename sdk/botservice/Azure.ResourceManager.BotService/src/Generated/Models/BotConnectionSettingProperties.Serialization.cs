@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (options.Format != "W" && SettingId != null)
+            if (options.Format != "W" && Optional.IsDefined(SettingId))
             {
                 writer.WritePropertyName("settingId"u8);
                 writer.WriteStringValue(SettingId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Scopes != null)
+            if (Optional.IsDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (ServiceProviderId != null)
+            if (Optional.IsDefined(ServiceProviderId))
             {
                 writer.WritePropertyName("serviceProviderId"u8);
                 writer.WriteStringValue(ServiceProviderId);
             }
-            if (ServiceProviderDisplayName != null)
+            if (Optional.IsDefined(ServiceProviderDisplayName))
             {
                 writer.WritePropertyName("serviceProviderDisplayName"u8);
                 writer.WriteStringValue(ServiceProviderDisplayName);
             }
-            if (!(Parameters is ChangeTrackingList<BotConnectionSettingParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

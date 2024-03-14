@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(BranchNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BranchNames))
             {
                 writer.WritePropertyName("branchNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AnnotateDefaultBranch.HasValue)
+            if (Optional.IsDefined(AnnotateDefaultBranch))
             {
                 writer.WritePropertyName("annotateDefaultBranch"u8);
                 writer.WriteStringValue(AnnotateDefaultBranch.Value.ToString());

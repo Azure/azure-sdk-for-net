@@ -27,12 +27,12 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (BuildMode.HasValue)
+            if (Optional.IsDefined(BuildMode))
             {
                 writer.WritePropertyName("buildMode"u8);
                 writer.WriteStringValue(BuildMode.Value.ToString());
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (!(FieldConfidence is ChangeTrackingDictionary<string, float> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldConfidence))
             {
                 writer.WritePropertyName("fieldConfidence"u8);
                 writer.WriteStartObject();

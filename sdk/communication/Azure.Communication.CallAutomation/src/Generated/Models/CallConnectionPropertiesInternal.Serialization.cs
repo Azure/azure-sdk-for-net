@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -32,7 +31,7 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
-            PhoneNumberIdentifierModel originalPstnTarget = default;
+            PhoneNumberIdentifierModel answeredFor = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -120,13 +119,13 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("originalPstnTarget"u8))
+                if (property.NameEquals("answeredFor"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    originalPstnTarget = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    answeredFor = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
             }
@@ -143,7 +142,7 @@ namespace Azure.Communication.CallAutomation
                 source,
                 correlationId,
                 answeredBy,
-                originalPstnTarget);
+                answeredFor);
         }
     }
 }

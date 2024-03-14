@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="itemPath"/> is null. </exception>
         public ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem)
         {
-            if (itemPath == null)
-            {
-                throw new ArgumentNullException(nameof(itemPath));
-            }
+            Argument.AssertNotNull(itemPath, nameof(itemPath));
 
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;

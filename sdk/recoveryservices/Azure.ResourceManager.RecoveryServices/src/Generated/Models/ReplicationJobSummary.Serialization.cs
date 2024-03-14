@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (FailedJobs.HasValue)
+            if (Optional.IsDefined(FailedJobs))
             {
                 writer.WritePropertyName("failedJobs"u8);
                 writer.WriteNumberValue(FailedJobs.Value);
             }
-            if (SuspendedJobs.HasValue)
+            if (Optional.IsDefined(SuspendedJobs))
             {
                 writer.WritePropertyName("suspendedJobs"u8);
                 writer.WriteNumberValue(SuspendedJobs.Value);
             }
-            if (InProgressJobs.HasValue)
+            if (Optional.IsDefined(InProgressJobs))
             {
                 writer.WritePropertyName("inProgressJobs"u8);
                 writer.WriteNumberValue(InProgressJobs.Value);

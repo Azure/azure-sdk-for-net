@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="profiles"/> is null. </exception>
         public NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
-            if (profiles == null)
-            {
-                throw new ArgumentNullException(nameof(profiles));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            Argument.AssertNotNull(profiles, nameof(profiles));
 
             TargetResourceId = targetResourceId;
             Profiles = profiles.ToList();

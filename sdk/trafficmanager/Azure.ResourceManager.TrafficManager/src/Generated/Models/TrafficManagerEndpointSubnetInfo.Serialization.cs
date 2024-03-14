@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (First != null)
+            if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
-            if (Last != null)
+            if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);

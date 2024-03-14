@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
             writer.WriteObjectValue(Requests);
-            if (Limits != null)
+            if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);

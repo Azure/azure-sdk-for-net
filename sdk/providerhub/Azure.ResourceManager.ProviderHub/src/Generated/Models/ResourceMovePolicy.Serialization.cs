@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (IsValidationRequired.HasValue)
+            if (Optional.IsDefined(IsValidationRequired))
             {
                 writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (IsCrossResourceGroupMoveEnabled.HasValue)
+            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (IsCrossSubscriptionMoveEnabled.HasValue)
+            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);

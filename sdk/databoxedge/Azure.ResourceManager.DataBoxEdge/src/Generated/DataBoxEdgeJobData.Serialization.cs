@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -68,49 +68,49 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && JobType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (options.Format != "W" && CurrentStage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
                 writer.WriteStringValue(CurrentStage.Value.ToString());
             }
-            if (options.Format != "W" && DownloadProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(DownloadProgress))
             {
                 writer.WritePropertyName("downloadProgress"u8);
                 writer.WriteObjectValue(DownloadProgress);
             }
-            if (options.Format != "W" && InstallProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(InstallProgress))
             {
                 writer.WritePropertyName("installProgress"u8);
                 writer.WriteObjectValue(InstallProgress);
             }
-            if (options.Format != "W" && TotalRefreshErrors.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalRefreshErrors))
             {
                 writer.WritePropertyName("totalRefreshErrors"u8);
                 writer.WriteNumberValue(TotalRefreshErrors.Value);
             }
-            if (options.Format != "W" && ErrorManifestFile != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorManifestFile))
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (options.Format != "W" && RefreshedEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(RefreshedEntityId))
             {
                 writer.WritePropertyName("refreshedEntityId"u8);
                 writer.WriteStringValue(RefreshedEntityId);
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteStringValue(Folder);

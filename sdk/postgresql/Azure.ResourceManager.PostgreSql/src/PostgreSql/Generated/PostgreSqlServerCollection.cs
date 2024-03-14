@@ -88,18 +88,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, PostgreSqlServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.CreateOrUpdate");
             scope.Start();
@@ -147,18 +137,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, PostgreSqlServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.CreateOrUpdate");
             scope.Start();
@@ -204,14 +184,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.Get");
             scope.Start();
@@ -256,14 +229,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<PostgreSqlServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlServerResource> GetReplicasAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetReplicas", "value", null, cancellationToken);
@@ -400,14 +359,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlServerResource> GetReplicas(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), _replicasClientDiagnostics, Pipeline, "PostgreSqlServerCollection.GetReplicas", "value", null, cancellationToken);
@@ -440,14 +392,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.Exists");
             scope.Start();
@@ -490,14 +435,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.Exists");
             scope.Start();
@@ -540,14 +478,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetIfExists");
             scope.Start();
@@ -592,14 +523,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var scope = _postgreSqlServerServersClientDiagnostics.CreateScope("PostgreSqlServerCollection.GetIfExists");
             scope.Start();

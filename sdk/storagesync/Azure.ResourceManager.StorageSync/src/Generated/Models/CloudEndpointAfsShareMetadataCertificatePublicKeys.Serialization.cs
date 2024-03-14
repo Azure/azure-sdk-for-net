@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FirstKey != null)
+            if (options.Format != "W" && Optional.IsDefined(FirstKey))
             {
                 writer.WritePropertyName("firstKey"u8);
                 writer.WriteStringValue(FirstKey);
             }
-            if (options.Format != "W" && SecondKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondKey))
             {
                 writer.WritePropertyName("secondKey"u8);
                 writer.WriteStringValue(SecondKey);

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Common;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing

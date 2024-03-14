@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsSoaRecordData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsSoaRecordData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsSoaRecordListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DnsSoaRecordListResult(value ?? new ChangeTrackingList<DnsSoaRecordData>(), nextLink, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DnsSoaRecordListResult>.Write(ModelReaderWriterOptions options)
         {

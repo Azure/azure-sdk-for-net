@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -44,6 +44,11 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(InputType))
+            {
+                writer.WritePropertyName("input_type"u8);
+                writer.WriteStringValue(InputType);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,6 +90,7 @@ namespace Azure.AI.OpenAI
             string user = default;
             string model = default;
             IList<string> input = default;
+            string inputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +115,18 @@ namespace Azure.AI.OpenAI
                     input = array;
                     continue;
                 }
+                if (property.NameEquals("input_type"u8))
+                {
+                    inputType = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmbeddingsOptions(user, model, input, serializedAdditionalRawData);
+            return new EmbeddingsOptions(user, model, input, inputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmbeddingsOptions>.Write(ModelReaderWriterOptions options)
