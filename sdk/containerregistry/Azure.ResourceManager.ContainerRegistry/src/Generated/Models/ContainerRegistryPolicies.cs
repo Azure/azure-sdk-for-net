@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The quarantine policy for a container registry. </summary>
         internal ContainerRegistryQuarantinePolicy QuarantinePolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("quarantinePolicy.status")]
         public ContainerRegistryPolicyStatus? QuarantineStatus
         {
             get => QuarantinePolicy is null ? default : QuarantinePolicy.Status;
@@ -80,12 +81,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The content trust policy for a container registry. </summary>
+        [WirePath("trustPolicy")]
         public ContainerRegistryTrustPolicy TrustPolicy { get; set; }
         /// <summary> The retention policy for a container registry. </summary>
+        [WirePath("retentionPolicy")]
         public ContainerRegistryRetentionPolicy RetentionPolicy { get; set; }
         /// <summary> The export policy for a container registry. </summary>
         internal ContainerRegistryExportPolicy ExportPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("exportPolicy.status")]
         public ContainerRegistryExportPolicyStatus? ExportStatus
         {
             get => ExportPolicy is null ? default : ExportPolicy.Status;

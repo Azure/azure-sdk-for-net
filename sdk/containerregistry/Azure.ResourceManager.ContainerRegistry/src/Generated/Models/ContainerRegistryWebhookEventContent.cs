@@ -72,24 +72,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The event ID. </summary>
+        [WirePath("id")]
         public Guid? Id { get; }
         /// <summary> The time at which the event occurred. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The action that encompasses the provided event. </summary>
+        [WirePath("action")]
         public string Action { get; }
         /// <summary> The target of the event. </summary>
+        [WirePath("target")]
         public ContainerRegistryWebhookEventTarget Target { get; }
         /// <summary> The request that generated the event. </summary>
+        [WirePath("request")]
         public ContainerRegistryWebhookEventRequestContent Request { get; }
         /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
         internal ContainerRegistryWebhookEventActor Actor { get; }
         /// <summary> The subject or username associated with the request context that generated the event. </summary>
+        [WirePath("actor.name")]
         public string ActorName
         {
             get => Actor?.Name;
         }
 
         /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
+        [WirePath("source")]
         public ContainerRegistryWebhookEventSource Source { get; }
     }
 }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The number of days to retain an untagged manifest after which it gets purged. </summary>
+        [WirePath("days")]
         public int? Days { get; set; }
         /// <summary> The timestamp when the policy was last updated. </summary>
+        [WirePath("lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("status")]
         public ContainerRegistryPolicyStatus? Status { get; set; }
     }
 }

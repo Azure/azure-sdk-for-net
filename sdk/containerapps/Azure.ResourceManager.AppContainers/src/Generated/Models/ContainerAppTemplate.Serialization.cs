@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         builder.AppendLine("[");
                         foreach (var item in InitContainers)
                         {
-                            AppendChildObject(builder, item, options, 4, true, "  initContainers: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  initContainers: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         builder.AppendLine("[");
                         foreach (var item in Containers)
                         {
-                            AppendChildObject(builder, item, options, 4, true, "  containers: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  containers: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
                 }
             }
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         builder.AppendLine("[");
                         foreach (var item in Volumes)
                         {
-                            AppendChildObject(builder, item, options, 4, true, "  volumes: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumes: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         builder.AppendLine("[");
                         foreach (var item in ServiceBinds)
                         {
-                            AppendChildObject(builder, item, options, 4, true, "  serviceBinds: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serviceBinds: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -381,48 +381,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)

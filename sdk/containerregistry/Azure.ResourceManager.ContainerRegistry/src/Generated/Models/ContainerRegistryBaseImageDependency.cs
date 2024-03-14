@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The type of the base image dependency. </summary>
+        [WirePath("type")]
         public ContainerRegistryBaseImageDependencyType? DependencyType { get; }
         /// <summary> The registry login server. </summary>
+        [WirePath("registry")]
         public string Registry { get; }
         /// <summary> The repository name. </summary>
+        [WirePath("repository")]
         public string Repository { get; }
         /// <summary> The tag name. </summary>
+        [WirePath("tag")]
         public string Tag { get; }
         /// <summary> The sha256-based digest of the image manifest. </summary>
+        [WirePath("digest")]
         public string Digest { get; }
     }
 }

@@ -73,11 +73,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// based on the type of the secret object. If the type is Opaque, the value will be
         /// used as is without any modification.
         /// </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary>
         /// The type of the secret object which determines how the value of the secret object has to be
         /// interpreted.
         /// </summary>
+        [WirePath("type")]
         public ContainerRegistrySecretObjectType? ObjectType { get; set; }
     }
 }

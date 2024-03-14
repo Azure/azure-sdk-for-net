@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The creation datetime of the password. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The expiry datetime of the password. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The password name "password1" or "password2". </summary>
+        [WirePath("name")]
         public ContainerRegistryTokenPasswordName? Name { get; set; }
         /// <summary> The password value. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

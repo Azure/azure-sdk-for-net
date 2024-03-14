@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
                 }
             }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
                 }
             }
 
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
                 }
             }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, Google, options, 2, false, "  google: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
                 }
             }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
                 }
             }
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
                 }
             }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
                 }
             }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         foreach (var item in CustomOpenIdConnectProviders)
                         {
                             builder.Append($"    '{item.Key}': ");
-                            AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
                         }
                         builder.AppendLine("  }");
                     }
@@ -355,48 +355,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)
