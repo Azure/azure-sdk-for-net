@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.ResourceManager.MachineLearningCompute;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {

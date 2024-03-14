@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {

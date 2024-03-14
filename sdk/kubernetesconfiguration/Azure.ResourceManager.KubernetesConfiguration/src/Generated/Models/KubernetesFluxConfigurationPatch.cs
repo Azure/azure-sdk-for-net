@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KubernetesConfiguration;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
