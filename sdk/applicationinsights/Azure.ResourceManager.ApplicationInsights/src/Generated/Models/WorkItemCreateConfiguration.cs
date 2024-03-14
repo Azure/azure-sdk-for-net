@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
