@@ -133,10 +133,7 @@ public abstract class BinaryContent : IDisposable
                     throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                 }
 
-                if (_sequenceReader == null)
-                {
-                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).ExtractReader();
-                }
+                _sequenceReader ??= new ModelWriter<T>(jsonModel, _options).ExtractReader();
                 return _sequenceReader;
             }
         }
@@ -224,46 +221,16 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            if (_stream.CanSeek)
-            {
-                length = _stream.Length - _origin;
-                return true;
-            }
-
-            length = 0;
-            return false;
+            // CanSeek is validated in constructor
+            length = _stream.Length - _origin;
+            return true;
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
 
-            // This is not using CopyTo so that we can honor cancellations.
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
-
-            try
-            {
-                while (true)
-                {
-                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-                    int read = _stream.Read(buffer, 0, buffer.Length);
-
-                    if (read == 0)
-                    {
-                        break;
-                    }
-
-                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-                    stream.Write(buffer, 0, read);
-                }
-            }
-            finally
-            {
-                stream.Flush();
-                ArrayPool<byte>.Shared.Return(buffer, true);
-            }
+            _stream.CopyTo(stream, cancellationToken);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
