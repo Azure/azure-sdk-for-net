@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityInsights;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
