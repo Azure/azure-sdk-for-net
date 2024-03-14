@@ -446,18 +446,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyKeyResource"> Request content. </param>
+        /// <param name="notificationHubPolicyKey"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyKeyResource"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubResourceKeys>> RegenerateKeysAsync(PolicyKeyResource policyKeyResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
+        public virtual async Task<Response<NotificationHubResourceKeys>> RegenerateKeysAsync(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyKeyResource, nameof(policyKeyResource));
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyKeyResource, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, notificationHubPolicyKey, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -488,18 +488,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyKeyResource"> Request content. </param>
+        /// <param name="notificationHubPolicyKey"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyKeyResource"/> is null. </exception>
-        public virtual Response<NotificationHubResourceKeys> RegenerateKeys(PolicyKeyResource policyKeyResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
+        public virtual Response<NotificationHubResourceKeys> RegenerateKeys(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyKeyResource, nameof(policyKeyResource));
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyKeyResource, cancellationToken);
+                var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, notificationHubPolicyKey, cancellationToken);
                 return response;
             }
             catch (Exception e)

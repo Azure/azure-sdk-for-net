@@ -112,28 +112,28 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// Name of the Notification Hubs namespace. This is immutable property, set automatically
         /// by the service when the namespace is created.
         /// </summary>
-        public string NamespaceName { get; }
+        public string NamespaceName { get; set; }
         /// <summary> Defines values for OperationProvisioningState. </summary>
         public OperationProvisioningState? ProvisioningState { get; set; }
         /// <summary> Namespace status. </summary>
         public NamespaceStatus? Status { get; set; }
         /// <summary> Gets or sets whether or not the namespace is currently enabled. </summary>
-        public bool? Enabled { get; }
+        public bool? Enabled { get; set; }
         /// <summary> Gets or sets whether or not the namespace is set as Critical. </summary>
-        public bool? Critical { get; }
+        public bool? Critical { get; set; }
         /// <summary> Namespace subscription id. </summary>
-        public string SubscriptionId { get; }
+        public string SubscriptionId { get; set; }
         /// <summary>
         /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
         /// this property.
         /// </summary>
-        public string Region { get; }
+        public string Region { get; set; }
         /// <summary> Azure Insights Metrics id. </summary>
         public string MetricId { get; }
         /// <summary> Time when the namespace was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Time when the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Defines values for NamespaceType. </summary>
         public NotificationHubNamespaceType? NamespaceType { get; set; }
         /// <summary> Allowed replication region. </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// Gets or sets endpoint you can use to perform NotificationHub
         /// operations.
         /// </summary>
-        public Uri ServiceBusEndpoint { get; }
+        public Uri ServiceBusEndpoint { get; set; }
         /// <summary> Private Endpoint Connections for namespace. </summary>
         public IReadOnlyList<PrivateEndpointConnectionResourceData> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets scaleUnit where the namespace gets created. </summary>

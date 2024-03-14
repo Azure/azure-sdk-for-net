@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
         /// <param name="dailyMaxActiveDevices"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string notificationHubName, TimeSpan? registrationTtl, IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             NotificationHubName = notificationHubName;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Gets or sets the RegistrationTtl of the created NotificationHub. </summary>
         public TimeSpan? RegistrationTtl { get; set; }
         /// <summary> Gets or sets the AuthorizationRules of the created NotificationHub. </summary>
-        public IReadOnlyList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
+        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
         /// <summary> Description of a NotificationHub ApnsCredential. </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
         /// <summary> Description of a NotificationHub WnsCredential. </summary>

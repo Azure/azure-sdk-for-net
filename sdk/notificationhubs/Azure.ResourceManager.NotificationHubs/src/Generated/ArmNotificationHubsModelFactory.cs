@@ -359,8 +359,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// Name of the Notification Hubs namespace. This is immutable property, set automatically
         /// by the service when the namespace is created.
         /// </param>
-        /// <param name="provisioningState"> Defines values for OperationProvisioningState. </param>
-        /// <param name="status"> Namespace status. </param>
+        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
+        /// <param name="namespaceStatus"> Namespace status. </param>
         /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
         /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
         /// <param name="subscriptionId"> Namespace subscription id. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? provisioningState = null, NamespaceStatus? status = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceType? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? operationProvisioningState = null, NamespaceStatus? namespaceStatus = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceType? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PrivateEndpointConnectionResourceData>();
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 location,
                 sku,
                 namespaceName,
-                provisioningState,
-                status,
+                operationProvisioningState,
+                namespaceStatus,
                 isEnabled,
                 isCritical,
                 subscriptionId,

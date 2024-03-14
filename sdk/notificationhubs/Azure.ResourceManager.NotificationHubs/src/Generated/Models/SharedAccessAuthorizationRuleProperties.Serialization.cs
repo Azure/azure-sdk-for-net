@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IReadOnlyList<AuthorizationRuleAccessRight> rights = default;
+            IList<AuthorizationRuleAccessRight> rights = default;
             string primaryKey = default;
             string secondaryKey = default;
             string keyName = default;

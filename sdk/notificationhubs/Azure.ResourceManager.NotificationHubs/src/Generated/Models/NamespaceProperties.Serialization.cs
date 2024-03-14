@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NamespaceName))
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Critical))
+            if (Optional.IsDefined(Critical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(Critical.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Region))
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(NamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
-                writer.WriteStringValue(NamespaceType.Value.ToString());
+                writer.WriteStringValue(NamespaceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplicationRegion))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("pnsCredentials"u8);
                 writer.WriteObjectValue(PnsCredentials);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceBusEndpoint))
+            if (Optional.IsDefined(ServiceBusEndpoint))
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    namespaceType = new NotificationHubNamespaceType(property.Value.GetString());
+                    namespaceType = property.Value.GetString().ToNotificationHubNamespaceType();
                     continue;
                 }
                 if (property.NameEquals("replicationRegion"u8))

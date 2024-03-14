@@ -9,6 +9,7 @@ csharp: true
 library-name: NotificationHubs
 namespace: Azure.ResourceManager.NotificationHubs
 require: https://github.com/Azure/azure-rest-api-specs/blob/a03dfac64acc53a8b84501a10099f95885b1b496/specification/notificationhubs/resource-manager/readme.md
+#package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,8 +20,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
@@ -30,7 +31,6 @@ request-path-to-resource-name:
 
 rename-mapping:
   NamespaceResource.properties.serviceBusEndpoint: -|uri
-  NamespaceCreateOrUpdateParameters.properties.serviceBusEndpoint: -|uri
   ApnsCredential.properties.endpoint: -|uri
   BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
   GcmCredential.properties.gcmEndpoint: -|uri
@@ -43,8 +43,6 @@ rename-mapping:
   SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|date-time
   NamespaceResource.properties.enabled: IsEnabled
   NamespaceResource.properties.critical: IsCritical
-  NamespaceCreateOrUpdateParameters.properties.enabled: IsEnabled
-  NamespaceCreateOrUpdateParameters.properties.critical: IsCritical
   ApnsCredential: NotificationHubApnsCredential
   WnsCredential: NotificationHubWnsCredential
   GcmCredential: NotificationHubGcmCredential
@@ -61,13 +59,14 @@ rename-mapping:
   NamespaceListResult: NotificationHubNamespaceListResult
   NamespaceType: NotificationHubNamespaceType
   PnsCredentialsResource: NotificationHubPnsCredentials
-  PolicykeyResource: NotificationHubPolicyKey
+  PolicyKeyResource: NotificationHubPolicyKey
   ResourceListKeys: NotificationHubResourceKeys
   Sku: NotificationHubSku
   SkuName: NotificationHubSkuName
-  SharedAccessAuthorizationRuleCreateOrUpdateParameters: SharedAccessAuthorizationRuleCreateOrUpdateContent
   ApnsCredential.properties.thumbprint: ThumbprintString
   MpnsCredential.properties.thumbprint: ThumbprintString
+  NamespaceResource.properties.provisioningState: OperationProvisioningState
+  NamespaceResource.properties.status: NamespaceStatus
 
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
@@ -111,4 +110,18 @@ directive:
     $.NamespaceProperties.properties.name['x-ms-client-name'] = 'NamespaceName';
     $.DebugSendResult.properties.success['type'] = 'integer';
     $.DebugSendResult.properties.failure['type'] = 'integer';
+# Revert spec modifications to keep backward compatibility.”
+- from: notificationhubs.json
+  where: $.definitions
+  transform: >
+    $.NotificationHubProperties.properties.authorizationRules['readOnly'] = false;
+    $.NamespaceType['x-ms-enum']['modelAsString'] = false;
+    $.NamespaceProperties.properties.createdAt['readOnly'] = false;
+    $.NamespaceProperties.properties.critical['readOnly'] = false;
+    $.NamespaceProperties.properties.enabled['readOnly'] = false;
+    $.NamespaceProperties.properties.name['readOnly'] = false;
+    $.NamespaceProperties.properties.region['readOnly'] = false;
+    $.NamespaceProperties.properties.serviceBusEndpoint['readOnly'] = false;
+    $.NamespaceProperties.properties.updatedAt['readOnly'] = false;
+    $.NamespaceProperties.properties.subscriptionId['readOnly'] = false;
 ```

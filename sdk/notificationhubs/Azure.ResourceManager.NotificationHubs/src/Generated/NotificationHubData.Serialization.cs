@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("registrationTtl"u8);
                 writer.WriteStringValue(RegistrationTtl.Value, "c");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AuthorizationRules))
+            if (Optional.IsCollectionDefined(AuthorizationRules))
             {
                 writer.WritePropertyName("authorizationRules"u8);
                 writer.WriteStartArray();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NotificationHubs
             SystemData systemData = default;
             string name0 = default;
             TimeSpan? registrationTtl = default;
-            IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
+            IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
             NotificationHubApnsCredential apnsCredential = default;
             NotificationHubWnsCredential wnsCredential = default;
             NotificationHubGcmCredential gcmCredential = default;

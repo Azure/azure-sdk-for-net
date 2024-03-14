@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class PolicyKeyResource : IUtf8JsonSerializable, IJsonModel<PolicyKeyResource>
+    public partial class NotificationHubPolicyKey : IUtf8JsonSerializable, IJsonModel<NotificationHubPolicyKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyKeyResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPolicyKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<PolicyKeyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubPolicyKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyKeyResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPolicyKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyKeyResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPolicyKey)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        PolicyKeyResource IJsonModel<PolicyKeyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubPolicyKey IJsonModel<NotificationHubPolicyKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyKeyResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPolicyKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyKeyResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPolicyKey)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePolicyKeyResource(document.RootElement, options);
+            return DeserializeNotificationHubPolicyKey(document.RootElement, options);
         }
 
-        internal static PolicyKeyResource DeserializePolicyKeyResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubPolicyKey DeserializeNotificationHubPolicyKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -82,38 +82,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyKeyResource(policyKey, serializedAdditionalRawData);
+            return new NotificationHubPolicyKey(policyKey, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PolicyKeyResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubPolicyKey>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyKeyResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPolicyKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyKeyResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPolicyKey)} does not support '{options.Format}' format.");
             }
         }
 
-        PolicyKeyResource IPersistableModel<PolicyKeyResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubPolicyKey IPersistableModel<NotificationHubPolicyKey>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyKeyResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPolicyKey>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePolicyKeyResource(document.RootElement, options);
+                        return DeserializeNotificationHubPolicyKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyKeyResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPolicyKey)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PolicyKeyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubPolicyKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

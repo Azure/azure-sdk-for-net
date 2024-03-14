@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
         /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rights"/> is null. </exception>
-        internal SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights)
+        public SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights)
         {
             Argument.AssertNotNull(rights, nameof(rights));
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="claimValue"> Gets a string that describes the claim value. </param>
         /// <param name="revision"> Gets the revision number for the rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessAuthorizationRuleProperties(IReadOnlyList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rights = rights;
             PrimaryKey = primaryKey;
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Gets or sets the rights associated with the rule. </summary>
-        public IReadOnlyList<AuthorizationRuleAccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRight> Rights { get; }
         /// <summary>
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
         /// </summary>
-        public string PrimaryKey { get; }
+        public string PrimaryKey { get; set; }
         /// <summary>
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
         /// </summary>
-        public string SecondaryKey { get; }
+        public string SecondaryKey { get; set; }
         /// <summary> Gets a string that describes the authorization rule. </summary>
         public string KeyName { get; }
         /// <summary> Gets the last modified time for this rule. </summary>

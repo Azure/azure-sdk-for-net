@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Namespace / NotificationHub Regenerate Keys request. </summary>
-    public partial class PolicyKeyResource
+    public partial class NotificationHubPolicyKey
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyKeyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         /// <param name="policyKey"> Type of Shared Access Policy Key (primary or secondary). </param>
-        public PolicyKeyResource(PolicyKeyType policyKey)
+        public NotificationHubPolicyKey(PolicyKeyType policyKey)
         {
             PolicyKey = policyKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyKeyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         /// <param name="policyKey"> Type of Shared Access Policy Key (primary or secondary). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyKeyResource(PolicyKeyType policyKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPolicyKey(PolicyKeyType policyKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyKey = policyKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyKeyResource"/> for deserialization. </summary>
-        internal PolicyKeyResource()
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/> for deserialization. </summary>
+        internal NotificationHubPolicyKey()
         {
         }
 

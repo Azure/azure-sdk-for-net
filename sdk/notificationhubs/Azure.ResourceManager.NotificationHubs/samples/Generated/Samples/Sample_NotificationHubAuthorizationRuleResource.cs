@@ -174,8 +174,8 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             NotificationHubAuthorizationRuleResource notificationHubAuthorizationRule = client.GetNotificationHubAuthorizationRuleResource(notificationHubAuthorizationRuleResourceId);
 
             // invoke the operation
-            PolicyKeyResource policyKeyResource = new PolicyKeyResource(PolicyKeyType.PrimaryKey);
-            NotificationHubResourceKeys result = await notificationHubAuthorizationRule.RegenerateKeysAsync(policyKeyResource);
+            NotificationHubPolicyKey notificationHubPolicyKey = new NotificationHubPolicyKey(PolicyKeyType.PrimaryKey);
+            NotificationHubResourceKeys result = await notificationHubAuthorizationRule.RegenerateKeysAsync(notificationHubPolicyKey);
 
             Console.WriteLine($"Succeeded: {result}");
         }

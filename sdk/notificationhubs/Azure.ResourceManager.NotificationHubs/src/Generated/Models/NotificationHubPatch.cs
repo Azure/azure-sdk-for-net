@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
         /// <param name="dailyMaxActiveDevices"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPatch(NotificationHubSku sku, IDictionary<string, string> tags, string notificationHubName, TimeSpan? registrationTtl, IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPatch(NotificationHubSku sku, IDictionary<string, string> tags, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Gets or sets the RegistrationTtl of the created NotificationHub. </summary>
         public TimeSpan? RegistrationTtl { get; set; }
         /// <summary> Gets or sets the AuthorizationRules of the created NotificationHub. </summary>
-        public IReadOnlyList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
+        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
         /// <summary> Description of a NotificationHub ApnsCredential. </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
         /// <summary> Description of a NotificationHub WnsCredential. </summary>
