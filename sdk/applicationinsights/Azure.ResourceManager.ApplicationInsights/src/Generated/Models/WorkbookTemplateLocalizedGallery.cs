@@ -93,8 +93,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("templateData")]
         public BinaryData TemplateData { get; set; }
         /// <summary> Workbook galleries supported by the template. </summary>
+        [WirePath("galleries")]
         public IList<WorkbookTemplateGallery> Galleries { get; }
     }
 }

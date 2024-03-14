@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> A list of Application Insights component feature. </summary>
+        [WirePath("Result")]
         public IReadOnlyList<ApplicationInsightsComponentFeature> Result { get; }
     }
 }
