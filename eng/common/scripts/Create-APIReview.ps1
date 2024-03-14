@@ -136,7 +136,6 @@ function Submit-APIReview($packageInfo, $packagePath)
 {
     $packageName = $packageInfo.Name    
     $apiLabel = "Source Branch:${SourceBranch}"
-    $packageVersion = $versionString
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
