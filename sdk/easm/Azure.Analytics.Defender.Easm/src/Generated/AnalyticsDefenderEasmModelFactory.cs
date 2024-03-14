@@ -484,17 +484,6 @@ namespace Azure.Analytics.Defender.Easm
                 detailedFromWhoisAt);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
-        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
-        {
-            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedString"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -515,6 +504,17 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null,
                 value,
                 sources?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
+        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        {
+            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SourceDetails"/>. </summary>

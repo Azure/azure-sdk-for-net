@@ -27,6 +27,8 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
@@ -36,8 +38,6 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,14 +76,19 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            DistributionModeKind kind = "Unknown";
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;
             bool? bypassSelectors = default;
-            DistributionModeKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DistributionModeKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("minConcurrentOffers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,18 +116,13 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new DistributionModeKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData);
+            return new UnknownDistributionMode(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributionMode>.Write(ModelReaderWriterOptions options)

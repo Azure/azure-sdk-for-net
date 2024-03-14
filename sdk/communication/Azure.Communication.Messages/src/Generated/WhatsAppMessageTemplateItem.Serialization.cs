@@ -40,6 +40,8 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
 #endif
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -49,8 +51,6 @@ namespace Azure.Communication.Messages.Models.Channels
             writer.WriteStringValue(Language);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,10 +90,10 @@ namespace Azure.Communication.Messages.Models.Channels
                 return null;
             }
             BinaryData content = default;
+            CommunicationMessagesChannel kind = default;
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
-            CommunicationMessagesChannel kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,6 +105,11 @@ namespace Azure.Communication.Messages.Models.Channels
                         continue;
                     }
                     content = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessagesChannel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -122,11 +127,6 @@ namespace Azure.Communication.Messages.Models.Channels
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new CommunicationMessagesChannel(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -134,10 +134,10 @@ namespace Azure.Communication.Messages.Models.Channels
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WhatsAppMessageTemplateItem(
+                kind,
                 name,
                 language,
                 status,
-                kind,
                 serializedAdditionalRawData,
                 content);
         }

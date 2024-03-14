@@ -37,6 +37,8 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("scoringRuleOptions"u8);
                 writer.WriteObjectValue(ScoringRuleOptions);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
@@ -46,8 +48,6 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,10 +88,10 @@ namespace Azure.Communication.JobRouter
             }
             RouterRule scoringRule = default;
             ScoringRuleOptions scoringRuleOptions = default;
+            DistributionModeKind kind = default;
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;
             bool? bypassSelectors = default;
-            DistributionModeKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,6 +112,11 @@ namespace Azure.Communication.JobRouter
                         continue;
                     }
                     scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DistributionModeKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minConcurrentOffers"u8))
@@ -141,11 +146,6 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new DistributionModeKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -153,10 +153,10 @@ namespace Azure.Communication.JobRouter
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BestWorkerMode(
+                kind,
                 minConcurrentOffers,
                 maxConcurrentOffers,
                 bypassSelectors,
-                kind,
                 serializedAdditionalRawData,
                 scoringRule,
                 scoringRuleOptions);

@@ -50,7 +50,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4CodeableConcept orderType = default;
             IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = default;
             IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = default;
-            string kind = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))

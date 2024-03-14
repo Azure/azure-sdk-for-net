@@ -47,13 +47,13 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,8 +95,8 @@ namespace Azure.Communication.JobRouter
             string queueId = default;
             int? priority = default;
             IList<RouterWorkerSelector> workerSelectors = default;
-            string id = default;
             ExceptionActionKind kind = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,14 +129,14 @@ namespace Azure.Communication.JobRouter
                     workerSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new ExceptionActionKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,8 +146,8 @@ namespace Azure.Communication.JobRouter
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManualReclassifyExceptionAction(
-                id,
                 kind,
+                id,
                 serializedAdditionalRawData,
                 queueId,
                 priority,

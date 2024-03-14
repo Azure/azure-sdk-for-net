@@ -29,10 +29,10 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,8 +72,8 @@ namespace Azure.Communication.Messages
                 return null;
             }
             string text = default;
+            MessageTemplateValueKind kind = default;
             string name = default;
-            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,14 +83,14 @@ namespace Azure.Communication.Messages
                     text = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new MessageTemplateValueKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,7 +99,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateText(name, kind, serializedAdditionalRawData, text);
+            return new MessageTemplateText(kind, name, serializedAdditionalRawData, text);
         }
 
         BinaryData IPersistableModel<MessageTemplateText>.Write(ModelReaderWriterOptions options)

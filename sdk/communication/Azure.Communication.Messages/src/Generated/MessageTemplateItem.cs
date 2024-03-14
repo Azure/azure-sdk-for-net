@@ -63,17 +63,17 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
-        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageTemplateItem(CommunicationMessagesChannel kind, string name, string language, MessageTemplateStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Kind = kind;
             Name = name;
             Language = language;
             Status = status;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,13 +82,13 @@ namespace Azure.Communication.Messages
         {
         }
 
+        /// <summary> The type discriminator describing a template type. </summary>
+        internal CommunicationMessagesChannel Kind { get; set; }
         /// <summary> The template's name. </summary>
         public string Name { get; }
         /// <summary> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </summary>
         public string Language { get; }
         /// <summary> The aggregated template status. </summary>
         public MessageTemplateStatus Status { get; }
-        /// <summary> The type discriminator describing a template type. </summary>
-        internal CommunicationMessagesChannel Kind { get; set; }
     }
 }

@@ -29,6 +29,8 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("template"u8);
             writer.WriteObjectValue(Template);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -38,8 +40,6 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,9 +79,9 @@ namespace Azure.Communication.Messages
                 return null;
             }
             MessageTemplate template = default;
+            CommunicationMessageKind kind = default;
             Guid channelRegistrationId = default;
             IList<string> to = default;
-            CommunicationMessageKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,6 +89,11 @@ namespace Azure.Communication.Messages
                 if (property.NameEquals("template"u8))
                 {
                     template = MessageTemplate.DeserializeMessageTemplate(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessageKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("channelRegistrationId"u8))
@@ -106,18 +111,13 @@ namespace Azure.Communication.Messages
                     to = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new CommunicationMessageKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData, template);
+            return new TemplateNotificationContent(kind, channelRegistrationId, to, serializedAdditionalRawData, template);
         }
 
         BinaryData IPersistableModel<TemplateNotificationContent>.Write(ModelReaderWriterOptions options)

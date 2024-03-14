@@ -1206,10 +1206,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                poolName = "<poolName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1226,10 +1223,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                poolName = "<poolName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1248,7 +1242,6 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                poolName = "<poolName>",
                 localAdministrator = "Enabled",
             });
             Operation<BinaryData> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", content);
@@ -1293,7 +1286,6 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                poolName = "<poolName>",
                 localAdministrator = "Enabled",
             });
             Operation<BinaryData> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", content);

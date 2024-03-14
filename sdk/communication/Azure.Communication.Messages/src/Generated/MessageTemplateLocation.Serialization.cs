@@ -41,10 +41,10 @@ namespace Azure.Communication.Messages
             writer.WriteNumberValue(LatitudeInternal);
             writer.WritePropertyName("longitude"u8);
             writer.WriteNumberValue(LongitudeInternal);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,8 +87,8 @@ namespace Azure.Communication.Messages
             string address = default;
             double latitude = default;
             double longitude = default;
+            MessageTemplateValueKind kind = default;
             string name = default;
-            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,14 +113,14 @@ namespace Azure.Communication.Messages
                     longitude = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new MessageTemplateValueKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,8 +130,8 @@ namespace Azure.Communication.Messages
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MessageTemplateLocation(
-                name,
                 kind,
+                name,
                 serializedAdditionalRawData,
                 locationName,
                 address,

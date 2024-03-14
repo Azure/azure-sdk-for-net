@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
-        internal ExceptionRule(string id, ExceptionTrigger trigger, IEnumerable<ExceptionAction> actions)
+        public ExceptionRule(string id, ExceptionTrigger trigger, IEnumerable<ExceptionAction> actions)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(trigger, nameof(trigger));
@@ -81,12 +81,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Id of an exception rule. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary>
         /// The trigger for this exception rule.
         /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
         /// </summary>
-        public ExceptionTrigger Trigger { get; }
+        public ExceptionTrigger Trigger { get; set; }
     }
 }

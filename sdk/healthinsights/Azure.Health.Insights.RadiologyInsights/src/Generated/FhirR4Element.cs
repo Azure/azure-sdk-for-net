@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FhirR4Element"/>. </summary>
-        internal FhirR4Element()
+        public FhirR4Element()
         {
             Extension = new ChangeTrackingList<FhirR4Extension>();
         }
@@ -58,7 +58,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4Element(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FhirR4Element(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Extension = extension;
@@ -66,8 +66,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Unique id for inter-element referencing. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Additional Content defined by implementations. </summary>
-        public IReadOnlyList<FhirR4Extension> Extension { get; }
+        public IList<FhirR4Extension> Extension { get; }
     }
 }

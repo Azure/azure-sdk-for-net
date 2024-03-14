@@ -46,18 +46,15 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
+        internal DocumentClassifierDetails(DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
-            Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
             Argument.AssertNotNull(docTypes, nameof(docTypes));
 
-            ClassifierId = classifierId;
             CreatedOn = createdOn;
             ApiVersion = apiVersion;
             DocTypes = docTypes;
