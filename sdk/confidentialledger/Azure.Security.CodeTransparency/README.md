@@ -10,7 +10,7 @@
 
 ### Install the package
 
-Make sure you have access to the correct Nuget Feed.
+Make sure you have access to the correct NuGet Feed.
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
