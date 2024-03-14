@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Resources
                         foreach (var item in Parameters)
                         {
                             builder.Append($"        '{item.Key}': ");
-                            AppendChildObject(builder, item.Value, options, 6, false, "    parameters: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    parameters: ");
                         }
                         builder.AppendLine("    }");
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Resources
                         builder.AppendLine("[");
                         foreach (var item in PolicyDefinitions)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    policyDefinitions: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    policyDefinitions: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Resources
                         builder.AppendLine("[");
                         foreach (var item in PolicyDefinitionGroups)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    policyDefinitionGroups: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    policyDefinitionGroups: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -497,48 +497,6 @@ namespace Azure.ResourceManager.Resources
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

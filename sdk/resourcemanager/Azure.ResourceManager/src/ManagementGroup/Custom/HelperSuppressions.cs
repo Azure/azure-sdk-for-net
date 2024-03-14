@@ -7,3 +7,4 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.ChangeTrackingList")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.RequestContentHelper")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.Argument")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.BicepSerializationHelpers")]
