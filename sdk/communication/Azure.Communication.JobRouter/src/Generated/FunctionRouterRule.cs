@@ -30,6 +30,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> URL for Azure Function. </summary>
-        public Uri FunctionUri { get; }
+        public Uri FunctionUri { get; set; }
     }
 }

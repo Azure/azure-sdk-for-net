@@ -28,6 +28,8 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -37,8 +39,6 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Language);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

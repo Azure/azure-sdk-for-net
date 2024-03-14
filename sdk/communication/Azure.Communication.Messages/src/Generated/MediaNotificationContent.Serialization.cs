@@ -34,6 +34,8 @@ namespace Azure.Communication.Messages
             }
             writer.WritePropertyName("mediaUri"u8);
             writer.WriteStringValue(MediaUri.AbsoluteUri);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -43,8 +45,6 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,9 +85,9 @@ namespace Azure.Communication.Messages
             }
             string content = default;
             Uri mediaUri = default;
+            CommunicationMessageKind kind = default;
             Guid channelRegistrationId = default;
             IList<string> to = default;
-            CommunicationMessageKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,6 +100,11 @@ namespace Azure.Communication.Messages
                 if (property.NameEquals("mediaUri"u8))
                 {
                     mediaUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessageKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("channelRegistrationId"u8))
@@ -117,11 +122,6 @@ namespace Azure.Communication.Messages
                     to = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new CommunicationMessageKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -129,9 +129,9 @@ namespace Azure.Communication.Messages
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MediaNotificationContent(
+                kind,
                 channelRegistrationId,
                 to,
-                kind,
                 serializedAdditionalRawData,
                 content,
                 mediaUri);

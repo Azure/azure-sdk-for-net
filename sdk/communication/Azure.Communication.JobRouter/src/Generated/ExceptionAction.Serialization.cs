@@ -27,13 +27,13 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -55,17 +55,16 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="ExceptionAction"/>. </summary>
-        /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExceptionAction(string id, ExceptionActionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExceptionAction(ExceptionActionKind kind, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
             Kind = kind;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
         /// <summary> Unique Id of the exception action. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
     }
 }
