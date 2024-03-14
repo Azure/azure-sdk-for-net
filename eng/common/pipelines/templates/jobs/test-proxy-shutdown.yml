@@ -28,13 +28,13 @@ stages:
           - pwsh: |
               $(Build.BinariesDirectory)/test-proxy/test-proxy.exe restore .
             displayName: Generate some proxy logs windows
-            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
 
           - pwsh: |
               $(Build.BinariesDirectory)/test-proxy/test-proxy restore .
             displayName: Generate some proxy logs linux
             continueOnError: true
-            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
 
           - template: /eng/common/testproxy/test-proxy-tool-shutdown.yml
 
