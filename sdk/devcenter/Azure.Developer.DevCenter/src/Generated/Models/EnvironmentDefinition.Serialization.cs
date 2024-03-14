@@ -55,14 +55,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ParametersSchema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ParametersSchema))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteStringValue(ParametersSchema);
             }
             if (Optional.IsDefined(TemplatePath))
             {
@@ -112,7 +105,7 @@ namespace Azure.Developer.DevCenter.Models
             string catalogName = default;
             string description = default;
             IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
-            BinaryData parametersSchema = default;
+            string parametersSchema = default;
             string templatePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -154,11 +147,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("parametersSchema"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parametersSchema = BinaryData.FromString(property.Value.GetRawText());
+                    parametersSchema = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
