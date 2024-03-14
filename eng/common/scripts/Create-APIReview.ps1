@@ -10,7 +10,7 @@ Param (
   [string] $DefaultBranch,
   [string] $RepoName,
   [string] $BuildId,
-  [string] $PackageNameFilter,
+  [string] $PackageName,
   [string] $ConfigFileDir,
   [string] $APIViewUri = "https://apiview.dev/AutoReview",
   [string] $ArtifactName = "packages",
@@ -75,7 +75,6 @@ function Upload-SourceArtifact($packagename, $filePath, $apiLabel, $releaseStatu
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
-        Write-Host "API view URL: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -108,7 +107,6 @@ function Uploaded-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $revi
     try
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri -Headers $headers
-        Write-Host "API view URL: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -152,12 +150,12 @@ function Submit-APIReview($packageInfo, $packagePath)
 }
 
 
-function ProcessPackage($PackageName)
+function ProcessPackage($packageName)
 {
     $packages = @{}
     if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
     {
-        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $PackageName
+        $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageName
     }
     else
     {
@@ -172,7 +170,7 @@ function ProcessPackage($PackageName)
         foreach($pkgPath in $packages.Values)
         {
             $pkg = Split-Path -Leaf $pkgPath
-            $pkgPropPath = Join-Path -Path $ConfigFileDir "$PackageName.json"
+            $pkgPropPath = Join-Path -Path $ConfigFileDir "$packageName.json"
             if (-Not (Test-Path $pkgPropPath))
             {
                 Write-Host " Package property file path $($pkgPropPath) is invalid."
@@ -183,7 +181,7 @@ function ProcessPackage($PackageName)
             $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
             if ($version -eq $null)
             {
-                Write-Host "Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+                Write-Host "Version info is not available for package $packageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
                 return 1
             }
             
@@ -193,7 +191,7 @@ function ProcessPackage($PackageName)
 
             # Run create review step only if build is triggered from main branch or if version is GA.
             # This is to avoid invalidating review status by a build triggered from feature branch
-            if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
+            if ( ($SourceBranch -ne $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
             {
                 Write-Host "Submitting API Review request for package $($pkg)"
                 $respCode = Submit-APIReview -packageInfo $pkgInfo -filePath $pkgPath
@@ -204,10 +202,10 @@ function ProcessPackage($PackageName)
                 {
                     if ($respCode -eq '500')
                     {
-                        Write-Host "Failed to mark package ${PackageName} as released. Please reach out to Azure SDK engineering systems on teams channel."   
+                        Write-Host "Failed to mark package ${packageName} as released. Please reach out to Azure SDK engineering systems on teams channel."   
                         return 1
                     }
-                    Write-Host "Package ${PackageName} is marked as released."   
+                    Write-Host "Package ${packageName} is marked as released."   
                     return 0
                 }
 
@@ -219,7 +217,7 @@ function ProcessPackage($PackageName)
                     IsApproved = $false
                     Details = ""
                 }
-                Process-ReviewStatusCode $respCode $PackageName $apiStatus $pkgNameStatus
+                Process-ReviewStatusCode $respCode $packageName $apiStatus $pkgNameStatus
 
                 if ($apiStatus.IsApproved) {
                     Write-Host "API status: $($apiStatus.Details)"
@@ -247,7 +245,7 @@ function ProcessPackage($PackageName)
                     {
                         if (!$apiStatus.IsApproved)
                         {
-                            Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($PackageName)."
+                            Write-Host "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageName)."
                             Write-Host "Build and release is not allowed for GA package without API review approval."
                             Write-Host "You will need to queue another build to proceed further after API review is approved"
                             Write-Host "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
@@ -255,7 +253,7 @@ function ProcessPackage($PackageName)
                         return 1
                     }
                     else {
-                        Write-Host "API review is not approved for package $($PackageName), however it is not required for this package type so it can still be released without API review approval."
+                        Write-Host "API review is not approved for package $($packageName), however it is not required for this package type so it can still be released without API review approval."
                     }
                 }
             }
@@ -281,15 +279,22 @@ Write-Host "Artifact path: $($ArtifactPath)"
 Write-Host "Source branch: $($SourceBranch)"
 Write-Host "Config File directory: $($ConfigFileDir)"
 
-foreach ($artifact in $ArtifactList)
+# if package name param is not empty then process only that package
+if ($PackageName)
 {
-    # if package name param is not empty then process only that package to support calling this script for a single package from release job
-    if ($PackageNameFilter -and $PackageNameFilter -ne $artifact.name) {
-        continue
+    Write-Host "Processing $($PackageName)"
+    $result = ProcessPackage -packageName $PackageName
+    $responses[$PackageName] = $result 
+}
+else
+{
+    # process all packages in the artifact
+    foreach ($artifact in $ArtifactList)
+    {
+        Write-Host "Processing $($artifact.name)"
+        $result = ProcessPackage -packageName $artifact.name
+        $responses[$artifact.name] = $result
     }
-    Write-Host "Processing $($artifact.name)"
-    $result = ProcessPackage -PackageName $artifact.name
-    $responses[$artifact.name] = $result 
 }
 
 $exitCode = 0
