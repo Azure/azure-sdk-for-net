@@ -26,13 +26,13 @@ stages:
           - template: /eng/common/testproxy/test-proxy-tool.yml
 
           - pwsh: |
-              $(Build.BinariesDirectory)/test-proxy/test-proxy.exe restore .
+              $(Build.BinariesDirectory)/test-proxy/test-proxy.exe restore -a .
             displayName: Generate some proxy logs windows
             continueOnError: true
             condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
 
           - pwsh: |
-              $(Build.BinariesDirectory)/test-proxy/test-proxy restore .
+              $(Build.BinariesDirectory)/test-proxy/test-proxy restore -a .
             displayName: Generate some proxy logs linux
             continueOnError: true
             condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))
@@ -40,3 +40,17 @@ stages:
           - template: /eng/common/testproxy/test-proxy-tool-shutdown.yml
 
           - template: /eng/common/testproxy/publish-proxy-logs.yml
+
+          - pwsh: |
+              for ($i = 0; $i -lt 10; $i++) {
+                  try {
+                      Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                      exit 0
+                  } catch {
+                      Write-Warning "Failed to successfully connect to test proxy. Retrying..."
+                      Start-Sleep 6
+                  }
+              }
+              Write-Error "Could not connect to test proxy."
+              exit 1
+            displayName: Test Proxy IsAlive
