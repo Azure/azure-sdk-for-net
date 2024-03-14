@@ -3,7 +3,6 @@ parameters:
   Artifacts: []
   ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
   MarkPackageAsShipped: $false
-  APIViewHostUrl: 'https://apiview.dev/'
   GenerateApiReviewForManualOnly: false
   ArtifactName: 'packages'
   PackageName: ''
@@ -24,12 +23,12 @@ steps:
           -ArtifactPath ${{parameters.ArtifactPath}}
           -ArtifactName ${{ parameters.ArtifactName }}
           -APIKey $(azuresdk-apiview-apikey)
-          -PackageName ${{parameters.PackageName}}
+          -PackageName '${{parameters.PackageName}}'
           -SourceBranch $(Build.SourceBranchName)
           -DefaultBranch $(DefaultBranch)
           -ConfigFileDir '${{parameters.ConfigFileDir}}'
           -BuildId $(Build.BuildId)
-          -RepoName $(Build.Repository.Name)          
+          -RepoName '$(Build.Repository.Name)'    
           -MarkPackageAsShipped ${{parameters.MarkPackageAsShipped}}
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
