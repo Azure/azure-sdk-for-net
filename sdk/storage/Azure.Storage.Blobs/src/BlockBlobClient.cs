@@ -1314,7 +1314,7 @@ namespace Azure.Storage.Blobs.Specialized
                         validationOptions.PrecalculatedChecksum.IsEmpty &&
                         ClientSideEncryption == null) // don't allow feature combination
                     {
-                        // report progress in terms of customer bytes, not encoded bytes
+                        // report progress in terms of caller bytes, not encoded bytes
                         structuredContentLength = contentLength;
                         contentLength = (content?.Length - content?.Position) ?? 0;
                         structuredBodyType = "XSM/1.0; properties=crc64";
