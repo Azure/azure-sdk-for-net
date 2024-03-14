@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<bool> logParameters = default;
             DataFactoryElement<string> timezone = default;
             DataFactoryElement<string> encoding = default;
-            DataFactoryKeyVaultSecret password = default;
+            DataFactoryKeyVaultSecretReference password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

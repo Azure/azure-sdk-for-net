@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {

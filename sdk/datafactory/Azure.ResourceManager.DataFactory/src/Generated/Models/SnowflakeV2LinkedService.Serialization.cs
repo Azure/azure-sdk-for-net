@@ -174,16 +174,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountIdentifier = default;
             DataFactoryElement<string> user = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<string> warehouse = default;
             SnowflakeAuthenticationType? authenticationType = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecret clientSecret = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
             DataFactoryElement<string> tenantId = default;
             DataFactoryElement<string> scope = default;
-            DataFactorySecret privateKey = default;
-            DataFactorySecret privateKeyPassphrase = default;
+            DataFactorySecretBaseDefinition privateKey = default;
+            DataFactorySecretBaseDefinition privateKeyPassphrase = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenantId"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("privateKeyPassphrase"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

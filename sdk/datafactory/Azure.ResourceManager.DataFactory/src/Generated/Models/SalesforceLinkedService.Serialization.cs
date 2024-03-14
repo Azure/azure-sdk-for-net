@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> environmentUrl = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecret password = default;
-            DataFactorySecret securityToken = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecretBaseDefinition securityToken = default;
             DataFactoryElement<string> apiVersion = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("securityToken"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            securityToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            securityToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("apiVersion"u8))

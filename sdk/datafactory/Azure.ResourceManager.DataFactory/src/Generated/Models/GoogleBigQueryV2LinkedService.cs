@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
         /// <param name="keyFileContent"> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleBigQueryV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactorySecret refreshToken, DataFactorySecret keyFileContent, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleBigQueryV2LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType, DataFactoryElement<string> clientId, DataFactorySecretBaseDefinition clientSecret, DataFactorySecretBaseDefinition refreshToken, DataFactorySecretBaseDefinition keyFileContent, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ProjectId = projectId;
             AuthenticationType = authenticationType;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
-        public DataFactorySecret RefreshToken { get; set; }
+        public DataFactorySecretBaseDefinition RefreshToken { get; set; }
         /// <summary> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret KeyFileContent { get; set; }
+        public DataFactorySecretBaseDefinition KeyFileContent { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }
