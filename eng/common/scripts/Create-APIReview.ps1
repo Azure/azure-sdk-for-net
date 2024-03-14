@@ -15,7 +15,7 @@ Param (
 )
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel, $releaseStatus)
+function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel, $releaseStatus, $packageVersion)
 {
     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
     $FileStream = [System.IO.FileStream]::new($filePath, [System.IO.FileMode]::Open)
@@ -34,6 +34,13 @@ function Submit-APIReview($packagename, $filePath, $uri, $apiKey, $apiLabel, $re
     $StringContent.Headers.ContentDisposition = $stringHeader
     $multipartContent.Add($stringContent)
     Write-Host "Request param, label: $apiLabel"
+
+    $versionParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+    $versionParam.Name = "packageVersion"
+    $versionContent = [System.Net.Http.StringContent]::new($packageVersion)
+    $versionContent.Headers.ContentDisposition = $versionParam
+    $multipartContent.Add($versionContent)
+    Write-Host "Request param, packageVersion: $packageVersion"
 
     if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
     {
@@ -106,6 +113,7 @@ if ($packages)
         # Get package info from json file created before updating version to daily dev
         $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
         $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+        $versionString = $pkgInfo.Version
         if ($version -eq $null)
         {
             Write-Host "Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
@@ -121,7 +129,7 @@ if ($packages)
         if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {
             Write-Host "Submitting API Review for package $($pkg)"
-            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel -releaseStatus $pkgInfo.ReleaseStatus
+            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel -releaseStatus $pkgInfo.ReleaseStatus -packageVersion $versionString
             Write-Host "HTTP Response code: $($respCode)"
             # HTTP status 200 means API is in approved status
             if ($respCode -eq '200')

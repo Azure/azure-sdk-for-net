@@ -146,7 +146,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
-      
+
       - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
         - template: /eng/pipelines/templates/steps/aot-compatibility.yml
           parameters:
@@ -213,6 +213,10 @@ jobs:
           pwsh: true
           failOnStderr: false
 
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
+
       - script: >-
           dotnet build eng/service.proj -warnaserror
           /t:rebuild
@@ -225,8 +229,14 @@ jobs:
           /p:Configuration=$(BuildConfiguration)
           /p:EnableSourceLink=false
           /p:BuildSnippets=true
+          $(DiagnosticArguments)
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
+
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'verify'
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
