@@ -131,7 +131,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     builderOptions.SetResourceBuilder(resourceBuilder);
 
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.IncludeScopes = false;
                 });
             });
 
