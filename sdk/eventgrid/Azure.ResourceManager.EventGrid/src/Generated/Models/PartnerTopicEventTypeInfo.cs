@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventGrid;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
