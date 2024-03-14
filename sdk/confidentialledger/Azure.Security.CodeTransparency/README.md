@@ -71,29 +71,6 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 
 Working with the source code of this library. The following just builds on the existing documentation to make it more convenient.
 
-### Tests
-
-#### Running the tests
-
-From the root of this repository run:
-
-```
-dotnet test eng/service.proj /p:ServiceDirectory=confidentialledger /p:Project=Azure.Security.CodeTransparency
-```
-
-It is also possible to pass [additional flters](https://learn.microsoft.com/dotnet/core/testing/selective-unit-tests?pivots=nunit), e.g.:
-
-```
-dotnet test eng/service.proj /p:ServiceDirectory=confidentialledger /p:Project=Azure.Security.CodeTransparency --filter TestCategory!=Live
-
-dotnet test eng/service.proj /p:ServiceDirectory=confidentialledger /p:Project=Azure.Security.CodeTransparency --filter Name~CreateEntryAsync
-```
-
-#### Adding new tests
-
-The framework supports different types of tests: unit, live, recorded, more in the docs 
-https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md
-
 <!-- LINKS -->
 [COSE_RFC]: https://www.rfc-editor.org/rfc/rfc8152.txt
 [SCITT_ARCHITECTURE_RFC]: https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-01.txt
