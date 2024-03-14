@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {

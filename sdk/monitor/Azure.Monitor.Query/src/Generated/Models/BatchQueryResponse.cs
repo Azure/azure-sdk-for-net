@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Monitor.Query;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {

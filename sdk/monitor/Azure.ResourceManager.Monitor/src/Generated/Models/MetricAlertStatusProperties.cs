@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PowerBIDedicated;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
