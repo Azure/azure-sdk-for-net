@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridNetwork;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {

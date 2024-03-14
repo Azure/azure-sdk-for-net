@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Storage;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {

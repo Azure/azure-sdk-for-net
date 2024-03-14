@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Maintenance;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
