@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -36,6 +35,15 @@ namespace Azure.ResourceManager.Resources
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCheckResourceNameRequestUri(ResourceNameValidationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/checkResourceName", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckResourceNameRequest(ResourceNameValidationContent content)

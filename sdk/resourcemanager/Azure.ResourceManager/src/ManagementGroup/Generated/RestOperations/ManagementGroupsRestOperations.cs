@@ -38,6 +38,19 @@ namespace Azure.ResourceManager.ManagementGroups
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string cacheControl, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string cacheControl, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +130,28 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string groupId, ManagementGroupExpandType? expand, bool? recurse, string filter, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            if (recurse != null)
+            {
+                uri.AppendQuery("$recurse", recurse.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string groupId, ManagementGroupExpandType? expand, bool? recurse, string filter, string cacheControl)
@@ -219,6 +254,16 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -297,6 +342,16 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string groupId, ManagementGroupPatch patch, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string groupId, ManagementGroupPatch patch, string cacheControl)
@@ -385,6 +440,16 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string groupId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string groupId, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -455,6 +520,25 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDescendantsRequestUri(string groupId, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/descendants", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDescendantsRequest(string groupId, string skipToken, int? top)
@@ -550,6 +634,15 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(ManagementGroupNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(ManagementGroupNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -615,6 +708,14 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string cacheControl, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string cacheControl, string skipToken)
@@ -699,6 +800,14 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDescendantsNextPageRequestUri(string nextLink, string groupId, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDescendantsNextPageRequest(string nextLink, string groupId, string skipToken, int? top)
