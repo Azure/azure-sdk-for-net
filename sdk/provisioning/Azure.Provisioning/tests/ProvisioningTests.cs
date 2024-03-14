@@ -779,6 +779,8 @@ namespace Azure.Provisioning.Tests
 
             infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
 
+            infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
+
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(BinaryData.FromObjectAsJson(
