@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NotificationHubs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {

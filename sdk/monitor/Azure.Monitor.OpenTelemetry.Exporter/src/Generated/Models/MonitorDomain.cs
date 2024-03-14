@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.Exporter;
+using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {

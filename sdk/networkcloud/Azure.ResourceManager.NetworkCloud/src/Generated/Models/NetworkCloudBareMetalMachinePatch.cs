@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
