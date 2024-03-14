@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<bool> disableLocalAuth = default;
+            IDictionary<string, string> tags = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;
@@ -185,7 +186,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespacePatch(Optional.ToDictionary(tags), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new PartnerNamespacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                minimumTlsVersionAllowed,
+                disableLocalAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespacePatch>.Write(ModelReaderWriterOptions options)

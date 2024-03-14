@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityContactData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityContactData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityContactData> array = new List<SecurityContactData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityContactData.DeserializeSecurityContactData(item));
+                        array.Add(SecurityContactData.DeserializeSecurityContactData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityContactList(value ?? new ChangeTrackingList<SecurityContactData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactList>.Write(ModelReaderWriterOptions options)

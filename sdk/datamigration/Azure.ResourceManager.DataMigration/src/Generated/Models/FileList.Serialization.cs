@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProjectFileData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProjectFileData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ProjectFileData> array = new List<ProjectFileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectFileData.DeserializeProjectFileData(item));
+                        array.Add(ProjectFileData.DeserializeProjectFileData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FileList(value ?? new ChangeTrackingList<ProjectFileData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileList>.Write(ModelReaderWriterOptions options)

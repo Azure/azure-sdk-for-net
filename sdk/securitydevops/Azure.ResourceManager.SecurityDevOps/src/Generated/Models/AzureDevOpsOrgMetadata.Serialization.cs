@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
-            Optional<IList<AzureDevOpsProjectMetadata>> projects = default;
+            string name = default;
+            AutoDiscovery? autoDiscovery = default;
+            IList<AzureDevOpsProjectMetadata> projects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsProjectMetadata> array = new List<AzureDevOpsProjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsProjectMetadata.DeserializeAzureDevOpsProjectMetadata(item));
+                        array.Add(AzureDevOpsProjectMetadata.DeserializeAzureDevOpsProjectMetadata(item, options));
                     }
                     projects = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsOrgMetadata(name.Value, Optional.ToNullable(autoDiscovery), Optional.ToList(projects), serializedAdditionalRawData);
+            return new AzureDevOpsOrgMetadata(name, autoDiscovery, projects ?? new ChangeTrackingList<AzureDevOpsProjectMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsOrgMetadata>.Write(ModelReaderWriterOptions options)

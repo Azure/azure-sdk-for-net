@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
+            string name = default;
+            string assetName = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? streamingLocatorId = default;
+            string streamingPolicyName = default;
+            string defaultContentKeyPolicyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +179,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, serializedAdditionalRawData);
+            return new MediaAssetStreamingLocator(
+                name,
+                assetName,
+                created,
+                startTime,
+                endTime,
+                streamingLocatorId,
+                streamingPolicyName,
+                defaultContentKeyPolicyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetStreamingLocator>.Write(ModelReaderWriterOptions options)

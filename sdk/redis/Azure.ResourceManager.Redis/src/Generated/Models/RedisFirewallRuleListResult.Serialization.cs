@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisFirewallRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RedisFirewallRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisFirewallRuleData> array = new List<RedisFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item));
+                        array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisFirewallRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisFirewallRuleListResult(value ?? new ChangeTrackingList<RedisFirewallRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

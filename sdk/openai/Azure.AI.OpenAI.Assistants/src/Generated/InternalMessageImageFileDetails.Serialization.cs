@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_id"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteStringValue(InternalDetails);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,14 +67,14 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalMessageImageFileIdDetails fileId = default;
+            string fileId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("file_id"u8))
                 {
-                    fileId = InternalMessageImageFileIdDetails.DeserializeInternalMessageImageFileIdDetails(property.Value);
+                    fileId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

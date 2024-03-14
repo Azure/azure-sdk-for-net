@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> validationRequired = default;
-            Optional<bool> crossResourceGroupMoveEnabled = default;
-            Optional<bool> crossSubscriptionMoveEnabled = default;
+            bool? validationRequired = default;
+            bool? crossResourceGroupMoveEnabled = default;
+            bool? crossSubscriptionMoveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMovePolicy(Optional.ToNullable(validationRequired), Optional.ToNullable(crossResourceGroupMoveEnabled), Optional.ToNullable(crossSubscriptionMoveEnabled), serializedAdditionalRawData);
+            return new ResourceMovePolicy(validationRequired, crossResourceGroupMoveEnabled, crossSubscriptionMoveEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMovePolicy>.Write(ModelReaderWriterOptions options)

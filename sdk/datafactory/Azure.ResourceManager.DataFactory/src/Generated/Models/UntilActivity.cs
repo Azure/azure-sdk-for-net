@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Timeout = timeout;
             Activities = activities;
             ActivityType = activityType ?? "Until";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UntilActivity"/> for deserialization. </summary>
+        internal UntilActivity()
+        {
         }
 
         /// <summary> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </summary>

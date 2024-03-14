@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<MaintenanceDayOfWeekType> dayOfWeek = default;
-            Optional<string> timeOfDayUTC = default;
+            MaintenanceDayOfWeekType? dayOfWeek = default;
+            string timeOfDayUTC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPropertiesMaintenanceWindow(Optional.ToNullable(dayOfWeek), timeOfDayUTC.Value, serializedAdditionalRawData);
+            return new AmlFileSystemPropertiesMaintenanceWindow(dayOfWeek, timeOfDayUTC, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPropertiesMaintenanceWindow>.Write(ModelReaderWriterOptions options)

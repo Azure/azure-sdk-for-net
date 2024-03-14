@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier hyperVSiteId = default;
-            Optional<ResourceIdentifier> fabricResourceId = default;
-            Optional<string> fabricContainerId = default;
+            ResourceIdentifier fabricResourceId = default;
+            string fabricContainerId = default;
             ResourceIdentifier migrationSolutionId = default;
-            Optional<Uri> migrationHubUri = default;
+            Uri migrationHubUri = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVMigrateFabricModelCustomProperties(instanceType, serializedAdditionalRawData, hyperVSiteId, fabricResourceId.Value, fabricContainerId.Value, migrationSolutionId, migrationHubUri.Value);
+            return new HyperVMigrateFabricModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                hyperVSiteId,
+                fabricResourceId,
+                fabricContainerId,
+                migrationSolutionId,
+                migrationHubUri);
         }
 
         BinaryData IPersistableModel<HyperVMigrateFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

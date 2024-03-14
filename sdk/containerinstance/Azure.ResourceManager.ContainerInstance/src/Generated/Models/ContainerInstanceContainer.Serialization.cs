@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -135,15 +136,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerPort>> ports = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
-            Optional<ContainerInstanceView> instanceView = default;
+            IList<string> command = default;
+            IList<ContainerPort> ports = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
+            ContainerInstanceView instanceView = default;
             ContainerResourceRequirements resources = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Optional<ContainerProbe> livenessProbe = default;
-            Optional<ContainerProbe> readinessProbe = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
+            ContainerProbe livenessProbe = default;
+            ContainerProbe readinessProbe = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerPort> array = new List<ContainerPort>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerPort.DeserializeContainerPort(item));
+                                array.Add(ContainerPort.DeserializeContainerPort(item, options));
                             }
                             ports = array;
                             continue;
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -215,12 +216,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
+                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resources"u8))
                         {
-                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value);
+                            resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"u8))
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item, options));
                             }
                             volumeMounts = array;
                             continue;
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
+                            livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readinessProbe"u8))
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
+                            readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityContext"u8))
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
                             continue;
                         }
                     }
@@ -273,7 +274,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
+            return new ContainerInstanceContainer(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                ports ?? new ChangeTrackingList<ContainerPort>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView,
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                livenessProbe,
+                readinessProbe,
+                securityContext,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceContainer>.Write(ModelReaderWriterOptions options)

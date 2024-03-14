@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -132,48 +133,48 @@ namespace Azure.ResourceManager.Logic.Models
             X12MessageFilter messageFilter = default;
             X12SecuritySettings securitySettings = default;
             X12ProcessingSettings processingSettings = default;
-            Optional<IList<X12EnvelopeOverride>> envelopeOverrides = default;
-            Optional<IList<X12ValidationOverride>> validationOverrides = default;
-            Optional<IList<X12MessageIdentifier>> messageFilterList = default;
+            IList<X12EnvelopeOverride> envelopeOverrides = default;
+            IList<X12ValidationOverride> validationOverrides = default;
+            IList<X12MessageIdentifier> messageFilterList = default;
             IList<X12SchemaReference> schemaReferences = default;
-            Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
+            IList<X12DelimiterOverrides> x12DelimiterOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
                 {
-                    validationSettings = X12ValidationSettings.DeserializeX12ValidationSettings(property.Value);
+                    validationSettings = X12ValidationSettings.DeserializeX12ValidationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("framingSettings"u8))
                 {
-                    framingSettings = X12FramingSettings.DeserializeX12FramingSettings(property.Value);
+                    framingSettings = X12FramingSettings.DeserializeX12FramingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("envelopeSettings"u8))
                 {
-                    envelopeSettings = X12EnvelopeSettings.DeserializeX12EnvelopeSettings(property.Value);
+                    envelopeSettings = X12EnvelopeSettings.DeserializeX12EnvelopeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("acknowledgementSettings"u8))
                 {
-                    acknowledgementSettings = X12AcknowledgementSettings.DeserializeX12AcknowledgementSettings(property.Value);
+                    acknowledgementSettings = X12AcknowledgementSettings.DeserializeX12AcknowledgementSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("messageFilter"u8))
                 {
-                    messageFilter = X12MessageFilter.DeserializeX12MessageFilter(property.Value);
+                    messageFilter = X12MessageFilter.DeserializeX12MessageFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
                 {
-                    securitySettings = X12SecuritySettings.DeserializeX12SecuritySettings(property.Value);
+                    securitySettings = X12SecuritySettings.DeserializeX12SecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("processingSettings"u8))
                 {
-                    processingSettings = X12ProcessingSettings.DeserializeX12ProcessingSettings(property.Value);
+                    processingSettings = X12ProcessingSettings.DeserializeX12ProcessingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("envelopeOverrides"u8))
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12EnvelopeOverride> array = new List<X12EnvelopeOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12EnvelopeOverride.DeserializeX12EnvelopeOverride(item));
+                        array.Add(X12EnvelopeOverride.DeserializeX12EnvelopeOverride(item, options));
                     }
                     envelopeOverrides = array;
                     continue;
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12ValidationOverride> array = new List<X12ValidationOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12ValidationOverride.DeserializeX12ValidationOverride(item));
+                        array.Add(X12ValidationOverride.DeserializeX12ValidationOverride(item, options));
                     }
                     validationOverrides = array;
                     continue;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12MessageIdentifier> array = new List<X12MessageIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12MessageIdentifier.DeserializeX12MessageIdentifier(item));
+                        array.Add(X12MessageIdentifier.DeserializeX12MessageIdentifier(item, options));
                     }
                     messageFilterList = array;
                     continue;
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12SchemaReference> array = new List<X12SchemaReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12SchemaReference.DeserializeX12SchemaReference(item));
+                        array.Add(X12SchemaReference.DeserializeX12SchemaReference(item, options));
                     }
                     schemaReferences = array;
                     continue;
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12DelimiterOverrides> array = new List<X12DelimiterOverrides>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.X12DelimiterOverrides.DeserializeX12DelimiterOverrides(item));
+                        array.Add(Models.X12DelimiterOverrides.DeserializeX12DelimiterOverrides(item, options));
                     }
                     x12DelimiterOverrides = array;
                     continue;
@@ -248,7 +249,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides), serializedAdditionalRawData);
+            return new X12ProtocolSettings(
+                validationSettings,
+                framingSettings,
+                envelopeSettings,
+                acknowledgementSettings,
+                messageFilter,
+                securitySettings,
+                processingSettings,
+                envelopeOverrides ?? new ChangeTrackingList<X12EnvelopeOverride>(),
+                validationOverrides ?? new ChangeTrackingList<X12ValidationOverride>(),
+                messageFilterList ?? new ChangeTrackingList<X12MessageIdentifier>(),
+                schemaReferences,
+                x12DelimiterOverrides ?? new ChangeTrackingList<X12DelimiterOverrides>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12ProtocolSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogApiKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatadogApiKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogApiKey> array = new List<DatadogApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item));
+                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogApiKeyListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogApiKeyListResponse(value ?? new ChangeTrackingList<DatadogApiKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogApiKeyListResponse>.Write(ModelReaderWriterOptions options)

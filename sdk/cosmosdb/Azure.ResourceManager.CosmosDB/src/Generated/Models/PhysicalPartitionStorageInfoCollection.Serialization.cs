@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PhysicalPartitionStorageInfo>> physicalPartitionStorageInfoCollection = default;
+            IReadOnlyList<PhysicalPartitionStorageInfo> physicalPartitionStorageInfoCollection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionStorageInfo> array = new List<PhysicalPartitionStorageInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item));
+                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item, options));
                     }
                     physicalPartitionStorageInfoCollection = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PhysicalPartitionStorageInfoCollection(Optional.ToList(physicalPartitionStorageInfoCollection), serializedAdditionalRawData);
+            return new PhysicalPartitionStorageInfoCollection(physicalPartitionStorageInfoCollection ?? new ChangeTrackingList<PhysicalPartitionStorageInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PhysicalPartitionStorageInfoCollection>.Write(ModelReaderWriterOptions options)

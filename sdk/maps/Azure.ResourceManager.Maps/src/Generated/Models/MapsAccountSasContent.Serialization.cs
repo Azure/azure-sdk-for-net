@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
             MapsSigningKey signingKey = default;
             string principalId = default;
-            Optional<IList<string>> regions = default;
+            IList<string> regions = default;
             int maxRatePerSecond = default;
             string start = default;
             string expiry = default;
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountSasContent(signingKey, principalId, Optional.ToList(regions), maxRatePerSecond, start, expiry, serializedAdditionalRawData);
+            return new MapsAccountSasContent(
+                signingKey,
+                principalId,
+                regions ?? new ChangeTrackingList<string>(),
+                maxRatePerSecond,
+                start,
+                expiry,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountSasContent>.Write(ModelReaderWriterOptions options)

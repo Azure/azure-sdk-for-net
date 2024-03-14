@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<int> errorCode = default;
-            Optional<DateTimeOffset> lastHealthCheckDateTime = default;
+            string message = default;
+            int? errorCode = default;
+            DateTimeOffset? lastHealthCheckDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostHealthCheckFailureDetails(message.Value, Optional.ToNullable(errorCode), Optional.ToNullable(lastHealthCheckDateTime), serializedAdditionalRawData);
+            return new SessionHostHealthCheckFailureDetails(message, errorCode, lastHealthCheckDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostHealthCheckFailureDetails>.Write(ModelReaderWriterOptions options)

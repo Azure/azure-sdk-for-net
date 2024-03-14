@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Internal;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal;

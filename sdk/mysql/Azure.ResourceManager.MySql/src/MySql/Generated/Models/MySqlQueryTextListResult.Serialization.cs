@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlQueryTextData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlQueryTextData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlQueryTextData> array = new List<MySqlQueryTextData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlQueryTextData.DeserializeMySqlQueryTextData(item));
+                        array.Add(MySqlQueryTextData.DeserializeMySqlQueryTextData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryTextListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlQueryTextListResult(value ?? new ChangeTrackingList<MySqlQueryTextData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryTextListResult>.Write(ModelReaderWriterOptions options)

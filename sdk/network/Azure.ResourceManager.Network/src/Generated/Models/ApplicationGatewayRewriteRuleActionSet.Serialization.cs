@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
-            Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
-            Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
+            IList<ApplicationGatewayHeaderConfiguration> requestHeaderConfigurations = default;
+            IList<ApplicationGatewayHeaderConfiguration> responseHeaderConfigurations = default;
+            ApplicationGatewayUrlConfiguration urlConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item, options));
                     }
                     requestHeaderConfigurations = array;
                     continue;
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item, options));
                     }
                     responseHeaderConfigurations = array;
                     continue;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value);
+                    urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRuleActionSet(Optional.ToList(requestHeaderConfigurations), Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRuleActionSet(requestHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), responseHeaderConfigurations ?? new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>(), urlConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRuleActionSet>.Write(ModelReaderWriterOptions options)

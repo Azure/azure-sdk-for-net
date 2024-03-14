@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             IReadOnlyList<SphereDeploymentData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereDeploymentData> array = new List<SphereDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereDeploymentData.DeserializeSphereDeploymentData(item));
+                        array.Add(SphereDeploymentData.DeserializeSphereDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DeploymentListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentListResult>.Write(ModelReaderWriterOptions options)

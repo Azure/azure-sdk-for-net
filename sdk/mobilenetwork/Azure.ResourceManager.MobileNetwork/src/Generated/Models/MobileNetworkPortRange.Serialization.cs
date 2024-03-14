@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> minPort = default;
-            Optional<int> maxPort = default;
+            int? minPort = default;
+            int? maxPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPortRange(Optional.ToNullable(minPort), Optional.ToNullable(maxPort), serializedAdditionalRawData);
+            return new MobileNetworkPortRange(minPort, maxPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPortRange>.Write(ModelReaderWriterOptions options)

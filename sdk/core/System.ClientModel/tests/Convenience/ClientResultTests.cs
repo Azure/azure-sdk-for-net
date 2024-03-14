@@ -127,6 +127,29 @@ public class PipelineResponseTests
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
 
+    [Test]
+    public void CanImplicitlyCastClientResultOfT()
+    {
+        PipelineResponse response = new MockPipelineResponse(200);
+
+        string plainString = "hello";
+        ClientResult<string> resultAsClientResultOfString = ClientResult.FromValue(plainString, response);
+        string resultAsPlainString = ClientResult.FromValue(plainString, response);
+        Assert.AreEqual(resultAsClientResultOfString.Value, resultAsPlainString);
+
+        string? nullableString = null;
+        ClientResult<string?> resultAsClientResultOfNullableString = ClientResult.FromOptionalValue(nullableString, response);
+        string? resultAsNullableString = ClientResult.FromOptionalValue(nullableString, response);
+        Assert.IsNull(resultAsNullableString);
+        Assert.AreEqual(resultAsClientResultOfNullableString.Value, resultAsNullableString);
+
+        int? nullableInt = null;
+        ClientResult<int?> resultAsClientResultOfNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
+        int? resultAsNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
+        Assert.IsNull(resultAsNullableInt);
+        Assert.AreEqual(resultAsClientResultOfNullableInt.Value, resultAsNullableInt);
+    }
+
     #endregion
 
     #region MockClient Tests

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -118,15 +119,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> annotation = default;
-            Optional<int> rackCount = default;
-            Optional<int> serverCountPerRack = default;
-            Optional<string> ipv4Prefix = default;
-            Optional<string> ipv6Prefix = default;
-            Optional<long> fabricAsn = default;
-            Optional<NetworkFabricPatchablePropertiesTerminalServerConfiguration> terminalServerConfiguration = default;
-            Optional<ManagementNetworkConfigurationPatchableProperties> managementNetworkConfiguration = default;
+            IDictionary<string, string> tags = default;
+            string annotation = default;
+            int? rackCount = default;
+            int? serverCountPerRack = default;
+            string ipv4Prefix = default;
+            string ipv6Prefix = default;
+            long? fabricAsn = default;
+            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
+            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value);
+                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value);
+                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -223,7 +224,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(rackCount), Optional.ToNullable(serverCountPerRack), ipv4Prefix.Value, ipv6Prefix.Value, Optional.ToNullable(fabricAsn), terminalServerConfiguration.Value, managementNetworkConfiguration.Value);
+            return new NetworkFabricPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation,
+                rackCount,
+                serverCountPerRack,
+                ipv4Prefix,
+                ipv6Prefix,
+                fabricAsn,
+                terminalServerConfiguration,
+                managementNetworkConfiguration);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

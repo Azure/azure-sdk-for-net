@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// Represents an extensible pipeline used by clients that call cloud services
+/// to send and receive HTTP request and responses. Creators of
+/// <see cref="ClientPipeline"/> can modify how it process a
+/// <see cref="PipelineMessage"/> by adding <see cref="PipelinePolicy"/>
+/// instances at various points in the default pipeline.
+/// </summary>
 public sealed partial class ClientPipeline
 {
     internal static TimeSpan DefaultNetworkTimeout { get; } = TimeSpan.FromSeconds(100);
@@ -44,12 +51,47 @@ public sealed partial class ClientPipeline
 
     #region Factory methods for creating a pipeline instance
 
+    /// <summary>
+    /// Create an instance of a <see cref="ClientPipeline"/> from the provided
+    /// <see cref="ClientPipelineOptions"/>.
+    /// </summary>
+    /// <param name="options">If provided, the
+    /// <see cref="ClientPipelineOptions"/> to use to construct the
+    /// <see cref="ClientPipeline"/>.</param>
+    /// <returns>The created <see cref="ClientPipeline"/> instance.</returns>
     public static ClientPipeline Create(ClientPipelineOptions? options = default)
         => Create(options ?? ClientPipelineOptions.Default,
             ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty);
 
+    /// <summary>
+    /// Create an instance of a <see cref="ClientPipeline"/> from the provided
+    /// <see cref="ClientPipelineOptions"/> and <see cref="PipelinePolicy"/>
+    /// collections.
+    /// </summary>
+    /// <param name="options"> The <see cref="ClientPipelineOptions"/> to use to
+    /// construct the <see cref="ClientPipeline"/>.</param>
+    /// <param name="perCallPolicies">A collection of <see cref="PipelinePolicy"/>
+    /// instances to add to the default pipeline before the pipeline's retry
+    /// policy.</param>
+    /// <param name="perTryPolicies">A collection of <see cref="PipelinePolicy"/>
+    /// instances to add to the default pipeline after the pipeline's retry
+    /// policy.</param>
+    /// <param name="beforeTransportPolicies">A collection of
+    /// <see cref="PipelinePolicy"/> instances to add to the default pipeline
+    /// before the pipeline's transport.</param>
+    /// <returns>The created <see cref="ClientPipeline"/> instance.</returns>
+    /// <remarks>Policies provided in <paramref name="options"/> are intended
+    /// to come from the end-user of a client who has passed the
+    /// <see cref="ClientPipelineOptions"/> instance to the client's
+    /// constructor. The client constructor implementation is intended to pass
+    /// client-specific policies using the <paramref name="perCallPolicies"/>,
+    /// <paramref name="perTryPolicies"/>, and
+    /// <paramref name="beforeTransportPolicies"/> parameters and should not
+    /// modify the <see cref="ClientPipelineOptions"/> provided by the client
+    /// user.
+    /// </remarks>
     public static ClientPipeline Create(
         ClientPipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
@@ -69,7 +111,6 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -103,9 +144,6 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // Response buffering comes before the transport.
-        policies[index++] = ResponseBufferingPolicy.Default;
-
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
@@ -128,6 +166,11 @@ public sealed partial class ClientPipeline
 
     #endregion
 
+    /// <summary>
+    /// Creates a <see cref="PipelineMessage"/> that can be sent using this
+    /// pipeline instance.
+    /// </summary>
+    /// <returns>The created <see cref="PipelineMessage"/>.</returns>
     public PipelineMessage CreateMessage()
     {
         PipelineMessage message = _transport.CreateMessage();
@@ -135,12 +178,38 @@ public sealed partial class ClientPipeline
         return message;
     }
 
+    /// <summary>
+    /// Send the provided <see cref="PipelineMessage"/>.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to send.</param>
+    /// <exception cref="ClientResultException">Thrown if an error other than
+    /// the service responding with an error response occurred while sending
+    /// the HTTP request.</exception>
+    /// <remarks>
+    /// All necessary values on <see cref="PipelineMessage.Request"/> should be
+    /// set prior to calling <see cref="Send(PipelineMessage)"/>.  After the
+    /// method returns, <see cref="PipelineMessage.Response"/> will be populated
+    /// with the details of the service response.
+    /// </remarks>
     public void Send(PipelineMessage message)
     {
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         policies[0].Process(message, policies, 0);
     }
 
+    /// <summary>
+    /// Send the provided <see cref="PipelineMessage"/>.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to send.</param>
+    /// <exception cref="ClientResultException">Thrown if an error other than
+    /// the service responding with an error response occurred while sending
+    /// the HTTP request.</exception>
+    /// <remarks>
+    /// All necessary values on <see cref="PipelineMessage.Request"/> should be
+    /// set prior to calling <see cref="Send(PipelineMessage)"/>.  After the
+    /// method returns, <see cref="PipelineMessage.Response"/> will be populated
+    /// with the details of the service response.
+    /// </remarks>
     public async ValueTask SendAsync(PipelineMessage message)
     {
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);

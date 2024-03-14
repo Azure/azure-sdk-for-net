@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/> for deserialization. </summary>
+        internal CustomDataSourceLinkedService()
+        {
         }
 
         /// <summary>

@@ -83,15 +83,15 @@ namespace Azure.AI.ContentSafety
                 return null;
             }
             ContentSafetyImageData image = default;
-            Optional<IList<ImageCategory>> categories = default;
-            Optional<AnalyzeImageOutputType> outputType = default;
+            IList<ImageCategory> categories = default;
+            AnalyzeImageOutputType? outputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value);
+                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeImageOptions(image, Optional.ToList(categories), Optional.ToNullable(outputType), serializedAdditionalRawData);
+            return new AnalyzeImageOptions(image, categories ?? new ChangeTrackingList<ImageCategory>(), outputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeImageOptions>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -88,12 +89,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ExportFormatType> format = default;
+            ExportFormatType? format = default;
             ExportDeliveryInfo deliveryInfo = default;
             ExportDefinition definition = default;
-            Optional<ExportExecutionListResult> runHistory = default;
-            Optional<bool> partitionData = default;
-            Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            ExportExecutionListResult runHistory = default;
+            bool? partitionData = default;
+            DateTimeOffset? nextRunTimeEstimate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("deliveryInfo"u8))
                 {
-                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value);
+                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ExportDefinition.DeserializeExportDefinition(property.Value);
+                    definition = ExportDefinition.DeserializeExportDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("runHistory"u8))
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value);
+                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionData"u8))
@@ -150,7 +151,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), serializedAdditionalRawData);
+            return new CommonExportProperties(
+                format,
+                deliveryInfo,
+                definition,
+                runHistory,
+                partitionData,
+                nextRunTimeEstimate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)

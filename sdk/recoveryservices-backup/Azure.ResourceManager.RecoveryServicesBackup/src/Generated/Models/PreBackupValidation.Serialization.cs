@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<InquiryStatus> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            InquiryStatus? status = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreBackupValidation(Optional.ToNullable(status), code.Value, message.Value, serializedAdditionalRawData);
+            return new PreBackupValidation(status, code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreBackupValidation>.Write(ModelReaderWriterOptions options)

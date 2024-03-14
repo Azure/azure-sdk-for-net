@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> scopeMapId = default;
-            Optional<ContainerRegistryTokenStatus> status = default;
-            Optional<ContainerRegistryTokenCredentials> credentials = default;
+            ResourceIdentifier scopeMapId = default;
+            ContainerRegistryTokenStatus? status = default;
+            ContainerRegistryTokenCredentials credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value);
+                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value, options);
                             continue;
                         }
                     }
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenPatch(scopeMapId.Value, Optional.ToNullable(status), credentials.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenPatch(scopeMapId, status, credentials, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenPatch>.Write(ModelReaderWriterOptions options)

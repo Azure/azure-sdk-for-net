@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
 {

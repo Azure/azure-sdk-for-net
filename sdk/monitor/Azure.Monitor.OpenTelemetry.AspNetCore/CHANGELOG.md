@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,72 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2024-03-12)
+
+### Features Added
+
+* Added ASP.NET Core and HTTP Client Metrics Collection:
+  * For `.NET 8.0` and above, we now utilize built-in Metrics from
+    [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+    and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
+  * For environments targetting `.NET 7.0` and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
+    Detailed metrics information can be found in the
+    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
+    documentation.
+  ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
+
+- Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
+  for the details.
+  ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
+
+* Added NET6 target framework.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
+
+### Bugs Fixed
+
+* Will no longer emit `db.statement_type` as a part of SQL custom dimensions.
+  This attribute was removed from the SqlClient Instrumentation Library because it's not a part of the [semantic conventions](https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#call-level-attributes).
+
+* Fix runtime crash with Microsoft.Bcl.AsyncInterfaces.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
+
+### Other Changes
+
+* Updated the code of vendored instrumentation library `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET repository.
+  Code has been updated to [1.7.0-beta.1](https://github.com/open-telemetry/opentelemetry-dotnet/tree/Instrumentation.SqlClient-1.7.0-beta.1/src/OpenTelemetry.Instrumentation.SqlClient).
+  ([#42479](https://github.com/Azure/azure-sdk-for-net/pull/42479))
+
+* Updated the code of vendored resource detector library `OpenTelemetry.ResourceDetectors.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.0.0-beta.5](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/ResourceDetectors.Azure-1.0.0-beta.5/src/OpenTelemetry.ResourceDetectors.Azure).
+  ([#42479](https://github.com/Azure/azure-sdk-for-net/pull/42479))
+
+## 1.2.0-beta.1 (2024-02-09)
+
+### Features Added
+
+* Added Azure Container Apps resource detector.
+  ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
+* Added `Azure.Monitor.OpenTelemetry.LiveMetrics`, enabling the sending of [live
+  metrics
+  data](https://learn.microsoft.com/azure/azure-monitor/app/live-stream).
+  The newly added `EnableLiveMetrics` property is set to `true` by default. This
+  property can be set to `false` to disable live metrics.
+  ([#41872](https://github.com/Azure/azure-sdk-for-net/pull/41872))
+
+- Added an experimental feature for logs emitted within an active tracing
+  context to follow the Activity's sampling decision. The feature can be enabled
+  by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING`
+  environment variable to `true`.
+  ([#41665](https://github.com/Azure/azure-sdk-for-net/pull/41665))
+
+### Other Changes
+
+* Updated the vendored code in the `OpenTelemetry.ResourceDetectors.Azure`
+  resource detector to include the Azure Container Apps resource detector.
+  ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
 
 ## 1.1.0 (2024-01-25)
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataMaskingRule>> value = default;
+            IReadOnlyList<DataMaskingRule> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DataMaskingRule> array = new List<DataMaskingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item));
+                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataMaskingRuleListResult(value ?? new ChangeTrackingList<DataMaskingRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingRuleListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<int> percentComplete = default;
-            Optional<int> numberOfUpdatesToInstall = default;
-            Optional<int> numberOfUpdatesInstalled = default;
+            int? percentComplete = default;
+            int? numberOfUpdatesToInstall = default;
+            int? numberOfUpdatesInstalled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateInstallProgress(Optional.ToNullable(percentComplete), Optional.ToNullable(numberOfUpdatesToInstall), Optional.ToNullable(numberOfUpdatesInstalled), serializedAdditionalRawData);
+            return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateInstallProgress>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> rulestackId = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier resourceId = default;
+            string rulestackId = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulestackDetails(resourceId.Value, rulestackId.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RulestackDetails(resourceId, rulestackId, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulestackDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CapabilitiesResultProperties> properties = default;
+            CapabilitiesResultProperties properties = default;
             ResourceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value);
+                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesResult(type, serializedAdditionalRawData, properties.Value);
+            return new CapabilitiesResult(type, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<CapabilitiesResult>.Write(ModelReaderWriterOptions options)

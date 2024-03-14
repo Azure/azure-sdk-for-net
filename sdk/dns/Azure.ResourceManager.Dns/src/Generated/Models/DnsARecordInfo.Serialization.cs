@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv4Address = default;
+            IPAddress ipv4Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsARecordInfo(ipv4Address.Value, serializedAdditionalRawData);
+            return new DnsARecordInfo(ipv4Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsARecordInfo>.Write(ModelReaderWriterOptions options)

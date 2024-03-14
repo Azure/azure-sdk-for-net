@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<EdgeOrderStageStatus> stageStatus = default;
-            Optional<EdgeOrderStageName> stageName = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> startTime = default;
+            EdgeOrderStageStatus? stageStatus = default;
+            EdgeOrderStageName? stageName = default;
+            string displayName = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderStageDetails(Optional.ToNullable(stageStatus), Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderStageDetails>.Write(ModelReaderWriterOptions options)

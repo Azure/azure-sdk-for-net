@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
-            Optional<string> apiKey = default;
-            Optional<string> regionId = default;
+            string accountId = default;
+            string apiKey = default;
+            string regionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceAccountCredentialsInfo(accountId.Value, apiKey.Value, regionId.Value, serializedAdditionalRawData);
+            return new DynatraceAccountCredentialsInfo(accountId, apiKey, regionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceAccountCredentialsInfo>.Write(ModelReaderWriterOptions options)

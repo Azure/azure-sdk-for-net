@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<MabBackupJobTaskDetails>> tasksList = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<string> dynamicErrorMessage = default;
+            IList<MabBackupJobTaskDetails> tasksList = default;
+            IDictionary<string, string> propertyBag = default;
+            string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabBackupJobTaskDetails> array = new List<MabBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabBackupJobTaskDetails.DeserializeMabBackupJobTaskDetails(item));
+                        array.Add(MabBackupJobTaskDetails.DeserializeMabBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new MabBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<MabBackupJobTaskDetails>(), propertyBag ?? new ChangeTrackingDictionary<string, string>(), dynamicErrorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

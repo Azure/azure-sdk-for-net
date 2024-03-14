@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> filesystemSubnet = default;
-            Optional<float> storageCapacityTiB = default;
-            Optional<StorageCacheSkuName> sku = default;
-            Optional<AzureLocation> location = default;
+            string filesystemSubnet = default;
+            float? storageCapacityTiB = default;
+            StorageCacheSkuName sku = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemSubnetContent(filesystemSubnet.Value, Optional.ToNullable(storageCapacityTiB), sku.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new AmlFileSystemSubnetContent(filesystemSubnet, storageCapacityTiB, sku, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemSubnetContent>.Write(ModelReaderWriterOptions options)

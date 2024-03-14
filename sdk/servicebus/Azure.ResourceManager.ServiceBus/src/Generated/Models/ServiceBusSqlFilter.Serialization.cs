@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> sqlExpression = default;
-            Optional<int> compatibilityLevel = default;
-            Optional<bool> requiresPreprocessing = default;
+            string sqlExpression = default;
+            int? compatibilityLevel = default;
+            bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusSqlFilter(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
+            return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusSqlFilter>.Write(ModelReaderWriterOptions options)

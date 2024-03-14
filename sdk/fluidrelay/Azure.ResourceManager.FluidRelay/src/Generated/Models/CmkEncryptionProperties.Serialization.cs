@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
-            Optional<Uri> keyEncryptionKeyUrl = default;
+            CmkIdentity keyEncryptionKeyIdentity = default;
+            Uri keyEncryptionKeyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
+                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CmkEncryptionProperties(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value, serializedAdditionalRawData);
+            return new CmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CmkEncryptionProperties>.Write(ModelReaderWriterOptions options)

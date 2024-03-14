@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<WhatIfChange>> changes = default;
+            string status = default;
+            ResponseError error = default;
+            IReadOnlyList<WhatIfChange> changes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item, options));
                             }
                             changes = array;
                             continue;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes), serializedAdditionalRawData);
+            return new WhatIfOperationResult(status, error, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfOperationResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -114,13 +115,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBAccountRestoreMode> restoreMode = default;
-            Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
-            Optional<IList<GremlinDatabaseRestoreResourceInfo>> gremlinDatabasesToRestore = default;
-            Optional<IList<string>> tablesToRestore = default;
-            Optional<string> sourceBackupLocation = default;
-            Optional<string> restoreSource = default;
-            Optional<DateTimeOffset> restoreTimestampInUtc = default;
+            CosmosDBAccountRestoreMode? restoreMode = default;
+            IList<DatabaseRestoreResourceInfo> databasesToRestore = default;
+            IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore = default;
+            IList<string> tablesToRestore = default;
+            string sourceBackupLocation = default;
+            string restoreSource = default;
+            DateTimeOffset? restoreTimestampInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DatabaseRestoreResourceInfo> array = new List<DatabaseRestoreResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseRestoreResourceInfo.DeserializeDatabaseRestoreResourceInfo(item));
+                        array.Add(DatabaseRestoreResourceInfo.DeserializeDatabaseRestoreResourceInfo(item, options));
                     }
                     databasesToRestore = array;
                     continue;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GremlinDatabaseRestoreResourceInfo> array = new List<GremlinDatabaseRestoreResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinDatabaseRestoreResourceInfo.DeserializeGremlinDatabaseRestoreResourceInfo(item));
+                        array.Add(GremlinDatabaseRestoreResourceInfo.DeserializeGremlinDatabaseRestoreResourceInfo(item, options));
                     }
                     gremlinDatabasesToRestore = array;
                     continue;
@@ -201,7 +202,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData, Optional.ToNullable(restoreMode), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore), sourceBackupLocation.Value);
+            return new CosmosDBAccountRestoreParameters(
+                restoreSource,
+                restoreTimestampInUtc,
+                serializedAdditionalRawData,
+                restoreMode,
+                databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(),
+                gremlinDatabasesToRestore ?? new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>(),
+                tablesToRestore ?? new ChangeTrackingList<string>(),
+                sourceBackupLocation);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountRestoreParameters>.Write(ModelReaderWriterOptions options)

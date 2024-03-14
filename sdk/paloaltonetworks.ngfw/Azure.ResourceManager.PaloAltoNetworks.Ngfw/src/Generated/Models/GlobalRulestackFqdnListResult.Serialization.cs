@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             IReadOnlyList<GlobalRulestackFqdnData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<GlobalRulestackFqdnData> array = new List<GlobalRulestackFqdnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(item));
+                        array.Add(GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackFqdnListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new GlobalRulestackFqdnListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackFqdnListResult>.Write(ModelReaderWriterOptions options)

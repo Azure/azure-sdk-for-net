@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -51,6 +52,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(MinBackupIntervalHours))
+            {
+                writer.WritePropertyName("minBackupIntervalHours"u8);
+                writer.WriteNumberValue(MinBackupIntervalHours.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBackupIntervalHours))
+            {
+                writer.WritePropertyName("maxBackupIntervalHours"u8);
+                writer.WriteNumberValue(MaxBackupIntervalHours.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,11 +100,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> minStorageSize = default;
-            Optional<long> maxStorageSize = default;
-            Optional<long> minBackupRetentionDays = default;
-            Optional<long> maxBackupRetentionDays = default;
+            string name = default;
+            long? minStorageSize = default;
+            long? maxStorageSize = default;
+            long? minBackupRetentionDays = default;
+            long? maxBackupRetentionDays = default;
+            long? minBackupIntervalHours = default;
+            long? maxBackupIntervalHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,13 +152,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     maxBackupRetentionDays = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("minBackupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minBackupIntervalHours = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("maxBackupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxBackupIntervalHours = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerStorageEditionCapability(name.Value, Optional.ToNullable(minStorageSize), Optional.ToNullable(maxStorageSize), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxBackupRetentionDays), serializedAdditionalRawData);
+            return new MySqlFlexibleServerStorageEditionCapability(
+                name,
+                minStorageSize,
+                maxStorageSize,
+                minBackupRetentionDays,
+                maxBackupRetentionDays,
+                minBackupIntervalHours,
+                maxBackupIntervalHours,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerStorageEditionCapability>.Write(ModelReaderWriterOptions options)

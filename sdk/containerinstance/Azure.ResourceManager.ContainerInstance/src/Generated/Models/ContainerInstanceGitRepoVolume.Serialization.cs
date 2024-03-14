@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> directory = default;
+            string directory = default;
             string repository = default;
-            Optional<string> revision = default;
+            string revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceGitRepoVolume(directory.Value, repository, revision.Value, serializedAdditionalRawData);
+            return new ContainerInstanceGitRepoVolume(directory, repository, revision, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceGitRepoVolume>.Write(ModelReaderWriterOptions options)

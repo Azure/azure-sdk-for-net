@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -139,14 +140,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
-            Optional<IList<MonitoringAccountDestination>> monitoringAccounts = default;
-            Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
-            Optional<IList<DataCollectionRuleEventHubDestination>> eventHubs = default;
-            Optional<IList<DataCollectionRuleEventHubDirectDestination>> eventHubsDirect = default;
-            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
-            Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
-            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
+            IList<LogAnalyticsDestination> logAnalytics = default;
+            IList<MonitoringAccountDestination> monitoringAccounts = default;
+            DestinationsSpecAzureMonitorMetrics azureMonitorMetrics = default;
+            IList<DataCollectionRuleEventHubDestination> eventHubs = default;
+            IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect = default;
+            IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect = default;
+            IList<DataCollectionRuleStorageTableDestination> storageTablesDirect = default;
+            IList<DataCollectionRuleStorageBlobDestination> storageAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item));
+                        array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item, options));
                     }
                     logAnalytics = array;
                     continue;
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item));
+                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item, options));
                     }
                     monitoringAccounts = array;
                     continue;
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value);
+                    azureMonitorMetrics = DestinationsSpecAzureMonitorMetrics.DeserializeDestinationsSpecAzureMonitorMetrics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventHubs"u8))
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDestination> array = new List<DataCollectionRuleEventHubDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item));
+                        array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item, options));
                     }
                     eventHubs = array;
                     continue;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDirectDestination> array = new List<DataCollectionRuleEventHubDirectDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item));
+                        array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item, options));
                     }
                     eventHubsDirect = array;
                     continue;
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageBlobsDirect = array;
                     continue;
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageTableDestination> array = new List<DataCollectionRuleStorageTableDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item));
+                        array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item, options));
                     }
                     storageTablesDirect = array;
                     continue;
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item, options));
                     }
                     storageAccounts = array;
                     continue;
@@ -264,7 +265,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts), serializedAdditionalRawData);
+            return new DestinationsSpec(
+                logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
+                monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
+                azureMonitorMetrics,
+                eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(),
+                eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(),
+                storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
+                storageTablesDirect ?? new ChangeTrackingList<DataCollectionRuleStorageTableDestination>(),
+                storageAccounts ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DestinationsSpec>.Write(ModelReaderWriterOptions options)

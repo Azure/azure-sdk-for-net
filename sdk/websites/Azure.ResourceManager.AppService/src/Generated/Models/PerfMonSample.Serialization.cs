@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> instanceName = default;
-            Optional<double> value = default;
+            DateTimeOffset? time = default;
+            string instanceName = default;
+            double? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfMonSample(Optional.ToNullable(time), instanceName.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+            return new PerfMonSample(time, instanceName, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfMonSample>.Write(ModelReaderWriterOptions options)

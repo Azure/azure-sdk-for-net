@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> identityClientId = default;
+            string identityClientId = default;
             string keyIdentifier = default;
             ResourceIdentifier keyVaultArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEncryptionKeyVaultProperties(identityClientId.Value, keyIdentifier, keyVaultArmId, serializedAdditionalRawData);
+            return new MachineLearningEncryptionKeyVaultProperties(identityClientId, keyIdentifier, keyVaultArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<AS2AgreementContent> aS2 = default;
-            Optional<X12AgreementContent> x12 = default;
-            Optional<EdifactAgreementContent> edifact = default;
+            AS2AgreementContent aS2 = default;
+            X12AgreementContent x12 = default;
+            EdifactAgreementContent edifact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value);
+                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("x12"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value);
+                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edifact"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
+                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementContent(aS2, x12, edifact, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementContent>.Write(ModelReaderWriterOptions options)

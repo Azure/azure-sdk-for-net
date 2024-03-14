@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<CookieExpirationConvention> convention = default;
-            Optional<string> timeToExpiration = default;
+            CookieExpirationConvention? convention = default;
+            string timeToExpiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value, serializedAdditionalRawData);
+            return new WebAppCookieExpiration(convention, timeToExpiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppCookieExpiration>.Write(ModelReaderWriterOptions options)

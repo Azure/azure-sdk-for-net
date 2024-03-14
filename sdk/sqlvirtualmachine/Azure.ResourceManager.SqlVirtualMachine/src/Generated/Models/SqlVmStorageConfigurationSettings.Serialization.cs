@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlStorageSettings> sqlDataSettings = default;
-            Optional<SqlStorageSettings> sqlLogSettings = default;
-            Optional<SqlTempDBSettings> sqlTempDBSettings = default;
-            Optional<bool> sqlSystemDBOnDataDisk = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
-            Optional<SqlVmStorageWorkloadType> storageWorkloadType = default;
+            SqlStorageSettings sqlDataSettings = default;
+            SqlStorageSettings sqlLogSettings = default;
+            SqlTempDBSettings sqlTempDBSettings = default;
+            bool? sqlSystemDBOnDataDisk = default;
+            SqlVmDiskConfigurationType? diskConfigurationType = default;
+            SqlVmStorageWorkloadType? storageWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlLogSettings"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlTempDbSettings"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
+                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlSystemDbOnDataDisk"u8))
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), serializedAdditionalRawData);
+            return new SqlVmStorageConfigurationSettings(
+                sqlDataSettings,
+                sqlLogSettings,
+                sqlTempDBSettings,
+                sqlSystemDBOnDataDisk,
+                diskConfigurationType,
+                storageWorkloadType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmStorageConfigurationSettings>.Write(ModelReaderWriterOptions options)

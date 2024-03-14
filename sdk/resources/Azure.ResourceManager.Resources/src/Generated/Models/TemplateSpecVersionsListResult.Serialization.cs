@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TemplateSpecVersionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<TemplateSpecVersionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TemplateSpecVersionData> array = new List<TemplateSpecVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item));
+                        array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TemplateSpecVersionsListResult(value ?? new ChangeTrackingList<TemplateSpecVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionsListResult>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventGridNamespaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EventGridNamespaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridNamespaceData> array = new List<EventGridNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridNamespaceData.DeserializeEventGridNamespaceData(item));
+                        array.Add(EventGridNamespaceData.DeserializeEventGridNamespaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NamespacesListResult(value ?? new ChangeTrackingList<EventGridNamespaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespacesListResult>.Write(ModelReaderWriterOptions options)

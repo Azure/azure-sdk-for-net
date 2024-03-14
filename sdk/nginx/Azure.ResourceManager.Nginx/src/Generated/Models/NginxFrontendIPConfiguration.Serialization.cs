@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
+            IList<WritableSubResource> publicIPAddresses = default;
+            IList<NginxPrivateIPAddress> privateIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxPrivateIPAddress> array = new List<NginxPrivateIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item));
+                        array.Add(NginxPrivateIPAddress.DeserializeNginxPrivateIPAddress(item, options));
                     }
                     privateIPAddresses = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxFrontendIPConfiguration(Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), serializedAdditionalRawData);
+            return new NginxFrontendIPConfiguration(publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), privateIPAddresses ?? new ChangeTrackingList<NginxPrivateIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxFrontendIPConfiguration>.Write(ModelReaderWriterOptions options)

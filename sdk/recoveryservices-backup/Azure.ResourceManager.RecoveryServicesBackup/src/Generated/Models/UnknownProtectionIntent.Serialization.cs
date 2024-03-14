@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProtectionIntent(document.RootElement, options);
+            return DeserializeBackupGenericProtectionIntent(document.RootElement, options);
         }
 
         internal static UnknownProtectionIntent DeserializeUnknownProtectionIntent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             ProtectionIntentItemType protectionIntentItemType = "Unknown";
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> itemId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            BackupManagementType? backupManagementType = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier itemId = default;
+            ResourceIdentifier policyId = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData);
+            return new UnknownProtectionIntent(
+                protectionIntentItemType,
+                backupManagementType,
+                sourceResourceId,
+                itemId,
+                policyId,
+                protectionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionIntent>.Write(ModelReaderWriterOptions options)
@@ -182,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProtectionIntent(document.RootElement, options);
+                        return DeserializeBackupGenericProtectionIntent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support '{options.Format}' format.");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier networkId = default;
-            Optional<KubernetesPluginType> pluginType = default;
+            KubernetesPluginType? pluginType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrunkedNetworkAttachmentConfiguration(networkId, Optional.ToNullable(pluginType), serializedAdditionalRawData);
+            return new TrunkedNetworkAttachmentConfiguration(networkId, pluginType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrunkedNetworkAttachmentConfiguration>.Write(ModelReaderWriterOptions options)

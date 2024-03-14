@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationUsage>> value = default;
+            IReadOnlyList<ReplicationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<ReplicationUsage> array = new List<ReplicationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item));
+                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ReplicationUsageListResult(value ?? new ChangeTrackingList<ReplicationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationUsageListResult>.Write(ModelReaderWriterOptions options)

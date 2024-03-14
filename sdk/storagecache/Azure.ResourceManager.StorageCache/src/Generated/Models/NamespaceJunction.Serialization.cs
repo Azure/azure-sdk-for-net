@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> namespacePath = default;
-            Optional<string> targetPath = default;
-            Optional<string> nfsExport = default;
-            Optional<string> nfsAccessPolicy = default;
+            string namespacePath = default;
+            string targetPath = default;
+            string nfsExport = default;
+            string nfsAccessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceJunction(namespacePath.Value, targetPath.Value, nfsExport.Value, nfsAccessPolicy.Value, serializedAdditionalRawData);
+            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceJunction>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsAlertRuleData(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsAlertRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/>. </summary>
@@ -43,7 +50,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier logicAppResourceId = null, string workflowId = null)
         {
-            return new SecurityInsightsAlertRuleActionData(id, name, resourceType, systemData, etag, logicAppResourceId, workflowId, serializedAdditionalRawData: null);
+            return new SecurityInsightsAlertRuleActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                logicAppResourceId,
+                workflowId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
@@ -57,7 +72,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleActionCreateOrUpdateContent SecurityInsightsAlertRuleActionCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier logicAppResourceId = null, Uri triggerUri = null, ETag? etag = null)
         {
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, resourceType, systemData, logicAppResourceId, triggerUri, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                logicAppResourceId,
+                triggerUri,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAlertRuleTemplateData"/>. </summary>
@@ -69,7 +92,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleTemplateData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new SecurityInsightsAlertRuleTemplateData(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
+            return new SecurityInsightsAlertRuleTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAutomationRuleData"/>. </summary>
@@ -95,7 +124,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             actions ??= new List<SecurityInsightsAutomationRuleAction>();
 
-            return new SecurityInsightsAutomationRuleData(id, name, resourceType, systemData, displayName, order, triggeringLogic, actions?.ToList(), lastModifiedOn, createdOn, lastModifiedBy, createdBy, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsAutomationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                order,
+                triggeringLogic,
+                actions?.ToList(),
+                lastModifiedOn,
+                createdOn,
+                lastModifiedBy,
+                createdBy,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsClientInfo"/>. </summary>
@@ -133,7 +176,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             labels ??= new List<string>();
 
-            return new SecurityInsightsBookmarkData(id, name, resourceType, systemData, createdOn, createdBy, displayName, labels?.ToList(), notes, query, queryResult, updatedOn, updatedBy, eventOn, queryStartOn, queryEndOn, incidentInfo, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsBookmarkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                createdBy,
+                displayName,
+                labels?.ToList(),
+                notes,
+                query,
+                queryResult,
+                updatedOn,
+                updatedBy,
+                eventOn,
+                queryStartOn,
+                queryEndOn,
+                incidentInfo,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsUserInfo"/>. </summary>
@@ -156,7 +218,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/> instance for mocking. </returns>
         public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsDataConnectorData(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsDataConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentData"/>. </summary>
@@ -188,7 +257,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             labels ??= new List<SecurityInsightsIncidentLabel>();
             relatedAnalyticRuleIds ??= new List<ResourceIdentifier>();
 
-            return new SecurityInsightsIncidentData(id, name, resourceType, systemData, additionalInfo, classification, classificationComment, classificationReason, createdOn, description, firstActivityOn, incidentUri, incidentNumber, labels?.ToList(), lastActivityOn, lastModifiedOn, owner, relatedAnalyticRuleIds?.ToList(), severity, status, title, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalInfo,
+                classification,
+                classificationComment,
+                classificationReason,
+                createdOn,
+                description,
+                firstActivityOn,
+                incidentUri,
+                incidentNumber,
+                labels?.ToList(),
+                lastActivityOn,
+                lastModifiedOn,
+                owner,
+                relatedAnalyticRuleIds?.ToList(),
+                severity,
+                status,
+                title,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/>. </summary>
@@ -203,7 +295,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             alertProductNames ??= new List<string>();
             tactics ??= new List<SecurityInsightsAttackTactic>();
 
-            return new SecurityInsightsIncidentAdditionalInfo(alertsCount, bookmarksCount, commentsCount, alertProductNames?.ToList(), tactics?.ToList(), serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentAdditionalInfo(
+                alertsCount,
+                bookmarksCount,
+                commentsCount,
+                alertProductNames?.ToList(),
+                tactics?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentLabel"/>. </summary>
@@ -256,7 +354,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             tactics ??= new List<SecurityInsightsAttackTactic>();
             resourceIdentifiers ??= new List<BinaryData>();
 
-            return new SecurityInsightsAlert(id, name, resourceType, systemData, SecurityInsightsEntityKind.SecurityAlert, serializedAdditionalRawData: null, additionalData, friendlyName, alertDisplayName, alertType, compromisedEntity, confidenceLevel, confidenceReasons?.ToList(), confidenceScore, confidenceScoreStatus, description, endOn, intent, providerAlertId, processingEndOn, productComponentName, productName, productVersion, remediationSteps?.ToList(), severity, startOn, status, systemAlertId, tactics?.ToList(), alertGeneratedOn, vendorName, alertLink, resourceIdentifiers?.ToList());
+            return new SecurityInsightsAlert(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.SecurityAlert,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                alertDisplayName,
+                alertType,
+                compromisedEntity,
+                confidenceLevel,
+                confidenceReasons?.ToList(),
+                confidenceScore,
+                confidenceScoreStatus,
+                description,
+                endOn,
+                intent,
+                providerAlertId,
+                processingEndOn,
+                productComponentName,
+                productName,
+                productVersion,
+                remediationSteps?.ToList(),
+                severity,
+                startOn,
+                status,
+                systemAlertId,
+                tactics?.ToList(),
+                alertGeneratedOn,
+                vendorName,
+                alertLink,
+                resourceIdentifiers?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAlertConfidenceReason"/>. </summary>
@@ -277,7 +408,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
         public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new SecurityInsightsEntity(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
+            return new SecurityInsightsEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsHuntingBookmark"/>. </summary>
@@ -304,7 +441,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             additionalData ??= new Dictionary<string, BinaryData>();
             labels ??= new List<string>();
 
-            return new SecurityInsightsHuntingBookmark(id, name, resourceType, systemData, SecurityInsightsEntityKind.Bookmark, serializedAdditionalRawData: null, additionalData, friendlyName, createdOn, createdBy, displayName, eventOn, labels?.ToList(), notes, query, queryResult, updatedOn, updatedBy, incidentInfo);
+            return new SecurityInsightsHuntingBookmark(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Bookmark,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                createdOn,
+                createdBy,
+                displayName,
+                eventOn,
+                labels?.ToList(),
+                notes,
+                query,
+                queryResult,
+                updatedOn,
+                updatedBy,
+                incidentInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/>. </summary>
@@ -320,7 +476,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/> instance for mocking. </returns>
         public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string message = null, SecurityInsightsClientInfo author = null, ETag? etag = null)
         {
-            return new SecurityInsightsIncidentCommentData(id, name, resourceType, systemData, createdOn, lastModifiedOn, message, author, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentCommentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                lastModifiedOn,
+                message,
+                author,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesResult"/>. </summary>
@@ -361,7 +527,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/> instance for mocking. </returns>
         public static SecurityInsightsIncidentRelationData SecurityInsightsIncidentRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, ResourceType? relatedResourceType = null, string relatedResourceKind = null, ETag? etag = null)
         {
-            return new SecurityInsightsIncidentRelationData(id, name, resourceType, systemData, relatedResourceId, relatedResourceName, relatedResourceType, relatedResourceKind, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentRelationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                relatedResourceId,
+                relatedResourceName,
+                relatedResourceType,
+                relatedResourceKind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsSentinelOnboardingStateData"/>. </summary>
@@ -374,7 +550,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSentinelOnboardingStateData"/> instance for mocking. </returns>
         public static SecurityInsightsSentinelOnboardingStateData SecurityInsightsSentinelOnboardingStateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isCustomerManagedKeySet = null, ETag? etag = null)
         {
-            return new SecurityInsightsSentinelOnboardingStateData(id, name, resourceType, systemData, isCustomerManagedKeySet, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsSentinelOnboardingStateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isCustomerManagedKeySet,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/>. </summary>
@@ -387,7 +570,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/> instance for mocking. </returns>
         public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityMLAnalyticsSettingData(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData: null);
+            return new SecurityMLAnalyticsSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
@@ -400,7 +590,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/> instance for mocking. </returns>
         public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsThreatIntelligenceIndicatorBaseData(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsThreatIntelligenceIndicatorBaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
@@ -454,7 +651,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             threatTypes ??= new List<string>();
             extensions ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, resourceType, systemData, ThreatIntelligenceResourceInnerKind.Indicator, etag, serializedAdditionalRawData: null, additionalData, friendlyName, threatIntelligenceTags?.ToList(), lastUpdatedOn, source, displayName, description, indicatorTypes?.ToList(), pattern, patternType, patternVersion, killChainPhases?.ToList(), parsedPattern?.ToList(), externalId, createdByRef, isDefanged, externalLastUpdatedOn, externalReferences?.ToList(), granularMarkings?.ToList(), labels?.ToList(), isRevoked, confidence, objectMarkingRefs?.ToList(), language, threatTypes?.ToList(), validFrom, validUntil, createdOn, modified, extensions);
+            return new SecurityInsightsThreatIntelligenceIndicatorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ThreatIntelligenceResourceInnerKind.Indicator,
+                etag,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                threatIntelligenceTags?.ToList(),
+                lastUpdatedOn,
+                source,
+                displayName,
+                description,
+                indicatorTypes?.ToList(),
+                pattern,
+                patternType,
+                patternVersion,
+                killChainPhases?.ToList(),
+                parsedPattern?.ToList(),
+                externalId,
+                createdByRef,
+                isDefanged,
+                externalLastUpdatedOn,
+                externalReferences?.ToList(),
+                granularMarkings?.ToList(),
+                labels?.ToList(),
+                isRevoked,
+                confidence,
+                objectMarkingRefs?.ToList(),
+                language,
+                threatTypes?.ToList(),
+                validFrom,
+                validUntil,
+                createdOn,
+                modified,
+                extensions);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ThreatIntelligenceMetrics"/>. </summary>
@@ -524,7 +758,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             labels ??= new List<string>();
 
-            return new SecurityInsightsWatchlistData(id, name, resourceType, systemData, watchlistId, displayName, provider, source, createdOn, updatedOn, createdBy, updatedBy, description, watchlistType, watchlistAlias, isDeleted, labels?.ToList(), defaultDuration, tenantId, numberOfLinesToSkip, rawContent, itemsSearchKey, contentType, uploadStatus, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsWatchlistData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                watchlistId,
+                displayName,
+                provider,
+                source,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                description,
+                watchlistType,
+                watchlistAlias,
+                isDeleted,
+                labels?.ToList(),
+                defaultDuration,
+                tenantId,
+                numberOfLinesToSkip,
+                rawContent,
+                itemsSearchKey,
+                contentType,
+                uploadStatus,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/>. </summary>
@@ -546,7 +806,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/> instance for mocking. </returns>
         public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, BinaryData itemsKeyValue = null, BinaryData entityMapping = null, ETag? etag = null)
         {
-            return new SecurityInsightsWatchlistItemData(id, name, resourceType, systemData, watchlistItemType, watchlistItemId, tenantId, isDeleted, createdOn, updatedOn, createdBy, updatedBy, itemsKeyValue, entityMapping, etag, serializedAdditionalRawData: null);
+            return new SecurityInsightsWatchlistItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                watchlistItemType,
+                watchlistItemId,
+                tenantId,
+                isDeleted,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                itemsKeyValue,
+                entityMapping,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFusionAlertRule"/>. </summary>
@@ -569,7 +845,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
 
-            return new SecurityInsightsFusionAlertRule(id, name, resourceType, systemData, AlertRuleKind.Fusion, etag, serializedAdditionalRawData: null, alertRuleTemplateName, description, displayName, isEnabled, lastModifiedOn, severity, tactics?.ToList(), techniques?.ToList());
+            return new SecurityInsightsFusionAlertRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.Fusion,
+                etag,
+                serializedAdditionalRawData: null,
+                alertRuleTemplateName,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                severity,
+                tactics?.ToList(),
+                techniques?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFusionAlertRuleTemplate"/>. </summary>
@@ -594,7 +885,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
 
-            return new SecurityInsightsFusionAlertRuleTemplate(id, name, resourceType, systemData, AlertRuleKind.Fusion, serializedAdditionalRawData: null, alertRulesCreatedByTemplateCount, createdOn, lastUpdatedOn, description, displayName, requiredDataConnectors?.ToList(), status, severity, tactics?.ToList(), techniques?.ToList());
+            return new SecurityInsightsFusionAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.Fusion,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                createdOn,
+                lastUpdatedOn,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                severity,
+                tactics?.ToList(),
+                techniques?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
@@ -619,7 +926,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             displayNamesExcludeFilter ??= new List<string>();
             severitiesFilter ??= new List<SecurityInsightsAlertSeverity>();
 
-            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, resourceType, systemData, AlertRuleKind.MicrosoftSecurityIncidentCreation, etag, serializedAdditionalRawData: null, displayNamesFilter?.ToList(), displayNamesExcludeFilter?.ToList(), productFilter, severitiesFilter?.ToList(), alertRuleTemplateName, description, displayName, isEnabled, lastModifiedOn);
+            return new MicrosoftSecurityIncidentCreationAlertRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.MicrosoftSecurityIncidentCreation,
+                etag,
+                serializedAdditionalRawData: null,
+                displayNamesFilter?.ToList(),
+                displayNamesExcludeFilter?.ToList(),
+                productFilter,
+                severitiesFilter?.ToList(),
+                alertRuleTemplateName,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>. </summary>
@@ -646,7 +969,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             displayNamesExcludeFilter ??= new List<string>();
             severitiesFilter ??= new List<SecurityInsightsAlertSeverity>();
 
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, resourceType, systemData, AlertRuleKind.MicrosoftSecurityIncidentCreation, serializedAdditionalRawData: null, alertRulesCreatedByTemplateCount, createdOn, lastUpdatedOn, description, displayName, requiredDataConnectors?.ToList(), status, displayNamesFilter?.ToList(), displayNamesExcludeFilter?.ToList(), productFilter, severitiesFilter?.ToList());
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.MicrosoftSecurityIncidentCreation,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                createdOn,
+                lastUpdatedOn,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                displayNamesFilter?.ToList(),
+                displayNamesExcludeFilter?.ToList(),
+                productFilter,
+                severitiesFilter?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsScheduledAlertRule"/>. </summary>
@@ -684,7 +1024,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
 
-            return new SecurityInsightsScheduledAlertRule(id, name, resourceType, systemData, AlertRuleKind.Scheduled, etag, serializedAdditionalRawData: null, query, queryFrequency, queryPeriod, severity, triggerOperator, triggerThreshold, eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null, customDetails, entityMappings?.ToList(), alertDetailsOverride, alertRuleTemplateName, templateVersion, description, displayName, isEnabled, lastModifiedOn, suppressionDuration, isSuppressionEnabled, tactics?.ToList(), techniques?.ToList(), incidentConfiguration);
+            return new SecurityInsightsScheduledAlertRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.Scheduled,
+                etag,
+                serializedAdditionalRawData: null,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
+                customDetails,
+                entityMappings?.ToList(),
+                alertDetailsOverride,
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                suppressionDuration,
+                isSuppressionEnabled,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                incidentConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduledAlertRuleTemplate"/>. </summary>
@@ -721,7 +1089,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             customDetails ??= new Dictionary<string, string>();
             entityMappings ??= new List<SecurityInsightsAlertRuleEntityMapping>();
 
-            return new ScheduledAlertRuleTemplate(id, name, resourceType, systemData, AlertRuleKind.Scheduled, serializedAdditionalRawData: null, alertRulesCreatedByTemplateCount, createdDateUTC, lastUpdatedDateUTC, description, displayName, requiredDataConnectors?.ToList(), status, query, queryFrequency, queryPeriod, severity, triggerOperator, triggerThreshold, tactics?.ToList(), techniques?.ToList(), version, eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null, customDetails, entityMappings?.ToList(), alertDetailsOverride);
+            return new ScheduledAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AlertRuleKind.Scheduled,
+                serializedAdditionalRawData: null,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
+                requiredDataConnectors?.ToList(),
+                status,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                tactics?.ToList(),
+                techniques?.ToList(),
+                version,
+                eventGroupingAggregationKind != null ? new EventGroupingSettings(eventGroupingAggregationKind, serializedAdditionalRawData: null) : null,
+                customDetails,
+                entityMappings?.ToList(),
+                alertDetailsOverride);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAadDataConnector"/>. </summary>
@@ -735,7 +1129,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAadDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
-            return new SecurityInsightsAadDataConnector(id, name, resourceType, systemData, DataConnectorKind.AzureActiveDirectory, etag, serializedAdditionalRawData: null, tenantId, alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+            return new SecurityInsightsAadDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureActiveDirectory,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAatpDataConnector"/>. </summary>
@@ -749,7 +1152,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAatpDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsAatpDataConnector SecurityInsightsAatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
-            return new SecurityInsightsAatpDataConnector(id, name, resourceType, systemData, DataConnectorKind.AzureAdvancedThreatProtection, etag, serializedAdditionalRawData: null, tenantId, alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+            return new SecurityInsightsAatpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureAdvancedThreatProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAscDataConnector"/>. </summary>
@@ -763,7 +1175,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAscDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsAscDataConnector SecurityInsightsAscDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, SecurityInsightsDataTypeConnectionState? alertsState = null, string subscriptionId = null)
         {
-            return new SecurityInsightsAscDataConnector(id, name, resourceType, systemData, DataConnectorKind.AzureSecurityCenter, etag, serializedAdditionalRawData: null, alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, subscriptionId);
+            return new SecurityInsightsAscDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AzureSecurityCenter,
+                etag,
+                serializedAdditionalRawData: null,
+                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
@@ -777,7 +1198,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsAwsCloudTrailDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsAwsCloudTrailDataConnector SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string awsRoleArn = null, SecurityInsightsDataTypeConnectionState? logsState = null)
         {
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, resourceType, systemData, DataConnectorKind.AmazonWebServicesCloudTrail, etag, serializedAdditionalRawData: null, awsRoleArn, logsState != null ? new AwsCloudTrailDataConnectorDataTypes(new AwsCloudTrailDataConnectorDataTypesLogs(logsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+            return new SecurityInsightsAwsCloudTrailDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.AmazonWebServicesCloudTrail,
+                etag,
+                serializedAdditionalRawData: null,
+                awsRoleArn,
+                logsState != null ? new AwsCloudTrailDataConnectorDataTypes(new AwsCloudTrailDataConnectorDataTypesLogs(logsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.McasDataConnector"/>. </summary>
@@ -791,7 +1221,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
         public static McasDataConnector McasDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, McasDataConnectorDataTypes dataTypes = null)
         {
-            return new McasDataConnector(id, name, resourceType, systemData, DataConnectorKind.MicrosoftCloudAppSecurity, etag, serializedAdditionalRawData: null, tenantId, dataTypes);
+            return new McasDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftCloudAppSecurity,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                dataTypes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MdatpDataConnector"/>. </summary>
@@ -805,7 +1244,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.MdatpDataConnector"/> instance for mocking. </returns>
         public static MdatpDataConnector MdatpDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null)
         {
-            return new MdatpDataConnector(id, name, resourceType, systemData, DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection, etag, serializedAdditionalRawData: null, tenantId, alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+            return new MdatpDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                alertsState != null ? new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsTIDataConnector"/>. </summary>
@@ -820,7 +1268,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsTIDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsTIDataConnector SecurityInsightsTIDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, DateTimeOffset? tipLookbackOn = null, SecurityInsightsDataTypeConnectionState? indicatorsState = null)
         {
-            return new SecurityInsightsTIDataConnector(id, name, resourceType, systemData, DataConnectorKind.ThreatIntelligence, etag, serializedAdditionalRawData: null, tenantId, tipLookbackOn, indicatorsState != null ? new TIDataConnectorDataTypes(new TIDataConnectorDataTypesIndicators(indicatorsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+            return new SecurityInsightsTIDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.ThreatIntelligence,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                tipLookbackOn,
+                indicatorsState != null ? new TIDataConnectorDataTypes(new TIDataConnectorDataTypesIndicators(indicatorsState, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsOfficeDataConnector"/>. </summary>
@@ -834,7 +1292,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsOfficeDataConnector"/> instance for mocking. </returns>
         public static SecurityInsightsOfficeDataConnector SecurityInsightsOfficeDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsOfficeDataConnectorDataTypes dataTypes = null)
         {
-            return new SecurityInsightsOfficeDataConnector(id, name, resourceType, systemData, DataConnectorKind.Office365, etag, serializedAdditionalRawData: null, tenantId, dataTypes);
+            return new SecurityInsightsOfficeDataConnector(
+                id,
+                name,
+                resourceType,
+                systemData,
+                DataConnectorKind.Office365,
+                etag,
+                serializedAdditionalRawData: null,
+                tenantId,
+                dataTypes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnomalySecurityMLAnalyticsSettings"/>. </summary>
@@ -864,7 +1331,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             tactics ??= new List<SecurityInsightsAttackTactic>();
             techniques ??= new List<string>();
 
-            return new AnomalySecurityMLAnalyticsSettings(id, name, resourceType, systemData, SecurityMLAnalyticsSettingsKind.Anomaly, etag, serializedAdditionalRawData: null, description, displayName, isEnabled, lastModifiedOn, requiredDataConnectors?.ToList(), tactics?.ToList(), techniques?.ToList(), anomalyVersion, customizableObservations, frequency, settingsStatus, isDefaultSettings, anomalySettingsVersion, settingsDefinitionId);
+            return new AnomalySecurityMLAnalyticsSettings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityMLAnalyticsSettingsKind.Anomaly,
+                etag,
+                serializedAdditionalRawData: null,
+                description,
+                displayName,
+                isEnabled,
+                lastModifiedOn,
+                requiredDataConnectors?.ToList(),
+                tactics?.ToList(),
+                techniques?.ToList(),
+                anomalyVersion,
+                customizableObservations,
+                frequency,
+                settingsStatus,
+                isDefaultSettings,
+                anomalySettingsVersion,
+                settingsDefinitionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAccountEntity"/>. </summary>
@@ -891,7 +1379,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsAccountEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Account, serializedAdditionalRawData: null, additionalData, friendlyName, aadTenantId, aadUserId, accountName, displayName, hostEntityId, isDomainJoined, ntDomain, objectGuid, puid, sid, upnSuffix, dnsDomain);
+            return new SecurityInsightsAccountEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Account,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                aadTenantId,
+                aadUserId,
+                accountName,
+                displayName,
+                hostEntityId,
+                isDomainJoined,
+                ntDomain,
+                objectGuid,
+                puid,
+                sid,
+                upnSuffix,
+                dnsDomain);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAzureResourceEntity"/>. </summary>
@@ -908,7 +1416,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsAzureResourceEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.AzureResource, serializedAdditionalRawData: null, additionalData, friendlyName, resourceId, subscriptionId);
+            return new SecurityInsightsAzureResourceEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.AzureResource,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                resourceId,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsCloudApplicationEntity"/>. </summary>
@@ -926,7 +1444,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsCloudApplicationEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.CloudApplication, serializedAdditionalRawData: null, additionalData, friendlyName, appId, appName, instanceName);
+            return new SecurityInsightsCloudApplicationEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.CloudApplication,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                appId,
+                appName,
+                instanceName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsDnsEntity"/>. </summary>
@@ -946,7 +1475,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             additionalData ??= new Dictionary<string, BinaryData>();
             ipAddressEntityIds ??= new List<string>();
 
-            return new SecurityInsightsDnsEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.DnsResolution, serializedAdditionalRawData: null, additionalData, friendlyName, dnsServerIPEntityId, domainName, hostIPAddressEntityId, ipAddressEntityIds?.ToList());
+            return new SecurityInsightsDnsEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.DnsResolution,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                dnsServerIPEntityId,
+                domainName,
+                hostIPAddressEntityId,
+                ipAddressEntityIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileEntity"/>. </summary>
@@ -966,7 +1507,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             additionalData ??= new Dictionary<string, BinaryData>();
             fileHashEntityIds ??= new List<string>();
 
-            return new SecurityInsightsFileEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.File, serializedAdditionalRawData: null, additionalData, friendlyName, directory, fileHashEntityIds?.ToList(), fileName, hostEntityId);
+            return new SecurityInsightsFileEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.File,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                directory,
+                fileHashEntityIds?.ToList(),
+                fileName,
+                hostEntityId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsFileHashEntity"/>. </summary>
@@ -983,7 +1536,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsFileHashEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.FileHash, serializedAdditionalRawData: null, additionalData, friendlyName, algorithm, hashValue);
+            return new SecurityInsightsFileHashEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.FileHash,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                algorithm,
+                hashValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntityGeoLocation"/>. </summary>
@@ -997,7 +1560,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsIPEntityGeoLocation"/> instance for mocking. </returns>
         public static SecurityInsightsIPEntityGeoLocation SecurityInsightsIPEntityGeoLocation(int? asn = null, string city = null, string countryCode = null, string countryName = null, double? latitude = null, double? longitude = null, string state = null)
         {
-            return new SecurityInsightsIPEntityGeoLocation(asn, city, countryCode, countryName, latitude, longitude, state, serializedAdditionalRawData: null);
+            return new SecurityInsightsIPEntityGeoLocation(
+                asn,
+                city,
+                countryCode,
+                countryName,
+                latitude,
+                longitude,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsHostEntity"/>. </summary>
@@ -1021,7 +1592,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsHostEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Host, serializedAdditionalRawData: null, additionalData, friendlyName, azureId, dnsDomain, hostName, isDomainJoined, netBiosName, ntDomain, omsAgentId, osFamily, osVersion);
+            return new SecurityInsightsHostEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Host,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                azureId,
+                dnsDomain,
+                hostName,
+                isDomainJoined,
+                netBiosName,
+                ntDomain,
+                omsAgentId,
+                osFamily,
+                osVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIotDeviceEntity"/>. </summary>
@@ -1055,7 +1643,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             threatIntelligence ??= new List<SecurityInsightsThreatIntelligence>();
             protocols ??= new List<string>();
 
-            return new SecurityInsightsIotDeviceEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.IotDevice, serializedAdditionalRawData: null, additionalData, friendlyName, deviceId, deviceName, source, iotSecurityAgentId, deviceType, vendor, edgeId, macAddress, model, serialNumber, firmwareVersion, operatingSystem, iotHubEntityId, hostEntityId, ipAddressEntityId, threatIntelligence?.ToList(), protocols?.ToList());
+            return new SecurityInsightsIotDeviceEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.IotDevice,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                deviceId,
+                deviceName,
+                source,
+                iotSecurityAgentId,
+                deviceType,
+                vendor,
+                edgeId,
+                macAddress,
+                model,
+                serialNumber,
+                firmwareVersion,
+                operatingSystem,
+                iotHubEntityId,
+                hostEntityId,
+                ipAddressEntityId,
+                threatIntelligence?.ToList(),
+                protocols?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
@@ -1068,7 +1681,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
         public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
         {
-            return new SecurityInsightsThreatIntelligence(confidence, providerName, reportLink, threatDescription, threatName, threatType, serializedAdditionalRawData: null);
+            return new SecurityInsightsThreatIntelligence(
+                confidence,
+                providerName,
+                reportLink,
+                threatDescription,
+                threatName,
+                threatType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntity"/>. </summary>
@@ -1087,7 +1707,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             additionalData ??= new Dictionary<string, BinaryData>();
             threatIntelligence ??= new List<SecurityInsightsThreatIntelligence>();
 
-            return new SecurityInsightsIPEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.IP, serializedAdditionalRawData: null, additionalData, friendlyName, address, location, threatIntelligence?.ToList());
+            return new SecurityInsightsIPEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.IP,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                address,
+                location,
+                threatIntelligence?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMailboxEntity"/>. </summary>
@@ -1106,7 +1737,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsMailboxEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Mailbox, serializedAdditionalRawData: null, additionalData, friendlyName, mailboxPrimaryAddress, displayName, upn, externalDirectoryObjectId);
+            return new SecurityInsightsMailboxEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Mailbox,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                mailboxPrimaryAddress,
+                displayName,
+                upn,
+                externalDirectoryObjectId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMailClusterEntity"/>. </summary>
@@ -1138,7 +1781,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             networkMessageIds ??= new List<string>();
             threats ??= new List<string>();
 
-            return new SecurityInsightsMailClusterEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.MailCluster, serializedAdditionalRawData: null, additionalData, friendlyName, networkMessageIds?.ToList(), countByDeliveryStatus, countByThreatType, countByProtectionStatus, threats?.ToList(), query, queryOn, mailCount, isVolumeAnomaly, source, clusterSourceIdentifier, clusterSourceType, clusterQueryStartOn, clusterQueryEndOn, clusterGroup);
+            return new SecurityInsightsMailClusterEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.MailCluster,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                networkMessageIds?.ToList(),
+                countByDeliveryStatus,
+                countByThreatType,
+                countByProtectionStatus,
+                threats?.ToList(),
+                query,
+                queryOn,
+                mailCount,
+                isVolumeAnomaly,
+                source,
+                clusterSourceIdentifier,
+                clusterSourceType,
+                clusterQueryStartOn,
+                clusterQueryEndOn,
+                clusterGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMailMessageEntity"/>. </summary>
@@ -1182,7 +1848,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             threats ??= new List<string>();
             threatDetectionMethods ??= new List<string>();
 
-            return new SecurityInsightsMailMessageEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.MailMessage, serializedAdditionalRawData: null, additionalData, friendlyName, fileEntityIds?.ToList(), recipient, uris?.ToList(), threats?.ToList(), p1Sender, p1SenderDisplayName, p1SenderDomain, senderIP, p2Sender, p2SenderDisplayName, p2SenderDomain, receiveOn, networkMessageId, internetMessageId, subject, language, threatDetectionMethods?.ToList(), bodyFingerprintBin1, bodyFingerprintBin2, bodyFingerprintBin3, bodyFingerprintBin4, bodyFingerprintBin5, antispamDirection, deliveryAction, deliveryLocation);
+            return new SecurityInsightsMailMessageEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.MailMessage,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                fileEntityIds?.ToList(),
+                recipient,
+                uris?.ToList(),
+                threats?.ToList(),
+                p1Sender,
+                p1SenderDisplayName,
+                p1SenderDomain,
+                senderIP,
+                p2Sender,
+                p2SenderDisplayName,
+                p2SenderDomain,
+                receiveOn,
+                networkMessageId,
+                internetMessageId,
+                subject,
+                language,
+                threatDetectionMethods?.ToList(),
+                bodyFingerprintBin1,
+                bodyFingerprintBin2,
+                bodyFingerprintBin3,
+                bodyFingerprintBin4,
+                bodyFingerprintBin5,
+                antispamDirection,
+                deliveryAction,
+                deliveryLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsMalwareEntity"/>. </summary>
@@ -1203,7 +1902,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             fileEntityIds ??= new List<string>();
             processEntityIds ??= new List<string>();
 
-            return new SecurityInsightsMalwareEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Malware, serializedAdditionalRawData: null, additionalData, friendlyName, category, fileEntityIds?.ToList(), malwareName, processEntityIds?.ToList());
+            return new SecurityInsightsMalwareEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Malware,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                category,
+                fileEntityIds?.ToList(),
+                malwareName,
+                processEntityIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsProcessEntity"/>. </summary>
@@ -1227,7 +1938,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsProcessEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Process, serializedAdditionalRawData: null, additionalData, friendlyName, accountEntityId, commandLine, createdOn, elevationToken, hostEntityId, hostLogonSessionEntityId, imageFileEntityId, parentProcessEntityId, processId);
+            return new SecurityInsightsProcessEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Process,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                accountEntityId,
+                commandLine,
+                createdOn,
+                elevationToken,
+                hostEntityId,
+                hostLogonSessionEntityId,
+                imageFileEntityId,
+                parentProcessEntityId,
+                processId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsRegistryKeyEntity"/>. </summary>
@@ -1244,7 +1972,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsRegistryKeyEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.RegistryKey, serializedAdditionalRawData: null, additionalData, friendlyName, hive, key);
+            return new SecurityInsightsRegistryKeyEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.RegistryKey,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                hive,
+                key);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsRegistryValueEntity"/>. </summary>
@@ -1263,7 +2001,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsRegistryValueEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.RegistryValue, serializedAdditionalRawData: null, additionalData, friendlyName, keyEntityId, valueData, valueName, valueType);
+            return new SecurityInsightsRegistryValueEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.RegistryValue,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                keyEntityId,
+                valueData,
+                valueName,
+                valueType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsGroupEntity"/>. </summary>
@@ -1281,7 +2031,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsGroupEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.SecurityGroup, serializedAdditionalRawData: null, additionalData, friendlyName, distinguishedName, objectGuid, sid);
+            return new SecurityInsightsGroupEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.SecurityGroup,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                distinguishedName,
+                objectGuid,
+                sid);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsSubmissionMailEntity"/>. </summary>
@@ -1306,7 +2067,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsSubmissionMailEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.SubmissionMail, serializedAdditionalRawData: null, additionalData, friendlyName, networkMessageId, submissionId, submitter, submitOn, messageReceivedOn, recipient, sender, senderIP, subject, reportType);
+            return new SecurityInsightsSubmissionMailEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.SubmissionMail,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                networkMessageId,
+                submissionId,
+                submitter,
+                submitOn,
+                messageReceivedOn,
+                recipient,
+                sender,
+                senderIP,
+                subject,
+                reportType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsUriEntity"/>. </summary>
@@ -1322,7 +2101,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityInsightsUriEntity(id, name, resourceType, systemData, SecurityInsightsEntityKind.Uri, serializedAdditionalRawData: null, additionalData, friendlyName, uri);
+            return new SecurityInsightsUriEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Uri,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                uri);
         }
     }
 }

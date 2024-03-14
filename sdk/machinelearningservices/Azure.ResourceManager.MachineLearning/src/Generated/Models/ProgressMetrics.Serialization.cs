@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -112,10 +113,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<long?> completedDatapointCount = default;
-            Optional<DateTimeOffset?> incrementalDataLastRefreshDateTime = default;
-            Optional<long?> skippedDatapointCount = default;
-            Optional<long?> totalDatapointCount = default;
+            long? completedDatapointCount = default;
+            DateTimeOffset? incrementalDataLastRefreshDateTime = default;
+            long? skippedDatapointCount = default;
+            long? totalDatapointCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProgressMetrics(Optional.ToNullable(completedDatapointCount), Optional.ToNullable(incrementalDataLastRefreshDateTime), Optional.ToNullable(skippedDatapointCount), Optional.ToNullable(totalDatapointCount), serializedAdditionalRawData);
+            return new ProgressMetrics(completedDatapointCount, incrementalDataLastRefreshDateTime, skippedDatapointCount, totalDatapointCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProgressMetrics>.Write(ModelReaderWriterOptions options)

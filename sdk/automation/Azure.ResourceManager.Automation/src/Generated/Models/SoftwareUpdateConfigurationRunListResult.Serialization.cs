@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SoftwareUpdateConfigurationRun>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SoftwareUpdateConfigurationRun> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SoftwareUpdateConfigurationRun> array = new List<SoftwareUpdateConfigurationRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item));
+                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationRunListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationRunListResult(value ?? new ChangeTrackingList<SoftwareUpdateConfigurationRun>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationRunListResult>.Write(ModelReaderWriterOptions options)

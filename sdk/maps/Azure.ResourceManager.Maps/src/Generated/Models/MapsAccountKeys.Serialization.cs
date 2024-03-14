@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> primaryKeyLastUpdated = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<DateTimeOffset> secondaryKeyLastUpdated = default;
+            DateTimeOffset? primaryKeyLastUpdated = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            DateTimeOffset? secondaryKeyLastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountKeys(Optional.ToNullable(primaryKeyLastUpdated), primaryKey.Value, secondaryKey.Value, Optional.ToNullable(secondaryKeyLastUpdated), serializedAdditionalRawData);
+            return new MapsAccountKeys(primaryKeyLastUpdated, primaryKey, secondaryKey, secondaryKeyLastUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountKeys>.Write(ModelReaderWriterOptions options)

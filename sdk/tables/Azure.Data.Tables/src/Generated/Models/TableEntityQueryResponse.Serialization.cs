@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
@@ -19,8 +20,8 @@ namespace Azure.Data.Tables.Models
             {
                 return null;
             }
-            Optional<string> odataMetadata = default;
-            Optional<IReadOnlyList<IDictionary<string, object>>> value = default;
+            string odataMetadata = default;
+            IReadOnlyList<IDictionary<string, object>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.metadata"u8))
@@ -62,7 +63,7 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new TableEntityQueryResponse(odataMetadata.Value, Optional.ToList(value));
+            return new TableEntityQueryResponse(odataMetadata, value ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
     }
 }

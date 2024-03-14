@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointId = default;
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<string> initiatorName = default;
-            Optional<bool> renewExistingRegistration = default;
+            string recoveryPointId = default;
+            ResourceIdentifier virtualMachineId = default;
+            string initiatorName = default;
+            bool? renewExistingRegistration = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +135,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmIlrRegistrationContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration));
+            return new IaasVmIlrRegistrationContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                virtualMachineId,
+                initiatorName,
+                renewExistingRegistration);
         }
 
         BinaryData IPersistableModel<IaasVmIlrRegistrationContent>.Write(ModelReaderWriterOptions options)

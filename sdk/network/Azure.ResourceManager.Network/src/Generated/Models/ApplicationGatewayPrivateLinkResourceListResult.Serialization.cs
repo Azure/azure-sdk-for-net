@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayPrivateLinkResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApplicationGatewayPrivateLinkResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayPrivateLinkResource> array = new List<ApplicationGatewayPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item));
+                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

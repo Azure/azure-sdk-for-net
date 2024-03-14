@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
-            Optional<string> id = default;
+            IList<RoleAssignmentEnablementRuleType> enabledRules = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToList(enabledRules));
+            return new RoleManagementPolicyEnablementRule(id, ruleType, target, serializedAdditionalRawData, enabledRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>());
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyEnablementRule>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             IReadOnlyList<DocumentModelSummary> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +43,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new GetDocumentModelsResponse(value, nextLink.Value);
+            return new GetDocumentModelsResponse(value, nextLink);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -109,11 +110,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<DetectorMetadata> detectorMetaData = default;
+            string source = default;
+            DetectorDefinition detectorDefinition = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            DetectorMetadata detectorMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value);
+                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                        array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
                     }
                     metrics = array;
                     continue;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value);
+                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +188,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value, serializedAdditionalRawData);
+            return new AnalysisDetectorEvidences(
+                source,
+                detectorDefinition,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                detectorMetaData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options)

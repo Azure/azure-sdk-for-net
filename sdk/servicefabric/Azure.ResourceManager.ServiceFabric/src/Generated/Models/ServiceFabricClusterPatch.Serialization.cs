@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -179,6 +180,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            {
+                writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
+                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -218,29 +224,30 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
-            Optional<ClusterCertificateDescription> certificate = default;
-            Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
-            Optional<string> clusterCodeVersion = default;
-            Optional<bool> eventStoreServiceEnabled = default;
-            Optional<IList<SettingsSectionDescription>> fabricSettings = default;
-            Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
-            Optional<ClusterReliabilityLevel> reliabilityLevel = default;
-            Optional<ClusterCertificateDescription> reverseProxyCertificate = default;
-            Optional<ClusterUpgradePolicy> upgradeDescription = default;
-            Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
-            Optional<ClusterUpgradeMode> upgradeMode = default;
-            Optional<SfZonalUpgradeMode> sfZonalUpgradeMode = default;
-            Optional<VmssZonalUpgradeMode> vmssZonalUpgradeMode = default;
-            Optional<bool> infrastructureServiceManager = default;
-            Optional<ClusterUpgradeCadence> upgradeWave = default;
-            Optional<DateTimeOffset> upgradePauseStartTimestampUtc = default;
-            Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
-            Optional<bool> waveUpgradePaused = default;
-            Optional<IList<ClusterNotification>> notifications = default;
+            IDictionary<string, string> tags = default;
+            IList<ClusterAddOnFeature> addOnFeatures = default;
+            ClusterCertificateDescription certificate = default;
+            ClusterServerCertificateCommonNames certificateCommonNames = default;
+            IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
+            IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
+            string clusterCodeVersion = default;
+            bool? eventStoreServiceEnabled = default;
+            IList<SettingsSectionDescription> fabricSettings = default;
+            IList<ClusterNodeTypeDescription> nodeTypes = default;
+            ClusterReliabilityLevel? reliabilityLevel = default;
+            ClusterCertificateDescription reverseProxyCertificate = default;
+            ClusterUpgradePolicy upgradeDescription = default;
+            ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
+            ClusterUpgradeMode? upgradeMode = default;
+            SfZonalUpgradeMode? sfZonalUpgradeMode = default;
+            VmssZonalUpgradeMode? vmssZonalUpgradeMode = default;
+            bool? infrastructureServiceManager = default;
+            ClusterUpgradeCadence? upgradeWave = default;
+            DateTimeOffset? upgradePauseStartTimestampUtc = default;
+            DateTimeOffset? upgradePauseEndTimestampUtc = default;
+            bool? waveUpgradePaused = default;
+            IList<ClusterNotification> notifications = default;
+            bool? enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +295,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("certificateCommonNames"u8))
@@ -297,7 +304,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
+                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientCertificateCommonNames"u8))
@@ -309,7 +316,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item));
+                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item, options));
                             }
                             clientCertificateCommonNames = array;
                             continue;
@@ -323,7 +330,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item));
+                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item, options));
                             }
                             clientCertificateThumbprints = array;
                             continue;
@@ -351,7 +358,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item));
+                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item, options));
                             }
                             fabricSettings = array;
                             continue;
@@ -365,7 +372,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item));
+                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item, options));
                             }
                             nodeTypes = array;
                             continue;
@@ -385,7 +392,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeDescription"u8))
@@ -394,7 +401,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
+                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
@@ -403,7 +410,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
+                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeMode"u8))
@@ -487,9 +494,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNotification> array = new List<ClusterNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNotification.DeserializeClusterNotification(item));
+                                array.Add(ClusterNotification.DeserializeClusterNotification(item, options));
                             }
                             notifications = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("enableHttpGatewayExclusiveAuthMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHttpGatewayExclusiveAuthMode = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -501,7 +517,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricClusterPatch(Optional.ToDictionary(tags), Optional.ToList(addOnFeatures), certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), Optional.ToList(nodeTypes), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, upgradeDescription.Value, applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), serializedAdditionalRawData);
+            return new ServiceFabricClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>(),
+                certificate,
+                certificateCommonNames,
+                clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>(),
+                clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>(),
+                clusterCodeVersion,
+                eventStoreServiceEnabled,
+                fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
+                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
+                reliabilityLevel,
+                reverseProxyCertificate,
+                upgradeDescription,
+                applicationTypeVersionsCleanupPolicy,
+                upgradeMode,
+                sfZonalUpgradeMode,
+                vmssZonalUpgradeMode,
+                infrastructureServiceManager,
+                upgradeWave,
+                upgradePauseStartTimestampUtc,
+                upgradePauseEndTimestampUtc,
+                waveUpgradePaused,
+                notifications ?? new ChangeTrackingList<ClusterNotification>(),
+                enableHttpGatewayExclusiveAuthMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricClusterPatch>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetCompressionType = datasetCompressionType;
             Level = level;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/> for deserialization. </summary>
+        internal DatasetCompression()
+        {
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Context = context;
             ObjectName = objectName;
             DatasetType = datasetType ?? "SapOdpResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/> for deserialization. </summary>
+        internal SapOdpResourceDataset()
+        {
         }
 
         /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>

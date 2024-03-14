@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorQuery> queryParameterStripDirective = default;
-            Optional<string> queryParameters = default;
-            Optional<DynamicCompressionEnabled> dynamicCompression = default;
-            Optional<TimeSpan> cacheDuration = default;
+            FrontDoorQuery? queryParameterStripDirective = default;
+            string queryParameters = default;
+            DynamicCompressionEnabled? dynamicCompression = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new FrontDoorCacheConfiguration(queryParameterStripDirective, queryParameters, dynamicCompression, cacheDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCacheConfiguration>.Write(ModelReaderWriterOptions options)

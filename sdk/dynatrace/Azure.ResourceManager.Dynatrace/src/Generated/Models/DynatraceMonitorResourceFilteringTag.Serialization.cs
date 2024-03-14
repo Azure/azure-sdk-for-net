@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<DynatraceMonitorResourceTagAction> action = default;
+            string name = default;
+            string value = default;
+            DynatraceMonitorResourceTagAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorResourceFilteringTag(name.Value, value.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new DynatraceMonitorResourceFilteringTag(name, value, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitorResourceFilteringTag>.Write(ModelReaderWriterOptions options)

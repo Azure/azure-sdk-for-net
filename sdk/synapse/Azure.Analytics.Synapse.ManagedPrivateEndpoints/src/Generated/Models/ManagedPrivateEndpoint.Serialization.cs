@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
@@ -29,10 +30,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ManagedPrivateEndpointProperties> properties = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            ManagedPrivateEndpointProperties properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpoint(id.Value, name.Value, type.Value, properties.Value);
+            return new ManagedPrivateEndpoint(id, name, type, properties);
         }
     }
 }

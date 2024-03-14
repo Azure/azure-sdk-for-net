@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<MarketplaceDetails> marketplaceDetails = default;
-            Optional<QumuloUserDetails> userDetails = default;
-            Optional<ResourceIdentifier> delegatedSubnetId = default;
-            Optional<Uri> clusterLoginUrl = default;
-            Optional<IList<string>> privateIPs = default;
+            MarketplaceDetails marketplaceDetails = default;
+            QumuloUserDetails userDetails = default;
+            ResourceIdentifier delegatedSubnetId = default;
+            Uri clusterLoginUrl = default;
+            IList<string> privateIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value);
+                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value);
+                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delegatedSubnetId"u8))
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemResourceUpdateProperties(marketplaceDetails.Value, userDetails.Value, delegatedSubnetId.Value, clusterLoginUrl.Value, Optional.ToList(privateIPs), serializedAdditionalRawData);
+            return new FileSystemResourceUpdateProperties(
+                marketplaceDetails,
+                userDetails,
+                delegatedSubnetId,
+                clusterLoginUrl,
+                privateIPs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options)

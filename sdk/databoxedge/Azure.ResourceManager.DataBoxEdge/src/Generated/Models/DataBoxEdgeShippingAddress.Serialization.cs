@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> addressLine1 = default;
-            Optional<string> addressLine2 = default;
-            Optional<string> addressLine3 = default;
-            Optional<string> postalCode = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
+            string addressLine1 = default;
+            string addressLine2 = default;
+            string addressLine3 = default;
+            string postalCode = default;
+            string city = default;
+            string state = default;
             string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +149,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShippingAddress(addressLine1.Value, addressLine2.Value, addressLine3.Value, postalCode.Value, city.Value, state.Value, country, serializedAdditionalRawData);
+            return new DataBoxEdgeShippingAddress(
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                postalCode,
+                city,
+                state,
+                country,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)

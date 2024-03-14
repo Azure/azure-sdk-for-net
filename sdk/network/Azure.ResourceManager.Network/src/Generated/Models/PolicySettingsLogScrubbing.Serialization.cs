@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WebApplicationFirewallScrubbingState> state = default;
-            Optional<IList<WebApplicationFirewallScrubbingRules>> scrubbingRules = default;
+            WebApplicationFirewallScrubbingState? state = default;
+            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item));
+                        array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
                     }
                     scrubbingRules = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettingsLogScrubbing(Optional.ToNullable(state), Optional.ToList(scrubbingRules), serializedAdditionalRawData);
+            return new PolicySettingsLogScrubbing(state, scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettingsLogScrubbing>.Write(ModelReaderWriterOptions options)

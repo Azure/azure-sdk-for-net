@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataShare.Models
                 return null;
             }
             SourceShareSynchronizationSettingKind kind = default;
-            Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
-            Optional<DateTimeOffset> synchronizationTime = default;
+            DataShareSynchronizationRecurrenceInterval? recurrenceInterval = default;
+            DateTimeOffset? synchronizationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledSourceSynchronizationSetting(kind, serializedAdditionalRawData, Optional.ToNullable(recurrenceInterval), Optional.ToNullable(synchronizationTime));
+            return new ScheduledSourceSynchronizationSetting(kind, serializedAdditionalRawData, recurrenceInterval, synchronizationTime);
         }
 
         BinaryData IPersistableModel<ScheduledSourceSynchronizationSetting>.Write(ModelReaderWriterOptions options)

@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LogSchedulePolicy": return LogSchedulePolicy.DeserializeLogSchedulePolicy(element);
-                    case "LongTermSchedulePolicy": return LongTermSchedulePolicy.DeserializeLongTermSchedulePolicy(element);
-                    case "SimpleSchedulePolicy": return SimpleSchedulePolicy.DeserializeSimpleSchedulePolicy(element);
-                    case "SimpleSchedulePolicyV2": return SimpleSchedulePolicyV2.DeserializeSimpleSchedulePolicyV2(element);
+                    case "LogSchedulePolicy": return LogSchedulePolicy.DeserializeLogSchedulePolicy(element, options);
+                    case "LongTermSchedulePolicy": return LongTermSchedulePolicy.DeserializeLongTermSchedulePolicy(element, options);
+                    case "SimpleSchedulePolicy": return SimpleSchedulePolicy.DeserializeSimpleSchedulePolicy(element, options);
+                    case "SimpleSchedulePolicyV2": return SimpleSchedulePolicyV2.DeserializeSimpleSchedulePolicyV2(element, options);
                 }
             }
-            return UnknownSchedulePolicy.DeserializeUnknownSchedulePolicy(element);
+            return UnknownSchedulePolicy.DeserializeUnknownSchedulePolicy(element, options);
         }
 
         BinaryData IPersistableModel<BackupSchedulePolicy>.Write(ModelReaderWriterOptions options)

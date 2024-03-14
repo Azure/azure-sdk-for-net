@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DdosProtectionPlanData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DdosProtectionPlanData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<DdosProtectionPlanData> array = new List<DdosProtectionPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item));
+                        array.Add(DdosProtectionPlanData.DeserializeDdosProtectionPlanData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DdosProtectionPlanListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DdosProtectionPlanListResult(value ?? new ChangeTrackingList<DdosProtectionPlanData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DdosProtectionPlanListResult>.Write(ModelReaderWriterOptions options)

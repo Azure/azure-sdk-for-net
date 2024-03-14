@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SavingsPlanValidateResult> benefits = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanValidateResult> array = new List<SavingsPlanValidateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item));
+                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item, options));
                     }
                     benefits = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanValidateResponse(Optional.ToList(benefits), nextLink.Value, serializedAdditionalRawData);
+            return new SavingsPlanValidateResponse(benefits ?? new ChangeTrackingList<SavingsPlanValidateResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanValidateResponse>.Write(ModelReaderWriterOptions options)

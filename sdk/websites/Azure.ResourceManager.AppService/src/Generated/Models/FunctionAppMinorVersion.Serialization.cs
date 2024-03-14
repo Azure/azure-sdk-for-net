@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> value = default;
-            Optional<FunctionAppRuntimes> stackSettings = default;
+            string displayText = default;
+            string value = default;
+            FunctionAppRuntimes stackSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value);
+                    stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppMinorVersion(displayText.Value, value.Value, stackSettings.Value, serializedAdditionalRawData);
+            return new FunctionAppMinorVersion(displayText, value, stackSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppMinorVersion>.Write(ModelReaderWriterOptions options)

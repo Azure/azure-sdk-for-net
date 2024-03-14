@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cron": return CronTrigger.DeserializeCronTrigger(element);
-                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element);
+                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
+                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                 }
             }
-            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);
+            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)

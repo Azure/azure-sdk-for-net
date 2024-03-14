@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppConfigurationStoreApiKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationStoreApiKey> array = new List<AppConfigurationStoreApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(item));
+                        array.Add(AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreApiKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppConfigurationStoreApiKeyListResult(value ?? new ChangeTrackingList<AppConfigurationStoreApiKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreApiKeyListResult>.Write(ModelReaderWriterOptions options)

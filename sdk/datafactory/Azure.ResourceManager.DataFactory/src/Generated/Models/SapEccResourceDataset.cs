@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Path = path;
             DatasetType = datasetType ?? "SapEccResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapEccResourceDataset"/> for deserialization. </summary>
+        internal SapEccResourceDataset()
+        {
         }
 
         /// <summary> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </summary>

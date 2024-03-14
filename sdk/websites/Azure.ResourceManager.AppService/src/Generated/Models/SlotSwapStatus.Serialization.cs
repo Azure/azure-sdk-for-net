@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestampUtc = default;
-            Optional<string> sourceSlotName = default;
-            Optional<string> destinationSlotName = default;
+            DateTimeOffset? timestampUtc = default;
+            string sourceSlotName = default;
+            string destinationSlotName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotSwapStatus(Optional.ToNullable(timestampUtc), sourceSlotName.Value, destinationSlotName.Value, serializedAdditionalRawData);
+            return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotSwapStatus>.Write(ModelReaderWriterOptions options)

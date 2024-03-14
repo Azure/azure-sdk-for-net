@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadNetworkDnsServiceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<WorkloadNetworkDnsServiceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkDnsServiceData> array = new List<WorkloadNetworkDnsServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(item));
+                        array.Add(WorkloadNetworkDnsServiceData.DeserializeWorkloadNetworkDnsServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsServicesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkDnsServicesList(value ?? new ChangeTrackingList<WorkloadNetworkDnsServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsServicesList>.Write(ModelReaderWriterOptions options)

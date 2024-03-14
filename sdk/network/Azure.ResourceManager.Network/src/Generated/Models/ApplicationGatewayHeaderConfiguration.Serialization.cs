@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> headerName = default;
-            Optional<string> headerValue = default;
+            string headerName = default;
+            string headerValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayHeaderConfiguration(headerName.Value, headerValue.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayHeaderConfiguration(headerName, headerValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayHeaderConfiguration>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EndpointCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EndpointCertificateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EndpointCertificateData> array = new List<EndpointCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointCertificateData.DeserializeEndpointCertificateData(item));
+                        array.Add(EndpointCertificateData.DeserializeEndpointCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointCertificateListResult(value ?? new ChangeTrackingList<EndpointCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointCertificateListResult>.Write(ModelReaderWriterOptions options)

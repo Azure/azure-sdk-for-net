@@ -43,9 +43,9 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             LayoutType kind = "Unknown";
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -77,7 +77,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode));
+            return new UnknownLayout(kind, resolution, placeholderImageUri, scalingMode);
         }
     }
 }

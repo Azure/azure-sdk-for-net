@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPendingUploadCredentialDto(document.RootElement, options);
+            return DeserializePendingUploadCredentialDto(document.RootElement, options);
         }
 
         internal static UnknownPendingUploadCredentialDto DeserializeUnknownPendingUploadCredentialDto(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPendingUploadCredentialDto(document.RootElement, options);
+                        return DeserializePendingUploadCredentialDto(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PendingUploadCredentialDto)} does not support '{options.Format}' format.");

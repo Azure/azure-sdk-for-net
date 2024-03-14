@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -69,9 +70,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> azureCloud = default;
-            Optional<string> applicationId = default;
-            Optional<string> apiKey = default;
+            string azureCloud = default;
+            string applicationId = default;
+            string apiKey = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -116,7 +117,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureApplicationInsightsParameter(azureCloud.Value, applicationId.Value, apiKey.Value, query);
+            return new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
         }
     }
 }

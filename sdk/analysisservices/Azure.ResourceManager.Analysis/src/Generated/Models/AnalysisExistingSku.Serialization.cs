@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<AnalysisResourceSku> sku = default;
-            Optional<ResourceType> resourceType = default;
+            AnalysisResourceSku sku = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     {
                         continue;
                     }
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
+                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisExistingSku(sku.Value, Optional.ToNullable(resourceType), serializedAdditionalRawData);
+            return new AnalysisExistingSku(sku, resourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisExistingSku>.Write(ModelReaderWriterOptions options)

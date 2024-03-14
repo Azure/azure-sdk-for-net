@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -198,27 +199,27 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<string> taskQueueId = default;
-            Optional<string> nodeCommunicationChannelEncryptionMode = default;
-            Optional<SynapseIntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
-            Optional<string> version = default;
-            Optional<IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode>> nodes = default;
-            Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Optional<string> updateDelayOffset = default;
-            Optional<string> localTimeZoneOffset = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<string>> serviceUrls = default;
-            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
-            Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<SynapseLinkedIntegrationRuntime>> links = default;
-            Optional<string> pushedVersion = default;
-            Optional<string> latestVersion = default;
-            Optional<DateTimeOffset> autoUpdateEta = default;
-            Optional<string> serviceRegion = default;
-            Optional<IReadOnlyList<string>> newerVersions = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
+            string taskQueueId = default;
+            string nodeCommunicationChannelEncryptionMode = default;
+            SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = default;
+            string version = default;
+            IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode> nodes = default;
+            DateTimeOffset? scheduledUpdateDate = default;
+            string updateDelayOffset = default;
+            string localTimeZoneOffset = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
+            IReadOnlyList<string> serviceUrls = default;
+            SynapseIntegrationRuntimeAutoUpdate? autoUpdate = default;
+            string versionStatus = default;
+            IReadOnlyList<SynapseLinkedIntegrationRuntime> links = default;
+            string pushedVersion = default;
+            string latestVersion = default;
+            DateTimeOffset? autoUpdateEta = default;
+            string serviceRegion = default;
+            IReadOnlyList<string> newerVersions = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseSelfHostedIntegrationRuntimeNode> array = new List<SynapseSelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item));
+                                array.Add(SynapseSelfHostedIntegrationRuntimeNode.DeserializeSynapseSelfHostedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -368,7 +369,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             List<SynapseLinkedIntegrationRuntime> array = new List<SynapseLinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item));
+                                array.Add(SynapseLinkedIntegrationRuntime.DeserializeSynapseLinkedIntegrationRuntime(item, options));
                             }
                             links = array;
                             continue;
@@ -417,7 +418,30 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), taskQueueId.Value, nodeCommunicationChannelEncryptionMode.Value, Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), serviceRegion.Value, Optional.ToList(newerVersions));
+            return new SynapseSelfHostedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName,
+                state,
+                additionalProperties,
+                createTime,
+                taskQueueId,
+                nodeCommunicationChannelEncryptionMode,
+                internalChannelEncryption,
+                version,
+                nodes ?? new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>(),
+                scheduledUpdateDate,
+                updateDelayOffset,
+                localTimeZoneOffset,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUrls ?? new ChangeTrackingList<string>(),
+                autoUpdate,
+                versionStatus,
+                links ?? new ChangeTrackingList<SynapseLinkedIntegrationRuntime>(),
+                pushedVersion,
+                latestVersion,
+                autoUpdateEta,
+                serviceRegion,
+                newerVersions ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

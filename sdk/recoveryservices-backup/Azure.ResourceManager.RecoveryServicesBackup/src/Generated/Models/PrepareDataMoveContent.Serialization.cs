@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -93,8 +94,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceIdentifier targetResourceId = default;
             AzureLocation targetRegion = default;
             DataMoveLevel dataMoveLevel = default;
-            Optional<IList<ResourceIdentifier>> sourceContainerArmIds = default;
-            Optional<bool> ignoreMoved = default;
+            IList<ResourceIdentifier> sourceContainerArmIds = default;
+            bool? ignoreMoved = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrepareDataMoveContent(targetResourceId, targetRegion, dataMoveLevel, Optional.ToList(sourceContainerArmIds), Optional.ToNullable(ignoreMoved), serializedAdditionalRawData);
+            return new PrepareDataMoveContent(
+                targetResourceId,
+                targetRegion,
+                dataMoveLevel,
+                sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                ignoreMoved,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrepareDataMoveContent>.Write(ModelReaderWriterOptions options)

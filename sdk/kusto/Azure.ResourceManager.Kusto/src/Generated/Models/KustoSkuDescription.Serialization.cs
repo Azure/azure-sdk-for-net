@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -121,12 +122,12 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<KustoSkuLocationInfoItem> locationInfo = default;
+            IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoSkuLocationInfoItem> array = new List<KustoSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item));
+                        array.Add(KustoSkuLocationInfoItem.DeserializeKustoSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -201,7 +202,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new KustoSkuDescription(
+                resourceType,
+                name,
+                tier,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSkuDescription>.Write(ModelReaderWriterOptions options)

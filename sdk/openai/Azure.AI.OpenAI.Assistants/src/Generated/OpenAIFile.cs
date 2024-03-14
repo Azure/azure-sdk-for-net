@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -91,6 +90,8 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
         public string Id { get; }
+        /// <summary> The size of the file, in bytes. </summary>
+        public int Size { get; }
         /// <summary> The name of the file. </summary>
         public string Filename { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>

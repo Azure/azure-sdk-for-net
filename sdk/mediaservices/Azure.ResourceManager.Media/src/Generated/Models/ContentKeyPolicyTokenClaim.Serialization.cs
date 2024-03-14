@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> claimType = default;
-            Optional<string> claimValue = default;
+            string claimType = default;
+            string claimValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyTokenClaim(claimType.Value, claimValue.Value, serializedAdditionalRawData);
+            return new ContentKeyPolicyTokenClaim(claimType, claimValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyTokenClaim>.Write(ModelReaderWriterOptions options)

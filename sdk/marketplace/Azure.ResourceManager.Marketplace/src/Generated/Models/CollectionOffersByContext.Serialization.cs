@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> context = default;
-            Optional<IReadOnlyList<PrivateStoreOfferResult>> value = default;
+            string context = default;
+            IReadOnlyList<PrivateStoreOfferResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<PrivateStoreOfferResult> array = new List<PrivateStoreOfferResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
+                                array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item, options));
                             }
                             value = array;
                             continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionOffersByContext(context.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CollectionOffersByContext(context, value ?? new ChangeTrackingList<PrivateStoreOfferResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionOffersByContext>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> encryptionAlgorithm = default;
-            Optional<byte[]> wrappedDataEncryptionKey = default;
-            Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
+            string id = default;
+            string encryptionAlgorithm = default;
+            byte[] wrappedDataEncryptionKey = default;
+            CosmosDBKeyWrapMetadata keyWrapMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value);
+                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlClientEncryptionKeyResourceInfo(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, serializedAdditionalRawData);
+            return new CosmosDBSqlClientEncryptionKeyResourceInfo(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyResourceInfo>.Write(ModelReaderWriterOptions options)

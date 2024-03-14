@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -154,13 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
-            Optional<string> errorMessage = default;
-            Optional<string> jobServiceType = default;
-            Optional<JobNodes> nodes = default;
-            Optional<int?> port = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<string> status = default;
+            string endpoint = default;
+            string errorMessage = default;
+            string jobServiceType = default;
+            JobNodes nodes = default;
+            int? port = default;
+            IDictionary<string, string> properties = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodes = null;
                         continue;
                     }
-                    nodes = JobNodes.DeserializeJobNodes(property.Value);
+                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("port"u8))
@@ -246,7 +247,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value, serializedAdditionalRawData);
+            return new MachineLearningJobService(
+                endpoint,
+                errorMessage,
+                jobServiceType,
+                nodes,
+                port,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobService>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -148,22 +149,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> arrayValueSeparator = default;
-            Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
+            string arrayValueSeparator = default;
+            IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
-            Optional<bool> isArray = default;
-            Optional<bool> isEnum = default;
-            Optional<bool> isFlagEnum = default;
-            Optional<bool> isImage = default;
-            Optional<bool> isLocalizedString = default;
-            Optional<bool> isName = default;
-            Optional<bool> isRequired = default;
-            Optional<string> propertyId = default;
-            Optional<string> schemaItemPropLink = default;
-            Optional<int> maxLength = default;
-            Optional<bool> isAvailableInGraph = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            bool? isArray = default;
+            bool? isEnum = default;
+            bool? isFlagEnum = default;
+            bool? isImage = default;
+            bool? isLocalizedString = default;
+            bool? isName = default;
+            bool? isRequired = default;
+            string propertyId = default;
+            string schemaItemPropLink = default;
+            int? maxLength = default;
+            bool? isAvailableInGraph = default;
+            IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileEnumValidValuesFormat> array = new List<ProfileEnumValidValuesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item, options));
                     }
                     enumValidValues = array;
                     continue;
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item, options));
                     }
                     dataSourcePrecedenceRules = array;
                     continue;
@@ -308,7 +309,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules), serializedAdditionalRawData);
+            return new PropertyDefinition(
+                arrayValueSeparator,
+                enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
+                fieldName,
+                fieldType,
+                isArray,
+                isEnum,
+                isFlagEnum,
+                isImage,
+                isLocalizedString,
+                isName,
+                isRequired,
+                propertyId,
+                schemaItemPropLink,
+                maxLength,
+                isAvailableInGraph,
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)

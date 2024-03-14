@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringRole> role = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
+            PeeringRole? role = default;
+            string email = default;
+            string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerAsnContactDetail(Optional.ToNullable(role), email.Value, phone.Value, serializedAdditionalRawData);
+            return new PeerAsnContactDetail(role, email, phone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerAsnContactDetail>.Write(ModelReaderWriterOptions options)

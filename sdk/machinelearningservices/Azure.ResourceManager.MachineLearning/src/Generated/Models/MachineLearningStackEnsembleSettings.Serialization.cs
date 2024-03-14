@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BinaryData> stackMetaLearnerKWargs = default;
-            Optional<double> stackMetaLearnerTrainPercentage = default;
-            Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
+            BinaryData stackMetaLearnerKWargs = default;
+            double? stackMetaLearnerTrainPercentage = default;
+            MachineLearningStackMetaLearnerType? stackMetaLearnerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs.Value, Optional.ToNullable(stackMetaLearnerTrainPercentage), Optional.ToNullable(stackMetaLearnerType), serializedAdditionalRawData);
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningStackEnsembleSettings>.Write(ModelReaderWriterOptions options)

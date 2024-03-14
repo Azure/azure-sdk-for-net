@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -128,11 +129,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationSafetyQualityMetricThreshold> metricThresholds = default;
-            Optional<IList<MonitoringInputDataBase>> productionData = default;
+            IList<MonitoringInputDataBase> productionData = default;
             double samplingRate = default;
-            Optional<string> workspaceConnectionId = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            string workspaceConnectionId = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationSafetyQualityMetricThreshold> array = new List<GenerationSafetyQualityMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item));
+                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;
@@ -213,7 +214,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationSafetyQualityMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, Optional.ToList(productionData), samplingRate, workspaceConnectionId.Value);
+            return new GenerationSafetyQualityMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData ?? new ChangeTrackingList<MonitoringInputDataBase>(),
+                samplingRate,
+                workspaceConnectionId);
         }
 
         BinaryData IPersistableModel<GenerationSafetyQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

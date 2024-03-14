@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareablePrivateLinkProperties> properties = default;
+            string name = default;
+            ShareablePrivateLinkProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value);
+                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkType>.Write(ModelReaderWriterOptions options)

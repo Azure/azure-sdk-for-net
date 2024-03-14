@@ -39,7 +39,7 @@ namespace Azure.Communication.MediaComposition
             LayoutResolution resolution = default;
             string streamUrl = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"u8))
@@ -63,7 +63,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new SrtInput(kind, placeholderImageUri.Value, resolution, streamUrl);
+            return new SrtInput(kind, placeholderImageUri, resolution, streamUrl);
         }
     }
 }

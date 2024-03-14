@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArmResourceDefinitionResourceElementTemplate> configuration = default;
-            Optional<string> name = default;
+            ArmResourceDefinitionResourceElementTemplate configuration = default;
+            string name = default;
             Type type = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configuration = ArmResourceDefinitionResourceElementTemplate.DeserializeArmResourceDefinitionResourceElementTemplate(property.Value);
+                    configuration = ArmResourceDefinitionResourceElementTemplate.DeserializeArmResourceDefinitionResourceElementTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionResourceElementTemplateDetails(name.Value, type, dependsOnProfile.Value, serializedAdditionalRawData, configuration.Value);
+            return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, type, dependsOnProfile, serializedAdditionalRawData, configuration);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionResourceElementTemplateDetails>.Write(ModelReaderWriterOptions options)

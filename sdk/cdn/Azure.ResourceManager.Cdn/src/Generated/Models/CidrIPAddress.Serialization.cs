@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> baseIPAddress = default;
-            Optional<int> prefixLength = default;
+            string baseIPAddress = default;
+            int? prefixLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength), serializedAdditionalRawData);
+            return new CidrIPAddress(baseIPAddress, prefixLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CidrIPAddress>.Write(ModelReaderWriterOptions options)

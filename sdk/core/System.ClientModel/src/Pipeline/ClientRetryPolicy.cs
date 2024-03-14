@@ -10,9 +10,17 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// A <see cref="PipelinePolicy"/> used by a <see cref="ClientPipeline"/> to
+/// decide whether or not to retry a <see cref="PipelineRequest"/>.
+/// </summary>
 public class ClientRetryPolicy : PipelinePolicy
 {
-    public static readonly ClientRetryPolicy Default = new();
+    /// <summary>
+    /// The <see cref="ClientRetryPolicy"/> instance used by a default
+    /// <see cref="ClientPipeline"/>.
+    /// </summary>
+    public static ClientRetryPolicy Default { get; } = new ClientRetryPolicy();
 
     private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
@@ -20,15 +28,21 @@ public class ClientRetryPolicy : PipelinePolicy
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
+    /// </summary>
+    /// <param name="maxRetries">The maximum number of retries to attempt.</param>
     public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
     }
 
+    /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
 
+    /// <inheritdoc/>
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
@@ -123,14 +137,56 @@ public class ClientRetryPolicy : PipelinePolicy
         }
     }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientRetryPolicy"/> logic.  It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// prior to passing control to the next policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
     protected virtual void OnSendingRequest(PipelineMessage message) { }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientRetryPolicy"/> logic.  It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// prior to passing control to the next policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
     protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message) => default;
 
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientRetryPolicy"/> logic.  It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// just after control has been returned from the policy at the position
+    /// after the retry policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
     protected virtual void OnRequestSent(PipelineMessage message) { }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientRetryPolicy"/> logic.  It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// just after control has been returned from the policy at the position
+    /// after the retry policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> that was received from the service.</param>
     protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
 
+    /// <summary>
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="ClientRetryPolicy"/> logic.  It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after the time interval for the current retry attempt has passed.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> for this
+    /// pipeline invocation.</param>
     protected virtual void OnTryComplete(PipelineMessage message) { }
 
     internal bool ShouldRetryInternal(PipelineMessage message, Exception? exception)
@@ -157,6 +213,17 @@ public class ClientRetryPolicy : PipelinePolicy
         }
     }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to customize the default
+    /// <see cref="ClientRetryPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has been returned from the policy at the position
+    /// after the retry policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> for this
+    /// pipeline invocation.</param>
+    /// <param name="exception">The exception, if any, that was thrown from
+    /// a policy after the retry policy in the pipeline.</param>
     protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
         if (message.RetryCount >= _maxRetries)
@@ -175,20 +242,65 @@ public class ClientRetryPolicy : PipelinePolicy
         return isRetriable;
     }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to customize the default
+    /// <see cref="ClientRetryPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// after control has been returned from the policy at the position
+    /// after the retry policy in the pipeline.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> for this
+    /// pipeline invocation.</param>
+    /// <param name="exception">The exception, if any, that was thrown from
+    /// a policy after the retry policy in the pipeline.</param>
     protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetry(message, exception));
 
+    /// <summary>
+    /// A method that can be overridden by derived types to customize the default
+    /// <see cref="ClientRetryPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// to determine how long the policy should wait before re-sending the request.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> for this
+    /// pipeline invocation.</param>
+    /// <param name="tryCount">A number indicating how many times the policy has
+    /// tried to send the request.</param>
+    /// <returns>The amount of time to wait before the next retry attempt.
+    /// </returns>
     protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
         // Default implementation is exponential backoff
         return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to customize the default
+    /// <see cref="ClientRetryPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// to wait the time interval returned by <see cref="GetNextDelay(PipelineMessage, int)"/>.
+    /// </summary>
+    /// <param name="time">The amount of time to wait before trying to send the
+    /// request again.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> used
+    /// to cancel the wait if needed.</param>
+    /// <returns>A task that can be awaited to asynchronously delay before the
+    /// next retry attempt.</returns>
     protected virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
     {
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// A method that can be overridden by derived types to customize the default
+    /// <see cref="ClientRetryPolicy"/> logic. It is called from
+    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// to wait the time interval returned by <see cref="GetNextDelay(PipelineMessage, int)"/>.
+    /// </summary>
+    /// <param name="time">The amount of time to wait before trying to send the
+    /// request again.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> used
+    /// to cancel the wait if needed.</param>
     protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
     {
         if (cancellationToken.WaitHandle.WaitOne(time))

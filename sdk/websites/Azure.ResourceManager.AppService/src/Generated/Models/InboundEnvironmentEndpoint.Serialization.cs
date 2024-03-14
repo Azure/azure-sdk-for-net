@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> endpoints = default;
-            Optional<IReadOnlyList<string>> ports = default;
+            string description = default;
+            IReadOnlyList<string> endpoints = default;
+            IReadOnlyList<string> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundEnvironmentEndpoint(description.Value, Optional.ToList(endpoints), Optional.ToList(ports), serializedAdditionalRawData);
+            return new InboundEnvironmentEndpoint(description, endpoints ?? new ChangeTrackingList<string>(), ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

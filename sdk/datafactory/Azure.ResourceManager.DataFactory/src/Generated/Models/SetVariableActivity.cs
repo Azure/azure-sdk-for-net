@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
             SetSystemVariable = setSystemVariable;
             ActivityType = activityType ?? "SetVariable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/> for deserialization. </summary>
+        internal SetVariableActivity()
+        {
         }
 
         /// <summary> Activity policy. </summary>

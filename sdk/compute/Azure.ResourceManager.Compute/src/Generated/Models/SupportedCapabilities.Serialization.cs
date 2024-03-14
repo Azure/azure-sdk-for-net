@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> diskControllerTypes = default;
-            Optional<bool> acceleratedNetwork = default;
-            Optional<ArchitectureType> architecture = default;
+            string diskControllerTypes = default;
+            bool? acceleratedNetwork = default;
+            ArchitectureType? architecture = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedCapabilities(diskControllerTypes.Value, Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture), serializedAdditionalRawData);
+            return new SupportedCapabilities(diskControllerTypes, acceleratedNetwork, architecture, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedCapabilities>.Write(ModelReaderWriterOptions options)

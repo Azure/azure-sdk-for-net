@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> projectNumber = default;
-            Optional<string> projectId = default;
-            Optional<string> workloadIdentityPoolId = default;
-            Optional<string> projectName = default;
+            string projectNumber = default;
+            string projectId = default;
+            string workloadIdentityPoolId = default;
+            string projectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value, projectName.Value, serializedAdditionalRawData);
+            return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GcpProjectDetails>.Write(ModelReaderWriterOptions options)

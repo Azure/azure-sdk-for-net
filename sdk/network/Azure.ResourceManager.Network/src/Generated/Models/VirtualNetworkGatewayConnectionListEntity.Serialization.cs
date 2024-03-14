@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -234,35 +235,35 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> authorizationKey = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string authorizationKey = default;
             WritableSubResource virtualNetworkGateway1 = default;
-            Optional<WritableSubResource> virtualNetworkGateway2 = default;
-            Optional<WritableSubResource> localNetworkGateway2 = default;
+            WritableSubResource virtualNetworkGateway2 = default;
+            WritableSubResource localNetworkGateway2 = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
-            Optional<int> routingWeight = default;
-            Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
-            Optional<string> sharedKey = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<WritableSubResource> peer = default;
-            Optional<bool> enableBgp = default;
-            Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> gatewayCustomBgpIPAddresses = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
-            Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> expressRouteGatewayBypass = default;
-            Optional<bool> enablePrivateLinkFastPath = default;
+            VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default;
+            int? routingWeight = default;
+            VirtualNetworkGatewayConnectionMode? connectionMode = default;
+            string sharedKey = default;
+            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
+            IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
+            long? egressBytesTransferred = default;
+            long? ingressBytesTransferred = default;
+            WritableSubResource peer = default;
+            bool? enableBgp = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
+            bool? usePolicyBasedTrafficSelectors = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
+            IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? expressRouteGatewayBypass = default;
+            bool? enablePrivateLinkFastPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -414,7 +415,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<TunnelConnectionHealth> array = new List<TunnelConnectionHealth>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item));
+                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item, options));
                             }
                             tunnelConnectionStatus = array;
                             continue;
@@ -464,7 +465,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item));
+                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                             }
                             gatewayCustomBgpIPAddresses = array;
                             continue;
@@ -487,7 +488,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -501,7 +502,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item));
+                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
                             }
                             trafficSelectorPolicies = array;
                             continue;
@@ -551,7 +552,37 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayConnectionListEntity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToList(gatewayCustomBgpIPAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
+            return new VirtualNetworkGatewayConnectionListEntity(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                authorizationKey,
+                virtualNetworkGateway1,
+                virtualNetworkGateway2,
+                localNetworkGateway2,
+                connectionType,
+                connectionProtocol,
+                routingWeight,
+                connectionMode,
+                sharedKey,
+                connectionStatus,
+                tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
+                egressBytesTransferred,
+                ingressBytesTransferred,
+                peer,
+                enableBgp,
+                gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
+                usePolicyBasedTrafficSelectors,
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
+                resourceGuid,
+                provisioningState,
+                expressRouteGatewayBypass,
+                enablePrivateLinkFastPath);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionListEntity>.Write(ModelReaderWriterOptions options)

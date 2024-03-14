@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<ReplicationProviderSpecificContainerCreationContent>> providerSpecificContent = default;
+            IList<ReplicationProviderSpecificContainerCreationContent> providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationProviderSpecificContainerCreationContent> array = new List<ReplicationProviderSpecificContainerCreationContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProviderSpecificContainerCreationContent.DeserializeReplicationProviderSpecificContainerCreationContent(item));
+                        array.Add(ReplicationProviderSpecificContainerCreationContent.DeserializeReplicationProviderSpecificContainerCreationContent(item, options));
                     }
                     providerSpecificContent = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateProtectionContainerProperties(Optional.ToList(providerSpecificContent), serializedAdditionalRawData);
+            return new SiteRecoveryCreateProtectionContainerProperties(providerSpecificContent ?? new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionContainerProperties>.Write(ModelReaderWriterOptions options)

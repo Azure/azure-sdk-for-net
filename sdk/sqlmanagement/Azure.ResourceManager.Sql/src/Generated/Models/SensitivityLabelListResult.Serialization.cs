@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SensitivityLabelData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SensitivityLabelData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SensitivityLabelData> array = new List<SensitivityLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item));
+                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SensitivityLabelListResult(value ?? new ChangeTrackingList<SensitivityLabelData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelListResult>.Write(ModelReaderWriterOptions options)

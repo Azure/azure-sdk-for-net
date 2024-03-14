@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SynapseSqlPoolData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<SynapseSqlPoolData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolData> array = new List<SynapseSqlPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolData.DeserializeSynapseSqlPoolData(item));
+                        array.Add(SynapseSqlPoolData.DeserializeSynapseSqlPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPoolInfoListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SqlPoolInfoListResult(nextLink, value ?? new ChangeTrackingList<SynapseSqlPoolData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPoolInfoListResult>.Write(ModelReaderWriterOptions options)

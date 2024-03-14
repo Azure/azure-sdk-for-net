@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusTopicData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceBusTopicData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusTopicData> array = new List<ServiceBusTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusTopicData.DeserializeServiceBusTopicData(item));
+                        array.Add(ServiceBusTopicData.DeserializeServiceBusTopicData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBTopicListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SBTopicListResult(value ?? new ChangeTrackingList<ServiceBusTopicData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBTopicListResult>.Write(ModelReaderWriterOptions options)

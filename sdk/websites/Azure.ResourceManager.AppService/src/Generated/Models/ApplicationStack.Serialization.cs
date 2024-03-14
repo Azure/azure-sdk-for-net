@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> display = default;
-            Optional<string> dependency = default;
-            Optional<IList<StackMajorVersion>> majorVersions = default;
-            Optional<IList<ApplicationStack>> frameworks = default;
-            Optional<IList<ApplicationStack>> isDeprecated = default;
+            string name = default;
+            string display = default;
+            string dependency = default;
+            IList<StackMajorVersion> majorVersions = default;
+            IList<ApplicationStack> frameworks = default;
+            IList<ApplicationStack> isDeprecated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
+                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item, options));
                     }
                     majorVersions = array;
                     continue;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        array.Add(DeserializeApplicationStack(item, options));
                     }
                     frameworks = array;
                     continue;
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        array.Add(DeserializeApplicationStack(item, options));
                     }
                     isDeprecated = array;
                     continue;
@@ -182,7 +183,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationStack(name.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), serializedAdditionalRawData);
+            return new ApplicationStack(
+                name,
+                display,
+                dependency,
+                majorVersions ?? new ChangeTrackingList<StackMajorVersion>(),
+                frameworks ?? new ChangeTrackingList<ApplicationStack>(),
+                isDeprecated ?? new ChangeTrackingList<ApplicationStack>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationStack>.Write(ModelReaderWriterOptions options)

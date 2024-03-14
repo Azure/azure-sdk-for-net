@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -41,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
-            Optional<string> keyVaultClientSecret = default;
+            string keyVaultClientSecret = default;
             string servicePrincipalIdNameInKV = default;
             string servicePrincipalSecretNameInKV = default;
             string tenantId = default;
@@ -78,7 +79,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalInKVParam(keyVaultEndpoint, keyVaultClientId, keyVaultClientSecret.Value, servicePrincipalIdNameInKV, servicePrincipalSecretNameInKV, tenantId);
+            return new ServicePrincipalInKVParam(
+                keyVaultEndpoint,
+                keyVaultClientId,
+                keyVaultClientSecret,
+                servicePrincipalIdNameInKV,
+                servicePrincipalSecretNameInKV,
+                tenantId);
         }
     }
 }

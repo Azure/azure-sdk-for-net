@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<ProximityPlacementGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ProximityPlacementGroupData> array = new List<ProximityPlacementGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(item));
+                        array.Add(ProximityPlacementGroupData.DeserializeProximityPlacementGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProximityPlacementGroupListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ProximityPlacementGroupListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProximityPlacementGroupListResult>.Write(ModelReaderWriterOptions options)

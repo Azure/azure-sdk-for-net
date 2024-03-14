@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> keywords = default;
-            Optional<int> maxDomainRecommendations = default;
+            string keywords = default;
+            int? maxDomainRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainRecommendationSearchContent(keywords.Value, Optional.ToNullable(maxDomainRecommendations), serializedAdditionalRawData);
+            return new DomainRecommendationSearchContent(keywords, maxDomainRecommendations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainRecommendationSearchContent>.Write(ModelReaderWriterOptions options)

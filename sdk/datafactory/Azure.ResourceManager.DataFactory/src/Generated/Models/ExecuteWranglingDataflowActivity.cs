@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Sinks = sinks;
             Queries = queries;
             ActivityType = activityType ?? "ExecuteWranglingDataflow";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/> for deserialization. </summary>
+        internal ExecuteWranglingDataflowActivity()
+        {
         }
 
         /// <summary> Activity policy. </summary>

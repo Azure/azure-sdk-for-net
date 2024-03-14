@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerKeyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerKeyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerKeyData> array = new List<SqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item));
+                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerKeyListResult(value ?? new ChangeTrackingList<SqlServerKeyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerKeyListResult>.Write(ModelReaderWriterOptions options)

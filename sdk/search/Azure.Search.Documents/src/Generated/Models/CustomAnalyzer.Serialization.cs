@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -52,8 +53,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             LexicalTokenizerName tokenizer = default;
-            Optional<IList<TokenFilterName>> tokenFilters = default;
-            Optional<IList<string>> charFilters = default;
+            IList<TokenFilterName> tokenFilters = default;
+            IList<string> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomAnalyzer(odataType, name, tokenizer, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
+            return new CustomAnalyzer(odataType, name, tokenizer, tokenFilters ?? new ChangeTrackingList<TokenFilterName>(), charFilters ?? new ChangeTrackingList<string>());
         }
     }
 }

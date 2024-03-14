@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorSecretData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontDoorSecretData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorSecretData> array = new List<FrontDoorSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorSecretData.DeserializeFrontDoorSecretData(item));
+                        array.Add(FrontDoorSecretData.DeserializeFrontDoorSecretData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecretListResult(value ?? new ChangeTrackingList<FrontDoorSecretData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretListResult>.Write(ModelReaderWriterOptions options)

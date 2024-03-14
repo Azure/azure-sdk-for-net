@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string address1 = default;
-            Optional<string> address2 = default;
+            string address2 = default;
             string city = default;
             string country = default;
             string postalCode = default;
@@ -125,7 +126,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationAddressInfo(address1, address2.Value, city, country, postalCode, state, serializedAdditionalRawData);
+            return new RegistrationAddressInfo(
+                address1,
+                address2,
+                city,
+                country,
+                postalCode,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistrationAddressInfo>.Write(ModelReaderWriterOptions options)

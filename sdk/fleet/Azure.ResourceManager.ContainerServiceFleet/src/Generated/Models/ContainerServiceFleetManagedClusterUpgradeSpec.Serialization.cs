@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetManagedClusterUpgradeType type = default;
-            Optional<string> kubernetesVersion = default;
+            string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetManagedClusterUpgradeSpec(type, kubernetesVersion.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetManagedClusterUpgradeSpec(type, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>.Write(ModelReaderWriterOptions options)

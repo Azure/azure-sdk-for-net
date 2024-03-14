@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<ExtensionOptionType>> request = default;
-            Optional<IList<ExtensionOptionType>> response = default;
+            IList<ExtensionOptionType> request = default;
+            IList<ExtensionOptionType> response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionOptions(Optional.ToList(request), Optional.ToList(response), serializedAdditionalRawData);
+            return new ExtensionOptions(request ?? new ChangeTrackingList<ExtensionOptionType>(), response ?? new ChangeTrackingList<ExtensionOptionType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionOptions>.Write(ModelReaderWriterOptions options)

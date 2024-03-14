@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -100,10 +101,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
-            Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
-            Optional<WritableSubResource> vault = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
+            FrontDoorEndpointConnectionCertificateType? certificateType = default;
+            WritableSubResource vault = default;
+            string secretName = default;
+            string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, Optional.ToNullable(certificateType), vault, secretName.Value, secretVersion.Value, serializedAdditionalRawData);
+            return new CustomHttpsConfiguration(
+                certificateSource,
+                protocolType,
+                minimumTlsVersion,
+                certificateType,
+                vault,
+                secretName,
+                secretVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHttpsConfiguration>.Write(ModelReaderWriterOptions options)

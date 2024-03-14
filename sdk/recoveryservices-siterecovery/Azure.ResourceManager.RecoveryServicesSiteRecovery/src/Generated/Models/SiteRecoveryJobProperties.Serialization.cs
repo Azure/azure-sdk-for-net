@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -149,20 +150,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> activityId = default;
-            Optional<string> scenarioName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> state = default;
-            Optional<string> stateDescription = default;
-            Optional<IReadOnlyList<AsrTask>> tasks = default;
-            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
-            Optional<string> targetObjectId = default;
-            Optional<string> targetObjectName = default;
-            Optional<string> targetInstanceType = default;
-            Optional<SiteRecoveryJobDetails> customDetails = default;
+            string activityId = default;
+            string scenarioName = default;
+            string friendlyName = default;
+            string state = default;
+            string stateDescription = default;
+            IReadOnlyList<AsrTask> tasks = default;
+            IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<string> allowedActions = default;
+            string targetObjectId = default;
+            string targetObjectName = default;
+            string targetInstanceType = default;
+            SiteRecoveryJobDetails customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item, options));
                     }
                     errors = array;
                     continue;
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value);
+                    customDetails = SiteRecoveryJobDetails.DeserializeSiteRecoveryJobDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -282,7 +283,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobProperties(activityId.Value, scenarioName.Value, friendlyName.Value, state.Value, stateDescription.Value, Optional.ToList(tasks), Optional.ToList(errors), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), targetObjectId.Value, targetObjectName.Value, targetInstanceType.Value, customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobProperties(
+                activityId,
+                scenarioName,
+                friendlyName,
+                state,
+                stateDescription,
+                tasks ?? new ChangeTrackingList<AsrTask>(),
+                errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
+                startTime,
+                endTime,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                targetObjectId,
+                targetObjectName,
+                targetInstanceType,
+                customDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobProperties>.Write(ModelReaderWriterOptions options)

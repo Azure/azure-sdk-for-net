@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> currentTimeStamp = default;
-            Optional<DateTimeOffset> previousTimeStamp = default;
-            Optional<ContainerCpuStatistics> currentCpuStats = default;
-            Optional<ContainerCpuStatistics> previousCpuStats = default;
-            Optional<ContainerMemoryStatistics> memoryStats = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            DateTimeOffset? currentTimeStamp = default;
+            DateTimeOffset? previousTimeStamp = default;
+            ContainerCpuStatistics currentCpuStats = default;
+            ContainerCpuStatistics previousCpuStats = default;
+            ContainerMemoryStatistics memoryStats = default;
+            string name = default;
+            string id = default;
+            ContainerNetworkInterfaceStatistics eth0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
+                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
+                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +187,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value, serializedAdditionalRawData);
+            return new ContainerInfo(
+                currentTimeStamp,
+                previousTimeStamp,
+                currentCpuStats,
+                previousCpuStats,
+                memoryStats,
+                name,
+                id,
+                eth0,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)

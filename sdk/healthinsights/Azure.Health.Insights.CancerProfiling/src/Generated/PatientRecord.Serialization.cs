@@ -83,8 +83,8 @@ namespace Azure.Health.Insights.CancerProfiling
                 return null;
             }
             string id = default;
-            Optional<PatientInfo> info = default;
-            Optional<IList<PatientDocument>> data = default;
+            PatientInfo info = default;
+            IList<PatientDocument> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     {
                         continue;
                     }
-                    info = PatientInfo.DeserializePatientInfo(property.Value);
+                    info = PatientInfo.DeserializePatientInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("data"u8))
@@ -112,7 +112,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientDocument> array = new List<PatientDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientDocument.DeserializePatientDocument(item));
+                        array.Add(PatientDocument.DeserializePatientDocument(item, options));
                     }
                     data = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientRecord(id, info.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new PatientRecord(id, info, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientRecord>.Write(ModelReaderWriterOptions options)

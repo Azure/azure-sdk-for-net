@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -77,14 +78,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             HierarchyInformation hierarchyInformation = default;
-            Optional<IList<FilterableProperty>> filterableProperty = default;
+            IList<FilterableProperty> filterableProperty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchyInformation"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
+                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filterableProperty"u8))
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<FilterableProperty> array = new List<FilterableProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item));
+                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item, options));
                     }
                     filterableProperty = array;
                     continue;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationFilters(hierarchyInformation, Optional.ToList(filterableProperty), serializedAdditionalRawData);
+            return new ConfigurationFilters(hierarchyInformation, filterableProperty ?? new ChangeTrackingList<FilterableProperty>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationFilters>.Write(ModelReaderWriterOptions options)

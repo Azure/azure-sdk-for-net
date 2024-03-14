@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> reservationId = default;
-            Optional<int> quantity = default;
-            Optional<PurchasePrice> billingRefundAmount = default;
-            Optional<BillingInformation> billingInformation = default;
-            Optional<ReservationOperationStatus> status = default;
+            ResourceIdentifier reservationId = default;
+            int? quantity = default;
+            PurchasePrice billingRefundAmount = default;
+            BillingInformation billingInformation = default;
+            ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value);
+                    billingInformation = BillingInformation.DeserializeBillingInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationToReturnForExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ReservationToReturnForExchange(
+                reservationId,
+                quantity,
+                billingRefundAmount,
+                billingInformation,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationToReturnForExchange>.Write(ModelReaderWriterOptions options)

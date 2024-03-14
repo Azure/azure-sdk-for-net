@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             NullValue = nullValue;
             Compression = compression;
             DatasetType = datasetType ?? "Xml";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="XmlDataset"/> for deserialization. </summary>
+        internal XmlDataset()
+        {
         }
 
         /// <summary>

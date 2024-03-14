@@ -107,11 +107,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<string>> elements = default;
-            Optional<DocumentCaption> caption = default;
-            Optional<IReadOnlyList<DocumentFootnote>> footnotes = default;
+            IReadOnlyList<string> elements = default;
+            DocumentCaption caption = default;
+            IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value);
+                    caption = DocumentCaption.DeserializeDocumentCaption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("footnotes"u8))
@@ -172,7 +172,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFootnote> array = new List<DocumentFootnote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item));
+                        array.Add(DocumentFootnote.DeserializeDocumentFootnote(item, options));
                     }
                     footnotes = array;
                     continue;
@@ -183,7 +183,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFigure(Optional.ToList(boundingRegions), spans, Optional.ToList(elements), caption.Value, Optional.ToList(footnotes), serializedAdditionalRawData);
+            return new DocumentFigure(
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                elements ?? new ChangeTrackingList<string>(),
+                caption,
+                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFigure>.Write(ModelReaderWriterOptions options)

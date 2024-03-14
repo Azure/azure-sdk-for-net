@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<string> quotaPeriod = default;
-            Optional<long> limit = default;
-            Optional<long> currentValue = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
+            string quotaPeriod = default;
+            long? limit = default;
+            long? currentValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))
@@ -171,7 +172,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), serializedAdditionalRawData, Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            return new PartitionUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                serializedAdditionalRawData,
+                partitionId,
+                partitionKeyRangeId);
         }
 
         BinaryData IPersistableModel<PartitionUsage>.Write(ModelReaderWriterOptions options)

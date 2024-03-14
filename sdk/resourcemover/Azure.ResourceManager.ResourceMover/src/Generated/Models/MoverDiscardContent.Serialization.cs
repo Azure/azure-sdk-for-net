@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<bool> validateOnly = default;
+            bool? validateOnly = default;
             IList<ResourceIdentifier> moveResources = default;
-            Optional<MoverResourceInputType> moveResourceInputType = default;
+            MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverDiscardContent(Optional.ToNullable(validateOnly), moveResources, Optional.ToNullable(moveResourceInputType), serializedAdditionalRawData);
+            return new MoverDiscardContent(validateOnly, moveResources, moveResourceInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverDiscardContent>.Write(ModelReaderWriterOptions options)

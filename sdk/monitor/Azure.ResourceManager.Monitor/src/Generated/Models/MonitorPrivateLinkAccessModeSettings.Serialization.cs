@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorPrivateLinkAccessMode queryAccessMode = default;
             MonitorPrivateLinkAccessMode ingestionAccessMode = default;
-            Optional<IList<MonitorPrivateLinkAccessModeSettingsExclusion>> exclusions = default;
+            IList<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorPrivateLinkAccessModeSettingsExclusion> array = new List<MonitorPrivateLinkAccessModeSettingsExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateLinkAccessModeSettingsExclusion.DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(item));
+                        array.Add(MonitorPrivateLinkAccessModeSettingsExclusion.DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, Optional.ToList(exclusions), serializedAdditionalRawData);
+            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, exclusions ?? new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkAccessModeSettings>.Write(ModelReaderWriterOptions options)

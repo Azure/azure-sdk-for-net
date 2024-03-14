@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> publisherId = default;
-            Optional<string> offerId = default;
+            string publisherId = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPropertiesManagedApplication(publisherId.Value, offerId.Value, serializedAdditionalRawData);
+            return new ProviderPropertiesManagedApplication(publisherId, offerId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderPropertiesManagedApplication>.Write(ModelReaderWriterOptions options)

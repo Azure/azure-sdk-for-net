@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
+            IDictionary<string, OpenAuthenticationAccessPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, OpenAuthenticationAccessPolicy> dictionary = new Dictionary<string, OpenAuthenticationAccessPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value));
+                        dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value, options));
                     }
                     policies = dictionary;
                     continue;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenAuthenticationAccessPolicies(Optional.ToDictionary(policies), serializedAdditionalRawData);
+            return new OpenAuthenticationAccessPolicies(policies ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAuthenticationAccessPolicies>.Write(ModelReaderWriterOptions options)

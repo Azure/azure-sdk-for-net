@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> deviceContent = default;
-            Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
-            Optional<IDictionary<string, object>> moduleContent = default;
+            IDictionary<string, object> deviceContent = default;
+            IDictionary<string, IDictionary<string, object>> modulesContent = default;
+            IDictionary<string, object> moduleContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceContent"u8))
@@ -165,7 +166,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationContent(Optional.ToDictionary(deviceContent), Optional.ToDictionary(modulesContent), Optional.ToDictionary(moduleContent));
+            return new ConfigurationContent(deviceContent ?? new ChangeTrackingDictionary<string, object>(), modulesContent ?? new ChangeTrackingDictionary<string, IDictionary<string, object>>(), moduleContent ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEndpointBaseProperties(document.RootElement, options);
+            return DeserializeEndpointBaseProperties(document.RootElement, options);
         }
 
         internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             EndpointType endpointType = "Unknown";
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEndpointBaseProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new UnknownEndpointBaseProperties(endpointType, description, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options)
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEndpointBaseProperties(document.RootElement, options);
+                        return DeserializeEndpointBaseProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{options.Format}' format.");

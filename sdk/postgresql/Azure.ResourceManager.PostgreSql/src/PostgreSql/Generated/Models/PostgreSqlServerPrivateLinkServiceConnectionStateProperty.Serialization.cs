@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             PostgreSqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
+            PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)

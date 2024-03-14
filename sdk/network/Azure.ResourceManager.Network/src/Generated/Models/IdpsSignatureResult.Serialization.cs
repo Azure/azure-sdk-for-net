@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -129,17 +130,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> signatureId = default;
-            Optional<FirewallPolicyIdpsSignatureMode> mode = default;
-            Optional<FirewallPolicyIdpsSignatureSeverity> severity = default;
-            Optional<FirewallPolicyIdpsSignatureDirection> direction = default;
-            Optional<string> group = default;
-            Optional<string> description = default;
-            Optional<string> protocol = default;
-            Optional<IReadOnlyList<string>> sourcePorts = default;
-            Optional<IReadOnlyList<string>> destinationPorts = default;
-            Optional<string> lastUpdated = default;
-            Optional<bool> inheritedFromParentPolicy = default;
+            int? signatureId = default;
+            FirewallPolicyIdpsSignatureMode? mode = default;
+            FirewallPolicyIdpsSignatureSeverity? severity = default;
+            FirewallPolicyIdpsSignatureDirection? direction = default;
+            string group = default;
+            string description = default;
+            string protocol = default;
+            IReadOnlyList<string> sourcePorts = default;
+            IReadOnlyList<string> destinationPorts = default;
+            string lastUpdated = default;
+            bool? inheritedFromParentPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +244,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Optional.ToList(sourcePorts), Optional.ToList(destinationPorts), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy), serializedAdditionalRawData);
+            return new IdpsSignatureResult(
+                signatureId,
+                mode,
+                severity,
+                direction,
+                group,
+                description,
+                protocol,
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                lastUpdated,
+                inheritedFromParentPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureResult>.Write(ModelReaderWriterOptions options)

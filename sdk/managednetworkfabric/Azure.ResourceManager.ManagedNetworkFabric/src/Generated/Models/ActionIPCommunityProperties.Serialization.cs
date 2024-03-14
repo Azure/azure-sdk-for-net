@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPCommunityIdList> delete = default;
-            Optional<IPCommunityIdList> @set = default;
-            Optional<IPCommunityIdList> @add = default;
+            IPCommunityIdList delete = default;
+            IPCommunityIdList @set = default;
+            IPCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    delete = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("set"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("add"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionIPCommunityProperties(@add.Value, serializedAdditionalRawData, delete.Value, @set.Value);
+            return new ActionIPCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
         }
 
         BinaryData IPersistableModel<ActionIPCommunityProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             bool immediate = default;
-            Optional<string> objectName = default;
+            string objectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBFinishCommandInput(objectName.Value, serializedAdditionalRawData, immediate);
+            return new MongoDBFinishCommandInput(objectName, serializedAdditionalRawData, immediate);
         }
 
         BinaryData IPersistableModel<MongoDBFinishCommandInput>.Write(ModelReaderWriterOptions options)

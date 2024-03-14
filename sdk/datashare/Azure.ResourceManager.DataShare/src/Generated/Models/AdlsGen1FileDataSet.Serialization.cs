@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -109,9 +110,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string accountName = default;
-            Optional<Guid> dataSetId = default;
+            Guid? dataSetId = default;
             string fileName = default;
             string folderPath = default;
             string resourceGroup = default;
@@ -201,7 +202,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdlsGen1FileDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, accountName, Optional.ToNullable(dataSetId), fileName, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FileDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                accountName,
+                dataSetId,
+                fileName,
+                folderPath,
+                resourceGroup,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<AdlsGen1FileDataSet>.Write(ModelReaderWriterOptions options)

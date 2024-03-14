@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageServicePrincipalData>> value = default;
+            IReadOnlyList<AutomanageServicePrincipalData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageServicePrincipalData> array = new List<AutomanageServicePrincipalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item));
+                        array.Add(AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicePrincipalListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ServicePrincipalListResult(value ?? new ChangeTrackingList<AutomanageServicePrincipalData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicePrincipalListResult>.Write(ModelReaderWriterOptions options)

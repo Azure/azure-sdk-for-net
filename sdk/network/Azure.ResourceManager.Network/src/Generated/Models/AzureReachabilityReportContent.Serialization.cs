@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -91,8 +92,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AzureReachabilityReportLocation providerLocation = default;
-            Optional<IList<string>> providers = default;
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<string> providers = default;
+            IList<AzureLocation> azureLocations = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportContent(providerLocation, Optional.ToList(providers), Optional.ToList(azureLocations), startTime, endTime, serializedAdditionalRawData);
+            return new AzureReachabilityReportContent(
+                providerLocation,
+                providers ?? new ChangeTrackingList<string>(),
+                azureLocations ?? new ChangeTrackingList<AzureLocation>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportContent>.Write(ModelReaderWriterOptions options)

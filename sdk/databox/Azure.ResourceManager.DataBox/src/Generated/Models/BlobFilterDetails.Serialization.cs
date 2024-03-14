@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IList<string>> blobPrefixList = default;
-            Optional<IList<string>> blobPathList = default;
-            Optional<IList<string>> containerList = default;
+            IList<string> blobPrefixList = default;
+            IList<string> blobPathList = default;
+            IList<string> containerList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobFilterDetails(Optional.ToList(blobPrefixList), Optional.ToList(blobPathList), Optional.ToList(containerList), serializedAdditionalRawData);
+            return new BlobFilterDetails(blobPrefixList ?? new ChangeTrackingList<string>(), blobPathList ?? new ChangeTrackingList<string>(), containerList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobFilterDetails>.Write(ModelReaderWriterOptions options)

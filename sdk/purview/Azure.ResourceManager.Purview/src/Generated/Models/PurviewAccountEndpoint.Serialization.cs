@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -30,11 +31,6 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Guardian))
-            {
-                writer.WritePropertyName("guardian"u8);
-                writer.WriteStringValue(Guardian);
             }
             if (options.Format != "W" && Optional.IsDefined(Scan))
             {
@@ -79,9 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> catalog = default;
-            Optional<string> guardian = default;
-            Optional<string> scan = default;
+            string catalog = default;
+            string scan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,11 +84,6 @@ namespace Azure.ResourceManager.Purview.Models
                 if (property.NameEquals("catalog"u8))
                 {
                     catalog = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("guardian"u8))
-                {
-                    guardian = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scan"u8))
@@ -107,7 +97,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountEndpoint(catalog.Value, guardian.Value, scan.Value, serializedAdditionalRawData);
+            return new PurviewAccountEndpoint(catalog, scan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)

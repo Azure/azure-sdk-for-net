@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ExportType type = default;
             TimeframeType timeframe = default;
-            Optional<ExportTimePeriod> timePeriod = default;
-            Optional<ExportDataset> dataSet = default;
+            ExportTimePeriod timePeriod = default;
+            ExportDataset dataSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value);
+                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSet"u8))
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dataSet = ExportDataset.DeserializeExportDataset(property.Value);
+                    dataSet = ExportDataset.DeserializeExportDataset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDefinition(type, timeframe, timePeriod.Value, dataSet.Value, serializedAdditionalRawData);
+            return new ExportDefinition(type, timeframe, timePeriod, dataSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDefinition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<string> cloudServiceCreationOption = default;
+            ResourceIdentifier recoveryPointId = default;
+            string cloudServiceCreationOption = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AUnplannedFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId.Value, cloudServiceCreationOption.Value);
+            return new A2AUnplannedFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId, cloudServiceCreationOption);
         }
 
         BinaryData IPersistableModel<A2AUnplannedFailoverContent>.Write(ModelReaderWriterOptions options)

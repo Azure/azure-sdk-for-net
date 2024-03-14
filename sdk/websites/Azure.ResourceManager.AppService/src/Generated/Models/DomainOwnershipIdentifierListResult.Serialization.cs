@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<DomainOwnershipIdentifierData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DomainOwnershipIdentifierData> array = new List<DomainOwnershipIdentifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(item));
+                        array.Add(DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainOwnershipIdentifierListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DomainOwnershipIdentifierListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainOwnershipIdentifierListResult>.Write(ModelReaderWriterOptions options)

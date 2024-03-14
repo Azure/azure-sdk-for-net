@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -80,11 +81,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<string> marketplaceSubscriptionId = default;
+            string marketplaceSubscriptionId = default;
             string planId = default;
             string offerId = default;
             string publisherId = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceDetails(marketplaceSubscriptionId.Value, planId, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus), serializedAdditionalRawData);
+            return new MarketplaceDetails(
+                marketplaceSubscriptionId,
+                planId,
+                offerId,
+                publisherId,
+                marketplaceSubscriptionStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options)

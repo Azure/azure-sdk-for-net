@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapMonitorData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SapMonitorData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapMonitorData> array = new List<SapMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapMonitorData.DeserializeSapMonitorData(item));
+                        array.Add(SapMonitorData.DeserializeSapMonitorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MonitorListResult(value ?? new ChangeTrackingList<SapMonitorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorListResult>.Write(ModelReaderWriterOptions options)

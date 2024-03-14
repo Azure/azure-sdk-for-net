@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> command = default;
+            IList<string> command = default;
             ProbeActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceExecAction(type, serializedAdditionalRawData, Optional.ToList(command));
+            return new AppInstanceExecAction(type, serializedAdditionalRawData, command ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AppInstanceExecAction>.Write(ModelReaderWriterOptions options)

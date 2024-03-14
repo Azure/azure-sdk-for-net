@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> currency = default;
-            Optional<decimal> value = default;
+            string currency = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAmount(currency.Value, Optional.ToNullable(value), serializedAdditionalRawData);
+            return new ConsumptionAmount(currency, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionAmount>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HybridContainerServiceNetworkOperationError> error = default;
-            Optional<string> operationId = default;
-            Optional<string> status = default;
+            HybridContainerServiceNetworkOperationError error = default;
+            string operationId = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value);
+                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkPropertiesStatusOperationStatus(error.Value, operationId.Value, status.Value, serializedAdditionalRawData);
+            return new VirtualNetworkPropertiesStatusOperationStatus(error, operationId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkPropertiesStatusOperationStatus>.Write(ModelReaderWriterOptions options)

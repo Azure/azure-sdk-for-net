@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -45,12 +46,12 @@ namespace Azure.Messaging.EventGrid.Models
                 return null;
             }
             string id = default;
-            Optional<string> topic = default;
+            string topic = default;
             string subject = default;
             JsonElement data = default;
             string eventType = default;
             DateTimeOffset eventTime = default;
-            Optional<string> metadataVersion = default;
+            string metadataVersion = default;
             string dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +96,15 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            return new EventGridEventInternal(
+                id,
+                topic,
+                subject,
+                data,
+                eventType,
+                eventTime,
+                metadataVersion,
+                dataVersion);
         }
 
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>

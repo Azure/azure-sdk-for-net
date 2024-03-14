@@ -79,7 +79,7 @@ namespace Azure.AI.AnomalyDetector
             Guid modelId = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdatedTime = default;
-            Optional<ModelInfo> modelInfo = default;
+            ModelInfo modelInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    modelInfo = ModelInfo.DeserializeModelInfo(property.Value);
+                    modelInfo = ModelInfo.DeserializeModelInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo.Value, serializedAdditionalRawData);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyDetectionModel>.Write(ModelReaderWriterOptions options)

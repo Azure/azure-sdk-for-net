@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IList<string>> installDependsOn = default;
-            Optional<IList<string>> uninstallDependsOn = default;
-            Optional<IList<string>> updateDependsOn = default;
+            IList<string> installDependsOn = default;
+            IList<string> uninstallDependsOn = default;
+            IList<string> updateDependsOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DependsOnProfile(Optional.ToList(installDependsOn), Optional.ToList(uninstallDependsOn), Optional.ToList(updateDependsOn), serializedAdditionalRawData);
+            return new DependsOnProfile(installDependsOn ?? new ChangeTrackingList<string>(), uninstallDependsOn ?? new ChangeTrackingList<string>(), updateDependsOn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DependsOnProfile>.Write(ModelReaderWriterOptions options)

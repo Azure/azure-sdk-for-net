@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> serializationDllPath = default;
-            Optional<string> serializationClassName = default;
+            string serializationDllPath = default;
+            string serializationClassName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomClrFormatSerialization(type, serializedAdditionalRawData, serializationDllPath.Value, serializationClassName.Value);
+            return new CustomClrFormatSerialization(type, serializedAdditionalRawData, serializationDllPath, serializationClassName);
         }
 
         BinaryData IPersistableModel<CustomClrFormatSerialization>.Write(ModelReaderWriterOptions options)

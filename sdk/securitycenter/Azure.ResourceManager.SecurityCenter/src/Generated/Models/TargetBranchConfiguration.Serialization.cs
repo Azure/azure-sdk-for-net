@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<string>> branchNames = default;
-            Optional<AnnotateDefaultBranchState> annotateDefaultBranch = default;
+            IList<string> branchNames = default;
+            AnnotateDefaultBranchState? annotateDefaultBranch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetBranchConfiguration(Optional.ToList(branchNames), Optional.ToNullable(annotateDefaultBranch), serializedAdditionalRawData);
+            return new TargetBranchConfiguration(branchNames ?? new ChangeTrackingList<string>(), annotateDefaultBranch, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetBranchConfiguration>.Write(ModelReaderWriterOptions options)

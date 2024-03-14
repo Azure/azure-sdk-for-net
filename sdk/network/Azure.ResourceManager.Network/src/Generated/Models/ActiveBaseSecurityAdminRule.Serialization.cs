@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -115,11 +116,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element);
-                    case "Default": return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element);
+                    case "Custom": return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element, options);
+                    case "Default": return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element, options);
                 }
             }
-            return UnknownActiveBaseSecurityAdminRule.DeserializeUnknownActiveBaseSecurityAdminRule(element);
+            return UnknownActiveBaseSecurityAdminRule.DeserializeUnknownActiveBaseSecurityAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<ActiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -20,12 +19,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<HealthcareAssertion> assertion = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            HealthcareAssertion assertion = default;
+            string name = default;
+            IReadOnlyList<HealthcareEntityLink> links = default;
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -90,7 +89,16 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntity(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore,
+                assertion,
+                name,
+                links ?? new ChangeTrackingList<HealthcareEntityLink>());
         }
     }
 }

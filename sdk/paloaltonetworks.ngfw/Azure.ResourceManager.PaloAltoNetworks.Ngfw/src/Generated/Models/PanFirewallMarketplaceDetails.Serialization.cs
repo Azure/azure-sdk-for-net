@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> marketplaceSubscriptionId = default;
+            string marketplaceSubscriptionId = default;
             string offerId = default;
             string publisherId = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId.Value, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus), serializedAdditionalRawData);
+            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PanFirewallMarketplaceDetails>.Write(ModelReaderWriterOptions options)

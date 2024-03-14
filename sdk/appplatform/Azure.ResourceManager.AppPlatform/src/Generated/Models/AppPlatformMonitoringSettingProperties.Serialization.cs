@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformMonitoringSettingState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<bool> traceEnabled = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<double> appInsightsSamplingRate = default;
-            Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
+            AppPlatformMonitoringSettingState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            bool? traceEnabled = default;
+            string appInsightsInstrumentationKey = default;
+            double? appInsightsSamplingRate = default;
+            ApplicationInsightsAgentVersions appInsightsAgentVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("traceEnabled"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    appInsightsAgentVersions = ApplicationInsightsAgentVersions.DeserializeApplicationInsightsAgentVersions(property.Value);
+                    appInsightsAgentVersions = ApplicationInsightsAgentVersions.DeserializeApplicationInsightsAgentVersions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformMonitoringSettingProperties(Optional.ToNullable(provisioningState), error.Value, Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value, serializedAdditionalRawData);
+            return new AppPlatformMonitoringSettingProperties(
+                provisioningState,
+                error,
+                traceEnabled,
+                appInsightsInstrumentationKey,
+                appInsightsSamplingRate,
+                appInsightsAgentVersions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformMonitoringSettingProperties>.Write(ModelReaderWriterOptions options)

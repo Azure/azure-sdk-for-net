@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> internetGatewayRuleId = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier internetGatewayRuleId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternetGatewayPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, internetGatewayRuleId.Value);
+            return new NetworkFabricInternetGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, internetGatewayRuleId);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternetGatewayPatch>.Write(ModelReaderWriterOptions options)

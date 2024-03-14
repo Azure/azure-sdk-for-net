@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ProviderShareSubscriptionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ProviderShareSubscriptionData> array = new List<ProviderShareSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(item));
+                        array.Add(ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderShareSubscriptionList(nextLink.Value, value, serializedAdditionalRawData);
+            return new ProviderShareSubscriptionList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderShareSubscriptionList>.Write(ModelReaderWriterOptions options)

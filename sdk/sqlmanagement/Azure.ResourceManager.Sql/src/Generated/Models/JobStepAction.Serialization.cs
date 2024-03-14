@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobStepActionType> type = default;
-            Optional<JobStepActionSource> source = default;
+            JobStepActionType? type = default;
+            JobStepActionSource? source = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepAction(Optional.ToNullable(type), Optional.ToNullable(source), value, serializedAdditionalRawData);
+            return new JobStepAction(type, source, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepAction>.Write(ModelReaderWriterOptions options)

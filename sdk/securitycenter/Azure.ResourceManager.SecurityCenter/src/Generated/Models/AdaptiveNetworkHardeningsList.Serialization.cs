@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AdaptiveNetworkHardeningData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AdaptiveNetworkHardeningData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AdaptiveNetworkHardeningData> array = new List<AdaptiveNetworkHardeningData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(item));
+                        array.Add(AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveNetworkHardeningsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AdaptiveNetworkHardeningsList(value ?? new ChangeTrackingList<AdaptiveNetworkHardeningData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveNetworkHardeningsList>.Write(ModelReaderWriterOptions options)

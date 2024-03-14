@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Index = index;
             Path = path;
             DatasetType = datasetType ?? "WebTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/> for deserialization. </summary>
+        internal WebTableDataset()
+        {
         }
 
         /// <summary> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </summary>

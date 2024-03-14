@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> logStreamPublicEndpoint = default;
+            bool? logStreamPublicEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceVnetAddons(Optional.ToNullable(logStreamPublicEndpoint), serializedAdditionalRawData);
+            return new ServiceVnetAddons(logStreamPublicEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceVnetAddons>.Write(ModelReaderWriterOptions options)

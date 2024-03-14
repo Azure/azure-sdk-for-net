@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<ApplianceCredentialKubeconfig>> kubeconfigs = default;
+            HybridConnectionConfig hybridConnectionConfig = default;
+            IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
+                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceClusterUserCredentialResult>.Write(ModelReaderWriterOptions options)

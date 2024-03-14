@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, ConnStringValueTypePair>> properties = default;
-            Optional<string> kind = default;
+            IDictionary<string, ConnStringValueTypePair> properties = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, ConnStringValueTypePair> dictionary = new Dictionary<string, ConnStringValueTypePair>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ConnStringValueTypePair.DeserializeConnStringValueTypePair(property0.Value));
+                        dictionary.Add(property0.Name, ConnStringValueTypePair.DeserializeConnStringValueTypePair(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStringDictionary(id, name, type, systemData.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new ConnectionStringDictionary(
+                id,
+                name,
+                type,
+                systemData,
+                properties ?? new ChangeTrackingDictionary<string, ConnStringValueTypePair>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStringDictionary>.Write(ModelReaderWriterOptions options)

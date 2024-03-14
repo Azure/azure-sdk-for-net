@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerJobTargetGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerJobTargetGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobTargetGroupData> array = new List<SqlServerJobTargetGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(item));
+                        array.Add(SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobTargetGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new JobTargetGroupListResult(value ?? new ChangeTrackingList<SqlServerJobTargetGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobTargetGroupListResult>.Write(ModelReaderWriterOptions options)

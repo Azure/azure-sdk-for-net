@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -102,11 +103,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> roleName = default;
-            Optional<MongoDBRoleDefinitionType> type = default;
-            Optional<string> databaseName = default;
-            Optional<IList<MongoDBPrivilege>> privileges = default;
-            Optional<IList<MongoDBRole>> roles = default;
+            string roleName = default;
+            MongoDBRoleDefinitionType? type = default;
+            string databaseName = default;
+            IList<MongoDBPrivilege> privileges = default;
+            IList<MongoDBRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item, options));
                             }
                             privileges = array;
                             continue;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
                             }
                             roles = array;
                             continue;
@@ -176,7 +177,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBRoleDefinitionCreateOrUpdateContent(roleName.Value, Optional.ToNullable(type), databaseName.Value, Optional.ToList(privileges), Optional.ToList(roles), serializedAdditionalRawData);
+            return new MongoDBRoleDefinitionCreateOrUpdateContent(
+                roleName,
+                type,
+                databaseName,
+                privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBRoleDefinitionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

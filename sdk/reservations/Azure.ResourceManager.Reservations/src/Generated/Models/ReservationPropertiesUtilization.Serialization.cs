@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
-            Optional<IReadOnlyList<ReservationUtilizationAggregates>> aggregates = default;
+            string trend = default;
+            IReadOnlyList<ReservationUtilizationAggregates> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationUtilizationAggregates> array = new List<ReservationUtilizationAggregates>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item));
+                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item, options));
                     }
                     aggregates = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPropertiesUtilization(trend.Value, Optional.ToList(aggregates), serializedAdditionalRawData);
+            return new ReservationPropertiesUtilization(trend, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPropertiesUtilization>.Write(ModelReaderWriterOptions options)

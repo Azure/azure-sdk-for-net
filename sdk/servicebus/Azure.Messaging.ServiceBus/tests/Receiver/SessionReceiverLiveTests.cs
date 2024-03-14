@@ -1150,12 +1150,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task SessionOrderingIsGuaranteed()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SessionOrderingIsGuaranteed(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var receiver = await client.AcceptSessionAsync(scope.QueueName, "session");
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "session", new ServiceBusSessionReceiverOptions
+                {
+                    PrefetchCount = prefetch ? 5 : 0
+                });
                 var sender = client.CreateSender(scope.QueueName);
 
                 CancellationTokenSource cts = new CancellationTokenSource();
@@ -1184,11 +1189,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         var messages = await receiver.ReceiveMessagesAsync(10);
                         foreach (var message in messages)
                         {
-                            if (message.SequenceNumber != lastSequenceNumber + 1)
-                            {
-                                Assert.Fail(
-                                    $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
-                            }
+                            Assert.That(
+                                message.SequenceNumber,
+                                Is.EqualTo(lastSequenceNumber + 1),
+                                $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
 
                             lastSequenceNumber = message.SequenceNumber;
 

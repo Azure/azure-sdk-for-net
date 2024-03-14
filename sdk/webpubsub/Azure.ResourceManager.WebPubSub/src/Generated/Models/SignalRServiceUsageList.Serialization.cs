@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRServiceUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SignalRServiceUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<SignalRServiceUsage> array = new List<SignalRServiceUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRServiceUsage.DeserializeSignalRServiceUsage(item));
+                        array.Add(SignalRServiceUsage.DeserializeSignalRServiceUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRServiceUsageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRServiceUsageList(value ?? new ChangeTrackingList<SignalRServiceUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRServiceUsageList>.Write(ModelReaderWriterOptions options)

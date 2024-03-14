@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ReportConfigSortingType> direction = default;
+            ReportConfigSortingType? direction = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigSorting(Optional.ToNullable(direction), name, serializedAdditionalRawData);
+            return new ReportConfigSorting(direction, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigSorting>.Write(ModelReaderWriterOptions options)

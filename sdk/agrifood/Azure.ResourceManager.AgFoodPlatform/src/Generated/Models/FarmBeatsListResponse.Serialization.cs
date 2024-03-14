@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FarmBeatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FarmBeatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<FarmBeatData> array = new List<FarmBeatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FarmBeatData.DeserializeFarmBeatData(item));
+                        array.Add(FarmBeatData.DeserializeFarmBeatData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FarmBeatsListResponse(value ?? new ChangeTrackingList<FarmBeatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatsListResponse>.Write(ModelReaderWriterOptions options)

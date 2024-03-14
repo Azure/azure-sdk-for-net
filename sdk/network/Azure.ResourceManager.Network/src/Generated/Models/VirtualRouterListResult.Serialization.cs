@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualRouterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualRouterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualRouterData> array = new List<VirtualRouterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualRouterData.DeserializeVirtualRouterData(item));
+                        array.Add(VirtualRouterData.DeserializeVirtualRouterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualRouterListResult(value ?? new ChangeTrackingList<VirtualRouterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualRouterListResult>.Write(ModelReaderWriterOptions options)

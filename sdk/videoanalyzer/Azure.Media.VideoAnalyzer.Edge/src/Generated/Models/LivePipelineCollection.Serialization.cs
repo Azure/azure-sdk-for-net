@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -40,8 +41,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<LivePipeline>> value = default;
-            Optional<string> continuationToken = default;
+            IList<LivePipeline> value = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +65,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineCollection(Optional.ToList(value), continuationToken.Value);
+            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken);
         }
     }
 }

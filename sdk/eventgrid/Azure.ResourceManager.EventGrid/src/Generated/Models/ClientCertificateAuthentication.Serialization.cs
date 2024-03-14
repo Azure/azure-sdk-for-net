@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<ClientCertificateValidationScheme> validationScheme = default;
-            Optional<IList<string>> allowedThumbprints = default;
+            ClientCertificateValidationScheme? validationScheme = default;
+            IList<string> allowedThumbprints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientCertificateAuthentication(Optional.ToNullable(validationScheme), Optional.ToList(allowedThumbprints), serializedAdditionalRawData);
+            return new ClientCertificateAuthentication(validationScheme, allowedThumbprints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientCertificateAuthentication>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> certificate = default;
-            Optional<string> certificatePassword = default;
+            string applicationId = default;
+            string certificate = default;
+            string certificatePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterUpdateIdentityCertificateContent(applicationId.Value, certificate.Value, certificatePassword.Value, serializedAdditionalRawData);
+            return new HDInsightClusterUpdateIdentityCertificateContent(applicationId, certificate, certificatePassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterUpdateIdentityCertificateContent>.Write(ModelReaderWriterOptions options)

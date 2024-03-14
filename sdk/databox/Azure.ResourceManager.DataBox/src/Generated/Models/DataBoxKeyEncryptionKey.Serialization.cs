@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxKeyEncryptionKeyType kekType = default;
-            Optional<DataBoxManagedIdentity> identityProperties = default;
-            Optional<Uri> kekUrl = default;
-            Optional<ResourceIdentifier> kekVaultResourceId = default;
+            DataBoxManagedIdentity identityProperties = default;
+            Uri kekUrl = default;
+            ResourceIdentifier kekVaultResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value);
+                    identityProperties = DataBoxManagedIdentity.DeserializeDataBoxManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kekUrl"u8))
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxKeyEncryptionKey(kekType, identityProperties.Value, kekUrl.Value, kekVaultResourceId.Value, serializedAdditionalRawData);
+            return new DataBoxKeyEncryptionKey(kekType, identityProperties, kekUrl, kekVaultResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxKeyEncryptionKey>.Write(ModelReaderWriterOptions options)

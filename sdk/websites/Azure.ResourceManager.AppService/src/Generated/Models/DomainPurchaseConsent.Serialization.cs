@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> agreementKeys = default;
-            Optional<string> agreedBy = default;
-            Optional<DateTimeOffset> agreedAt = default;
+            IList<string> agreementKeys = default;
+            string agreedBy = default;
+            DateTimeOffset? agreedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainPurchaseConsent(Optional.ToList(agreementKeys), agreedBy.Value, Optional.ToNullable(agreedAt), serializedAdditionalRawData);
+            return new DomainPurchaseConsent(agreementKeys ?? new ChangeTrackingList<string>(), agreedBy, agreedAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainPurchaseConsent>.Write(ModelReaderWriterOptions options)

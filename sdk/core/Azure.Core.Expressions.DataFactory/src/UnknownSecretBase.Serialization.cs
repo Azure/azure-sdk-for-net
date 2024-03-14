@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Core.Expressions.DataFactory
 {
-    internal partial class UnknownSecretBase : IUtf8JsonSerializable
+    internal partial class UnknownSecret : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element)
+        internal static UnknownSecret DeserializeUnknownSecretBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -35,7 +35,7 @@ namespace Azure.Core.Expressions.DataFactory
                     continue;
                 }
             }
-            return new UnknownSecretBase(type);
+            return new UnknownSecret(type);
         }
     }
 }

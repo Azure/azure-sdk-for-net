@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<SqlSynapseLinkWorkspaceInfo>> workspaces = default;
+            SystemData systemData = default;
+            IList<SqlSynapseLinkWorkspaceInfo> workspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<SqlSynapseLinkWorkspaceInfo> array = new List<SqlSynapseLinkWorkspaceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlSynapseLinkWorkspaceInfo.DeserializeSqlSynapseLinkWorkspaceInfo(item));
+                                array.Add(SqlSynapseLinkWorkspaceInfo.DeserializeSqlSynapseLinkWorkspaceInfo(item, options));
                             }
                             workspaces = array;
                             continue;
@@ -163,7 +164,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSynapseLinkWorkspace(id, name, type, systemData.Value, Optional.ToList(workspaces), serializedAdditionalRawData);
+            return new SqlSynapseLinkWorkspace(
+                id,
+                name,
+                type,
+                systemData,
+                workspaces ?? new ChangeTrackingList<SqlSynapseLinkWorkspaceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSynapseLinkWorkspace>.Write(ModelReaderWriterOptions options)

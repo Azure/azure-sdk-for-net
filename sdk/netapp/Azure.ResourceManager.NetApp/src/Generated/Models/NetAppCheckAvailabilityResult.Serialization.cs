@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> isAvailable = default;
-            Optional<NetAppNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            bool? isAvailable = default;
+            NetAppNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppCheckAvailabilityResult(Optional.ToNullable(isAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new NetAppCheckAvailabilityResult(isAvailable, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppCheckAvailabilityResult>.Write(ModelReaderWriterOptions options)

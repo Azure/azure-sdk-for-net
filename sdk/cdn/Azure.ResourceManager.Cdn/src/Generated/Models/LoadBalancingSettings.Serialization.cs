@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<int> sampleSize = default;
-            Optional<int> successfulSamplesRequired = default;
-            Optional<int> additionalLatencyInMilliseconds = default;
+            int? sampleSize = default;
+            int? successfulSamplesRequired = default;
+            int? additionalLatencyInMilliseconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancingSettings(Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyInMilliseconds), serializedAdditionalRawData);
+            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancingSettings>.Write(ModelReaderWriterOptions options)

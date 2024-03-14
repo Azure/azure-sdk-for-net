@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BenefitUtilizationSummary>> value = default;
-            Optional<Uri> nextLink = default;
+            IReadOnlyList<BenefitUtilizationSummary> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<BenefitUtilizationSummary> array = new List<BenefitUtilizationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item));
+                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesListResult(value ?? new ChangeTrackingList<BenefitUtilizationSummary>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesListResult>.Write(ModelReaderWriterOptions options)

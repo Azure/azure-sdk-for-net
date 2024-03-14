@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             string name = default;
             Uri uri = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IList<string> roles = default;
-            Optional<string> applicationName = default;
+            string applicationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuntimeScriptAction(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData);
+            return new RuntimeScriptAction(
+                name,
+                uri,
+                parameters,
+                roles,
+                applicationName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuntimeScriptAction>.Write(ModelReaderWriterOptions options)

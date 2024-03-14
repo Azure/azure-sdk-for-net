@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> friendlyName = default;
-            Optional<string> testVmName = default;
-            Optional<string> testVmFriendlyName = default;
-            Optional<string> networkConnectionStatus = default;
-            Optional<string> networkFriendlyName = default;
-            Optional<string> subnet = default;
-            Optional<ResourceIdentifier> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
+            string name = default;
+            string friendlyName = default;
+            string testVmName = default;
+            string testVmFriendlyName = default;
+            string networkConnectionStatus = default;
+            string networkFriendlyName = default;
+            string subnet = default;
+            ResourceIdentifier recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
+            return new FailoverReplicationProtectedItemDetails(
+                name,
+                friendlyName,
+                testVmName,
+                testVmFriendlyName,
+                networkConnectionStatus,
+                networkFriendlyName,
+                subnet,
+                recoveryPointId,
+                recoveryPointTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverReplicationProtectedItemDetails>.Write(ModelReaderWriterOptions options)

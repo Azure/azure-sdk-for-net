@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -18,7 +17,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> token = default;
+            string token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))
@@ -27,7 +26,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new AttestationResponse(token.Value);
+            return new AttestationResponse(token);
         }
     }
 }

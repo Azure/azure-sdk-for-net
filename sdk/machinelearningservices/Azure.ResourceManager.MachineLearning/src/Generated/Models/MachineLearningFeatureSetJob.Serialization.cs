@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -164,15 +165,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> createdDate = default;
-            Optional<string> displayName = default;
-            Optional<TimeSpan?> duration = default;
-            Optional<string> experimentId = default;
-            Optional<FeatureWindow> featureWindow = default;
-            Optional<string> jobId = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<FeatureStoreJobType> type = default;
+            DateTimeOffset? createdDate = default;
+            string displayName = default;
+            TimeSpan? duration = default;
+            string experimentId = default;
+            FeatureWindow featureWindow = default;
+            string jobId = default;
+            MachineLearningJobStatus? status = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            FeatureStoreJobType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureWindow = null;
                         continue;
                     }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value);
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobId"u8))
@@ -276,7 +277,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetJob(Optional.ToNullable(createdDate), displayName.Value, Optional.ToNullable(duration), experimentId.Value, featureWindow.Value, jobId.Value, Optional.ToNullable(status), Optional.ToDictionary(tags), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MachineLearningFeatureSetJob(
+                createdDate,
+                displayName,
+                duration,
+                experimentId,
+                featureWindow,
+                jobId,
+                status,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetJob>.Write(ModelReaderWriterOptions options)

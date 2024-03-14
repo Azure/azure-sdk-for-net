@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> summaryCode = default;
-            Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> affectedResourceType = default;
-            Optional<string> affectedResourceSubtype = default;
-            Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
+            string summaryCode = default;
+            HealthErrorCategory? category = default;
+            SiteRecoveryErrorSeverity? severity = default;
+            string summaryMessage = default;
+            string affectedResourceType = default;
+            string affectedResourceSubtype = default;
+            IReadOnlyList<string> affectedResourceCorrelationIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +174,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Optional.ToList(affectedResourceCorrelationIds), serializedAdditionalRawData);
+            return new HealthErrorSummary(
+                summaryCode,
+                category,
+                severity,
+                summaryMessage,
+                affectedResourceType,
+                affectedResourceSubtype,
+                affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthErrorSummary>.Write(ModelReaderWriterOptions options)

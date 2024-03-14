@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsCnameRecordData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsCnameRecordData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DnsCnameRecordData> array = new List<DnsCnameRecordData>();
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsCnameRecordListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DnsCnameRecordListResult(value ?? new ChangeTrackingList<DnsCnameRecordData>(), nextLink, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DnsCnameRecordListResult>.Write(ModelReaderWriterOptions options)
         {

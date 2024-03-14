@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Command = command;
             CommandTimeout = commandTimeout;
             ActivityType = activityType ?? "AzureDataExplorerCommand";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerCommandActivity"/> for deserialization. </summary>
+        internal AzureDataExplorerCommandActivity()
+        {
         }
 
         /// <summary> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </summary>

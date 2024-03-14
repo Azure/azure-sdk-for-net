@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -117,15 +118,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
-            Optional<int> port = default;
-            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
-            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
-            Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
-            Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
-            Optional<RedisPersistenceSettings> persistence = default;
-            Optional<IList<RedisEnterpriseModule>> modules = default;
-            Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            RedisEnterpriseClientProtocol? clientProtocol = default;
+            int? port = default;
+            RedisEnterpriseProvisioningStatus? provisioningState = default;
+            RedisEnterpriseClusterResourceState? resourceState = default;
+            RedisEnterpriseClusteringPolicy? clusteringPolicy = default;
+            RedisEnterpriseEvictionPolicy? evictionPolicy = default;
+            RedisPersistenceSettings persistence = default;
+            IList<RedisEnterpriseModule> modules = default;
+            RedisEnterpriseDatabaseGeoReplication geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value);
+                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("modules"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item));
+                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item, options));
                             }
                             modules = array;
                             continue;
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value);
+                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
                             continue;
                         }
                     }
@@ -234,7 +235,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabasePatch(Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDatabasePatch(
+                clientProtocol,
+                port,
+                provisioningState,
+                resourceState,
+                clusteringPolicy,
+                evictionPolicy,
+                persistence,
+                modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
+                geoReplication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabasePatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<LoadBalancingSettings> loadBalancingSettings = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<EnabledState> sessionAffinityState = default;
+            string profileName = default;
+            LoadBalancingSettings loadBalancingSettings = default;
+            HealthProbeSettings healthProbeSettings = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            EnabledState? sessionAffinityState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value);
+                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8))
@@ -168,7 +169,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupPatch(profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), serializedAdditionalRawData);
+            return new FrontDoorOriginGroupPatch(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                sessionAffinityState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupPatch>.Write(ModelReaderWriterOptions options)

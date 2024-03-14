@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> notBeforeTimeout = default;
-            Optional<bool> enable = default;
+            string notBeforeTimeout = default;
+            bool? enable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TerminateNotificationProfile(notBeforeTimeout.Value, Optional.ToNullable(enable), serializedAdditionalRawData);
+            return new TerminateNotificationProfile(notBeforeTimeout, enable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerminateNotificationProfile>.Write(ModelReaderWriterOptions options)

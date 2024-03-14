@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -82,11 +83,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Categorical": return CategoricalDataDriftMetricThreshold.DeserializeCategoricalDataDriftMetricThreshold(element);
-                    case "Numerical": return NumericalDataDriftMetricThreshold.DeserializeNumericalDataDriftMetricThreshold(element);
+                    case "Categorical": return CategoricalDataDriftMetricThreshold.DeserializeCategoricalDataDriftMetricThreshold(element, options);
+                    case "Numerical": return NumericalDataDriftMetricThreshold.DeserializeNumericalDataDriftMetricThreshold(element, options);
                 }
             }
-            return UnknownDataDriftMetricThresholdBase.DeserializeUnknownDataDriftMetricThresholdBase(element);
+            return UnknownDataDriftMetricThresholdBase.DeserializeUnknownDataDriftMetricThresholdBase(element, options);
         }
 
         BinaryData IPersistableModel<DataDriftMetricThresholdBase>.Write(ModelReaderWriterOptions options)

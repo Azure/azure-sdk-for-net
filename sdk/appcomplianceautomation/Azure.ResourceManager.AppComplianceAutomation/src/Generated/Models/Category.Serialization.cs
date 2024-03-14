@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<CategoryType> categoryType = default;
-            Optional<CategoryStatus> categoryStatus = default;
-            Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
+            string categoryName = default;
+            CategoryType? categoryType = default;
+            CategoryStatus? categoryStatus = default;
+            IReadOnlyList<ControlFamily> controlFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ControlFamily> array = new List<ControlFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControlFamily.DeserializeControlFamily(item));
+                        array.Add(ControlFamily.DeserializeControlFamily(item, options));
                     }
                     controlFamilies = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies), serializedAdditionalRawData);
+            return new Category(categoryName, categoryType, categoryStatus, controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)

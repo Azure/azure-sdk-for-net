@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformGatewayCustomDomainData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformGatewayCustomDomainData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayCustomDomainData> array = new List<AppPlatformGatewayCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(item));
+                        array.Add(AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayCustomDomainResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GatewayCustomDomainResourceList(value ?? new ChangeTrackingList<AppPlatformGatewayCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayCustomDomainResourceList>.Write(ModelReaderWriterOptions options)

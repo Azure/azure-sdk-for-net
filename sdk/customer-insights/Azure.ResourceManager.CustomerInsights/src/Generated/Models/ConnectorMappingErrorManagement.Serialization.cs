@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             ErrorManagementType errorManagementType = default;
-            Optional<int> errorLimit = default;
+            int? errorLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingErrorManagement(errorManagementType, Optional.ToNullable(errorLimit), serializedAdditionalRawData);
+            return new ConnectorMappingErrorManagement(errorManagementType, errorLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingErrorManagement>.Write(ModelReaderWriterOptions options)
