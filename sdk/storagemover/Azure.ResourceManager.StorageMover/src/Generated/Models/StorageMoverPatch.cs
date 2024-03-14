@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageMover;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
