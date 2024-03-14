@@ -208,7 +208,7 @@ public abstract class BinaryContent : IDisposable
     {
         private const int CopyToBufferSize = 81920;
 
-        internal readonly Stream _stream;
+        private readonly Stream _stream;
         private readonly long _origin;
 
         public StreamBinaryContent(Stream stream)
