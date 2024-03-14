@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The XML specification of a WebTest to run against an application. </summary>
+        [WirePath("WebTest")]
         public string WebTest { get; set; }
     }
 }

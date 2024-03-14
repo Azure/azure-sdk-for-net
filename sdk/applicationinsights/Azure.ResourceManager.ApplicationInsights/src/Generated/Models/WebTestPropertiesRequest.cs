@@ -72,16 +72,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Url location to test. </summary>
+        [WirePath("RequestUrl")]
         public Uri RequestUri { get; set; }
         /// <summary> List of headers and their values to add to the WebTest call. </summary>
+        [WirePath("Headers")]
         public IList<HeaderField> Headers { get; }
         /// <summary> Http verb to use for this web test. </summary>
+        [WirePath("HttpVerb")]
         public string HttpVerb { get; set; }
         /// <summary> Base64 encoded string body to send with this web test. </summary>
+        [WirePath("RequestBody")]
         public string RequestBody { get; set; }
         /// <summary> Parse Dependent request for this WebTest. </summary>
+        [WirePath("ParseDependentRequests")]
         public bool? ParseDependentRequests { get; set; }
         /// <summary> Follow redirects for this web test. </summary>
+        [WirePath("FollowRedirects")]
         public bool? FollowRedirects { get; set; }
     }
 }
