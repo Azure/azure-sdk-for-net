@@ -4,7 +4,7 @@ Your service might have [additional configuration][CTS_configuration_doc] which 
 
 Use [DefaultAzureCredential][default_cred_ref] to get your token:
 
-```C#
+```C# Snippet:CodeTransparencySample3_CreateClientWithCredentials
 DefaultAzureCredential credential = new();
 string[] scopes = { "https://your.service.scope/.default" };
 TokenCredential token = credential.GetToken(new TokenRequestContext(scopes));

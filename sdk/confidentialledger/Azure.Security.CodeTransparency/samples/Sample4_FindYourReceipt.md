@@ -12,7 +12,7 @@ To get started, you'll need a url of the service.
 To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
-```C#
+```C# Snippet:CodeTransparencySample4_CreateClient
 CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
 ```
 
@@ -20,7 +20,7 @@ CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-le
 
 You can only find a entry or receipt if you know its id (e.g. `17.157`) but if you are searching based on other attribute that could be in the payload of the signature that was submitted then you need to iterate over the submissions and find the matching one locally.
 
-```C#
+```C# Snippet:CodeTransparencySample4_IterateOverEntries
 byte[] signature = null;
 AsyncPageable<string> response = client.GetEntryIdsAsync();
 await foreach (Page<string> page in response.AsPages())
