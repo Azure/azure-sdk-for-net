@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ActionPerformedOn.HasValue)
+            if (Optional.IsDefined(ActionPerformedOn))
             {
                 writer.WritePropertyName("actionDateTimeInUtc"u8);
                 writer.WriteStringValue(ActionPerformedOn.Value, "O");
             }
-            if (IsPerformedByCustomer.HasValue)
+            if (Optional.IsDefined(IsPerformedByCustomer))
             {
                 writer.WritePropertyName("isPerformedByCustomer"u8);
                 writer.WriteBooleanValue(IsPerformedByCustomer.Value);
             }
-            if (CustomerResolution.HasValue)
+            if (Optional.IsDefined(CustomerResolution))
             {
                 writer.WritePropertyName("customerResolution"u8);
                 writer.WriteStringValue(CustomerResolution.Value.ToSerialString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RehydrationRetentionDuration.HasValue)
+            if (Optional.IsDefined(RehydrationRetentionDuration))
             {
                 writer.WritePropertyName("rehydrationRetentionDuration"u8);
                 writer.WriteStringValue(RehydrationRetentionDuration.Value, "P");
             }
-            if (RehydrationPriority.HasValue)
+            if (Optional.IsDefined(RehydrationPriority))
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
                 writer.WriteStringValue(RehydrationPriority.Value.ToString());

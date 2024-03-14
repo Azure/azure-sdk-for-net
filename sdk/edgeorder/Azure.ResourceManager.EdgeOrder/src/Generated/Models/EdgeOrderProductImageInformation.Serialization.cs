@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ImageType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && ImageUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);

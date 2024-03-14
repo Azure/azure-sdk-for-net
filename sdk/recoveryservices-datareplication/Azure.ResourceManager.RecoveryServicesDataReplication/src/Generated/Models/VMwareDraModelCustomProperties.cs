@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="biosId"/> or <paramref name="marsAuthenticationIdentity"/> is null. </exception>
         public VMwareDraModelCustomProperties(string biosId, DataReplicationIdentity marsAuthenticationIdentity)
         {
-            if (biosId == null)
-            {
-                throw new ArgumentNullException(nameof(biosId));
-            }
-            if (marsAuthenticationIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(marsAuthenticationIdentity));
-            }
+            Argument.AssertNotNull(biosId, nameof(biosId));
+            Argument.AssertNotNull(marsAuthenticationIdentity, nameof(marsAuthenticationIdentity));
 
             BiosId = biosId;
             MarsAuthenticationIdentity = marsAuthenticationIdentity;

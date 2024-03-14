@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PublicNetworkAccess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DelegatedSubnetResourceId != null)
+            if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
-            if (PrivateDnsZoneArmResourceId != null)
+            if (Optional.IsDefined(PrivateDnsZoneArmResourceId))
             {
                 writer.WritePropertyName("privateDnsZoneArmResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneArmResourceId);

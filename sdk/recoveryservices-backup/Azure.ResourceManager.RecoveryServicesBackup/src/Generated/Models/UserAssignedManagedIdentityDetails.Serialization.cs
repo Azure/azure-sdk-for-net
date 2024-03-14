@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityArmId != null)
+            if (Optional.IsDefined(IdentityArmId))
             {
                 writer.WritePropertyName("identityArmId"u8);
                 writer.WriteStringValue(IdentityArmId);
             }
-            if (IdentityName != null)
+            if (Optional.IsDefined(IdentityName))
             {
                 writer.WritePropertyName("identityName"u8);
                 writer.WriteStringValue(IdentityName);
             }
-            if (UserAssignedIdentityProperties != null)
+            if (Optional.IsDefined(UserAssignedIdentityProperties))
             {
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
                 JsonSerializer.Serialize(writer, UserAssignedIdentityProperties);

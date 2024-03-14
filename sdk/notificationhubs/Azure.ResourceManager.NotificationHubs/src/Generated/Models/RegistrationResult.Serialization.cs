@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplicationPlatform != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationPlatform))
             {
                 writer.WritePropertyName("applicationPlatform"u8);
                 writer.WriteStringValue(ApplicationPlatform);
             }
-            if (options.Format != "W" && PnsHandle != null)
+            if (options.Format != "W" && Optional.IsDefined(PnsHandle))
             {
                 writer.WritePropertyName("pnsHandle"u8);
                 writer.WriteStringValue(PnsHandle);
             }
-            if (options.Format != "W" && RegistrationId != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationId))
             {
                 writer.WritePropertyName("registrationId"u8);
                 writer.WriteStringValue(RegistrationId);
             }
-            if (options.Format != "W" && Outcome != null)
+            if (options.Format != "W" && Optional.IsDefined(Outcome))
             {
                 writer.WritePropertyName("outcome"u8);
                 writer.WriteStringValue(Outcome);

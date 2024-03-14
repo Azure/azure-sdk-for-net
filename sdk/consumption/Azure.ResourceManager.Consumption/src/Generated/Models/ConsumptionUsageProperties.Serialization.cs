@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FirstConsumptionDate != null)
+            if (options.Format != "W" && Optional.IsDefined(FirstConsumptionDate))
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
                 writer.WriteStringValue(FirstConsumptionDate);
             }
-            if (options.Format != "W" && LastConsumptionDate != null)
+            if (options.Format != "W" && Optional.IsDefined(LastConsumptionDate))
             {
                 writer.WritePropertyName("lastConsumptionDate"u8);
                 writer.WriteStringValue(LastConsumptionDate);
             }
-            if (options.Format != "W" && LookBackUnitType != null)
+            if (options.Format != "W" && Optional.IsDefined(LookBackUnitType))
             {
                 writer.WritePropertyName("lookBackUnitType"u8);
                 writer.WriteStringValue(LookBackUnitType);
             }
-            if (options.Format != "W" && !(UsageData is ChangeTrackingList<float> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UsageData))
             {
                 writer.WritePropertyName("usageData"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && UsageGrain != null)
+            if (options.Format != "W" && Optional.IsDefined(UsageGrain))
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain);

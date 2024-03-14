@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NotificationHubName != null)
+            if (Optional.IsDefined(NotificationHubName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NotificationHubName);
             }
-            if (RegistrationTtl.HasValue)
+            if (Optional.IsDefined(RegistrationTtl))
             {
                 writer.WritePropertyName("registrationTtl"u8);
                 writer.WriteStringValue(RegistrationTtl.Value, "c");
             }
-            if (options.Format != "W" && !(AuthorizationRules is ChangeTrackingList<SharedAccessAuthorizationRuleProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AuthorizationRules))
             {
                 writer.WritePropertyName("authorizationRules"u8);
                 writer.WriteStartArray();
@@ -88,52 +88,52 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 writer.WriteEndArray();
             }
-            if (ApnsCredential != null)
+            if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
                 writer.WriteObjectValue(ApnsCredential);
             }
-            if (WnsCredential != null)
+            if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
                 writer.WriteObjectValue(WnsCredential);
             }
-            if (GcmCredential != null)
+            if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
                 writer.WriteObjectValue(GcmCredential);
             }
-            if (MpnsCredential != null)
+            if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
                 writer.WriteObjectValue(MpnsCredential);
             }
-            if (AdmCredential != null)
+            if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
                 writer.WriteObjectValue(AdmCredential);
             }
-            if (BaiduCredential != null)
+            if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
                 writer.WriteObjectValue(BaiduCredential);
             }
-            if (BrowserCredential != null)
+            if (Optional.IsDefined(BrowserCredential))
             {
                 writer.WritePropertyName("browserCredential"u8);
                 writer.WriteObjectValue(BrowserCredential);
             }
-            if (XiaomiCredential != null)
+            if (Optional.IsDefined(XiaomiCredential))
             {
                 writer.WritePropertyName("xiaomiCredential"u8);
                 writer.WriteObjectValue(XiaomiCredential);
             }
-            if (FcmV1Credential != null)
+            if (Optional.IsDefined(FcmV1Credential))
             {
                 writer.WritePropertyName("fcmV1Credential"u8);
                 writer.WriteObjectValue(FcmV1Credential);
             }
-            if (options.Format != "W" && DailyMaxActiveDevices.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DailyMaxActiveDevices))
             {
                 writer.WritePropertyName("dailyMaxActiveDevices"u8);
                 writer.WriteNumberValue(DailyMaxActiveDevices.Value);

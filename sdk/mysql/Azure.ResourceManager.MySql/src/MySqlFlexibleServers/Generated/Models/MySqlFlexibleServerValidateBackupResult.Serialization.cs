@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NumberOfContainers.HasValue)
+            if (Optional.IsDefined(NumberOfContainers))
             {
                 writer.WritePropertyName("numberOfContainers"u8);
                 writer.WriteNumberValue(NumberOfContainers.Value);

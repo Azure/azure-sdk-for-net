@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.Update");
             scope.Start();
@@ -327,10 +324,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual Response<ConfigurationGroupSchemaResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.Update");
             scope.Start();
@@ -373,10 +367,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaVersionUpdateState"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfigurationGroupSchemaVersionUpdateState>> UpdateStateAsync(WaitUntil waitUntil, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (configurationGroupSchemaVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaVersionUpdateState));
-            }
+            Argument.AssertNotNull(configurationGroupSchemaVersionUpdateState, nameof(configurationGroupSchemaVersionUpdateState));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.UpdateState");
             scope.Start();
@@ -422,10 +413,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaVersionUpdateState"/> is null. </exception>
         public virtual ArmOperation<ConfigurationGroupSchemaVersionUpdateState> UpdateState(WaitUntil waitUntil, ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (configurationGroupSchemaVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(configurationGroupSchemaVersionUpdateState));
-            }
+            Argument.AssertNotNull(configurationGroupSchemaVersionUpdateState, nameof(configurationGroupSchemaVersionUpdateState));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.UpdateState");
             scope.Start();
@@ -471,14 +459,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.AddTag");
             scope.Start();
@@ -539,14 +521,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ConfigurationGroupSchemaResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.AddTag");
             scope.Start();
@@ -606,10 +582,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.SetTags");
             scope.Start();
@@ -666,10 +639,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ConfigurationGroupSchemaResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.SetTags");
             scope.Start();
@@ -726,10 +696,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.RemoveTag");
             scope.Start();
@@ -789,10 +756,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ConfigurationGroupSchemaResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaResource.RemoveTag");
             scope.Start();

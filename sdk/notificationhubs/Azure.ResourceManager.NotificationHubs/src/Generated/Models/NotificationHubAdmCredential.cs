@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="clientSecret"/> or <paramref name="authTokenUri"/> is null. </exception>
         public NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (clientSecret == null)
-            {
-                throw new ArgumentNullException(nameof(clientSecret));
-            }
-            if (authTokenUri == null)
-            {
-                throw new ArgumentNullException(nameof(authTokenUri));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(clientSecret, nameof(clientSecret));
+            Argument.AssertNotNull(authTokenUri, nameof(authTokenUri));
 
             ClientId = clientId;
             ClientSecret = clientSecret;

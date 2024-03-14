@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rights"/> is null. </exception>
         public PublicInternetAuthorizationRule(IEnumerable<AuthorizationRuleAccessRight> rights)
         {
-            if (rights == null)
-            {
-                throw new ArgumentNullException(nameof(rights));
-            }
+            Argument.AssertNotNull(rights, nameof(rights));
 
             Rights = rights.ToList();
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceProviderNamespace != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceProviderNamespace))
             {
                 writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);

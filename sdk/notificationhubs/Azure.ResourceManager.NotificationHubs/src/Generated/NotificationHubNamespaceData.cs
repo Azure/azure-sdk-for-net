@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public NotificationHubNamespaceData(AzureLocation location, NotificationHubSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionResourceData>();

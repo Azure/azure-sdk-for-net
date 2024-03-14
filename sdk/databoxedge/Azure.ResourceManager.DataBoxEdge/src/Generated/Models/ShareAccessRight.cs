@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         internal ShareAccessRight(ResourceIdentifier shareId, ShareAccessType accessType)
         {
-            if (shareId == null)
-            {
-                throw new ArgumentNullException(nameof(shareId));
-            }
+            Argument.AssertNotNull(shareId, nameof(shareId));
 
             ShareId = shareId;
             AccessType = accessType;

@@ -289,10 +289,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGroupResource>> UpdateAsync(ETag ifMatch, ApiManagementGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupResource.Update");
             scope.Start();
@@ -335,10 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiManagementGroupResource> Update(ETag ifMatch, ApiManagementGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupResource.Update");
             scope.Start();
@@ -435,14 +429,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckGroupUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
             scope.Start();
@@ -481,14 +468,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<bool> CheckGroupUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CheckGroupUserEntityExists");
             scope.Start();
@@ -527,14 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGroupUserData>> CreateGroupUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CreateGroupUser");
             scope.Start();
@@ -573,14 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<ApiManagementGroupUserData> CreateGroupUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.CreateGroupUser");
             scope.Start();
@@ -619,14 +585,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response> DeleteGroupUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.DeleteGroupUser");
             scope.Start();
@@ -665,14 +624,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response DeleteGroupUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _groupUserClientDiagnostics.CreateScope("ApiManagementGroupResource.DeleteGroupUser");
             scope.Start();

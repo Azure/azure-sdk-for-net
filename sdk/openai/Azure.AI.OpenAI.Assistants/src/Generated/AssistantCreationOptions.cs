@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -51,10 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public AssistantCreationOptions(string model)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
+            Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
             Tools = new ChangeTrackingList<ToolDefinition>();

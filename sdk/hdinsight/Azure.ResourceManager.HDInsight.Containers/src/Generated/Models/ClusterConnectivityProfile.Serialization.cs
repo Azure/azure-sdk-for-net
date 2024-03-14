@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("web"u8);
                 writer.WriteObjectValue(Web);
             }
-            if (!(Ssh is ChangeTrackingList<SshConnectivityEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteStartArray();

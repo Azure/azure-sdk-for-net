@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<Response<NotificationHubsPrivateLinkResource>> GetAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -134,14 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual Response<NotificationHubsPrivateLinkResource> Get(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -246,14 +232,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -296,14 +275,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -346,14 +318,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<NotificationHubsPrivateLinkResource>> GetIfExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -398,14 +363,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual NullableResponse<NotificationHubsPrivateLinkResource> GetIfExists(string subResourceName, CancellationToken cancellationToken = default)
         {
-            if (subResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(subResourceName));
-            }
-            if (subResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
 
             using var scope = _notificationHubsPrivateLinkResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubsPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

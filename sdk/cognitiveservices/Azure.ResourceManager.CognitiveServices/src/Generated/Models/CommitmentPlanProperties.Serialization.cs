@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (CommitmentPlanGuid.HasValue)
+            if (Optional.IsDefined(CommitmentPlanGuid))
             {
                 writer.WritePropertyName("commitmentPlanGuid"u8);
                 writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
-            if (HostingModel.HasValue)
+            if (Optional.IsDefined(HostingModel))
             {
                 writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
-            if (PlanType != null)
+            if (Optional.IsDefined(PlanType))
             {
                 writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
-            if (Current != null)
+            if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteObjectValue(Current);
             }
-            if (AutoRenew.HasValue)
+            if (Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(AutoRenew.Value);
             }
-            if (Next != null)
+            if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
                 writer.WriteObjectValue(Next);
             }
-            if (options.Format != "W" && Last != null)
+            if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteObjectValue(Last);
             }
-            if (options.Format != "W" && !(ProvisioningIssues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();

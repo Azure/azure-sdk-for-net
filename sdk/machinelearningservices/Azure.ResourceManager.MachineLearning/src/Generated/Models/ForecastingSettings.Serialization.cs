@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CountryOrRegionForHolidays != null)
+            if (Optional.IsDefined(CountryOrRegionForHolidays))
             {
                 if (CountryOrRegionForHolidays != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("countryOrRegionForHolidays");
                 }
             }
-            if (CvStepSize.HasValue)
+            if (Optional.IsDefined(CvStepSize))
             {
                 if (CvStepSize != null)
                 {
@@ -50,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvStepSize");
                 }
             }
-            if (FeatureLags.HasValue)
+            if (Optional.IsDefined(FeatureLags))
             {
                 writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
-            if (!(FeaturesUnknownAtForecastTime is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FeaturesUnknownAtForecastTime))
             {
                 if (FeaturesUnknownAtForecastTime != null)
                 {
@@ -72,12 +73,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featuresUnknownAtForecastTime");
                 }
             }
-            if (ForecastHorizon != null)
+            if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
                 writer.WriteObjectValue(ForecastHorizon);
             }
-            if (Frequency != null)
+            if (Optional.IsDefined(Frequency))
             {
                 if (Frequency != null)
                 {
@@ -89,22 +90,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("frequency");
                 }
             }
-            if (Seasonality != null)
+            if (Optional.IsDefined(Seasonality))
             {
                 writer.WritePropertyName("seasonality"u8);
                 writer.WriteObjectValue(Seasonality);
             }
-            if (ShortSeriesHandlingConfig.HasValue)
+            if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
                 writer.WritePropertyName("shortSeriesHandlingConfig"u8);
                 writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
             }
-            if (TargetAggregateFunction.HasValue)
+            if (Optional.IsDefined(TargetAggregateFunction))
             {
                 writer.WritePropertyName("targetAggregateFunction"u8);
                 writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
-            if (TargetLags != null)
+            if (Optional.IsDefined(TargetLags))
             {
                 if (TargetLags != null)
                 {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetLags");
                 }
             }
-            if (TargetRollingWindowSize != null)
+            if (Optional.IsDefined(TargetRollingWindowSize))
             {
                 if (TargetRollingWindowSize != null)
                 {
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetRollingWindowSize");
                 }
             }
-            if (TimeColumnName != null)
+            if (Optional.IsDefined(TimeColumnName))
             {
                 if (TimeColumnName != null)
                 {
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeColumnName");
                 }
             }
-            if (!(TimeSeriesIdColumnNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
                 if (TimeSeriesIdColumnNames != null)
                 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeSeriesIdColumnNames");
                 }
             }
-            if (UseStl.HasValue)
+            if (Optional.IsDefined(UseStl))
             {
                 writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());

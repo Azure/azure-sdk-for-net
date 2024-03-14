@@ -49,10 +49,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubResource"/> object. </returns>
         public static NotificationHubResource GetNotificationHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetNotificationHubResource(id);
         }
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource"/> object. </returns>
         public static NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetNotificationHubAuthorizationRuleResource(id);
         }
@@ -93,10 +87,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> object. </returns>
         public static NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetNotificationHubNamespaceAuthorizationRuleResource(id);
         }
@@ -115,10 +106,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubNamespaceResource"/> object. </returns>
         public static NotificationHubNamespaceResource GetNotificationHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetNotificationHubNamespaceResource(id);
         }
@@ -137,10 +125,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
         public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetPrivateEndpointConnectionResource(id);
         }
@@ -159,10 +144,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubsPrivateLinkResource"/> object. </returns>
         public static NotificationHubsPrivateLinkResource GetNotificationHubsPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNotificationHubsArmClient(client).GetNotificationHubsPrivateLinkResource(id);
         }
@@ -179,10 +161,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubNamespaceResources and their operations over a NotificationHubNamespaceResource. </returns>
         public static NotificationHubNamespaceCollection GetNotificationHubNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespaces();
         }
@@ -220,10 +199,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public static async Task<Response<NotificationHubNamespaceResource>> GetNotificationHubNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -261,10 +237,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public static Response<NotificationHubNamespaceResource> GetNotificationHubNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespace(namespaceName, cancellationToken);
         }
@@ -300,10 +273,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableNotificationHubsSubscriptionResource(subscriptionResource).CheckNotificationHubNamespaceAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -339,10 +309,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).CheckNotificationHubNamespaceAvailability(content, cancellationToken);
         }
@@ -380,10 +347,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this SubscriptionResource subscriptionResource, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespacesAsync(skipToken, top, cancellationToken);
         }
@@ -421,10 +385,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(this SubscriptionResource subscriptionResource, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespaces(skipToken, top, cancellationToken);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalWorkspaceStorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalWorkspaceStorageAccounts))
             {
                 writer.WritePropertyName("additionalWorkspaceStorageAccounts"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultWorkspaceResourceGroup != null)
+            if (Optional.IsDefined(DefaultWorkspaceResourceGroup))
             {
                 writer.WritePropertyName("defaultWorkspaceResourceGroup"u8);
                 writer.WriteStringValue(DefaultWorkspaceResourceGroup);

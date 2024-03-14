@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
@@ -27,37 +28,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && SnapshotName != null)
+            if (options.Format != "W" && Optional.IsDefined(SnapshotName))
             {
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ReportProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
                 writer.WriteObjectValue(ReportProperties);
             }
-            if (options.Format != "W" && ReportSystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
                 writer.WritePropertyName("reportSystemData"u8);
                 JsonSerializer.Serialize(writer, ReportSystemData);
             }
-            if (options.Format != "W" && !(ComplianceResults is ChangeTrackingList<ComplianceResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
             {
                 writer.WritePropertyName("complianceResults"u8);
                 writer.WriteStartArray();

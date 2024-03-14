@@ -28,6 +28,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
         private string _details;
+        private CancellationTokenSource _listenerCancellationTokenSource;
         private CancellationTokenSource _functionExecutionCancellationTokenSource;
         private readonly IDrainModeManager _drainModeManager;
         private volatile bool _disposed;
@@ -50,6 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _checkpointStore = checkpointStore;
             _options = options;
             _logger = _loggerFactory.CreateLogger<EventHubListener>();
+            _listenerCancellationTokenSource = new CancellationTokenSource();
             _functionExecutionCancellationTokenSource = new CancellationTokenSource();
             _drainModeManager = drainModeManager;
 
@@ -88,6 +90,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         void IDisposable.Dispose()
         {
+            _listenerCancellationTokenSource.Cancel();
             _functionExecutionCancellationTokenSource.Cancel();
 
 #pragma warning disable AZC0102
@@ -110,6 +113,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            _listenerCancellationTokenSource.Cancel();
+
             if (!_drainModeManager.IsDrainModeEnabled)
             {
                 _functionExecutionCancellationTokenSource.Cancel();
@@ -122,7 +127,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         IEventProcessor IEventProcessorFactory.CreatePartitionProcessor()
         {
-            return new PartitionProcessor(_options, _executor, _loggerFactory.CreateLogger<PartitionProcessor>(), _singleDispatch, _functionExecutionCancellationTokenSource.Token);
+            return new PartitionProcessor(
+                _options,
+                _executor,
+                _loggerFactory.CreateLogger<PartitionProcessor>(),
+                _singleDispatch,
+                _listenerCancellationTokenSource.Token,
+                _functionExecutionCancellationTokenSource.Token);
         }
 
         public IScaleMonitor GetMonitor()

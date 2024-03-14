@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,109 +64,109 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplicationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("ApplicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (options.Format != "W" && AppId != null)
+            if (options.Format != "W" && Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && NamePropertiesName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("Application_Type"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (FlowType.HasValue)
+            if (Optional.IsDefined(FlowType))
             {
                 writer.WritePropertyName("Flow_Type"u8);
                 writer.WriteStringValue(FlowType.Value.ToString());
             }
-            if (RequestSource.HasValue)
+            if (Optional.IsDefined(RequestSource))
             {
                 writer.WritePropertyName("Request_Source"u8);
                 writer.WriteStringValue(RequestSource.Value.ToString());
             }
-            if (options.Format != "W" && InstrumentationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("CreationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("TenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (HockeyAppId != null)
+            if (Optional.IsDefined(HockeyAppId))
             {
                 writer.WritePropertyName("HockeyAppId"u8);
                 writer.WriteStringValue(HockeyAppId);
             }
-            if (options.Format != "W" && HockeyAppToken != null)
+            if (options.Format != "W" && Optional.IsDefined(HockeyAppToken))
             {
                 writer.WritePropertyName("HockeyAppToken"u8);
                 writer.WriteStringValue(HockeyAppToken);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (SamplingPercentage.HasValue)
+            if (Optional.IsDefined(SamplingPercentage))
             {
                 writer.WritePropertyName("SamplingPercentage"u8);
                 writer.WriteNumberValue(SamplingPercentage.Value);
             }
-            if (options.Format != "W" && ConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("ConnectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("RetentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (IsDisableIPMasking.HasValue)
+            if (Optional.IsDefined(IsDisableIPMasking))
             {
                 writer.WritePropertyName("DisableIpMasking"u8);
                 writer.WriteBooleanValue(IsDisableIPMasking.Value);
             }
-            if (IsImmediatePurgeDataOn30Days.HasValue)
+            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
             {
                 writer.WritePropertyName("ImmediatePurgeDataOn30Days"u8);
                 writer.WriteBooleanValue(IsImmediatePurgeDataOn30Days.Value);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("WorkspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (options.Format != "W" && LaMigrationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LaMigrationOn))
             {
                 writer.WritePropertyName("LaMigrationDate"u8);
                 writer.WriteStringValue(LaMigrationOn.Value, "O");
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<PrivateLinkScopedResourceContent> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("PrivateLinkScopedResources"u8);
                 writer.WriteStartArray();
@@ -176,27 +176,27 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccessForIngestion.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (PublicNetworkAccessForQuery.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (IngestionMode.HasValue)
+            if (Optional.IsDefined(IngestionMode))
             {
                 writer.WritePropertyName("IngestionMode"u8);
                 writer.WriteStringValue(IngestionMode.Value.ToString());
             }
-            if (IsDisableLocalAuth.HasValue)
+            if (Optional.IsDefined(IsDisableLocalAuth))
             {
                 writer.WritePropertyName("DisableLocalAuth"u8);
                 writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (IsForceCustomerStorageForProfiler.HasValue)
+            if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
             {
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);

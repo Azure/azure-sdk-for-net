@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="baiduApiKey"/>, <paramref name="baiduEndpoint"/> or <paramref name="baiduSecretKey"/> is null. </exception>
         public NotificationHubBaiduCredential(string baiduApiKey, Uri baiduEndpoint, string baiduSecretKey)
         {
-            if (baiduApiKey == null)
-            {
-                throw new ArgumentNullException(nameof(baiduApiKey));
-            }
-            if (baiduEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(baiduEndpoint));
-            }
-            if (baiduSecretKey == null)
-            {
-                throw new ArgumentNullException(nameof(baiduSecretKey));
-            }
+            Argument.AssertNotNull(baiduApiKey, nameof(baiduApiKey));
+            Argument.AssertNotNull(baiduEndpoint, nameof(baiduEndpoint));
+            Argument.AssertNotNull(baiduSecretKey, nameof(baiduSecretKey));
 
             BaiduApiKey = baiduApiKey;
             BaiduEndpoint = baiduEndpoint;

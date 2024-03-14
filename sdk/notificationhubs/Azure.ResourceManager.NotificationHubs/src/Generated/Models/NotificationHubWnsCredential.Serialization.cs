@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PackageSid != null)
+            if (Optional.IsDefined(PackageSid))
             {
                 writer.WritePropertyName("packageSid"u8);
                 writer.WriteStringValue(PackageSid);
             }
-            if (SecretKey != null)
+            if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
-            if (WindowsLiveEndpoint != null)
+            if (Optional.IsDefined(WindowsLiveEndpoint))
             {
                 writer.WritePropertyName("windowsLiveEndpoint"u8);
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
             }
-            if (CertificateKey != null)
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (WnsCertificate != null)
+            if (Optional.IsDefined(WnsCertificate))
             {
                 writer.WritePropertyName("wnsCertificate"u8);
                 writer.WriteStringValue(WnsCertificate);

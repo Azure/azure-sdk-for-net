@@ -21,18 +21,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
         public CustomEntitiesResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<Entity> entities) : base(id, warnings, entities)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(entities, nameof(entities));
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEntitiesResultDocumentsItem"/>. </summary>

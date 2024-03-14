@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (OperationInProgress.HasValue)
+            if (Optional.IsDefined(OperationInProgress))
             {
                 writer.WritePropertyName("operationInProgress"u8);
                 writer.WriteStringValue(OperationInProgress.Value.ToString());
             }
-            if (OperationInProgressLockTimeoutInUtc.HasValue)
+            if (Optional.IsDefined(OperationInProgressLockTimeoutInUtc))
             {
                 writer.WritePropertyName("operationInProgressLockTimeoutInUTC"u8);
                 writer.WriteStringValue(OperationInProgressLockTimeoutInUtc.Value, "O");

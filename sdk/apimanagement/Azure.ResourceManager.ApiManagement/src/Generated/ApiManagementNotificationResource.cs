@@ -339,14 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckNotificationRecipientUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
@@ -385,14 +378,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<bool> CheckNotificationRecipientUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
@@ -431,14 +417,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<RecipientUserContract>> CreateOrUpdateNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientUser");
             scope.Start();
@@ -477,14 +456,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<RecipientUserContract> CreateOrUpdateNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientUser");
             scope.Start();
@@ -523,14 +495,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response> DeleteNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientUser");
             scope.Start();
@@ -569,14 +534,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response DeleteNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientUser");
             scope.Start();
@@ -665,14 +623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckNotificationRecipientEmailEntityExistsAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
@@ -711,14 +662,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response<bool> CheckNotificationRecipientEmailEntityExists(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
@@ -757,14 +701,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response<RecipientEmailContract>> CreateOrUpdateNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientEmail");
             scope.Start();
@@ -803,14 +740,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response<RecipientEmailContract> CreateOrUpdateNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CreateOrUpdateNotificationRecipientEmail");
             scope.Start();
@@ -849,14 +779,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual async Task<Response> DeleteNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientEmail");
             scope.Start();
@@ -895,14 +818,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public virtual Response DeleteNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (email.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(email));
-            }
+            Argument.AssertNotNullOrEmpty(email, nameof(email));
 
             using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.DeleteNotificationRecipientEmail");
             scope.Start();

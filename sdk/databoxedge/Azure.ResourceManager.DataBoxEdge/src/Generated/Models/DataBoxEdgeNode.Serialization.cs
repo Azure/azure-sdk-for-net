@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -42,44 +43,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeStatus))
             {
                 writer.WritePropertyName("nodeStatus"u8);
                 writer.WriteStringValue(NodeStatus.Value.ToString());
             }
-            if (options.Format != "W" && NodeChassisSerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeChassisSerialNumber))
             {
                 writer.WritePropertyName("nodeChassisSerialNumber"u8);
                 writer.WriteStringValue(NodeChassisSerialNumber);
             }
-            if (options.Format != "W" && NodeSerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeSerialNumber))
             {
                 writer.WritePropertyName("nodeSerialNumber"u8);
                 writer.WriteStringValue(NodeSerialNumber);
             }
-            if (options.Format != "W" && NodeDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeDisplayName))
             {
                 writer.WritePropertyName("nodeDisplayName"u8);
                 writer.WriteStringValue(NodeDisplayName);
             }
-            if (options.Format != "W" && NodeFriendlySoftwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeFriendlySoftwareVersion))
             {
                 writer.WritePropertyName("nodeFriendlySoftwareVersion"u8);
                 writer.WriteStringValue(NodeFriendlySoftwareVersion);
             }
-            if (options.Format != "W" && NodeHcsVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeHcsVersion))
             {
                 writer.WritePropertyName("nodeHcsVersion"u8);
                 writer.WriteStringValue(NodeHcsVersion);
             }
-            if (options.Format != "W" && NodeInstanceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeInstanceId))
             {
                 writer.WritePropertyName("nodeInstanceId"u8);
                 writer.WriteStringValue(NodeInstanceId.Value);

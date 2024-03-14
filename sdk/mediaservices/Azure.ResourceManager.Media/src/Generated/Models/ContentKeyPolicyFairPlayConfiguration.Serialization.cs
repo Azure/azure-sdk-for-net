@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
             writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
-            if (OfflineRentalConfiguration != null)
+            if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
                 writer.WriteObjectValue(OfflineRentalConfiguration);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Uid.HasValue)
+            if (Optional.IsDefined(Uid))
             {
                 writer.WritePropertyName("uid"u8);
                 writer.WriteNumberValue(Uid.Value);
             }
-            if (Gid.HasValue)
+            if (Optional.IsDefined(Gid))
             {
                 writer.WritePropertyName("gid"u8);
                 writer.WriteNumberValue(Gid.Value);
             }
-            if (SshPrivateKey != null)
+            if (Optional.IsDefined(SshPrivateKey))
             {
                 writer.WritePropertyName("sshPrivateKey"u8);
                 writer.WriteStringValue(SshPrivateKey);

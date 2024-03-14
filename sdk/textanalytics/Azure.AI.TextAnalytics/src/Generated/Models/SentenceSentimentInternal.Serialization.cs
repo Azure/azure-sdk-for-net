@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (!(Targets is ChangeTrackingList<SentenceTarget> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Assessments is ChangeTrackingList<SentenceAssessment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Assessments))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();

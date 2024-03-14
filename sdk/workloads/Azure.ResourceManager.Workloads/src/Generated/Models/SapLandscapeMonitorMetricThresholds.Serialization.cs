@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Green.HasValue)
+            if (Optional.IsDefined(Green))
             {
                 writer.WritePropertyName("green"u8);
                 writer.WriteNumberValue(Green.Value);
             }
-            if (Yellow.HasValue)
+            if (Optional.IsDefined(Yellow))
             {
                 writer.WritePropertyName("yellow"u8);
                 writer.WriteNumberValue(Yellow.Value);
             }
-            if (Red.HasValue)
+            if (Optional.IsDefined(Red))
             {
                 writer.WritePropertyName("red"u8);
                 writer.WriteNumberValue(Red.Value);

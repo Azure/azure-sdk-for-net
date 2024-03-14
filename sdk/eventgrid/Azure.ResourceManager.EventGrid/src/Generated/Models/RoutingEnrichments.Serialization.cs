@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Static is ChangeTrackingList<StaticRoutingEnrichment> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Static))
             {
                 writer.WritePropertyName("static"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Dynamic is ChangeTrackingList<DynamicRoutingEnrichment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Dynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteStartArray();

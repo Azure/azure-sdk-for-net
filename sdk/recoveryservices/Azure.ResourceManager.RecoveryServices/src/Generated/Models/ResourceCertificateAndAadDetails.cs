@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -23,22 +24,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aadAuthority"/>, <paramref name="servicePrincipalClientId"/>, <paramref name="servicePrincipalObjectId"/> or <paramref name="azureManagementEndpointAudience"/> is null. </exception>
         internal ResourceCertificateAndAadDetails(string aadAuthority, Guid aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience)
         {
-            if (aadAuthority == null)
-            {
-                throw new ArgumentNullException(nameof(aadAuthority));
-            }
-            if (servicePrincipalClientId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalClientId));
-            }
-            if (servicePrincipalObjectId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalObjectId));
-            }
-            if (azureManagementEndpointAudience == null)
-            {
-                throw new ArgumentNullException(nameof(azureManagementEndpointAudience));
-            }
+            Argument.AssertNotNull(aadAuthority, nameof(aadAuthority));
+            Argument.AssertNotNull(servicePrincipalClientId, nameof(servicePrincipalClientId));
+            Argument.AssertNotNull(servicePrincipalObjectId, nameof(servicePrincipalObjectId));
+            Argument.AssertNotNull(azureManagementEndpointAudience, nameof(azureManagementEndpointAudience));
 
             AadAuthority = aadAuthority;
             AadTenantId = aadTenantId;

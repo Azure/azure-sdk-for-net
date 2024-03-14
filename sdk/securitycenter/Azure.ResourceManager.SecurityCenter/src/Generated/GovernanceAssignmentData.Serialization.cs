@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (RemediationDueOn.HasValue)
+            if (Optional.IsDefined(RemediationDueOn))
             {
                 writer.WritePropertyName("remediationDueDate"u8);
                 writer.WriteStringValue(RemediationDueOn.Value, "O");
             }
-            if (RemediationEta != null)
+            if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
                 writer.WriteObjectValue(RemediationEta);
             }
-            if (IsGracePeriod.HasValue)
+            if (Optional.IsDefined(IsGracePeriod))
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (GovernanceEmailNotification != null)
+            if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
-            if (AdditionalData != null)
+            if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);

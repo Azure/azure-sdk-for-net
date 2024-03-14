@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mpnsCertificate"/>, <paramref name="certificateKey"/> or <paramref name="thumbprintString"/> is null. </exception>
         public NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, string thumbprintString)
         {
-            if (mpnsCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(mpnsCertificate));
-            }
-            if (certificateKey == null)
-            {
-                throw new ArgumentNullException(nameof(certificateKey));
-            }
-            if (thumbprintString == null)
-            {
-                throw new ArgumentNullException(nameof(thumbprintString));
-            }
+            Argument.AssertNotNull(mpnsCertificate, nameof(mpnsCertificate));
+            Argument.AssertNotNull(certificateKey, nameof(certificateKey));
+            Argument.AssertNotNull(thumbprintString, nameof(thumbprintString));
 
             MpnsCertificate = mpnsCertificate;
             CertificateKey = certificateKey;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationMode.HasValue)
+            if (Optional.IsDefined(NotificationMode))
             {
                 writer.WritePropertyName("notificationMode"u8);
                 writer.WriteStringValue(NotificationMode.Value.ToString());
             }
-            if (MessageScope.HasValue)
+            if (Optional.IsDefined(MessageScope))
             {
                 writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
-            if (!(IncludedEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedEvents))
             {
                 writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotificationEndpoints is ChangeTrackingList<NotificationEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotificationEndpoints))
             {
                 writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

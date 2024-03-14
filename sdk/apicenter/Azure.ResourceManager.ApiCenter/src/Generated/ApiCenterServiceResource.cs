@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiCenterServiceResource>> UpdateAsync(ApiCenterServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Update");
             scope.Start();
@@ -326,10 +323,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiCenterServiceResource> Update(ApiCenterServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiCenterServiceServicesClientDiagnostics.CreateScope("ApiCenterServiceResource.Update");
             scope.Start();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -53,10 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel)
         {
-            if (targetResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceId));
-            }
+            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
 
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;

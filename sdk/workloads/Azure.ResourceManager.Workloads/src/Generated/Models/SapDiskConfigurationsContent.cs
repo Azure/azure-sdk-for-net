@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -56,10 +57,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dbVmSku"/> is null. </exception>
         public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
         {
-            if (dbVmSku == null)
-            {
-                throw new ArgumentNullException(nameof(dbVmSku));
-            }
+            Argument.AssertNotNull(dbVmSku, nameof(dbVmSku));
 
             AppLocation = appLocation;
             Environment = environment;

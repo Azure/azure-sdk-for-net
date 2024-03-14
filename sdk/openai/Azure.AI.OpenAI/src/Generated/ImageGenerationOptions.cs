@@ -50,10 +50,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
         public ImageGenerationOptions(string prompt)
         {
-            if (prompt == null)
-            {
-                throw new ArgumentNullException(nameof(prompt));
-            }
+            Argument.AssertNotNull(prompt, nameof(prompt));
 
             Prompt = prompt;
         }

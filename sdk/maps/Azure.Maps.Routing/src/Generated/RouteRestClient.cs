@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
@@ -109,7 +110,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -135,7 +136,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -574,7 +575,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -600,7 +601,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -967,7 +968,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1620,7 +1621,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1698,7 +1699,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionParameters);
             request.Content = content;
             return message;
@@ -2202,7 +2203,7 @@ namespace Azure.Maps.Routing
             uri.AppendPath("/route/range/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && !(query is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+            if (query != null && !(query is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -2234,7 +2235,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("traffic", useTrafficData.Value, true);
             }
-            if (avoid != null && !(avoid is ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -2769,7 +2770,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
@@ -3409,7 +3410,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;

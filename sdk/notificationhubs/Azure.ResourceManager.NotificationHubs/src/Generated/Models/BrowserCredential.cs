@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/>, <paramref name="vapidPrivateKey"/> or <paramref name="vapidPublicKey"/> is null. </exception>
         public BrowserCredential(string subject, string vapidPrivateKey, string vapidPublicKey)
         {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
-            if (vapidPrivateKey == null)
-            {
-                throw new ArgumentNullException(nameof(vapidPrivateKey));
-            }
-            if (vapidPublicKey == null)
-            {
-                throw new ArgumentNullException(nameof(vapidPublicKey));
-            }
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(vapidPrivateKey, nameof(vapidPrivateKey));
+            Argument.AssertNotNull(vapidPublicKey, nameof(vapidPublicKey));
 
             Subject = subject;
             VapidPrivateKey = vapidPrivateKey;

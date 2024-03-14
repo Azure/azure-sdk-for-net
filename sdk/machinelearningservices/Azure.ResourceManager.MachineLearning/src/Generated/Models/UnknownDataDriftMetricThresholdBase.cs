@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDataDriftMetricThresholdBase. </summary>
+    /// <summary> Unknown version of DataDriftMetricThresholdBase. </summary>
     internal partial class UnknownDataDriftMetricThresholdBase : DataDriftMetricThresholdBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataDriftMetricThresholdBase"/>. </summary>

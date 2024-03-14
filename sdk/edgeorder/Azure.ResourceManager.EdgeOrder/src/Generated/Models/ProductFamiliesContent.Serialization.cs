@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (CustomerSubscriptionDetails != null)
+            if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails);

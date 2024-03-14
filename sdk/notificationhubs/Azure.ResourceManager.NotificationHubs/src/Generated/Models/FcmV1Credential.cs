@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientEmail"/>, <paramref name="privateKey"/> or <paramref name="projectId"/> is null. </exception>
         public FcmV1Credential(string clientEmail, string privateKey, string projectId)
         {
-            if (clientEmail == null)
-            {
-                throw new ArgumentNullException(nameof(clientEmail));
-            }
-            if (privateKey == null)
-            {
-                throw new ArgumentNullException(nameof(privateKey));
-            }
-            if (projectId == null)
-            {
-                throw new ArgumentNullException(nameof(projectId));
-            }
+            Argument.AssertNotNull(clientEmail, nameof(clientEmail));
+            Argument.AssertNotNull(privateKey, nameof(privateKey));
+            Argument.AssertNotNull(projectId, nameof(projectId));
 
             ClientEmail = clientEmail;
             PrivateKey = privateKey;

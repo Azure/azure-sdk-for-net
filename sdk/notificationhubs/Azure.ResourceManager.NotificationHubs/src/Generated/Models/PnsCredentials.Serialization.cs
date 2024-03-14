@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (AdmCredential != null)
+            if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
                 writer.WriteObjectValue(AdmCredential);
             }
-            if (ApnsCredential != null)
+            if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
                 writer.WriteObjectValue(ApnsCredential);
             }
-            if (BaiduCredential != null)
+            if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
                 writer.WriteObjectValue(BaiduCredential);
             }
-            if (BrowserCredential != null)
+            if (Optional.IsDefined(BrowserCredential))
             {
                 writer.WritePropertyName("browserCredential"u8);
                 writer.WriteObjectValue(BrowserCredential);
             }
-            if (GcmCredential != null)
+            if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
                 writer.WriteObjectValue(GcmCredential);
             }
-            if (MpnsCredential != null)
+            if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
                 writer.WriteObjectValue(MpnsCredential);
             }
-            if (WnsCredential != null)
+            if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
                 writer.WriteObjectValue(WnsCredential);
             }
-            if (XiaomiCredential != null)
+            if (Optional.IsDefined(XiaomiCredential))
             {
                 writer.WritePropertyName("xiaomiCredential"u8);
                 writer.WriteObjectValue(XiaomiCredential);
             }
-            if (FcmV1Credential != null)
+            if (Optional.IsDefined(FcmV1Credential))
             {
                 writer.WritePropertyName("fcmV1Credential"u8);
                 writer.WriteObjectValue(FcmV1Credential);

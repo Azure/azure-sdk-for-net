@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Tone.HasValue)
+            if (Optional.IsDefined(Tone))
             {
                 writer.WritePropertyName("tone"u8);
                 writer.WriteStringValue(Tone.Value.ToString());
