@@ -20,11 +20,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ConstructOperationForRehydration()
         {
-            var mockResponse = new MockResponse(200);
-            var mockJsonModel = new MockJsonModel(1, "a");
-            mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
-            var transport = new MockTransport(mockResponse);
-            var pipeline = new HttpPipeline(transport, default);
+            HttpPipeline pipeline = CreateMockHttpPipeline(out _);
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = new RehydrationOperation(pipeline, rehydrationToken);
@@ -34,26 +30,34 @@ namespace Azure.Core.Tests
             Assert.False(operation.HasCompleted);
 
             operation.UpdateStatus();
-            var rawResponse = operation.GetRawResponse();
-            Assert.AreEqual(200, rawResponse.Status);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
         }
 
         [Test]
         public void ConstructOperationOfTForRehydration()
         {
-            var mockResponse = new MockResponse(200);
-            var mockJsonModel = new MockJsonModel(1, "a");
-            mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
-            var transport = new MockTransport(mockResponse);
-            var pipeline = new HttpPipeline(transport, default);
+            var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = new RehydrationOperation<MockJsonModel>(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
+            Assert.False(operation.HasCompleted);
 
             operation.UpdateStatus();
-            var rawResponse = operation.GetRawResponse();
-            Assert.AreEqual(200, rawResponse.Status);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
             Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
+        }
+
+        private static HttpPipeline CreateMockHttpPipeline(out MockJsonModel mockJsonModel)
+        {
+            var mockResponse = new MockResponse(200);
+            mockJsonModel = new MockJsonModel(1, "a");
+            mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
+            var transport = new MockTransport(mockResponse);
+            var pipeline = new HttpPipeline(transport, default);
+            return pipeline;
         }
 
         private class MockClientOptions : ClientOptions
