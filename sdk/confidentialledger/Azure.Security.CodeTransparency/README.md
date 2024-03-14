@@ -42,20 +42,20 @@ Before submitting the cose file, the service must be configured with the relevan
 To submit the signature, use the following code:
 
 ```C# Snippet:CodeTransparencySubmission
-CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
-FileStream fileStream = File.OpenRead("signature.cose");
-BinaryData content = BinaryData.FromStream(fileStream);
-Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
-Response<GetOperationResult> operationResult = await operation.WaitForCompletionAsync();
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{operationResult.Value.EntryId}}}");
-Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryAsync(operationResult.Value.EntryId, true);
-BinaryData signatureWithReceipt = signatureWithReceiptResponse.Value;
+BinaryData content = BinaryData.FromString("Hello World!");
+Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
 ```
 
 Once you have the receipt and the signature, you can verify whether the signature was actually included in the Code Transparency service by running the receipt verification logic. The verifier checks if the receipt was issued for a given signature and if the receipt signature was endorsed by the service.
 
 ```C# Snippet:CodeTransparencyVerification
-CcfReceiptVerifier.RunVerification(signatureWithReceipt.ToArray());
+byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.did.2023-02-13.cose");
+var didDocBytes = readFileBytes("service.2023-03.did.json");
+var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
+CcfReceiptVerifier.RunVerification(receiptBytes, null, didRef => {
+    Assert.AreEqual("https://preview-test.scitt.azure.net/.well-known/did.json", didRef.DidDocUrl.ToString());
+    return didDoc;
+});
 ```
 
 If the verification completes without exception, you can trust the signature and the receipt. This allows you to safely inspect the contents of the files, especially the contents of the payload embedded in a cose signature envelope.

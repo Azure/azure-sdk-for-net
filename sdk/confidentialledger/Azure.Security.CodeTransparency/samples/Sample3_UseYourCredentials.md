@@ -5,10 +5,7 @@ Your service might have [additional configuration][CTS_configuration_doc] which 
 Use [DefaultAzureCredential][default_cred_ref] to get your token:
 
 ```C# Snippet:CodeTransparencySample3_CreateClientWithCredentials
-DefaultAzureCredential credential = new();
-string[] scopes = { "https://your.service.scope/.default" };
-TokenCredential token = credential.GetToken(new TokenRequestContext(scopes));
-CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), new AzureKeyCredential(token.Token));
+var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 ```
 
 Once you construct the client instance the token will be sent in the `Authorization` header as `Bearer <token>`.

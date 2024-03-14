@@ -14,7 +14,7 @@ To create a new `CodeTransparencyClient` that will interact with the service, wi
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample1_CreateClient
-CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 ```
 
 ## Submit the file
@@ -22,9 +22,8 @@ CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-le
 The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
 
 ```C# Snippet:CodeTransparencySample1_SendSignature
-FileStream fileStream = File.OpenRead("signature.cose");
-BinaryData content = BinaryData.FromStream(fileStream);
-Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);  
+BinaryData content = BinaryData.FromString("Hello World!");
+Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
 ```
 
 ## Verify if operation was successful
@@ -34,7 +33,11 @@ If you want to be sure that the submission completed successfully it is necessar
 Another important part of the operation check is that it will contain an identifier (entry ID) to be used to get the transaction receipt.
 
 ```C# Snippet:CodeTransparencySample1_WaitForResult
+var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+BinaryData content = BinaryData.FromString("Hello World!");
+Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
+Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
+Assert.AreEqual("foobar", operation.Id);
 Response<GetOperationResult> response = await operation.WaitForCompletionAsync();
 GetOperationResult value = response.Value;
-Console.WriteLine($"The entry id to use to get the entry and receipt is {{{value.EntryId}}}");
 ```

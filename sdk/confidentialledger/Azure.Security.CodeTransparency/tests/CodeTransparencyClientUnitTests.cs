@@ -57,9 +57,23 @@ namespace Azure.Security.CodeTransparency.Tests
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
+            #region Snippet:CodeTransparencySample1_CreateClient
+            #region Snippet:CodeTransparencySample2_CreateClient
+            #region Snippet:CodeTransparencySample3_CreateClientWithCredentials
+            #region Snippet:CodeTransparencySample4_CreateClient
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            #endregion
+            #endregion
+            #endregion
+            #endregion
+
+            #region Snippet:CodeTransparencySubmission
+            #region Snippet:CodeTransparencySample1_SendSignature
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<GetOperationResult> response = await client.CreateEntryAsync(content);
+            #endregion
+            #endregion
+
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(false, response.HasCompleted);
             Assert.AreEqual("foobar", response.Id);
@@ -99,14 +113,15 @@ namespace Azure.Security.CodeTransparency.Tests
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
+            #region Snippet:CodeTransparencySample1_WaitForResult
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual("foobar", operation.Id);
-
             Response<GetOperationResult> response = await operation.WaitForCompletionAsync();
             GetOperationResult value = response.Value;
+            #endregion
             Assert.AreEqual("123.23", value.EntryId);
             Assert.AreEqual(OperationStatus.Succeeded, value.Status);
             Assert.IsTrue(operation.HasCompleted);
@@ -171,9 +186,10 @@ namespace Azure.Security.CodeTransparency.Tests
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
+            #region Snippet:CodeTransparencySample2_GetRawReceipt
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
-
+            #endregion
             Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2024-01-11-preview", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
@@ -191,9 +207,10 @@ namespace Azure.Security.CodeTransparency.Tests
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
+            #region Snippet:CodeTransparencySample2_GetEntryWithEmbeddedReceipt
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44", true);
-
+            #endregion
             Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2024-01-11-preview&embedReceipt=true", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
@@ -235,12 +252,14 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            #region Snippet:CodeTransparencySample4_IterateOverEntries
             AsyncPageable<string> response = client.GetEntryIdsAsync();
             List<string> ids = new();
             await foreach (Page<string> page in response.AsPages())
             {
                 ids.AddRange(page.Values);
             }
+            #endregion
             Assert.AreEqual("https://foo.bar.com/entries/txIds?api-version=2024-01-11-preview", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual("https://foo.bar.com/entries/txIds?from=3&to=6", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual("https://foo.bar.com/entries/txIds?from=7", mockTransport.Requests[2].Uri.ToString());

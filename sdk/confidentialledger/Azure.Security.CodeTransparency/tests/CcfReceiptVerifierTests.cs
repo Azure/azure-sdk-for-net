@@ -133,6 +133,8 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public void Verify_embedded_receipt_with_did_issuer()
         {
+            #region Snippet:CodeTransparencyVerification
+            #region Snippet:CodeTransparencySample2_VerifyEntryWithEmbeddedReceipt
             byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.did.2023-02-13.cose");
             var didDocBytes = readFileBytes("service.2023-03.did.json");
             var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
@@ -140,11 +142,14 @@ namespace Azure.Security.CodeTransparency.Tests
                 Assert.AreEqual("https://preview-test.scitt.azure.net/.well-known/did.json", didRef.DidDocUrl.ToString());
                 return didDoc;
             });
+            #endregion
+            #endregion
         }
 
         [Test]
         public void Verify_Using_DID_Success_Test()
         {
+            #region Snippet:CodeTransparencySample2_VerifyEntryAndReceipt
             byte[] receiptBytes = readFileBytes("artifact.2023-03-03.receipt.did.2023-03-03.cbor");
             byte[] coseSign1Bytes = readFileBytes("artifact.2023-03-03.cose");
             var didDocBytes = readFileBytes("service.2023-02.did.json");
@@ -153,6 +158,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 Assert.AreEqual("https://127.0.0.1:42399/.well-known/did.json", didRef.DidDocUrl.ToString());
                 return didDoc;
             });
+            #endregion
         }
 
         [Test]
