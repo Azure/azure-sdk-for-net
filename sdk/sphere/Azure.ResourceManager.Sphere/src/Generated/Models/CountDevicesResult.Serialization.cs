@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class CountDeviceResult : IUtf8JsonSerializable, IJsonModel<CountDeviceResult>
+    public partial class CountDevicesResult : IUtf8JsonSerializable, IJsonModel<CountDevicesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CountDeviceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CountDevicesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CountDeviceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CountDevicesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CountDeviceResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountDeviceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CountDevicesResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteEndObject();
         }
 
-        CountDeviceResult IJsonModel<CountDeviceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CountDevicesResult IJsonModel<CountDevicesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CountDeviceResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountDeviceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CountDevicesResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCountDeviceResult(document.RootElement, options);
+            return DeserializeCountDevicesResult(document.RootElement, options);
         }
 
-        internal static CountDeviceResult DeserializeCountDeviceResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CountDevicesResult DeserializeCountDevicesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -82,38 +82,38 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CountDeviceResult(value, serializedAdditionalRawData);
+            return new CountDevicesResult(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CountDeviceResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CountDevicesResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CountDeviceResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CountDeviceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountDevicesResult)} does not support '{options.Format}' format.");
             }
         }
 
-        CountDeviceResult IPersistableModel<CountDeviceResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CountDevicesResult IPersistableModel<CountDevicesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CountDeviceResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CountDevicesResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCountDeviceResult(document.RootElement, options);
+                        return DeserializeCountDevicesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CountDeviceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountDevicesResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CountDeviceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CountDevicesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
