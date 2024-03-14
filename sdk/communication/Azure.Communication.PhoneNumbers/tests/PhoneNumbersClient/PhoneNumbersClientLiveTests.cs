@@ -718,7 +718,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(areaCodes);
         }
 
-        [Test]
         [AsyncOnly]
         public async Task GetTollFreeAreaCodesAsyncAsPages()
         {
@@ -754,7 +753,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(areaCodesCount, actual);
         }
 
-        [Test]
         [SyncOnly]
         public void GetTollFreeAreaCodesAsPages()
         {
@@ -827,7 +825,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
         }
 
-        [Test]
         [AsyncOnly]
         public async Task GetGeographicAreaCodesAsyncAsPages()
         {
@@ -864,7 +861,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(areaCodesCount, actual);
         }
 
-        [Test]
         [SyncOnly]
         public void GetGeographicAreaCodesAsPages()
         {
