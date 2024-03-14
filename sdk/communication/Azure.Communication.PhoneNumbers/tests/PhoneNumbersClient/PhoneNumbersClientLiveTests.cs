@@ -1289,6 +1289,128 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsNotNull(offerings);
         }
 
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncSucceeds()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationSucceeds()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = client.SearchOperatorInformation(phoneNumbers);
+            Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncOnlyAcceptsOnePhoneNumber()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber, phoneNumber };
+
+            var client = CreateClient();
+
+            try
+            {
+                var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                return;
+            }
+
+            Assert.Fail("SearchOperatorInformationAsync should have thrown an exception.");
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationOnlyAcceptsOnePhoneNumber()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber, phoneNumber };
+
+            var client = CreateClient();
+
+            try
+            {
+                var results = client.SearchOperatorInformation(phoneNumbers);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                return;
+            }
+
+            Assert.Fail("SearchOperatorInformation should have thrown an exception.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncRespectsOptions()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
+            var operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNull(operatorInformation.IsoCountryCode);
+            Assert.IsNull(operatorInformation.OperatorDetails);
+
+            results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
+            operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNotNull(operatorInformation.IsoCountryCode);
+            Assert.IsNotNull(operatorInformation.OperatorDetails);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationRespectsOptions()
+        {
+            var phoneNumber = GetTestPhoneNumber();
+            List<string> phoneNumbers = new List<string>() { phoneNumber };
+
+            var client = CreateClient();
+
+            var results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
+            var operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNull(operatorInformation.IsoCountryCode);
+            Assert.IsNull(operatorInformation.OperatorDetails);
+
+            results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
+            operatorInformation = results.Value.Values[0];
+            Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
+            Assert.IsNotNull(operatorInformation.InternationalFormat);
+            Assert.IsNotNull(operatorInformation.NationalFormat);
+            Assert.IsNotNull(operatorInformation.IsoCountryCode);
+            Assert.IsNotNull(operatorInformation.OperatorDetails);
+        }
+
         private static bool IsSuccess(int statusCode)
         {
             return statusCode >= 200 && statusCode < 300;
