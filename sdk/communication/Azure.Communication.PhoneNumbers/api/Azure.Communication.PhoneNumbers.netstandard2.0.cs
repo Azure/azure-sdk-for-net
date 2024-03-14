@@ -27,10 +27,17 @@ namespace Azure.Communication.PhoneNumbers
     public partial class OperatorInformation
     {
         internal OperatorInformation() { }
+        public string InternationalFormat { get { throw null; } }
         public string IsoCountryCode { get { throw null; } }
+        public string NationalFormat { get { throw null; } }
         public Azure.Communication.PhoneNumbers.OperatorNumberType? NumberType { get { throw null; } }
         public Azure.Communication.PhoneNumbers.OperatorDetails OperatorDetails { get { throw null; } }
         public string PhoneNumber { get { throw null; } }
+    }
+    public partial class OperatorInformationOptions
+    {
+        public OperatorInformationOptions() { }
+        public bool? IncludeAdditionalOperatorDetails { get { throw null; } set { } }
     }
     public partial class OperatorInformationResult
     {
@@ -162,8 +169,8 @@ namespace Azure.Communication.PhoneNumbers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber>> GetPurchasedPhoneNumberAsync(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber> GetPurchasedPhoneNumbers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.PhoneNumbers.OperatorInformationResult> SearchOperatorInformation(System.Collections.Generic.IEnumerable<string> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.OperatorInformationResult>> SearchOperatorInformationAsync(System.Collections.Generic.IEnumerable<string> phoneNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.PhoneNumbers.OperatorInformationResult> SearchOperatorInformation(System.Collections.Generic.IEnumerable<string> phoneNumbers, Azure.Communication.PhoneNumbers.OperatorInformationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.OperatorInformationResult>> SearchOperatorInformationAsync(System.Collections.Generic.IEnumerable<string> phoneNumbers, Azure.Communication.PhoneNumbers.OperatorInformationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Communication.PhoneNumbers.PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.PhoneNumbers.ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -175,14 +182,14 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2022_12_01) { }
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2024_03_01_Preview) { }
         public string? AcceptedLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2022_01_11_Preview_2 = 2,
             V2022_12_01 = 3,
-            V2023_05_01_Preview = 4,
+            V2024_03_01_Preview = 4,
         }
     }
     public partial class PhoneNumberSearchOptions
@@ -242,7 +249,7 @@ namespace Azure.Communication.PhoneNumbers
     public static partial class PhoneNumbersModelFactory
     {
         public static Azure.Communication.PhoneNumbers.OperatorDetails OperatorDetails(string name = null, string mobileNetworkCode = null, string mobileCountryCode = null) { throw null; }
-        public static Azure.Communication.PhoneNumbers.OperatorInformation OperatorInformation(string phoneNumber = null, Azure.Communication.PhoneNumbers.OperatorNumberType? numberType = default(Azure.Communication.PhoneNumbers.OperatorNumberType?), string isoCountryCode = null, Azure.Communication.PhoneNumbers.OperatorDetails operatorDetails = null) { throw null; }
+        public static Azure.Communication.PhoneNumbers.OperatorInformation OperatorInformation(string phoneNumber = null, string nationalFormat = null, string internationalFormat = null, string isoCountryCode = null, Azure.Communication.PhoneNumbers.OperatorNumberType? numberType = default(Azure.Communication.PhoneNumbers.OperatorNumberType?), Azure.Communication.PhoneNumbers.OperatorDetails operatorDetails = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.OperatorInformationResult OperatorInformationResult(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.OperatorInformation> values = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null) { throw null; }
