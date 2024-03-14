@@ -178,6 +178,9 @@
 # ServiceLabel: %Cloud Shell
 # ServiceOwners:                                                   @maertendMSFT
 
+# ServiceLabel: %Code Signing
+# ServiceOwners                                                    @jaxelr @dawnwang17 @janielmartell
+
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao
 
