@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using NUnit;
@@ -132,6 +133,37 @@ namespace Azure.Core.Tests
             string testId = "operation-id";
             var operation = new TestOperation<int>(testId, TimeSpan.Zero, 0, null);
             Assert.AreEqual(testId, operation.Id);
+        }
+
+        [Test]
+        public void RehydrateOperation()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = new RehydrationOperation(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
+            Assert.False(operation.HasCompleted);
+            operation.UpdateStatus();
+        }
+
+        [Test]
+        public void RehydrateOperationOfT()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = new RehydrationOperation<int>(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
+            Assert.False(operation.HasCompleted);
+            Assert.Throws<InvalidOperationException>(() => { var value = operation.Value; });
+            Assert.False(operation.HasValue);
+        }
+
+        private class MockClientOptions : ClientOptions
+        {
         }
     }
 }
