@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -11,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class RehydrationOperation<T> : Operation<T> where T: notnull
+    internal class RehydrationOperation<T> : Operation<T> where T : IPersistableModel<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;

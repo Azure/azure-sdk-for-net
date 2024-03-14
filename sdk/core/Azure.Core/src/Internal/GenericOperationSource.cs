@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T> where T : notnull
+    internal class GenericOperationSource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> : IOperationSource<T> where T : IPersistableModel<T>
     {
         T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
             => CreateResult(response);

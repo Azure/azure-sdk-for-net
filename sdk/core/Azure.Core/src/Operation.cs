@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null) where T : notnull
+        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
             => new RehydrationOperation<T>(pipeline, rehydrationToken, options);
 
         /// <summary>
