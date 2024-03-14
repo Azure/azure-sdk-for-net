@@ -1377,9 +1377,12 @@ namespace Azure.Storage.Blobs.Specialized
                         structuredContentLength = contentLength;
                         contentLength = (content?.Length - content?.Position) ?? 0;
                         range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
-                        structuredBodyType = "XSM/1.0; properties=crc64";
+                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                         content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = new StructuredMessageEncodingStream(content, 4 * Constants.MB, StructuredMessage.Flags.StorageCrc64);
+                        content = new StructuredMessageEncodingStream(
+                            content,
+                            Constants.StructuredMessage.DefaultSegmentContentLength,
+                            StructuredMessage.Flags.StorageCrc64);
                         contentLength = (content?.Length - content?.Position) ?? 0;
                     }
                     else
