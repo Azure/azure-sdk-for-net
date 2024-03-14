@@ -588,7 +588,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task DeleteMessagesForCountPassesAFutureDate()
+        public async Task DeleteMessagesForCountPassesTheCurrentDate()
         {
             var expectedCount = 2000;
             var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
@@ -601,16 +601,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedCount);
 
-            // Delete for a count should use a future date/time so that
-            // the operation is not constrained by the date.
+            // Delete for a count should use the date/time so that
+            // the operation cannot loop forever. Capture a call time just
+            // prior to calling the method so that we can infer the value
+            // used by the method is just slightly in the future.
 
+            var callTime = DateTimeOffset.UtcNow;
             var returnedCount = await receiver.DeleteMessagesAsync(expectedCount);
+
             Assert.AreEqual(expectedCount, returnedCount);
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
                     expectedCount,
-                    It.Is<DateTimeOffset>(value => value > DateTimeOffset.UtcNow),
+                    It.Is<DateTimeOffset>(value => value >= callTime),
                     It.IsAny<CancellationToken>()),
                     Times.Once);
         }

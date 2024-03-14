@@ -673,6 +673,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <remarks>
+        /// If the lock for a message is held by another receiver, it will be respected and the message will not be deleted.
+        ///
         /// This method may invoke multiple service requests to delete all messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
         /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
         ///
@@ -682,7 +684,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The number of messages that were deleted.</returns>
         public virtual async Task<int> DeleteMessagesAsync(CancellationToken cancellationToken = default)
         {
-            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow.AddDays(1), cancellationToken).ConfigureAwait(false);
+            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow, cancellationToken).ConfigureAwait(false);
 
             if (deleted == MaxDeleteMessageCount)
             {
@@ -690,7 +692,7 @@ namespace Azure.Messaging.ServiceBus
 
                while (batchCount == MaxDeleteMessageCount)
                {
-                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow.AddDays(1), cancellationToken).ConfigureAwait(false);
+                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, DateTimeOffset.UtcNow, cancellationToken).ConfigureAwait(false);
                    deleted += batchCount;
                }
             }
@@ -704,6 +706,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <remarks>
+        /// If the lock for a message is held by another receiver, it will be respected and the message will not be deleted.
+        ///
         /// This method may invoke multiple service requests to delete all eligible messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
         /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
         ///
@@ -738,6 +742,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The number of messages that were deleted.</returns>
+        /// <remarks>If the lock for a message is held by another receiver, it will be respected and the message will not be deleted.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
@@ -754,7 +759,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.</param>
         /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <returns>The number of messages that were deleted.</returns>\
+        /// <returns>The number of messages that were deleted.</returns>
+        /// <remarks>If the lock for a message is held by another receiver, it will be respected and the message will not be deleted.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
