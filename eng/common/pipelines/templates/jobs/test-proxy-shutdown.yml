@@ -39,4 +39,4 @@ stages:
 
           - template: /eng/common/testproxy/test-proxy-tool-shutdown.yml
 
-          - template: eng/common/testproxy/publish-proxy-logs.yml
+          - template: /eng/common/testproxy/publish-proxy-logs.yml
