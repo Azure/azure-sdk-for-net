@@ -109,6 +109,10 @@ resource signalRService_d95Jninqk 'Microsoft.SignalRService/signalR@2022-02-01' 
   name: 'existingSignalR'
 }
 
+resource applicationInsightsComponent_OdiSCimF0 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: 'existingAppInsights'
+}
+
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_C2Aq73IJb
   name: 'appsettings'
