@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> companyId = default;
             DataFactoryElement<string> consumerKey = default;
-            DataFactorySecret consumerSecret = default;
-            DataFactorySecret accessToken = default;
-            DataFactorySecret accessTokenSecret = default;
+            DataFactorySecretBaseDefinition consumerSecret = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecretBaseDefinition accessTokenSecret = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> url = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecret servicePrincipalKey = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> aadResourceId = default;
             string encryptedCredential = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

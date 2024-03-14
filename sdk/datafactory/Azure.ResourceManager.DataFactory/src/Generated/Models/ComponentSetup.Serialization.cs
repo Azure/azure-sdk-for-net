@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             string componentName = default;
-            DataFactorySecret licenseKey = default;
+            DataFactorySecretBaseDefinition licenseKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            licenseKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            licenseKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }

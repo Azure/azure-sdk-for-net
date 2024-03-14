@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> domain = default;
-            DataFactorySecret accessToken = default;
+            DataFactorySecretBaseDefinition accessToken = default;
             DataFactoryElement<string> authentication = default;
             DataFactoryElement<string> workspaceResourceId = default;
             DataFactoryElement<string> existingClusterId = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))

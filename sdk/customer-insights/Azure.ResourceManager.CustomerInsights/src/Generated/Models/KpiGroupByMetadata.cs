@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CustomerInsights;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {

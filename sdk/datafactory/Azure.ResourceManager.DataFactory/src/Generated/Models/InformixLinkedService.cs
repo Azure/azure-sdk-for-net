@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for Basic authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal InformixLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecret credential, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal InformixLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecretBaseDefinition credential, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The access credential portion of the connection string specified in driver-specific property-value format. </summary>
-        public DataFactorySecret Credential { get; set; }
+        public DataFactorySecretBaseDefinition Credential { get; set; }
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Basic authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactorySecretBaseDefinition Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }
