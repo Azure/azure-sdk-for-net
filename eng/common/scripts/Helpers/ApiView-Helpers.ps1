@@ -64,7 +64,7 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   }
 }
 
-function Process-ReviewStatusCode($statusCode, $packageName $apiApprovalStat, $packageNameStat)
+function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStat, $packageNameStat)
 {
   $apiApproved = $false
   $apiApprovalDetails = "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved for a GA version release."
