@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                             new TokenClaim("CustomRoles", "Writer", "Editor")
                             ));
 
-                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
                     // set the request status type
                     request.RequestStatus = requestStatusType;
-                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     request.Response = null;
 
-                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     request.Response.Actions.Add(action);
 
-                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 

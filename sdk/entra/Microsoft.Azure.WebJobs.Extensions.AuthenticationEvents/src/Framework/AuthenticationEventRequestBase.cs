@@ -74,10 +74,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        public abstract Task<AuthenticationEventResponse> Failed(Exception exception);
+        public abstract AuthenticationEventResponse Failed(Exception exception);
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public abstract Task<AuthenticationEventResponse> Completed();
+        public abstract AuthenticationEventResponse Completed();
     }
 }

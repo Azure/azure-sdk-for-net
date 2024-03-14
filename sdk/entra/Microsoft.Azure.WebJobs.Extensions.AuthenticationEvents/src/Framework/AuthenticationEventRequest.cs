@@ -36,13 +36,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public async override Task<AuthenticationEventResponse> Completed()
+        public override AuthenticationEventResponse Completed()
         {
             try
             {
                 if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
                 {
-                    return await Failed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage)).ConfigureAwait(false);
+                    return Failed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             catch (Exception ex)
             {
-                return await Failed(new AuthenticationEventTriggerRequestValidationException(ex.Message)).ConfigureAwait(false);
+                return Failed(new AuthenticationEventTriggerRequestValidationException(ex.Message));
             }
 
             return Response;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// </summary>
         /// <param name="exception">The exception that is thrown</param>
         /// <returns>An authenticationeventresponse task</returns>
-        public override Task<AuthenticationEventResponse> Failed(Exception exception)
+        public override AuthenticationEventResponse Failed(Exception exception)
         {
             if (Response == null)
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             Response.Body = Helpers.GetFailedResponsePayload(exception);
 
-            return Task.FromResult<AuthenticationEventResponse>(Response);
+            return Response;
         }
 
         /// <summary>
