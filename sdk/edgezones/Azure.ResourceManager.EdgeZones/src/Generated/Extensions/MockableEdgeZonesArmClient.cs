@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureExtendedZoneResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureExtendedZoneResource.CreateResourceIdentifier" /> to create an <see cref="AzureExtendedZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ExtendedZoneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedZoneResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureExtendedZoneResource"/> object. </returns>
-        public virtual AzureExtendedZoneResource GetAzureExtendedZoneResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedZoneResource"/> object. </returns>
+        public virtual ExtendedZoneResource GetExtendedZoneResource(ResourceIdentifier id)
         {
-            AzureExtendedZoneResource.ValidateResourceId(id);
-            return new AzureExtendedZoneResource(Client, id);
+            ExtendedZoneResource.ValidateResourceId(id);
+            return new ExtendedZoneResource(Client, id);
         }
     }
 }

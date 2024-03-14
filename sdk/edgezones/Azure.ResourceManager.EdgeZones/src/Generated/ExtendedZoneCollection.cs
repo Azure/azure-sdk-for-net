@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EdgeZones
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureExtendedZoneResource"/> and their operations.
-    /// Each <see cref="AzureExtendedZoneResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="AzureExtendedZoneCollection"/> instance call the GetAzureExtendedZones method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ExtendedZoneResource"/> and their operations.
+    /// Each <see cref="ExtendedZoneResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ExtendedZoneCollection"/> instance call the GetExtendedZones method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class AzureExtendedZoneCollection : ArmCollection, IEnumerable<AzureExtendedZoneResource>, IAsyncEnumerable<AzureExtendedZoneResource>
+    public partial class ExtendedZoneCollection : ArmCollection, IEnumerable<ExtendedZoneResource>, IAsyncEnumerable<ExtendedZoneResource>
     {
-        private readonly ClientDiagnostics _azureExtendedZoneClientDiagnostics;
-        private readonly AzureExtendedZonesRestOperations _azureExtendedZoneRestClient;
+        private readonly ClientDiagnostics _extendedZoneAzureExtendedZonesClientDiagnostics;
+        private readonly AzureExtendedZonesRestOperations _extendedZoneAzureExtendedZonesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AzureExtendedZoneCollection"/> class for mocking. </summary>
-        protected AzureExtendedZoneCollection()
+        /// <summary> Initializes a new instance of the <see cref="ExtendedZoneCollection"/> class for mocking. </summary>
+        protected ExtendedZoneCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AzureExtendedZoneCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtendedZoneCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AzureExtendedZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ExtendedZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureExtendedZoneClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", AzureExtendedZoneResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AzureExtendedZoneResource.ResourceType, out string azureExtendedZoneApiVersion);
-            _azureExtendedZoneRestClient = new AzureExtendedZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureExtendedZoneApiVersion);
+            _extendedZoneAzureExtendedZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", ExtendedZoneResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ExtendedZoneResource.ResourceType, out string extendedZoneAzureExtendedZonesApiVersion);
+            _extendedZoneAzureExtendedZonesRestClient = new AzureExtendedZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, extendedZoneAzureExtendedZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,18 +79,18 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        public virtual async Task<Response<AzureExtendedZoneResource>> GetAsync(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedZoneResource>> GetAsync(string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.Get");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = await _azureExtendedZoneRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneAzureExtendedZonesRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureExtendedZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,18 +124,18 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        public virtual Response<AzureExtendedZoneResource> Get(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedZoneResource> Get(string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.Get");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.Get");
             scope.Start();
             try
             {
-                var response = _azureExtendedZoneRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken);
+                var response = _extendedZoneAzureExtendedZonesRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureExtendedZoneResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureExtendedZoneResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureExtendedZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExtendedZoneResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExtendedZoneResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureExtendedZoneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureExtendedZoneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureExtendedZoneResource(Client, AzureExtendedZoneData.DeserializeAzureExtendedZoneData(e)), _azureExtendedZoneClientDiagnostics, Pipeline, "AzureExtendedZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedZoneAzureExtendedZonesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedZoneAzureExtendedZonesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtendedZoneResource(Client, ExtendedZoneData.DeserializeExtendedZoneData(e)), _extendedZoneAzureExtendedZonesClientDiagnostics, Pipeline, "ExtendedZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,17 +191,17 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureExtendedZoneResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureExtendedZoneResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExtendedZoneResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExtendedZoneResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureExtendedZoneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureExtendedZoneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureExtendedZoneResource(Client, AzureExtendedZoneData.DeserializeAzureExtendedZoneData(e)), _azureExtendedZoneClientDiagnostics, Pipeline, "AzureExtendedZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extendedZoneAzureExtendedZonesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extendedZoneAzureExtendedZonesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtendedZoneResource(Client, ExtendedZoneData.DeserializeExtendedZoneData(e)), _extendedZoneAzureExtendedZonesClientDiagnostics, Pipeline, "ExtendedZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.EdgeZones
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.Exists");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _azureExtendedZoneRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneAzureExtendedZonesRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.EdgeZones
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.Exists");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.Exists");
             scope.Start();
             try
             {
-                var response = _azureExtendedZoneRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken);
+                var response = _extendedZoneAzureExtendedZonesRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        public virtual async Task<NullableResponse<AzureExtendedZoneResource>> GetIfExistsAsync(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ExtendedZoneResource>> GetIfExistsAsync(string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.GetIfExists");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _azureExtendedZoneRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneAzureExtendedZonesRestClient.GetAsync(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AzureExtendedZoneResource>(response.GetRawResponse());
-                return Response.FromValue(new AzureExtendedZoneResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ExtendedZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AzureExtendedZoneResource"/></description>
+        /// <description><see cref="ExtendedZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,18 +360,18 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        public virtual NullableResponse<AzureExtendedZoneResource> GetIfExists(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ExtendedZoneResource> GetIfExists(string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
 
-            using var scope = _azureExtendedZoneClientDiagnostics.CreateScope("AzureExtendedZoneCollection.GetIfExists");
+            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _azureExtendedZoneRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken);
+                var response = _extendedZoneAzureExtendedZonesRestClient.Get(Id.SubscriptionId, azureExtendedZoneName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AzureExtendedZoneResource>(response.GetRawResponse());
-                return Response.FromValue(new AzureExtendedZoneResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ExtendedZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        IEnumerator<AzureExtendedZoneResource> IEnumerable<AzureExtendedZoneResource>.GetEnumerator()
+        IEnumerator<ExtendedZoneResource> IEnumerable<ExtendedZoneResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.EdgeZones
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AzureExtendedZoneResource> IAsyncEnumerable<AzureExtendedZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ExtendedZoneResource> IAsyncEnumerable<ExtendedZoneResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

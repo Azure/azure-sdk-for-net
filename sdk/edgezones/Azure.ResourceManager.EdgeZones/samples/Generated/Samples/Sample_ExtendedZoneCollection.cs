@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeZones.Samples
 {
-    public partial class Sample_AzureExtendedZoneCollection
+    public partial class Sample_ExtendedZoneCollection
     {
         // ListAzureExtendedZones
         [NUnit.Framework.Test]
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this AzureExtendedZoneResource
-            AzureExtendedZoneCollection collection = subscriptionResource.GetAzureExtendedZones();
+            // get the collection of this ExtendedZoneResource
+            ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation and iterate over the result
-            await foreach (AzureExtendedZoneResource item in collection.GetAllAsync())
+            await foreach (ExtendedZoneResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AzureExtendedZoneData resourceData = item.Data;
+                ExtendedZoneData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this AzureExtendedZoneResource
-            AzureExtendedZoneCollection collection = subscriptionResource.GetAzureExtendedZones();
+            // get the collection of this ExtendedZoneResource
+            ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
             string azureExtendedZoneName = "losangeles";
-            AzureExtendedZoneResource result = await collection.GetAsync(azureExtendedZoneName);
+            ExtendedZoneResource result = await collection.GetAsync(azureExtendedZoneName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AzureExtendedZoneData resourceData = result.Data;
+            ExtendedZoneData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this AzureExtendedZoneResource
-            AzureExtendedZoneCollection collection = subscriptionResource.GetAzureExtendedZones();
+            // get the collection of this ExtendedZoneResource
+            ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
             string azureExtendedZoneName = "losangeles";
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this AzureExtendedZoneResource
-            AzureExtendedZoneCollection collection = subscriptionResource.GetAzureExtendedZones();
+            // get the collection of this ExtendedZoneResource
+            ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
             string azureExtendedZoneName = "losangeles";
-            NullableResponse<AzureExtendedZoneResource> response = await collection.GetIfExistsAsync(azureExtendedZoneName);
-            AzureExtendedZoneResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ExtendedZoneResource> response = await collection.GetIfExistsAsync(azureExtendedZoneName);
+            ExtendedZoneResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AzureExtendedZoneData resourceData = result.Data;
+                ExtendedZoneData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

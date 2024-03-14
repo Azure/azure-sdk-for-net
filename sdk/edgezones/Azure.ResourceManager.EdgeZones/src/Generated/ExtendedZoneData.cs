@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EdgeZones
 {
     /// <summary>
-    /// A class representing the AzureExtendedZone data model.
+    /// A class representing the ExtendedZone data model.
     /// An AzureExtendedZone resource
     /// </summary>
-    public partial class AzureExtendedZoneData : ResourceData
+    public partial class ExtendedZoneData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.EdgeZones
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureExtendedZoneData"/>. </summary>
-        internal AzureExtendedZoneData()
+        /// <summary> Initializes a new instance of <see cref="ExtendedZoneData"/>. </summary>
+        internal ExtendedZoneData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureExtendedZoneData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="latitude"> AzureExtendedZone latitude. </param>
         /// <param name="homeLocation"> AzureExtendedZone homeLocation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureExtendedZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, RegistrationState? registrationState, string displayName, string regionalDisplayName, string regionType, string regionCategory, string geography, string geographyGroup, string longitude, string latitude, string homeLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExtendedZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EdgeZonesProvisioningState? provisioningState, EdgeZonesRegistrationState? registrationState, string displayName, string regionalDisplayName, string regionType, string regionCategory, string geography, string geographyGroup, string longitude, string latitude, string homeLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             RegistrationState = registrationState;
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeZonesProvisioningState? ProvisioningState { get; }
         /// <summary> AzureExtendedZone registration approved or not. </summary>
-        public RegistrationState? RegistrationState { get; }
+        public EdgeZonesRegistrationState? RegistrationState { get; }
         /// <summary> AzureExtendedZone displayName. </summary>
         public string DisplayName { get; }
         /// <summary> AzureExtendedZone regionalDisplayName. </summary>

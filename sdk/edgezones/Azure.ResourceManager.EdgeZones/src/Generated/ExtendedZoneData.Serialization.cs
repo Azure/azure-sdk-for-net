@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeZones
 {
-    public partial class AzureExtendedZoneData : IUtf8JsonSerializable, IJsonModel<AzureExtendedZoneData>
+    public partial class ExtendedZoneData : IUtf8JsonSerializable, IJsonModel<ExtendedZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureExtendedZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AzureExtendedZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExtendedZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureExtendedZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,19 +124,19 @@ namespace Azure.ResourceManager.EdgeZones
             writer.WriteEndObject();
         }
 
-        AzureExtendedZoneData IJsonModel<AzureExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureExtendedZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureExtendedZoneData(document.RootElement, options);
+            return DeserializeExtendedZoneData(document.RootElement, options);
         }
 
-        internal static AzureExtendedZoneData DeserializeAzureExtendedZoneData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExtendedZoneData DeserializeExtendedZoneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.EdgeZones
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningState? provisioningState = default;
-            RegistrationState? registrationState = default;
+            EdgeZonesProvisioningState? provisioningState = default;
+            EdgeZonesRegistrationState? registrationState = default;
             string displayName = default;
             string regionalDisplayName = default;
             string regionType = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EdgeZones
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new EdgeZonesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("registrationState"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EdgeZones
                             {
                                 continue;
                             }
-                            registrationState = new RegistrationState(property0.Value.GetString());
+                            registrationState = new EdgeZonesRegistrationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EdgeZones
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureExtendedZoneData(
+            return new ExtendedZoneData(
                 id,
                 name,
                 type,
@@ -287,35 +287,35 @@ namespace Azure.ResourceManager.EdgeZones
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureExtendedZoneData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureExtendedZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support '{options.Format}' format.");
             }
         }
 
-        AzureExtendedZoneData IPersistableModel<AzureExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureExtendedZoneData(document.RootElement, options);
+                        return DeserializeExtendedZoneData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureExtendedZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureExtendedZoneListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedZoneListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneListResult value = default;
+                        ExtendedZoneListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureExtendedZoneListResult.DeserializeAzureExtendedZoneListResult(document.RootElement);
+                        value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureExtendedZoneListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ExtendedZoneListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneListResult value = default;
+                        ExtendedZoneListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureExtendedZoneListResult.DeserializeAzureExtendedZoneListResult(document.RootElement);
+                        value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureExtendedZoneData>> GetAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedZoneData>> GetAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureExtendedZoneData)null, message.Response);
+                    return Response.FromValue((ExtendedZoneData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureExtendedZoneData> Get(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public Response<ExtendedZoneData> Get(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureExtendedZoneData)null, message.Response);
+                    return Response.FromValue((ExtendedZoneData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureExtendedZoneData>> RegisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedZoneData>> RegisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureExtendedZoneData> Register(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public Response<ExtendedZoneData> Register(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureExtendedZoneData>> UnregisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedZoneData>> UnregisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureExtendedZoneData> Unregister(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public Response<ExtendedZoneData> Unregister(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneData value = default;
+                        ExtendedZoneData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureExtendedZoneData.DeserializeAzureExtendedZoneData(document.RootElement);
+                        value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureExtendedZoneListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedZoneListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneListResult value = default;
+                        ExtendedZoneListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureExtendedZoneListResult.DeserializeAzureExtendedZoneListResult(document.RootElement);
+                        value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureExtendedZoneListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ExtendedZoneListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.EdgeZones
             {
                 case 200:
                     {
-                        AzureExtendedZoneListResult value = default;
+                        ExtendedZoneListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureExtendedZoneListResult.DeserializeAzureExtendedZoneListResult(document.RootElement);
+                        value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

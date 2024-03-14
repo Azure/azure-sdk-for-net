@@ -14,7 +14,7 @@ using Azure.ResourceManager.EdgeZones;
 
 namespace Azure.ResourceManager.EdgeZones.Samples
 {
-    public partial class Sample_AzureExtendedZoneResource
+    public partial class Sample_ExtendedZoneResource
     {
         // GetAzureExtendedZone
         [NUnit.Framework.Test]
@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AzureExtendedZoneResource created on azure
-            // for more information of creating AzureExtendedZoneResource, please refer to the document of AzureExtendedZoneResource
+            // this example assumes you already have this ExtendedZoneResource created on azure
+            // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
             string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier azureExtendedZoneResourceId = AzureExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
-            AzureExtendedZoneResource azureExtendedZone = client.GetAzureExtendedZoneResource(azureExtendedZoneResourceId);
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation
-            AzureExtendedZoneResource result = await azureExtendedZone.GetAsync();
+            ExtendedZoneResource result = await extendedZone.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AzureExtendedZoneData resourceData = result.Data;
+            ExtendedZoneData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AzureExtendedZoneResource created on azure
-            // for more information of creating AzureExtendedZoneResource, please refer to the document of AzureExtendedZoneResource
+            // this example assumes you already have this ExtendedZoneResource created on azure
+            // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
             string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier azureExtendedZoneResourceId = AzureExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
-            AzureExtendedZoneResource azureExtendedZone = client.GetAzureExtendedZoneResource(azureExtendedZoneResourceId);
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation
-            AzureExtendedZoneResource result = await azureExtendedZone.RegisterAsync();
+            ExtendedZoneResource result = await extendedZone.RegisterAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AzureExtendedZoneData resourceData = result.Data;
+            ExtendedZoneData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AzureExtendedZoneResource created on azure
-            // for more information of creating AzureExtendedZoneResource, please refer to the document of AzureExtendedZoneResource
+            // this example assumes you already have this ExtendedZoneResource created on azure
+            // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
             string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier azureExtendedZoneResourceId = AzureExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
-            AzureExtendedZoneResource azureExtendedZone = client.GetAzureExtendedZoneResource(azureExtendedZoneResourceId);
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation
-            AzureExtendedZoneResource result = await azureExtendedZone.UnregisterAsync();
+            ExtendedZoneResource result = await extendedZone.UnregisterAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AzureExtendedZoneData resourceData = result.Data;
+            ExtendedZoneData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

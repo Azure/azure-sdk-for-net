@@ -21,7 +21,13 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  AzureExtendedZone: ExtendedZone
+  AzureExtendedZoneListResult: ExtendedZoneListResult
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - RegistrationState
 
 format-by-name-rules:
   'tenantId': 'uuid'

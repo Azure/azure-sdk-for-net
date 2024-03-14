@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEdgeZonesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeZones.AzureExtendedZoneData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeZones.ExtendedZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <param name="longitude"> AzureExtendedZone longitude. </param>
         /// <param name="latitude"> AzureExtendedZone latitude. </param>
         /// <param name="homeLocation"> AzureExtendedZone homeLocation. </param>
-        /// <returns> A new <see cref="EdgeZones.AzureExtendedZoneData"/> instance for mocking. </returns>
-        public static AzureExtendedZoneData AzureExtendedZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, RegistrationState? registrationState = null, string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null)
+        /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
+        public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeZonesProvisioningState? provisioningState = null, EdgeZonesRegistrationState? registrationState = null, string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null)
         {
-            return new AzureExtendedZoneData(
+            return new ExtendedZoneData(
                 id,
                 name,
                 resourceType,
