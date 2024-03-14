@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added the `MaxMessageBatchSize` property to the `ServiceBusTrigger` to allow configuring the maximum number of messages to process in a batch at the function level.
+- Added the `MaxMessageBatchSize` property to the `ServiceBusTrigger` attribute to allow configuring the maximum number of messages to process in a batch at the function level.
 
 ## 5.13.6 (2024-03-05)
 
