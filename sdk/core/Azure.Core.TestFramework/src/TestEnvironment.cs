@@ -184,7 +184,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
-        public string ClientId => GetRecordedVariable("CLIENT_ID");
+        public string ClientId => GetRecordedOptionalVariable("CLIENT_ID");
 
         /// <summary>
         ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
