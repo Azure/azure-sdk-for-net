@@ -1,0 +1,40 @@
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+stages:
+  - stage:
+    displayName: Invoke Proxy Shutdown Test
+    jobs:
+      - job: Test
+        strategy:
+          matrix:
+            Windows:
+              Pool: azsdk-pool-mms-win-2022-general
+              Image: windows-2022
+            Linux:
+              Pool: azsdk-pool-mms-ubuntu-2204-general
+              Image: ubuntu-22.04
+            Mac:
+              Pool: Azure Pipelines
+              Image: macos-11
+
+        pool:
+          name: $(Pool)
+          vmImage: $(Image)
+
+        steps:
+          - template: /eng/common/testproxy/test-proxy-tool.yml
+
+          - pwsh: |
+              $(Build.BinariesDirectory)/test-proxy/test-proxy.exe restore .
+            displayName: Generate some proxy logs windows
+            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+
+          - pwsh: |
+              $(Build.BinariesDirectory)/test-proxy/test-proxy restore .
+            displayName: Generate some proxy logs linux
+            continueOnError: true
+            condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
+
+          - template: /eng/common/testproxy/test-proxy-tool-shutdown.yml
+
