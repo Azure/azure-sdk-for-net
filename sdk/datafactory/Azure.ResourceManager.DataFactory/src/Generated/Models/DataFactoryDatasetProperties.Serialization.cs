@@ -162,6 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element, options);
                     case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
                     case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element, options);
+                    case "GoogleBigQueryV2Object": return GoogleBigQueryV2ObjectDataset.DeserializeGoogleBigQueryV2ObjectDataset(element, options);
                     case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element, options);
                     case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element, options);
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
@@ -191,6 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element, options);
                     case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element, options);
                     case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
+                    case "PostgreSqlV2Table": return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element, options);
                     case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element, options);
                     case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element, options);
                     case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
@@ -209,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
+                    case "ServiceNowV2Object": return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element, options);
