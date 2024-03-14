@@ -98,6 +98,8 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Pool name. </summary>
         public string Name { get; }
+        /// <summary> Azure region where Dev Boxes in the pool are located. </summary>
+        public AzureLocation Location { get; }
         /// <summary> The operating system type of Dev Boxes in this pool. </summary>
         public DevBoxOSType? OSType { get; }
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>

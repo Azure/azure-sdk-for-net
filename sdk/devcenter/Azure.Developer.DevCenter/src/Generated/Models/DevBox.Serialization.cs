@@ -70,10 +70,10 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
@@ -157,7 +157,7 @@ namespace Azure.Developer.DevCenter.Models
             PowerState? powerState = default;
             Guid? uniqueId = default;
             ResponseError error = default;
-            AzureLocation location = default;
+            AzureLocation? location = default;
             DevBoxOSType? osType = default;
             Guid? user = default;
             DevBoxHardwareProfile hardwareProfile = default;

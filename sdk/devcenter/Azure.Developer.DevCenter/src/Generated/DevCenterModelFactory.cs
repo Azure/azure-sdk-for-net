@@ -168,7 +168,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
-        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation location = default, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
+        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation? location = null, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
         {
             return new DevBox(
                 name,
@@ -282,7 +282,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <returns> A new <see cref="Models.EnvironmentDefinition"/> instance for mocking. </returns>
-        public static EnvironmentDefinition EnvironmentDefinition(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameter> parameters = null, BinaryData parametersSchema = null, string templatePath = null)
+        public static EnvironmentDefinition EnvironmentDefinition(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameter> parameters = null, string parametersSchema = null, string templatePath = null)
         {
             parameters ??= new List<EnvironmentDefinitionParameter>();
 

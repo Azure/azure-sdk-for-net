@@ -24,11 +24,5 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Display name for the Dev Box. </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Azure region where this Dev Box is located. This will be the same region as the
-        /// Virtual Network it is attached to.
-        /// </summary>
-        public AzureLocation Location { get; }
     }
 }
