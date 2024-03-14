@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <exception cref="ArgumentNullException"> <paramref name="upgrade"/> is null. </exception>
         public ContainerServiceFleetManagedClusterUpdate(ContainerServiceFleetManagedClusterUpgradeSpec upgrade)
         {
-            if (upgrade == null)
-            {
-                throw new ArgumentNullException(nameof(upgrade));
-            }
+            Argument.AssertNotNull(upgrade, nameof(upgrade));
 
             Upgrade = upgrade;
         }

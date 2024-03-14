@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, RedisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, RedisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _redisPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RedisPrivateEndpointConnectionResource.Update");
             scope.Start();

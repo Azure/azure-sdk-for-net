@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
         public MachineLearningEncryptionSetting(MachineLearningEncryptionKeyVaultProperties keyVaultProperties, MachineLearningEncryptionStatus status)
         {
-            if (keyVaultProperties == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultProperties));
-            }
+            Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
 
             KeyVaultProperties = keyVaultProperties;
             Status = status;

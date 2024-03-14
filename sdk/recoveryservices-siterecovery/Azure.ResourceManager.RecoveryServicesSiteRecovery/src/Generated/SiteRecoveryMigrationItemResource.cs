@@ -355,10 +355,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryMigrationItemPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
             scope.Start();
@@ -404,10 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> Update(WaitUntil waitUntil, SiteRecoveryMigrationItemPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
             scope.Start();
@@ -453,10 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> MigrateAsync(WaitUntil waitUntil, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
             scope.Start();
@@ -502,10 +493,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> Migrate(WaitUntil waitUntil, SiteRecoveryMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
             scope.Start();
@@ -551,10 +539,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> PauseReplicationAsync(WaitUntil waitUntil, PauseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
             scope.Start();
@@ -600,10 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> PauseReplication(WaitUntil waitUntil, PauseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
             scope.Start();
@@ -649,10 +631,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> ResumeReplicationAsync(WaitUntil waitUntil, ResumeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
             scope.Start();
@@ -698,10 +677,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> ResumeReplication(WaitUntil waitUntil, ResumeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
             scope.Start();
@@ -747,10 +723,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> ResyncAsync(WaitUntil waitUntil, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
             scope.Start();
@@ -796,10 +769,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> Resync(WaitUntil waitUntil, MigrationItemResyncContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
             scope.Start();
@@ -845,10 +815,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> TestMigrateAsync(WaitUntil waitUntil, TestMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
             scope.Start();
@@ -894,10 +861,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> TestMigrate(WaitUntil waitUntil, TestMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
             scope.Start();
@@ -943,10 +907,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> TestMigrateCleanupAsync(WaitUntil waitUntil, TestMigrateCleanupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
             scope.Start();
@@ -992,10 +953,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> TestMigrateCleanup(WaitUntil waitUntil, TestMigrateCleanupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
             scope.Start();

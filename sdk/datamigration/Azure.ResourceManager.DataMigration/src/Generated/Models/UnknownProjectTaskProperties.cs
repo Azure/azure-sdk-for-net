@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownProjectTaskProperties. </summary>
+    /// <summary> Unknown version of ProjectTaskProperties. </summary>
     internal partial class UnknownProjectTaskProperties : ProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/>. </summary>

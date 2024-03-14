@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageClassificationMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageClassificationMappingName, StorageClassificationMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StorageClassificationMappingResource> CreateOrUpdate(WaitUntil waitUntil, string storageClassificationMappingName, StorageClassificationMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual async Task<Response<StorageClassificationMappingResource>> GetAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual Response<StorageClassificationMappingResource> Get(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageClassificationMappingResource>> GetIfExistsAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
         public virtual NullableResponse<StorageClassificationMappingResource> GetIfExists(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
-            if (storageClassificationMappingName == null)
-            {
-                throw new ArgumentNullException(nameof(storageClassificationMappingName));
-            }
-            if (storageClassificationMappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationMappingName));
-            }
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
 
             using var scope = _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics.CreateScope("StorageClassificationMappingCollection.GetIfExists");
             scope.Start();

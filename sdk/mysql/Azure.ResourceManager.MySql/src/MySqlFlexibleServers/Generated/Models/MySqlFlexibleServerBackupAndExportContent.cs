@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -23,14 +24,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
         public MySqlFlexibleServerBackupAndExportContent(MySqlFlexibleServerBackupSettings backupSettings, MySqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
-            if (backupSettings == null)
-            {
-                throw new ArgumentNullException(nameof(backupSettings));
-            }
-            if (targetDetails == null)
-            {
-                throw new ArgumentNullException(nameof(targetDetails));
-            }
+            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
+            Argument.AssertNotNull(targetDetails, nameof(targetDetails));
 
             TargetDetails = targetDetails;
         }

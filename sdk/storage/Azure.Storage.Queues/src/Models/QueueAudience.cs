@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {

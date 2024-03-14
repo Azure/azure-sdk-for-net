@@ -366,10 +366,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerDnsAliasResource>> AcquireAsync(WaitUntil waitUntil, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
-            if (serverDnsAliasAcquisition == null)
-            {
-                throw new ArgumentNullException(nameof(serverDnsAliasAcquisition));
-            }
+            Argument.AssertNotNull(serverDnsAliasAcquisition, nameof(serverDnsAliasAcquisition));
 
             using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasResource.Acquire");
             scope.Start();
@@ -415,10 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         public virtual ArmOperation<SqlServerDnsAliasResource> Acquire(WaitUntil waitUntil, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
-            if (serverDnsAliasAcquisition == null)
-            {
-                throw new ArgumentNullException(nameof(serverDnsAliasAcquisition));
-            }
+            Argument.AssertNotNull(serverDnsAliasAcquisition, nameof(serverDnsAliasAcquisition));
 
             using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasResource.Acquire");
             scope.Start();

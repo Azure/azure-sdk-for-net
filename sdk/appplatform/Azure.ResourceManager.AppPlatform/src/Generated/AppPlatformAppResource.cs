@@ -491,10 +491,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformAppResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformAppData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Update");
             scope.Start();
@@ -540,10 +537,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformAppResource> Update(WaitUntil waitUntil, AppPlatformAppData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Update");
             scope.Start();
@@ -665,10 +659,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformAppResource>> ActivateDeploymentsAsync(WaitUntil waitUntil, ActiveAppPlatformDeploymentsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ActivateDeployments");
             scope.Start();
@@ -714,10 +705,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AppPlatformAppResource> ActivateDeployments(WaitUntil waitUntil, ActiveAppPlatformDeploymentsContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ActivateDeployments");
             scope.Start();
@@ -762,10 +750,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppPlatformCustomDomainValidateResult>> ValidateDomainAsync(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ValidateDomain");
             scope.Start();
@@ -807,10 +792,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppPlatformCustomDomainValidateResult> ValidateDomain(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ValidateDomain");
             scope.Start();

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Maps.Routing;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {

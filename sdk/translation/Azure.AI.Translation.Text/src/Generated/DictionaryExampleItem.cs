@@ -59,18 +59,9 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedSource"/>, <paramref name="normalizedTarget"/> or <paramref name="examples"/> is null. </exception>
         internal DictionaryExampleItem(string normalizedSource, string normalizedTarget, IEnumerable<DictionaryExample> examples)
         {
-            if (normalizedSource == null)
-            {
-                throw new ArgumentNullException(nameof(normalizedSource));
-            }
-            if (normalizedTarget == null)
-            {
-                throw new ArgumentNullException(nameof(normalizedTarget));
-            }
-            if (examples == null)
-            {
-                throw new ArgumentNullException(nameof(examples));
-            }
+            Argument.AssertNotNull(normalizedSource, nameof(normalizedSource));
+            Argument.AssertNotNull(normalizedTarget, nameof(normalizedTarget));
+            Argument.AssertNotNull(examples, nameof(examples));
 
             NormalizedSource = normalizedSource;
             NormalizedTarget = normalizedTarget;

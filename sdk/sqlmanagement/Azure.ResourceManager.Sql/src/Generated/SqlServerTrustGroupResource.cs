@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerTrustGroupResource>> UpdateAsync(WaitUntil waitUntil, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerTrustGroupResource> Update(WaitUntil waitUntil, SqlServerTrustGroupData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("SqlServerTrustGroupResource.Update");
             scope.Start();

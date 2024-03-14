@@ -286,10 +286,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ServiceProjectTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ServiceProjectTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Update");
             scope.Start();
@@ -452,10 +446,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="commandProperties"/> is null. </exception>
         public virtual async Task<Response<CommandProperties>> CommandAsync(CommandProperties commandProperties, CancellationToken cancellationToken = default)
         {
-            if (commandProperties == null)
-            {
-                throw new ArgumentNullException(nameof(commandProperties));
-            }
+            Argument.AssertNotNull(commandProperties, nameof(commandProperties));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Command");
             scope.Start();
@@ -497,10 +488,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="commandProperties"/> is null. </exception>
         public virtual Response<CommandProperties> Command(CommandProperties commandProperties, CancellationToken cancellationToken = default)
         {
-            if (commandProperties == null)
-            {
-                throw new ArgumentNullException(nameof(commandProperties));
-            }
+            Argument.AssertNotNull(commandProperties, nameof(commandProperties));
 
             using var scope = _serviceProjectTaskTasksClientDiagnostics.CreateScope("ServiceProjectTaskResource.Command");
             scope.Start();

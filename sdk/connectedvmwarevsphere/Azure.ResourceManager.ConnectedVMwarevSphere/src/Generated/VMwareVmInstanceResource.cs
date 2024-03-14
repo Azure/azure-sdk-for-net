@@ -297,10 +297,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<VMwareVmInstanceResource>> UpdateAsync(WaitUntil waitUntil, VMwareVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _vMwareVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("VMwareVmInstanceResource.Update");
             scope.Start();
@@ -346,10 +343,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<VMwareVmInstanceResource> Update(WaitUntil waitUntil, VMwareVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _vMwareVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("VMwareVmInstanceResource.Update");
             scope.Start();
@@ -395,10 +389,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VMwareVmInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, VMwareVmInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("VMwareVmInstanceResource.CreateOrUpdate");
             scope.Start();
@@ -444,10 +435,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VMwareVmInstanceResource> CreateOrUpdate(WaitUntil waitUntil, VMwareVmInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareVmInstanceVirtualMachineInstancesClientDiagnostics.CreateScope("VMwareVmInstanceResource.CreateOrUpdate");
             scope.Start();

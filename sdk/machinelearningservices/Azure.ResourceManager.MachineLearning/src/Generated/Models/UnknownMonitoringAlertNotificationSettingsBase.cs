@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownMonitoringAlertNotificationSettingsBase. </summary>
+    /// <summary> Unknown version of MonitoringAlertNotificationSettingsBase. </summary>
     internal partial class UnknownMonitoringAlertNotificationSettingsBase : MonitoringAlertNotificationSettingsBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitoringAlertNotificationSettingsBase"/>. </summary>
