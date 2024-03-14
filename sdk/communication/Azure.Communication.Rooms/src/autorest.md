@@ -20,8 +20,8 @@ clear-output-folder: true
 generation1-convenience-client: true
 ```
 
-### Role
 ``` yaml
+# Add nullable annotations
 directive:
   - from: swagger-document
     where: $.definitions.ParticipantProperties
