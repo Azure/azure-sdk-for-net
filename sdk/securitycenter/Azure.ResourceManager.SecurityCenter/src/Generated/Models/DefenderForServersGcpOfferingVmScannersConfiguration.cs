@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityCenter;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
