@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static implicit operator BinaryContent(ModelAsStruct model)
         {
-            return BinaryContent.Create(model, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.FromModel(model, ModelReaderWriterHelper.WireOptions);
         }
 
         ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)

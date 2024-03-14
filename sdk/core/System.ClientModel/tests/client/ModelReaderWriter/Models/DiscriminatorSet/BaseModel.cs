@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return BinaryContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.FromModel(baseModel, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator BaseModel(ClientResult result)

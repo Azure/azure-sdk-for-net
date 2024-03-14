@@ -10,9 +10,12 @@ namespace System.ClientModel
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
-        public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
+        public static System.ClientModel.BinaryContent FromBinaryData(System.BinaryData value) { throw null; }
+        public static System.ClientModel.BinaryContent FromModel<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static System.ClientModel.BinaryContent FromPath(string path) { throw null; }
+        public static System.ClientModel.BinaryContent FromStream(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent FromString(string value) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -130,6 +133,30 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public sealed partial class MultipartBinaryContent : System.ClientModel.BinaryContent, System.IDisposable
+    {
+        public MultipartBinaryContent(string subtype) { }
+        public void Add(string value, System.Collections.Generic.IEnumerable<(string Name, string Value)> headers) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public bool TryGetHeaderValue(string name, out string? value) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MultipartContentPrototype : System.ClientModel.BinaryContent
+    {
+        public MultipartContentPrototype() { }
+        public MultipartContentPrototype(System.ReadOnlySpan<byte> boundary) { }
+        public MultipartContentPrototype(string boundary) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> headerName, System.ReadOnlySpan<byte> headerValue) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> header1Name, System.ReadOnlySpan<byte> header1Value, System.ReadOnlySpan<byte> header2Name, System.ReadOnlySpan<byte> header2Value) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> header1Name, System.ReadOnlySpan<byte> header1Value, System.ReadOnlySpan<byte> header2Name, System.ReadOnlySpan<byte> header2Value, System.ReadOnlySpan<byte> header3Name, System.ReadOnlySpan<byte> header3Value) { }
+        public void Add(System.ClientModel.BinaryContent content, params (string Name, string Value)[] headers) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

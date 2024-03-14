@@ -58,7 +58,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
         if (hasContent)
         {
-            message.Request.Content = BinaryContent.Create(BinaryData.FromString(string.Empty));
+            message.Request.Content = BinaryContent.FromBinaryData(BinaryData.FromString(string.Empty));
         }
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
@@ -79,7 +79,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
             });
 
         var bytes = Encoding.ASCII.GetBytes("Hello world");
-        var content = BinaryContent.Create(BinaryData.FromBytes(bytes));
+        var content = BinaryContent.FromBinaryData(BinaryData.FromBytes(bytes));
 
         HttpClientPipelineTransport transport = new();
 

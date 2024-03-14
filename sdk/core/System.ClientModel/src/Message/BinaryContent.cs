@@ -1,9 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,6 +21,8 @@ public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
+    private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
+
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
     /// bytes held in the provided <see cref="BinaryData"/> instance.
@@ -25,7 +31,7 @@ public abstract class BinaryContent : IDisposable
     /// this <see cref="BinaryContent"/> will hold.</param>
     /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
     /// bytes held in the provided <see cref="BinaryData"/> instance.</returns>
-    public static BinaryContent Create(BinaryData value)
+    public static BinaryContent FromBinaryData(BinaryData value)
         => new BinaryDataBinaryContent(value.ToMemory());
 
     /// <summary>
@@ -38,8 +44,42 @@ public abstract class BinaryContent : IDisposable
     /// that indicates what format the <paramref name="model"/> will be written in.
     /// </param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
-    public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+    public static BinaryContent FromModel<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         => new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions);
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.
+    /// </summary>
+    /// <param name="stream">The <see cref="Stream"/> containing the bytes
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.</returns>
+    public static BinaryContent FromStream(Stream stream)
+        => new StreamBinaryContent(stream);
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the <see cref="FileStream"/> opened from the provided
+    /// <paramref name="path"/>.
+    /// </summary>
+    /// <param name="path">The path to the file containing the content
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the <see cref="FileStream"/> opened from the provided
+    /// <paramref name="path"/>.</returns>
+    /// <remarks>The caller is responsible for calling <see cref="Dispose"/>
+    /// on the instance returned from this method.</remarks>
+    public static BinaryContent FromPath(string path)
+        => new StreamBinaryContent(File.OpenRead(path));
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static BinaryContent FromString(string value)
+        => new BinaryDataBinaryContent(s_UTF8NoBomEncoding.GetBytes(value));
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -70,7 +110,7 @@ public abstract class BinaryContent : IDisposable
 
     private sealed class BinaryDataBinaryContent : BinaryContent
     {
-        private readonly ReadOnlyMemory<byte> _bytes;
+        internal readonly ReadOnlyMemory<byte> _bytes;
 
         public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes)
         {
@@ -189,6 +229,81 @@ public abstract class BinaryContent : IDisposable
                 _sequenceReader = null;
                 sequenceReader.Dispose();
             }
+        }
+    }
+
+    private sealed class StreamBinaryContent : BinaryContent
+    {
+        private const int CopyToBufferSize = 81920;
+
+        internal readonly Stream _stream;
+        private readonly long _origin;
+
+        public StreamBinaryContent(Stream stream)
+        {
+            if (!stream.CanSeek)
+            {
+                throw new ArgumentException("Stream must be seekable.", nameof(stream));
+            }
+
+            _stream = stream;
+            _origin = stream.Position;
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            if (_stream.CanSeek)
+            {
+                length = _stream.Length - _origin;
+                return true;
+            }
+
+            length = 0;
+            return false;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+
+            // This is not using CopyTo so that we can honor cancellations.
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
+
+            try
+            {
+                while (true)
+                {
+                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+                    int read = _stream.Read(buffer, 0, buffer.Length);
+
+                    if (read == 0)
+                    {
+                        break;
+                    }
+
+                    CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+                    stream.Write(buffer, 0, read);
+                }
+            }
+            finally
+            {
+                stream.Flush();
+                ArrayPool<byte>.Shared.Return(buffer, true);
+            }
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+
+            await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
+        }
+
+        public override void Dispose()
+        {
+            _stream.Dispose();
         }
     }
 }

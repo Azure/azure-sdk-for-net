@@ -100,7 +100,7 @@ public class ClientImplementationSamples
 
             // Add request body content that will be written using methods
             // defined by the model's implementation of the IJsonModel<T> interface.
-            request.Content = BinaryContent.Create(resource);
+            request.Content = BinaryContent.FromModel(resource);
 
             // Send the message.
             _pipeline.Send(message);

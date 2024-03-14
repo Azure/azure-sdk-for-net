@@ -59,7 +59,16 @@ public abstract class PipelineRequest : IDisposable
     public BinaryContent? Content
     {
         get => ContentCore;
-        set => ContentCore = value;
+        set
+        {
+            // TODO: remove - protocol method caller will be responsible for this
+            //if (value is BinaryContent.MultipartFormDataBinaryContent content)
+            //{
+            //    content.AddHeaders(this);
+            //}
+
+            ContentCore = value;
+        }
     }
 
     /// <summary>
