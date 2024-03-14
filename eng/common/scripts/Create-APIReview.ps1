@@ -10,8 +10,8 @@ Param (
   [string] $DefaultBranch,
   [string] $RepoName,
   [string] $BuildId,
-  [string] $PackageName,
-  [string] $ConfigFileDir,
+  [string] $PackageName = "",
+  [string] $ConfigFileDir = "",
   [string] $APIViewUri = "https://apiview.dev/AutoReview",
   [string] $ArtifactName = "packages",
   [bool] $MarkPackageAsShipped = $false
