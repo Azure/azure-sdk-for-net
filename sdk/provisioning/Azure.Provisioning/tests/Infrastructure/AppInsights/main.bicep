@@ -10,5 +10,6 @@ resource applicationInsightsComponent_FpLXFVEKV 'Microsoft.Insights/components@2
   kind: 'web'
   properties: {
     Application_Type: 'web'
+    WorkspaceResourceId: 'workspaceId'
   }
 }
