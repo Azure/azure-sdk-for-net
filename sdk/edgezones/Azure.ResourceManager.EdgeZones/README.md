@@ -1,6 +1,6 @@
 # Microsoft Azure EdgeZones management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Edge Zones are small-footprint extensions of Azure placed in metros, industry centers, or at specific jurisdictions to serve low latency and/or data residency workloads.  To use Azure Edge Zones a customer needs to register their subscription for an Azure Extended Zone (the first type of Azure Edge Zone offered by Microsoft).  The Microsoft Azure EdgeZones management client library allows customers to manage their Azure Edge Zone registrations.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
