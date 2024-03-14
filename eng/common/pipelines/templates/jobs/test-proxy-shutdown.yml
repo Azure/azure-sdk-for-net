@@ -42,7 +42,7 @@ stages:
           - template: /eng/common/testproxy/publish-proxy-logs.yml
 
           - pwsh: |
-              for ($i = 0; $i -lt 10; $i++) {
+              for ($i = 0; $i -lt 2; $i++) {
                   try {
                       Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
                       exit 0
