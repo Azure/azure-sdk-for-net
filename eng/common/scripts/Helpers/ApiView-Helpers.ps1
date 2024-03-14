@@ -63,3 +63,50 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
     Write-Warning "Failed to check API review status for package $($PackageName). You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
   }
 }
+
+function Process-ReviewStatusCode($statusCode, $packageName $apiApprovalStat, $packageNameStat)
+{
+  $apiApproved = $false
+  $apiApprovalDetails = "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved for a GA version release."
+
+  $packageNameApproved = $false
+  $packageNameApprovalDetails = ""
+
+  # 200 API approved and Package name approved
+  # 201 API review is not approved, Package name is approved
+  # 202 API review is not approved, Package name is not approved
+
+  switch ($statusCode)
+  {
+    200
+    {
+      $apiApprovalDetails = "API Review is approved for package $($packageName)"
+      $apiApproved = $true
+
+      $packageNameApproved = $true
+      $packageNameApprovalDetails = "Package name is approved for package $($packageName)"
+    }
+    201
+    {
+      $packageNameApproved = $true
+      $packageNameApprovalDetails = "Package name is approved for package $($packageName)"
+    }
+    202
+    {
+      $packageNameApprovalDetails = "Package name $($packageName) is not yet approved by an SDK API approver. Package name must be approved to release a beta version if $($packageName) was never released as a stable version."
+      $packageNameApprovalDetails += " You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on package name Approval."
+    }
+    default
+    {
+      $apiApprovalDetails = "Invalid status code from APIView. status code $($statusCode)"
+      $packageNameApprovalDetails = "Invalid status code from APIView. status code $($statusCode)"
+      Write-Error "Failed to process API Review status for for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel."
+    }
+  }
+
+  $apiApprovalStat.IsApproved = $apiApproved
+  $apiApprovalStat.Details = $apiApprovalDetails
+
+  $packageNameStat.IsApproved = $packageNameApproved
+  $packageNameStat.Details = $packageNameApprovalDetails
+}
