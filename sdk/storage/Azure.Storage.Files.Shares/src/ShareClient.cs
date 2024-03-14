@@ -3136,6 +3136,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
         /// </summary>
         /// <param name="filePermissionKey">
         /// The file permission key.
