@@ -72,10 +72,10 @@ namespace Azure.Monitor.Query
     }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
-        public MetricsClientOptions(Azure.Monitor.Query.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsClientOptions.ServiceVersion.V2023_10_01) { }
+        public MetricsClientOptions(Azure.Monitor.Query.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsClientOptions.ServiceVersion.V2024_02_01) { }
         public enum ServiceVersion
         {
-            V2023_10_01 = 1,
+            V2024_02_01 = 1,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
