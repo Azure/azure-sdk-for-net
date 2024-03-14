@@ -139,7 +139,7 @@ namespace Azure
         public abstract Azure.Response GetRawResponse();
         public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
         public static Azure.Operation Rehydrate(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
-        public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions? options = null) where T : notnull { throw null; }
+        public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken? rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
