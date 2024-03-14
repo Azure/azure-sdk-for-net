@@ -71,19 +71,6 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 
 Working with the source code of this library. The following just builds on the existing documentation to make it more convenient.
 
-### (Re)Generating the code
-
-The code is generated from the Typespec, this is not specific to the current package. If you need to change anything in the generated code directory you will first need to update the Typespec first.
-
-- Clone the repo containing the typespec: `git clone git@github.com:Azure/azure-rest-api-specs.git`
-- Clone this repository: `git clone git@github.com:Azure/azure-sdk-for-net.git`
-- Get into the directory that contains the typespec: `cd azure-rest-api-specs/specification/confidentialledger/Microsoft.CodeTransparency/`
-- From within the Typespec directory regenerate the SDK by invoking a Powershell helper script and providing a path to the cloned SDK repository:
-
-    ```sh
-    pwsh ../../../eng/scripts/TypeSpec-Generate-Sdk.ps1 -SdkRepoRootDirectory ~/azure-sdk-for-net/
-    ```
-
 ### Tests
 
 #### Running the tests
