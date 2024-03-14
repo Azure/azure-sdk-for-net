@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DevSpaces;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
