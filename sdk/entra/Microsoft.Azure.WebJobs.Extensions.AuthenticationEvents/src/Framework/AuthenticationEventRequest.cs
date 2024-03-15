@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             catch (Exception ex)
             {
-                return Failed(new AuthenticationEventTriggerRequestValidationException(ex.Message));
+                return Failed(ex);
             }
 
             return Response;
