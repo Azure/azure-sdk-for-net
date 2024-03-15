@@ -656,14 +656,14 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Determines whether to enable proxy logging beyond errors.
+        /// Determines whether to enable debug level proxy logging. Errors are logged by default.
         /// </summary>
-        internal static bool EnableProxyLogging
+        internal static bool EnableDebugProxyLogging
         {
             get
             {
-                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
-                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+                string switchString = TestContext.Parameters["EnableDebugProxyLogging"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_DEBUG_PROXY_LOGGING");
 
                 bool.TryParse(switchString, out bool enableProxyLogging);
 
