@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Resources
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resources/Azure.ResourceManager.Resources/src/Generated/RestOperations/DeploymentScriptsRestOperations.cs#L36
         private const string DefaultVersion = "2020-10-01";
 
-        private static readonly Func<string, AzureCliScript> Empty = (name) => ArmResourcesModelFactory.AzureCliScript();
+        private static AzureCliScript Empty(string name) => ArmResourcesModelFactory.AzureCliScript();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeploymentScript"/>.

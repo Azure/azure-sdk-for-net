@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService
     public class WebSiteConfigLogs : Resource<SiteLogsConfigData>
     {
         private const string ResourceTypeName = "Microsoft.Web/sites/config";
-        private static readonly Func<string, SiteLogsConfigData> Empty = (name) => ArmAppServiceModelFactory.SiteLogsConfigData();
+        private static SiteLogsConfigData Empty(string name) => ArmAppServiceModelFactory.SiteLogsConfigData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSiteConfigLogs"/>.

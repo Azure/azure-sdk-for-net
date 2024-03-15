@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Sql
     public class SqlDatabase : Resource<SqlDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.Sql/servers/databases";
-        private static readonly Func<string, SqlDatabaseData> Empty = (name) => ArmSqlModelFactory.SqlDatabaseData();
+        private static SqlDatabaseData Empty(string name) => ArmSqlModelFactory.SqlDatabaseData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlDatabase"/>.

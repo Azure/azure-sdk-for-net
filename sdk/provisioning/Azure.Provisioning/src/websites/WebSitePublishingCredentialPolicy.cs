@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService
     public class WebSitePublishingCredentialPolicy : Resource<CsmPublishingCredentialsPoliciesEntityData>
     {
         private const string ResourceTypeName = "Microsoft.Web/sites/basicPublishingCredentialsPolicies";
-        private static readonly Func<string, CsmPublishingCredentialsPoliciesEntityData> Empty = (name) => ArmAppServiceModelFactory.CsmPublishingCredentialsPoliciesEntityData();
+        private static CsmPublishingCredentialsPoliciesEntityData Empty(string name) => ArmAppServiceModelFactory.CsmPublishingCredentialsPoliciesEntityData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSitePublishingCredentialPolicy"/> class.

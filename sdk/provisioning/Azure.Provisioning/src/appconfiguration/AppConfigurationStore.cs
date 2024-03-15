@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppConfiguration
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/src/Generated/RestOperations/ConfigurationStoresRestOperations.cs#L36
         private const string DefaultVersion = "2023-03-01";
 
-        private static readonly Func<string, AppConfigurationStoreData> Empty = (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData();
+        private static AppConfigurationStoreData Empty(string name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppConfigurationStore"/> class.

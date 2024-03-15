@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CosmosDB
         // TODO the version used in ARM library doesn't exist in docs, so we are using the latest documented version
         internal const string DefaultVersion = "2023-04-15";
 
-        private static readonly Func<string, CosmosDBAccountData> Empty = (name) => ArmCosmosDBModelFactory.CosmosDBAccountData();
+        private static CosmosDBAccountData Empty(string name) => ArmCosmosDBModelFactory.CosmosDBAccountData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="CosmosDBAccount"/> class.

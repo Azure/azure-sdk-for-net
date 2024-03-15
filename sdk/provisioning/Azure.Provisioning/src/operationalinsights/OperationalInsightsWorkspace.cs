@@ -3,73 +3,68 @@
 
 using System;
 using Azure.Core;
-using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
-using Azure.ResourceManager.ApplicationInsights.Models;
+using Azure.ResourceManager.OperationalInsights;
+using Azure.ResourceManager.OperationalInsights.Models;
 
-namespace Azure.Provisioning.ApplicationInsights
+namespace Azure.Provisioning.OperationalInsights
 {
     /// <summary>
-    /// Represents an Application Insights component.
+    /// Represents an Operational Insights workspace.
     /// </summary>
-    public class ApplicationInsightsComponent : Resource<ApplicationInsightsComponentData>
+    public class OperationalInsightsWorkspace : Resource<OperationalInsightsWorkspaceData>
     {
         // https://learn.microsoft.com/azure/templates/microsoft.insights/2020-02-02/components?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Insights/components";
-        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/src/Generated/RestOperations/ComponentsRestOperations.cs#L36
-        internal const string DefaultVersion = "2020-02-02";
+        // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/src/Generated/RestOperations/WorkspacesRestOperations.cs#L36C42-L36C52
+        internal const string DefaultVersion = "2022-10-01";
 
-        private static ApplicationInsightsComponentData Empty(string name) => ArmApplicationInsightsModelFactory.ApplicationInsightsComponentData();
+        private static OperationalInsightsWorkspaceData Empty(string name) => ArmOperationalInsightsModelFactory.OperationalInsightsWorkspaceData();
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ApplicationInsightsComponentData"/> class.
+        /// Creates a new instance of the <see cref="OperationalInsightsWorkspaceData"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="kind">The kind.</param>
-        /// <param name="applicationType">The application type.</param>
+        /// <param name="sku">The SKU.</param>
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location</param>
-        public ApplicationInsightsComponent(
+        public OperationalInsightsWorkspace(
             IConstruct scope,
-            string kind = "web",
-            string applicationType = "web",
+            OperationalInsightsWorkspaceSku? sku = default,
             ResourceGroup? parent = default,
-            string name = "appinsights",
+            string name = "opinsights",
             string version = DefaultVersion,
             AzureLocation? location = default)
-            : this(scope, parent, name, version, location, false, (name) => ArmApplicationInsightsModelFactory.ApplicationInsightsComponentData(
+            : this(scope, parent, name, version, false, (name) => ArmOperationalInsightsModelFactory.OperationalInsightsWorkspaceData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                kind: kind,
-                applicationType: applicationType))
+                sku: new OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerGB2018)))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private ApplicationInsightsComponent(
+        private OperationalInsightsWorkspace(
             IConstruct scope,
             ResourceGroup? parent,
             string name,
             string version = DefaultVersion,
-            AzureLocation? location = default,
             bool isExisting = false,
-            Func<string, ApplicationInsightsComponentData>? creator = null)
+            Func<string, OperationalInsightsWorkspaceData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="CosmosDBAccount"/> class referencing an existing instance.
+        /// Creates a new instance of the <see cref="OperationalInsightsWorkspace"/> class referencing an existing instance.
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static ApplicationInsightsComponent FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
-            => new ApplicationInsightsComponent(scope, parent: parent, name: name, isExisting: true);
+        public static OperationalInsightsWorkspace FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new OperationalInsightsWorkspace(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);

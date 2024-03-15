@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices
     public class CognitiveServicesAccountDeployment : Resource<CognitiveServicesAccountDeploymentData>
     {
         private const string ResourceTypeName = "Microsoft.CognitiveServices/accounts/deployments";
-        private static readonly Func<string, CognitiveServicesAccountDeploymentData> Empty = (name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentData();
+        private static CognitiveServicesAccountDeploymentData Empty (string name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountDeploymentData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="CognitiveServicesAccount"/> class.

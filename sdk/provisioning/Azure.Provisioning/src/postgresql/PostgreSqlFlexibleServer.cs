@@ -20,7 +20,7 @@ namespace Azure.Provisioning.PostgreSql
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/postgresql/Azure.ResourceManager.PostgreSql/src/PostgreSqlFlexibleServers/Generated/RestOperations/ServersRestOperations.cs#L37
         internal const string DefaultVersion = "2023-03-01-preview";
 
-        private static readonly Func<string, PostgreSqlFlexibleServerData> Empty = (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
+        private static PostgreSqlFlexibleServerData Empty(string name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="PostgreSqlFlexibleServer"/> class.

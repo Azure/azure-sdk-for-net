@@ -19,7 +19,7 @@ namespace Azure.Provisioning.EventHubs
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.ResourceManager.EventHubs/src/Generated/RestOperations/NamespacesRestOperations.cs#L36
         internal const string DefaultVersion = "2022-10-01-preview";
 
-        private static readonly Func<string, EventHubsNamespaceData> Empty = (name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
+        private static EventHubsNamespaceData Empty(string name) => ArmEventHubsModelFactory.EventHubsNamespaceData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHubsNamespace"/>.

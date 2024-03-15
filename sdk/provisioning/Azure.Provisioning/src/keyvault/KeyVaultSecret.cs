@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KeyVaults
     public class KeyVaultSecret : Resource<KeyVaultSecretData>
     {
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults/secrets";
-        private static readonly Func<string, KeyVaultSecretData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultSecretData();
+        private static KeyVaultSecretData Empty(string name) => ArmKeyVaultModelFactory.KeyVaultSecretData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSecret"/>.

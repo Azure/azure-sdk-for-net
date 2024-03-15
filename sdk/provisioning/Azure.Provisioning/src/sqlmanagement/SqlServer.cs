@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Sql
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/sqlmanagement/Azure.ResourceManager.Sql/src/Generated/RestOperations/ServerRestOperations.cs#L36
         internal const string DefaultVersion = "2020-11-01-preview";
 
-        private static readonly Func<string, SqlServerData> Empty = (name) => ArmSqlModelFactory.SqlServerData();
+        private static SqlServerData Empty(string name) => ArmSqlModelFactory.SqlServerData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlServer"/> class for mocking.

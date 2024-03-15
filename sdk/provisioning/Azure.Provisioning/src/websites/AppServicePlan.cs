@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService
     public class AppServicePlan : Resource<AppServicePlanData>
     {
         private const string ResourceTypeName = "Microsoft.Web/serverfarms";
-        private static readonly Func<string, AppServicePlanData> Empty = (name) => ArmAppServiceModelFactory.AppServicePlanData();
+        private static AppServicePlanData Empty(string name) => ArmAppServiceModelFactory.AppServicePlanData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppServicePlan"/>.

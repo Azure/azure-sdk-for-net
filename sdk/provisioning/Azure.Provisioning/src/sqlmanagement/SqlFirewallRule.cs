@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Sql
     public class SqlFirewallRule : Resource<SqlFirewallRuleData>
     {
         private const string ResourceTypeName = "Microsoft.Sql/servers/firewallRules";
-        private static readonly Func<string, SqlFirewallRuleData> Empty = (name) => ArmSqlModelFactory.SqlFirewallRuleData();
+        private static SqlFirewallRuleData Empty(string name) => ArmSqlModelFactory.SqlFirewallRuleData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlFirewallRule"/>.

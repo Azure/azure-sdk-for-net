@@ -14,7 +14,7 @@ namespace Azure.Provisioning.EventHubs
     public class EventHubsConsumerGroup : Resource<EventHubsConsumerGroupData>
     {
         private const string ResourceTypeName = "Microsoft.EventHub/namespaces/eventhubs/consumergroups";
-        private static readonly Func<string, EventHubsConsumerGroupData> Empty = (name) => ArmEventHubsModelFactory.EventHubsConsumerGroupData();
+        private static EventHubsConsumerGroupData Empty(string name) => ArmEventHubsModelFactory.EventHubsConsumerGroupData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHub"/>.
