@@ -156,6 +156,12 @@ jobs:
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'verify'
+
     pool:
       name: $(LINUXPOOL)
       image: $(LINUXVMIMAGE)
@@ -225,11 +231,6 @@ jobs:
           $(DiagnosticArguments)
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
-
-      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'verify'
 
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
