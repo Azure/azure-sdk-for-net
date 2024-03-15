@@ -785,7 +785,7 @@ namespace Azure.Provisioning.Tests
 
             infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
 
-            infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingOpInsights'", rg));
+            infra.AddResource(OperationalInsightsWorkspace.FromExisting(infra, "'existingOpInsights'", rg));
 
             infra.Build(GetOutputPath());
 
