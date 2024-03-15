@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string providerId, AzureLocation location, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/resourceProviders/", false);
+            uri.AppendPath(providerId, true);
+            uri.AppendPath("/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/serviceLimits/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string providerId, AzureLocation location, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +137,22 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string providerId, AzureLocation location, string resourceName, ReservationQuotaData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/resourceProviders/", false);
+            uri.AppendPath(providerId, true);
+            uri.AppendPath("/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/serviceLimits/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string providerId, AzureLocation location, string resourceName, ReservationQuotaData data)
@@ -219,6 +251,22 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string providerId, AzureLocation location, string resourceName, ReservationQuotaData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/resourceProviders/", false);
+            uri.AppendPath(providerId, true);
+            uri.AppendPath("/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/serviceLimits/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string providerId, AzureLocation location, string resourceName, ReservationQuotaData data)
         {
             var message = _pipeline.CreateMessage();
@@ -313,6 +361,21 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string providerId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/resourceProviders/", false);
+            uri.AppendPath(providerId, true);
+            uri.AppendPath("/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/serviceLimits", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string providerId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -388,6 +451,14 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string providerId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string providerId, AzureLocation location)

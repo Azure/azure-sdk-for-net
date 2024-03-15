@@ -38,6 +38,18 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateByScopeRequestUri(string scope, string lockName, ManagementLockData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
+            uri.AppendPath(lockName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData data)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +132,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateDeleteByScopeRequestUri(string scope, string lockName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
+            uri.AppendPath(lockName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByScopeRequest(string scope, string lockName)
         {
             var message = _pipeline.CreateMessage();
@@ -182,6 +206,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByScopeRequestUri(string scope, string lockName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/locks/", false);
+            uri.AppendPath(lockName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByScopeRequest(string scope, string lockName)
@@ -260,6 +296,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListByScopeRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/locks", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByScopeRequest(string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -329,6 +380,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByScopeNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByScopeNextPageRequest(string nextLink, string scope, string filter)

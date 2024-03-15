@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.Quota
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Quota/quotas/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +133,18 @@ namespace Azure.ResourceManager.Quota
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string resourceName, CurrentQuotaLimitBaseData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Quota/quotas/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string resourceName, CurrentQuotaLimitBaseData data)
@@ -213,6 +237,18 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string scope, string resourceName, CurrentQuotaLimitBaseData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Quota/quotas/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string scope, string resourceName, CurrentQuotaLimitBaseData data)
         {
             var message = _pipeline.CreateMessage();
@@ -303,6 +339,17 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Quota/quotas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -366,6 +413,14 @@ namespace Azure.ResourceManager.Quota
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)
