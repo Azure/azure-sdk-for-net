@@ -878,10 +878,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy">
-        /// the sorting query for the collection (ex: 'CreatedDateTimeUtc asc',
-        /// 'CreatedDateTimeUtc desc')
-        /// </param>
+        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for all documents in a batch document translation request.
@@ -985,10 +982,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy">
-        /// the sorting query for the collection (ex: 'CreatedDateTimeUtc asc',
-        /// 'CreatedDateTimeUtc desc')
-        /// </param>
+        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for all documents in a batch document translation request.
@@ -1106,10 +1100,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy">
-        /// the sorting query for the collection (ex: 'CreatedDateTimeUtc asc',
-        /// 'CreatedDateTimeUtc desc')
-        /// </param>
+        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1180,10 +1171,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy">
-        /// the sorting query for the collection (ex: 'CreatedDateTimeUtc asc',
-        /// 'CreatedDateTimeUtc desc')
-        /// </param>
+        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
