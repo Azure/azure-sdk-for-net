@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.AppContainers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateJobExecutionRequestUri(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateJobExecutionRequest(string subscriptionId, string resourceGroupName, string jobName, string jobExecutionName)
         {
             var message = _pipeline.CreateMessage();
