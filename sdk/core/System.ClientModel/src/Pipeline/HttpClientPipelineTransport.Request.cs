@@ -90,9 +90,9 @@ public partial class HttpClientPipelineTransport
             Uri uri = request.Uri;
             HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
 
-            MessageBodyAdapter? httpContent = request.Content == null ? null :
-                new MessageBodyAdapter(request.Content, cancellationToken);
+            HttpContent? httpContent = GetHttpRequestMessageContent(request.Content, cancellationToken);
             httpRequest.Content = httpContent;
+
 #if NETSTANDARD
             httpRequest.Headers.ExpectContinue = false;
 #endif
@@ -135,6 +135,21 @@ public partial class HttpClientPipelineTransport
             }
 
             return httpRequest;
+        }
+
+        private static HttpContent? GetHttpRequestMessageContent(BinaryContent? content, CancellationToken cancellationToken)
+        {
+            if (content is BinaryContent.HttpContentBinaryContent httpContent)
+            {
+                return httpContent.HttpContent;
+            }
+
+            if (content is not null)
+            {
+                return new MessageBodyAdapter(content, cancellationToken);
+            }
+
+            return null;
         }
 
         private sealed class MessageBodyAdapter : HttpContent

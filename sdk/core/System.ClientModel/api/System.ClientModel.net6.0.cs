@@ -12,6 +12,7 @@ namespace System.ClientModel
         protected BinaryContent() { }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent Create(System.Net.Http.HttpContent content) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);

@@ -5,6 +5,7 @@ using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,6 +53,14 @@ public abstract class BinaryContent : IDisposable
     /// bytes held in the provided <see cref="Stream"/> instance.</returns>
     public static BinaryContent Create(Stream stream)
         => new StreamBinaryContent(stream);
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that calls through
+    /// to the provided <see cref="HttpContent"/> to write the from the content
+    /// stream.
+    /// </summary>
+    public static BinaryContent Create(HttpContent content)
+        => new HttpContentBinaryContent(content);
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -241,6 +250,55 @@ public abstract class BinaryContent : IDisposable
         public override void Dispose()
         {
             _stream.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// This class allows us to work around an issue where the MultipartContent
+    /// type will load its full content into memory when ReadAsStreamAsync is
+    /// called on .NET Framework platforms.  This issue is due to MultipartContent
+    /// on .NET Framework not implementing CreateContentReadStreamAsync.
+    /// </summary>
+    internal sealed class HttpContentBinaryContent : BinaryContent
+    {
+        internal HttpContent HttpContent { get; }
+
+        public HttpContentBinaryContent(HttpContent httpContent)
+        {
+            Argument.AssertNotNull(httpContent, nameof(httpContent));
+
+            HttpContent = httpContent;
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            // We can't call the protected method on HttpContent
+            length = 0;
+            return false;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+        {
+#if NET6_0_OR_GREATER
+            HttpContent.CopyTo(stream, default, cancellationToken);
+#else
+            // Sync over async
+            HttpContent.CopyToAsync(stream).RunSynchronously();
+#endif
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+#if NET6_0_OR_GREATER
+            await HttpContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+#else
+            await HttpContent.CopyToAsync(stream).ConfigureAwait(false);
+#endif
+        }
+
+        public override void Dispose()
+        {
+            HttpContent.Dispose();
         }
     }
 }
