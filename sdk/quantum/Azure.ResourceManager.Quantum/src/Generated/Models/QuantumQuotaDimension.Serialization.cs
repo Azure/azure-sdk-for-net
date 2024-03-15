@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class QuotaDimension : IUtf8JsonSerializable, IJsonModel<QuotaDimension>
+    public partial class QuantumQuotaDimension : IUtf8JsonSerializable, IJsonModel<QuantumQuotaDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumQuotaDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<QuotaDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuantumQuotaDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumQuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumQuotaDimension)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,19 +85,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        QuotaDimension IJsonModel<QuotaDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuantumQuotaDimension IJsonModel<QuantumQuotaDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumQuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumQuotaDimension)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaDimension(document.RootElement, options);
+            return DeserializeQuantumQuotaDimension(document.RootElement, options);
         }
 
-        internal static QuotaDimension DeserializeQuotaDimension(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuantumQuotaDimension DeserializeQuantumQuotaDimension(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaDimension(
+            return new QuantumQuotaDimension(
                 id,
                 scope,
                 period,
@@ -179,35 +179,35 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QuotaDimension>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuantumQuotaDimension>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumQuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumQuotaDimension)} does not support '{options.Format}' format.");
             }
         }
 
-        QuotaDimension IPersistableModel<QuotaDimension>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuantumQuotaDimension IPersistableModel<QuantumQuotaDimension>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumQuotaDimension>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQuotaDimension(document.RootElement, options);
+                        return DeserializeQuantumQuotaDimension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumQuotaDimension)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QuotaDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuantumQuotaDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

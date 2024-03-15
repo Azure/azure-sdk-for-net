@@ -12,7 +12,7 @@ using Azure.ResourceManager.Quantum;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Provider properties. </summary>
-    public partial class ProviderProperties
+    public partial class QuantumProviderProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
-        internal ProviderProperties()
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
+        internal QuantumProviderProperties()
         {
-            Targets = new ChangeTrackingList<TargetDescription>();
-            Skus = new ChangeTrackingList<SkuDescription>();
-            QuotaDimensions = new ChangeTrackingList<QuotaDimension>();
-            PricingDimensions = new ChangeTrackingList<PricingDimension>();
+            Targets = new ChangeTrackingList<ProviderTargetDescription>();
+            Skus = new ChangeTrackingList<ProviderSkuDescription>();
+            QuotaDimensions = new ChangeTrackingList<QuantumQuotaDimension>();
+            PricingDimensions = new ChangeTrackingList<ProviderPricingDimension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderPropertiesAad aad, ProviderPropertiesManagedApplication managedApplication, IReadOnlyList<TargetDescription> targets, IReadOnlyList<SkuDescription> skus, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDimension> pricingDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuantumProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderAadInfo aad, ProviderApplicationInfo managedApplication, IReadOnlyList<ProviderTargetDescription> targets, IReadOnlyList<ProviderSkuDescription> skus, IReadOnlyList<QuantumQuotaDimension> quotaDimensions, IReadOnlyList<ProviderPricingDimension> pricingDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ProviderType = providerType;
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Provider's default endpoint. </summary>
         public string DefaultEndpoint { get; }
         /// <summary> Azure Active Directory info. </summary>
-        public ProviderPropertiesAad Aad { get; }
+        public ProviderAadInfo Aad { get; }
         /// <summary> Provider's Managed-Application info. </summary>
-        public ProviderPropertiesManagedApplication ManagedApplication { get; }
+        public ProviderApplicationInfo ManagedApplication { get; }
         /// <summary> The list of targets available from this provider. </summary>
-        public IReadOnlyList<TargetDescription> Targets { get; }
+        public IReadOnlyList<ProviderTargetDescription> Targets { get; }
         /// <summary> The list of skus available from this provider. </summary>
-        public IReadOnlyList<SkuDescription> Skus { get; }
+        public IReadOnlyList<ProviderSkuDescription> Skus { get; }
         /// <summary> The list of quota dimensions from the provider. </summary>
-        public IReadOnlyList<QuotaDimension> QuotaDimensions { get; }
+        public IReadOnlyList<QuantumQuotaDimension> QuotaDimensions { get; }
         /// <summary> The list of pricing dimensions from the provider. </summary>
-        public IReadOnlyList<PricingDimension> PricingDimensions { get; }
+        public IReadOnlyList<ProviderPricingDimension> PricingDimensions { get; }
     }
 }

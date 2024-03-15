@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class ProviderPropertiesManagedApplication : IUtf8JsonSerializable, IJsonModel<ProviderPropertiesManagedApplication>
+    public partial class ProviderApplicationInfo : IUtf8JsonSerializable, IJsonModel<ProviderApplicationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPropertiesManagedApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderApplicationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ProviderPropertiesManagedApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProviderApplicationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderPropertiesManagedApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPropertiesManagedApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        ProviderPropertiesManagedApplication IJsonModel<ProviderPropertiesManagedApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderApplicationInfo IJsonModel<ProviderApplicationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderPropertiesManagedApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPropertiesManagedApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProviderPropertiesManagedApplication(document.RootElement, options);
+            return DeserializeProviderApplicationInfo(document.RootElement, options);
         }
 
-        internal static ProviderPropertiesManagedApplication DeserializeProviderPropertiesManagedApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProviderApplicationInfo DeserializeProviderApplicationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPropertiesManagedApplication(publisherId, offerId, serializedAdditionalRawData);
+            return new ProviderApplicationInfo(publisherId, offerId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProviderPropertiesManagedApplication>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderApplicationInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderPropertiesManagedApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPropertiesManagedApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        ProviderPropertiesManagedApplication IPersistableModel<ProviderPropertiesManagedApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderApplicationInfo IPersistableModel<ProviderApplicationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderPropertiesManagedApplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProviderPropertiesManagedApplication(document.RootElement, options);
+                        return DeserializeProviderApplicationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPropertiesManagedApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProviderPropertiesManagedApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderApplicationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

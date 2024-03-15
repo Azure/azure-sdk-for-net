@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Result of check name availability. </summary>
-    public partial class CheckNameAvailabilityResult
+    /// <summary> Azure Active Directory info. </summary>
+    public partial class ProviderAadInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="ProviderAadInfo"/>. </summary>
+        internal ProviderAadInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
-        /// <param name="reason"> The reason of unavailability. </param>
-        /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
+        /// <summary> Initializes a new instance of <see cref="ProviderAadInfo"/>. </summary>
+        /// <param name="applicationId"> Provider's application id. </param>
+        /// <param name="tenantId"> Provider's tenant id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderAadInfo(string applicationId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
-            Message = message;
+            ApplicationId = applicationId;
+            TenantId = tenantId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicator of availability of the Quantum Workspace resource name. </summary>
-        public bool? NameAvailable { get; }
-        /// <summary> The reason of unavailability. </summary>
-        public string Reason { get; }
-        /// <summary> The detailed info regarding the reason associated with the Namespace. </summary>
-        public string Message { get; }
+        /// <summary> Provider's application id. </summary>
+        public string ApplicationId { get; }
+        /// <summary> Provider's tenant id. </summary>
+        public Guid? TenantId { get; }
     }
 }

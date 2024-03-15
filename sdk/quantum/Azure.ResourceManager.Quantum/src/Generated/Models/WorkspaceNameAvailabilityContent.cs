@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The response of a list Providers operation. </summary>
-    internal partial class OfferingsListResult
+    /// <summary> Details of check name availability request body. </summary>
+    public partial class WorkspaceNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +46,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        internal OfferingsListResult()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityContent"/>. </summary>
+        public WorkspaceNameAvailabilityContent()
         {
-            Value = new ChangeTrackingList<QuantumProviderDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        /// <param name="value"> Result of a list Providers operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type of Quantum Workspace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Name = name;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<QuantumProviderDescription> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
-        public string NextLink { get; }
+        /// <summary> Name for checking availability. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type of Quantum Workspace. </summary>
+        public ResourceType? ResourceType { get; set; }
     }
 }

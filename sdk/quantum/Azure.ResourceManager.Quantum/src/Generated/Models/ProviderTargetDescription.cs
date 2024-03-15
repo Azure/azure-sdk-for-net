@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
-    public partial class ProviderDescription
+    /// <summary> Information about a Target. A target is the component that can process a specific type of Job. </summary>
+    public partial class ProviderTargetDescription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +46,39 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        internal ProviderDescription()
+        /// <summary> Initializes a new instance of <see cref="ProviderTargetDescription"/>. </summary>
+        internal ProviderTargetDescription()
         {
+            AcceptedDataFormats = new ChangeTrackingList<string>();
+            AcceptedContentEncodings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderDescription"/>. </summary>
-        /// <param name="id"> Unique provider's id. </param>
-        /// <param name="name"> Provider's display name. </param>
-        /// <param name="properties"> A list of provider-specific properties. </param>
+        /// <summary> Initializes a new instance of <see cref="ProviderTargetDescription"/>. </summary>
+        /// <param name="id"> Unique target id. </param>
+        /// <param name="name"> Display name of this target. </param>
+        /// <param name="description"> A description about this target. </param>
+        /// <param name="acceptedDataFormats"> List of data formats accepted by this target. </param>
+        /// <param name="acceptedContentEncodings"> List of content encodings accepted by this target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderDescription(string id, string name, ProviderProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderTargetDescription(string id, string name, string description, IReadOnlyList<string> acceptedDataFormats, IReadOnlyList<string> acceptedContentEncodings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
-            Properties = properties;
+            Description = description;
+            AcceptedDataFormats = acceptedDataFormats;
+            AcceptedContentEncodings = acceptedContentEncodings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique provider's id. </summary>
+        /// <summary> Unique target id. </summary>
         public string Id { get; }
-        /// <summary> Provider's display name. </summary>
+        /// <summary> Display name of this target. </summary>
         public string Name { get; }
-        /// <summary> A list of provider-specific properties. </summary>
-        public ProviderProperties Properties { get; }
+        /// <summary> A description about this target. </summary>
+        public string Description { get; }
+        /// <summary> List of data formats accepted by this target. </summary>
+        public IReadOnlyList<string> AcceptedDataFormats { get; }
+        /// <summary> List of content encodings accepted by this target. </summary>
+        public IReadOnlyList<string> AcceptedContentEncodings { get; }
     }
 }

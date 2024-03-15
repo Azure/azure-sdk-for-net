@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class SkuDescription : IUtf8JsonSerializable, IJsonModel<SkuDescription>
+    public partial class ProviderSkuDescription : IUtf8JsonSerializable, IJsonModel<ProviderSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderSkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProviderSkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderSkuDescription)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,19 +105,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        SkuDescription IJsonModel<SkuDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderSkuDescription IJsonModel<ProviderSkuDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderSkuDescription)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuDescription(document.RootElement, options);
+            return DeserializeProviderSkuDescription(document.RootElement, options);
         }
 
-        internal static SkuDescription DeserializeSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProviderSkuDescription DeserializeProviderSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Quantum.Models
             Uri restrictedAccessUri = default;
             bool? autoAdd = default;
             IReadOnlyList<string> targets = default;
-            IReadOnlyList<QuotaDimension> quotaDimensions = default;
-            IReadOnlyList<PricingDetail> pricingDetails = default;
+            IReadOnlyList<QuantumQuotaDimension> quotaDimensions = default;
+            IReadOnlyList<QuantumPricingDetail> pricingDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    List<QuotaDimension> array = new List<QuotaDimension>();
+                    List<QuantumQuotaDimension> array = new List<QuantumQuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
+                        array.Add(QuantumQuotaDimension.DeserializeQuantumQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    List<PricingDetail> array = new List<PricingDetail>();
+                    List<QuantumPricingDetail> array = new List<QuantumPricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item, options));
+                        array.Add(QuantumPricingDetail.DeserializeQuantumPricingDetail(item, options));
                     }
                     pricingDetails = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDescription(
+            return new ProviderSkuDescription(
                 id,
                 name,
                 version,
@@ -232,40 +232,40 @@ namespace Azure.ResourceManager.Quantum.Models
                 restrictedAccessUri,
                 autoAdd,
                 targets ?? new ChangeTrackingList<string>(),
-                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
-                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                quotaDimensions ?? new ChangeTrackingList<QuantumQuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<QuantumPricingDetail>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderSkuDescription>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderSkuDescription)} does not support '{options.Format}' format.");
             }
         }
 
-        SkuDescription IPersistableModel<SkuDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderSkuDescription IPersistableModel<ProviderSkuDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkuDescription(document.RootElement, options);
+                        return DeserializeProviderSkuDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderSkuDescription)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderSkuDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

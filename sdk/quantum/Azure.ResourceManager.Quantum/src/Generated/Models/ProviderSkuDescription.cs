@@ -12,7 +12,7 @@ using Azure.ResourceManager.Quantum;
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about a specific sku. </summary>
-    public partial class SkuDescription
+    public partial class ProviderSkuDescription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
-        internal SkuDescription()
+        /// <summary> Initializes a new instance of <see cref="ProviderSkuDescription"/>. </summary>
+        internal ProviderSkuDescription()
         {
             Targets = new ChangeTrackingList<string>();
-            QuotaDimensions = new ChangeTrackingList<QuotaDimension>();
-            PricingDetails = new ChangeTrackingList<PricingDetail>();
+            QuotaDimensions = new ChangeTrackingList<QuantumQuotaDimension>();
+            PricingDetails = new ChangeTrackingList<QuantumPricingDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSkuDescription"/>. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="quotaDimensions"> The list of quota dimensions for this sku. </param>
         /// <param name="pricingDetails"> The list of pricing details for the sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IReadOnlyList<string> targets, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDetail> pricingDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderSkuDescription(string id, string name, string version, string description, Uri restrictedAccessUri, bool? autoAdd, IReadOnlyList<string> targets, IReadOnlyList<QuantumQuotaDimension> quotaDimensions, IReadOnlyList<QuantumPricingDetail> pricingDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> The list of targets available for this sku. </summary>
         public IReadOnlyList<string> Targets { get; }
         /// <summary> The list of quota dimensions for this sku. </summary>
-        public IReadOnlyList<QuotaDimension> QuotaDimensions { get; }
+        public IReadOnlyList<QuantumQuotaDimension> QuotaDimensions { get; }
         /// <summary> The list of pricing details for the sku. </summary>
-        public IReadOnlyList<PricingDetail> PricingDetails { get; }
+        public IReadOnlyList<QuantumPricingDetail> PricingDetails { get; }
     }
 }

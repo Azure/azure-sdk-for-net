@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Provider's Managed-Application info. </summary>
-    public partial class ProviderPropertiesManagedApplication
+    /// <summary> Result of check name availability. </summary>
+    public partial class WorkspaceNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,29 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesManagedApplication"/>. </summary>
-        internal ProviderPropertiesManagedApplication()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityResult"/>. </summary>
+        internal WorkspaceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesManagedApplication"/>. </summary>
-        /// <param name="publisherId"> Provider's publisher id. </param>
-        /// <param name="offerId"> Provider's offer id. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
+        /// <param name="reason"> The reason of unavailability. </param>
+        /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderPropertiesManagedApplication(string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PublisherId = publisherId;
-            OfferId = offerId;
+            IsNameAvailable = isNameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provider's publisher id. </summary>
-        public string PublisherId { get; }
-        /// <summary> Provider's offer id. </summary>
-        public string OfferId { get; }
+        /// <summary> Indicator of availability of the Quantum Workspace resource name. </summary>
+        public bool? IsNameAvailable { get; }
+        /// <summary> The reason of unavailability. </summary>
+        public string Reason { get; }
+        /// <summary> The detailed info regarding the reason associated with the Namespace. </summary>
+        public string Message { get; }
     }
 }
