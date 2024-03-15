@@ -25,7 +25,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 return null;
             }
 
-            return BinaryContent.Create(availabilitySetData, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.FromModel(availabilitySetData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator AvailabilitySetData(ClientResult result)

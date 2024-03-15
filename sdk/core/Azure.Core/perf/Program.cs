@@ -38,3 +38,5 @@ config.AddJob(Job.Default
     .WithMaxIterationCount(20)
     .AsDefault());
 BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args.Where(a => !a.Equals("--bm")).ToArray(), config);
+
+//BenchmarkRunner.Run(typeof(Azure.Core.Perf.MultipartContentBenchmark), new DebugInProcessConfig());
