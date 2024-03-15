@@ -133,6 +133,17 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
     }
+    public sealed partial class MultipartFormDataBinaryContent : System.ClientModel.BinaryContent
+    {
+        public MultipartFormDataBinaryContent() { }
+        public void Add(System.BinaryData content, string name, string? fileName = null) { }
+        public void Add(System.IO.Stream stream, string name, string? fileName = null) { }
+        public void Add(string content, string name, string? fileName = null) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {

@@ -3,6 +3,7 @@
 
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,37 +15,74 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
 {
     private readonly MultipartFormDataContent _multipartContent;
 
+    private static Random _random = new();
+    private static readonly char[] _boundaryValues = "()+,-./0123456789:=?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
     internal HttpContent HttpContent => _multipartContent;
 
     public MultipartFormDataBinaryContent()
     {
-        // TODO: Add boundary
-        _multipartContent = new MultipartFormDataContent();
+        _multipartContent = new MultipartFormDataContent(CreateBoundary());
     }
 
-    public void Add(Stream stream, string name, string? fileName)
+    public void Add(Stream stream, string name, string? fileName = default)
     {
-        StreamContent content = new(stream);
+        Add(new StreamContent(stream), name, fileName);
+    }
 
+    public void Add(string content, string name, string? fileName = default)
+    {
+        Add(new StringContent(content), name, fileName);
+    }
+
+    public void Add(BinaryData content, string name, string? fileName = default)
+    {
+        // TODO: is calling ToArray on BinaryData the most performant way?
+        Add(new ByteArrayContent(content.ToArray()), name, fileName);
+    }
+
+    // TODO: overload for IPersistableModel?
+
+    private void Add(HttpContent content, string name, string? fileName)
+    {
         if (fileName is not null)
         {
-            _multipartContent.Add(content, name, fileName);
+            AddFileNameHeader(content, name, fileName);
         }
-        else
+
+        _multipartContent.Add(content, name);
+    }
+
+    private static void AddFileNameHeader(HttpContent content, string name, string filename)
+    {
+        // TODO: I think we need to add the content header manually because the
+        // default implementation is adding a `filename*` parameter to the header,
+        // which RFC 7578 says not to do -- I am following up with the BCL team
+        // on this to learn more about when this is/isn't needed.
+        ContentDispositionHeaderValue header = new("form-data")
         {
-            _multipartContent.Add(content, name);
+            Name = name,
+            FileName = filename
+        };
+        content.Headers.ContentDisposition = header;
+    }
+
+    private static string CreateBoundary()
+    {
+        // TODO: test it.
+
+        Span<char> chars = new char[70];
+
+        byte[] random = new byte[70];
+        _random.NextBytes(random);
+
+        int mask = _boundaryValues.Length - 1;
+        for (int i = 0; i < 70; i++)
+        {
+            chars[i] = _boundaryValues[random[i] & mask];
         }
-    }
 
-    public void Add(string content, string name)
-    {
-        StringContent stringContent = new(content);
-        _multipartContent.Add(stringContent, name);
-    }
-
-    public void Add(BinaryData data, string name)
-    {
-        ByteArrayContent content = new(data.ToArray());
+        return chars.ToString();
     }
 
     public override bool TryComputeLength(out long length)
