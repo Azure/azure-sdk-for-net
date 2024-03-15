@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Tests
 #else
             string resourceId = TestEnvironment.MetricsResource;
 #endif
-            #region Snippet:CreateMetricsClient
+            #region Snippet:CreateMetricsQueryClient
 #if SNIPPET
             var client = new MetricsQueryClient(new DefaultAzureCredential());
 #else
