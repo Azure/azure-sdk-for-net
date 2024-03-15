@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Tests
         public void ParameterOverridesIsInitialized()
         {
             BicepModelReaderWriterOptions options = new BicepModelReaderWriterOptions();
-            Assert.IsNotNull(options.ParameterOverrides);
+            Assert.IsNotNull(options.PropertyOverrides);
         }
     }
 }
