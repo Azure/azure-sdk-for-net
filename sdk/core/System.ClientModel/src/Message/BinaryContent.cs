@@ -234,6 +234,7 @@ public abstract class BinaryContent : IDisposable
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
             await _stream.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+            await _stream.FlushAsync(cancellation).ConfigureAwait(false);
         }
 
         public override void Dispose()
