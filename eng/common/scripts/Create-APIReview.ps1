@@ -24,6 +24,7 @@ Set-StrictMode -Version 3
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
 function Upload-SourceArtifact($packagename, $filePath, $apiLabel, $releaseStatus, $packageVersion)
 {
+    Write-Host "File path: $filePath"
     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
     $FileStream = [System.IO.FileStream]::new($filePath, [System.IO.FileMode]::Open)
     $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
@@ -121,7 +122,7 @@ function Uploaded-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $revi
 function GetAPI-TokenFileName($packageName) 
 {
     $reviewTokenFileName = "${packageName}_${LanguageShort}.json"
-    $tokenFilePath = Join-Path $ArtifactPath $reviewTokenFileName
+    $tokenFilePath = Join-Path $ArtifactPath $packageName $reviewTokenFileName
     if (Test-Path $tokenFilePath) {
         Write-Host "Review token file is present at $tokenFilePath"
         return $reviewTokenFileName
@@ -141,9 +142,11 @@ function Submit-APIReview($packageInfo, $packagePath)
     # APIView processes request using different API if token file is already generated
     $reviewTokenFileName =  GetAPI-TokenFileName $packageName
     if ($reviewTokenFileName) {
+        Write-Host "Uploading review token file $reviewTokenFileName to APIView."
         return Uploaded-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version
     }
     else {
+        Write-Host "Uploading $packagePath to APIView."
         return Upload-SourceArtifact $packagename $packagePath $apiLabel $packageInfo.ReleaseStatus $packageInfo.Version
     }
 }
@@ -192,8 +195,8 @@ function ProcessPackage($packageName)
             # This is to avoid invalidating review status by a build triggered from feature branch
             if ( ($SourceBranch -ne $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
             {
-                Write-Host "Submitting API Review request for package $($pkg)"
-                $respCode = Submit-APIReview -packageInfo $pkgInfo -filePath $pkgPath
+                Write-Host "Submitting API Review request for package $($pkg), File path: $($pkgPath)"
+                $respCode = Submit-APIReview $pkgInfo $pkgPath
                 Write-Host "HTTP Response code: $($respCode)"
 
                 # no need to check API review status when marking a package as shipped
