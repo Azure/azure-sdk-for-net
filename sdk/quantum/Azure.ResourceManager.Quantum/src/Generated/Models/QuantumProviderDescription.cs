@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Details of check name availability request body. </summary>
-    public partial class CheckNameAvailabilityContent
+    /// <summary> Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs. </summary>
+    public partial class QuantumProviderDescription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,29 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderDescription"/>. </summary>
+        internal QuantumProviderDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Name for checking availability. </param>
-        /// <param name="resourceType"> The resource type of Quantum Workspace. </param>
+        /// <summary> Initializes a new instance of <see cref="QuantumProviderDescription"/>. </summary>
+        /// <param name="id"> Unique provider's id. </param>
+        /// <param name="name"> Provider's display name. </param>
+        /// <param name="properties"> Provider properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuantumProviderDescription(string id, string name, QuantumProviderProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Id = id;
             Name = name;
-            ResourceType = resourceType;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name for checking availability. </summary>
-        public string Name { get; set; }
-        /// <summary> The resource type of Quantum Workspace. </summary>
-        public string ResourceType { get; set; }
+        /// <summary> Unique provider's id. </summary>
+        public string Id { get; }
+        /// <summary> Provider's display name. </summary>
+        public string Name { get; }
+        /// <summary> Provider properties. </summary>
+        public QuantumProviderProperties Properties { get; }
     }
 }

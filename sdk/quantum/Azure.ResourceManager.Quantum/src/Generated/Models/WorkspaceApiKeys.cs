@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Detailed pricing information for an sku. </summary>
-    public partial class PricingDetail
+    /// <summary> List of api keys to be generated. </summary>
+    public partial class WorkspaceApiKeys
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,22 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
-        internal PricingDetail()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKeys"/>. </summary>
+        public WorkspaceApiKeys()
         {
+            Keys = new ChangeTrackingList<WorkspaceKeyType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
-        /// <param name="id"> Unique id for this pricing information. </param>
-        /// <param name="value"> The unit cost of this sku. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKeys"/>. </summary>
+        /// <param name="keys"> A list of api key names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PricingDetail(string id, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceApiKeys(IList<WorkspaceKeyType> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Value = value;
+            Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique id for this pricing information. </summary>
-        public string Id { get; }
-        /// <summary> The unit cost of this sku. </summary>
-        public string Value { get; }
+        /// <summary> A list of api key names. </summary>
+        public IList<WorkspaceKeyType> Keys { get; }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The response of a list Providers operation. </summary>
-    internal partial class OfferingsListResult
+    /// <summary> Azure quantum workspace Api key details. </summary>
+    public partial class WorkspaceApiKey
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        internal OfferingsListResult()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKey"/>. </summary>
+        internal WorkspaceApiKey()
         {
-            Value = new ChangeTrackingList<QuantumProviderDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        /// <param name="value"> Result of a list Providers operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKey"/>. </summary>
+        /// <param name="createdOn"> The creation time of the api key. </param>
+        /// <param name="key"> The Api key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceApiKey(DateTimeOffset? createdOn, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            CreatedOn = createdOn;
+            Key = key;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<QuantumProviderDescription> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
-        public string NextLink { get; }
+        /// <summary> The creation time of the api key. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The Api key. </summary>
+        public string Key { get; }
     }
 }

@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class Provider : IUtf8JsonSerializable, IJsonModel<Provider>
+    public partial class QuantumProvider : IUtf8JsonSerializable, IJsonModel<QuantumProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Provider>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumProvider>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<Provider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuantumProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Provider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Provider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumProvider)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        Provider IJsonModel<Provider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuantumProvider IJsonModel<QuantumProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Provider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Provider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumProvider)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvider(document.RootElement, options);
+            return DeserializeQuantumProvider(document.RootElement, options);
         }
 
-        internal static Provider DeserializeProvider(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuantumProvider DeserializeQuantumProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Quantum.Models
             string providerSku = default;
             Uri instanceUri = default;
             string applicationName = default;
-            Status? provisioningState = default;
+            ProviderProvisioningStatus? provisioningState = default;
             string resourceUsageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    provisioningState = new Status(property.Value.GetString());
+                    provisioningState = new ProviderProvisioningStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceUsageId"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Provider(
+            return new QuantumProvider(
                 providerId,
                 providerSku,
                 instanceUri,
@@ -159,35 +159,35 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Provider>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuantumProvider>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Provider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Provider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support '{options.Format}' format.");
             }
         }
 
-        Provider IPersistableModel<Provider>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuantumProvider IPersistableModel<QuantumProvider>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Provider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProvider(document.RootElement, options);
+                        return DeserializeQuantumProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Provider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Provider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuantumProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

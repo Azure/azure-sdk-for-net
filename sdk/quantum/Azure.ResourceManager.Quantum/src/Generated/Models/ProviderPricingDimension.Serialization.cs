@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class ProviderDescription : IUtf8JsonSerializable, IJsonModel<ProviderDescription>
+    public partial class ProviderPricingDimension : IUtf8JsonSerializable, IJsonModel<ProviderPricingDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPricingDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ProviderDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProviderPricingDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPricingDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPricingDimension)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,15 +32,10 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,19 +55,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        ProviderDescription IJsonModel<ProviderDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderPricingDimension IJsonModel<ProviderPricingDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPricingDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPricingDimension)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProviderDescription(document.RootElement, options);
+            return DeserializeProviderPricingDimension(document.RootElement, options);
         }
 
-        internal static ProviderDescription DeserializeProviderDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProviderPricingDimension DeserializeProviderPricingDimension(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -82,7 +77,6 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             string id = default;
             string name = default;
-            ProviderProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,53 +91,44 @@ namespace Azure.ResourceManager.Quantum.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ProviderProperties.DeserializeProviderProperties(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderDescription(id, name, properties, serializedAdditionalRawData);
+            return new ProviderPricingDimension(id, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProviderDescription>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderPricingDimension>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPricingDimension>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPricingDimension)} does not support '{options.Format}' format.");
             }
         }
 
-        ProviderDescription IPersistableModel<ProviderDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderPricingDimension IPersistableModel<ProviderPricingDimension>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProviderDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderPricingDimension>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProviderDescription(document.RootElement, options);
+                        return DeserializeProviderPricingDimension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPricingDimension)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProviderDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderPricingDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

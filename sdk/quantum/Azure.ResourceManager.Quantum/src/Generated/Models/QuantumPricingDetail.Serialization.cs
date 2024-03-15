@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class PricingDetail : IUtf8JsonSerializable, IJsonModel<PricingDetail>
+    public partial class QuantumPricingDetail : IUtf8JsonSerializable, IJsonModel<QuantumPricingDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PricingDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumPricingDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<PricingDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuantumPricingDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PricingDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumPricingDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PricingDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumPricingDetail)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        PricingDetail IJsonModel<PricingDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuantumPricingDetail IJsonModel<QuantumPricingDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PricingDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumPricingDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PricingDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuantumPricingDetail)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePricingDetail(document.RootElement, options);
+            return DeserializeQuantumPricingDetail(document.RootElement, options);
         }
 
-        internal static PricingDetail DeserializePricingDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuantumPricingDetail DeserializeQuantumPricingDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PricingDetail(id, value, serializedAdditionalRawData);
+            return new QuantumPricingDetail(id, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PricingDetail>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuantumPricingDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PricingDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumPricingDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PricingDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumPricingDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        PricingDetail IPersistableModel<PricingDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuantumPricingDetail IPersistableModel<QuantumPricingDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PricingDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumPricingDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePricingDetail(document.RootElement, options);
+                        return DeserializeQuantumPricingDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PricingDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuantumPricingDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PricingDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuantumPricingDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

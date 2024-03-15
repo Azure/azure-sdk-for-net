@@ -14,16 +14,16 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class TargetDescription : IUtf8JsonSerializable, IJsonModel<TargetDescription>
+    public partial class ProviderTargetDescription : IUtf8JsonSerializable, IJsonModel<ProviderTargetDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderTargetDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<TargetDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProviderTargetDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderTargetDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderTargetDescription)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        TargetDescription IJsonModel<TargetDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderTargetDescription IJsonModel<ProviderTargetDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderTargetDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderTargetDescription)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetDescription(document.RootElement, options);
+            return DeserializeProviderTargetDescription(document.RootElement, options);
         }
 
-        internal static TargetDescription DeserializeTargetDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProviderTargetDescription DeserializeProviderTargetDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetDescription(
+            return new ProviderTargetDescription(
                 id,
                 name,
                 description,
@@ -167,35 +167,35 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TargetDescription>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderTargetDescription>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderTargetDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderTargetDescription)} does not support '{options.Format}' format.");
             }
         }
 
-        TargetDescription IPersistableModel<TargetDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderTargetDescription IPersistableModel<ProviderTargetDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetDescription>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderTargetDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTargetDescription(document.RootElement, options);
+                        return DeserializeProviderTargetDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderTargetDescription)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TargetDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderTargetDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

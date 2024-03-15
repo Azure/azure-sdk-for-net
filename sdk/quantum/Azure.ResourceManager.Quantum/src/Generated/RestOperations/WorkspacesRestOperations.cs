@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Quantum
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-10-preview";
+            _apiVersion = apiVersion ?? "2023-11-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Returns the Workspace resource associated with the given name. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Returns the Workspace resource associated with the given name. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Creates or updates a workspace resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="data"> Workspace details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Creates or updates a workspace resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="data"> Workspace details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Updates an existing workspace's tags. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="patch"> Parameters supplied to update tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Updates an existing workspace's tags. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="patch"> Parameters supplied to update tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Deletes a Workspace resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Deletes a Workspace resource. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Gets the list of Workspaces within a Subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Gets the list of Workspaces within a Subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -442,8 +442,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Gets the list of Workspaces within a resource group. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -469,8 +469,8 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Gets the list of Workspaces within a resource group. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Gets the list of Workspaces within a Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Gets the list of Workspaces within a Subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -579,8 +579,8 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Gets the list of Workspaces within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -608,8 +608,8 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Gets the list of Workspaces within a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>

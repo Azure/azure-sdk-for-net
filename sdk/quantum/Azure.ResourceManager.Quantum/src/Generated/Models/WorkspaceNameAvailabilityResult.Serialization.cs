@@ -14,23 +14,23 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class CheckNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<CheckNameAvailabilityResult>
+    public partial class WorkspaceNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<WorkspaceNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CheckNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceNameAvailabilityResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Quantum.Models
             writer.WriteEndObject();
         }
 
-        CheckNameAvailabilityResult IJsonModel<CheckNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkspaceNameAvailabilityResult IJsonModel<WorkspaceNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceNameAvailabilityResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+            return DeserializeWorkspaceNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkspaceNameAvailabilityResult DeserializeWorkspaceNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new WorkspaceNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkspaceNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceNameAvailabilityResult)} does not support '{options.Format}' format.");
             }
         }
 
-        CheckNameAvailabilityResult IPersistableModel<CheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkspaceNameAvailabilityResult IPersistableModel<WorkspaceNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+                        return DeserializeWorkspaceNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceNameAvailabilityResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

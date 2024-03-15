@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Azure Active Directory info. </summary>
-    public partial class ProviderPropertiesAad
+    /// <summary> Provider's Managed-Application info. </summary>
+    public partial class ProviderApplicationInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
-        internal ProviderPropertiesAad()
+        /// <summary> Initializes a new instance of <see cref="ProviderApplicationInfo"/>. </summary>
+        internal ProviderApplicationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
-        /// <param name="applicationId"> Provider's application id. </param>
-        /// <param name="tenantId"> Provider's tenant id. </param>
+        /// <summary> Initializes a new instance of <see cref="ProviderApplicationInfo"/>. </summary>
+        /// <param name="publisherId"> Provider's publisher id. </param>
+        /// <param name="offerId"> Provider's offer id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderPropertiesAad(string applicationId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderApplicationInfo(string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ApplicationId = applicationId;
-            TenantId = tenantId;
+            PublisherId = publisherId;
+            OfferId = offerId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provider's application id. </summary>
-        public string ApplicationId { get; }
-        /// <summary> Provider's tenant id. </summary>
-        public Guid? TenantId { get; }
+        /// <summary> Provider's publisher id. </summary>
+        public string PublisherId { get; }
+        /// <summary> Provider's offer id. </summary>
+        public string OfferId { get; }
     }
 }
