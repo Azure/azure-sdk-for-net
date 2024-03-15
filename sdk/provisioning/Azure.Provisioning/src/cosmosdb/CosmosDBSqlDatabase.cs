@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CosmosDB
     public class CosmosDBSqlDatabase : Resource<CosmosDBSqlDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases";
-        private static readonly Func<string, CosmosDBSqlDatabaseData> Empty = (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData();
+        private static CosmosDBSqlDatabaseData Empty(string name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CosmosDBSqlDatabase"/>.

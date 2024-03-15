@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Redis
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/redis/Azure.ResourceManager.Redis/src/Generated/RestOperations/RedisRestOperations.cs#L36
         private const string DefaultVersion = "2023-08-01";
 
-        private static readonly Func<string, RedisData> Empty = (name) => ArmRedisModelFactory.RedisData(updateChannel: null);
+        private static RedisData Empty(string name) => ArmRedisModelFactory.RedisData(updateChannel: null);
 
         /// <summary>
         /// Creates a new instance of the <see cref="RedisCache"/> class.

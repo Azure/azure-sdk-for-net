@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Search
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/src/Generated/RestOperations/ServicesRestOperations.cs#L36
         private const string DefaultVersion = "2023-11-01";
 
-        private static readonly Func<string, SearchServiceData> Empty = (name) => ArmSearchModelFactory.SearchServiceData();
+        private static SearchServiceData Empty(string name) => ArmSearchModelFactory.SearchServiceData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="SearchService"/> class.

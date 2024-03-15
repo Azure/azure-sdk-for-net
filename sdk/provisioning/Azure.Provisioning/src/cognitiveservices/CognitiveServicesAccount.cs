@@ -19,7 +19,7 @@ namespace Azure.Provisioning.CognitiveServices
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices/src/Generated/RestOperations/AccountsRestOperations.cs#L36
         private const string DefaultVersion = "2023-05-01";
 
-        private static readonly Func<string, CognitiveServicesAccountData> Empty = (name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountData();
+        private static CognitiveServicesAccountData Empty(string name) => ArmCognitiveServicesModelFactory.CognitiveServicesAccountData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="CognitiveServicesAccount"/> class.

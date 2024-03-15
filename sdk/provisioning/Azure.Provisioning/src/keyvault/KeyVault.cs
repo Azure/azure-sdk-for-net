@@ -21,7 +21,7 @@ namespace Azure.Provisioning.KeyVaults
         // TODO the version used in ARM library doesn't exist in the docs so we are using the latest documented version
         internal const string DefaultVersion = "2022-07-01";
 
-        private static readonly Func<string, KeyVaultData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultData();
+        private static KeyVaultData Empty(string name) => ArmKeyVaultModelFactory.KeyVaultData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="KeyVault"/> class referencing an existing instance.

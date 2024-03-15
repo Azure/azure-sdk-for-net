@@ -20,7 +20,7 @@ namespace Azure.Provisioning.SignalR
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Azure.ResourceManager.SignalR/src/Generated/RestOperations/SignalRRestOperations.cs#L36
         private const string DefaultVersion = "2022-02-01";
 
-        private static readonly Func<string, SignalRData> Empty = (name) => ArmSignalRModelFactory.SignalRData();
+        private static SignalRData Empty(string name) => ArmSignalRModelFactory.SignalRData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="SignalRService"/> class.

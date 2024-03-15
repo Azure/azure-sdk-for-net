@@ -19,7 +19,7 @@ namespace Azure.Provisioning.OperationalInsights
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/src/Generated/RestOperations/WorkspacesRestOperations.cs#L36C42-L36C52
         internal const string DefaultVersion = "2022-10-01";
 
-        private static readonly Func<string, OperationalInsightsWorkspaceData> Empty = (name) => ArmOperationalInsightsModelFactory.OperationalInsightsWorkspaceData();
+        private static OperationalInsightsWorkspaceData Empty(string name) => ArmOperationalInsightsModelFactory.OperationalInsightsWorkspaceData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="OperationalInsightsWorkspaceData"/> class.

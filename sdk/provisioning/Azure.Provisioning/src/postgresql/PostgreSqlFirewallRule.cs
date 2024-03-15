@@ -14,7 +14,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFirewallRule : Resource<PostgreSqlFirewallRuleData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules";
-        private static readonly Func<string, PostgreSqlFirewallRuleData> Empty = (name) => ArmPostgreSqlModelFactory.PostgreSqlFirewallRuleData();
+        private static PostgreSqlFirewallRuleData Empty(string name) => ArmPostgreSqlModelFactory.PostgreSqlFirewallRuleData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PostgreSqlFirewallRule"/>.

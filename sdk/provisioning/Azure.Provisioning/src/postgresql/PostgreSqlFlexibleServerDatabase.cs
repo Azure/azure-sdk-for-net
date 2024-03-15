@@ -13,7 +13,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFlexibleServerDatabase : Resource<PostgreSqlFlexibleServerDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers/databases";
-        private static readonly Func<string, PostgreSqlFlexibleServerDatabaseData> Empty = (name)
+        private static PostgreSqlFlexibleServerDatabaseData Empty(string name)
             => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerDatabaseData();
 
                 /// <summary>

@@ -32,7 +32,7 @@ namespace Azure.Provisioning.AppService
     public class WebSite : Resource<WebSiteData>
     {
         private const string ResourceTypeName = "Microsoft.Web/sites";
-        private static readonly Func<string, WebSiteData> Empty = (name) => ArmAppServiceModelFactory.WebSiteData();
+        private static WebSiteData Empty(string name) => ArmAppServiceModelFactory.WebSiteData();
 
         private ApplicationSettingsResource AppSettings { get; }
 

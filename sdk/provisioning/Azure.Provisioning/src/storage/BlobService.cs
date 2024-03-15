@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Storage
     public class BlobService : Resource<BlobServiceData>
     {
         private const string ResourceTypeName = "Microsoft.Storage/storageAccounts/blobServices";
-        private static readonly Func<string, BlobServiceData> Empty = (name) => ArmStorageModelFactory.BlobServiceData();
+        private static BlobServiceData Empty(string name) => ArmStorageModelFactory.BlobServiceData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobService"/>.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus
     public class ServiceBusQueue : Resource<ServiceBusQueueData>
     {
         private const string ResourceTypeName = "Microsoft.ServiceBus/namespaces/queues";
-        private static readonly Func<string, ServiceBusQueueData> Empty = (name) => ArmServiceBusModelFactory.ServiceBusQueueData();
+        private static ServiceBusQueueData Empty(string name) => ArmServiceBusModelFactory.ServiceBusQueueData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusQueue"/>.

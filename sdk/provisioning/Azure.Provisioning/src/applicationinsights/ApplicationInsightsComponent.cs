@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ApplicationInsights
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights/src/Generated/RestOperations/ComponentsRestOperations.cs#L36
         internal const string DefaultVersion = "2020-02-02";
 
-        private static readonly Func<string, ApplicationInsightsComponentData> Empty = (name) => ArmApplicationInsightsModelFactory.ApplicationInsightsComponentData();
+        private static ApplicationInsightsComponentData Empty(string name) => ArmApplicationInsightsModelFactory.ApplicationInsightsComponentData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="ApplicationInsightsComponentData"/> class.

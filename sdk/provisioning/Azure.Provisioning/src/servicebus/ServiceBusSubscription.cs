@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ServiceBus
     public class ServiceBusSubscription : Resource<ServiceBusSubscriptionData>
     {
         private const string ResourceTypeName = "Microsoft.ServiceBus/namespaces/topics/subscriptions";
-        private static readonly Func<string, ServiceBusSubscriptionData> Empty = (name) => ArmServiceBusModelFactory.ServiceBusSubscriptionData();
+        private static ServiceBusSubscriptionData Empty(string name) => ArmServiceBusModelFactory.ServiceBusSubscriptionData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusSubscription"/>.

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ServiceBus
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.ResourceManager.ServiceBus/src/Generated/RestOperations/NamespacesRestOperations.cs#L36C42-L36C60
         internal const string DefaultVersion = "2022-10-01-preview";
 
-        private static readonly Func<string, ServiceBusNamespaceData> Empty = (name) => ArmServiceBusModelFactory.ServiceBusNamespaceData();
+        private static ServiceBusNamespaceData Empty(string name) => ArmServiceBusModelFactory.ServiceBusNamespaceData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusNamespace"/>.

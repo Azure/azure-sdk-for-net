@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Storage
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/src/Generated/RestOperations/BlobContainersRestOperations.cs#L36
         internal const string DefaultVersion = "2022-09-01";
 
-        private static readonly Func<string, StorageAccountData> Empty = (name) => ArmStorageModelFactory.StorageAccountData();
+        private static StorageAccountData Empty(string name) => ArmStorageModelFactory.StorageAccountData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageAccount"/>.
