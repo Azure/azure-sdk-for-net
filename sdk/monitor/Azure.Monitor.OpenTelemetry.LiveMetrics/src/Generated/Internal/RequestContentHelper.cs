@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+namespace LiveMetrics
 {
     internal static class RequestContentHelper
     {

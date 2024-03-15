@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+namespace LiveMetrics
 {
     internal static class Optional
     {
