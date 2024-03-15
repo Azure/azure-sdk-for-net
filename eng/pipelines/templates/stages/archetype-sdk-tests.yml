@@ -3,7 +3,7 @@ resources:
     - repository: 1ESPipelineTemplates
       type: git
       name: 1ESPipelineTemplates/1ESPipelineTemplates
-      ref: refs/tags/stable
+      ref: refs/tags/release
 
 parameters:
   - name: AdditionalPlatforms
