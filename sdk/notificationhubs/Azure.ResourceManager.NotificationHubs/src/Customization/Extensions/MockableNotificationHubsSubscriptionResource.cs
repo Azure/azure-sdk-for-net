@@ -3,17 +3,10 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
-using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Mocking
 {
@@ -45,7 +38,11 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(CancellationToken cancellationToken)
-            => GetNotificationHubNamespacesAsync(null, null, cancellationToken);
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId, null, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, null, null);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
+        }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
@@ -72,6 +69,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(CancellationToken cancellationToken)
-            => GetNotificationHubNamespaces(null, null, cancellationToken);
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId, null, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, null, null);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
+        }
     }
 }

@@ -6,12 +6,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Mocking;
-using Azure.ResourceManager.NotificationHubs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NotificationHubs
@@ -50,7 +45,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNotificationHubNamespacesAsync(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespacesAsync(cancellationToken);
+        }
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
@@ -83,6 +82,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetNotificationHubNamespaces(subscriptionResource, null, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespaces(cancellationToken);
+        }
     }
 }

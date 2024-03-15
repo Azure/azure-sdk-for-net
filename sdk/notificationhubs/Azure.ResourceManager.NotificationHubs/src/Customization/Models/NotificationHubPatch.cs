@@ -7,10 +7,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NotificationHubs;
 
 [assembly: CodeGenSuppressType("NotificationHubPatch")]
-
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the patch NotificationHub operation. </summary>

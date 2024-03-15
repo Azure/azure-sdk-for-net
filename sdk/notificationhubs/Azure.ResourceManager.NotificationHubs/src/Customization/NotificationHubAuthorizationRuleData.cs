@@ -3,10 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 using System.Linq;
