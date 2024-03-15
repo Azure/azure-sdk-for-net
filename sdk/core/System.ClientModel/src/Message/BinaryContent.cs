@@ -231,11 +231,11 @@ public abstract class BinaryContent : IDisposable
             _stream.Flush();
         }
 
-        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
-            await _stream.CopyToAsync(stream, cancellation).ConfigureAwait(false);
-            await _stream.FlushAsync(cancellation).ConfigureAwait(false);
+            await _stream.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+            await _stream.FlushAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public override void Dispose()
