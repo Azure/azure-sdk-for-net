@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="MetricsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The resource manager service endpoint to use. </param>
+        /// <param name="endpoint"> The data plane service endpoint to use. </param>
         public static IAzureClientBuilder<MetricsClient, MetricsClientOptions> AddMetricsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
