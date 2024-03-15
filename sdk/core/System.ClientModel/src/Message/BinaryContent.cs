@@ -228,6 +228,7 @@ public abstract class BinaryContent : IDisposable
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
             _stream.CopyTo(stream, cancellationToken);
+            _stream.Flush();
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
