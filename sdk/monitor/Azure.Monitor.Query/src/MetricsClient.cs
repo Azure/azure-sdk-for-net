@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// The <see cref="MetricsClient"/> allows you to query multiple Azure Monitor Metric services.
+    /// The <see cref="MetricsClient"/> allows you to query the Azure Monitor Metrics service for multiple Azure resources in a single request.
     /// </summary>
     public class MetricsClient
     {
@@ -21,11 +21,11 @@ namespace Azure.Monitor.Query
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsClient"/>.
+        /// Creates an instance of <see cref="MetricsClient"/>.
         /// </summary>
-        /// <param name="endpoint">The data plane service endpoint to use. For example <c>https://metrics.monitor.azure.com/.default</c> for public cloud.</param>
+        /// <param name="endpoint">The data plane service endpoint to use. For example, <c>https://metrics.monitor.azure.com/.default</c> for Azure Public Cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        /// <param name="options">The <see cref="MetricsClientOptions"/> instance to use as client configuration.</param>
         public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsClient"/> for mocking.
+        /// Creates an instance of <see cref="MetricsClient"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected MetricsClient()
         {
@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A time-series metrics result for the requested metric names.</returns>
+        /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
@@ -92,12 +92,12 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
-        /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
+        /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>A time-series metrics result for the requested metric names.</returns>
+        /// <returns>A time series metrics result for the requested metric names.</returns>
         public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
             if (resourceIds.Count() == 0 || metricNames.Count == 0)
