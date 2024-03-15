@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if NET6_0_OR_GREATER
+
 using Azure.Storage;
 using Azure.Storage.Queues;
 using Contracts;
@@ -84,3 +86,4 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
         }
     }
 }
+#endif

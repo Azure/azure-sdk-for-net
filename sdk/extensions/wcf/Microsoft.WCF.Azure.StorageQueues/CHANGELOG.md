@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.0 (Unreleased)
+## 1.0.0-preview (Unreleased)
 
 ### Features Added
 

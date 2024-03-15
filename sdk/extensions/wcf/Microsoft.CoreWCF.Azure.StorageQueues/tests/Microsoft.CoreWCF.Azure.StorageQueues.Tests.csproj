@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
-    <!--<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>-->
-		<RequiredTargetFrameworks>net6.0;net7.0</RequiredTargetFrameworks>
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-		<GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
     <IsPackable>false</IsPackable>
     <UserSecretsId>7d774a2c-019d-4f91-87ed-06aeedf5fd0d</UserSecretsId>
   </PropertyGroup>
@@ -18,7 +16,7 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Primitives" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Files.Shares" />
     <PackageReference Include="Azure.Storage.Queues" />
@@ -26,19 +24,19 @@
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" />
-		<PackageReference Include="NUnit" />
-		<PackageReference Include="NUnit3TestAdapter" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" />
-		<PackageReference Include="coverlet.collector">
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <PackageReference Include="System.ServiceModel.Primitives" />
   </ItemGroup>
-    
+
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
