@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.Chaos
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string locationName, string targetTypeName, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/targetTypes/", false);
+            uri.AppendPath(targetTypeName, true);
+            uri.AppendPath("/capabilityTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string locationName, string targetTypeName, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +139,22 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/targetTypes/", false);
+            uri.AppendPath(targetTypeName, true);
+            uri.AppendPath("/capabilityTypes/", false);
+            uri.AppendPath(capabilityTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
@@ -208,6 +243,14 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string locationName, string targetTypeName, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string locationName, string targetTypeName, string continuationToken)

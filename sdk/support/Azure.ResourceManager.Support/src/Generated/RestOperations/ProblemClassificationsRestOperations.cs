@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateClassifyProblemsRequestUri(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(problemServiceName, true);
+            uri.AppendPath("/classifyProblems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateClassifyProblemsRequest(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +131,17 @@ namespace Azure.ResourceManager.Support
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string serviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -183,6 +207,18 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string serviceName, string problemClassificationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/problemClassifications/", false);
+            uri.AppendPath(problemClassificationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string serviceName, string problemClassificationName)

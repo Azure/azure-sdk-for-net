@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.ManagedServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationAssignments/", false);
+            uri.AppendPath(registrationAssignmentId, true);
+            if (expandRegistrationDefinition != null)
+            {
+                uri.AppendQuery("$expandRegistrationDefinition", expandRegistrationDefinition.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, string registrationAssignmentId, bool? expandRegistrationDefinition)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +135,18 @@ namespace Azure.ResourceManager.ManagedServices
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string registrationAssignmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationAssignments/", false);
+            uri.AppendPath(registrationAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string scope, string registrationAssignmentId)
         {
             var message = _pipeline.CreateMessage();
@@ -183,6 +211,18 @@ namespace Azure.ResourceManager.ManagedServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationAssignments/", false);
+            uri.AppendPath(registrationAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationAssignmentId, ManagedServicesRegistrationAssignmentData data)
@@ -255,6 +295,25 @@ namespace Azure.ResourceManager.ManagedServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope, bool? expandRegistrationDefinition, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/registrationAssignments", false);
+            if (expandRegistrationDefinition != null)
+            {
+                uri.AppendQuery("$expandRegistrationDefinition", expandRegistrationDefinition.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope, bool? expandRegistrationDefinition, string filter)
@@ -332,6 +391,14 @@ namespace Azure.ResourceManager.ManagedServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, bool? expandRegistrationDefinition, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, bool? expandRegistrationDefinition, string filter)
