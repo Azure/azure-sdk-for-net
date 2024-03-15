@@ -76,21 +76,7 @@ Azure Monitor Query supports Microsoft Entra authentication. Both `LogsQueryClie
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
 If you get an HTTP error with status code 401 (Unauthorized) ErrorCode: InvalidAuthenticationTokenTenant, confirm your `Audience` parameter is set correctly. If your resource isn't located in the Azure Public Cloud, the `Audience` parameter must be set in the `ClientOptions` parameter while constructing the client.
-By default, `LogsQueryClient` and `MetricsQueryClient` are configured to connect to the Azure Public Cloud. To connect to a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
-
-```C# Snippet:CreateClientsWithOptions
-MetricsQueryClientOptions metricsQueryClientOptions = new MetricsQueryClientOptions()
-{
-    Audience = MetricsQueryAudience.AzureGovernment
-};
-MetricsQueryClient metricsQueryClient = new MetricsQueryClient(new DefaultAzureCredential(), metricsQueryClientOptions);
-
-LogsQueryClientOptions logsQueryClientOptions = new LogsQueryClientOptions()
-{
-    Audience = LogsQueryAudience.AzureChina
-};
-LogsQueryClient logsQueryClient = new LogsQueryClient(new DefaultAzureCredential(), logsQueryClientOptions);
-```
+This Azure.Monitor.Query [link](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#configure-client-for-azure-sovereign-cloud) has an example.
 
 ## Troubleshooting logs query
 
