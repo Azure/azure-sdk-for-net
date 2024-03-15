@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceBus;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {

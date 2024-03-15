@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Attestation;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {

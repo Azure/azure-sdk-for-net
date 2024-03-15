@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SqlVirtualMachine;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {

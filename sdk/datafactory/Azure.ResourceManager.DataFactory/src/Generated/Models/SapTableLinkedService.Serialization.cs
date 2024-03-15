@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> language = default;
             DataFactoryElement<string> systemId = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
             DataFactoryElement<string> sncMode = default;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))

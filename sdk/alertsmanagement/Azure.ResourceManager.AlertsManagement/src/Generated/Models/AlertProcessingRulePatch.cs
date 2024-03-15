@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AlertsManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {

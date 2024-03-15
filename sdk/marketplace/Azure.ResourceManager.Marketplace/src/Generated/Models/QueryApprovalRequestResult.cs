@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.ResourceManager.Marketplace;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {

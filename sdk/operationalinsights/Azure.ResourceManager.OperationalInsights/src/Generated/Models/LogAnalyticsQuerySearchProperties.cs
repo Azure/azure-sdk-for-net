@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OperationalInsights;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DevTestLabs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {

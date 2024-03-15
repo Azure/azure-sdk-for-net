@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Communication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {

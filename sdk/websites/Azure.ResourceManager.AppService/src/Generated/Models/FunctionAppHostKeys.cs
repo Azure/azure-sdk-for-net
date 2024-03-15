@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {

@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> projectId = default;
             GoogleBigQueryV2AuthenticationType authenticationType = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecret clientSecret = default;
-            DataFactorySecret refreshToken = default;
-            DataFactorySecret keyFileContent = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecretBaseDefinition refreshToken = default;
+            DataFactorySecretBaseDefinition keyFileContent = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("refreshToken"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("keyFileContent"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            keyFileContent = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            keyFileContent = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {

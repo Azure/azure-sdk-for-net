@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DesktopVirtualization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
