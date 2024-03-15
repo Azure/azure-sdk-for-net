@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.VoiceServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByCommunicationsGatewayRequestUri(string subscriptionId, string resourceGroupName, string communicationsGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/communicationsGateways/", false);
+            uri.AppendPath(communicationsGatewayName, true);
+            uri.AppendPath("/testLines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByCommunicationsGatewayRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.VoiceServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/communicationsGateways/", false);
+            uri.AppendPath(communicationsGatewayName, true);
+            uri.AppendPath("/testLines/", false);
+            uri.AppendPath(testLineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
@@ -204,6 +235,22 @@ namespace Azure.ResourceManager.VoiceServices
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName, VoiceServicesTestLineData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/communicationsGateways/", false);
+            uri.AppendPath(communicationsGatewayName, true);
+            uri.AppendPath("/testLines/", false);
+            uri.AppendPath(testLineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName, VoiceServicesTestLineData data)
         {
             var message = _pipeline.CreateMessage();
@@ -288,6 +335,22 @@ namespace Azure.ResourceManager.VoiceServices
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/communicationsGateways/", false);
+            uri.AppendPath(communicationsGatewayName, true);
+            uri.AppendPath("/testLines/", false);
+            uri.AppendPath(testLineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName)
         {
             var message = _pipeline.CreateMessage();
@@ -364,6 +427,22 @@ namespace Azure.ResourceManager.VoiceServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName, VoiceServicesTestLinePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/communicationsGateways/", false);
+            uri.AppendPath(communicationsGatewayName, true);
+            uri.AppendPath("/testLines/", false);
+            uri.AppendPath(testLineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string communicationsGatewayName, string testLineName, VoiceServicesTestLinePatch patch)
@@ -456,6 +535,14 @@ namespace Azure.ResourceManager.VoiceServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCommunicationsGatewayNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string communicationsGatewayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCommunicationsGatewayNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string communicationsGatewayName)

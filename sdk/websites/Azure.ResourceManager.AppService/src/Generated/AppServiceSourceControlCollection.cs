@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceSourceControlRestClient.UpdateSourceControlAsync(sourceControlType, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()));
+                var uri = _appServiceSourceControlRestClient.CreateUpdateSourceControlRequestUri(sourceControlType, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceSourceControlRestClient.UpdateSourceControl(sourceControlType, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()));
+                var uri = _appServiceSourceControlRestClient.CreateUpdateSourceControlRequestUri(sourceControlType, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AppServiceSourceControlResource>(Response.FromValue(new AppServiceSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
