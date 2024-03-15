@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
     /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepRetrievalToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
+    /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepRetrievalToolCall"/>.
     /// </summary>
     public abstract partial class RunStepToolCall
     {
