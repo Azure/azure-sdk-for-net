@@ -1,11 +1,11 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2024-03-16)
 
 ### Features Added
 
+- Upgraded api-version to 'package-2023-11-13-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d6fcc46341f274b8af42a4cdcfa14e1f8d472619/specification/quantum/resource-manager/readme.md.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
 - Enable Azure quantum api key and connection string to access quantum workspaces.
 
 ### Breaking Changes

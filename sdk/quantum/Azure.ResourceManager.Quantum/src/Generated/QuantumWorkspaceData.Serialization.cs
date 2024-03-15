@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Quantum
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiKeyEnabled))
+            if (Optional.IsDefined(IsApiKeyEnabled))
             {
                 writer.WritePropertyName("apiKeyEnabled"u8);
-                writer.WriteBooleanValue(ApiKeyEnabled.Value);
+                writer.WriteBooleanValue(IsApiKeyEnabled.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.Quantum
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<Provider> providers = default;
-            UsableStatus? usable = default;
-            ProvisioningStatus? provisioningState = default;
+            IList<QuantumProvider> providers = default;
+            WorkspaceUsableStatus? usable = default;
+            QuantumProvisioningStatus? provisioningState = default;
             string storageAccount = default;
             Uri endpointUri = default;
             bool? apiKeyEnabled = default;
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            List<Provider> array = new List<Provider>();
+                            List<QuantumProvider> array = new List<QuantumProvider>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Provider.DeserializeProvider(item, options));
+                                array.Add(QuantumProvider.DeserializeQuantumProvider(item, options));
                             }
                             providers = array;
                             continue;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            usable = new UsableStatus(property0.Value.GetString());
+                            usable = new WorkspaceUsableStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Quantum
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningStatus(property0.Value.GetString());
+                            provisioningState = new QuantumProvisioningStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageAccount"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Quantum
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                providers ?? new ChangeTrackingList<Provider>(),
+                providers ?? new ChangeTrackingList<QuantumProvider>(),
                 usable,
                 provisioningState,
                 storageAccount,

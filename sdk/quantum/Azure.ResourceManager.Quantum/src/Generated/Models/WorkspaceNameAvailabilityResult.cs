@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The response of a list Providers operation. </summary>
-    internal partial class OfferingsListResult
+    /// <summary> Result of check name availability. </summary>
+    public partial class WorkspaceNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,29 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        internal OfferingsListResult()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityResult"/>. </summary>
+        internal WorkspaceNameAvailabilityResult()
         {
-            Value = new ChangeTrackingList<QuantumProviderDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        /// <param name="value"> Result of a list Providers operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
+        /// <param name="reason"> The reason of unavailability. </param>
+        /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            IsNameAvailable = isNameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<QuantumProviderDescription> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
-        public string NextLink { get; }
+        /// <summary> Indicator of availability of the Quantum Workspace resource name. </summary>
+        public bool? IsNameAvailable { get; }
+        /// <summary> The reason of unavailability. </summary>
+        public string Reason { get; }
+        /// <summary> The detailed info regarding the reason associated with the Namespace. </summary>
+        public string Message { get; }
     }
 }

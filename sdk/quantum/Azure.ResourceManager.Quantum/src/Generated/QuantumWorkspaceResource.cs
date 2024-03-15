@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListKeysResult>> GetKeysWorkspaceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkspaceKeyListResult>> GetKeysWorkspaceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
             scope.Start();
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListKeysResult> GetKeysWorkspace(CancellationToken cancellationToken = default)
+        public virtual Response<WorkspaceKeyListResult> GetKeysWorkspace(CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
             scope.Start();
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
-        public virtual async Task<Response> RegenerateKeysWorkspaceAsync(APIKeys keySpecification, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RegenerateKeysWorkspaceAsync(WorkspaceApiKeys keySpecification, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keySpecification, nameof(keySpecification));
 
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
-        public virtual Response RegenerateKeysWorkspace(APIKeys keySpecification, CancellationToken cancellationToken = default)
+        public virtual Response RegenerateKeysWorkspace(WorkspaceApiKeys keySpecification, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keySpecification, nameof(keySpecification));
 

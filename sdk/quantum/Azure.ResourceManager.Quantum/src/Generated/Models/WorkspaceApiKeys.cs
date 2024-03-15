@@ -11,8 +11,8 @@ using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The response of a list Providers operation. </summary>
-    internal partial class OfferingsListResult
+    /// <summary> List of api keys to be generated. </summary>
+    public partial class WorkspaceApiKeys
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +46,22 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        internal OfferingsListResult()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKeys"/>. </summary>
+        public WorkspaceApiKeys()
         {
-            Value = new ChangeTrackingList<QuantumProviderDescription>();
+            Keys = new ChangeTrackingList<WorkspaceKeyType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        /// <param name="value"> Result of a list Providers operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceApiKeys"/>. </summary>
+        /// <param name="keys"> A list of api key names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceApiKeys(IList<WorkspaceKeyType> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Keys = keys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<QuantumProviderDescription> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
-        public string NextLink { get; }
+        /// <summary> A list of api key names. </summary>
+        public IList<WorkspaceKeyType> Keys { get; }
     }
 }

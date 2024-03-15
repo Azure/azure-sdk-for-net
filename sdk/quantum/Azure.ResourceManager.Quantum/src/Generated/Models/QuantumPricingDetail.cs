@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The response of a list Providers operation. </summary>
-    internal partial class OfferingsListResult
+    /// <summary> Detailed pricing information for an sku. </summary>
+    public partial class QuantumPricingDetail
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,25 @@ namespace Azure.ResourceManager.Quantum.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        internal OfferingsListResult()
+        /// <summary> Initializes a new instance of <see cref="QuantumPricingDetail"/>. </summary>
+        internal QuantumPricingDetail()
         {
-            Value = new ChangeTrackingList<QuantumProviderDescription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
-        /// <param name="value"> Result of a list Providers operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
+        /// <summary> Initializes a new instance of <see cref="QuantumPricingDetail"/>. </summary>
+        /// <param name="id"> Unique id for this pricing information. </param>
+        /// <param name="value"> The unit cost of this sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferingsListResult(IReadOnlyList<QuantumProviderDescription> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuantumPricingDetail(string id, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Id = id;
             Value = value;
-            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of a list Providers operation. </summary>
-        public IReadOnlyList<QuantumProviderDescription> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </summary>
-        public string NextLink { get; }
+        /// <summary> Unique id for this pricing information. </summary>
+        public string Id { get; }
+        /// <summary> The unit cost of this sku. </summary>
+        public string Value { get; }
     }
 }

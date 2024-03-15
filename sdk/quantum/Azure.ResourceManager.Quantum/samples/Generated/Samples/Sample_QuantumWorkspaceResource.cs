@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quantum.Samples
             QuantumWorkspaceResource quantumWorkspace = client.GetQuantumWorkspaceResource(quantumWorkspaceResourceId);
 
             // invoke the operation
-            ListKeysResult result = await quantumWorkspace.GetKeysWorkspaceAsync();
+            WorkspaceKeyListResult result = await quantumWorkspace.GetKeysWorkspaceAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.Quantum.Samples
             QuantumWorkspaceResource quantumWorkspace = client.GetQuantumWorkspaceResource(quantumWorkspaceResourceId);
 
             // invoke the operation
-            APIKeys keySpecification = new APIKeys()
+            WorkspaceApiKeys keySpecification = new WorkspaceApiKeys()
             {
                 Keys =
 {
-KeyType.Primary,KeyType.Secondary
+WorkspaceKeyType.Primary,WorkspaceKeyType.Secondary
 },
             };
             await quantumWorkspace.RegenerateKeysWorkspaceAsync(keySpecification);

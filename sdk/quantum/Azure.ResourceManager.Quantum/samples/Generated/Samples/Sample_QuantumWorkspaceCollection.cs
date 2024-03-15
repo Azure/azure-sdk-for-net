@@ -154,15 +154,15 @@ namespace Azure.ResourceManager.Quantum.Samples
             {
                 Providers =
 {
-new Provider()
+new QuantumProvider()
 {
 ProviderId = "Honeywell",
 ProviderSku = "Basic",
-},new Provider()
+},new QuantumProvider()
 {
 ProviderId = "IonQ",
 ProviderSku = "Basic",
-},new Provider()
+},new QuantumProvider()
 {
 ProviderId = "OneQBit",
 ProviderSku = "Basic",
