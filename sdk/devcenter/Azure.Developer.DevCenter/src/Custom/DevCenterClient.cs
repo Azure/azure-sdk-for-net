@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Developer.DevCenter
 {
     public partial class DevCenterClient
-    { 
+    {
         private readonly DevCenterClientOptions _options;
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
