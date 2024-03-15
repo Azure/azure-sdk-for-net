@@ -22,6 +22,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
         [Test]
         [AsyncOnly]
+        [Ignore("Test is failing in playback mode due to an issue with LRO not completing")]
         public async Task PurchaseAndReleaseAsync()
         {
             if (SkipPhoneNumberLiveTests)
@@ -108,6 +109,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
         [Test]
         [SyncOnly]
+        [Ignore("Test is failing in playback mode due to an issue with LRO not completing")]
         public void PurchaseAndRelease()
         {
             if (SkipPhoneNumberLiveTests)

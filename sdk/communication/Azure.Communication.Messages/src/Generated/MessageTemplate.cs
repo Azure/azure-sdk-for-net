@@ -87,7 +87,7 @@ namespace Azure.Communication.Messages
         /// <summary>
         /// The template values.
         /// Please note <see cref="MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/> and <see cref="MessageTemplateQuickAction"/>.
+        /// The available derived classes include <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateLocation"/>, <see cref="MessageTemplateQuickAction"/>, <see cref="MessageTemplateText"/> and <see cref="MessageTemplateVideo"/>.
         /// </summary>
         public IList<MessageTemplateValue> Values { get; }
         /// <summary>
