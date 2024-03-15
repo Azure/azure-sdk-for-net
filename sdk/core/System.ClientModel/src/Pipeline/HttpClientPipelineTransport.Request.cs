@@ -139,9 +139,9 @@ public partial class HttpClientPipelineTransport
 
         private static HttpContent? GetHttpRequestMessageContent(BinaryContent? content, CancellationToken cancellationToken)
         {
-            if (content is BinaryContent.HttpContentBinaryContent httpContent)
+            if (content is MultipartFormDataBinaryContent multipartContent)
             {
-                return httpContent.HttpContent;
+                return multipartContent.HttpContent;
             }
 
             if (content is not null)
