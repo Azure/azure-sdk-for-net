@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
-                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);
                     case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element, options);
-                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
                     case "function": return ChatRequestFunctionMessage.DeserializeChatRequestFunctionMessage(element, options);
+                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
+                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
+                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);
                 }
             }
             return UnknownChatRequestMessage.DeserializeUnknownChatRequestMessage(element, options);
