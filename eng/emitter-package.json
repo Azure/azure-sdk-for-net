@@ -10,7 +10,6 @@
     "@typespec/versioning": "0.54.0",
     "@azure-tools/typespec-client-generator-core": "0.40.0",
     "@typespec/compiler": "0.54.0",
-    "@typespec/openapi": "0.54.0",
-    "@typespec/json-schema": "0.54.0"
+    "@typespec/openapi": "0.54.0"
   }
 }
