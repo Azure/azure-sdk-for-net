@@ -22,14 +22,16 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Upload-SourceArtifact($packagename, $filePath, $apiLabel, $releaseStatus, $packageVersion)
+function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVersion)
 {
     Write-Host "File path: $filePath"
+    $fileName = Split-Path -Leaf $filePath
+    Write-Host "File name: $fileName"
     $multipartContent = [System.Net.Http.MultipartFormDataContent]::new()
     $FileStream = [System.IO.FileStream]::new($filePath, [System.IO.FileMode]::Open)
     $fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
     $fileHeader.Name = "file"
-    $fileHeader.FileName = $packagename
+    $fileHeader.FileName = $fileName
     $fileContent = [System.Net.Http.StreamContent]::new($FileStream)
     $fileContent.Headers.ContentDisposition = $fileHeader
     $fileContent.Headers.ContentType = [System.Net.Http.Headers.MediaTypeHeaderValue]::Parse("application/octet-stream")
@@ -50,14 +52,12 @@ function Upload-SourceArtifact($packagename, $filePath, $apiLabel, $releaseStatu
     $multipartContent.Add($versionContent)
     Write-Host "Request param, packageVersion: $packageVersion"
     
-    if ($MarkPackageAsShipped) {
-        $releaseTagParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
-        $releaseTagParam.Name = "setReleaseTag"
-        $releaseTagParamContent = [System.Net.Http.StringContent]::new($true)
-        $releaseTagParamContent.Headers.ContentDisposition = $releaseTagParam
-        $multipartContent.Add($releaseTagParamContent)
-        Write-Host "Request param, setReleaseTag: true"
-    }
+    $releaseTagParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+    $releaseTagParam.Name = "setReleaseTag"
+    $releaseTagParamContent = [System.Net.Http.StringContent]::new($MarkPackageAsShipped)
+    $releaseTagParamContent.Headers.ContentDisposition = $releaseTagParam
+    $multipartContent.Add($releaseTagParamContent)
+    Write-Host "Request param, setReleaseTag: $MarkPackageAsShipped"
 
     if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
     {
@@ -149,7 +149,7 @@ function Submit-APIReview($packageInfo, $packagePath)
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
-        return Upload-SourceArtifact $packagename $packagePath $apiLabel $packageInfo.ReleaseStatus $packageInfo.Version
+        return Upload-SourceArtifact $packagePath $apiLabel $packageInfo.ReleaseStatus $packageInfo.Version
     }
 }
 
