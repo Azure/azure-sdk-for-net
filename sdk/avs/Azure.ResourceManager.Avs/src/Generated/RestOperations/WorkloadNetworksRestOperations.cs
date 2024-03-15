@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Avs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/", false);
+            uri.AppendPath(workloadNetworkName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +139,21 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -202,6 +233,21 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListSegmentsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/segments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSegmentsRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -279,6 +325,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSegmentRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/segments/", false);
+            uri.AppendPath(segmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSegmentRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId)
@@ -369,6 +431,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateSegmentsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/segments/", false);
+            uri.AppendPath(segmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateSegmentsRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -451,6 +529,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSegmentsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/segments/", false);
+            uri.AppendPath(segmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSegmentsRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
@@ -537,6 +631,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSegmentRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/segments/", false);
+            uri.AppendPath(segmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSegmentRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId)
         {
             var message = _pipeline.CreateMessage();
@@ -613,6 +723,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dhcpConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -692,6 +817,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
+            uri.AppendPath(dhcpId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
@@ -782,6 +923,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
+            uri.AppendPath(dhcpId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
         {
             var message = _pipeline.CreateMessage();
@@ -864,6 +1021,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
+            uri.AppendPath(dhcpId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
@@ -950,6 +1123,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dhcpConfigurations/", false);
+            uri.AppendPath(dhcpId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId)
         {
             var message = _pipeline.CreateMessage();
@@ -1026,6 +1215,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListGatewaysRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/gateways", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListGatewaysRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -1105,6 +1309,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetGatewayRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/gateways/", false);
+            uri.AppendPath(gatewayId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetGatewayRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId)
@@ -1195,6 +1415,21 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListPortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/portMirroringProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -1272,6 +1507,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
+            uri.AppendPath(portMirroringId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
@@ -1362,6 +1613,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreatePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
+            uri.AppendPath(portMirroringId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreatePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1444,6 +1711,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdatePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
+            uri.AppendPath(portMirroringId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdatePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
@@ -1530,6 +1813,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeletePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/portMirroringProfiles/", false);
+            uri.AppendPath(portMirroringId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeletePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId)
         {
             var message = _pipeline.CreateMessage();
@@ -1606,6 +1905,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVmGroupsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/vmGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListVmGroupsRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -1685,6 +1999,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
+            uri.AppendPath(vmGroupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
@@ -1775,6 +2105,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
+            uri.AppendPath(vmGroupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1857,6 +2203,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
+            uri.AppendPath(vmGroupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
@@ -1943,6 +2305,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeleteVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/vmGroups/", false);
+            uri.AppendPath(vmGroupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
         {
             var message = _pipeline.CreateMessage();
@@ -2019,6 +2397,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVirtualMachinesRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/virtualMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListVirtualMachinesRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -2098,6 +2491,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVirtualMachineRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string virtualMachineId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/virtualMachines/", false);
+            uri.AppendPath(virtualMachineId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetVirtualMachineRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string virtualMachineId)
@@ -2188,6 +2597,21 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListDnsServicesRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListDnsServicesRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -2265,6 +2689,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
+            uri.AppendPath(dnsServiceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
@@ -2355,6 +2795,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
+            uri.AppendPath(dnsServiceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -2437,6 +2893,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
+            uri.AppendPath(dnsServiceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
@@ -2523,6 +2995,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsServices/", false);
+            uri.AppendPath(dnsServiceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId)
         {
             var message = _pipeline.CreateMessage();
@@ -2599,6 +3087,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDnsZonesRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsZones", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDnsZonesRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -2678,6 +3181,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
+            uri.AppendPath(dnsZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
@@ -2768,6 +3287,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreateDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
+            uri.AppendPath(dnsZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
         {
             var message = _pipeline.CreateMessage();
@@ -2850,6 +3385,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
+            uri.AppendPath(dnsZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
@@ -2936,6 +3487,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/dnsZones/", false);
+            uri.AppendPath(dnsZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
         {
             var message = _pipeline.CreateMessage();
@@ -3012,6 +3579,21 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPublicIPsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/publicIPs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPublicIPsRequest(string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -3091,6 +3673,22 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPublicIPRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
+            uri.AppendPath(publicIPId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPublicIPRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
@@ -3181,6 +3779,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateCreatePublicIPRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, WorkloadNetworkPublicIPData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
+            uri.AppendPath(publicIPId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreatePublicIPRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, WorkloadNetworkPublicIPData data)
         {
             var message = _pipeline.CreateMessage();
@@ -3265,6 +3879,22 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateDeletePublicIPRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AVS/privateClouds/", false);
+            uri.AppendPath(privateCloudName, true);
+            uri.AppendPath("/workloadNetworks/default/publicIPs/", false);
+            uri.AppendPath(publicIPId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeletePublicIPRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
         {
             var message = _pipeline.CreateMessage();
@@ -3343,6 +3973,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -3417,6 +4055,14 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSegmentsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSegmentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -3495,6 +4141,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListDhcpNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListDhcpNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -3569,6 +4223,14 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListGatewaysNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListGatewaysNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -3647,6 +4309,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListPortMirroringNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListPortMirroringNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -3721,6 +4391,14 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVmGroupsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListVmGroupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -3799,6 +4477,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListVirtualMachinesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListVirtualMachinesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -3873,6 +4559,14 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDnsServicesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListDnsServicesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
@@ -3951,6 +4645,14 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        internal RequestUriBuilder CreateListDnsZonesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListDnsZonesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var message = _pipeline.CreateMessage();
@@ -4025,6 +4727,14 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPublicIPsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPublicIPsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName)
