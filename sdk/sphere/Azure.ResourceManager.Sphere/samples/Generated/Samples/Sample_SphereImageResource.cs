@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ImagesGet()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/GetImage.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/GetImage.json
             // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup1";
             string catalogName = "MyCatalog1";
-            string imageName = "myImageId";
+            string imageName = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier sphereImageResourceId = SphereImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName, imageName);
             SphereImageResource sphereImage = client.GetSphereImageResource(sphereImageResourceId);
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ImageCreateOrUpdate()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/PutImage.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/PutImage.json
             // this example is just showing the usage of "Images_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup1";
             string catalogName = "MyCatalog1";
-            string imageName = "default";
+            string imageName = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier sphereImageResourceId = SphereImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName, imageName);
             SphereImageResource sphereImage = client.GetSphereImageResource(sphereImageResourceId);
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ImagesDelete()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/DeleteImage.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/DeleteImage.json
             // this example is just showing the usage of "Images_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup1";
             string catalogName = "MyCatalog1";
-            string imageName = "imageID";
+            string imageName = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier sphereImageResourceId = SphereImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName, imageName);
             SphereImageResource sphereImage = client.GetSphereImageResource(sphereImageResourceId);
 
