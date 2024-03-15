@@ -59,7 +59,7 @@ namespace Azure.Core.TestFramework
             s_dotNetExe = Path.Combine(installDir, dotNetExeName);
 
             bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-            s_enableDebugProxyLogging = TestEnvironment.EnableDebugProxyLogging;
+            s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
         }
 
         private TestProxy(string proxyPath, bool debugMode = false)
