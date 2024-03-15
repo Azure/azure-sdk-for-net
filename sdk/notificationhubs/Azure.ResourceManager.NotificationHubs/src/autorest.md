@@ -30,43 +30,51 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
 
 rename-mapping:
+  NamespaceResource: NotificationHubNamespace
   NamespaceResource.properties.serviceBusEndpoint: -|uri
-  ApnsCredential.properties.endpoint: -|uri
-  BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
-  GcmCredential.properties.gcmEndpoint: -|uri
-  GcmCredential.properties.googleApiKey: gcmApiKey
-  WnsCredential.properties.windowsLiveEndpoint: -|uri
-  NotificationHubResource.properties.registrationTtl: -|duration-constant
-  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|date-time
-  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|date-time
-  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|date-time
-  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|date-time
   NamespaceResource.properties.enabled: IsEnabled
   NamespaceResource.properties.critical: IsCritical
+  NamespaceResource.properties.provisioningState: OperationProvisioningState
+  NamespaceResource.properties.status: NamespaceStatus
+  NamespaceResource.properties.namespaceType: HubNamespaceType
   ApnsCredential: NotificationHubApnsCredential
-  WnsCredential: NotificationHubWnsCredential
-  GcmCredential: NotificationHubGcmCredential
-  MpnsCredential: NotificationHubMpnsCredential
-  AdmCredential: NotificationHubAdmCredential
+  ApnsCredential.properties.endpoint: -|uri
+  ApnsCredential.properties.thumbprint: ThumbprintString
   BaiduCredential: NotificationHubBaiduCredential
-  AccessRights: AuthorizationRuleAccessRight
-  NamespaceResource: NotificationHubNamespace
+  BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
+  GcmCredential: NotificationHubGcmCredential
+  GcmCredential.properties.gcmEndpoint: -|uri
+  GcmCredential.properties.googleApiKey: gcmApiKey
+  WnsCredential: NotificationHubWnsCredential
+  WnsCredential.properties.windowsLiveEndpoint: -|uri
   NotificationHubResource: NotificationHub
+  NotificationHubResource.properties.registrationTtl: -|duration-constant
   SharedAccessAuthorizationRuleResource: NotificationHubAuthorizationRule
+  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|date-time
+  SharedAccessAuthorizationRuleResource.properties.rights: AccessRights
+  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|date-time
+  MpnsCredential: NotificationHubMpnsCredential
+  MpnsCredential.properties.thumbprint: ThumbprintString
+  AdmCredential: NotificationHubAdmCredential
+  AccessRights: AuthorizationRuleAccessRightExt
   CheckAvailabilityParameters: NotificationHubAvailabilityContent
   CheckAvailabilityResult: NotificationHubAvailabilityResult
   DebugSendResponse: NotificationHubTestSendResult
+  DebugSendResponse.properties.results: FailureDescription
   NamespaceListResult: NotificationHubNamespaceListResult
-  NamespaceType: NotificationHubNamespaceType
+  NamespaceType: NotificationHubNamespaceTypeExt
   PnsCredentialsResource: NotificationHubPnsCredentials
   PolicyKeyResource: NotificationHubPolicyKey
   ResourceListKeys: NotificationHubResourceKeys
   Sku: NotificationHubSku
   SkuName: NotificationHubSkuName
-  ApnsCredential.properties.thumbprint: ThumbprintString
-  MpnsCredential.properties.thumbprint: ThumbprintString
-  NamespaceResource.properties.provisioningState: OperationProvisioningState
-  NamespaceResource.properties.status: NamespaceStatus
+  IpRule: NotificationHubIPRule
+  IpRule.rights: AccessRights
+  NetworkAcls: NotificationHubNetworkAcls
+  PublicInternetAuthorizationRule.rights: AccessRights
+  SharedAccessAuthorizationRuleProperties.rights: AccessRights
 
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
@@ -115,7 +123,6 @@ directive:
   where: $.definitions
   transform: >
     $.NotificationHubProperties.properties.authorizationRules['readOnly'] = false;
-    $.NamespaceType['x-ms-enum']['modelAsString'] = false;
     $.NamespaceProperties.properties.createdAt['readOnly'] = false;
     $.NamespaceProperties.properties.critical['readOnly'] = false;
     $.NamespaceProperties.properties.enabled['readOnly'] = false;

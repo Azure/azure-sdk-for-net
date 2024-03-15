@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             string authorizationRuleName = "MyManageSharedAccessKey";
             NotificationHubAuthorizationRuleData data = new NotificationHubAuthorizationRuleData(new AzureLocation("placeholder"))
             {
-                Rights =
+                AccessRights =
 {
-AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
+AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 },
             };
             ArmOperation<NotificationHubAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);

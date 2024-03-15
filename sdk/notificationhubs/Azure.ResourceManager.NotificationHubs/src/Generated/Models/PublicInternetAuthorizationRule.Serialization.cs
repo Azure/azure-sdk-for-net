@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rights"u8);
             writer.WriteStartArray();
-            foreach (var item in Rights)
+            foreach (var item in AccessRights)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IList<AuthorizationRuleAccessRight> rights = default;
+            IList<AuthorizationRuleAccessRightExt> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rights"u8))
                 {
-                    List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
+                    List<AuthorizationRuleAccessRightExt> array = new List<AuthorizationRuleAccessRightExt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AuthorizationRuleAccessRight(item.GetString()));
+                        array.Add(new AuthorizationRuleAccessRightExt(item.GetString()));
                     }
                     rights = array;
                     continue;

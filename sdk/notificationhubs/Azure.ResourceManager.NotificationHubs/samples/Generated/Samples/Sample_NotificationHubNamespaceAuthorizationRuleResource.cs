@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             // invoke the operation
             NotificationHubAuthorizationRuleData data = new NotificationHubAuthorizationRuleData(new AzureLocation("placeholder"))
             {
-                Rights =
+                AccessRights =
 {
-AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
+AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 },
             };
             ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> lro = await notificationHubNamespaceAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
@@ -169,7 +169,7 @@ AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
             NotificationHubNamespaceAuthorizationRuleResource notificationHubNamespaceAuthorizationRule = client.GetNotificationHubNamespaceAuthorizationRuleResource(notificationHubNamespaceAuthorizationRuleResourceId);
 
             // invoke the operation
-            NotificationHubPolicyKey notificationHubPolicyKey = new NotificationHubPolicyKey(PolicyKeyType.PrimaryKey);
+            NotificationHubPolicyKey notificationHubPolicyKey = new NotificationHubPolicyKey("PrimaryKey");
             NotificationHubResourceKeys result = await notificationHubNamespaceAuthorizationRule.RegenerateKeysAsync(notificationHubPolicyKey);
 
             Console.WriteLine($"Succeeded: {result}");

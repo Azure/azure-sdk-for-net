@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class IPRule : IUtf8JsonSerializable, IJsonModel<IPRule>
+    public partial class NotificationHubIPRule : IUtf8JsonSerializable, IJsonModel<NotificationHubIPRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubIPRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<IPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubIPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubIPRule)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStringValue(IPMask);
             writer.WritePropertyName("rights"u8);
             writer.WriteStartArray();
-            foreach (var item in Rights)
+            foreach (var item in AccessRights)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        IPRule IJsonModel<IPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubIPRule IJsonModel<NotificationHubIPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubIPRule)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPRule(document.RootElement, options);
+            return DeserializeNotificationHubIPRule(document.RootElement, options);
         }
 
-        internal static IPRule DeserializeIPRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubIPRule DeserializeNotificationHubIPRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             string ipMask = default;
-            IList<AuthorizationRuleAccessRight> rights = default;
+            IList<AuthorizationRuleAccessRightExt> rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (property.NameEquals("rights"u8))
                 {
-                    List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
+                    List<AuthorizationRuleAccessRightExt> array = new List<AuthorizationRuleAccessRightExt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AuthorizationRuleAccessRight(item.GetString()));
+                        array.Add(new AuthorizationRuleAccessRightExt(item.GetString()));
                     }
                     rights = array;
                     continue;
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPRule(ipMask, rights, serializedAdditionalRawData);
+            return new NotificationHubIPRule(ipMask, rights, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubIPRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubIPRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubIPRule)} does not support '{options.Format}' format.");
             }
         }
 
-        IPRule IPersistableModel<IPRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubIPRule IPersistableModel<NotificationHubIPRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubIPRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPRule(document.RootElement, options);
+                        return DeserializeNotificationHubIPRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubIPRule)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubIPRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rights"u8);
             writer.WriteStartArray();
-            foreach (var item in Rights)
+            foreach (var item in AccessRights)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IList<AuthorizationRuleAccessRight> rights = default;
+            IList<AuthorizationRuleAccessRightExt> rights = default;
             string primaryKey = default;
             string secondaryKey = default;
             string keyName = default;
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 if (property.NameEquals("rights"u8))
                 {
-                    List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
+                    List<AuthorizationRuleAccessRightExt> array = new List<AuthorizationRuleAccessRightExt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AuthorizationRuleAccessRight(item.GetString()));
+                        array.Add(new AuthorizationRuleAccessRightExt(item.GetString()));
                     }
                     rights = array;
                     continue;

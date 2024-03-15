@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             string authorizationRuleName = "sdk-AuthRules-1788";
             NotificationHubAuthorizationRuleData data = new NotificationHubAuthorizationRuleData(new AzureLocation("placeholder"))
             {
-                Rights =
+                AccessRights =
 {
-AuthorizationRuleAccessRight.Listen,AuthorizationRuleAccessRight.Send
+AuthorizationRuleAccessRightExt.Listen,AuthorizationRuleAccessRightExt.Send
 },
             };
             ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);

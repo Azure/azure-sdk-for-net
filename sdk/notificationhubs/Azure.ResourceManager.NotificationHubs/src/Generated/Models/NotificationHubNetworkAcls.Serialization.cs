@@ -14,16 +14,16 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NetworkAcls : IUtf8JsonSerializable, IJsonModel<NetworkAcls>
+    public partial class NotificationHubNetworkAcls : IUtf8JsonSerializable, IJsonModel<NotificationHubNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNetworkAcls)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        NetworkAcls IJsonModel<NetworkAcls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubNetworkAcls IJsonModel<NotificationHubNetworkAcls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNetworkAcls)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkAcls(document.RootElement, options);
+            return DeserializeNotificationHubNetworkAcls(document.RootElement, options);
         }
 
-        internal static NetworkAcls DeserializeNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubNetworkAcls DeserializeNotificationHubNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IList<IPRule> ipRules = default;
+            IList<NotificationHubIPRule> ipRules = default;
             PublicInternetAuthorizationRule publicNetworkRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<NotificationHubIPRule> array = new List<NotificationHubIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item, options));
+                        array.Add(NotificationHubIPRule.DeserializeNotificationHubIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAcls(ipRules ?? new ChangeTrackingList<IPRule>(), publicNetworkRule, serializedAdditionalRawData);
+            return new NotificationHubNetworkAcls(ipRules ?? new ChangeTrackingList<NotificationHubIPRule>(), publicNetworkRule, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkAcls>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubNetworkAcls>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNetworkAcls)} does not support '{options.Format}' format.");
             }
         }
 
-        NetworkAcls IPersistableModel<NetworkAcls>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubNetworkAcls IPersistableModel<NotificationHubNetworkAcls>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkAcls(document.RootElement, options);
+                        return DeserializeNotificationHubNetworkAcls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNetworkAcls)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkAcls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubNetworkAcls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

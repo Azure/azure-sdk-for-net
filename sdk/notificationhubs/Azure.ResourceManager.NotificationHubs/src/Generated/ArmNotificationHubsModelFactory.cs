@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedAccessAuthorizationRuleProperties"/>. </summary>
-        /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
+        /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
         /// <param name="primaryKey">
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="claimValue"> Gets a string that describes the claim value. </param>
         /// <param name="revision"> Gets the revision number for the rule. </param>
         /// <returns> A new <see cref="Models.SharedAccessAuthorizationRuleProperties"/> instance for mocking. </returns>
-        public static SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? createdOn = null, string claimType = null, string claimValue = null, int? revision = null)
+        public static SharedAccessAuthorizationRuleProperties SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRightExt> accessRights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? createdOn = null, string claimType = null, string claimValue = null, int? revision = null)
         {
-            rights ??= new List<AuthorizationRuleAccessRight>();
+            accessRights ??= new List<AuthorizationRuleAccessRightExt>();
 
             return new SharedAccessAuthorizationRuleProperties(
-                rights?.ToList(),
+                accessRights?.ToList(),
                 primaryKey,
                 secondaryKey,
                 keyName,
@@ -155,47 +155,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 claimType,
                 claimValue,
                 revision,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPatch"/>. </summary>
-        /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="notificationHubName"> Gets or sets the NotificationHub name. </param>
-        /// <param name="registrationTtl"> Gets or sets the RegistrationTtl of the created NotificationHub. </param>
-        /// <param name="authorizationRules"> Gets or sets the AuthorizationRules of the created NotificationHub. </param>
-        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
-        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
-        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
-        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
-        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
-        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
-        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
-        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
-        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
-        /// <param name="dailyMaxActiveDevices"></param>
-        /// <returns> A new <see cref="Models.NotificationHubPatch"/> instance for mocking. </returns>
-        public static NotificationHubPatch NotificationHubPatch(NotificationHubSku sku = null, IDictionary<string, string> tags = null, string notificationHubName = null, TimeSpan? registrationTtl = null, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules = null, NotificationHubApnsCredential apnsCredential = null, NotificationHubWnsCredential wnsCredential = null, NotificationHubGcmCredential gcmCredential = null, NotificationHubMpnsCredential mpnsCredential = null, NotificationHubAdmCredential admCredential = null, NotificationHubBaiduCredential baiduCredential = null, BrowserCredential browserCredential = null, XiaomiCredential xiaomiCredential = null, FcmV1Credential fcmV1Credential = null, long? dailyMaxActiveDevices = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            authorizationRules ??= new List<SharedAccessAuthorizationRuleProperties>();
-
-            return new NotificationHubPatch(
-                sku,
-                tags,
-                notificationHubName,
-                registrationTtl,
-                authorizationRules?.ToList(),
-                apnsCredential,
-                wnsCredential,
-                gcmCredential,
-                mpnsCredential,
-                admCredential,
-                baiduCredential,
-                browserCredential,
-                xiaomiCredential,
-                fcmV1Credential,
-                dailyMaxActiveDevices,
                 serializedAdditionalRawData: null);
         }
 
@@ -208,12 +167,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="location"> The location. </param>
         /// <param name="success"> Gets or sets successful send. </param>
         /// <param name="failure"> Gets or sets send failure. </param>
-        /// <param name="results"> Gets or sets actual failure description. </param>
+        /// <param name="failureDescription"> Gets or sets actual failure description. </param>
         /// <returns> A new <see cref="Models.NotificationHubTestSendResult"/> instance for mocking. </returns>
-        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? success = null, long? failure = null, IEnumerable<RegistrationResult> results = null)
+        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? success = null, int? failure = null, IEnumerable<RegistrationResult> failureDescription = null)
         {
             tags ??= new Dictionary<string, string>();
-            results ??= new List<RegistrationResult>();
+            failureDescription ??= new List<RegistrationResult>();
 
             return new NotificationHubTestSendResult(
                 id,
@@ -224,7 +183,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 location,
                 success,
                 failure,
-                results?.ToList(),
+                failureDescription?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -246,7 +205,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
+        /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
         /// <param name="primaryKey">
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
@@ -262,10 +221,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="claimValue"> Gets a string that describes the claim value. </param>
         /// <param name="revision"> Gets the revision number for the rule. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubAuthorizationRuleData"/> instance for mocking. </returns>
-        public static NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<AuthorizationRuleAccessRight> rights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? createdOn = null, string claimType = null, string claimValue = null, int? revision = null)
+        public static NotificationHubAuthorizationRuleData NotificationHubAuthorizationRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<AuthorizationRuleAccessRightExt> accessRights = null, string primaryKey = null, string secondaryKey = null, string keyName = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? createdOn = null, string claimType = null, string claimValue = null, int? revision = null)
         {
             tags ??= new Dictionary<string, string>();
-            rights ??= new List<AuthorizationRuleAccessRight>();
+            accessRights ??= new List<AuthorizationRuleAccessRightExt>();
 
             return new NotificationHubAuthorizationRuleData(
                 id,
@@ -274,7 +233,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 tags,
                 location,
-                rights?.ToList(),
+                accessRights?.ToList(),
                 primaryKey,
                 secondaryKey,
                 keyName,
@@ -371,7 +330,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="metricId"> Azure Insights Metrics id. </param>
         /// <param name="createdOn"> Time when the namespace was created. </param>
         /// <param name="updatedOn"> Time when the namespace was updated. </param>
-        /// <param name="namespaceType"> Defines values for NamespaceType. </param>
+        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
         /// <param name="replicationRegion"> Allowed replication region. </param>
         /// <param name="zoneRedundancy"> Namespace SKU name. </param>
         /// <param name="networkAcls"> A collection of network authorization rules. </param>
@@ -385,7 +344,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? operationProvisioningState = null, NamespaceStatus? namespaceStatus = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceType? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? operationProvisioningState = null, NamespaceStatus? namespaceStatus = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? hubNamespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PrivateEndpointConnectionResourceData>();
@@ -408,7 +367,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 metricId,
                 createdOn,
                 updatedOn,
-                namespaceType,
+                hubNamespaceType,
                 replicationRegion,
                 zoneRedundancy,
                 networkAcls,
@@ -452,7 +411,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <returns> A new <see cref="Models.NamespaceProperties"/> instance for mocking. </returns>
-        public static NamespaceProperties NamespaceProperties(string namespaceName = null, OperationProvisioningState? provisioningState = null, NamespaceStatus? status = null, bool? enabled = null, bool? critical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceType? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static NamespaceProperties NamespaceProperties(string namespaceName = null, OperationProvisioningState? provisioningState = null, NamespaceStatus? status = null, bool? enabled = null, bool? critical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionResourceData>();
 

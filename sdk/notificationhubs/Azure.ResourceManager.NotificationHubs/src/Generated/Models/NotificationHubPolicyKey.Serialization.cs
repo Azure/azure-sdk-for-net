@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("policyKey"u8);
-            writer.WriteStringValue(PolicyKey.ToString());
+            writer.WriteStringValue(PolicyKey);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            PolicyKeyType policyKey = default;
+            string policyKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyKey"u8))
                 {
-                    policyKey = new PolicyKeyType(property.Value.GetString());
+                    policyKey = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

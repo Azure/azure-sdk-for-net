@@ -75,11 +75,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/> for deserialization. </summary>
-        internal NotificationHubAdmCredential()
-        {
-        }
-
         /// <summary> Gets or sets the client identifier. </summary>
         public string ClientId { get; set; }
         /// <summary> Gets or sets the credential secret access key. </summary>

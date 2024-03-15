@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubResource notificationHub = client.GetNotificationHubResource(notificationHubResourceId);
 
             // invoke the operation
-            NotificationHubPatch patch = new NotificationHubPatch()
+            NotificationHubPatch patch = new NotificationHubPatch(new AzureLocation("placeholder"))
             {
                 RegistrationTtl = TimeSpan.Parse("10675199.02:48:05.4775807"),
                 GcmCredential = new NotificationHubGcmCredential("###################################")

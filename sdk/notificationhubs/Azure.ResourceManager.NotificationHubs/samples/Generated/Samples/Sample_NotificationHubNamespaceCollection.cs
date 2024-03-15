@@ -156,18 +156,18 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             })
             {
                 ZoneRedundancy = ZoneRedundancyPreference.Enabled,
-                NetworkAcls = new NetworkAcls()
+                NetworkAcls = new NotificationHubNetworkAcls()
                 {
                     IPRules =
 {
-new IPRule("185.48.100.00/24",new AuthorizationRuleAccessRight[]
+new NotificationHubIPRule("185.48.100.00/24",new AuthorizationRuleAccessRightExt[]
 {
-AuthorizationRuleAccessRight.Manage,AuthorizationRuleAccessRight.Send,AuthorizationRuleAccessRight.Listen
+AuthorizationRuleAccessRightExt.Manage,AuthorizationRuleAccessRightExt.Send,AuthorizationRuleAccessRightExt.Listen
 })
 },
-                    PublicNetworkRuleRights =
+                    PublicNetworkRuleAccessRights =
 {
-AuthorizationRuleAccessRight.Listen
+AuthorizationRuleAccessRightExt.Listen
 },
                 },
                 Tags =

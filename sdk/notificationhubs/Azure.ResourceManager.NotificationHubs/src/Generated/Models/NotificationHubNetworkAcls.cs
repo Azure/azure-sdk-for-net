@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> A network authorization rule that filters traffic based on IP address. </summary>
-    public partial class IPRule
+    /// <summary> A collection of network authorization rules. </summary>
+    public partial class NotificationHubNetworkAcls
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,38 +46,32 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPRule"/>. </summary>
-        /// <param name="ipMask"> IP mask. </param>
-        /// <param name="rights"> List of access rights. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipMask"/> or <paramref name="rights"/> is null. </exception>
-        public IPRule(string ipMask, IEnumerable<AuthorizationRuleAccessRight> rights)
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNetworkAcls"/>. </summary>
+        public NotificationHubNetworkAcls()
         {
-            Argument.AssertNotNull(ipMask, nameof(ipMask));
-            Argument.AssertNotNull(rights, nameof(rights));
-
-            IPMask = ipMask;
-            Rights = rights.ToList();
+            IPRules = new ChangeTrackingList<NotificationHubIPRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPRule"/>. </summary>
-        /// <param name="ipMask"> IP mask. </param>
-        /// <param name="rights"> List of access rights. </param>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNetworkAcls"/>. </summary>
+        /// <param name="ipRules"> List of IP rules. </param>
+        /// <param name="publicNetworkRule"> A default (public Internet) network authorization rule, which contains rights if no other network rule matches. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPRule(string ipMask, IList<AuthorizationRuleAccessRight> rights, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubNetworkAcls(IList<NotificationHubIPRule> ipRules, PublicInternetAuthorizationRule publicNetworkRule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IPMask = ipMask;
-            Rights = rights;
+            IPRules = ipRules;
+            PublicNetworkRule = publicNetworkRule;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPRule"/> for deserialization. </summary>
-        internal IPRule()
-        {
-        }
-
-        /// <summary> IP mask. </summary>
-        public string IPMask { get; set; }
+        /// <summary> List of IP rules. </summary>
+        public IList<NotificationHubIPRule> IPRules { get; }
+        /// <summary> A default (public Internet) network authorization rule, which contains rights if no other network rule matches. </summary>
+        internal PublicInternetAuthorizationRule PublicNetworkRule { get; set; }
         /// <summary> List of access rights. </summary>
-        public IList<AuthorizationRuleAccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRightExt> PublicNetworkRuleAccessRights
+        {
+            get => PublicNetworkRule is null ? default : PublicNetworkRule.AccessRights;
+            set => PublicNetworkRule = new PublicInternetAuthorizationRule(value);
+        }
     }
 }

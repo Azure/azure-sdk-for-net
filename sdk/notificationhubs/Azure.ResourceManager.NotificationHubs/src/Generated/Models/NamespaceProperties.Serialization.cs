@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(NamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
-                writer.WriteStringValue(NamespaceType.Value.ToSerialString());
+                writer.WriteStringValue(NamespaceType.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationRegion))
             {
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             string metricId = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? updatedAt = default;
-            NotificationHubNamespaceType? namespaceType = default;
+            NotificationHubNamespaceTypeExt? namespaceType = default;
             ReplicationRegion? replicationRegion = default;
             ZoneRedundancyPreference? zoneRedundancy = default;
-            NetworkAcls networkAcls = default;
+            NotificationHubNetworkAcls networkAcls = default;
             PnsCredentials pnsCredentials = default;
             Uri serviceBusEndpoint = default;
             IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    namespaceType = property.Value.GetString().ToNotificationHubNamespaceType();
+                    namespaceType = new NotificationHubNamespaceTypeExt(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationRegion"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    networkAcls = NetworkAcls.DeserializeNetworkAcls(property.Value, options);
+                    networkAcls = NotificationHubNetworkAcls.DeserializeNotificationHubNetworkAcls(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pnsCredentials"u8))

@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
-        /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rights"/> is null. </exception>
-        public SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRight> rights)
+        /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessRights"/> is null. </exception>
+        public SharedAccessAuthorizationRuleProperties(IEnumerable<AuthorizationRuleAccessRightExt> accessRights)
         {
-            Argument.AssertNotNull(rights, nameof(rights));
+            Argument.AssertNotNull(accessRights, nameof(accessRights));
 
-            Rights = rights.ToList();
+            AccessRights = accessRights.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
-        /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
+        /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
         /// <param name="primaryKey">
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="claimValue"> Gets a string that describes the claim value. </param>
         /// <param name="revision"> Gets the revision number for the rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRightExt> accessRights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Rights = rights;
+            AccessRights = accessRights;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             KeyName = keyName;
@@ -88,13 +88,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/> for deserialization. </summary>
-        internal SharedAccessAuthorizationRuleProperties()
-        {
-        }
-
         /// <summary> Gets or sets the rights associated with the rule. </summary>
-        public IList<AuthorizationRuleAccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRightExt> AccessRights { get; }
         /// <summary>
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.

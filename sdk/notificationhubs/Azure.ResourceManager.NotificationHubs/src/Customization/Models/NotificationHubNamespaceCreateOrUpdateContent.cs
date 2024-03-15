@@ -5,12 +5,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace operation. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary>

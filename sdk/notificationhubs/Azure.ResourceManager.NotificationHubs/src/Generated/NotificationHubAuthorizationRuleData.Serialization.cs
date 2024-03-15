@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.NotificationHubs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (Optional.IsCollectionDefined(AccessRights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
-                foreach (var item in Rights)
+                foreach (var item in AccessRights)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NotificationHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<AuthorizationRuleAccessRight> rights = default;
+            IList<AuthorizationRuleAccessRightExt> rights = default;
             string primaryKey = default;
             string secondaryKey = default;
             string keyName = default;
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
+                            List<AuthorizationRuleAccessRightExt> array = new List<AuthorizationRuleAccessRightExt>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AuthorizationRuleAccessRight(item.GetString()));
+                                array.Add(new AuthorizationRuleAccessRightExt(item.GetString()));
                             }
                             rights = array;
                             continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
+                rights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>(),
                 primaryKey,
                 secondaryKey,
                 keyName,

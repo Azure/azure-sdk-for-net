@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
@@ -21,5 +22,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> The sku of the created namespace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NotificationHubSku Sku { get; set; }
+        /// <summary> The rights associated with the rule. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<AuthorizationRuleAccessRight> Rights { get => AccessRights.Select(p => p.ToString().ToAuthorizationRuleAccessRight()).ToList(); }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="location"> The location. </param>
         public NotificationHubAuthorizationRuleData(AzureLocation location) : base(location)
         {
-            Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
+            AccessRights = new ChangeTrackingList<AuthorizationRuleAccessRightExt>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAuthorizationRuleData"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="rights"> Gets or sets the rights associated with the rule. </param>
+        /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
         /// <param name="primaryKey">
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="claimValue"> Gets a string that describes the claim value. </param>
         /// <param name="revision"> Gets the revision number for the rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AuthorizationRuleAccessRightExt> accessRights, string primaryKey, string secondaryKey, string keyName, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, string claimType, string claimValue, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Rights = rights;
+            AccessRights = accessRights;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             KeyName = keyName;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary> Gets or sets the rights associated with the rule. </summary>
-        public IList<AuthorizationRuleAccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRightExt> AccessRights { get; }
         /// <summary>
         /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.

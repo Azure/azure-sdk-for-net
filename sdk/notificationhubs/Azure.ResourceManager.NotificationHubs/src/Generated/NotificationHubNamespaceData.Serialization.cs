@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(NamespaceType))
+            if (Optional.IsDefined(HubNamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
-                writer.WriteStringValue(NamespaceType.Value.ToSerialString());
+                writer.WriteStringValue(HubNamespaceType.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationRegion))
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.NotificationHubs
             string metricId = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? updatedAt = default;
-            NotificationHubNamespaceType? namespaceType = default;
+            NotificationHubNamespaceTypeExt? namespaceType = default;
             ReplicationRegion? replicationRegion = default;
             ZoneRedundancyPreference? zoneRedundancy = default;
-            NetworkAcls networkAcls = default;
+            NotificationHubNetworkAcls networkAcls = default;
             PnsCredentials pnsCredentials = default;
             Uri serviceBusEndpoint = default;
             IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            namespaceType = property0.Value.GetString().ToNotificationHubNamespaceType();
+                            namespaceType = new NotificationHubNamespaceTypeExt(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("replicationRegion"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            networkAcls = NetworkAcls.DeserializeNetworkAcls(property0.Value, options);
+                            networkAcls = NotificationHubNetworkAcls.DeserializeNotificationHubNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("pnsCredentials"u8))

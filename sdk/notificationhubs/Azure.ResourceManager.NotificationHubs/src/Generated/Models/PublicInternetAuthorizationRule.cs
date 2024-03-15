@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PublicInternetAuthorizationRule"/>. </summary>
-        /// <param name="rights"> List of access rights. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rights"/> is null. </exception>
-        public PublicInternetAuthorizationRule(IEnumerable<AuthorizationRuleAccessRight> rights)
+        /// <param name="accessRights"> List of access rights. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessRights"/> is null. </exception>
+        public PublicInternetAuthorizationRule(IEnumerable<AuthorizationRuleAccessRightExt> accessRights)
         {
-            Argument.AssertNotNull(rights, nameof(rights));
+            Argument.AssertNotNull(accessRights, nameof(accessRights));
 
-            Rights = rights.ToList();
+            AccessRights = accessRights.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicInternetAuthorizationRule"/>. </summary>
-        /// <param name="rights"> List of access rights. </param>
+        /// <param name="accessRights"> List of access rights. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicInternetAuthorizationRule(IList<AuthorizationRuleAccessRight> rights, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicInternetAuthorizationRule(IList<AuthorizationRuleAccessRightExt> accessRights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Rights = rights;
+            AccessRights = accessRights;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> List of access rights. </summary>
-        public IList<AuthorizationRuleAccessRight> Rights { get; }
+        public IList<AuthorizationRuleAccessRightExt> AccessRights { get; }
     }
 }

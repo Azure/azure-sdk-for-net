@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="metricId"> Azure Insights Metrics id. </param>
         /// <param name="createdOn"> Time when the namespace was created. </param>
         /// <param name="updatedOn"> Time when the namespace was updated. </param>
-        /// <param name="namespaceType"> Defines values for NamespaceType. </param>
+        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
         /// <param name="replicationRegion"> Allowed replication region. </param>
         /// <param name="zoneRedundancy"> Namespace SKU name. </param>
         /// <param name="networkAcls"> A collection of network authorization rules. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string namespaceName, OperationProvisioningState? operationProvisioningState, NamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceType? namespaceType, ReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections, string scaleUnit, string dataCenter, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string namespaceName, OperationProvisioningState? operationProvisioningState, NamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, ReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections, string scaleUnit, string dataCenter, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             NamespaceName = namespaceName;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs
             MetricId = metricId;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
-            NamespaceType = namespaceType;
+            HubNamespaceType = hubNamespaceType;
             ReplicationRegion = replicationRegion;
             ZoneRedundancy = zoneRedundancy;
             NetworkAcls = networkAcls;
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <summary> Time when the namespace was updated. </summary>
         public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Defines values for NamespaceType. </summary>
-        public NotificationHubNamespaceType? NamespaceType { get; set; }
+        public NotificationHubNamespaceTypeExt? HubNamespaceType { get; set; }
         /// <summary> Allowed replication region. </summary>
         public ReplicationRegion? ReplicationRegion { get; set; }
         /// <summary> Namespace SKU name. </summary>
         public ZoneRedundancyPreference? ZoneRedundancy { get; set; }
         /// <summary> A collection of network authorization rules. </summary>
-        public NetworkAcls NetworkAcls { get; set; }
+        public NotificationHubNetworkAcls NetworkAcls { get; set; }
         /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
         public PnsCredentials PnsCredentials { get; set; }
         /// <summary>

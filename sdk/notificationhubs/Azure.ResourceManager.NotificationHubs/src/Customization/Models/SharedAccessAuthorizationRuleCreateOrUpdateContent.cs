@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
@@ -13,6 +14,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
     /// Serialized Name: SharedAccessAuthorizationRuleCreateOrUpdateParameters
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {
         /// <summary>

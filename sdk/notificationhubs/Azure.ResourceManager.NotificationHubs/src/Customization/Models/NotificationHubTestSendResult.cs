@@ -1,26 +1,28 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#nullable disable
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubApnsCredential
+    /// <summary> Description of a NotificationHub Resource. </summary>
+    public partial class NotificationHubTestSendResult : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NotificationHubApnsCredential()
-        {
-        }
-
+        /// <summary> successful send. </summary>
+        public int? Success { get; set; }
+        /// <summary> send failure. </summary>
+        public int? Failure { get; set; }
         /// <summary>
-        /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode.
+        /// actual failure description
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -45,11 +47,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </para>
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
-        public BinaryData Thumbprint
-        {
-            get { return BinaryData.FromString(ThumbprintString); }
-            set { ThumbprintString = value.ToString(); }
-        }
+        public BinaryData Results { get; set; }
+        /// <summary> The sku of the created namespace. </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

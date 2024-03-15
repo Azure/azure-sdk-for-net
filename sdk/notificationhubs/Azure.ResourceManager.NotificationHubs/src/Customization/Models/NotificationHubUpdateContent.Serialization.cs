@@ -14,16 +14,16 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubPatch : IUtf8JsonSerializable, IJsonModel<NotificationHubPatch>
+    public partial class NotificationHubUpdateContent : IUtf8JsonSerializable, IJsonModel<NotificationHubUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NotificationHubPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubUpdateContent)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        NotificationHubPatch IJsonModel<NotificationHubPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubUpdateContent IJsonModel<NotificationHubUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubUpdateContent)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNotificationHubPatch(document.RootElement, options);
+            return DeserializeNotificationHubUpdateContent(document.RootElement, options);
         }
 
-        internal static NotificationHubPatch DeserializeNotificationHubPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubUpdateContent DeserializeNotificationHubUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubPatch(
+            return new NotificationHubUpdateContent(
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 name,
@@ -351,35 +351,35 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NotificationHubPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubUpdateContent)} does not support '{options.Format}' format.");
             }
         }
 
-        NotificationHubPatch IPersistableModel<NotificationHubPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubUpdateContent IPersistableModel<NotificationHubUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNotificationHubPatch(document.RootElement, options);
+                        return DeserializeNotificationHubUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubUpdateContent)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NotificationHubPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

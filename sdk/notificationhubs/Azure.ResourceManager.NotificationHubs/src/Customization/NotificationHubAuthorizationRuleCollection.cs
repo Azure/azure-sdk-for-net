@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 resource.Value.Data.SystemData,
                 resource.Value.Data.Tags,
                 resource.Value.Data.Location,
-                new List<AuthorizationRuleAccessRight>(content.Properties.Rights),
+                content.Properties.AccessRights,
                 content.Properties.PrimaryKey,
                 content.Properties.SecondaryKey,
                 content.Properties.KeyName,
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 resource.Value.Data.SystemData,
                 resource.Value.Data.Tags,
                 resource.Value.Data.Location,
-                new List<AuthorizationRuleAccessRight>(content.Properties.Rights),
+                content.Properties.AccessRights,
                 content.Properties.PrimaryKey,
                 content.Properties.SecondaryKey,
                 content.Properties.KeyName,

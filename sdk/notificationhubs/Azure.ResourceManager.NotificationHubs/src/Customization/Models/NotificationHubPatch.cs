@@ -5,16 +5,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs;
 
+[assembly: CodeGenSuppressType("NotificationHubPatch")]
+
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Parameters supplied to the CreateOrUpdate NotificationHub operation. </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NotificationHubCreateOrUpdateContent : TrackedResourceData
+    /// <summary> Parameters supplied to the patch NotificationHub operation. </summary>
+    public partial class NotificationHubPatch : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/>. </summary>
         /// <param name="location"> The location. </param>
-        public NotificationHubCreateOrUpdateContent(AzureLocation location) : base(location)
+        public NotificationHubPatch(AzureLocation location) : base(location)
         {
             AuthorizationRules = new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
         /// <param name="sku"> The sku of the created namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubPatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             NotificationHubName = notificationHubName;
             RegistrationTtl = registrationTtl;
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/> for deserialization. </summary>
-        internal NotificationHubCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/> for deserialization. </summary>
+        internal NotificationHubPatch()
         {
         }
 

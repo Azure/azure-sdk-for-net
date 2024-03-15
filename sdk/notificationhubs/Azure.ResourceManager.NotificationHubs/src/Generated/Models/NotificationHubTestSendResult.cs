@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="location"> The location. </param>
         public NotificationHubTestSendResult(AzureLocation location) : base(location)
         {
-            Results = new ChangeTrackingList<RegistrationResult>();
+            FailureDescription = new ChangeTrackingList<RegistrationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="location"> The location. </param>
         /// <param name="success"> Gets or sets successful send. </param>
         /// <param name="failure"> Gets or sets send failure. </param>
-        /// <param name="results"> Gets or sets actual failure description. </param>
+        /// <param name="failureDescription"> Gets or sets actual failure description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? success, long? failure, IReadOnlyList<RegistrationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, IReadOnlyList<RegistrationResult> failureDescription, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Success = success;
             Failure = failure;
-            Results = results;
+            FailureDescription = failureDescription;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,12 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         internal NotificationHubTestSendResult()
         {
         }
-
-        /// <summary> Gets or sets successful send. </summary>
-        public long? Success { get; }
-        /// <summary> Gets or sets send failure. </summary>
-        public long? Failure { get; }
         /// <summary> Gets or sets actual failure description. </summary>
-        public IReadOnlyList<RegistrationResult> Results { get; }
+        public IReadOnlyList<RegistrationResult> FailureDescription { get; }
     }
 }

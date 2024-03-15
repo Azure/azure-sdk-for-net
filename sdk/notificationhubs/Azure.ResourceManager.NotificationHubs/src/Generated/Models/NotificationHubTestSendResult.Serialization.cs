@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("failure"u8);
                 writer.WriteNumberValue(Failure.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Results))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FailureDescription))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
-                foreach (var item in Results)
+                foreach (var item in FailureDescription)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            long? success = default;
-            long? failure = default;
+            int? success = default;
+            int? failure = default;
             IReadOnlyList<RegistrationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             {
                                 continue;
                             }
-                            success = property0.Value.GetInt64();
+                            success = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("failure"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             {
                                 continue;
                             }
-                            failure = property0.Value.GetInt64();
+                            failure = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("results"u8))
