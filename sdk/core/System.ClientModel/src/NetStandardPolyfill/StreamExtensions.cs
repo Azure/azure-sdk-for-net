@@ -119,6 +119,7 @@ internal static class StreamExtensions
 
         try
         {
+            cancellationToken.ThrowIfCancellationRequested();
             int read;
             while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
             {

@@ -146,7 +146,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         CancellationTokenSource cts = new();
         cts.Cancel();
 
-        Assert.Throws<TaskCanceledException>(() => { content.WriteTo(destination, cts.Token); });
+        Assert.Throws<OperationCanceledException>(() => { content.WriteTo(destination, cts.Token); });
     }
 
     [Test]

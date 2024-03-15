@@ -203,8 +203,6 @@ public abstract class BinaryContent : IDisposable
 
     private sealed class StreamBinaryContent : BinaryContent
     {
-        private const int CopyToBufferSize = 81920;
-
         private readonly Stream _stream;
         private readonly long _origin;
 
@@ -221,7 +219,7 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            // CanSeek is validated in constructor
+            // CanSeek is validated in constructor - it will always be true.
             length = _stream.Length - _origin;
             return true;
         }
@@ -229,15 +227,13 @@ public abstract class BinaryContent : IDisposable
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
-
             _stream.CopyTo(stream, cancellationToken);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             _stream.Seek(_origin, SeekOrigin.Begin);
-
-            await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
+            await _stream.CopyToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         public override void Dispose()
