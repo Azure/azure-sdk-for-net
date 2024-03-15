@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            PrivateLinkConnectionStatus? status = default;
+            NotificationHubPrivateLinkConnectionStatus? status = default;
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    status = new PrivateLinkConnectionStatus(property.Value.GetString());
+                    status = new NotificationHubPrivateLinkConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

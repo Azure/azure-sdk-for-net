@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceListResult"/>. </summary>
         internal PrivateEndpointConnectionResourceListResult()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionResourceData>();
+            Value = new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceListResult"/>. </summary>
         /// <param name="value"> Gets or sets result of the List AuthorizationRules operation. </param>
         /// <param name="nextLink"> Gets or sets link to the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionResourceListResult(IReadOnlyList<PrivateEndpointConnectionResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionResourceListResult(IReadOnlyList<NotificationHubPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Gets or sets result of the List AuthorizationRules operation. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionResourceData> Value { get; }
+        public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> Value { get; }
         /// <summary> Gets or sets link to the next set of results. </summary>
         public string NextLink { get; }
     }

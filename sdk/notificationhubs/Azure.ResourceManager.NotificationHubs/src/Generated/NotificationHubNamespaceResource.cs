@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetNotificationHubNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the NotificationHubNamespace. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of NotificationHubPrivateEndpointConnectionResources in the NotificationHubNamespace. </summary>
+        /// <returns> An object representing collection of NotificationHubPrivateEndpointConnectionResources and their operations over a NotificationHubPrivateEndpointConnectionResource. </returns>
+        public virtual NotificationHubPrivateEndpointConnectionCollection GetNotificationHubPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionResourceCollection(client, Id));
+            return GetCachedClient(client => new NotificationHubPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionResourceAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubPrivateEndpointConnectionResource>> GetNotificationHubPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnectionResources().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetNotificationHubPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,9 +300,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnectionResource(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubPrivateEndpointConnectionResource> GetNotificationHubPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnectionResources().Get(privateEndpointConnectionName, cancellationToken);
+            return GetNotificationHubPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NotificationHubsPrivateLinkResources in the NotificationHubNamespace. </summary>

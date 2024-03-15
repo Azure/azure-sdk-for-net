@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="description"> Human-friendly description. </param>
         /// <param name="actionsRequired"> Human-friendly description of required actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateLinkServiceConnectionState(PrivateLinkConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemotePrivateLinkServiceConnectionState(NotificationHubPrivateLinkConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> State of Private Link Connection. </summary>
-        public PrivateLinkConnectionStatus? Status { get; set; }
+        public NotificationHubPrivateLinkConnectionStatus? Status { get; set; }
         /// <summary> Human-friendly description. </summary>
         public string Description { get; }
         /// <summary> Human-friendly description of required actions. </summary>

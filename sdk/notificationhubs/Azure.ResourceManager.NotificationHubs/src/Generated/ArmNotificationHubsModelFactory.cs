@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="failure"> Gets or sets send failure. </param>
         /// <param name="failureDescription"> Gets or sets actual failure description. </param>
         /// <returns> A new <see cref="Models.NotificationHubTestSendResult"/> instance for mocking. </returns>
-        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? success = null, int? failure = null, IEnumerable<RegistrationResult> failureDescription = null)
+        public static NotificationHubTestSendResult NotificationHubTestSendResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, int? success = null, int? failure = null, IEnumerable<NotificationHubPubRegistrationResult> failureDescription = null)
         {
             tags ??= new Dictionary<string, string>();
-            failureDescription ??= new List<RegistrationResult>();
+            failureDescription ??= new List<NotificationHubPubRegistrationResult>();
 
             return new NotificationHubTestSendResult(
                 id,
@@ -187,15 +187,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegistrationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPubRegistrationResult"/>. </summary>
         /// <param name="applicationPlatform"> PNS type. </param>
         /// <param name="pnsHandle"> PNS handle. </param>
         /// <param name="registrationId"> Registration id. </param>
         /// <param name="outcome"> Notification outcome. </param>
-        /// <returns> A new <see cref="Models.RegistrationResult"/> instance for mocking. </returns>
-        public static RegistrationResult RegistrationResult(string applicationPlatform = null, string pnsHandle = null, string registrationId = null, string outcome = null)
+        /// <returns> A new <see cref="Models.NotificationHubPubRegistrationResult"/> instance for mocking. </returns>
+        public static NotificationHubPubRegistrationResult NotificationHubPubRegistrationResult(string applicationPlatform = null, string pnsHandle = null, string registrationId = null, string outcome = null)
         {
-            return new RegistrationResult(applicationPlatform, pnsHandle, registrationId, outcome, serializedAdditionalRawData: null);
+            return new NotificationHubPubRegistrationResult(applicationPlatform, pnsHandle, registrationId, outcome, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubAuthorizationRuleData"/>. </summary>
@@ -344,10 +344,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? operationProvisioningState = null, NamespaceStatus? namespaceStatus = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? hubNamespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NotificationHubSku sku = null, string namespaceName = null, OperationProvisioningState? operationProvisioningState = null, NotificationHubNamespaceStatus? namespaceStatus = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? hubNamespaceType = null, AllowedReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, NotificationHubPublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<PrivateEndpointConnectionResourceData>();
+            privateEndpointConnections ??= new List<NotificationHubPrivateEndpointConnectionData>();
 
             return new NotificationHubNamespaceData(
                 id,
@@ -380,15 +380,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NamespaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubNamespaceProperties"/>. </summary>
         /// <param name="namespaceName">
         /// Name of the Notification Hubs namespace. This is immutable property, set automatically
         /// by the service when the namespace is created.
         /// </param>
         /// <param name="provisioningState"> Defines values for OperationProvisioningState. </param>
         /// <param name="status"> Namespace status. </param>
-        /// <param name="enabled"> Gets or sets whether or not the namespace is currently enabled. </param>
-        /// <param name="critical"> Gets or sets whether or not the namespace is set as Critical. </param>
+        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
+        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
         /// <param name="subscriptionId"> Namespace subscription id. </param>
         /// <param name="region">
         /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
@@ -410,17 +410,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
-        /// <returns> A new <see cref="Models.NamespaceProperties"/> instance for mocking. </returns>
-        public static NamespaceProperties NamespaceProperties(string namespaceName = null, OperationProvisioningState? provisioningState = null, NamespaceStatus? status = null, bool? enabled = null, bool? critical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? namespaceType = null, ReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<PrivateEndpointConnectionResourceData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, PublicNetworkAccess? publicNetworkAccess = null)
+        /// <returns> A new <see cref="Models.NotificationHubNamespaceProperties"/> instance for mocking. </returns>
+        public static NotificationHubNamespaceProperties NotificationHubNamespaceProperties(string namespaceName = null, OperationProvisioningState? provisioningState = null, NotificationHubNamespaceStatus? status = null, bool? isEnabled = null, bool? isCritical = null, string subscriptionId = null, string region = null, string metricId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, NotificationHubNamespaceTypeExt? namespaceType = null, AllowedReplicationRegion? replicationRegion = null, ZoneRedundancyPreference? zoneRedundancy = null, NotificationHubNetworkAcls networkAcls = null, PnsCredentials pnsCredentials = null, Uri serviceBusEndpoint = null, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = null, string scaleUnit = null, string dataCenter = null, NotificationHubPublicNetworkAccess? publicNetworkAccess = null)
         {
-            privateEndpointConnections ??= new List<PrivateEndpointConnectionResourceData>();
+            privateEndpointConnections ??= new List<NotificationHubPrivateEndpointConnectionData>();
 
-            return new NamespaceProperties(
+            return new NotificationHubNamespaceProperties(
                 namespaceName,
                 provisioningState,
                 status,
-                enabled,
-                critical,
+                isEnabled,
+                isCritical,
                 subscriptionId,
                 region,
                 metricId,
@@ -439,16 +439,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubs.PrivateEndpointConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Private Endpoint Connection properties. </param>
-        /// <returns> A new <see cref="NotificationHubs.PrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResourceData PrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
+        /// <returns> A new <see cref="NotificationHubs.NotificationHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static NotificationHubPrivateEndpointConnectionData NotificationHubPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NotificationHubPrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionResourceData(
+            return new NotificationHubPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -457,17 +457,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> State of Private Endpoint Connection. </param>
         /// <param name="privateEndpointId"> Represents a Private Endpoint that is connected to Notification Hubs namespace using Private Endpoint Connection. </param>
         /// <param name="groupIds"> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </param>
         /// <param name="connectionState"> State of the Private Link Service connection. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, RemotePrivateLinkServiceConnectionState connectionState = null)
+        /// <returns> A new <see cref="Models.NotificationHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static NotificationHubPrivateEndpointConnectionProperties NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, RemotePrivateLinkServiceConnectionState connectionState = null)
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
+            return new NotificationHubPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateLinkServiceConnectionState"/>. </summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="description"> Human-friendly description. </param>
         /// <param name="actionsRequired"> Human-friendly description of required actions. </param>
         /// <returns> A new <see cref="Models.RemotePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RemotePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState(PrivateLinkConnectionStatus? status = null, string description = null, string actionsRequired = null)
+        public static RemotePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState(NotificationHubPrivateLinkConnectionStatus? status = null, string description = null, string actionsRequired = null)
         {
             return new RemotePrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }

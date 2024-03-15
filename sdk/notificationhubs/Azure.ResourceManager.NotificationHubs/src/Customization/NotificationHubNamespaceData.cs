@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs
         public string Status
         {
             get => NamespaceStatus.ToString();
-            set => NamespaceStatus = string.IsNullOrEmpty(value) ? null : new NamespaceStatus(value);
+            set => NamespaceStatus = string.IsNullOrEmpty(value) ? null : new NotificationHubNamespaceStatus(value);
         }
         /// <summary> The namespace type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

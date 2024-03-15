@@ -75,6 +75,17 @@ rename-mapping:
   NetworkAcls: NotificationHubNetworkAcls
   PublicInternetAuthorizationRule.rights: AccessRights
   SharedAccessAuthorizationRuleProperties.rights: AccessRights
+  PrivateEndpointConnectionResource: NotificationHubPrivateEndpointConnection
+  PrivateEndpointConnectionProperties: NotificationHubPrivateEndpointConnectionProperties
+  NamespaceProperties: NotificationHubNamespaceProperties
+  NamespaceProperties.enabled: IsEnabled
+  NamespaceProperties.critical: IsCritical
+  NamespaceStatus: NotificationHubNamespaceStatus
+  PrivateLinkConnectionStatus: NotificationHubPrivateLinkConnectionStatus
+  PublicNetworkAccess: NotificationHubPublicNetworkAccess
+  RegistrationResult: NotificationHubPubRegistrationResult
+  ReplicationRegion: AllowedReplicationRegion
+  ReplicationRegion.WestUs2: WestUS2
 
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability

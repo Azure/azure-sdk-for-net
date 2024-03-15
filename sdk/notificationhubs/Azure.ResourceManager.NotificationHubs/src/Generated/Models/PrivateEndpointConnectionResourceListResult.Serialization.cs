@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IReadOnlyList<PrivateEndpointConnectionResourceData> value = default;
+            IReadOnlyList<NotificationHubPrivateEndpointConnectionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnectionResourceData> array = new List<PrivateEndpointConnectionResourceData>();
+                    List<NotificationHubPrivateEndpointConnectionData> array = new List<NotificationHubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(item, options));
+                        array.Add(NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionResourceListResult(value ?? new ChangeTrackingList<PrivateEndpointConnectionResourceData>(), nextLink, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionResourceListResult(value ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionResourceListResult>.Write(ModelReaderWriterOptions options)

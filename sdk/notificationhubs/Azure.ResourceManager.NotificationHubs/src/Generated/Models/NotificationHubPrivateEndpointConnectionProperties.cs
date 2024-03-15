@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Private Endpoint Connection properties. </summary>
-    public partial class PrivateEndpointConnectionProperties
+    public partial class NotificationHubPrivateEndpointConnectionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
-        public PrivateEndpointConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateEndpointConnectionProperties"/>. </summary>
+        public NotificationHubPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> State of Private Endpoint Connection. </param>
         /// <param name="privateEndpoint"> Represents a Private Endpoint that is connected to Notification Hubs namespace using Private Endpoint Connection. </param>
         /// <param name="groupIds"> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </param>
         /// <param name="connectionState"> State of the Private Link Service connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, RemotePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, RemotePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;

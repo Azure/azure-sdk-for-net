@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs.Models;
 
-namespace Azure.ResourceManager.NotificationHubs.Models
+namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> Notification result for a single registration. </summary>
-    public partial class RegistrationResult
+    /// <summary>
+    /// A class representing the NotificationHubPrivateEndpointConnection data model.
+    /// Represents a Private Endpoint Connection ARM resource - a sub-resource of Notification Hubs namespace.
+    /// </summary>
+    public partial class NotificationHubPrivateEndpointConnectionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +51,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RegistrationResult"/>. </summary>
-        internal RegistrationResult()
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateEndpointConnectionData"/>. </summary>
+        public NotificationHubPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegistrationResult"/>. </summary>
-        /// <param name="applicationPlatform"> PNS type. </param>
-        /// <param name="pnsHandle"> PNS handle. </param>
-        /// <param name="registrationId"> Registration id. </param>
-        /// <param name="outcome"> Notification outcome. </param>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Private Endpoint Connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegistrationResult(string applicationPlatform, string pnsHandle, string registrationId, string outcome, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NotificationHubPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ApplicationPlatform = applicationPlatform;
-            PnsHandle = pnsHandle;
-            RegistrationId = registrationId;
-            Outcome = outcome;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> PNS type. </summary>
-        public string ApplicationPlatform { get; }
-        /// <summary> PNS handle. </summary>
-        public string PnsHandle { get; }
-        /// <summary> Registration id. </summary>
-        public string RegistrationId { get; }
-        /// <summary> Notification outcome. </summary>
-        public string Outcome { get; }
+        /// <summary> Private Endpoint Connection properties. </summary>
+        public NotificationHubPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

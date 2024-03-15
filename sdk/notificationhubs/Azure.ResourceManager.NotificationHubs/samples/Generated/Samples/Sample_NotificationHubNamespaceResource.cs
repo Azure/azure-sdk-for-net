@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubNamespacePatch patch = new NotificationHubNamespacePatch()
             {
                 Sku = new NotificationHubSku(NotificationHubSkuName.Free),
-                Properties = new NamespaceProperties()
+                Properties = new NotificationHubNamespaceProperties()
                 {
                     PnsCredentials = new PnsCredentials()
                     {

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             NotificationHubSku sku = default;
-            NamespaceProperties properties = default;
+            NotificationHubNamespaceProperties properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    properties = NamespaceProperties.DeserializeNamespaceProperties(property.Value, options);
+                    properties = NotificationHubNamespaceProperties.DeserializeNotificationHubNamespaceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

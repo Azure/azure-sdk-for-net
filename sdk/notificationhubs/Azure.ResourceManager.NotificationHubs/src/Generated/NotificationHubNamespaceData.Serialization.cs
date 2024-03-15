@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NotificationHubs
             SystemData systemData = default;
             string name0 = default;
             OperationProvisioningState? provisioningState = default;
-            NamespaceStatus? status = default;
+            NotificationHubNamespaceStatus? status = default;
             bool? enabled = default;
             bool? critical = default;
             string subscriptionId = default;
@@ -227,15 +227,15 @@ namespace Azure.ResourceManager.NotificationHubs
             DateTimeOffset? createdAt = default;
             DateTimeOffset? updatedAt = default;
             NotificationHubNamespaceTypeExt? namespaceType = default;
-            ReplicationRegion? replicationRegion = default;
+            AllowedReplicationRegion? replicationRegion = default;
             ZoneRedundancyPreference? zoneRedundancy = default;
             NotificationHubNetworkAcls networkAcls = default;
             PnsCredentials pnsCredentials = default;
             Uri serviceBusEndpoint = default;
-            IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections = default;
+            IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default;
             string scaleUnit = default;
             string dataCenter = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            NotificationHubPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            status = new NamespaceStatus(property0.Value.GetString());
+                            status = new NotificationHubNamespaceStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            replicationRegion = new ReplicationRegion(property0.Value.GetString());
+                            replicationRegion = new AllowedReplicationRegion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundancy"u8))
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            List<PrivateEndpointConnectionResourceData> array = new List<PrivateEndpointConnectionResourceData>();
+                            List<NotificationHubPrivateEndpointConnectionData> array = new List<NotificationHubPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(item, options));
+                                array.Add(NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new NotificationHubPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 networkAcls,
                 pnsCredentials,
                 serviceBusEndpoint,
-                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionResourceData>(),
+                privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>(),
                 scaleUnit,
                 dataCenter,
                 publicNetworkAccess,

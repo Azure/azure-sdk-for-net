@@ -16,7 +16,7 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
-    public partial class Sample_PrivateEndpointConnectionResourceCollection
+    public partial class Sample_NotificationHubPrivateEndpointConnectionCollection
     {
         // PrivateEndpointConnections_Update
         [NUnit.Framework.Test]
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             ResourceIdentifier notificationHubNamespaceResourceId = NotificationHubNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             NotificationHubNamespaceResource notificationHubNamespace = client.GetNotificationHubNamespaceResource(notificationHubNamespaceResourceId);
 
-            // get the collection of this PrivateEndpointConnectionResource
-            PrivateEndpointConnectionResourceCollection collection = notificationHubNamespace.GetPrivateEndpointConnectionResources();
+            // get the collection of this NotificationHubPrivateEndpointConnectionResource
+            NotificationHubPrivateEndpointConnectionCollection collection = notificationHubNamespace.GetNotificationHubPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            PrivateEndpointConnectionResourceData data = new PrivateEndpointConnectionResourceData()
+            NotificationHubPrivateEndpointConnectionData data = new NotificationHubPrivateEndpointConnectionData()
             {
-                Properties = new PrivateEndpointConnectionProperties()
+                Properties = new NotificationHubPrivateEndpointConnectionProperties()
                 {
                     ConnectionState = new RemotePrivateLinkServiceConnectionState()
                     {
-                        Status = PrivateLinkConnectionStatus.Approved,
+                        Status = NotificationHubPrivateLinkConnectionStatus.Approved,
                     },
                 },
             };
-            ArmOperation<PrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            PrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<NotificationHubPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            NotificationHubPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionResourceData resourceData = result.Data;
+            NotificationHubPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             ResourceIdentifier notificationHubNamespaceResourceId = NotificationHubNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             NotificationHubNamespaceResource notificationHubNamespace = client.GetNotificationHubNamespaceResource(notificationHubNamespaceResourceId);
 
-            // get the collection of this PrivateEndpointConnectionResource
-            PrivateEndpointConnectionResourceCollection collection = notificationHubNamespace.GetPrivateEndpointConnectionResources();
+            // get the collection of this NotificationHubPrivateEndpointConnectionResource
+            NotificationHubPrivateEndpointConnectionCollection collection = notificationHubNamespace.GetNotificationHubPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            PrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
+            NotificationHubPrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionResourceData resourceData = result.Data;
+            NotificationHubPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             ResourceIdentifier notificationHubNamespaceResourceId = NotificationHubNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             NotificationHubNamespaceResource notificationHubNamespace = client.GetNotificationHubNamespaceResource(notificationHubNamespaceResourceId);
 
-            // get the collection of this PrivateEndpointConnectionResource
-            PrivateEndpointConnectionResourceCollection collection = notificationHubNamespace.GetPrivateEndpointConnectionResources();
+            // get the collection of this NotificationHubPrivateEndpointConnectionResource
+            NotificationHubPrivateEndpointConnectionCollection collection = notificationHubNamespace.GetNotificationHubPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             ResourceIdentifier notificationHubNamespaceResourceId = NotificationHubNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             NotificationHubNamespaceResource notificationHubNamespace = client.GetNotificationHubNamespaceResource(notificationHubNamespaceResourceId);
 
-            // get the collection of this PrivateEndpointConnectionResource
-            PrivateEndpointConnectionResourceCollection collection = notificationHubNamespace.GetPrivateEndpointConnectionResources();
+            // get the collection of this NotificationHubPrivateEndpointConnectionResource
+            NotificationHubPrivateEndpointConnectionCollection collection = notificationHubNamespace.GetNotificationHubPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            NullableResponse<PrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
-            PrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NotificationHubPrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
+            NotificationHubPrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PrivateEndpointConnectionResourceData resourceData = result.Data;
+                NotificationHubPrivateEndpointConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             ResourceIdentifier notificationHubNamespaceResourceId = NotificationHubNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             NotificationHubNamespaceResource notificationHubNamespace = client.GetNotificationHubNamespaceResource(notificationHubNamespaceResourceId);
 
-            // get the collection of this PrivateEndpointConnectionResource
-            PrivateEndpointConnectionResourceCollection collection = notificationHubNamespace.GetPrivateEndpointConnectionResources();
+            // get the collection of this NotificationHubPrivateEndpointConnectionResource
+            NotificationHubPrivateEndpointConnectionCollection collection = notificationHubNamespace.GetNotificationHubPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
-            await foreach (PrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (NotificationHubPrivateEndpointConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PrivateEndpointConnectionResourceData resourceData = item.Data;
+                NotificationHubPrivateEndpointConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

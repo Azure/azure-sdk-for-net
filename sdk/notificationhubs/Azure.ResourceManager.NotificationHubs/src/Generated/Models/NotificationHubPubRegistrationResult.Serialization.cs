@@ -14,16 +14,16 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class RegistrationResult : IUtf8JsonSerializable, IJsonModel<RegistrationResult>
+    public partial class NotificationHubPubRegistrationResult : IUtf8JsonSerializable, IJsonModel<NotificationHubPubRegistrationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPubRegistrationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<RegistrationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubPubRegistrationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPubRegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPubRegistrationResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        RegistrationResult IJsonModel<RegistrationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubPubRegistrationResult IJsonModel<NotificationHubPubRegistrationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPubRegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPubRegistrationResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegistrationResult(document.RootElement, options);
+            return DeserializeNotificationHubPubRegistrationResult(document.RootElement, options);
         }
 
-        internal static RegistrationResult DeserializeRegistrationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubPubRegistrationResult DeserializeNotificationHubPubRegistrationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistrationResult(applicationPlatform, pnsHandle, registrationId, outcome, serializedAdditionalRawData);
+            return new NotificationHubPubRegistrationResult(applicationPlatform, pnsHandle, registrationId, outcome, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RegistrationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubPubRegistrationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPubRegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPubRegistrationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        RegistrationResult IPersistableModel<RegistrationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubPubRegistrationResult IPersistableModel<NotificationHubPubRegistrationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPubRegistrationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRegistrationResult(document.RootElement, options);
+                        return DeserializeNotificationHubPubRegistrationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPubRegistrationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RegistrationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubPubRegistrationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

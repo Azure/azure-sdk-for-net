@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="properties"> Represents namespace properties. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespacePatch(NotificationHubSku sku, NamespaceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubNamespacePatch(NotificationHubSku sku, NotificationHubNamespaceProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Properties = properties;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
         /// <summary> Represents namespace properties. </summary>
-        public NamespaceProperties Properties { get; set; }
+        public NotificationHubNamespaceProperties Properties { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
     }

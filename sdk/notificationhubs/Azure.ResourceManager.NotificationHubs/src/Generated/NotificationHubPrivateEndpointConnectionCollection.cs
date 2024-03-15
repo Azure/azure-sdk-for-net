@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="PrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="NotificationHubNamespaceResource"/>.
-    /// To get a <see cref="PrivateEndpointConnectionResourceCollection"/> instance call the GetPrivateEndpointConnectionResources method from an instance of <see cref="NotificationHubNamespaceResource"/>.
+    /// A class representing a collection of <see cref="NotificationHubPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="NotificationHubPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="NotificationHubNamespaceResource"/>.
+    /// To get a <see cref="NotificationHubPrivateEndpointConnectionCollection"/> instance call the GetNotificationHubPrivateEndpointConnections method from an instance of <see cref="NotificationHubNamespaceResource"/>.
     /// </summary>
-    public partial class PrivateEndpointConnectionResourceCollection : ArmCollection, IEnumerable<PrivateEndpointConnectionResource>, IAsyncEnumerable<PrivateEndpointConnectionResource>
+    public partial class NotificationHubPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<NotificationHubPrivateEndpointConnectionResource>, IAsyncEnumerable<NotificationHubPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionResourceCollection"/> class for mocking. </summary>
-        protected PrivateEndpointConnectionResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubPrivateEndpointConnectionCollection"/> class for mocking. </summary>
+        protected NotificationHubPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateEndpointConnectionResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NotificationHubPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
-            _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointConnectionResourcePrivateEndpointConnectionsApiVersion);
+            _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NotificationHubPrivateEndpointConnectionResource.ResourceType, out string notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NotificationHubPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, NotificationHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.CreateOrUpdate");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource>(new NotificationHubPrivateEndpointConnectionOperationSource(Client), _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NotificationHubPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, NotificationHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.CreateOrUpdate");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new NotificationHubsArmOperation<PrivateEndpointConnectionResource>(new PrivateEndpointConnectionResourceOperationSource(Client), _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource>(new NotificationHubPrivateEndpointConnectionOperationSource(Client), _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,18 +179,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.Get");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.Get");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NotificationHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,16 +263,16 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NotificationHubPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NotificationHubPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionResource(Client, PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(e)), _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "PrivateEndpointConnectionResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NotificationHubPrivateEndpointConnectionResource(Client, NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(e)), _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "NotificationHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -293,16 +293,16 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NotificationHubPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NotificationHubPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionResource(Client, PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(e)), _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics, Pipeline, "PrivateEndpointConnectionResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new NotificationHubPrivateEndpointConnectionResource(Client, NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(e)), _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "NotificationHubPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,11 +334,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.Exists");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.Exists");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,18 +416,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NotificationHubPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.GetIfExists");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NotificationHubPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="NotificationHubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -461,18 +461,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual NullableResponse<PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NotificationHubPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _privateEndpointConnectionResourcePrivateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResourceCollection.GetIfExists");
+            using var scope = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("NotificationHubPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _privateEndpointConnectionResourcePrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _notificationHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<PrivateEndpointConnectionResource>(response.GetRawResponse());
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NotificationHubPrivateEndpointConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        IEnumerator<PrivateEndpointConnectionResource> IEnumerable<PrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<NotificationHubPrivateEndpointConnectionResource> IEnumerable<NotificationHubPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PrivateEndpointConnectionResource> IAsyncEnumerable<PrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NotificationHubPrivateEndpointConnectionResource> IAsyncEnumerable<NotificationHubPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

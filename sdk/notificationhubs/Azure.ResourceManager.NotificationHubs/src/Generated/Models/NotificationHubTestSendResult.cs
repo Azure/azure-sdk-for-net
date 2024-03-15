@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="location"> The location. </param>
         public NotificationHubTestSendResult(AzureLocation location) : base(location)
         {
-            FailureDescription = new ChangeTrackingList<RegistrationResult>();
+            FailureDescription = new ChangeTrackingList<NotificationHubPubRegistrationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="failure"> Gets or sets send failure. </param>
         /// <param name="failureDescription"> Gets or sets actual failure description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, IReadOnlyList<RegistrationResult> failureDescription, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, IReadOnlyList<NotificationHubPubRegistrationResult> failureDescription, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Success = success;
             Failure = failure;
@@ -79,6 +79,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
         }
         /// <summary> Gets or sets actual failure description. </summary>
-        public IReadOnlyList<RegistrationResult> FailureDescription { get; }
+        public IReadOnlyList<NotificationHubPubRegistrationResult> FailureDescription { get; }
     }
 }

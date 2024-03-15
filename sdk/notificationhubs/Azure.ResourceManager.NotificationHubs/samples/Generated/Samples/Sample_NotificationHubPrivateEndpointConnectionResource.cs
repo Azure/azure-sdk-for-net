@@ -16,7 +16,7 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
-    public partial class Sample_PrivateEndpointConnectionResource
+    public partial class Sample_NotificationHubPrivateEndpointConnectionResource
     {
         // PrivateEndpointConnections_Update
         [NUnit.Framework.Test]
@@ -31,32 +31,32 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
+            // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
             string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            ResourceIdentifier privateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource privateEndpointConnectionResource = client.GetPrivateEndpointConnectionResource(privateEndpointConnectionResourceId);
+            ResourceIdentifier notificationHubPrivateEndpointConnectionResourceId = NotificationHubPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
+            NotificationHubPrivateEndpointConnectionResource notificationHubPrivateEndpointConnection = client.GetNotificationHubPrivateEndpointConnectionResource(notificationHubPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            PrivateEndpointConnectionResourceData data = new PrivateEndpointConnectionResourceData()
+            NotificationHubPrivateEndpointConnectionData data = new NotificationHubPrivateEndpointConnectionData()
             {
-                Properties = new PrivateEndpointConnectionProperties()
+                Properties = new NotificationHubPrivateEndpointConnectionProperties()
                 {
                     ConnectionState = new RemotePrivateLinkServiceConnectionState()
                     {
-                        Status = PrivateLinkConnectionStatus.Approved,
+                        Status = NotificationHubPrivateLinkConnectionStatus.Approved,
                     },
                 },
             };
-            ArmOperation<PrivateEndpointConnectionResource> lro = await privateEndpointConnectionResource.UpdateAsync(WaitUntil.Completed, data);
-            PrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<NotificationHubPrivateEndpointConnectionResource> lro = await notificationHubPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            NotificationHubPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionResourceData resourceData = result.Data;
+            NotificationHubPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
+            // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
             string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            ResourceIdentifier privateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource privateEndpointConnectionResource = client.GetPrivateEndpointConnectionResource(privateEndpointConnectionResourceId);
+            ResourceIdentifier notificationHubPrivateEndpointConnectionResourceId = NotificationHubPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
+            NotificationHubPrivateEndpointConnectionResource notificationHubPrivateEndpointConnection = client.GetNotificationHubPrivateEndpointConnectionResource(notificationHubPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await privateEndpointConnectionResource.DeleteAsync(WaitUntil.Completed);
+            await notificationHubPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -102,21 +102,21 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
+            // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
             string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
-            ResourceIdentifier privateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource privateEndpointConnectionResource = client.GetPrivateEndpointConnectionResource(privateEndpointConnectionResourceId);
+            ResourceIdentifier notificationHubPrivateEndpointConnectionResourceId = NotificationHubPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, privateEndpointConnectionName);
+            NotificationHubPrivateEndpointConnectionResource notificationHubPrivateEndpointConnection = client.GetNotificationHubPrivateEndpointConnectionResource(notificationHubPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            PrivateEndpointConnectionResource result = await privateEndpointConnectionResource.GetAsync();
+            NotificationHubPrivateEndpointConnectionResource result = await notificationHubPrivateEndpointConnection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PrivateEndpointConnectionResourceData resourceData = result.Data;
+            NotificationHubPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

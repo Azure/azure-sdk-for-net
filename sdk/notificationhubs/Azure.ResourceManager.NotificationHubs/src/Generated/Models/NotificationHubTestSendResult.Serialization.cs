@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             SystemData systemData = default;
             int? success = default;
             int? failure = default;
-            IReadOnlyList<RegistrationResult> results = default;
+            IReadOnlyList<NotificationHubPubRegistrationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             {
                                 continue;
                             }
-                            List<RegistrationResult> array = new List<RegistrationResult>();
+                            List<NotificationHubPubRegistrationResult> array = new List<NotificationHubPubRegistrationResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistrationResult.DeserializeRegistrationResult(item, options));
+                                array.Add(NotificationHubPubRegistrationResult.DeserializeNotificationHubPubRegistrationResult(item, options));
                             }
                             results = array;
                             continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 location,
                 success,
                 failure,
-                results ?? new ChangeTrackingList<RegistrationResult>(),
+                results ?? new ChangeTrackingList<NotificationHubPubRegistrationResult>(),
                 serializedAdditionalRawData);
         }
 

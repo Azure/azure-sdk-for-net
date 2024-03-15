@@ -12,7 +12,7 @@ using Azure.ResourceManager.NotificationHubs;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Represents namespace properties. </summary>
-    public partial class NamespaceProperties
+    public partial class NotificationHubNamespaceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceProperties"/>. </summary>
-        public NamespaceProperties()
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceProperties"/>. </summary>
+        public NotificationHubNamespaceProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionResourceData>();
+            PrivateEndpointConnections = new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceProperties"/>. </summary>
         /// <param name="namespaceName">
         /// Name of the Notification Hubs namespace. This is immutable property, set automatically
         /// by the service when the namespace is created.
         /// </param>
         /// <param name="provisioningState"> Defines values for OperationProvisioningState. </param>
         /// <param name="status"> Namespace status. </param>
-        /// <param name="enabled"> Gets or sets whether or not the namespace is currently enabled. </param>
-        /// <param name="critical"> Gets or sets whether or not the namespace is set as Critical. </param>
+        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
+        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
         /// <param name="subscriptionId"> Namespace subscription id. </param>
         /// <param name="region">
         /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceProperties(string namespaceName, OperationProvisioningState? provisioningState, NamespaceStatus? status, bool? enabled, bool? critical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? namespaceType, ReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections, string scaleUnit, string dataCenter, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubNamespaceProperties(string namespaceName, OperationProvisioningState? provisioningState, NotificationHubNamespaceStatus? status, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? namespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections, string scaleUnit, string dataCenter, NotificationHubPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NamespaceName = namespaceName;
             ProvisioningState = provisioningState;
             Status = status;
-            Enabled = enabled;
-            Critical = critical;
+            IsEnabled = isEnabled;
+            IsCritical = isCritical;
             SubscriptionId = subscriptionId;
             Region = region;
             MetricId = metricId;
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Defines values for OperationProvisioningState. </summary>
         public OperationProvisioningState? ProvisioningState { get; set; }
         /// <summary> Namespace status. </summary>
-        public NamespaceStatus? Status { get; set; }
+        public NotificationHubNamespaceStatus? Status { get; set; }
         /// <summary> Gets or sets whether or not the namespace is currently enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Gets or sets whether or not the namespace is set as Critical. </summary>
-        public bool? Critical { get; set; }
+        public bool? IsCritical { get; set; }
         /// <summary> Namespace subscription id. </summary>
         public string SubscriptionId { get; set; }
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Defines values for NamespaceType. </summary>
         public NotificationHubNamespaceTypeExt? NamespaceType { get; set; }
         /// <summary> Allowed replication region. </summary>
-        public ReplicationRegion? ReplicationRegion { get; set; }
+        public AllowedReplicationRegion? ReplicationRegion { get; set; }
         /// <summary> Namespace SKU name. </summary>
         public ZoneRedundancyPreference? ZoneRedundancy { get; set; }
         /// <summary> A collection of network authorization rules. </summary>
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         public Uri ServiceBusEndpoint { get; set; }
         /// <summary> Private Endpoint Connections for namespace. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionResourceData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets scaleUnit where the namespace gets created. </summary>
         public string ScaleUnit { get; set; }
         /// <summary> Deprecated. </summary>
         public string DataCenter { get; set; }
         /// <summary> Type of public network access. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public NotificationHubPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

@@ -15,16 +15,16 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    public partial class PrivateEndpointConnectionResourceData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionResourceData>
+    public partial class NotificationHubPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<NotificationHubPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<PrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPrivateEndpointConnectionData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.NotificationHubs
             writer.WriteEndObject();
         }
 
-        PrivateEndpointConnectionResourceData IJsonModel<PrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubPrivateEndpointConnectionData IJsonModel<NotificationHubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPrivateEndpointConnectionData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+            return DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement, options);
         }
 
-        internal static PrivateEndpointConnectionResourceData DeserializePrivateEndpointConnectionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubPrivateEndpointConnectionData DeserializeNotificationHubPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            PrivateEndpointConnectionProperties properties = default;
+            NotificationHubPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value, options);
+                    properties = NotificationHubPrivateEndpointConnectionProperties.DeserializeNotificationHubPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionResourceData(
+            return new NotificationHubPrivateEndpointConnectionData(
                 id,
                 name,
                 type,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.NotificationHubs
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        PrivateEndpointConnectionResourceData IPersistableModel<PrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubPrivateEndpointConnectionData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+                        return DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

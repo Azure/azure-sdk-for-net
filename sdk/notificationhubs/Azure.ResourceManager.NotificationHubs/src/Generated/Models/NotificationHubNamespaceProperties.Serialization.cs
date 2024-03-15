@@ -14,16 +14,16 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NamespaceProperties : IUtf8JsonSerializable, IJsonModel<NamespaceProperties>
+    public partial class NotificationHubNamespaceProperties : IUtf8JsonSerializable, IJsonModel<NotificationHubNamespaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespaceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NamespaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NotificationHubNamespaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceProperties)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Critical))
+            if (Optional.IsDefined(IsCritical))
             {
                 writer.WritePropertyName("critical"u8);
-                writer.WriteBooleanValue(Critical.Value);
+                writer.WriteBooleanValue(IsCritical.Value);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -150,19 +150,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        NamespaceProperties IJsonModel<NamespaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubNamespaceProperties IJsonModel<NotificationHubNamespaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceProperties)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamespaceProperties(document.RootElement, options);
+            return DeserializeNotificationHubNamespaceProperties(document.RootElement, options);
         }
 
-        internal static NamespaceProperties DeserializeNamespaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NotificationHubNamespaceProperties DeserializeNotificationHubNamespaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             string name = default;
             OperationProvisioningState? provisioningState = default;
-            NamespaceStatus? status = default;
+            NotificationHubNamespaceStatus? status = default;
             bool? enabled = default;
             bool? critical = default;
             string subscriptionId = default;
@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             DateTimeOffset? createdAt = default;
             DateTimeOffset? updatedAt = default;
             NotificationHubNamespaceTypeExt? namespaceType = default;
-            ReplicationRegion? replicationRegion = default;
+            AllowedReplicationRegion? replicationRegion = default;
             ZoneRedundancyPreference? zoneRedundancy = default;
             NotificationHubNetworkAcls networkAcls = default;
             PnsCredentials pnsCredentials = default;
             Uri serviceBusEndpoint = default;
-            IReadOnlyList<PrivateEndpointConnectionResourceData> privateEndpointConnections = default;
+            IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default;
             string scaleUnit = default;
             string dataCenter = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            NotificationHubPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    status = new NamespaceStatus(property.Value.GetString());
+                    status = new NotificationHubNamespaceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    replicationRegion = new ReplicationRegion(property.Value.GetString());
+                    replicationRegion = new AllowedReplicationRegion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneRedundancy"u8))
@@ -328,10 +328,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnectionResourceData> array = new List<PrivateEndpointConnectionResourceData>();
+                    List<NotificationHubPrivateEndpointConnectionData> array = new List<NotificationHubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionResourceData.DeserializePrivateEndpointConnectionResourceData(item, options));
+                        array.Add(NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new NotificationHubPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceProperties(
+            return new NotificationHubNamespaceProperties(
                 name,
                 provisioningState,
                 status,
@@ -378,42 +378,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 networkAcls,
                 pnsCredentials,
                 serviceBusEndpoint,
-                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionResourceData>(),
+                privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>(),
                 scaleUnit,
                 dataCenter,
                 publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NamespaceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NotificationHubNamespaceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        NamespaceProperties IPersistableModel<NamespaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NotificationHubNamespaceProperties IPersistableModel<NotificationHubNamespaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNamespaceProperties(document.RootElement, options);
+                        return DeserializeNotificationHubNamespaceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NamespaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NotificationHubNamespaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

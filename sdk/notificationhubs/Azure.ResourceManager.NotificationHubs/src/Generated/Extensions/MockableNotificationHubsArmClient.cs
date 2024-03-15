@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NotificationHubPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NotificationHubPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NotificationHubPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual NotificationHubPrivateEndpointConnectionResource GetNotificationHubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            NotificationHubPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new NotificationHubPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>
