@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Specifies name of the password which should be regenerated -- password or password2. </summary>
+        [WirePath("name")]
         public ContainerRegistryPasswordName Name { get; }
     }
 }

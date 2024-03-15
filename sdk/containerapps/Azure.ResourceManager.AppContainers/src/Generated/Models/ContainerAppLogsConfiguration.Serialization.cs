@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -104,6 +106,57 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppLogsConfiguration(destination, logAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
+            if (Optional.IsDefined(Destination) || hasPropertyOverride)
+            {
+                builder.Append("  destination: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Destination.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Destination}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Destination}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsConfiguration), out propertyOverride);
+            if (Optional.IsDefined(LogAnalyticsConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  logAnalyticsConfiguration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false, "  logAnalyticsConfiguration: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppLogsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,6 +165,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{options.Format}' format.");
             }
@@ -128,6 +183,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppLogsConfiguration(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{options.Format}' format.");
             }

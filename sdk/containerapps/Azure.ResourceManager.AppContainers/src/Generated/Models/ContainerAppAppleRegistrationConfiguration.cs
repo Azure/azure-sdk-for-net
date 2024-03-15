@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The Client ID of the app used for login. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> The app setting name that contains the client secret. </summary>
+        [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }
 }

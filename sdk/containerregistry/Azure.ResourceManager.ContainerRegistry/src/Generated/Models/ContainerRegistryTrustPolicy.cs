@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The type of trust policy. </summary>
+        [WirePath("type")]
         public ContainerRegistryTrustPolicyType? PolicyType { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("status")]
         public ContainerRegistryPolicyStatus? Status { get; set; }
     }
 }

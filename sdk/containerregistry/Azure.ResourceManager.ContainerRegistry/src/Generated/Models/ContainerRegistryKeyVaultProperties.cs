@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Key vault uri to access the encryption key. </summary>
+        [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
         /// <summary> The fully qualified key identifier that includes the version of the key that is actually used for encryption. </summary>
+        [WirePath("versionedKeyIdentifier")]
         public string VersionedKeyIdentifier { get; }
         /// <summary> The client id of the identity which will be used to access key vault. </summary>
+        [WirePath("identity")]
         public string Identity { get; set; }
         /// <summary> Auto key rotation status for a CMK enabled registry. </summary>
+        [WirePath("keyRotationEnabled")]
         public bool? IsKeyRotationEnabled { get; }
         /// <summary> Timestamp of the last successful key rotation. </summary>
+        [WirePath("lastKeyRotationTimestamp")]
         public DateTimeOffset? LastKeyRotationTimestamp { get; }
     }
 }

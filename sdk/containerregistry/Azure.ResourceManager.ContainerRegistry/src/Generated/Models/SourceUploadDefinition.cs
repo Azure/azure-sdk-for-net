@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The URL where the client can upload the source. </summary>
+        [WirePath("uploadUrl")]
         public Uri UploadUri { get; }
         /// <summary> The relative path to the source. This is used to submit the subsequent queue build request. </summary>
+        [WirePath("relativePath")]
         public string RelativePath { get; }
     }
 }

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Client Id. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> Client Secret. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
         /// <summary> Tenant Id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> Kind of auth github does for deploying the template. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> Subscription Id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
     }
 }

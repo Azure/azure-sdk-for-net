@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -108,6 +110,50 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsCapacityReservationProperties(lastSkuUpdate, minCapacity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSkuUpdatedOn), out propertyOverride);
+            if (Optional.IsDefined(LastSkuUpdatedOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastSkuUpdate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastSkuUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCapacity), out propertyOverride);
+            if (Optional.IsDefined(MinCapacity) || hasPropertyOverride)
+            {
+                builder.Append("  minCapacity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MinCapacity.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OperationalInsightsCapacityReservationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsCapacityReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +162,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsCapacityReservationProperties)} does not support '{options.Format}' format.");
             }
@@ -132,6 +180,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOperationalInsightsCapacityReservationProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsCapacityReservationProperties)} does not support '{options.Format}' format.");
             }

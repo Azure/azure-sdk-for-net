@@ -87,20 +87,28 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Component type. </summary>
+        [WirePath("properties.componentType")]
         public string ComponentType { get; set; }
         /// <summary> Component version. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Boolean describing if the component errors are ignores. </summary>
+        [WirePath("properties.ignoreErrors")]
         public bool? IgnoreErrors { get; set; }
         /// <summary> Initialization timeout. </summary>
+        [WirePath("properties.initTimeout")]
         public string InitTimeout { get; set; }
         /// <summary> Collection of secrets used by a Dapr component. </summary>
+        [WirePath("properties.secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Name of a Dapr component to retrieve component secrets from. </summary>
+        [WirePath("properties.secretStoreComponent")]
         public string SecretStoreComponent { get; set; }
         /// <summary> Component metadata. </summary>
+        [WirePath("properties.metadata")]
         public IList<ContainerAppDaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>
+        [WirePath("properties.scopes")]
         public IList<string> Scopes { get; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

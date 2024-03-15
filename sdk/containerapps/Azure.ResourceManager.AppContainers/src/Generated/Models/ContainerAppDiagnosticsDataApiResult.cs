@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Table response. </summary>
+        [WirePath("table")]
         public ContainerAppDiagnosticDataTableResult Table { get; set; }
         /// <summary> Details of the table response. </summary>
+        [WirePath("renderingProperties")]
         public ContainerAppDiagnosticRendering RenderingProperties { get; set; }
     }
 }

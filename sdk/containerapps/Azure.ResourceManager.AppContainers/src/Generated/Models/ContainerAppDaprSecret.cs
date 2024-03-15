@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Secret Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Secret Value. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

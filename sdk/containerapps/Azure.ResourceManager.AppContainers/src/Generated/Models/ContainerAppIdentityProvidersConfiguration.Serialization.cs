@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -218,6 +221,142 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
+            if (Optional.IsDefined(AzureActiveDirectory) || hasPropertyOverride)
+            {
+                builder.Append("  azureActiveDirectory: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
+            if (Optional.IsDefined(Facebook) || hasPropertyOverride)
+            {
+                builder.Append("  facebook: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
+            if (Optional.IsDefined(GitHub) || hasPropertyOverride)
+            {
+                builder.Append("  gitHub: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
+            if (Optional.IsDefined(Google) || hasPropertyOverride)
+            {
+                builder.Append("  google: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
+            if (Optional.IsDefined(Twitter) || hasPropertyOverride)
+            {
+                builder.Append("  twitter: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
+            if (Optional.IsDefined(Apple) || hasPropertyOverride)
+            {
+                builder.Append("  apple: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
+            if (Optional.IsDefined(AzureStaticWebApps) || hasPropertyOverride)
+            {
+                builder.Append("  azureStaticWebApps: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomOpenIdConnectProviders), out propertyOverride);
+            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders) || hasPropertyOverride)
+            {
+                if (CustomOpenIdConnectProviders.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  customOpenIdConnectProviders: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in CustomOpenIdConnectProviders)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -226,6 +365,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{options.Format}' format.");
             }
@@ -242,6 +383,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppIdentityProvidersConfiguration(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{options.Format}' format.");
             }
