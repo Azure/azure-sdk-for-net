@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
+using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Message;
 
@@ -96,5 +97,63 @@ internal class BinaryContentTests : SyncAsyncTestBase
         writer.Flush();
 
         Assert.AreEqual(model.Utf8BytesValue, contentStream.ToArray());
+    }
+
+    [Test]
+    public void CanGetLengthFromStreamBinaryContent()
+    {
+        int size = 100;
+        byte[] sourceArray = new byte[size];
+        new Random(100).NextBytes(sourceArray);
+
+        MemoryStream stream = new(sourceArray);
+
+        using BinaryContent content = BinaryContent.Create(stream);
+
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(size, length);
+    }
+
+    [Test]
+    public async Task CanWriteToStreamFromStreamBinaryContent()
+    {
+        int size = 100;
+
+        byte[] sourceArray = new byte[size];
+        new Random(100).NextBytes(sourceArray);
+        MemoryStream source = new(sourceArray);
+
+        byte[] destinationArray = new byte[size * 2];
+        MemoryStream destination = new(destinationArray);
+
+        using BinaryContent content = BinaryContent.Create(source);
+
+        await content.WriteToSyncOrAsync(destination, CancellationToken.None, IsAsync);
+
+        Assert.AreEqual(size, destination.Position);
+
+        Assert.AreEqual(source.ToArray(), destination.ToArray().AsSpan().Slice(0, size).ToArray());
+    }
+
+    [Test]
+    public void StreamBinaryContentWriteToCanBeCancelled()
+    {
+        int size = 100;
+        MemoryStream source = new(size);
+        MemoryStream destination = new(size);
+
+        BinaryContent content = BinaryContent.Create(source);
+        CancellationTokenSource cts = new();
+        cts.Cancel();
+
+        Assert.Throws<OperationCanceledException>(() => { content.WriteTo(destination, cts.Token); });
+    }
+
+    [Test]
+    public void StreamBinaryContentMustBeSeekable()
+    {
+        NonSeekableMemoryStream stream = new();
+
+        Assert.Throws<ArgumentException>(() => { BinaryContent.Create(stream); });
     }
 }
