@@ -23,13 +23,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             for (int i = 0; i < 10000; i++)
                 ThreadPool.QueueUserWorkItem(async w =>
                 {
-                    HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+                    HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
                     {
-                        eventsResponseHandler.SetValueAsync(Payload.TokenIssuanceStart.ActionResponse, CancellationToken.None);
+                        await eventsResponseHandler.SetValueAsync(Payload.TokenIssuanceStart.ActionResponse, CancellationToken.None);
                     });
 
-                    Assert.AreEqual(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-                    Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+                    Assert.AreEqual(HttpStatusCode.OK, httpResponseMessage.StatusCode);
+                    Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
                 });
         }
 
@@ -38,14 +38,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void QueryParameterTest()
         {
             TokenIssuanceStartRequest tokenIssuanceStartRequest = new TokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
-            Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
+            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model for CSharp for version: 10_01_2021</summary>
         [Test]
         public async Task TokenIssuanceStartObjectModelTest()
         {
-            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
                 {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                             new TokenClaim("CustomRoles", "Writer", "Editor")
                             ));
 
-                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(RequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized, "Unauthorized")]
         public async Task TokenIssuanceStartRequestValidationTest(RequestStatusType requestStatusType, HttpStatusCode httpStatusCode, string reasonPhrase)
         {
-            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
                 {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
                     // set the request status type
                     request.RequestStatus = requestStatusType;
-                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -96,13 +96,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [Description("Tests the OnTokenIssuanceStart request and response object model when the response is set to null")]
         public async Task TokenIssuanceStartObjectModelNullResponseTest()
         {
-            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
                 {
                     request.Response = null;
 
-                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
@@ -125,18 +125,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
 
-            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
                 {
                     request.Response.Actions.Add(action);
 
-                    eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);
                 }
             });
 
             Assert.AreEqual(httpResponseMessage.StatusCode, expectReturnCode);
-            Assert.True(TestHelper.DoesPayloadMatch(expectedResponse, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(expectedResponse, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
     }
 }

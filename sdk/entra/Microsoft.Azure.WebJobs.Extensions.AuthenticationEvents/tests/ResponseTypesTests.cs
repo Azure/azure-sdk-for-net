@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var (code, payload) = GetExpected(responseType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 MemoryStream memoryStream = null;
                 StreamWriter streamWriter = null;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     memoryStream = new MemoryStream();
                     streamWriter = new StreamWriter(memoryStream);
-                    eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
                 }
                 finally
                 {
