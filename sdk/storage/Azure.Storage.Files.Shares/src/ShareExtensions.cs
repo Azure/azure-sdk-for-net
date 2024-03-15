@@ -709,7 +709,7 @@ namespace Azure.Storage.Files.Shares
                 Protocols =  ToShareEnabledProtocols(response.Headers.EnabledProtocols),
                 RootSquash = response.Headers.RootSquash,
                 Metadata = response.Headers.Metadata,
-                EnableSnapshotVirtualDirectoryAccess = response.Headers.EnabledSnapshotVirtualDirectoryAccess,
+                EnableSnapshotVirtualDirectoryAccess = response.Headers.EnableSnapshotVirtualDirectoryAccess,
                 QuotaInGB = response.Headers.Quota,
             };
         }
