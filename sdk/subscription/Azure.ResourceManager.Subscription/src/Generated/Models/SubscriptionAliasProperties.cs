@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Subscription;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {

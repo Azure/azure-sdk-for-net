@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {

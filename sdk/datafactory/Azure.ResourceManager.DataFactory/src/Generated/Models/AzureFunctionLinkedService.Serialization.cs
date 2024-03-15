@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> functionAppUrl = default;
-            DataFactorySecret functionKey = default;
+            DataFactorySecretBaseDefinition functionKey = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             DataFactoryElement<string> resourceId = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            functionKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            functionKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Orbital;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {

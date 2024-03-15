@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {

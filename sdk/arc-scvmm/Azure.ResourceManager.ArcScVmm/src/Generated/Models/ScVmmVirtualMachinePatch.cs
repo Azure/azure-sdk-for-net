@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ArcScVmm;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {

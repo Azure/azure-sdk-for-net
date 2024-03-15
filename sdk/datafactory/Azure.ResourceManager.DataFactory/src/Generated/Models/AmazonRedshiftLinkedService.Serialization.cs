@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> server = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<int> port = default;
             string encryptedCredential = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))

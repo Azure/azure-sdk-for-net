@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Elastic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {

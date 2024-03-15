@@ -205,16 +205,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             BinaryData connectionProperties = default;
             DataFactoryElement<string> clientCustomerId = default;
-            DataFactorySecret developerToken = default;
+            DataFactorySecretBaseDefinition developerToken = default;
             GoogleAdWordsAuthenticationType? authenticationType = default;
-            DataFactorySecret refreshToken = default;
+            DataFactorySecretBaseDefinition refreshToken = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecret clientSecret = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
             DataFactoryElement<string> email = default;
             DataFactoryElement<string> keyFilePath = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
-            DataFactorySecret privateKey = default;
+            DataFactorySecretBaseDefinition privateKey = default;
             DataFactoryElement<string> loginCustomerId = default;
             DataFactoryElement<string> googleAdsApiVersion = default;
             DataFactoryElement<bool> supportLegacyDataTypes = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            developerToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            developerToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("email"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("loginCustomerID"u8))

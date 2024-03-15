@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
