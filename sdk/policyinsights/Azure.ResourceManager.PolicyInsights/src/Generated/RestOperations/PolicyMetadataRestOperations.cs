@@ -37,6 +37,16 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetResourceRequestUri(string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata/", false);
+            uri.AppendPath(resourceName, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourceRequest(string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +115,19 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -164,6 +187,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, PolicyQuerySettings policyQuerySettings)
