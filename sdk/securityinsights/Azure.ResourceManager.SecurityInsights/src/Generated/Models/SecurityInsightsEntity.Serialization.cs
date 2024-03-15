@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element, options);
                     case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
                     case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element, options);
+                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
                     case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element, options);
                     case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element, options);
-                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
                     case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element, options);
                     case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element, options);
                     case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);

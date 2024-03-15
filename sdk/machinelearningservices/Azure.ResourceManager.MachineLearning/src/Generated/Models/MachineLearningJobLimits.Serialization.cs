@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                     case "Command": return MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(element, options);
+                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                 }
             }
             return UnknownJobLimits.DeserializeUnknownJobLimits(element, options);

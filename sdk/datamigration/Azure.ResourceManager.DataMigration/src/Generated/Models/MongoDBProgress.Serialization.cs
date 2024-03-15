@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                     case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element, options);
                     case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
-                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                 }
             }
             return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);

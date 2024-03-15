@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     ///   completions request that should use Azure OpenAI chat extensions to augment the response behavior.
     ///   The use of this configuration is compatible only with Azure OpenAI.
     /// Please note <see cref="AzureChatExtensionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureSearchChatExtensionConfiguration"/>, <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/>, <see cref="AzureCosmosDBChatExtensionConfiguration"/>, <see cref="ElasticsearchChatExtensionConfiguration"/> and <see cref="PineconeChatExtensionConfiguration"/>.
+    /// The available derived classes include <see cref="AzureCosmosDBChatExtensionConfiguration"/>, <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/>, <see cref="AzureSearchChatExtensionConfiguration"/>, <see cref="ElasticsearchChatExtensionConfiguration"/> and <see cref="PineconeChatExtensionConfiguration"/>.
     /// </summary>
     public abstract partial class AzureChatExtensionConfiguration
     {

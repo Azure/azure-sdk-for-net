@@ -39,10 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element);
+                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element);
-                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element);
                 }
             }
             return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element);

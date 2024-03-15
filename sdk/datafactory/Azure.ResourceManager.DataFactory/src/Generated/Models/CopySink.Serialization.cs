@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AvroSink": return AvroSink.DeserializeAvroSink(element, options);
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element, options);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element, options);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
-                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element, options);

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary>
     /// An abstract representation of an input tool definition that an assistant can use.
     /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="RetrievalToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
+    /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
     /// </summary>
     public abstract partial class ToolDefinition
     {

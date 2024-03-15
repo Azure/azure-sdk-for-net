@@ -71,8 +71,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return MessageTextContent.DeserializeMessageTextContent(element, options);
                     case "image_file": return MessageImageFileContent.DeserializeMessageImageFileContent(element, options);
+                    case "text": return MessageTextContent.DeserializeMessageTextContent(element, options);
                 }
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);

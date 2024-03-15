@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
                     case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element, options);
                     case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element, options);
+                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
                     case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element, options);
                     case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element, options);
-                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
                     case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
                     case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
                     case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element, options);
