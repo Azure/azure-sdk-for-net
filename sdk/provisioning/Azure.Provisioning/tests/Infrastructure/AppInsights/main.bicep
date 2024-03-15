@@ -4,6 +4,16 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
+resource operationalInsightsWorkspace_nSkskRVz7 'Microsoft.Insights/components@2022-10-01' = {
+  name: toLower(take(concat('opinsights', uniqueString(resourceGroup().id)), 24))
+  location: location
+  properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+  }
+}
+
 resource applicationInsightsComponent_FpLXFVEKV 'Microsoft.Insights/components@2020-02-02' = {
   name: toLower(take(concat('appinsights', uniqueString(resourceGroup().id)), 24))
   location: location

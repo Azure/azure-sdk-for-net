@@ -113,6 +113,10 @@ resource applicationInsightsComponent_OdiSCimF0 'Microsoft.Insights/components@2
   name: 'existingAppInsights'
 }
 
+resource applicationInsightsComponent_8Dwma7cn9 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: 'existingOpInsights'
+}
+
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_C2Aq73IJb
   name: 'appsettings'

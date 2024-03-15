@@ -22,6 +22,7 @@ using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.EventHubs;
+using Azure.Provisioning.OperationalInsights;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.Search;
@@ -438,6 +439,8 @@ namespace Azure.Provisioning.Tests
         public async Task AppInsights()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            _ = new OperationalInsightsWorkspace(infrastructure);
+
             var appInsights = new ApplicationInsightsComponent(infrastructure);
             appInsights.Properties.WorkspaceResourceId = "workspaceId";
 
@@ -781,6 +784,8 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
 
             infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
+
+            infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingOpInsights'", rg));
 
             infra.Build(GetOutputPath());
 
