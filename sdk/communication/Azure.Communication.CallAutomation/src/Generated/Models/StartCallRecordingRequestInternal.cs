@@ -48,9 +48,9 @@ namespace Azure.Communication.CallAutomation
         /// Channel-Participant mapping details can be found in the metadata of the recording.
         /// ///
         /// </param>
-        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which could be resumed. </param>
+        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
         /// <param name="externalStorage"></param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, ExternalStorageInternal externalStorage)
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, ExternalStorage externalStorage)
         {
             CallLocator = callLocator;
             RecordingStateCallbackUri = recordingStateCallbackUri;
@@ -87,9 +87,9 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
-        /// <summary> When set to true will start recording in Pause mode, which could be resumed. </summary>
+        /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
         public bool? PauseOnStart { get; set; }
         /// <summary> Gets or sets the external storage. </summary>
-        public ExternalStorageInternal ExternalStorage { get; set; }
+        public ExternalStorage ExternalStorage { get; set; }
     }
 }

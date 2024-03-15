@@ -6,17 +6,16 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams application. </summary>
-    public partial class MicrosoftTeamsAppIdentifierModel
+    internal partial class TeamsAppIdentifier
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
-        public MicrosoftTeamsAppIdentifierModel(string appId)
+        public TeamsAppIdentifier(string appId)
         {
             if (appId == null)
             {
@@ -26,10 +25,10 @@ namespace Azure.Communication.CallAutomation
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel? cloud)
+        internal TeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud)
         {
             AppId = appId;
             Cloud = cloud;
@@ -38,6 +37,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The Id of the Microsoft Teams application. </summary>
         public string AppId { get; set; }
         /// <summary> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </summary>
-        internal CommunicationCloudEnvironmentModel? Cloud { get; set; }
+        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

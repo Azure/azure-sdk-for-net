@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("ExternalStorage")]
-    internal partial class ExternalStorageInternal
+    public partial class ExternalStorage
     {
     }
 }

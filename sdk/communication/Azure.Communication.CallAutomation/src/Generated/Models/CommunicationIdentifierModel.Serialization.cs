@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -60,7 +59,7 @@ namespace Azure.Communication
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
-            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
+            TeamsAppIdentifier microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -110,7 +109,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
+                    microsoftTeamsApp = TeamsAppIdentifier.DeserializeTeamsAppIdentifier(property.Value);
                     continue;
                 }
             }

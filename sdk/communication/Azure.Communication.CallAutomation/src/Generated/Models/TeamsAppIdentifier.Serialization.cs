@@ -6,12 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
-    public partial class MicrosoftTeamsAppIdentifierModel : IUtf8JsonSerializable
+    internal partial class TeamsAppIdentifier : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +25,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftTeamsAppIdentifierModel DeserializeMicrosoftTeamsAppIdentifierModel(JsonElement element)
+        internal static TeamsAppIdentifier DeserializeTeamsAppIdentifier(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -51,7 +50,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MicrosoftTeamsAppIdentifierModel(appId, cloud);
+            return new TeamsAppIdentifier(appId, cloud);
         }
     }
 }
