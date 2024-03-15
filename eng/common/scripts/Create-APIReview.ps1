@@ -50,12 +50,14 @@ function Upload-SourceArtifact($packagename, $filePath, $apiLabel, $releaseStatu
     $multipartContent.Add($versionContent)
     Write-Host "Request param, packageVersion: $packageVersion"
     
-    $releaseTagParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
-    $releaseTagParam.Name = "setReleaseTag"
-    $releaseTagParamContent = [System.Net.Http.StringContent]::new($SetReleaseTag)
-    $releaseTagParamContent.Headers.ContentDisposition = $releaseTagParam
-    $multipartContent.Add($releaseTagParamContent)
-    Write-Host "Request param, setReleaseTag: $SetReleaseTag"
+    if ($MarkPackageAsShipped) {
+        $releaseTagParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+        $releaseTagParam.Name = "setReleaseTag"
+        $releaseTagParamContent = [System.Net.Http.StringContent]::new($true)
+        $releaseTagParamContent.Headers.ContentDisposition = $releaseTagParam
+        $multipartContent.Add($releaseTagParamContent)
+        Write-Host "Request param, setReleaseTag: true"
+    }
 
     if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
     {
