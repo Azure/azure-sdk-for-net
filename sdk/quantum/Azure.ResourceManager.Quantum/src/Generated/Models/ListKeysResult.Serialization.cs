@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (ApiKeyEnabled.HasValue)
+            if (Optional.IsDefined(ApiKeyEnabled))
             {
                 writer.WritePropertyName("apiKeyEnabled"u8);
                 writer.WriteBooleanValue(ApiKeyEnabled.Value);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteObjectValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteObjectValue(SecondaryKey);
             }
-            if (options.Format != "W" && PrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (options.Format != "W" && SecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<bool> apiKeyEnabled = default;
-            Optional<ApiKey> primaryKey = default;
-            Optional<ApiKey> secondaryKey = default;
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
+            bool? apiKeyEnabled = default;
+            ApiKey primaryKey = default;
+            ApiKey secondaryKey = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.Quantum.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ListKeysResult(
-                Optional.ToNullable(apiKeyEnabled),
-                primaryKey.Value,
-                secondaryKey.Value,
-                primaryConnectionString.Value,
-                secondaryConnectionString.Value,
+                apiKeyEnabled,
+                primaryKey,
+                secondaryKey,
+                primaryConnectionString,
+                secondaryConnectionString,
                 serializedAdditionalRawData);
         }
 

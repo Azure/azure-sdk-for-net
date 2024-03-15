@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Quantum
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (ApiKeyEnabled.HasValue)
+            if (Optional.IsDefined(ApiKeyEnabled))
             {
                 writer.WritePropertyName("apiKeyEnabled"u8);
                 writer.WriteBooleanValue(ApiKeyEnabled.Value);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Quantum
             ProvisioningStatus? provisioningState = default;
             string storageAccount = default;
             Uri endpointUri = default;
-            bool apiKeyEnabled = default;
+            bool? apiKeyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -434,10 +434,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
         public virtual async Task<Response> RegenerateKeysWorkspaceAsync(APIKeys keySpecification, CancellationToken cancellationToken = default)
         {
-            if (keySpecification == null)
-            {
-                throw new ArgumentNullException(nameof(keySpecification));
-            }
+            Argument.AssertNotNull(keySpecification, nameof(keySpecification));
 
             using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
             scope.Start();
@@ -475,10 +472,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
         public virtual Response RegenerateKeysWorkspace(APIKeys keySpecification, CancellationToken cancellationToken = default)
         {
-            if (keySpecification == null)
-            {
-                throw new ArgumentNullException(nameof(keySpecification));
-            }
+            Argument.AssertNotNull(keySpecification, nameof(keySpecification));
 
             using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
             scope.Start();
