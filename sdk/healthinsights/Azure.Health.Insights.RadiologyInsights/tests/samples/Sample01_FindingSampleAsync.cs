@@ -63,16 +63,63 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     foreach (FhirR4CodeableConcept category in categoryList)
                     {
                         Console.Write("   Category: ");
-                        DisplayCodes(category);
+                        DisplayCodes(category, 2);
                     }
-                    FhirR4CodeableConcept valueCodeableConcept = finding.ValueCodeableConcept;
-                    DisplayCodes(valueCodeableConcept);
+                    Console.Write("   Code: ");
+                    FhirR4CodeableConcept code = finding.Code;
+                    DisplayCodes(code, 2);
+                    Console.Write("   Interpretation: ");
+                    IList<FhirR4CodeableConcept> interpretationList = finding.Interpretation;
+                    if (interpretationList != null)
+                    {
+                        foreach (FhirR4CodeableConcept interpretation in interpretationList)
+                        {
+                            DisplayCodes(interpretation, 2);
+                        }
+                    }
+                    Console.Write("   Component: ");
+                    IList<FhirR4ObservationComponent> componentList = finding.Component;
+                    foreach (FhirR4ObservationComponent component in componentList)
+                    {
+                        FhirR4CodeableConcept componentCode = component.Code;
+                        DisplayCodes(componentCode, 2);
+                        Console.Write("      Value codeable concept: ");
+                        FhirR4CodeableConcept valueCodeableConcept = component.ValueCodeableConcept;
+                        DisplayCodes(valueCodeableConcept, 4);
+                    }
+                    displaySectionInfo(findingInference);
                 }
             }
         }
-
-        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept)
+        private static void displaySectionInfo(FindingInference findingInference)
         {
+            IReadOnlyList<FhirR4Extension> extensionList = findingInference.Extension;
+            if (extensionList != null)
+            {
+                foreach (FhirR4Extension extension in extensionList)
+                {
+                    if (extension.Url != null && extension.Url.Equals("section"))
+                    {
+                        Console.Write("   Section:");
+                        IReadOnlyList<FhirR4Extension> subextensionList = extension.Extension;
+                        if (subextensionList != null)
+                        {
+                            foreach (FhirR4Extension subextension in subextensionList)
+                            {
+                                Console.Write("      " + subextension.Url + ": " + subextension.ValueString);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept, int indentation)
+        {
+            string initialBlank = "";
+            for (int i = 0; i < indentation; i++)
+            {
+                initialBlank += "   ";
+            }
             if (codeableConcept != null)
             {
                 IList<FhirR4Coding> codingList = codeableConcept.Coding;
@@ -80,7 +127,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
             }
