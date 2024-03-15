@@ -25,6 +25,7 @@
     <PackageReference Include="Azure.ResourceManager.Search" />
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
     <PackageReference Include="Azure.ResourceManager.SignalR" />
+    <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 

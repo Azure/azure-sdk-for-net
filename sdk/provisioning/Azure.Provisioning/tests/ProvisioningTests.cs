@@ -17,6 +17,7 @@ using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
+using Azure.Provisioning.ApplicationInsights;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
@@ -434,6 +435,18 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task AppInsights()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var appInsights = new ApplicationInsightsComponent(infrastructure);
+            appInsights.Properties.WorkspaceResourceId = "workspaceId";
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
@@ -766,6 +779,8 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(EventHubsConsumerGroup.FromExisting(infra, "'existingEhConsumerGroup'", hub));
 
             infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
+
+            infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
 
             infra.Build(GetOutputPath());
 
