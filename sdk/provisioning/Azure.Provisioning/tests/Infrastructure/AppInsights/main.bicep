@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource operationalInsightsWorkspace_nSkskRVz7 'Microsoft.Insights/components@2022-10-01' = {
+resource operationalInsightsWorkspace_nSkskRVz7 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: toLower(take(concat('opinsights', uniqueString(resourceGroup().id)), 24))
   location: location
   properties: {
