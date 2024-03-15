@@ -15,7 +15,7 @@ namespace Azure.Core
         public string? Id { get; }
 
         // Version for this contract itself since we might change the members in the future.
-        internal string Version { get; } = "1.0.0";
+        internal string Version { get; } = NextLinkOperationImplementation.RehydartionTokenVersion;
 
         // The below members are used to re-construct <cref="NextLinkOperationImplemenation">.
         // Value of <cref="NextLinkOperationImplemenration.HeaderSrouce">.

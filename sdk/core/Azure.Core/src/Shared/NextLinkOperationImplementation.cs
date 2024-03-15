@@ -16,6 +16,7 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
+        internal const string RehydartionTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
         private static readonly string[] SuccessStates = { "succeeded" };
@@ -162,7 +163,7 @@ namespace Azure.Core
         }
 
         public RehydrationToken GetRehydrationToken()
-            => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
+            => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString(), OperationId);
 
         public static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
@@ -183,7 +184,8 @@ namespace Azure.Core
             }
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
             response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString());
+            var operationId = ParseOperationId(nextRequestUri);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), operationId);
         }
 
         public static RehydrationToken GetRehydrationToken(
@@ -192,9 +194,10 @@ namespace Azure.Core
             string nextRequestUri,
             string headerSource,
             string? lastKnownLocation,
-            string finalStateVia)
+            string finalStateVia,
+            string? operationId = null)
         {
-            var data = new BinaryData(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            var data = new BinaryData(new { version = RehydartionTokenVersion, id = operationId, requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 

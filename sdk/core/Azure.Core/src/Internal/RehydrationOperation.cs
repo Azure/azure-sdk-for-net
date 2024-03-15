@@ -25,6 +25,8 @@ namespace Azure.Core
 
         public override string Id => _nextLinkOperation?.OperationId ?? null;
 
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
+
         public override bool HasCompleted => _operation.HasCompleted;
 
         public override Response GetRawResponse() => _operation.RawResponse;
