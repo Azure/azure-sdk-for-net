@@ -4,14 +4,16 @@
 #nullable enable
 
 using System.Reflection;
+
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
+
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -34,33 +36,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
         /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
-        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
-        /// <remarks>
-        /// <para>
-        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
-        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
-        /// parsed state values.
-        /// </para>
-        ///
-        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
-        /// <list type="bullet">
-        /// <item>ASP.NET Core.</item>
-        /// <item>HTTP Client.</item>
-        /// <item>SQL Client.</item>
-        /// </list>
-        /// </remarks>
-        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
-        {
-            builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
-                        DefaultAzureMonitorOptions>();
-            return builder.UseAzureMonitor(o => { });
-        }
-
-        /// <summary>
-        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
-        /// </summary>
-        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
         /// <param name="configureAzureMonitor">Callback action for configuring <see cref="AzureMonitorOptions"/>.</param>
+        /// <param name="configureResource">Callback action for configuring <see cref="ResourceBuilder"/>.</param>
         /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
         /// <remarks>
         /// <para>
@@ -76,25 +53,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions>? configureAzureMonitor = null, Action<ResourceBuilder>? configureResource = null)
         {
-            if (builder.Services == null)
+            if (builder.Services is null)
             {
                 throw new ArgumentNullException(nameof(builder.Services));
             }
 
-            if (configureAzureMonitor != null)
+            if (configureAzureMonitor is not null)
             {
                 builder.Services.Configure(configureAzureMonitor);
             }
 
-            Action<ResourceBuilder> configureResource = (r) => r
+            configureResource = (Action<ResourceBuilder>)Delegate.Combine(configureResource, (ResourceBuilder r) => r
                 .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
                 .AddDetector(new AppServiceResourceDetector())
                 .AddDetector(new AzureContainerAppsResourceDetector())
-                .AddDetector(new AzureVMResourceDetector());
+                .AddDetector(new AzureVMResourceDetector()),
+                (ResourceBuilder r) => { })!;
 
-            builder.ConfigureResource(configureResource);
+            builder.ConfigureResource(configureResource!);
 
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
