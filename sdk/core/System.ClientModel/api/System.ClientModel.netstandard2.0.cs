@@ -132,6 +132,20 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
     }
+    public partial class MultipartBinaryContent : System.ClientModel.BinaryContent, System.IDisposable
+    {
+        public MultipartBinaryContent() { }
+        public MultipartBinaryContent(string subtype) { }
+        public MultipartBinaryContent(string subtype, string boundary) { }
+        public string Boundary { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public void Add(System.ClientModel.BinaryContent part) { }
+        public void Add(System.ClientModel.BinaryContent part, (string Name, string Value)[] headers) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {
