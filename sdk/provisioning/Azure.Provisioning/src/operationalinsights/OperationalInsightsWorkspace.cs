@@ -14,8 +14,8 @@ namespace Azure.Provisioning.OperationalInsights
     /// </summary>
     public class OperationalInsightsWorkspace : Resource<OperationalInsightsWorkspaceData>
     {
-        // https://learn.microsoft.com/azure/templates/microsoft.insights/2020-02-02/components?pivots=deployment-language-bicep
-        private const string ResourceTypeName = "Microsoft.Insights/components";
+        // https://learn.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/2022-10-01/workspaces?pivots=deployment-language-bicep
+        private const string ResourceTypeName = "Microsoft.OperationalInsights/workspaces";
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/operationalinsights/Azure.ResourceManager.OperationalInsights/src/Generated/RestOperations/WorkspacesRestOperations.cs#L36C42-L36C52
         internal const string DefaultVersion = "2022-10-01";
 
