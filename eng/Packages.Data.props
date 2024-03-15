@@ -363,7 +363,7 @@
 
   <!-- IsWcfLibrary is set in "..\sdk\extensions\wcf\Directory.Build.props". This property indicates that WCF/CoreWCF extensions project is being built.-->
   <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
-    <PackageReference Update="CoreWCF.Queue" Version="1.5.1" />
+    <PackageReference Update="CoreWCF.Queue" Version="1.5.2" />
     <PackageReference Update="System.IO.Pipelines" Version="6.0.3" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="6.0.0" />
