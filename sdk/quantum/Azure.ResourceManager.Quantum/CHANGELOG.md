@@ -8,11 +8,9 @@
     - Enable Azure quantum api key and connection string to access quantum workspaces.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.2.
 
 ## 1.0.0-beta.4 (2023-11-29)
 
