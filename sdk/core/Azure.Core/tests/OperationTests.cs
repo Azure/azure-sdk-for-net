@@ -5,11 +5,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
-using NUnit;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -179,10 +177,6 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(mockResponse);
             var pipeline = new HttpPipeline(transport, default);
             return pipeline;
-        }
-
-        private class MockClientOptions : ClientOptions
-        {
         }
     }
 }
