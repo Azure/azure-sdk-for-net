@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class RehydrationOperation<T> : Operation<T> where T : notnull
+    internal class RehydrationOperation<T> : ArmOperation<T> where T : notnull
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
