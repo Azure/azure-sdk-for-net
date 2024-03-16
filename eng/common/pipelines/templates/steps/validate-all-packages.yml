@@ -1,0 +1,28 @@
+parameters:
+  ArtifactPath: $(Build.ArtifactStagingDirectory)
+  Artifacts: []
+  ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
+
+steps:
+ - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), eq(variables['System.TeamProject'], 'internal')) }}:
+    - task: Powershell@2
+      inputs:
+        filePath: $(Build.SourcesDirectory)/eng/common/scripts/Validate-All-Packages.ps1
+        arguments: >
+          -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
+          -ArtifactPath ${{ parameters.ArtifactPath }}
+          -RepoRoot $(Build.SourcesDirectory)
+          -APIKey $(azuresdk-apiview-apikey)
+          -ConfigFileDir '${{ parameters.ConfigFileDir }}'
+          -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId)
+          -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
+          -Devops_pat '$(azuresdk-azure-sdk-devops-release-work-item-pat)'
+        pwsh: true
+        workingDirectory: $(Pipeline.Workspace)
+      displayName: Validate packages and update work items
+      continueOnError: true
+      condition: >-
+        and(
+          succeededOrFailed(),
+          not(endsWith(variables['Build.Repository.Name'], '-pr'))
+        )
