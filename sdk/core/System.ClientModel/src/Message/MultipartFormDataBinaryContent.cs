@@ -89,6 +89,8 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
         _random.NextBytes(random);
 
         // The following will sample evenly from the possible values.
+        // This is important to ensuring that the odds of creating a boundary
+        // that occurs in any content part are astronomically small.
         int mask = 255 >> 2;
 
         Debug.Assert(_boundaryValues.Length - 1 == mask);
