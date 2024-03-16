@@ -9,6 +9,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using MockJsonModel = Azure.Core.TestFramework.MockJsonModel;
 
 namespace System.ClientModel.Tests.Message;
 
