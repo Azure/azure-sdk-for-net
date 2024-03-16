@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -16,7 +17,7 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
     private readonly MultipartFormDataContent _multipartContent;
 
     private static Random _random = new();
-    private static readonly char[] _boundaryValues = "()+,-./0123456789:=?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+    private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     public MultipartFormDataBinaryContent()
     {
@@ -82,14 +83,16 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
 
     private static string CreateBoundary()
     {
-        // TODO: test it.
-
         Span<char> chars = new char[70];
 
         byte[] random = new byte[70];
         _random.NextBytes(random);
 
-        int mask = _boundaryValues.Length - 1;
+        // The following will sample evenly from the possible values.
+        int mask = 255 >> 2;
+
+        Debug.Assert(_boundaryValues.Length - 1 == mask);
+
         for (int i = 0; i < 70; i++)
         {
             chars[i] = _boundaryValues[random[i] & mask];
