@@ -18,12 +18,25 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
     private static Random _random = new();
     private static readonly char[] _boundaryValues = "()+,-./0123456789:=?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-    internal HttpContent HttpContent => _multipartContent;
-
     public MultipartFormDataBinaryContent()
     {
         _multipartContent = new MultipartFormDataContent(CreateBoundary());
     }
+
+    public string? ContentType
+    {
+        get
+        {
+            if (_multipartContent.Headers.ContentType is MediaTypeHeaderValue value)
+            {
+                return value.ToString();
+            }
+
+            return null;
+        }
+    }
+
+    internal HttpContent HttpContent => _multipartContent;
 
     public void Add(Stream stream, string name, string? fileName = default)
     {
