@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Fix for "Comitted Memory" not updating.
+  ([]())
+
 ### Other Changes
 
 ## 1.0.0-beta.3 (2024-03-08)
