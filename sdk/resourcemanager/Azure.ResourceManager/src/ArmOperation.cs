@@ -5,11 +5,31 @@
 
 #nullable disable
 
+using Azure.Core;
 
 namespace Azure.ResourceManager
 {
     /// <inheritdoc/>
     public abstract class ArmOperation : Operation
     {
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static ArmOperation Rehydrate(ArmClient client, RehydrationToken? rehydrationToken, ArmClientOptions options = null)
+            => new RehydrationOperation(client, rehydrationToken, options);
+            
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="client">The Arm client.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The Arm client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static ArmOperation<T> Rehydrate<T>(ArmClient client, RehydrationToken? rehydrationToken, ArmClientOptions options = null) where T : notnull
+            => new RehydrationOperation<T>(client, rehydrationToken, options);
     }
 }
