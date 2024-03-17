@@ -42,6 +42,26 @@ Documentation is available to help you learn how to use this package:
 
 ## Examples
 
+### Get the intermediate status of the ImportEntities method
+
+```C# Snippet:Readme_GetIntermediateStatusOfImportEntitiesMethod
+// First, initialize the ArmClient
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+// Create Resource group, create a discovery site.
+// Get Discovery site resource with the created name.
+SAPDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
+// Post import entities operation.
+ArmOperation<OperationStatusResult> importEntitiesOp =
+    await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
+// Get operation status.
+Response<GenericResource> operationStatus = await client.GetGenericResources()
+    .GetAsync(ResourceIdentifier.Parse(importEntitiesOp.Value.Id));
+JObject operationStatusObj = JObject.Parse(operationStatus?.GetRawResponse()?.Content?.ToString());
+JToken opProperties = operationStatusObj?["properties"];
+// Status of import entities method.
+string status = opProperties?["status"].ToString();
+```
+
 Code samples for using the management library for .NET can be found in the following locations
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
