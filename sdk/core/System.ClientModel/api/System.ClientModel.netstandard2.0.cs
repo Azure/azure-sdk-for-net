@@ -136,7 +136,7 @@ namespace System.ClientModel.Primitives
     public sealed partial class MultipartFormDataBinaryContent : System.ClientModel.BinaryContent
     {
         public MultipartFormDataBinaryContent() { }
-        public string? ContentType { get { throw null; } }
+        public string ContentType { get { throw null; } }
         public void Add(System.BinaryData content, string name, string? fileName = null) { }
         public void Add(System.IO.Stream stream, string name, string? fileName = null) { }
         public void Add(string content, string name, string? fileName = null) { }

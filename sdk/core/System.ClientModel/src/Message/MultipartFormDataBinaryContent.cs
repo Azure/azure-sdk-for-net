@@ -24,16 +24,13 @@ public sealed class MultipartFormDataBinaryContent : BinaryContent
         _multipartContent = new MultipartFormDataContent(CreateBoundary());
     }
 
-    public string? ContentType
+    public string ContentType
     {
         get
         {
-            if (_multipartContent.Headers.ContentType is MediaTypeHeaderValue value)
-            {
-                return value.ToString();
-            }
+            Debug.Assert(_multipartContent.Headers.ContentType is not null);
 
-            return null;
+            return _multipartContent.Headers.ContentType!.ToString();
         }
     }
 
