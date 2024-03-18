@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -39,6 +40,7 @@ using Azure.ResourceManager.SignalR.Models;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
+using UserAssignedIdentity = Azure.Provisioning.ManagedServiceIdentities.UserAssignedIdentity;
 
 namespace Azure.Provisioning.Tests
 {
@@ -450,6 +452,17 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task UserAssignedIdentities()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            _ = new UserAssignedIdentity(infrastructure);
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
@@ -786,6 +799,8 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(ApplicationInsightsComponent.FromExisting(infra, "'existingAppInsights'", rg));
 
             infra.AddResource(OperationalInsightsWorkspace.FromExisting(infra, "'existingOpInsights'", rg));
+
+            infra.AddResource(UserAssignedIdentity.FromExisting(infra, "'existingUserAssignedIdentity'", rg));
 
             infra.Build(GetOutputPath());
 

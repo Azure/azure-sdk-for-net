@@ -76,7 +76,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
-        /// <returns>The KeyVault instance.</returns>
+        /// <returns>The CosmosDBAccount instance.</returns>
         public static CosmosDBAccount FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new CosmosDBAccount(scope, parent: parent, name: name, isExisting: true);
 

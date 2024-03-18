@@ -113,8 +113,12 @@ resource applicationInsightsComponent_OdiSCimF0 'Microsoft.Insights/components@2
   name: 'existingAppInsights'
 }
 
-resource operationalInsightsWorkspace_8Dwma7cn9 'Microsoft.Insights/components@2022-10-01' existing = {
+resource operationalInsightsWorkspace_8Dwma7cn9 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: 'existingOpInsights'
+}
+
+resource userAssignedIdentity_AHWXCnFeG 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+  name: 'existingUserAssignedIdentity'
 }
 
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
