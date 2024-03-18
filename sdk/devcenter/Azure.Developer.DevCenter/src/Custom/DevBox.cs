@@ -21,8 +21,5 @@ namespace Azure.Developer.DevCenter.Models
             Name = name;
             PoolName = poolName;
         }
-
-        /// <summary> Display name for the Dev Box. </summary>
-        public string Name { get; set; }
     }
 }

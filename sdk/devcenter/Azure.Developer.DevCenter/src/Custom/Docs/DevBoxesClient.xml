@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <doc>
   <members>
-    <member name="CreateDevBoxAsync(WaitUntil,string,string,string,DevBox,CancellationToken)">
+    <member name="CreateDevBoxAsync(WaitUntil,string,string,DevBox,CancellationToken)">
       <example>
         This sample shows how to call CreateDevBoxAsync.
         <code>
@@ -10,7 +10,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-DevBox devBox = new DevBox("<poolName>");
+DevBox devBox = new DevBox("<devBoxName>", "<poolName>");
 Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", devBox);
 DevBox responseData = operation.Value;
 ]]>
@@ -22,7 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-DevBox devBox = new DevBox("<poolName>")
+DevBox devBox = new DevBox("<devBoxName>", "<poolName>")
 {
     LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
 };
@@ -32,7 +32,7 @@ DevBox responseData = operation.Value;
         </code>
       </example>
     </member>
-    <member name="CreateDevBox(WaitUntil,string,string,string,DevBox,CancellationToken)">
+    <member name="CreateDevBox(WaitUntil,string,string,DevBox,CancellationToken)">
       <example>
         This sample shows how to call CreateDevBox.
         <code>
@@ -41,7 +41,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-DevBox devBox = new DevBox("<poolName>");
+DevBox devBox = new DevBox("<devBoxName>", "<poolName>");
 Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", devBox);
 DevBox responseData = operation.Value;
 ]]>
@@ -53,7 +53,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-DevBox devBox = new DevBox("<poolName>")
+DevBox devBox = new DevBox("<devBoxName>", "<poolName>")
 {
     LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
 };

@@ -102,6 +102,9 @@ namespace Azure.Developer.DevCenter.Models
         internal DevBox()
         {
         }
+
+        /// <summary> Display name for the Dev Box. </summary>
+        public string Name { get; }
         /// <summary> Name of the project this Dev Box belongs to. </summary>
         public string ProjectName { get; }
         /// <summary> The name of the Dev Box pool this machine belongs to. </summary>
