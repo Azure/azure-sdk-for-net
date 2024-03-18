@@ -10,16 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hdinsight/ci.mgmt.yml
-    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
+    - sdk/trustedsigning/ci.mgmt.yml
+    - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: hdinsight
+    ServiceDirectory: trustedsigning
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.HDInsight
-      safeName: AzureResourceManagerHDInsight
-    - name: Azure.ResourceManager.HDInsight.Containers
-      safeName: AzureResourceManagerHDInsightContainers
+    - name: Azure.ResourceManager.TrustedSigning
+      safeName: AzureResourceManagerTrustedSigning
