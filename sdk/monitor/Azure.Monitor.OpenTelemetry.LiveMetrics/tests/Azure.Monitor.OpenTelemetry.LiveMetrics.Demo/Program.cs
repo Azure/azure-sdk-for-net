@@ -120,25 +120,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             // Start each task
             for (int i = 0; i < numProcessors; i++)
             {
-                tasks[i] = Task.Run(() => Compute());
+                tasks[i] = Task.Run(() =>
+                {
+                    var timeStamp = DateTime.Now.AddSeconds(5);
+                    while (DateTime.Now < timeStamp)
+                    {
+                        // Keep the CPU busy
+                    }
+                });
             }
 
             await Task.WhenAll(tasks);
-        }
-
-        private static void Compute()
-        {
-            var timeStamp = DateTime.Now.AddSeconds(5);
-
-            while (DateTime.Now < timeStamp)
-            {
-                //Simulate intensive computation
-                double result = 0;
-                for (int i = 0; i < 1000000; i++)
-                {
-                    result += Math.Sqrt(i);
-                }
-            }
         }
     }
 }
