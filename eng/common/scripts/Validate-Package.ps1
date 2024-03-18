@@ -109,7 +109,7 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
             Details = ""
         }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]." 
-        Check-ApiReviewStatus -PackageName $packageName -Language $language -packageVersion $packageVersion -url $APIViewUri -apiKey $APIKey -apiApprovalStatus $apiStatus -packageNameStatus $packageNameStatus
+        Check-ApiReviewStatus -packageName $packageName -language $language -packageVersion $packageVersion -url $APIViewUri -apiKey $APIKey -apiApprovalStatus $apiStatus -packageNameStatus $packageNameStatus
 
         #API review approval status
         $APIReviewValidation.Message = $apiStatus.Details

@@ -45,20 +45,6 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
     }
   }
 
-  if (!$apiApprovalStatus) {
-    $apiApprovalStatus = [PSCustomObject]@{
-      IsApproved = $false
-      Details = ""
-    }
-  }
-
-  if (!$packageNameStatus) {
-    $packageNameStatus = [PSCustomObject]@{
-      IsApproved = $false
-      Details = ""
-    }
-  }
-
   try
   {
     $requestUrl = "${url}?language=${lang}&packageName=${packageName}"
