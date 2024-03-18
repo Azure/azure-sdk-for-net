@@ -52,8 +52,8 @@ extends:
       safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
     - name: Azure.Core.Amqp
       safeName: AzureCoreAmqp
-        #    - name: System.ClientModel
-        #      safeName: SystemClientModel
+    - name: System.ClientModel
+      safeName: SystemClientModel
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
