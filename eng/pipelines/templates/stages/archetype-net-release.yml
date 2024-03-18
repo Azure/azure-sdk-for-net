@@ -138,8 +138,7 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        # Sync eng directory to get credscan suppressions on disk in expected path
-                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                        - template: /eng/pipelines/templates/steps/download-credscan-suppressions.yml
 
               - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
                 - deployment: UploadSymbols
