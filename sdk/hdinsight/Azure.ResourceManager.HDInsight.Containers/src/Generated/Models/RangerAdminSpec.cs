@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="admins"/> or <paramref name="database"/> is null. </exception>
         public RangerAdminSpec(IEnumerable<string> admins, RangerAdminSpecDatabase database)
         {
-            if (admins == null)
-            {
-                throw new ArgumentNullException(nameof(admins));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(admins, nameof(admins));
+            Argument.AssertNotNull(database, nameof(database));
 
             Admins = admins.ToList();
             Database = database;

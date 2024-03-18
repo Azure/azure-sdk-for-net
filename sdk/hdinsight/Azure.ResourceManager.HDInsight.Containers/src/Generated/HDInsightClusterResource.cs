@@ -384,10 +384,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUpgradeRequest"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightClusterResource>> UpgradeAsync(WaitUntil waitUntil, ClusterUpgrade clusterUpgradeRequest, CancellationToken cancellationToken = default)
         {
-            if (clusterUpgradeRequest == null)
-            {
-                throw new ArgumentNullException(nameof(clusterUpgradeRequest));
-            }
+            Argument.AssertNotNull(clusterUpgradeRequest, nameof(clusterUpgradeRequest));
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Upgrade");
             scope.Start();
@@ -433,10 +430,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUpgradeRequest"/> is null. </exception>
         public virtual ArmOperation<HDInsightClusterResource> Upgrade(WaitUntil waitUntil, ClusterUpgrade clusterUpgradeRequest, CancellationToken cancellationToken = default)
         {
-            if (clusterUpgradeRequest == null)
-            {
-                throw new ArgumentNullException(nameof(clusterUpgradeRequest));
-            }
+            Argument.AssertNotNull(clusterUpgradeRequest, nameof(clusterUpgradeRequest));
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Upgrade");
             scope.Start();

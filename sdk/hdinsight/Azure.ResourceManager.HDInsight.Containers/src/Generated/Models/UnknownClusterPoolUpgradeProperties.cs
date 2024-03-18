@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    /// <summary> The UnknownClusterPoolUpgradeProperties. </summary>
+    /// <summary> Unknown version of ClusterPoolUpgradeProperties. </summary>
     internal partial class UnknownClusterPoolUpgradeProperties : ClusterPoolUpgradeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClusterPoolUpgradeProperties"/>. </summary>

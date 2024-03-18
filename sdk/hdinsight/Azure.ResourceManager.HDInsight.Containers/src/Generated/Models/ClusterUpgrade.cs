@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -54,10 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ClusterUpgrade(ClusterUpgradeProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

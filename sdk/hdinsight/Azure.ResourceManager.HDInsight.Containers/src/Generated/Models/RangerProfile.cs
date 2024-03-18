@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rangerAdmin"/> or <paramref name="rangerUsersync"/> is null. </exception>
         public RangerProfile(RangerAdminSpec rangerAdmin, RangerUsersyncSpec rangerUsersync)
         {
-            if (rangerAdmin == null)
-            {
-                throw new ArgumentNullException(nameof(rangerAdmin));
-            }
-            if (rangerUsersync == null)
-            {
-                throw new ArgumentNullException(nameof(rangerUsersync));
-            }
+            Argument.AssertNotNull(rangerAdmin, nameof(rangerAdmin));
+            Argument.AssertNotNull(rangerUsersync, nameof(rangerUsersync));
 
             RangerAdmin = rangerAdmin;
             RangerUsersync = rangerUsersync;
