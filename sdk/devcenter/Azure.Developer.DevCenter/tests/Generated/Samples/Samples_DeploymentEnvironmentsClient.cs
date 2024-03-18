@@ -1223,32 +1223,6 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
-            Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-            DevCenterEnvironment responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>");
-            Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-            DevCenterEnvironment responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -1317,44 +1291,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
-            {
-                Parameters =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-            };
-            Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-            DevCenterEnvironment responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
-            {
-                Parameters =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-            };
-            Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
-            DevCenterEnvironment responseData = operation.Value;
         }
 
         [Test]

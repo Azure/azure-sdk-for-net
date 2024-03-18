@@ -49,23 +49,6 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
-        /// <param name="environmentTypeName"> Environment type. </param>
-        /// <param name="catalogName"> Name of the catalog. </param>
-        /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
-        public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName)
-        {
-            Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
-
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
-            EnvironmentTypeName = environmentTypeName;
-            CatalogName = catalogName;
-            EnvironmentDefinitionName = environmentDefinitionName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>

@@ -249,6 +249,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             var environment = new DevCenterEnvironment
             (
+                EnvName,
                 TestEnvironment.EnvironmentTypeName,
                 TestEnvironment.CatalogName,
                 EnvDefinitionName
@@ -258,7 +259,6 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                EnvName,
                 environment);
 
             EnvironmentProvisioningState? provisioningState = environmentCreateOperation.Value.ProvisioningState;

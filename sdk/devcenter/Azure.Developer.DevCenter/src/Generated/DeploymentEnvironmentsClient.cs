@@ -1013,63 +1013,12 @@ namespace Azure.Developer.DevCenter
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeploymentEnvironmentsClient.GetEnvironmentTypes", "value", "nextLink", context);
         }
 
-        /// <summary> Creates or updates an environment. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="body"> Represents an environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)']/*" />
-        public virtual async Task<Operation<DevCenterEnvironment>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, DevCenterEnvironment body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
-            Operation<BinaryData> response = await CreateOrUpdateEnvironmentAsync(waitUntil, projectName, userId, environmentName, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DevCenterEnvironment.FromResponse, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
-        }
-
-        /// <summary> Creates or updates an environment. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="environmentName"> The name of the environment. </param>
-        /// <param name="body"> Represents an environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="environmentName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)']/*" />
-        public virtual Operation<DevCenterEnvironment> CreateOrUpdateEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, DevCenterEnvironment body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = body.ToRequestContent();
-            Operation<BinaryData> response = CreateOrUpdateEnvironment(waitUntil, projectName, userId, environmentName, content, context);
-            return ProtocolOperationHelpers.Convert(response, DevCenterEnvironment.FromResponse, ClientDiagnostics, "DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
-        }
-
         /// <summary>
         /// [Protocol Method] Creates or updates an environment.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1112,11 +1061,6 @@ namespace Azure.Developer.DevCenter
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateEnvironment(WaitUntil,string,string,string,DevCenterEnvironment,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
