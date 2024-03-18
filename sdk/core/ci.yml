@@ -31,29 +31,38 @@ pr:
     - eng/mgmt/
     - eng/common/
 
+parameters:
+  - name: Artifacts
+    type: object
+    default:
+      - name: Azure.Core
+        safeName: AzureCore
+      - name: Azure.Core.Experimental
+        safeName: AzureCoreExperimental
+      - name: Azure.Core.Expressions.DataFactory
+        safeName: AzureCoreExpressionsDataFactory
+      - name: Microsoft.Azure.Core.NewtonsoftJson
+        safeName: MicrosoftAzureCoreNewtonsoftJson
+      - name: Microsoft.Azure.Core.Spatial
+        safeName: MicrosoftAzureCoreSpatial
+      - name: Microsoft.Azure.Core.Spatial.NewtonsoftJson
+        safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
+        # Currently due to size constraints with 1es pipeline templates we cannot include ALL release stages in one build
+        skipReleaseStage: true
+      - name: Azure.Core.Amqp
+        safeName: AzureCoreAmqp
+        # Currently due to size constraints with 1es pipeline templates we cannot include ALL release stages in one build
+        skipReleaseStage: true
+      - name: System.ClientModel
+        safeName: SystemClientModel
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: core
     BuildSnippets: false
     ArtifactName: packages
-    Artifacts:
-    - name: Azure.Core
-      safeName: AzureCore
-    - name: Azure.Core.Experimental
-      safeName: AzureCoreExperimental
-    - name: Azure.Core.Expressions.DataFactory
-      safeName: AzureCoreExpressionsDataFactory
-    - name: Microsoft.Azure.Core.NewtonsoftJson
-      safeName: MicrosoftAzureCoreNewtonsoftJson
-    - name: Microsoft.Azure.Core.Spatial
-      safeName: MicrosoftAzureCoreSpatial
-    - name: Microsoft.Azure.Core.Spatial.NewtonsoftJson
-      safeName: MicrosoftAzureCoreSpatialNewtonsoftJson
-    - name: Azure.Core.Amqp
-      safeName: AzureCoreAmqp
-    - name: System.ClientModel
-      safeName: SystemClientModel
+    Artifacts: ${{ parameters.Artifacts }}
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
