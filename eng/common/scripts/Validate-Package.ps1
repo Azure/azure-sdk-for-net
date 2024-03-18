@@ -109,8 +109,10 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
             Details = ""
         }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]." 
-        Check-ApiReviewStatus -packageName $packageName -language $language -packageVersion $packageVersion -url $APIViewUri -apiKey $APIKey -apiApprovalStatus $apiStatus -packageNameStatus $packageNameStatus
+        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus $packageNameStatus
 
+        Write-Host "API review approval details: $($apiStatus.Details)"
+        Write-Host "Package name approval details: $($packageNameStatus.Details)"
         #API review approval status
         $APIReviewValidation.Message = $apiStatus.Details
         $APIReviewValidation.Status = if ($apiStatus.IsApproved) { "Approved" } else { "Pending" }
@@ -261,8 +263,8 @@ $pkgValidationDetails= [PSCustomObject]@{
     Version = $pkgInfo.Version
     ChangeLogValidation = [PSCustomObject]@{
         Name = "Change Log Validation"
-        Status = $changelogStatus.Status
-        Message = $changelogStatus.Message
+        Status = "$changelogStatus.Status"
+        Message = "$changelogStatus.Message"
     }
     APIReviewValidation = $apireviewDetails.ApiviewApproval
     PackageNameValidation = $apireviewDetails.PackageNameApproval
