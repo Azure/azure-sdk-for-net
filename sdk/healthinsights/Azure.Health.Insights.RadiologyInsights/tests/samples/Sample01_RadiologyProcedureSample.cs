@@ -61,25 +61,48 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
                     foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
                     {
-                        DisplayCodes(procedureCode);
+                        DisplayCodes(procedureCode, 2);
+                    }
+                    Console.Write("   Imaging procedures:");
+                    IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+
+                    foreach (ImagingProcedure imagingProcedure in imagingProcedures)
+                    {
+                        Console.Write("      Modality: ");
+                        FhirR4CodeableConcept modality = imagingProcedure.Modality;
+                        DisplayCodes(modality, 3);
+                        Console.Write("      Anatomy: ");
+                        FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
+                        DisplayCodes(anatomy, 3);
+                        Console.Write("      Laterality: ");
+                        FhirR4CodeableConcept laterality = imagingProcedure.Laterality;
+                        DisplayCodes(laterality, 3);
                     }
                     Console.Write("   Ordered procedures:");
                     FhirR4Extendible orderedProcedure = radiologyProcedureInference.OrderedProcedure;
                     FhirR4CodeableConcept code = orderedProcedure.Code;
-                    DisplayCodes(code);
+                    DisplayCodes(code, 2);
                     Console.Write("   Description: " + orderedProcedure.Description);
                 }
             }
         }
 
-        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept)
+        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept, int indentation)
         {
-            IList<FhirR4Coding> codingList = codeableConcept.Coding;
-            if (codingList != null)
+            string initialBlank = "";
+            for (int i = 0; i < indentation; i++)
             {
-                foreach (FhirR4Coding fhirR4Coding in codingList)
+                initialBlank += "   ";
+            }
+            if (codeableConcept != null)
+            {
+                IList<FhirR4Coding> codingList = codeableConcept.Coding;
+                if (codingList != null)
                 {
-                    Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                    foreach (FhirR4Coding fhirR4Coding in codingList)
+                    {
+                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                    }
                 }
             }
         }

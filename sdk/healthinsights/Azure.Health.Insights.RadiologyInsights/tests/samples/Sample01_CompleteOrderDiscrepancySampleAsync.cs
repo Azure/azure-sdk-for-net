@@ -59,25 +59,30 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     Console.Write("Complete Order Discrepancy Inference found: ");
                     FhirR4CodeableConcept orderType = completeOrderDiscrepancyInference.OrderType;
-                    DisplayCodes(orderType);
+                    DisplayCodes(orderType, 1);
                     IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
                     Console.Write("   Missing body parts:");
                     foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
                     {
-                        DisplayCodes(missingBodyPart);
+                        DisplayCodes(missingBodyPart, 2);
                     }
                     IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
                     Console.Write("   Missing body part measurements:");
                     foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
                     {
-                        DisplayCodes(missingBodyPartMeasurement);
+                        DisplayCodes(missingBodyPartMeasurement, 2);
                     }
                 }
             }
         }
 
-        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept)
+        private static void DisplayCodes(FhirR4CodeableConcept codeableConcept, int indentation)
         {
+            string initialBlank = "";
+            for (int i = 0; i < indentation; i++)
+            {
+                initialBlank += "   ";
+            }
             if (codeableConcept != null)
             {
                 IList<FhirR4Coding> codingList = codeableConcept.Coding;
@@ -85,7 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     foreach (FhirR4Coding fhirR4Coding in codingList)
                     {
-                        Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                        Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                     }
                 }
             }
