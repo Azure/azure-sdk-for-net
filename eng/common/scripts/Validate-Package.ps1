@@ -81,7 +81,6 @@ function ValidateChangeLog($changeLogPath, $versionString)
         $validationStatus.Status = "Failed"
         $validationStatus.Message = $_.Exception.Message
     }
-    Write-Host $(ConvertTo-Json $validationStatus)
     return $validationStatus
 }
 
@@ -181,7 +180,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -packageNewLibrary $pkgInfo.IsNewSDK `
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
-        -inRelease $false `
+        -inRelease $IsReleaseBuild `
         -devops_pat $Devops_pat
     
     if ($LASTEXITCODE -ne 0)
@@ -260,7 +259,11 @@ $apireviewDetails = VerifyAPIReview $PackageName $pkgInfo.Version $LanguageDispl
 $pkgValidationDetails= [PSCustomObject]@{
     Name = $PackageName
     Version = $pkgInfo.Version
-    ChangeLogValidation = $changelogStatus
+    ChangeLogValidation = [PSCustomObject]@{
+        Name = "Change Log Validation"
+        Status = $changelogStatus.Status
+        Message = $changelogStatus.Message
+    }
     APIReviewValidation = $apireviewDetails.ApiviewApproval
     PackageNameValidation = $apireviewDetails.PackageNameApproval
 }
