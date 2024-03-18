@@ -11,6 +11,7 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +37,71 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
         /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
+        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <remarks>
+        /// <para>
+        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
+        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
+        /// parsed state values.
+        /// </para>
+        ///
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <list type="bullet">
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
+        /// </list>
+        /// </remarks>
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder) => builder.UseAzureMonitor(null, null);
+
+        /// <summary>
+        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
+        /// </summary>
+        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
+        /// <param name="configureAzureMonitor">Callback action for configuring <see cref="AzureMonitorOptions"/>.</param>
+        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <remarks>
+        /// <para>
+        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
+        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
+        /// parsed state values.
+        /// </para>
+        ///
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <list type="bullet">
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
+        /// </list>
+        /// </remarks>
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor) => UseAzureMonitor(builder, configureAzureMonitor, null);
+
+        /// <summary>
+        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
+        /// </summary>
+        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
+        /// <param name="configureResource">Callback action for configuring <see cref="ResourceBuilder"/>.</param>
+        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <remarks>
+        /// <para>
+        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
+        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
+        /// parsed state values.
+        /// </para>
+        ///
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
+        /// <list type="bullet">
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
+        /// </list>
+        /// </remarks>
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<ResourceBuilder> configureResource) => UseAzureMonitor(builder, null, configureResource);
+
+        /// <summary>
+        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
+        /// </summary>
+        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
         /// <param name="configureAzureMonitor">Callback action for configuring <see cref="AzureMonitorOptions"/>.</param>
         /// <param name="configureResource">Callback action for configuring <see cref="ResourceBuilder"/>.</param>
         /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
@@ -53,8 +119,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions>? configureAzureMonitor = null, Action<ResourceBuilder>? configureResource = null)
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions>? configureAzureMonitor, Action<ResourceBuilder>? configureResource)
         {
+            builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>, DefaultAzureMonitorOptions>();
+
             if (builder.Services is null)
             {
                 throw new ArgumentNullException(nameof(builder.Services));
