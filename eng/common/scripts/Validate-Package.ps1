@@ -80,7 +80,8 @@ function ValidateChangeLog($changeLogPath, $versionString)
         Write-Host "Current directory: $(Get-Location)"
         $validationStatus.Status = "Failed"
         $validationStatus.Message = $_.Exception.Message
-    }    
+    }
+    Write-Host $(ConvertTo-Json $validationStatus)
     return $validationStatus
 }
 
@@ -110,7 +111,6 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
         }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]." 
         Check-ApiReviewStatus -PackageName $packageName -Language $language -packageVersion $packageVersion -url $APIViewUri -apiKey $APIKey -apiApprovalStatus $apiStatus -packageNameStatus $packageNameStatus
-        Write-Host "API Review status: $apireviewStatus"
 
         #API review approval status
         $APIReviewValidation.Message = $apiStatus.Details
@@ -236,6 +236,7 @@ function UpdateValidationStatus($pkgvalidationDetails)
 
 # Read package property file and identify all packages to process
 Write-Host "Processing package: $PackageName"
+Write-Host "Is Release Build: $IsReleaseBuild"
 $packagePropertyFile = Join-Path $ConfigFileDir "$PackageName.json"
 $pkgInfo = Get-Content $packagePropertyFile | ConvertFrom-Json
 
