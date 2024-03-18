@@ -40,8 +40,8 @@ extends:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
-        #    - name: Azure.Core.Experimental
-        #      safeName: AzureCoreExperimental
+    - name: Azure.Core.Experimental
+      safeName: AzureCoreExperimental
         #    - name: Azure.Core.Expressions.DataFactory
         #      safeName: AzureCoreExpressionsDataFactory
         #    - name: Microsoft.Azure.Core.NewtonsoftJson
