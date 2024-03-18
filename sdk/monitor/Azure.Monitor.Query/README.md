@@ -674,7 +674,13 @@ foreach (var value in metricsQueryResults.Values)
 
 #### Register the client with dependency injection
 
-To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
+| Client               | Extension method        |
+|----------------------|-------------------------|
+| `LogsQueryClient`    | [AddLogsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.logsqueryclientbuilderextensions?view=azure-dotnet)    |
+| `MetricsQueryClient` | [AddMetricsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsqueryclientbuilderextensions?view=azure-dotnet) |
+| `MetricsClient`      | `AddMetricsClient`      |
+
+For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
 
 ## Troubleshooting
 
