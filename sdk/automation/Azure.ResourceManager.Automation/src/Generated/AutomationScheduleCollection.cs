@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scheduleName, AutomationScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string scheduleName, AutomationScheduleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<Response<AutomationScheduleResource>> GetAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual Response<AutomationScheduleResource> Get(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual Response<bool> Exists(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationScheduleResource>> GetIfExistsAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         public virtual NullableResponse<AutomationScheduleResource> GetIfExists(string scheduleName, CancellationToken cancellationToken = default)
         {
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var scope = _automationScheduleScheduleClientDiagnostics.CreateScope("AutomationScheduleCollection.GetIfExists");
             scope.Start();

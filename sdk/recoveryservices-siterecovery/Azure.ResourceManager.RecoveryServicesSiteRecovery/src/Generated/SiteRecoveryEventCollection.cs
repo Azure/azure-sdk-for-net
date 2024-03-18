@@ -86,14 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryEventResource>> GetAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Get");
             scope.Start();
@@ -138,14 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual Response<SiteRecoveryEventResource> Get(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Get");
             scope.Start();
@@ -252,14 +238,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Exists");
             scope.Start();
@@ -302,14 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.Exists");
             scope.Start();
@@ -352,14 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryEventResource>> GetIfExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.GetIfExists");
             scope.Start();
@@ -404,14 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryEventResource> GetIfExists(string eventName, CancellationToken cancellationToken = default)
         {
-            if (eventName == null)
-            {
-                throw new ArgumentNullException(nameof(eventName));
-            }
-            if (eventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
-            }
+            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
 
             using var scope = _siteRecoveryEventReplicationEventsClientDiagnostics.CreateScope("SiteRecoveryEventCollection.GetIfExists");
             scope.Start();

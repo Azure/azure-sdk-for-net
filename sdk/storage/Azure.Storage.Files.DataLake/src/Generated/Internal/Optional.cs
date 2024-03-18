@@ -7,9 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Storage.Files.DataLake
+namespace Azure.Storage.Common
 {
     internal static class Optional
     {

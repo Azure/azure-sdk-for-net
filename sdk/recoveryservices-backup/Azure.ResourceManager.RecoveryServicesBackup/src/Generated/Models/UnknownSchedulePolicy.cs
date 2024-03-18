@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownSchedulePolicy. </summary>
+    /// <summary> Unknown version of SchedulePolicy. </summary>
     internal partial class UnknownSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSchedulePolicy"/>. </summary>

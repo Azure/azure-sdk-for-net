@@ -59,22 +59,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
         internal Assistant(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-            if (tools == null)
-            {
-                throw new ArgumentNullException(nameof(tools));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(tools, nameof(tools));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             CreatedAt = createdAt;
@@ -135,7 +123,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The collection of tools enabled for the assistant.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="RetrievalToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> Tools { get; }
         /// <summary> A list of attached file IDs, ordered by creation date in ascending order. </summary>

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<QuantumWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, QuantumWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<QuantumWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, QuantumWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +165,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
             scope.Start();
@@ -237,7 +210,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
             scope.Start();
@@ -289,7 +255,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +285,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +315,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
             scope.Start();
@@ -399,7 +358,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
             scope.Start();
@@ -449,7 +401,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<QuantumWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -501,7 +446,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<QuantumWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
             scope.Start();

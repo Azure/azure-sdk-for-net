@@ -202,10 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<BackupResourceConfigResource>> UpdateAsync(BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.Update");
             scope.Start();
@@ -247,10 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<BackupResourceConfigResource> Update(BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.Update");
             scope.Start();
@@ -289,10 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.PrepareDataMove");
             scope.Start();
@@ -334,10 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.PrepareDataMove");
             scope.Start();
@@ -379,10 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> TriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.TriggerDataMove");
             scope.Start();
@@ -424,10 +409,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation TriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.TriggerDataMove");
             scope.Start();
@@ -473,14 +455,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<BackupResourceConfigResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.AddTag");
             scope.Start();
@@ -541,14 +517,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<BackupResourceConfigResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.AddTag");
             scope.Start();
@@ -608,10 +578,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BackupResourceConfigResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.SetTags");
             scope.Start();
@@ -668,10 +635,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BackupResourceConfigResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.SetTags");
             scope.Start();
@@ -728,10 +692,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<BackupResourceConfigResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.RemoveTag");
             scope.Start();
@@ -791,10 +752,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<BackupResourceConfigResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.RemoveTag");
             scope.Start();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="ready"/> is null. </exception>
         internal HDInsightServiceStatus(string kind, string ready)
         {
-            if (kind == null)
-            {
-                throw new ArgumentNullException(nameof(kind));
-            }
-            if (ready == null)
-            {
-                throw new ArgumentNullException(nameof(ready));
-            }
+            Argument.AssertNotNull(kind, nameof(kind));
+            Argument.AssertNotNull(ready, nameof(ready));
 
             Kind = kind;
             Ready = ready;

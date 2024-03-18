@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
             scope.Start();
@@ -238,10 +235,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = QnAMakerEndpointKeysClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey");
             scope.Start();

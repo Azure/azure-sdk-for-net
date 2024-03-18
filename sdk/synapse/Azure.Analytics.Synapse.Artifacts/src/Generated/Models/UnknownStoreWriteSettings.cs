@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownStoreWriteSettings. </summary>
+    /// <summary> Unknown version of StoreWriteSettings. </summary>
     internal partial class UnknownStoreWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/>. </summary>

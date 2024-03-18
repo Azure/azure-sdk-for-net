@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="fabricControllerId"/> is null. </exception>
         public NetworkCloudClusterManagerData(AzureLocation location, ResourceIdentifier fabricControllerId) : base(location)
         {
-            if (fabricControllerId == null)
-            {
-                throw new ArgumentNullException(nameof(fabricControllerId));
-            }
+            Argument.AssertNotNull(fabricControllerId, nameof(fabricControllerId));
 
             AvailabilityZones = new ChangeTrackingList<string>();
             ClusterVersions = new ChangeTrackingList<ClusterAvailableVersion>();

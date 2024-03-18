@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverride(string ruleId)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
+            Argument.AssertNotNull(ruleId, nameof(ruleId));
 
             RuleId = ruleId;
             Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();

@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public ClusterPoolNetworkProfile(ResourceIdentifier subnetId)
         {
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             SubnetId = subnetId;
             ApiServerAuthorizedIPRanges = new ChangeTrackingList<string>();

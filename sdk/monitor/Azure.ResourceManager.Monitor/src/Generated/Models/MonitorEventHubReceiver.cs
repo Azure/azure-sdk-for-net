@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -53,22 +54,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eventHubNameSpace"/>, <paramref name="eventHubName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public MonitorEventHubReceiver(string name, string eventHubNameSpace, string eventHubName, string subscriptionId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (eventHubNameSpace == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubNameSpace));
-            }
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(eventHubNameSpace, nameof(eventHubNameSpace));
+            Argument.AssertNotNull(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             Name = name;
             EventHubNameSpace = eventHubNameSpace;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public VectorizableTextQuery(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Kind = VectorQueryKind.Text;

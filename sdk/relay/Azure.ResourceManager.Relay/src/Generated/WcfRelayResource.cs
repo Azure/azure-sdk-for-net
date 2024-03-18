@@ -350,10 +350,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WcfRelayResource>> UpdateAsync(WaitUntil waitUntil, WcfRelayData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayResource.Update");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WcfRelayResource> Update(WaitUntil waitUntil, WcfRelayData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayResource.Update");
             scope.Start();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownConnectToSourceSqlServerTaskOutput. </summary>
+    /// <summary> Unknown version of ConnectToSourceSqlServerTaskOutput. </summary>
     internal partial class UnknownConnectToSourceSqlServerTaskOutput : ConnectToSourceSqlServerTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConnectToSourceSqlServerTaskOutput"/>. </summary>

@@ -52,14 +52,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
         public MessageTemplate(string name, string language)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(language, nameof(language));
 
             Name = name;
             Language = language;
@@ -93,7 +87,7 @@ namespace Azure.Communication.Messages
         /// <summary>
         /// The template values.
         /// Please note <see cref="MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/> and <see cref="MessageTemplateQuickAction"/>.
+        /// The available derived classes include <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateLocation"/>, <see cref="MessageTemplateQuickAction"/>, <see cref="MessageTemplateText"/> and <see cref="MessageTemplateVideo"/>.
         /// </summary>
         public IList<MessageTemplateValue> Values { get; }
         /// <summary>

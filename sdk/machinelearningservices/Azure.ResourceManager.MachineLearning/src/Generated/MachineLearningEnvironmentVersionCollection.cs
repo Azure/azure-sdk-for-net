@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningEnvironmentVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, MachineLearningEnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningEnvironmentVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, MachineLearningEnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<MachineLearningEnvironmentVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<MachineLearningEnvironmentVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.Get");
             scope.Start();
@@ -373,14 +339,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.Exists");
             scope.Start();
@@ -423,14 +382,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.Exists");
             scope.Start();
@@ -473,14 +425,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningEnvironmentVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.GetIfExists");
             scope.Start();
@@ -525,14 +470,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual NullableResponse<MachineLearningEnvironmentVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningEnvironmentVersionCollection.GetIfExists");
             scope.Start();

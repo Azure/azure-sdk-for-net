@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsDataSourceResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsDataSourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsDataSourceResource> Update(WaitUntil waitUntil, OperationalInsightsDataSourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.Update");
             scope.Start();
@@ -380,14 +374,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsDataSourceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.AddTag");
             scope.Start();
@@ -443,14 +431,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<OperationalInsightsDataSourceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.AddTag");
             scope.Start();
@@ -505,10 +487,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsDataSourceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.SetTags");
             scope.Start();
@@ -564,10 +543,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<OperationalInsightsDataSourceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.SetTags");
             scope.Start();
@@ -623,10 +599,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsDataSourceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.RemoveTag");
             scope.Start();
@@ -681,10 +654,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<OperationalInsightsDataSourceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceResource.RemoveTag");
             scope.Start();

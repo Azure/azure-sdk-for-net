@@ -51,10 +51,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OncoPhenotypeInference(OncoPhenotypeInferenceType type, string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Type = type;
             Value = value;

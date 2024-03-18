@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceUpdateInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instanceName, DeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceUpdateInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string instanceName, DeviceUpdateInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<Response<DeviceUpdateInstanceResource>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<DeviceUpdateInstanceResource> Get(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceUpdateInstanceResource>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual NullableResponse<DeviceUpdateInstanceResource> GetIfExists(string instanceName, CancellationToken cancellationToken = default)
         {
-            if (instanceName == null)
-            {
-                throw new ArgumentNullException(nameof(instanceName));
-            }
-            if (instanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instanceName));
-            }
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
             using var scope = _deviceUpdateInstanceInstancesClientDiagnostics.CreateScope("DeviceUpdateInstanceCollection.GetIfExists");
             scope.Start();

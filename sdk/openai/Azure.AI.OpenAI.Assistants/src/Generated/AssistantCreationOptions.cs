@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -51,10 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public AssistantCreationOptions(string model)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
+            Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
             Tools = new ChangeTrackingList<ToolDefinition>();
@@ -99,7 +95,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The collection of tools to enable for the new assistant.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="RetrievalToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
         /// </summary>
         public IList<ToolDefinition> Tools { get; }
         /// <summary> A list of previously uploaded file IDs to attach to the assistant. </summary>

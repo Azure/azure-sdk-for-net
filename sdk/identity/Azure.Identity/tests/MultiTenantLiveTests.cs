@@ -39,6 +39,7 @@ namespace Azure.Identity.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Entra policy requires MFA")]
         public async Task GraphWithUsernamePassword()
         {
             var tenantId = TestEnvironment.MultiTenantAppTenantId;

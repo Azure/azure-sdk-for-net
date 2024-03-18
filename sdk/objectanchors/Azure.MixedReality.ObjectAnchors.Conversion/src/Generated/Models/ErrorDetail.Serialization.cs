@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.MixedReality.ObjectAnchors.Conversion;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
