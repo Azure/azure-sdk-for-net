@@ -21,16 +21,14 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="ExternalStorage"/>. </summary>
         /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
-        /// <param name="recordingDestinationContainerUrl"> Uri of a container or a location within a container. </param>
-        internal ExternalStorage(RecordingStorageKind recordingStorageKind, Uri recordingDestinationContainerUrl)
+        /// <param name="recordingDestinationContainerUri"> Uri of a container or a location within a container. </param>
+        internal ExternalStorage(RecordingStorageKind recordingStorageKind, Uri recordingDestinationContainerUri)
         {
             RecordingStorageKind = recordingStorageKind;
-            RecordingDestinationContainerUrl = recordingDestinationContainerUrl;
+            RecordingDestinationContainerUri = recordingDestinationContainerUri;
         }
 
         /// <summary> Defines the kind of external storage. </summary>
         public RecordingStorageKind RecordingStorageKind { get; }
-        /// <summary> Uri of a container or a location within a container. </summary>
-        public Uri RecordingDestinationContainerUrl { get; set; }
     }
 }

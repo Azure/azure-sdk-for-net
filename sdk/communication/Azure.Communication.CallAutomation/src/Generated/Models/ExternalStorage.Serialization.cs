@@ -17,10 +17,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("recordingStorageKind"u8);
             writer.WriteStringValue(RecordingStorageKind.ToString());
-            if (RecordingDestinationContainerUrl != null)
+            if (RecordingDestinationContainerUri != null)
             {
                 writer.WritePropertyName("recordingDestinationContainerUrl"u8);
-                writer.WriteStringValue(RecordingDestinationContainerUrl.AbsoluteUri);
+                writer.WriteStringValue(RecordingDestinationContainerUri.AbsoluteUri);
             }
             writer.WriteEndObject();
         }
