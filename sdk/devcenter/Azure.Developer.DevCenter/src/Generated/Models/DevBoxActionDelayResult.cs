@@ -49,26 +49,26 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="result"> The result of the delay operation on this action. </param>
+        /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
-        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus result)
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus)
         {
             Argument.AssertNotNull(actionName, nameof(actionName));
 
             ActionName = actionName;
-            Result = result;
+            DelayStatus = delayStatus;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="result"> The result of the delay operation on this action. </param>
+        /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus result, DevBoxAction action, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus delayStatus, DevBoxAction action, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionName = actionName;
-            Result = result;
+            DelayStatus = delayStatus;
             Action = action;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -82,7 +82,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The name of the action. </summary>
         public string ActionName { get; }
         /// <summary> The result of the delay operation on this action. </summary>
-        public DevBoxActionDelayStatus Result { get; }
+        public DevBoxActionDelayStatus DelayStatus { get; }
         /// <summary> The delayed action. </summary>
         public DevBoxAction Action { get; }
         /// <summary> Information about the error that occurred. Only populated on error. </summary>

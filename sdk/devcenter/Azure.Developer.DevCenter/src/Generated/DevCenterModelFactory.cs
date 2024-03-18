@@ -228,13 +228,13 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="result"> The result of the delay operation on this action. </param>
+        /// <param name="delayStatus"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
         /// <returns> A new <see cref="Models.DevBoxActionDelayResult"/> instance for mocking. </returns>
-        public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, DevBoxActionDelayStatus result = default, DevBoxAction action = null, ResponseError error = null)
+        public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, DevBoxActionDelayStatus delayStatus = default, DevBoxAction action = null, ResponseError error = null)
         {
-            return new DevBoxActionDelayResult(actionName, result, action, error, serializedAdditionalRawData: null);
+            return new DevBoxActionDelayResult(actionName, delayStatus, action, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>

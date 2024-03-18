@@ -31,7 +31,7 @@ namespace Azure.Developer.DevCenter.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(ActionName);
             writer.WritePropertyName("result"u8);
-            writer.WriteStringValue(Result.ToString());
+            writer.WriteStringValue(DelayStatus.ToString());
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);

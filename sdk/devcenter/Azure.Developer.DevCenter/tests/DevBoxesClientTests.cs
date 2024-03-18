@@ -300,7 +300,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             Assert.AreEqual(1, actionsDelayResult.Count);
 
-            DevBoxActionDelayStatus actionDelayStatus = actionsDelayResult[0].Result;
+            DevBoxActionDelayStatus actionDelayStatus = actionsDelayResult[0].DelayStatus;
             if (actionDelayStatus == default)
             {
                 FailDueToMissingProperty("actionDelayStatus");
