@@ -22,6 +22,51 @@ namespace Azure.Storage.Files.Shares.Models
             => StorageClosedHandlesSegment(
                 marker: marker,
                 numberOfHandlesClosed: numberOfHandlesClosed);
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        public static ShareProperties ShareProperties(
+            string accessTier = default,
+            DateTimeOffset? lastModified = default,
+            int? provisionedIops = default,
+            int? provisionedIngressMBps = default,
+            int? provisionedEgressMBps = default,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
+            DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default,
+            ETag? eTag = default,
+            DateTimeOffset? accessTierChangeTime = default,
+            string accessTierTransitionState = default,
+            ShareLeaseStatus? leaseStatus = default,
+            ShareLeaseState? leaseState = default,
+            ShareLeaseDuration? leaseDuration = default,
+            int? quotaInGB = default,
+            IDictionary<string, string> metadata = default,
+            ShareProtocols? protocols = default,
+            ShareRootSquash? rootSquash = default,
+            bool? enableSnapshotVirtualDirectoryAccess = default)
+            => new ShareProperties()
+            {
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+                Protocols = protocols,
+                RootSquash = rootSquash,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess
+            };
 
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
@@ -55,6 +100,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareProperties ShareProperties(
             string accessTier = default,
             DateTimeOffset? lastModified = default,
