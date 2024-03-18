@@ -499,6 +499,30 @@ namespace Azure.Storage.Files.Shares.Tests
                 await share.DeleteAsync(false);
             }
         }
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task CreateAsync_OAuth()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            try
+            {
+                // Act
+                Response<ShareInfo> response = await share.CreateAsync(quotaInGB: 1);
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
 
         [RecordedTest]
         public async Task GetPermissionAsync_Error()
