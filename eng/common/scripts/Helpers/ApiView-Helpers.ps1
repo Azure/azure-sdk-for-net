@@ -28,8 +28,12 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   if ($lang -eq $null) {
     return
   }
-
   $headers = @{ "ApiKey" = $apiKey }
+  $body = @{
+    language = $lang
+    packageName = $packageName
+    packageVersion = $packageVersion
+  }
 
   if (!$apiApprovalStatus) {
     $apiApprovalStatus = [PSCustomObject]@{
@@ -47,13 +51,7 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
 
   try
   {
-    $requestUrl = "${url}?language=${lang}&packageName=${packageName}"
-    if ($packageVersion)
-    {
-      $requestUrl = "${requestUrl}&packageVersion=${packageVersion}"
-    }
-    Write-host "URL to check status: $requestUrl"
-    $response = Invoke-WebRequest $requestUrl -Method 'GET' -Headers $headers
+    $response = Invoke-WebRequest $url -Method 'GET' -Headers $headers -Body $body
     Process-ReviewStatusCode -statusCode $response.StatusCode -packageName $packageName -apiApprovalStatus $apiApprovalStatus -packageNameStatus $packageNameStatus
     if ($apiApprovalStatus.IsApproved) {
       Write-Host $($apiApprovalStatus.Details)
