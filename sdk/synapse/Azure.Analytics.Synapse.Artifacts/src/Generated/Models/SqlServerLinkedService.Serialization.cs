@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -97,15 +98,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object connectionString = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
-            Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
+            SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +221,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, userName.Value, password.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value);
+            return new SqlServerLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                userName,
+                password,
+                encryptedCredential,
+                alwaysEncryptedSettings);
         }
 
         internal partial class SqlServerLinkedServiceConverter : JsonConverter<SqlServerLinkedService>

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {

@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepository : IUtf8JsonSerializable
+    public partial class KubernetesGitRepository : IUtf8JsonSerializable, IJsonModel<KubernetesGitRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesGitRepository>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesGitRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -112,23 +123,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element)
+        KubernetesGitRepository IJsonModel<KubernetesGitRepository>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepository(document.RootElement, options);
+        }
+
+        internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
-            Optional<string> sshKnownHosts = default;
-            Optional<string> httpsUser = default;
-            Optional<string> httpsCACert = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesGitRepositoryRef repositoryRef = default;
+            string sshKnownHosts = default;
+            string httpsUser = default;
+            string httpsCACert = default;
+            string localAuthRef = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -168,7 +210,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         repositoryRef = null;
                         continue;
                     }
-                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value);
+                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshKnownHosts"u8))
@@ -211,8 +253,53 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     localAuthRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesGitRepository(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesGitRepository(
+                url,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesGitRepository>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KubernetesGitRepository IPersistableModel<KubernetesGitRepository>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesGitRepository(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesGitRepository>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

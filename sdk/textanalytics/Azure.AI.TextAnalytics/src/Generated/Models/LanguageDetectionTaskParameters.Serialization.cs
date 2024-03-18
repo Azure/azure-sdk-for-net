@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -34,8 +35,8 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -53,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageDetectionTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value);
+            return new LanguageDetectionTaskParameters(loggingOptOut, modelVersion);
         }
     }
 }

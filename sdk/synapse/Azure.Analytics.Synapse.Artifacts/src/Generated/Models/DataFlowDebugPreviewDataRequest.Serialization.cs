@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -47,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<string> dataFlowName = default;
-            Optional<string> streamName = default;
-            Optional<int> rowLimits = default;
+            string sessionId = default;
+            string dataFlowName = default;
+            string streamName = default;
+            int? rowLimits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPreviewDataRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToNullable(rowLimits));
+            return new DataFlowDebugPreviewDataRequest(sessionId, dataFlowName, streamName, rowLimits);
         }
 
         internal partial class DataFlowDebugPreviewDataRequestConverter : JsonConverter<DataFlowDebugPreviewDataRequest>

@@ -5,17 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CognitiveServicesAccountModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseModel))
             {
@@ -74,6 +85,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
@@ -94,29 +110,65 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
+            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
+            {
+                writer.WritePropertyName("callRateLimit"u8);
+                writer.WriteObjectValue(CallRateLimit);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element)
+        CognitiveServicesAccountModel IJsonModel<CognitiveServicesAccountModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
+        }
+
+        internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
-            Optional<bool> isDefaultVersion = default;
-            Optional<IList<CognitiveServicesModelSku>> skus = default;
-            Optional<int> maxCapacity = default;
-            Optional<IDictionary<string, string>> capabilities = default;
-            Optional<IDictionary<string, string>> finetuneCapabilities = default;
-            Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
-            Optional<ModelLifecycleStatus> lifecycleStatus = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> format = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> source = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            CognitiveServicesAccountDeploymentModel baseModel = default;
+            bool? isDefaultVersion = default;
+            IList<CognitiveServicesModelSku> skus = default;
+            int? maxCapacity = default;
+            IDictionary<string, string> capabilities = default;
+            IDictionary<string, string> finetuneCapabilities = default;
+            ServiceAccountModelDeprecationInfo deprecation = default;
+            ModelLifecycleStatus? lifecycleStatus = default;
+            SystemData systemData = default;
+            string format = default;
+            string name = default;
+            string version = default;
+            string source = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseModel"u8))
@@ -125,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isDefaultVersion"u8))
@@ -146,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item, options));
                     }
                     skus = array;
                     continue;
@@ -194,7 +246,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
+                    deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lifecycleStatus"u8))
@@ -241,11 +293,62 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CognitiveServicesAccountModel(
+                format,
+                name,
+                version,
+                source,
+                callRateLimit,
+                serializedAdditionalRawData,
+                baseModel,
+                isDefaultVersion,
+                skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(),
+                maxCapacity,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(),
+                deprecation,
+                lifecycleStatus,
+                systemData);
         }
+
+        BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CognitiveServicesAccountModel IPersistableModel<CognitiveServicesAccountModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CognitiveServicesAccountModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

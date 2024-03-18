@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomAlertRule(document.RootElement, options);
+            return DeserializeCustomAlertRule(document.RootElement, options);
         }
 
         internal static UnknownCustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData);
+            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomAlertRule>.Write(ModelReaderWriterOptions options)
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomAlertRule(document.RootElement, options);
+                        return DeserializeCustomAlertRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{options.Format}' format.");

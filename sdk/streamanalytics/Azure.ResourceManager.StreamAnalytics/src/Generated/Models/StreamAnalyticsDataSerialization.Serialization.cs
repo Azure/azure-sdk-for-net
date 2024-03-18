@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsDataSerialization : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownSerialization))]
+    public partial class StreamAnalyticsDataSerialization : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsDataSerialization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsDataSerialization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamAnalyticsDataSerialization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamAnalyticsDataSerialization DeserializeStreamAnalyticsDataSerialization(JsonElement element)
+        StreamAnalyticsDataSerialization IJsonModel<StreamAnalyticsDataSerialization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
+        }
+
+        internal static StreamAnalyticsDataSerialization DeserializeStreamAnalyticsDataSerialization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,14 +70,45 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element);
-                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element);
-                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element);
-                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element);
-                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element);
+                    case "Avro": return AvroFormatSerialization.DeserializeAvroFormatSerialization(element, options);
+                    case "Csv": return CsvFormatSerialization.DeserializeCsvFormatSerialization(element, options);
+                    case "CustomClr": return CustomClrFormatSerialization.DeserializeCustomClrFormatSerialization(element, options);
+                    case "Json": return JsonFormatSerialization.DeserializeJsonFormatSerialization(element, options);
+                    case "Parquet": return ParquetFormatSerialization.DeserializeParquetFormatSerialization(element, options);
                 }
             }
-            return UnknownSerialization.DeserializeUnknownSerialization(element);
+            return UnknownSerialization.DeserializeUnknownSerialization(element, options);
         }
+
+        BinaryData IPersistableModel<StreamAnalyticsDataSerialization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StreamAnalyticsDataSerialization IPersistableModel<StreamAnalyticsDataSerialization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsDataSerialization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamAnalyticsDataSerialization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamAnalyticsDataSerialization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamAnalyticsDataSerialization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

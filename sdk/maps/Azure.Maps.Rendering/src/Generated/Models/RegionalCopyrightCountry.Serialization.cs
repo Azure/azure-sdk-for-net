@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Rendering
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> isO3 = default;
-            Optional<string> label = default;
+            string isO3 = default;
+            string label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ISO3"u8))
@@ -33,7 +32,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new RegionalCopyrightCountry(isO3.Value, label.Value);
+            return new RegionalCopyrightCountry(isO3, label);
         }
     }
 }

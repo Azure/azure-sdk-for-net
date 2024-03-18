@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -35,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
             Offer = offer;
             Skus = skus;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions()
+        {
         }
 
         /// <summary> The name of a supported Azure region. </summary>

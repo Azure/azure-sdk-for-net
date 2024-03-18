@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesNetworkRuleSet : IUtf8JsonSerializable
+    public partial class CognitiveServicesNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<CognitiveServicesNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesNetworkRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CognitiveServicesNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultAction))
             {
@@ -41,18 +52,49 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesNetworkRuleSet DeserializeCognitiveServicesNetworkRuleSet(JsonElement element)
+        CognitiveServicesNetworkRuleSet IJsonModel<CognitiveServicesNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesNetworkRuleSet(document.RootElement, options);
+        }
+
+        internal static CognitiveServicesNetworkRuleSet DeserializeCognitiveServicesNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
-            Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
+            CognitiveServicesNetworkRuleAction? defaultAction = default;
+            IList<CognitiveServicesIPRule> ipRules = default;
+            IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -73,7 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -87,13 +129,49 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesVirtualNetworkRule> array = new List<CognitiveServicesVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item));
+                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CognitiveServicesNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CognitiveServicesNetworkRuleSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CognitiveServicesNetworkRuleSet IPersistableModel<CognitiveServicesNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCognitiveServicesNetworkRuleSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CognitiveServicesNetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlConfiguration : IUtf8JsonSerializable
+    public partial class FlowAccessControlConfiguration : IUtf8JsonSerializable, IJsonModel<FlowAccessControlConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowAccessControlConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FlowAccessControlConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
@@ -35,19 +47,50 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("workflowManagement"u8);
                 writer.WriteObjectValue(WorkflowManagement);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlowAccessControlConfiguration DeserializeFlowAccessControlConfiguration(JsonElement element)
+        FlowAccessControlConfiguration IJsonModel<FlowAccessControlConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowAccessControlConfiguration(document.RootElement, options);
+        }
+
+        internal static FlowAccessControlConfiguration DeserializeFlowAccessControlConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FlowAccessControlConfigurationPolicy> triggers = default;
-            Optional<FlowAccessControlConfigurationPolicy> contents = default;
-            Optional<FlowAccessControlConfigurationPolicy> actions = default;
-            Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
+            FlowAccessControlConfigurationPolicy triggers = default;
+            FlowAccessControlConfigurationPolicy contents = default;
+            FlowAccessControlConfigurationPolicy actions = default;
+            FlowAccessControlConfigurationPolicy workflowManagement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggers"u8))
@@ -56,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contents"u8))
@@ -65,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -74,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workflowManagement"u8))
@@ -83,11 +126,47 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FlowAccessControlConfiguration(triggers.Value, contents.Value, actions.Value, workflowManagement.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FlowAccessControlConfiguration(triggers, contents, actions, workflowManagement, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FlowAccessControlConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FlowAccessControlConfiguration IPersistableModel<FlowAccessControlConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFlowAccessControlConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FlowAccessControlConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

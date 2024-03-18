@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             int number = default;
-            Optional<string> allowedSourceAddressPrefix = default;
+            string allowedSourceAddressPrefix = default;
             DateTimeOffset endTimeUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix.Value, endTimeUtc, serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endTimeUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyInitiatePort>.Write(ModelReaderWriterOptions options)

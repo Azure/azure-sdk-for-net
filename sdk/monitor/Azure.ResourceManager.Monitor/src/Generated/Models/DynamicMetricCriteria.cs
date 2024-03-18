@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Monitor.Models
             FailingPeriods = failingPeriods;
             IgnoreDataBefore = ignoreDataBefore;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
+        internal DynamicMetricCriteria()
+        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. </summary>

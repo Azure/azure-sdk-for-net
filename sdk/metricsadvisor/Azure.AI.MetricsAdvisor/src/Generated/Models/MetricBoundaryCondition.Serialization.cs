@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -51,12 +52,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lower = default;
-            Optional<double> upper = default;
+            double? lower = default;
+            double? upper = default;
             BoundaryDirection direction = default;
-            Optional<BoundaryMeasureType> type = default;
-            Optional<string> metricId = default;
-            Optional<bool> triggerForMissing = default;
+            BoundaryMeasureType? type = default;
+            string metricId = default;
+            bool? triggerForMissing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lower"u8))
@@ -106,7 +107,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricBoundaryCondition(Optional.ToNullable(lower), Optional.ToNullable(upper), direction, Optional.ToNullable(type), metricId.Value, Optional.ToNullable(triggerForMissing));
+            return new MetricBoundaryCondition(
+                lower,
+                upper,
+                direction,
+                type,
+                metricId,
+                triggerForMissing);
         }
     }
 }

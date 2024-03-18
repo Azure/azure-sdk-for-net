@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> cknSecretIdentifier = default;
-            Optional<string> cakSecretIdentifier = default;
-            Optional<ExpressRouteLinkMacSecCipher> cipher = default;
-            Optional<ExpressRouteLinkMacSecSciState> sciState = default;
+            string cknSecretIdentifier = default;
+            string cakSecretIdentifier = default;
+            ExpressRouteLinkMacSecCipher? cipher = default;
+            ExpressRouteLinkMacSecSciState? sciState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState), serializedAdditionalRawData);
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier, cakSecretIdentifier, cipher, sciState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteLinkMacSecConfig>.Write(ModelReaderWriterOptions options)

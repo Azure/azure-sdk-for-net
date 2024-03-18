@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertMetadataProperties> properties = default;
+            ServiceAlertMetadataProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value);
+                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertMetadata(properties.Value, serializedAdditionalRawData);
+            return new ServiceAlertMetadata(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadata>.Write(ModelReaderWriterOptions options)

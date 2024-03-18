@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonRdsForOracleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactorySecretBaseDefinition password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRdsForOracleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Password = password;
@@ -44,10 +44,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AmazonRdsForOracle";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/> for deserialization. </summary>
+        internal AmazonRdsForOracleLinkedService()
+        {
+        }
+
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

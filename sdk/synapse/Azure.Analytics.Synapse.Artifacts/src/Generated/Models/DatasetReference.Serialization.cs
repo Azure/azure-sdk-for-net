@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -50,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             DatasetReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -85,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new DatasetReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class DatasetReferenceConverter : JsonConverter<DatasetReference>

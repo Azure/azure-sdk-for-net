@@ -73,15 +73,27 @@ public static class MockSyncAsyncExtensions
         }
     }
 
-    public static async Task WaitSyncOrAsync(this ClientRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
+    public static async Task WaitSyncOrAsync(this MockRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
     {
         if (isAsync)
         {
-            await policy.WaitAsync(delay, cancellationToken).ConfigureAwait(false);
+            await policy.DoWaitAsync(delay, cancellationToken).ConfigureAwait(false);
         }
         else
         {
-            policy.Wait(delay, cancellationToken);
+            policy.DoWait(delay, cancellationToken);
+        }
+    }
+
+    public static async Task<BinaryData> BufferContentSyncOrAsync(this PipelineResponse response, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            return await response.BufferContentAsync(cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            return response.BufferContent(cancellationToken);
         }
     }
 }

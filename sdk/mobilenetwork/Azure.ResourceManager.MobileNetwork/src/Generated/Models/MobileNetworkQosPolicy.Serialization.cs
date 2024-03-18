@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkQosPolicy : IUtf8JsonSerializable
+    public partial class MobileNetworkQosPolicy : IUtf8JsonSerializable, IJsonModel<MobileNetworkQosPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkQosPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MobileNetworkQosPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FiveQi))
             {
@@ -37,20 +49,51 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             writer.WritePropertyName("maximumBitRate"u8);
             writer.WriteObjectValue(MaximumBitRate);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkQosPolicy DeserializeMobileNetworkQosPolicy(JsonElement element)
+        MobileNetworkQosPolicy IJsonModel<MobileNetworkQosPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkQosPolicy(document.RootElement, options);
+        }
+
+        internal static MobileNetworkQosPolicy DeserializeMobileNetworkQosPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
             Ambr maximumBitRate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("5qi"u8))
@@ -91,11 +134,53 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("maximumBitRate"u8))
                 {
-                    maximumBitRate = Ambr.DeserializeAmbr(property.Value);
+                    maximumBitRate = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MobileNetworkQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MobileNetworkQosPolicy(
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                maximumBitRate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MobileNetworkQosPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MobileNetworkQosPolicy IPersistableModel<MobileNetworkQosPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMobileNetworkQosPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MobileNetworkQosPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

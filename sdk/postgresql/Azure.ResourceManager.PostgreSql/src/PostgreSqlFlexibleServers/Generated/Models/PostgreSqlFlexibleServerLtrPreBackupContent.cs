@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -19,6 +20,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupSettings, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerLtrPreBackupContent()
+        {
         }
     }
 }

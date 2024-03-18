@@ -1,5 +1,46 @@
 # Release History
 
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+* All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
+  This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
+  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2024-02-08)
+
+### Bugs Fixed
+
+* Fixed an issue where `_OTELRESOURCE_` metrics were emitted with duplicated
+  timestamps. This fix ensures accurate and distinct timestamping for all
+  `_OTELRESOURCE_` metrics.
+  ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
+
+* Fixed an issue where tags associated with Exceptions were not being included.
+  Now, tags linked to an `ActivityEvent` following the [otel convention for storing exception](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md) are correctly exported as Custom Properties.
+  ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  ([#41553](https://github.com/Azure/azure-sdk-for-net/pull/41553))
+
+## 1.2.0 (2024-01-24)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+
 ## 1.1.0 (2023-11-29)
 
 ### Features Added

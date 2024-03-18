@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,11 +17,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> capacity = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -51,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebAppServicePlanUpdatedEventDataSku(name.Value, tier.Value, size.Value, family.Value, capacity.Value);
+            return new WebAppServicePlanUpdatedEventDataSku(name, tier, size, family, capacity);
         }
     }
 }

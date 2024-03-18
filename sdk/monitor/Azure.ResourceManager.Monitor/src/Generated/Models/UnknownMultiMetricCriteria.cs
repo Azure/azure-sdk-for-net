@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownMultiMetricCriteria. </summary>
+    /// <summary> Unknown version of MultiMetricCriteria. </summary>
     internal partial class UnknownMultiMetricCriteria : MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/>. </summary>
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Monitor.Models
         internal UnknownMultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/> for deserialization. </summary>
+        internal UnknownMultiMetricCriteria()
+        {
         }
     }
 }

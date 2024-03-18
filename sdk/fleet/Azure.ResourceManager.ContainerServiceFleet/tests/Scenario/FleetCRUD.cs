@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             string updateRunName = "run1";
             ContainerServiceFleetUpdateRunData updateRunData = new ContainerServiceFleetUpdateRunData();
             updateRunData.ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
-                new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full, "1.26.1"), new NodeImageSelection(NodeImageSelectionType.Latest));
+                new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full, "1.26.1", null), new NodeImageSelection(NodeImageSelectionType.Latest), null);
 
             ArmOperation<ContainerServiceFleetUpdateRunResource> createUpdateRunLRO = await updateRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, updateRunData);
             ContainerServiceFleetUpdateRunResource updateRunResource = createUpdateRunLRO.Value;

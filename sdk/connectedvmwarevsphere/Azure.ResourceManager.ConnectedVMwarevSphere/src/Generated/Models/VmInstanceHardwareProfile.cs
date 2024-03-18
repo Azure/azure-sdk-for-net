@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the hardware settings for the virtual machine. </summary>
     public partial class VmInstanceHardwareProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VmInstanceHardwareProfile"/>. </summary>
         public VmInstanceHardwareProfile()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="cpuHotAddEnabled"> Gets or sets a value indicating whether virtual processors can be added while this virtual machine is running. </param>
         /// <param name="cpuHotRemoveEnabled"> Gets or sets a value indicating whether virtual processors can be removed while this virtual machine is running. </param>
         /// <param name="memoryHotAddEnabled"> Gets or sets a value indicating whether memory can be added while this virtual machine is running. </param>
-        internal VmInstanceHardwareProfile(int? memorySizeMB, int? numCpus, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmInstanceHardwareProfile(int? memorySizeMB, int? numCpus, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MemorySizeMB = memorySizeMB;
             NumCpus = numCpus;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             CpuHotAddEnabled = cpuHotAddEnabled;
             CpuHotRemoveEnabled = cpuHotRemoveEnabled;
             MemoryHotAddEnabled = memoryHotAddEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets memory size in MBs for the vm. </summary>

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +59,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new UnknownEndpointBase(type, credentials.Value, url);
+            return new UnknownEndpointBase(type, credentials, url);
         }
     }
 }

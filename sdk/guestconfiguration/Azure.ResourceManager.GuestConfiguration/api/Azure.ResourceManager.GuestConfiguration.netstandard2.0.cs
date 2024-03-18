@@ -1,9 +1,14 @@
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    public partial class GuestConfigurationAssignmentData : Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData
+    public partial class GuestConfigurationAssignmentData : Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>
     {
         public GuestConfigurationAssignmentData() { }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class GuestConfigurationExtensions
     {
@@ -214,27 +219,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus left, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentReportResourceComplianceReason
+    public partial class AssignmentReportResourceComplianceReason : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>
     {
         public AssignmentReportResourceComplianceReason() { }
         public string Code { get { throw null; } }
         public string Phrase { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssignmentReportResourceInfo
+    public partial class AssignmentReportResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>
     {
         public AssignmentReportResourceInfo() { }
         public string AssignmentResourceSettingName { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
         public System.BinaryData Properties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason> Reasons { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentInfo
+    public partial class GuestConfigurationAssignmentInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>
     {
         public GuestConfigurationAssignmentInfo() { }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo Configuration { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentProperties
+    public partial class GuestConfigurationAssignmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>
     {
         public GuestConfigurationAssignmentProperties() { }
         public string AssignmentHash { get { throw null; } }
@@ -249,15 +269,25 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string ResourceType { get { throw null; } }
         public string TargetResourceId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo> VmssVmList { get { throw null; } set { } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentReport
+    public partial class GuestConfigurationAssignmentReport : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>
     {
         internal GuestConfigurationAssignmentReport() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties Properties { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentReportDetails
+    public partial class GuestConfigurationAssignmentReportDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>
     {
         internal GuestConfigurationAssignmentReportDetails() { }
         public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
@@ -266,8 +296,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentReportInfo
+    public partial class GuestConfigurationAssignmentReportInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>
     {
         public GuestConfigurationAssignmentReportInfo() { }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } set { } }
@@ -279,8 +314,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } set { } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationAssignmentReportProperties
+    public partial class GuestConfigurationAssignmentReportProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>
     {
         internal GuestConfigurationAssignmentReportProperties() { }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } }
@@ -291,6 +331,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } }
         public string VmssResourceId { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationAssignmentReportType : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType>
@@ -330,11 +375,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GuestConfigurationInfo
+    public partial class GuestConfigurationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>
     {
         public GuestConfigurationInfo() { }
         public string Name { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationKind : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind>
@@ -353,7 +403,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GuestConfigurationNavigation
+    public partial class GuestConfigurationNavigation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>
     {
         public GuestConfigurationNavigation() { }
         public string AssignmentSource { get { throw null; } }
@@ -367,12 +417,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? Kind { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationParameter
+    public partial class GuestConfigurationParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>
     {
         public GuestConfigurationParameter() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState>
@@ -394,7 +454,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GuestConfigurationResourceData
+    public partial class GuestConfigurationResourceData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>
     {
         public GuestConfigurationResourceData() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -402,14 +462,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationVmInfo
+    public partial class GuestConfigurationVmInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>
     {
         public GuestConfigurationVmInfo() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Guid? Uuid { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GuestConfigurationVmssVmInfo
+    public partial class GuestConfigurationVmssVmInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>
     {
         public GuestConfigurationVmssVmInfo() { }
         public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
@@ -417,6 +487,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.Guid? LatestReportId { get { throw null; } }
         public System.Guid? VmId { get { throw null; } }
         public Azure.Core.ResourceIdentifier VmResourceId { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LcmConfigurationMode : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode>
@@ -437,7 +512,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode left, Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LcmConfigurationSetting
+    public partial class LcmConfigurationSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>
     {
         internal LcmConfigurationSetting() { }
         public Azure.ResourceManager.GuestConfiguration.Models.ActionAfterReboot? ActionAfterReboot { get { throw null; } }
@@ -446,5 +521,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public bool? IsModuleOverwriteAllowed { get { throw null; } }
         public bool? RebootIfNeeded { get { throw null; } }
         public float? RefreshFrequencyInMins { get { throw null; } }
+        Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -5,6 +5,7 @@
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
@@ -37,6 +38,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
+        /// Enables or disables the Live Metrics feature. This property is enabled by default.
+        /// Note: Enabling Live Metrics incurs no additional billing or costs. However, it does introduce
+        /// a performance overhead due to extra data collection, processing, and networking calls. This overhead
+        /// is only significant when the LiveMetrics portal is actively used in the UI. Once the portal is closed,
+        /// LiveMetrics reverts to a 'silent' mode with minimal to no overhead.
+        /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/live-stream?tabs=dotnet6"/>.
+        /// </summary>
+        public bool EnableLiveMetrics { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
         /// For example, specifying 0.4 means that 40% of traces are sampled and 60% are dropped.
         /// The default value is 1.0F, indicating that all telemetry items are sampled.
@@ -58,6 +69,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;
+            }
+        }
+
+        internal void SetValueToLiveMetricsExporterOptions(LiveMetricsExporterOptions liveMetricsExporterOptions)
+        {
+            liveMetricsExporterOptions.ConnectionString = ConnectionString;
+            liveMetricsExporterOptions.Credential = Credential;
+            liveMetricsExporterOptions.EnableLiveMetrics = EnableLiveMetrics;
+            if (Transport != null)
+            {
+                liveMetricsExporterOptions.Transport = Transport;
             }
         }
     }

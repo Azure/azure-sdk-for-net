@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "MongoDbCollection";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionDataset"/> for deserialization. </summary>
+        internal MongoDBCollectionDataset()
+        {
         }
 
         /// <summary> The table name of the MongoDB database. Type: string (or Expression with resultType string). </summary>

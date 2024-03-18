@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -29,6 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
             PublisherName = publisherName;
             Offer = offer;
             Skus = skus;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesOptions()
+        {
         }
 
         /// <summary> The name of a supported Azure region. </summary>

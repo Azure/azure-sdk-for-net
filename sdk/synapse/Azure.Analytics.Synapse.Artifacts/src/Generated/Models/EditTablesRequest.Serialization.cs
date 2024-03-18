@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -38,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<LinkTableRequest>> linkTables = default;
+            IList<LinkTableRequest> linkTables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkTables"u8))
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EditTablesRequest(Optional.ToList(linkTables));
+            return new EditTablesRequest(linkTables ?? new ChangeTrackingList<LinkTableRequest>());
         }
 
         internal partial class EditTablesRequestConverter : JsonConverter<EditTablesRequest>

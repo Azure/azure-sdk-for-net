@@ -10,7 +10,7 @@ model-namespace: false
 tag: package-2023-10-03-preview
 
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/c9a35416eefc12daeca840f3af52228467095986/specification/communication/data-plane/CallAutomation/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/2f0c2b15ba41419aec1a739307b50e03178e0d4d/specification/communication/data-plane/CallAutomation/readme.md
 
 
 title: Azure Communication Services

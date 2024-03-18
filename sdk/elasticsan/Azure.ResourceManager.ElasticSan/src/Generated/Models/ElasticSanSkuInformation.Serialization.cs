@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -107,11 +108,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ElasticSanSkuName name = default;
-            Optional<ElasticSanSkuTier> tier = default;
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ElasticSanSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
+            ElasticSanSkuTier? tier = default;
+            string resourceType = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<ElasticSanSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuLocationInfo> array = new List<ElasticSanSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item));
+                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuCapability> array = new List<ElasticSanSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item));
+                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -183,7 +184,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ElasticSanSkuInformation(
+                name,
+                tier,
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>(),
+                capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuInformation>.Write(ModelReaderWriterOptions options)

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -48,7 +50,7 @@
 ### Other Changes
 
 - Upgraded API version to 2022-06-01.
-- Ported Track 1 unit tests over to be compatible with Track 2 changes.  
+- Ported Track 1 unit tests over to be compatible with Track 2 changes.
 
 ## 1.0.0 (2022-09-19)
 

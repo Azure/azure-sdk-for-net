@@ -5,19 +5,115 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class PolicyProviderSpecificContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownPolicyProviderSpecificContent))]
+    public partial class PolicyProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<PolicyProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyProviderSpecificContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyProviderSpecificContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PolicyProviderSpecificContent IJsonModel<PolicyProviderSpecificContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyProviderSpecificContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyProviderSpecificContent(document.RootElement, options);
+        }
+
+        internal static PolicyProviderSpecificContent DeserializePolicyProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "A2A": return A2APolicyCreationContent.DeserializeA2APolicyCreationContent(element, options);
+                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationPolicyCreationContent.DeserializeA2ACrossClusterMigrationPolicyCreationContent(element, options);
+                    case "HyperVReplica2012": return HyperVReplicaPolicyContent.DeserializeHyperVReplicaPolicyContent(element, options);
+                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzurePolicyContent.DeserializeHyperVReplicaAzurePolicyContent(element, options);
+                    case "InMage": return InMagePolicyContent.DeserializeInMagePolicyContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2PolicyContent.DeserializeInMageAzureV2PolicyContent(element, options);
+                    case "InMageRcm": return InMageRcmPolicyCreationContent.DeserializeInMageRcmPolicyCreationContent(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackPolicyCreationContent.DeserializeInMageRcmFailbackPolicyCreationContent(element, options);
+                    case "VMwareCbt": return VMwareCbtPolicyCreationContent.DeserializeVMwareCbtPolicyCreationContent(element, options);
+                }
+            }
+            return UnknownPolicyProviderSpecificContent.DeserializeUnknownPolicyProviderSpecificContent(element, options);
+        }
+
+        BinaryData IPersistableModel<PolicyProviderSpecificContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PolicyProviderSpecificContent IPersistableModel<PolicyProviderSpecificContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyProviderSpecificContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyProviderSpecificContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyProviderSpecificContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

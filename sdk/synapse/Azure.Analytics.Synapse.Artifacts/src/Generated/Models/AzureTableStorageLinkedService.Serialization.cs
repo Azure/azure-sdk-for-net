@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -100,15 +101,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> accountKey = default;
-            Optional<object> sasUri = default;
-            Optional<AzureKeyVaultSecretReference> sasToken = default;
-            Optional<string> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            object connectionString = default;
+            AzureKeyVaultSecretReference accountKey = default;
+            object sasUri = default;
+            AzureKeyVaultSecretReference sasToken = default;
+            string encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +224,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, encryptedCredential.Value);
+            return new AzureTableStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                encryptedCredential);
         }
 
         internal partial class AzureTableStorageLinkedServiceConverter : JsonConverter<AzureTableStorageLinkedService>

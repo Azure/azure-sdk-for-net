@@ -237,26 +237,26 @@ namespace Azure.Storage.DataMovement
                 }
                 // If the initial request returned no content (i.e., a 304),
                 // we'll pass that back to the user immediately
-                long initialLength = initialResult.Properties.ContentLength;
+                long? initialLength = initialResult?.ContentLength;
 
                 // There needs to be at least 1 chunk to create the blob even if the
                 // length is 0 bytes.
-                if (initialResult == default || initialLength == 0)
+                if (initialResult == default || (initialLength ?? 0) == 0)
                 {
                     await CreateZeroLengthDownload().ConfigureAwait(false);
                     return;
                 }
 
                 // TODO: Change to use buffer instead of converting to stream
-                long totalLength = ParseRangeTotalLength(initialResult.ContentRange);
+                long totalLength = initialResult.ResourceLength.Value;
                 bool successfulInitialCopy = await CopyToStreamInternal(
                     offset: 0,
-                    sourceLength: initialLength,
+                    sourceLength: initialLength.Value,
                     source: initialResult.Content,
                     expectedLength: totalLength).ConfigureAwait(false);
                 if (successfulInitialCopy)
                 {
-                    ReportBytesWritten(initialLength);
+                    ReportBytesWritten(initialLength.Value);
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
@@ -264,7 +264,7 @@ namespace Azure.Storage.DataMovement
                     }
                     else
                     {
-                        await QueueChunksToChannel(initialLength, totalLength).ConfigureAwait(false);
+                        await QueueChunksToChannel(initialLength.Value, totalLength).ConfigureAwait(false);
                     }
                 }
                 else
@@ -294,7 +294,7 @@ namespace Azure.Storage.DataMovement
                     ReadStreamAsync(cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
-                long downloadLength = result.Properties.ContentLength;
+                long downloadLength = result.ContentLength.Value;
                 // This should not occur but add a check just in case
                 if (downloadLength != totalLength)
                 {

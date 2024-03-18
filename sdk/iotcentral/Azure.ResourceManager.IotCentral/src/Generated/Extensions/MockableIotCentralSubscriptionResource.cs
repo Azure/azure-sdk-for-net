@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotCentralAppTemplate.DeserializeIotCentralAppTemplate(e), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotCentralAppAppsRestClient.CreateListTemplatesRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotCentralAppAppsRestClient.CreateListTemplatesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotCentralAppTemplate.DeserializeIotCentralAppTemplate, IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotCentralAppTemplate.DeserializeIotCentralAppTemplate(e), IotCentralAppAppsClientDiagnostics, Pipeline, "MockableIotCentralSubscriptionResource.GetTemplatesApps", "value", "nextLink", cancellationToken);
         }
     }
 }

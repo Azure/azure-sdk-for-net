@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -24,6 +24,7 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="name"> An optional name for the participant. </param>
         /// <param name="toolCalls">
@@ -34,12 +35,17 @@ namespace Azure.AI.OpenAI
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
         /// </param>
-        internal ChatRequestAssistantMessage(ChatRole role, string content, string name, IList<ChatCompletionsToolCall> toolCalls, FunctionCall functionCall) : base(role)
+        internal ChatRequestAssistantMessage(ChatRole role, IDictionary<string, BinaryData> serializedAdditionalRawData, string content, string name, IList<ChatCompletionsToolCall> toolCalls, FunctionCall functionCall) : base(role, serializedAdditionalRawData)
         {
             Content = content;
             Name = name;
             ToolCalls = toolCalls;
             FunctionCall = functionCall;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/> for deserialization. </summary>
+        internal ChatRequestAssistantMessage()
+        {
         }
 
         /// <summary> The content of the message. </summary>

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual Pageable<BotServiceProvider> GetBotConnectionServiceProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>

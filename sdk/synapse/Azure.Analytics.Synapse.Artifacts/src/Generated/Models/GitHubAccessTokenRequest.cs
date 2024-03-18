@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {

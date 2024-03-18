@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -60,8 +61,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ExtendedLocationType> type = default;
-            Optional<string> name = default;
+            ExtendedLocationType? type = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ExtendedLocation(Optional.ToNullable(type), name.Value);
+            return new ExtendedLocation(type, name);
         }
 
         BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)

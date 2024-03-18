@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<string> targetIqn = default;
-            Optional<string> targetPortalHostname = default;
-            Optional<int> targetPortalPort = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<ResourceOperationalStatus> status = default;
+            string targetIqn = default;
+            string targetPortalHostname = default;
+            int? targetPortalPort = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            ResourceOperationalStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new IscsiTargetInfo(
+                targetIqn,
+                targetPortalHostname,
+                targetPortalPort,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IscsiTargetInfo>.Write(ModelReaderWriterOptions options)

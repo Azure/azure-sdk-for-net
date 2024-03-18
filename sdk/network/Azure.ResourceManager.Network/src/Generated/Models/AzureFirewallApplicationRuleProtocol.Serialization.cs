@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureFirewallApplicationRuleProtocolType> protocolType = default;
-            Optional<int> port = default;
+            AzureFirewallApplicationRuleProtocolType? protocolType = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallApplicationRuleProtocol(Optional.ToNullable(protocolType), Optional.ToNullable(port), serializedAdditionalRawData);
+            return new AzureFirewallApplicationRuleProtocol(protocolType, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallApplicationRuleProtocol>.Write(ModelReaderWriterOptions options)

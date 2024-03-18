@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -139,16 +140,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;
-            Optional<string> translatedAddress = default;
-            Optional<string> translatedPort = default;
-            Optional<string> translatedFqdn = default;
-            Optional<IList<string>> sourceIPGroups = default;
+            string name = default;
+            string description = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<AzureFirewallNetworkRuleProtocol> protocols = default;
+            string translatedAddress = default;
+            string translatedPort = default;
+            string translatedFqdn = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +255,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(protocols), translatedAddress.Value, translatedPort.Value, translatedFqdn.Value, Optional.ToList(sourceIPGroups), serializedAdditionalRawData);
+            return new AzureFirewallNatRule(
+                name,
+                description,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
+                translatedAddress,
+                translatedPort,
+                translatedFqdn,
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRule>.Write(ModelReaderWriterOptions options)

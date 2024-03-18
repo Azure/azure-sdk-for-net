@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             ExternalCloudProviderType = externalCloudProviderType;
             ExternalCloudProviderId = externalCloudProviderId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantResourceByExternalCloudProviderTypeDimensionsOptions"/> for deserialization. </summary>
+        internal TenantResourceByExternalCloudProviderTypeDimensionsOptions()
+        {
         }
 
         /// <summary> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </summary>

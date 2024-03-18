@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +14,76 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class StorageAccountListResult
+    internal partial class StorageAccountListResult : IUtf8JsonSerializable, IJsonModel<StorageAccountListResult>
     {
-        internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageAccountListResult IJsonModel<StorageAccountListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountListResult(document.RootElement, options);
+        }
+
+        internal static StorageAccountListResult DeserializeStorageAccountListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageAccountData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StorageAccountData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountData> array = new List<StorageAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountData.DeserializeStorageAccountData(item));
+                        array.Add(StorageAccountData.DeserializeStorageAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +105,44 @@ namespace Azure.ResourceManager.Storage.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountListResult(value ?? new ChangeTrackingList<StorageAccountData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageAccountListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountListResult IPersistableModel<StorageAccountListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

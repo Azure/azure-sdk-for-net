@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -30,16 +31,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/>. </summary>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        internal VirtualMachineImageBase(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id)
+        internal VirtualMachineImageBase(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id, serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
             Tags = tags;
             ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImageBase"/> for deserialization. </summary>
+        internal VirtualMachineImageBase()
+        {
         }
 
         /// <summary> The name of the resource. </summary>

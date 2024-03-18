@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -42,9 +43,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<EntityReference> connectVia = default;
-            Optional<EntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            EntityReference connectVia = default;
+            EntityReference stagingLinkedService = default;
+            string path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectVia"u8))
@@ -71,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value);
+            return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path);
         }
 
         internal partial class IntegrationRuntimeDataProxyPropertiesConverter : JsonConverter<IntegrationRuntimeDataProxyProperties>

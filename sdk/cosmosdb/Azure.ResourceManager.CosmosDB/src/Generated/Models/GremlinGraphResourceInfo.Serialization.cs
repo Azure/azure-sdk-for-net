@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GremlinGraphResourceInfo : IUtf8JsonSerializable
+    public partial class GremlinGraphResourceInfo : IUtf8JsonSerializable, IJsonModel<GremlinGraphResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GremlinGraphResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GremlinGraphResourceInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(GraphName);
@@ -57,24 +69,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GremlinGraphResourceInfo DeserializeGremlinGraphResourceInfo(JsonElement element)
+        GremlinGraphResourceInfo IJsonModel<GremlinGraphResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GremlinGraphResourceInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGremlinGraphResourceInfo(document.RootElement, options);
+        }
+
+        internal static GremlinGraphResourceInfo DeserializeGremlinGraphResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Optional<int> defaultTtl = default;
-            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<long> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            CosmosDBIndexingPolicy indexingPolicy = default;
+            CosmosDBContainerPartitionKey partitionKey = default;
+            int? defaultTtl = default;
+            CosmosDBUniqueKeyPolicy uniqueKeyPolicy = default;
+            ConflictResolutionPolicy conflictResolutionPolicy = default;
+            long? analyticalStorageTtl = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
+                    indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -97,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"u8))
@@ -115,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
+                    uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("conflictResolutionPolicy"u8))
@@ -124,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
+                    conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))
@@ -142,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -154,8 +197,54 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GremlinGraphResourceInfo(
+                id,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeyPolicy,
+                conflictResolutionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GremlinGraphResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GremlinGraphResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GremlinGraphResourceInfo IPersistableModel<GremlinGraphResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGremlinGraphResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GremlinGraphResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GremlinGraphResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

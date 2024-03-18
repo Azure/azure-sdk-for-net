@@ -5,28 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class KubeEnvironmentPatch : IUtf8JsonSerializable
+    public partial class KubeEnvironmentPatch : IUtf8JsonSerializable, IJsonModel<KubeEnvironmentPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeEnvironmentPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubeEnvironmentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubeEnvironmentPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled"u8);
                 writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
+            {
+                writer.WritePropertyName("defaultDomain"u8);
+                writer.WriteStringValue(DefaultDomain);
             }
             if (Optional.IsDefined(StaticIP))
             {
@@ -49,28 +96,59 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(AksResourceId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubeEnvironmentPatch DeserializeKubeEnvironmentPatch(JsonElement element)
+        KubeEnvironmentPatch IJsonModel<KubeEnvironmentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubeEnvironmentPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubeEnvironmentPatch(document.RootElement, options);
+        }
+
+        internal static KubeEnvironmentPatch DeserializeKubeEnvironmentPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<ResourceIdentifier> aksResourceId = default;
+            SystemData systemData = default;
+            KubeEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            bool? internalLoadBalancerEnabled = default;
+            string defaultDomain = default;
+            string staticIP = default;
+            ArcConfiguration arcConfiguration = default;
+            AppLogsConfiguration appLogsConfiguration = default;
+            ResourceIdentifier aksResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -150,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
+                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"u8))
@@ -159,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
+                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))
@@ -174,8 +252,58 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubeEnvironmentPatch(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubeEnvironmentPatch(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                deploymentErrors,
+                internalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubeEnvironmentPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubeEnvironmentPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KubeEnvironmentPatch IPersistableModel<KubeEnvironmentPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubeEnvironmentPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubeEnvironmentPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubeEnvironmentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskRunContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryEncodedTaskRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEncodedTaskRunContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistryEncodedTaskRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskRunContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
@@ -72,27 +83,58 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryEncodedTaskRunContent DeserializeContainerRegistryEncodedTaskRunContent(JsonElement element)
+        ContainerRegistryEncodedTaskRunContent IJsonModel<ContainerRegistryEncodedTaskRunContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskRunContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryEncodedTaskRunContent(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryEncodedTaskRunContent DeserializeContainerRegistryEncodedTaskRunContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Optional<int> timeout = default;
+            string encodedValuesContent = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -114,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -130,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("platform"u8))
                 {
-                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value);
+                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentConfiguration"u8))
@@ -139,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value);
+                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -153,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -180,8 +222,57 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     logTemplate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryEncodedTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryEncodedTaskRunContent(
+                type,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                timeout,
+                platform,
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryEncodedTaskRunContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskRunContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryEncodedTaskRunContent IPersistableModel<ContainerRegistryEncodedTaskRunContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryEncodedTaskRunContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskRunContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryEncodedTaskRunContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

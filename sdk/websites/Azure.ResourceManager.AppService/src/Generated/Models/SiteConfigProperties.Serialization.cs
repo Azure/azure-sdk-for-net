@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigProperties : IUtf8JsonSerializable
+    public partial class SiteConfigProperties : IUtf8JsonSerializable, IJsonModel<SiteConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteConfigProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteConfigProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfWorkers))
             {
@@ -282,6 +292,18 @@ namespace Azure.ResourceManager.AppService.Models
                 else
                 {
                     writer.WriteNull("connectionStrings");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(MachineKey))
+            {
+                if (MachineKey != null)
+                {
+                    writer.WritePropertyName("machineKey"u8);
+                    writer.WriteObjectValue(MachineKey);
+                }
+                else
+                {
+                    writer.WriteNull("machineKey");
                 }
             }
             if (Optional.IsCollectionDefined(HandlerMappings))
@@ -850,82 +872,113 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteConfigProperties DeserializeSiteConfigProperties(JsonElement element)
+        SiteConfigProperties IJsonModel<SiteConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteConfigProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteConfigProperties(document.RootElement, options);
+        }
+
+        internal static SiteConfigProperties DeserializeSiteConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int?> numberOfWorkers = default;
-            Optional<IList<string>> defaultDocuments = default;
-            Optional<string> netFrameworkVersion = default;
-            Optional<string> phpVersion = default;
-            Optional<string> pythonVersion = default;
-            Optional<string> nodeVersion = default;
-            Optional<string> powerShellVersion = default;
-            Optional<string> linuxFxVersion = default;
-            Optional<string> windowsFxVersion = default;
-            Optional<bool?> requestTracingEnabled = default;
-            Optional<DateTimeOffset?> requestTracingExpirationTime = default;
-            Optional<bool?> remoteDebuggingEnabled = default;
-            Optional<string> remoteDebuggingVersion = default;
-            Optional<bool?> httpLoggingEnabled = default;
-            Optional<bool?> acrUseManagedIdentityCreds = default;
-            Optional<string> acrUserManagedIdentityId = default;
-            Optional<int?> logsDirectorySizeLimit = default;
-            Optional<bool?> detailedErrorLoggingEnabled = default;
-            Optional<string> publishingUsername = default;
-            Optional<IList<AppServiceNameValuePair>> appSettings = default;
-            Optional<IList<ConnStringInfo>> connectionStrings = default;
-            Optional<SiteMachineKey> machineKey = default;
-            Optional<IList<HttpRequestHandlerMapping>> handlerMappings = default;
-            Optional<string> documentRoot = default;
-            Optional<ScmType?> scmType = default;
-            Optional<bool?> use32BitWorkerProcess = default;
-            Optional<bool?> webSocketsEnabled = default;
-            Optional<bool?> alwaysOn = default;
-            Optional<string> javaVersion = default;
-            Optional<string> javaContainer = default;
-            Optional<string> javaContainerVersion = default;
-            Optional<string> appCommandLine = default;
-            Optional<ManagedPipelineMode?> managedPipelineMode = default;
-            Optional<IList<VirtualApplication>> virtualApplications = default;
-            Optional<SiteLoadBalancing?> loadBalancing = default;
-            Optional<RoutingRuleExperiments> experiments = default;
-            Optional<SiteLimits> limits = default;
-            Optional<bool?> autoHealEnabled = default;
-            Optional<AutoHealRules> autoHealRules = default;
-            Optional<string> tracingOptions = default;
-            Optional<string> vnetName = default;
-            Optional<bool?> vnetRouteAllEnabled = default;
-            Optional<int?> vnetPrivatePortsCount = default;
-            Optional<AppServiceCorsSettings> cors = default;
-            Optional<WebAppPushSettings> push = default;
-            Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
-            Optional<ApiManagementConfig> apiManagementConfig = default;
-            Optional<string> autoSwapSlotName = default;
-            Optional<bool?> localMySqlEnabled = default;
-            Optional<int?> managedServiceIdentityId = default;
-            Optional<int?> xManagedServiceIdentityId = default;
-            Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IList<AppServiceIPSecurityRestriction>> ipSecurityRestrictions = default;
-            Optional<IList<AppServiceIPSecurityRestriction>> scmIPSecurityRestrictions = default;
-            Optional<bool?> scmIPSecurityRestrictionsUseMain = default;
-            Optional<bool?> http20Enabled = default;
-            Optional<AppServiceSupportedTlsVersion?> minTlsVersion = default;
-            Optional<AppServiceSupportedTlsVersion?> scmMinTlsVersion = default;
-            Optional<AppServiceFtpsState?> ftpsState = default;
-            Optional<int?> preWarmedInstanceCount = default;
-            Optional<int?> functionAppScaleLimit = default;
-            Optional<string> healthCheckPath = default;
-            Optional<bool?> functionsRuntimeScaleMonitoringEnabled = default;
-            Optional<string> websiteTimeZone = default;
-            Optional<int?> minimumElasticInstanceCount = default;
-            Optional<IDictionary<string, AppServiceStorageAccessInfo>> azureStorageAccounts = default;
-            Optional<string> publicNetworkAccess = default;
+            int? numberOfWorkers = default;
+            IList<string> defaultDocuments = default;
+            string netFrameworkVersion = default;
+            string phpVersion = default;
+            string pythonVersion = default;
+            string nodeVersion = default;
+            string powerShellVersion = default;
+            string linuxFxVersion = default;
+            string windowsFxVersion = default;
+            bool? requestTracingEnabled = default;
+            DateTimeOffset? requestTracingExpirationTime = default;
+            bool? remoteDebuggingEnabled = default;
+            string remoteDebuggingVersion = default;
+            bool? httpLoggingEnabled = default;
+            bool? acrUseManagedIdentityCreds = default;
+            string acrUserManagedIdentityId = default;
+            int? logsDirectorySizeLimit = default;
+            bool? detailedErrorLoggingEnabled = default;
+            string publishingUsername = default;
+            IList<AppServiceNameValuePair> appSettings = default;
+            IList<ConnStringInfo> connectionStrings = default;
+            SiteMachineKey machineKey = default;
+            IList<HttpRequestHandlerMapping> handlerMappings = default;
+            string documentRoot = default;
+            ScmType? scmType = default;
+            bool? use32BitWorkerProcess = default;
+            bool? webSocketsEnabled = default;
+            bool? alwaysOn = default;
+            string javaVersion = default;
+            string javaContainer = default;
+            string javaContainerVersion = default;
+            string appCommandLine = default;
+            ManagedPipelineMode? managedPipelineMode = default;
+            IList<VirtualApplication> virtualApplications = default;
+            SiteLoadBalancing? loadBalancing = default;
+            RoutingRuleExperiments experiments = default;
+            SiteLimits limits = default;
+            bool? autoHealEnabled = default;
+            AutoHealRules autoHealRules = default;
+            string tracingOptions = default;
+            string vnetName = default;
+            bool? vnetRouteAllEnabled = default;
+            int? vnetPrivatePortsCount = default;
+            AppServiceCorsSettings cors = default;
+            WebAppPushSettings push = default;
+            AppServiceApiDefinitionInfo apiDefinition = default;
+            ApiManagementConfig apiManagementConfig = default;
+            string autoSwapSlotName = default;
+            bool? localMySqlEnabled = default;
+            int? managedServiceIdentityId = default;
+            int? xManagedServiceIdentityId = default;
+            string keyVaultReferenceIdentity = default;
+            IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default;
+            IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default;
+            bool? scmIPSecurityRestrictionsUseMain = default;
+            bool? http20Enabled = default;
+            AppServiceSupportedTlsVersion? minTlsVersion = default;
+            AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
+            AppServiceFtpsState? ftpsState = default;
+            int? preWarmedInstanceCount = default;
+            int? functionAppScaleLimit = default;
+            string healthCheckPath = default;
+            bool? functionsRuntimeScaleMonitoringEnabled = default;
+            string websiteTimeZone = default;
+            int? minimumElasticInstanceCount = default;
+            IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default;
+            string publicNetworkAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfWorkers"u8))
@@ -1133,7 +1186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     appSettings = array;
                     continue;
@@ -1148,7 +1201,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ConnStringInfo> array = new List<ConnStringInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnStringInfo.DeserializeConnStringInfo(item));
+                        array.Add(ConnStringInfo.DeserializeConnStringInfo(item, options));
                     }
                     connectionStrings = array;
                     continue;
@@ -1160,7 +1213,7 @@ namespace Azure.ResourceManager.AppService.Models
                         machineKey = null;
                         continue;
                     }
-                    machineKey = SiteMachineKey.DeserializeSiteMachineKey(property.Value);
+                    machineKey = SiteMachineKey.DeserializeSiteMachineKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("handlerMappings"u8))
@@ -1173,7 +1226,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item));
+                        array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item, options));
                     }
                     handlerMappings = array;
                     continue;
@@ -1288,7 +1341,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<VirtualApplication> array = new List<VirtualApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplication.DeserializeVirtualApplication(item));
+                        array.Add(VirtualApplication.DeserializeVirtualApplication(item, options));
                     }
                     virtualApplications = array;
                     continue;
@@ -1310,7 +1363,7 @@ namespace Azure.ResourceManager.AppService.Models
                         experiments = null;
                         continue;
                     }
-                    experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property.Value);
+                    experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -1320,7 +1373,7 @@ namespace Azure.ResourceManager.AppService.Models
                         limits = null;
                         continue;
                     }
-                    limits = SiteLimits.DeserializeSiteLimits(property.Value);
+                    limits = SiteLimits.DeserializeSiteLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoHealEnabled"u8))
@@ -1340,7 +1393,7 @@ namespace Azure.ResourceManager.AppService.Models
                         autoHealRules = null;
                         continue;
                     }
-                    autoHealRules = AutoHealRules.DeserializeAutoHealRules(property.Value);
+                    autoHealRules = AutoHealRules.DeserializeAutoHealRules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tracingOptions"u8))
@@ -1390,7 +1443,7 @@ namespace Azure.ResourceManager.AppService.Models
                         cors = null;
                         continue;
                     }
-                    cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property.Value);
+                    cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("push"u8))
@@ -1400,7 +1453,7 @@ namespace Azure.ResourceManager.AppService.Models
                         push = null;
                         continue;
                     }
-                    push = WebAppPushSettings.DeserializeWebAppPushSettings(property.Value);
+                    push = WebAppPushSettings.DeserializeWebAppPushSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiDefinition"u8))
@@ -1410,7 +1463,7 @@ namespace Azure.ResourceManager.AppService.Models
                         apiDefinition = null;
                         continue;
                     }
-                    apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property.Value);
+                    apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiManagementConfig"u8))
@@ -1420,7 +1473,7 @@ namespace Azure.ResourceManager.AppService.Models
                         apiManagementConfig = null;
                         continue;
                     }
-                    apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property.Value);
+                    apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoSwapSlotName"u8))
@@ -1483,7 +1536,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
+                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item, options));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -1498,7 +1551,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
+                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item, options));
                     }
                     scmIPSecurityRestrictions = array;
                     continue;
@@ -1623,7 +1676,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value));
+                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value, options));
                     }
                     azureStorageAccounts = dictionary;
                     continue;
@@ -1638,8 +1691,112 @@ namespace Azure.ResourceManager.AppService.Models
                     publicNetworkAccess = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteConfigProperties(Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityId.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIPSecurityRestrictions), Optional.ToNullable(scmIPSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteConfigProperties(
+                numberOfWorkers,
+                defaultDocuments ?? new ChangeTrackingList<string>(),
+                netFrameworkVersion,
+                phpVersion,
+                pythonVersion,
+                nodeVersion,
+                powerShellVersion,
+                linuxFxVersion,
+                windowsFxVersion,
+                requestTracingEnabled,
+                requestTracingExpirationTime,
+                remoteDebuggingEnabled,
+                remoteDebuggingVersion,
+                httpLoggingEnabled,
+                acrUseManagedIdentityCreds,
+                acrUserManagedIdentityId,
+                logsDirectorySizeLimit,
+                detailedErrorLoggingEnabled,
+                publishingUsername,
+                appSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(),
+                connectionStrings ?? new ChangeTrackingList<ConnStringInfo>(),
+                machineKey,
+                handlerMappings ?? new ChangeTrackingList<HttpRequestHandlerMapping>(),
+                documentRoot,
+                scmType,
+                use32BitWorkerProcess,
+                webSocketsEnabled,
+                alwaysOn,
+                javaVersion,
+                javaContainer,
+                javaContainerVersion,
+                appCommandLine,
+                managedPipelineMode,
+                virtualApplications ?? new ChangeTrackingList<VirtualApplication>(),
+                loadBalancing,
+                experiments,
+                limits,
+                autoHealEnabled,
+                autoHealRules,
+                tracingOptions,
+                vnetName,
+                vnetRouteAllEnabled,
+                vnetPrivatePortsCount,
+                cors,
+                push,
+                apiDefinition,
+                apiManagementConfig,
+                autoSwapSlotName,
+                localMySqlEnabled,
+                managedServiceIdentityId,
+                xManagedServiceIdentityId,
+                keyVaultReferenceIdentity,
+                ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
+                scmIPSecurityRestrictions ?? new ChangeTrackingList<AppServiceIPSecurityRestriction>(),
+                scmIPSecurityRestrictionsUseMain,
+                http20Enabled,
+                minTlsVersion,
+                scmMinTlsVersion,
+                ftpsState,
+                preWarmedInstanceCount,
+                functionAppScaleLimit,
+                healthCheckPath,
+                functionsRuntimeScaleMonitoringEnabled,
+                websiteTimeZone,
+                minimumElasticInstanceCount,
+                azureStorageAccounts ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteConfigProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteConfigProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteConfigProperties IPersistableModel<SiteConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteConfigProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteConfigProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

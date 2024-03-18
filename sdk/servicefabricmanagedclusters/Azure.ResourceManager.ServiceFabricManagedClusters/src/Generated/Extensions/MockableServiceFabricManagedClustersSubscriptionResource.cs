@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => managedUnsupportedVMSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(e), managedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => managedUnsupportedVMSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(e), managedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

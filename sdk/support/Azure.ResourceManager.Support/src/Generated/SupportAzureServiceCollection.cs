@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>

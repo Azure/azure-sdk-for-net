@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceType = resourceType;
             ResourceName = resourceName;
             ConfigurationAssignmentName = configurationAssignmentName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetConfigurationAssignmentByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceGetConfigurationAssignmentByParentOptions()
+        {
         }
 
         /// <summary> Resource provider name. </summary>

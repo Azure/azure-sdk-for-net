@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Unknown version of ChatFinishDetails. </summary>
@@ -12,7 +15,13 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChatFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
-        internal UnknownChatFinishDetails(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChatFinishDetails(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownChatFinishDetails"/> for deserialization. </summary>
+        internal UnknownChatFinishDetails()
         {
         }
     }

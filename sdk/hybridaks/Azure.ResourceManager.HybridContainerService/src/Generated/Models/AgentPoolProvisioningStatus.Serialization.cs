@@ -5,17 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AgentPoolProvisioningStatus : IUtf8JsonSerializable
+    public partial class AgentPoolProvisioningStatus : IUtf8JsonSerializable, IJsonModel<AgentPoolProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolProvisioningStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AgentPoolProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState.Value.ToString());
+            }
             if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
@@ -31,18 +47,49 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolProvisioningStatus DeserializeAgentPoolProvisioningStatus(JsonElement element)
+        AgentPoolProvisioningStatus IJsonModel<AgentPoolProvisioningStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolProvisioningStatus(document.RootElement, options);
+        }
+
+        internal static AgentPoolProvisioningStatus DeserializeAgentPoolProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
-            Optional<string> errorMessage = default;
-            Optional<IList<AgentPoolUpdateProfile>> readyReplicas = default;
+            HybridContainerServiceResourceProvisioningState? currentState = default;
+            string errorMessage = default;
+            IList<AgentPoolUpdateProfile> readyReplicas = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentState"u8))
@@ -68,13 +115,49 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item, options));
                     }
                     readyReplicas = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolProvisioningStatus(Optional.ToNullable(currentState), errorMessage.Value, Optional.ToList(readyReplicas));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentPoolProvisioningStatus(currentState, errorMessage, readyReplicas ?? new ChangeTrackingList<AgentPoolUpdateProfile>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolProvisioningStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AgentPoolProvisioningStatus IPersistableModel<AgentPoolProvisioningStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentPoolProvisioningStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentPoolProvisioningStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

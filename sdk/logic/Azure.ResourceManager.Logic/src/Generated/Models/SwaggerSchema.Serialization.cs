@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerSchema : IUtf8JsonSerializable
+    public partial class SwaggerSchema : IUtf8JsonSerializable, IJsonModel<SwaggerSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SwaggerSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Reference))
             {
@@ -147,35 +157,66 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("dynamicTree"u8);
                 writer.WriteObjectValue(DynamicTree);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element)
+        SwaggerSchema IJsonModel<SwaggerSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerSchema(document.RootElement, options);
+        }
+
+        internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> @ref = default;
-            Optional<SwaggerSchemaType> type = default;
-            Optional<string> title = default;
-            Optional<SwaggerSchema> items = default;
-            Optional<IDictionary<string, SwaggerSchema>> properties = default;
-            Optional<BinaryData> additionalProperties = default;
-            Optional<IList<string>> required = default;
-            Optional<int> maxProperties = default;
-            Optional<int> minProperties = default;
-            Optional<IList<SwaggerSchema>> allOf = default;
-            Optional<string> discriminator = default;
-            Optional<bool> readOnly = default;
-            Optional<SwaggerXml> xml = default;
-            Optional<SwaggerExternalDocumentation> externalDocs = default;
-            Optional<BinaryData> example = default;
-            Optional<bool> notificationUrlExtension = default;
-            Optional<SwaggerCustomDynamicSchema> dynamicSchemaOld = default;
-            Optional<SwaggerCustomDynamicProperties> dynamicSchemaNew = default;
-            Optional<SwaggerCustomDynamicList> dynamicListNew = default;
-            Optional<SwaggerCustomDynamicTree> dynamicTree = default;
+            string @ref = default;
+            SwaggerSchemaType? type = default;
+            string title = default;
+            SwaggerSchema items = default;
+            IDictionary<string, SwaggerSchema> properties = default;
+            BinaryData additionalProperties = default;
+            IList<string> required = default;
+            int? maxProperties = default;
+            int? minProperties = default;
+            IList<SwaggerSchema> allOf = default;
+            string discriminator = default;
+            bool? readOnly = default;
+            SwaggerXml xml = default;
+            SwaggerExternalDocumentation externalDocs = default;
+            BinaryData example = default;
+            bool? notificationUrlExtension = default;
+            SwaggerCustomDynamicSchema dynamicSchemaOld = default;
+            SwaggerCustomDynamicProperties dynamicSchemaNew = default;
+            SwaggerCustomDynamicList dynamicListNew = default;
+            SwaggerCustomDynamicTree dynamicTree = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ref"u8))
@@ -203,7 +244,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    items = DeserializeSwaggerSchema(property.Value);
+                    items = DeserializeSwaggerSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -215,7 +256,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerSchema> dictionary = new Dictionary<string, SwaggerSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeSwaggerSchema(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;
@@ -270,7 +311,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<SwaggerSchema> array = new List<SwaggerSchema>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSwaggerSchema(item));
+                        array.Add(DeserializeSwaggerSchema(item, options));
                     }
                     allOf = array;
                     continue;
@@ -295,7 +336,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    xml = SwaggerXml.DeserializeSwaggerXml(property.Value);
+                    xml = SwaggerXml.DeserializeSwaggerXml(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("externalDocs"u8))
@@ -304,7 +345,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value);
+                    externalDocs = SwaggerExternalDocumentation.DeserializeSwaggerExternalDocumentation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("example"u8))
@@ -331,7 +372,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value);
+                    dynamicSchemaOld = SwaggerCustomDynamicSchema.DeserializeSwaggerCustomDynamicSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicSchemaNew"u8))
@@ -340,7 +381,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value);
+                    dynamicSchemaNew = SwaggerCustomDynamicProperties.DeserializeSwaggerCustomDynamicProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicListNew"u8))
@@ -349,7 +390,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value);
+                    dynamicListNew = SwaggerCustomDynamicList.DeserializeSwaggerCustomDynamicList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicTree"u8))
@@ -358,11 +399,68 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value);
+                    dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, Optional.ToList(required), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), Optional.ToList(allOf), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SwaggerSchema(
+                @ref,
+                type,
+                title,
+                items,
+                properties ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
+                additionalProperties,
+                required ?? new ChangeTrackingList<string>(),
+                maxProperties,
+                minProperties,
+                allOf ?? new ChangeTrackingList<SwaggerSchema>(),
+                discriminator,
+                readOnly,
+                xml,
+                externalDocs,
+                example,
+                notificationUrlExtension,
+                dynamicSchemaOld,
+                dynamicSchemaNew,
+                dynamicListNew,
+                dynamicTree,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SwaggerSchema>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SwaggerSchema IPersistableModel<SwaggerSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SwaggerSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSwaggerSchema(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SwaggerSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SwaggerSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

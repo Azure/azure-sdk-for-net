@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
+            ResourceIdentifier id = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayIPConfiguration(id.Value, publicIPAddress.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new VpnGatewayIPConfiguration(id, publicIPAddress, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnGatewayIPConfiguration>.Write(ModelReaderWriterOptions options)

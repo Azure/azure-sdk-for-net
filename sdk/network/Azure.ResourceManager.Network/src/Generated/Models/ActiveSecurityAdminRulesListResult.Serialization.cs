@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ActiveBaseSecurityAdminRule>> value = default;
-            Optional<string> skipToken = default;
+            IReadOnlyList<ActiveBaseSecurityAdminRule> value = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveBaseSecurityAdminRule> array = new List<ActiveBaseSecurityAdminRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item));
+                        array.Add(ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveSecurityAdminRulesListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveSecurityAdminRulesListResult(value ?? new ChangeTrackingList<ActiveBaseSecurityAdminRule>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRulesListResult>.Write(ModelReaderWriterOptions options)

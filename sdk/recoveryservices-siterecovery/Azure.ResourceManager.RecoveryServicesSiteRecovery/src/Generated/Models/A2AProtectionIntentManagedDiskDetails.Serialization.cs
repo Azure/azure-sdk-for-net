@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable
+    public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectionIntentManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectionIntentManagedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2AProtectionIntentManagedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
@@ -47,22 +59,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static A2AProtectionIntentManagedDiskDetails DeserializeA2AProtectionIntentManagedDiskDetails(JsonElement element)
+        A2AProtectionIntentManagedDiskDetails IJsonModel<A2AProtectionIntentManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AProtectionIntentManagedDiskDetails(document.RootElement, options);
+        }
+
+        internal static A2AProtectionIntentManagedDiskDetails DeserializeA2AProtectionIntentManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string diskId = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
-            Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomContent = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            StorageAccountCustomDetails primaryStagingStorageAccountCustomContent = default;
+            RecoveryResourceGroupCustomDetails recoveryResourceGroupCustomContent = default;
+            string recoveryReplicaDiskAccountType = default;
+            string recoveryTargetDiskAccountType = default;
+            ResourceIdentifier recoveryDiskEncryptionSetId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -76,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupCustomInput"u8))
@@ -85,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryResourceGroupCustomContent = RecoveryResourceGroupCustomDetails.DeserializeRecoveryResourceGroupCustomDetails(property.Value);
+                    recoveryResourceGroupCustomContent = RecoveryResourceGroupCustomDetails.DeserializeRecoveryResourceGroupCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
@@ -113,11 +156,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new A2AProtectionIntentManagedDiskDetails(diskId, primaryStagingStorageAccountCustomContent.Value, recoveryResourceGroupCustomContent.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2AProtectionIntentManagedDiskDetails(
+                diskId,
+                primaryStagingStorageAccountCustomContent,
+                recoveryResourceGroupCustomContent,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                diskEncryptionInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<A2AProtectionIntentManagedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        A2AProtectionIntentManagedDiskDetails IPersistableModel<A2AProtectionIntentManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2AProtectionIntentManagedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2AProtectionIntentManagedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

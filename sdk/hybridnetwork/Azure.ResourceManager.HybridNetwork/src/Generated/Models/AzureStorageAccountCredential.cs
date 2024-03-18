@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -23,10 +24,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageAccountCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureStorageAccountCredential(CredentialType credentialType, ResourceIdentifier storageAccountId, IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType)
+        internal AzureStorageAccountCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountId, IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType, serializedAdditionalRawData)
         {
             StorageAccountId = storageAccountId;
             ContainerCredentials = containerCredentials;

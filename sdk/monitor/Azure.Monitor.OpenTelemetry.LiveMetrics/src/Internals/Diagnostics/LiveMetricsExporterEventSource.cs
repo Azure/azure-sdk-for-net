@@ -171,5 +171,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(10, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
         public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
+
+        [NonEvent]
+        public void StateMachineFailedWithUnknownException(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                StateMachineFailedWithUnknownException(ex.ToInvariantString());
+            }
+        }
+
+        [Event(11, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
+        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
+
+        [NonEvent]
+        public void DroppedDocument(DocumentIngressDocumentType documentType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                DroppedDocument(documentType.ToString());
+            }
+        }
+
+        [Event(12, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
+        public void DroppedDocument(string documentType) => WriteEvent(12, documentType);
+
+        [Event(13, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(13, previousCollectedTime, recentCollectedTime);
+
+        [Event(14, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(14, previousCollectedValue, recentCollectedValue);
+
+        [Event(15, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(15, period, diffValue, calculatedValue, processorCount, normalizedValue);
     }
 }

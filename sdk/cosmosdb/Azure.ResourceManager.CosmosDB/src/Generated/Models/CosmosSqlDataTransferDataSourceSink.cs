@@ -6,7 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -29,15 +30,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
         /// <param name="remoteAccountName"></param>
-        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string containerName, string remoteAccountName) : base(component)
+        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, string containerName, string remoteAccountName) : base(component, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             ContainerName = containerName;
             RemoteAccountName = remoteAccountName;
             Component = component;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosSqlDataTransferDataSourceSink()
+        {
         }
 
         /// <summary> Gets or sets the database name. </summary>

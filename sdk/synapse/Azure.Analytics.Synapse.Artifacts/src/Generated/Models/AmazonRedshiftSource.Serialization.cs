@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -70,14 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> query = default;
-            Optional<RedshiftUnloadSettings> redshiftUnloadSettings = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> additionalColumns = default;
+            object query = default;
+            RedshiftUnloadSettings redshiftUnloadSettings = default;
+            object queryTimeout = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRedshiftSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, redshiftUnloadSettings.Value);
+            return new AmazonRedshiftSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                query,
+                redshiftUnloadSettings);
         }
 
         internal partial class AmazonRedshiftSourceConverter : JsonConverter<AmazonRedshiftSource>

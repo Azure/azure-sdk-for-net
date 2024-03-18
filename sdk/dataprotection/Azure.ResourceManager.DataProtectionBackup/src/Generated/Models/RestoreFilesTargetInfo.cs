@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -29,11 +31,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
-        internal RestoreFilesTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, RestoreFilesTargetDetails targetDetails) : base(objectType, recoverySetting, restoreLocation)
+        internal RestoreFilesTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, RestoreFilesTargetDetails targetDetails) : base(objectType, recoverySetting, restoreLocation, serializedAdditionalRawData)
         {
             TargetDetails = targetDetails;
             ObjectType = objectType ?? "RestoreFilesTargetInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetInfo"/> for deserialization. </summary>
+        internal RestoreFilesTargetInfo()
+        {
         }
 
         /// <summary> Destination of RestoreAsFiles operation, when destination is not a datasource. </summary>

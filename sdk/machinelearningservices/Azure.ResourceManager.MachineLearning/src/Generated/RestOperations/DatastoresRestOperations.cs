@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("isDefault", isDefault.Value, true);
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("names", names, ",", true);
             }

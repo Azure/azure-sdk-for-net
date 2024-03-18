@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsWithinSubscriptionRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(e), ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignmentsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>

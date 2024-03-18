@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> provisioningStatusMessage = default;
-            Optional<DateTimeOffset> provisioningStatusUpdateTimeUtc = default;
-            Optional<DevOpsProvisioningState> provisioningState = default;
-            Optional<string> parentOrgName = default;
-            Optional<string> projectId = default;
-            Optional<ResourceOnboardingState> onboardingState = default;
-            Optional<ActionableRemediation> actionableRemediation = default;
+            string provisioningStatusMessage = default;
+            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DevOpsProvisioningState? provisioningState = default;
+            string parentOrgName = default;
+            string projectId = default;
+            ResourceOnboardingState? onboardingState = default;
+            ActionableRemediation actionableRemediation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
+                    actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +168,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsProjectProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, projectId.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value, serializedAdditionalRawData);
+            return new DevOpsProjectProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdateTimeUtc,
+                provisioningState,
+                parentOrgName,
+                projectId,
+                onboardingState,
+                actionableRemediation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsProjectProperties>.Write(ModelReaderWriterOptions options)

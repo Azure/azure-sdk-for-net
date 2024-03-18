@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -100,10 +101,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IssueOrigin> origin = default;
-            Optional<IssueSeverity> severity = default;
-            Optional<ConnectivityIssueType> type = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
+            IssueOrigin? origin = default;
+            IssueSeverity? severity = default;
+            ConnectivityIssueType? type = default;
+            IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityIssueInfo(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context), serializedAdditionalRawData);
+            return new ConnectivityIssueInfo(origin, severity, type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityIssueInfo>.Write(ModelReaderWriterOptions options)

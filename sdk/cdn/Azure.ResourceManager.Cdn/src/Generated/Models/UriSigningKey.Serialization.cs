@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriSigningKey : IUtf8JsonSerializable
+    public partial class UriSigningKey : IUtf8JsonSerializable, IJsonModel<UriSigningKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UriSigningKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UriSigningKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UriSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriSigningKey)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("keySourceParameters"u8);
             writer.WriteObjectValue(KeySourceParameters);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UriSigningKey DeserializeUriSigningKey(JsonElement element)
+        UriSigningKey IJsonModel<UriSigningKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UriSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriSigningKey)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUriSigningKey(document.RootElement, options);
+        }
+
+        internal static UriSigningKey DeserializeUriSigningKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string keyId = default;
             KeyVaultSigningKey keySourceParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyId"u8))
@@ -39,11 +81,47 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("keySourceParameters"u8))
                 {
-                    keySourceParameters = KeyVaultSigningKey.DeserializeKeyVaultSigningKey(property.Value);
+                    keySourceParameters = KeyVaultSigningKey.DeserializeKeyVaultSigningKey(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UriSigningKey(keyId, keySourceParameters);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UriSigningKey(keyId, keySourceParameters, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UriSigningKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UriSigningKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UriSigningKey IPersistableModel<UriSigningKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUriSigningKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UriSigningKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UriSigningKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

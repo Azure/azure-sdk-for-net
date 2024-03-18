@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;

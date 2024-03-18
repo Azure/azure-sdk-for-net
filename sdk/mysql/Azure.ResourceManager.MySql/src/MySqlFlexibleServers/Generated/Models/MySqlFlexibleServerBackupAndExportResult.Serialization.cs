@@ -6,17 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerBackupAndExportResult : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupAndExportResult : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerBackupAndExportResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerBackupAndExportResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlFlexibleServerBackupAndExportResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -43,6 +54,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DatasourceSizeInBytes))
@@ -61,27 +92,58 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStringValue(BackupMetadata);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerBackupAndExportResult DeserializeMySqlFlexibleServerBackupAndExportResult(JsonElement element)
+        MySqlFlexibleServerBackupAndExportResult IJsonModel<MySqlFlexibleServerBackupAndExportResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerBackupAndExportResult DeserializeMySqlFlexibleServerBackupAndExportResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerBackupAndExportOperationStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<ResponseError> error = default;
+            MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            double? percentComplete = default;
+            ResponseError error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> datasourceSizeInBytes = default;
-            Optional<long> dataTransferredInBytes = default;
-            Optional<string> backupMetadata = default;
+            SystemData systemData = default;
+            long? datasourceSizeInBytes = default;
+            long? dataTransferredInBytes = default;
+            string backupMetadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -188,8 +250,57 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerBackupAndExportResult(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupMetadata.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlFlexibleServerBackupAndExportResult(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startTime,
+                endTime,
+                percentComplete,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupMetadata,
+                error,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerBackupAndExportResult IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerBackupAndExportResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerBackupAndExportResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

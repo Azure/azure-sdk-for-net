@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationPurchaseContent : IUtf8JsonSerializable
+    public partial class ReservationPurchaseContent : IUtf8JsonSerializable, IJsonModel<ReservationPurchaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationPurchaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReservationPurchaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -102,29 +112,60 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStringValue(ReviewOn.Value, "O");
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element)
+        ReservationPurchaseContent IJsonModel<ReservationPurchaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationPurchaseContent(document.RootElement, options);
+        }
+
+        internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ReservationTerm> term = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> quantity = default;
-            Optional<string> displayName = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<bool> renew = default;
-            Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            ReservationsSkuName sku = default;
+            AzureLocation? location = default;
+            ReservedResourceType? reservedResourceType = default;
+            ResourceIdentifier billingScopeId = default;
+            ReservationTerm? term = default;
+            ReservationBillingPlan? billingPlan = default;
+            int? quantity = default;
+            string displayName = default;
+            AppliedScopeType? appliedScopeType = default;
+            IList<string> appliedScopes = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            bool? renew = default;
+            PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default;
+            DateTimeOffset? reviewDateTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -133,7 +174,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
+                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -234,7 +275,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("renew"u8))
@@ -252,7 +293,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value);
+                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reviewDateTime"u8))
@@ -267,8 +308,59 @@ namespace Azure.ResourceManager.Reservations.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationPurchaseContent(
+                sku,
+                location,
+                reservedResourceType,
+                billingScopeId,
+                term,
+                billingPlan,
+                quantity,
+                displayName,
+                appliedScopeType,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties,
+                renew,
+                reservedResourceProperties,
+                reviewDateTime,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReservationPurchaseContent IPersistableModel<ReservationPurchaseContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationPurchaseContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationPurchaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

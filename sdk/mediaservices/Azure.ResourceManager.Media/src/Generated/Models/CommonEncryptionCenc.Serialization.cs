@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CommonEncryptionCenc : IUtf8JsonSerializable
+    public partial class CommonEncryptionCenc : IUtf8JsonSerializable, IJsonModel<CommonEncryptionCenc>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonEncryptionCenc>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommonEncryptionCenc>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCenc>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonEncryptionCenc)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
@@ -46,20 +57,51 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommonEncryptionCenc DeserializeCommonEncryptionCenc(JsonElement element)
+        CommonEncryptionCenc IJsonModel<CommonEncryptionCenc>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCenc>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonEncryptionCenc)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonEncryptionCenc(document.RootElement, options);
+        }
+
+        internal static CommonEncryptionCenc DeserializeCommonEncryptionCenc(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<CencDrmConfiguration> drm = default;
-            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            MediaEnabledProtocols enabledProtocols = default;
+            IList<MediaTrackSelection> clearTracks = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            CencDrmConfiguration drm = default;
+            ClearKeyEncryptionConfiguration clearKeyEncryptionConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"u8))
@@ -68,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -80,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -91,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("drm"u8))
@@ -100,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    drm = CencDrmConfiguration.DeserializeCencDrmConfiguration(property.Value);
+                    drm = CencDrmConfiguration.DeserializeCencDrmConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
@@ -109,11 +151,53 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommonEncryptionCenc(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommonEncryptionCenc(
+                enabledProtocols,
+                clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                contentKeys,
+                drm,
+                clearKeyEncryptionConfiguration,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommonEncryptionCenc>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCenc>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommonEncryptionCenc)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommonEncryptionCenc IPersistableModel<CommonEncryptionCenc>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonEncryptionCenc>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommonEncryptionCenc(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommonEncryptionCenc)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommonEncryptionCenc>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -65,9 +66,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "AvroSink": return AvroSink.DeserializeAvroSink(element);
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element);
-                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element);

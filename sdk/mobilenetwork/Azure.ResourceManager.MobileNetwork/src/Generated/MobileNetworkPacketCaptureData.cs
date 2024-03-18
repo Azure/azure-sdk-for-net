@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkPacketCaptureData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPacketCaptureData"/>. </summary>
         public MobileNetworkPacketCaptureData()
         {
@@ -40,7 +72,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="outputFiles"> The list of output files of a packet capture session. </param>
-        internal MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, IReadOnlyList<string> outputFiles) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, IReadOnlyList<string> outputFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -51,6 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork
             TotalBytesPerSession = totalBytesPerSession;
             TimeLimitInSeconds = timeLimitInSeconds;
             OutputFiles = outputFiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the packet capture session resource. </summary>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<Uri> sasUri = default;
+            Uri sasUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DownloadResponseComplianceDetailedPdfReport(sasUri.Value, serializedAdditionalRawData);
+            return new DownloadResponseComplianceDetailedPdfReport(sasUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DownloadResponseComplianceDetailedPdfReport>.Write(ModelReaderWriterOptions options)

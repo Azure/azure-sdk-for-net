@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateSyncMigrationInputSqlServerTaskInput : IUtf8JsonSerializable
+    public partial class ValidateSyncMigrationInputSqlServerTaskInput : IUtf8JsonSerializable, IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
@@ -27,11 +37,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element)
+        ValidateSyncMigrationInputSqlServerTaskInput IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateSyncMigrationInputSqlServerTaskInput(document.RootElement, options);
+        }
+
+        internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,16 +78,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -56,13 +97,49 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlDBSyncDatabaseInput> array = new List<MigrateSqlServerSqlDBSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ValidateSyncMigrationInputSqlServerTaskInput IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeValidateSyncMigrationInputSqlServerTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

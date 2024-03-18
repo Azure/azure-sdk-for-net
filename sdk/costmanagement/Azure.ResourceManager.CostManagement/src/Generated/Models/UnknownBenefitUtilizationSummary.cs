@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The UnknownBenefitUtilizationSummary. </summary>
+    /// <summary> Unknown version of BenefitUtilizationSummary. </summary>
     internal partial class UnknownBenefitUtilizationSummary : BenefitUtilizationSummary
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBenefitUtilizationSummary"/>. </summary>
@@ -19,9 +21,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
-        internal UnknownBenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBenefitUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBenefitUtilizationSummary"/> for deserialization. </summary>
+        internal UnknownBenefitUtilizationSummary()
+        {
         }
     }
 }

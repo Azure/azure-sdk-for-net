@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -30,11 +30,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
         /// <param name="vectorizer"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizer)
+        /// <param name="compressionConfigurationName"> The name of the compression method configuration that specifies the compression method and optional parameters. </param>
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, string vectorizer, string compressionConfigurationName)
         {
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
             Vectorizer = vectorizer;
+            CompressionConfigurationName = compressionConfigurationName;
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>
@@ -43,5 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string AlgorithmConfigurationName { get; set; }
         /// <summary> The name of the kind of vectorization method being configured for use with vector search. </summary>
         public string Vectorizer { get; set; }
+        /// <summary> The name of the compression method configuration that specifies the compression method and optional parameters. </summary>
+        public string CompressionConfigurationName { get; set; }
     }
 }

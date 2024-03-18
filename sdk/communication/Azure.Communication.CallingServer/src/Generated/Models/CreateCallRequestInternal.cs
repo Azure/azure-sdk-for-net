@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {

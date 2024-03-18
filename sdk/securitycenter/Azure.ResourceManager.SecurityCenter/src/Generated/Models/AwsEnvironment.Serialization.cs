@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsOrganizationalInfo> organizationalData = default;
-            Optional<IList<string>> regions = default;
-            Optional<string> accountName = default;
-            Optional<long> scanInterval = default;
+            AwsOrganizationalInfo organizationalData = default;
+            IList<string> regions = default;
+            string accountName = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);
+                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, Optional.ToList(regions), accountName.Value, Optional.ToNullable(scanInterval));
+            return new AwsEnvironment(
+                environmentType,
+                serializedAdditionalRawData,
+                organizationalData,
+                regions ?? new ChangeTrackingList<string>(),
+                accountName,
+                scanInterval);
         }
 
         BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)

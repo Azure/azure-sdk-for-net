@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -21,7 +24,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MaxTokensFinishDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
-        internal MaxTokensFinishDetails(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaxTokensFinishDetails(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }

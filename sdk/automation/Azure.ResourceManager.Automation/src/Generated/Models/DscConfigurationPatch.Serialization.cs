@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -114,13 +115,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
-            Optional<AutomationContentSource> source = default;
-            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
-            Optional<string> description = default;
+            string name = default;
+            IDictionary<string, string> tags = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
+            AutomationContentSource source = default;
+            IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.Automation.Models
                             Dictionary<string, DscConfigurationParameterDefinition> dictionary = new Dictionary<string, DscConfigurationParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -208,7 +209,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationPatch(name.Value, Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), source.Value, Optional.ToDictionary(parameters), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationPatch(
+                name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                logVerbose,
+                logProgress,
+                source,
+                parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationPatch>.Write(ModelReaderWriterOptions options)

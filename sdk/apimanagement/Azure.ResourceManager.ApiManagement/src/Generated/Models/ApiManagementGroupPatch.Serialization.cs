@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<ApiManagementGroupType> type = default;
-            Optional<string> externalId = default;
+            string displayName = default;
+            string description = default;
+            ApiManagementGroupType? type = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGroupPatch(displayName.Value, description.Value, Optional.ToNullable(type), externalId.Value, serializedAdditionalRawData);
+            return new ApiManagementGroupPatch(displayName, description, type, externalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGroupPatch>.Write(ModelReaderWriterOptions options)

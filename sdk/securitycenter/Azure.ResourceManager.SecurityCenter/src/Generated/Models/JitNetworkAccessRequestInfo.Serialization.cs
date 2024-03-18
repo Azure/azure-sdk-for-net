@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<JitNetworkAccessRequestVirtualMachine> virtualMachines = default;
             DateTimeOffset startTimeUtc = default;
             string requestor = default;
-            Optional<string> justification = default;
+            string justification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessRequestVirtualMachine> array = new List<JitNetworkAccessRequestVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessRequestVirtualMachine.DeserializeJitNetworkAccessRequestVirtualMachine(item));
+                        array.Add(JitNetworkAccessRequestVirtualMachine.DeserializeJitNetworkAccessRequestVirtualMachine(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessRequestInfo(virtualMachines, startTimeUtc, requestor, justification.Value, serializedAdditionalRawData);
+            return new JitNetworkAccessRequestInfo(virtualMachines, startTimeUtc, requestor, justification, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessRequestInfo>.Write(ModelReaderWriterOptions options)

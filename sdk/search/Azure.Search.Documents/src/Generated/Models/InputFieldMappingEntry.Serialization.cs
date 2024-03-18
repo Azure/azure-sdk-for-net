@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -48,9 +49,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs));
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
         }
     }
 }

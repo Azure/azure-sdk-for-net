@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> artifactSelector = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> relativePath = default;
+            string artifactSelector = default;
+            string runtimeVersion = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, artifactSelector.Value, runtimeVersion.Value);
+            return new SourceUploadedUserSourceInfo(
+                type,
+                version,
+                serializedAdditionalRawData,
+                relativePath,
+                artifactSelector,
+                runtimeVersion);
         }
 
         BinaryData IPersistableModel<SourceUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

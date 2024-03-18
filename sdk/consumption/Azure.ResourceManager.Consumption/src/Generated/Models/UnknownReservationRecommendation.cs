@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The UnknownReservationRecommendation. </summary>
+    /// <summary> Unknown version of ReservationRecommendation. </summary>
     internal partial class UnknownReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/>. </summary>
@@ -25,9 +26,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
-        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/> for deserialization. </summary>
+        internal UnknownReservationRecommendation()
+        {
         }
     }
 }

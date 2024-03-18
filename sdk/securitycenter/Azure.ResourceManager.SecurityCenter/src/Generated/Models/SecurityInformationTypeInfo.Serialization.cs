@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> order = default;
-            Optional<Guid> recommendedLabelId = default;
-            Optional<bool> enabled = default;
-            Optional<bool> custom = default;
-            Optional<IList<InformationProtectionKeyword>> keywords = default;
+            string displayName = default;
+            string description = default;
+            int? order = default;
+            Guid? recommendedLabelId = default;
+            bool? enabled = default;
+            bool? custom = default;
+            IList<InformationProtectionKeyword> keywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionKeyword> array = new List<InformationProtectionKeyword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item));
+                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item, options));
                     }
                     keywords = array;
                     continue;
@@ -181,7 +182,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Optional.ToNullable(order), Optional.ToNullable(recommendedLabelId), Optional.ToNullable(enabled), Optional.ToNullable(custom), Optional.ToList(keywords), serializedAdditionalRawData);
+            return new SecurityInformationTypeInfo(
+                displayName,
+                description,
+                order,
+                recommendedLabelId,
+                enabled,
+                custom,
+                keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options)

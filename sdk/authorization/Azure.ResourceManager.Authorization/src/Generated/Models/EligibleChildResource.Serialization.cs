@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EligibleChildResource(id.Value, name.Value, type.Value, serializedAdditionalRawData);
+            return new EligibleChildResource(id, name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EligibleChildResource>.Write(ModelReaderWriterOptions options)

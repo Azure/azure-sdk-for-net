@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -146,15 +147,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> sourceIPGroups = default;
-            Optional<IList<string>> destinationIPGroups = default;
-            Optional<IList<string>> destinationFqdns = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            IList<FirewallPolicyRuleNetworkProtocol> ipProtocols = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<string> sourceIPGroups = default;
+            IList<string> destinationIPGroups = default;
+            IList<string> destinationFqdns = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +280,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), Optional.ToList(destinationFqdns));
+            return new NetworkRule(
+                name,
+                description,
+                ruleType,
+                serializedAdditionalRawData,
+                ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                destinationFqdns ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<NetworkRule>.Write(ModelReaderWriterOptions options)

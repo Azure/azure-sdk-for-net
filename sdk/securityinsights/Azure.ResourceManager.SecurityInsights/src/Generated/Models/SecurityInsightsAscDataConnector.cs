@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -28,9 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
         /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
-        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsAscDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, SecurityInsightsAlertsDataTypeOfDataConnector dataTypes, string subscriptionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DataTypes = dataTypes;
             SubscriptionId = subscriptionId;

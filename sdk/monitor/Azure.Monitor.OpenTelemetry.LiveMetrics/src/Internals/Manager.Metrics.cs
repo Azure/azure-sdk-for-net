@@ -16,10 +16,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
-        internal static bool? s_isAzureWebApp = null;
+        internal readonly bool _isAzureWebApp;
 
-        private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
+        private readonly int _processorCount = Environment.ProcessorCount;
+        private readonly Process _process = Process.GetCurrentProcess();
+        private DateTimeOffset _cachedCollectedTime = DateTimeOffset.MinValue;
+        private long _cachedCollectedValue = 0;
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -30,12 +32,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
                 RoleName = LiveMetricsResource?.RoleName,
                 MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                                                       // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
                 StreamId = _streamId,
-                Timestamp = DateTime.UtcNow,
-                //TODO: Provide feedback to service team to get this removed, it not a part of AI SDK.
-                TransmissionTime = DateTime.UtcNow,
-                IsWebApp = IsWebAppRunningInAzure(),
+                Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
+                TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
+                IsWebApp = _isAzureWebApp,
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
                 // Follow up with service team to get this removed for OTEL based live metrics.
@@ -48,12 +48,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
+                // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
+                // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                //TODO: Apply filters
+                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
+                //    if (metric.CheckFilters(telemetry, out filteringErrors))
+
                 dataPoint.Documents.Add(item);
 
                 if (item.DocumentType == DocumentIngressDocumentType.Request)
                 {
-                    // Export needs to divide by count to get the average.
-                    // this.AIRequestDurationAveInMs = requestCount > 0 ? (double)requestDurationInTicks / TimeSpan.TicksPerMillisecond / requestCount : 0;
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -65,10 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item.DocumentType == DocumentIngressDocumentType.RemoteDependency)
                 {
-                    // Export needs to divide by count to get the average.
-                    // this.AIDependencyCallDurationAveInMs = dependencyCount > 0 ? (double)dependencyDurationInTicks / TimeSpan.TicksPerMillisecond / dependencyCount : 0;
-                    // Export DependencyDurationLiveMetric, Meter: LiveMetricMeterName
-                    // (2023 - 11 - 03T23: 20:56.0282406Z, 2023 - 11 - 03T23: 21:00.9830153Z] Histogram Value: Sum: 798.9463000000001 Count: 7 Min: 4.9172 Max: 651.8997
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -93,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            foreach (var metricPoint in CollectPerfCounters())
+            foreach (var metricPoint in CollectProcessMetrics())
             {
                 dataPoint.Metrics.Add(metricPoint);
             }
@@ -101,54 +101,98 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return dataPoint;
         }
 
-        public IEnumerable<Models.MetricPoint> CollectPerfCounters()
+        /// <remarks>
+        /// <para>
+        /// For Memory:
+        /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.privatememorysize64"/>.
+        /// "The amount of memory, in bytes, allocated for the associated process that cannot be shared with other processes.".
+        /// </para>
+        /// <para>
+        /// For CPU:
+        /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.totalprocessortime"/>.
+        /// "A TimeSpan that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the UserProcessorTime and the PrivilegedProcessorTime.".
+        /// </para>
+        /// </remarks>
+        public IEnumerable<Models.MetricPoint> CollectProcessMetrics()
         {
-            // PERFORMANCE COUNTERS
             yield return new Models.MetricPoint
             {
                 Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _performanceCounter_CommittedBytes.NextValue(),
+                Value = _process.PrivateMemorySize64,
                 Weight = 1
             };
 
-            yield return new Models.MetricPoint
+            if (TryCalculateCPUCounter(out var processorValue))
             {
-                Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                Value = _performanceCounter_ProcessorTime.NextValue(),
-                Weight = 1
-            };
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+                    Value = Convert.ToSingle(processorValue),
+                    Weight = 1
+                };
+            }
+        }
+
+        private void ResetCachedValues()
+        {
+            _cachedCollectedTime = DateTimeOffset.MinValue;
+            _cachedCollectedValue = 0;
         }
 
         /// <summary>
-        /// Searches for the environment variable specific to Azure Web App.
+        /// Calcualte the CPU usage as the diff between two ticks divided by the period of time, and then divided by the number of processors.
+        /// <code>((change in ticks / period) / number of processors)</code>
         /// </summary>
-        /// <returns>Boolean, which is true if the current application is an Azure Web App.</returns>
-        internal static bool? IsWebAppRunningInAzure()
+        private bool TryCalculateCPUCounter(out double normalizedValue)
         {
-            const string WebSiteEnvironmentVariable = "WEBSITE_SITE_NAME";
-            const string WebSiteIsolationEnvironmentVariable = "WEBSITE_ISOLATION";
-            const string WebSiteIsolationHyperV = "hyperv";
+            var previousCollectedValue = _cachedCollectedValue;
+            var previousCollectedTime = _cachedCollectedTime;
 
-            if (!s_isAzureWebApp.HasValue)
+            var recentCollectedValue = _cachedCollectedValue = _process.TotalProcessorTime.Ticks;
+            var recentCollectedTime = _cachedCollectedTime = DateTimeOffset.UtcNow;
+
+            double calculatedValue;
+
+            if (previousCollectedTime == DateTimeOffset.MinValue)
             {
-                try
-                {
-                    // Presence of "WEBSITE_SITE_NAME" indicate web apps.
-                    // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
-                    // can be read using regular mechanism and hence this method retuns false for
-                    // premium containers.
-                    // TODO: switch to platform. Not necessary for POC.
-                    s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
-                                    Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
-                }
-                catch (System.Exception ex)
-                {
-                    LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
-                    return false;
-                }
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} DateTimeOffset.MinValue");
+                normalizedValue = default;
+                return false;
             }
 
-            return s_isAzureWebApp;
+            var period = recentCollectedTime.Ticks - previousCollectedTime.Ticks;
+            if (period < 0)
+            {
+                // Not likely to happen but being safe here incase of clock issues in multi-core.
+                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
+                    previousCollectedTime: previousCollectedTime.Ticks,
+                    recentCollectedTime: recentCollectedTime.Ticks);
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period less than zero");
+                normalizedValue = default;
+                return false;
+            }
+
+            var diff = recentCollectedValue - previousCollectedValue;
+            if (diff < 0)
+            {
+                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeValue(
+                    previousCollectedValue: previousCollectedValue,
+                    recentCollectedValue: recentCollectedValue);
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} diff less than zero");
+                normalizedValue = default;
+                return false;
+            }
+
+            period = period != 0 ? period : 1;
+            calculatedValue = diff * 100.0 / period;
+            normalizedValue = calculatedValue / _processorCount;
+            LiveMetricsExporterEventSource.Log.ProcessCountersCpuCounter(
+                period: previousCollectedValue,
+                diffValue: recentCollectedValue,
+                calculatedValue: calculatedValue,
+                processorCount: _processorCount,
+                normalizedValue: normalizedValue);
+            return true;
         }
     }
 }

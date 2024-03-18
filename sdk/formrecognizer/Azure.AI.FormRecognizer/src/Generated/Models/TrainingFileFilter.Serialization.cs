@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -20,11 +21,8 @@ namespace Azure.AI.FormRecognizer.Training
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(IncludeSubfolders))
-            {
-                writer.WritePropertyName("includeSubFolders"u8);
-                writer.WriteBooleanValue(IncludeSubfolders);
-            }
+            writer.WritePropertyName("includeSubFolders"u8);
+            writer.WriteBooleanValue(IncludeSubfolders);
             writer.WriteEndObject();
         }
     }

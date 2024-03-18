@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ApplyRecoveryPoint input specific to InMageAzureV2 provider. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2ApplyRecoveryPointContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        internal InMageAzureV2ApplyRecoveryPointContent(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2ApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "InMageAzureV2";
         }

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = dimensions;
             SkipMetricValidation = skipMetricValidation;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/> for deserialization. </summary>
+        internal MultiMetricCriteria()
+        {
         }
 
         /// <summary> Specifies the type of threshold criteria. </summary>

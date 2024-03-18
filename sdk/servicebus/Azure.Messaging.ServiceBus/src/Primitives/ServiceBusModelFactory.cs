@@ -279,6 +279,27 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.NamespaceProperties"/> instance for mocking.
+        /// </summary>
+        public static NamespaceProperties NamespaceProperties(
+            string name,
+            DateTimeOffset createdTime,
+            DateTimeOffset modifiedTime,
+            MessagingSku messagingSku,
+            int messagingUnits,
+            string alias) =>
+            new NamespaceProperties
+            {
+                Name = name,
+                CreatedTime = createdTime,
+                ModifiedTime = modifiedTime,
+                MessagingSku = messagingSku,
+                MessagingUnits = messagingUnits,
+                Alias = alias,
+                NamespaceType = new NamespaceType() // this cannot be created by the user
+            };
+
+        /// <summary>
         /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
         /// </summary>
         public static SubscriptionProperties SubscriptionProperties(

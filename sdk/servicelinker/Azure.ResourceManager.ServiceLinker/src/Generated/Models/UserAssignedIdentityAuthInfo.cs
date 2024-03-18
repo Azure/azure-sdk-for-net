@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is userAssignedIdentity. </summary>
@@ -18,9 +21,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> Client Id for userAssignedIdentity. </param>
         /// <param name="subscriptionId"> Subscription id for userAssignedIdentity. </param>
-        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, string clientId, string subscriptionId) : base(authType)
+        internal UserAssignedIdentityAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, string subscriptionId) : base(authType, serializedAdditionalRawData)
         {
             ClientId = clientId;
             SubscriptionId = subscriptionId;

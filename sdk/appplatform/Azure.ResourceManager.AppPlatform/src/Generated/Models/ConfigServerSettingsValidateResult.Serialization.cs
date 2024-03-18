@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<IReadOnlyList<ConfigServerSettingsErrorRecord>> details = default;
+            bool? isValid = default;
+            IReadOnlyList<ConfigServerSettingsErrorRecord> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerSettingsErrorRecord> array = new List<ConfigServerSettingsErrorRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item));
+                        array.Add(ConfigServerSettingsErrorRecord.DeserializeConfigServerSettingsErrorRecord(item, options));
                     }
                     details = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), Optional.ToList(details), serializedAdditionalRawData);
+            return new ConfigServerSettingsValidateResult(isValid, details ?? new ChangeTrackingList<ConfigServerSettingsErrorRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsValidateResult>.Write(ModelReaderWriterOptions options)

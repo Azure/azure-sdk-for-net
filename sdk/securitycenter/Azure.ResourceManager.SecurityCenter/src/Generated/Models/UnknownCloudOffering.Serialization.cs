@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCloudOffering(document.RootElement, options);
+            return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
         }
 
         internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             OfferingType offeringType = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCloudOffering(offeringType, description.Value, serializedAdditionalRawData);
+            return new UnknownCloudOffering(offeringType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterCloudOffering>.Write(ModelReaderWriterOptions options)
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCloudOffering(document.RootElement, options);
+                        return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{options.Format}' format.");

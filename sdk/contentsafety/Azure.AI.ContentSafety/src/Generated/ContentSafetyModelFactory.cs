@@ -14,6 +14,27 @@ namespace Azure.AI.ContentSafety
     /// <summary> Model factory for models. </summary>
     public static partial class ContentSafetyModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextOptions"/>. </summary>
+        /// <param name="text"> The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
+        /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
+        /// <param name="blocklistNames"> The names of blocklists. </param>
+        /// <param name="haltOnBlocklistHit"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
+        /// <param name="outputType"> This refers to the type of text analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeTextOptions"/> instance for mocking. </returns>
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, IEnumerable<TextCategory> categories = null, IEnumerable<string> blocklistNames = null, bool? haltOnBlocklistHit = null, AnalyzeTextOutputType? outputType = null)
+        {
+            categories ??= new List<TextCategory>();
+            blocklistNames ??= new List<string>();
+
+            return new AnalyzeTextOptions(
+                text,
+                categories?.ToList(),
+                blocklistNames?.ToList(),
+                haltOnBlocklistHit,
+                outputType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextResult"/>. </summary>
         /// <param name="blocklistsMatch"> The blocklist match details. </param>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
@@ -23,31 +44,17 @@ namespace Azure.AI.ContentSafety
             blocklistsMatch ??= new List<TextBlocklistMatch>();
             categoriesAnalysis ??= new List<TextCategoriesAnalysis>();
 
-            return new AnalyzeTextResult(blocklistsMatch?.ToList(), categoriesAnalysis?.ToList());
+            return new AnalyzeTextResult(blocklistsMatch?.ToList(), categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistMatch"/>. </summary>
         /// <param name="blocklistName"> The name of the matched blocklist. </param>
         /// <param name="blocklistItemId"> The ID of the matched item. </param>
         /// <param name="blocklistItemText"> The content of the matched item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blocklistName"/>, <paramref name="blocklistItemId"/> or <paramref name="blocklistItemText"/> is null. </exception>
         /// <returns> A new <see cref="ContentSafety.TextBlocklistMatch"/> instance for mocking. </returns>
         public static TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null)
         {
-            if (blocklistName == null)
-            {
-                throw new ArgumentNullException(nameof(blocklistName));
-            }
-            if (blocklistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(blocklistItemId));
-            }
-            if (blocklistItemText == null)
-            {
-                throw new ArgumentNullException(nameof(blocklistItemText));
-            }
-
-            return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText);
+            return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextCategoriesAnalysis"/>. </summary>
@@ -56,7 +63,19 @@ namespace Azure.AI.ContentSafety
         /// <returns> A new <see cref="ContentSafety.TextCategoriesAnalysis"/> instance for mocking. </returns>
         public static TextCategoriesAnalysis TextCategoriesAnalysis(TextCategory category = default, int? severity = null)
         {
-            return new TextCategoriesAnalysis(category, severity);
+            return new TextCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageOptions"/>. </summary>
+        /// <param name="image"> The image needs to be analyzed. </param>
+        /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
+        /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
+        /// <returns> A new <see cref="ContentSafety.AnalyzeImageOptions"/> instance for mocking. </returns>
+        public static AnalyzeImageOptions AnalyzeImageOptions(ContentSafetyImageData image = null, IEnumerable<ImageCategory> categories = null, AnalyzeImageOutputType? outputType = null)
+        {
+            categories ??= new List<ImageCategory>();
+
+            return new AnalyzeImageOptions(image, categories?.ToList(), outputType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageResult"/>. </summary>
@@ -66,7 +85,7 @@ namespace Azure.AI.ContentSafety
         {
             categoriesAnalysis ??= new List<ImageCategoriesAnalysis>();
 
-            return new AnalyzeImageResult(categoriesAnalysis?.ToList());
+            return new AnalyzeImageResult(categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.ImageCategoriesAnalysis"/>. </summary>
@@ -75,7 +94,7 @@ namespace Azure.AI.ContentSafety
         /// <returns> A new <see cref="ContentSafety.ImageCategoriesAnalysis"/> instance for mocking. </returns>
         public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = null)
         {
-            return new ImageCategoriesAnalysis(category, severity);
+            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>
@@ -85,7 +104,7 @@ namespace Azure.AI.ContentSafety
         /// <returns> A new <see cref="ContentSafety.TextBlocklistItem"/> instance for mocking. </returns>
         public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null)
         {
-            return new TextBlocklistItem(blocklistItemId, description, text);
+            return new TextBlocklistItem(blocklistItemId, description, text, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AddOrUpdateTextBlocklistItemsResult"/>. </summary>
@@ -95,7 +114,7 @@ namespace Azure.AI.ContentSafety
         {
             blocklistItems ??= new List<TextBlocklistItem>();
 
-            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems?.ToList());
+            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklist"/>. </summary>
@@ -104,7 +123,7 @@ namespace Azure.AI.ContentSafety
         /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
         public static TextBlocklist TextBlocklist(string name = null, string description = null)
         {
-            return new TextBlocklist(name, description);
+            return new TextBlocklist(name, description, serializedAdditionalRawData: null);
         }
     }
 }

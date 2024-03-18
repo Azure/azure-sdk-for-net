@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -18,10 +17,10 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> relationshipId = default;
-            Optional<string> sourceId = default;
-            Optional<string> relationshipName = default;
-            Optional<string> relationshipLink = default;
+            string relationshipId = default;
+            string sourceId = default;
+            string relationshipName = default;
+            string relationshipLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$relationshipId"u8))
@@ -45,7 +44,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new IncomingRelationship(relationshipId.Value, sourceId.Value, relationshipName.Value, relationshipLink.Value);
+            return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
         }
     }
 }

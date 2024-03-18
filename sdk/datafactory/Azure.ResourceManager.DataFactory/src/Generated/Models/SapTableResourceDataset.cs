@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "SapTableResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapTableResourceDataset"/> for deserialization. </summary>
+        internal SapTableResourceDataset()
+        {
         }
 
         /// <summary> The name of the SAP Table. Type: string (or Expression with resultType string). </summary>

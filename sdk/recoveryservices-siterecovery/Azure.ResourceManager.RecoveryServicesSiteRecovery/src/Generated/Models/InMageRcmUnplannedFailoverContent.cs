@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,13 +28,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmUnplannedFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
-        internal InMageRcmUnplannedFailoverContent(string instanceType, string performShutdown, ResourceIdentifier recoveryPointId) : base(instanceType)
+        internal InMageRcmUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, ResourceIdentifier recoveryPointId) : base(instanceType, serializedAdditionalRawData)
         {
             PerformShutdown = performShutdown;
             RecoveryPointId = recoveryPointId;
             InstanceType = instanceType ?? "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUnplannedFailoverContent"/> for deserialization. </summary>
+        internal InMageRcmUnplannedFailoverContent()
+        {
         }
 
         /// <summary> A value indicating whether VM is to be shutdown. </summary>

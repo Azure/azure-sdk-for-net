@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<int> passedCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> manualCount = default;
+            int? passedCount = default;
+            int? failedCount = default;
+            int? manualCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount), serializedAdditionalRawData);
+            return new OverviewStatus(passedCount, failedCount, manualCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OverviewStatus>.Write(ModelReaderWriterOptions options)

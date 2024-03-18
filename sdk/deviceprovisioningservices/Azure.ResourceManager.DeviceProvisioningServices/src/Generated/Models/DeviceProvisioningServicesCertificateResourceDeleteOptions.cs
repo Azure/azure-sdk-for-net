@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             IfMatch = ifMatch;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceDeleteOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceDeleteOptions()
+        {
         }
 
         /// <summary> ETag of the certificate. </summary>

@@ -5,25 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptExecutionParameterDetails : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
+    public partial class ScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScriptExecutionParameterDetails DeserializeScriptExecutionParameterDetails(JsonElement element)
+        ScriptExecutionParameterDetails IJsonModel<ScriptExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
+        }
+
+        internal static ScriptExecutionParameterDetails DeserializeScriptExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,12 +72,43 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Credential": return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element);
-                    case "SecureValue": return ScriptSecureStringExecutionParameterDetails.DeserializeScriptSecureStringExecutionParameterDetails(element);
-                    case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element);
+                    case "Credential": return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element, options);
+                    case "SecureValue": return ScriptSecureStringExecutionParameterDetails.DeserializeScriptSecureStringExecutionParameterDetails(element, options);
+                    case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element, options);
                 }
             }
-            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element);
+            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element, options);
         }
+
+        BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScriptExecutionParameterDetails IPersistableModel<ScriptExecutionParameterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScriptExecutionParameterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

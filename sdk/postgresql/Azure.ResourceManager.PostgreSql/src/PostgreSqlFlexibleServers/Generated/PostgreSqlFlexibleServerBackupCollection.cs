@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {

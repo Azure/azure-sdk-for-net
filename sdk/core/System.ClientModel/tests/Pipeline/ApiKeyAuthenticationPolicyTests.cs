@@ -17,6 +17,19 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void CanImplicitlyCastApiKeyCredential()
+    {
+        string keyValue = "test_key";
+        ApiKeyCredential credential1 = new(keyValue);
+        ApiKeyCredential credential2 = keyValue;
+
+        credential1.Deconstruct(out string deconstructed1);
+        credential2.Deconstruct(out string deconstructed2);
+
+        Assert.AreEqual(deconstructed1, deconstructed2);
+    }
+
+    [Test]
     public async Task HeaderPolicySetsKey()
     {
         string keyValue = "test_key";
@@ -30,7 +43,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -54,7 +70,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -77,7 +96,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200, 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -102,7 +124,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200, 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -125,7 +150,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -147,7 +175,10 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
             Transport = new MockPipelineTransport("Transport", new int[] { 200 })
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options, keyPolicy);
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { keyPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
 
         using PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);

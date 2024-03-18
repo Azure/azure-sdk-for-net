@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<bool> force = default;
+            string branch = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationSaveContent(branch.Value, Optional.ToNullable(force), serializedAdditionalRawData);
+            return new ConfigurationSaveContent(branch, force, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationSaveContent>.Write(ModelReaderWriterOptions options)

@@ -13,7 +13,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void AddCreatesNewHeader()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
@@ -23,7 +23,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void AddCreatesMultiValueHeader()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
@@ -34,7 +34,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void SetCreatesNewHeader()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Set("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
@@ -44,7 +44,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void SetReplacesExistingHeader()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Set("Mock-Header", "Value 1");
         headers.Set("Mock-Header", "Value 2");
 
@@ -55,7 +55,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void RemoveDeletesHeader()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Set("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
@@ -68,7 +68,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void CanGetSingleValueAsString()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValue("Mock-Header", out string? value));
@@ -78,7 +78,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void CanGetMultiValueAsString()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
@@ -89,7 +89,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void CanGetSingleValueAsEnumerable()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValues("Mock-Header", out IEnumerable<string>? values));
@@ -100,7 +100,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void CanGetMultiValueAsEnumerable()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Value 1");
         headers.Add("Mock-Header", "Value 2");
 
@@ -113,7 +113,7 @@ public class PipelineRequestHeadersTests
     [Test]
     public void GetIsCaseInsensitive()
     {
-        PipelineRequestHeaders headers = new();
+        ArrayBackedRequestHeaders headers = new();
         headers.Add("Mock-Header", "Mock value");
 
         Assert.IsTrue(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values));

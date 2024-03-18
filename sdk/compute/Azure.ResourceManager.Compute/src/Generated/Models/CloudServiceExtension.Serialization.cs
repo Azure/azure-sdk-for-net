@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceExtension : IUtf8JsonSerializable
+    public partial class CloudServiceExtension : IUtf8JsonSerializable, IJsonModel<CloudServiceExtension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceExtension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudServiceExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceExtension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceExtension)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -78,6 +88,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsCollectionDefined(RolesAppliedTo))
             {
                 writer.WritePropertyName("rolesAppliedTo"u8);
@@ -89,26 +104,57 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudServiceExtension DeserializeCloudServiceExtension(JsonElement element)
+        CloudServiceExtension IJsonModel<CloudServiceExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceExtension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudServiceExtension)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceExtension(document.RootElement, options);
+        }
+
+        internal static CloudServiceExtension DeserializeCloudServiceExtension(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<string>> rolesAppliedTo = default;
+            string name = default;
+            string publisher = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = default;
+            string forceUpdateTag = default;
+            string provisioningState = default;
+            IList<string> rolesAppliedTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -173,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value);
+                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))
@@ -203,8 +249,56 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, Optional.ToList(rolesAppliedTo));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudServiceExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                protectedSettingsFromKeyVault,
+                forceUpdateTag,
+                provisioningState,
+                rolesAppliedTo ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudServiceExtension>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceExtension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceExtension)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudServiceExtension IPersistableModel<CloudServiceExtension>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceExtension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudServiceExtension(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudServiceExtension)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudServiceExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

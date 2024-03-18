@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownGranularCopyLogDetails. </summary>
+    /// <summary> Unknown version of GranularCopyLogDetails. </summary>
     internal partial class UnknownGranularCopyLogDetails : GranularCopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal UnknownGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType) : base(copyLogDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             CopyLogDetailsType = copyLogDetailsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownGranularCopyLogDetails"/> for deserialization. </summary>
+        internal UnknownGranularCopyLogDetails()
+        {
         }
     }
 }

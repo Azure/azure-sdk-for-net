@@ -6,17 +6,42 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DataTransferServiceProperties : IUtf8JsonSerializable
+    public partial class DataTransferServiceProperties : IUtf8JsonSerializable, IJsonModel<DataTransferServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTransferServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataTransferServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataTransferServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataTransferServiceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
             if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
@@ -29,6 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -44,18 +74,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static DataTransferServiceProperties DeserializeDataTransferServiceProperties(JsonElement element)
+        DataTransferServiceProperties IJsonModel<DataTransferServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataTransferServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataTransferServiceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataTransferServiceProperties(document.RootElement, options);
+        }
+
+        internal static DataTransferServiceProperties DeserializeDataTransferServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataTransferRegionalService>> locations = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
+            IReadOnlyList<DataTransferRegionalService> locations = default;
+            DateTimeOffset? creationTime = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -69,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferRegionalService> array = new List<DataTransferRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item));
+                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item, options));
                     }
                     locations = array;
                     continue;
@@ -118,7 +162,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataTransferServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, Optional.ToList(locations));
+            return new DataTransferServiceProperties(
+                creationTime,
+                instanceSize,
+                instanceCount,
+                serviceType,
+                status,
+                additionalProperties,
+                locations ?? new ChangeTrackingList<DataTransferRegionalService>());
         }
+
+        BinaryData IPersistableModel<DataTransferServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataTransferServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataTransferServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataTransferServiceProperties IPersistableModel<DataTransferServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataTransferServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataTransferServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataTransferServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataTransferServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

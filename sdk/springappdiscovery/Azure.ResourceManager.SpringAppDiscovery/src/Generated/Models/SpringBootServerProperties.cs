@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// </summary>
     public partial class SpringBootServerProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SpringBootServerProperties"/>. </summary>
         /// <param name="server">
         /// Server is the target server name or ip address to discover of SpringBootServer.
@@ -66,7 +99,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The resource provisioning state.
         /// Serialized Name: SpringbootserversProperties.provisioningState
         /// </param>
-        internal SpringBootServerProperties(int? port, string server, IList<IPAddress> fqdnAndIPAddressList, ResourceIdentifier machineArmId, int? totalApps, int? springBootApps, IList<SpringBootSiteError> errors, SpringAppDiscoveryProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpringBootServerProperties(int? port, string server, IList<IPAddress> fqdnAndIPAddressList, ResourceIdentifier machineArmId, int? totalApps, int? springBootApps, IList<SpringBootSiteError> errors, SpringAppDiscoveryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             Server = server;
@@ -76,6 +110,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             SpringBootApps = springBootApps;
             Errors = errors;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpringBootServerProperties"/> for deserialization. </summary>
+        internal SpringBootServerProperties()
+        {
         }
 
         /// <summary>

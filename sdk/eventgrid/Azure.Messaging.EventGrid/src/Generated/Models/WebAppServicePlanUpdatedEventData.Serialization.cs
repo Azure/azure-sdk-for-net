@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,14 +20,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AppServicePlanEventTypeDetail> appServicePlanEventTypeDetail = default;
-            Optional<WebAppServicePlanUpdatedEventDataSku> sku = default;
-            Optional<string> name = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> correlationRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> address = default;
-            Optional<string> verb = default;
+            AppServicePlanEventTypeDetail appServicePlanEventTypeDetail = default;
+            WebAppServicePlanUpdatedEventDataSku sku = default;
+            string name = default;
+            string clientRequestId = default;
+            string correlationRequestId = default;
+            string requestId = default;
+            string address = default;
+            string verb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appServicePlanEventTypeDetail"u8))
@@ -80,7 +79,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebAppServicePlanUpdatedEventData(appServicePlanEventTypeDetail.Value, sku.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebAppServicePlanUpdatedEventData(
+                appServicePlanEventTypeDetail,
+                sku,
+                name,
+                clientRequestId,
+                correlationRequestId,
+                requestId,
+                address,
+                verb);
         }
 
         internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>

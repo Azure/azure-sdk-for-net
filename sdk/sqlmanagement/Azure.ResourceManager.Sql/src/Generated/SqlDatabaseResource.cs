@@ -548,71 +548,6 @@ namespace Azure.ResourceManager.Sql
             return GetDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of LongTermRetentionPolicyResources and their operations over a LongTermRetentionPolicyResource. </returns>
-        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
-        {
-            return GetCachedClient(client => new LongTermRetentionPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return await GetLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a database's long term retention policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
-        }
-
         /// <summary> Gets an object representing a MaintenanceWindowOptionResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOption()
@@ -1358,6 +1293,71 @@ namespace Azure.ResourceManager.Sql
             return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of LongTermRetentionPolicyResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of LongTermRetentionPolicyResources and their operations over a LongTermRetentionPolicyResource. </returns>
+        public virtual LongTermRetentionPolicyCollection GetLongTermRetentionPolicies()
+        {
+            return GetCachedClient(client => new LongTermRetentionPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return await GetLongTermRetentionPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database's long term retention policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LongTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. Should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a database.
         /// <list type="bullet">
@@ -1644,7 +1644,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1698,7 +1698,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1723,7 +1723,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2001,7 +2001,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseExtensionsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult, _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult(e), _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseExtensionsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult, _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult(e), _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2123,7 +2123,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseOperationData.DeserializeDatabaseOperationData, _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2149,7 +2149,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseOperationData.DeserializeDatabaseOperationData, _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2175,7 +2175,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseUsagesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseUsage.DeserializeDatabaseUsage, _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseUsage.DeserializeDatabaseUsage(e), _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2201,7 +2201,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseUsagesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseUsage.DeserializeDatabaseUsage, _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseUsage.DeserializeDatabaseUsage(e), _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2527,7 +2527,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace, _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace(e), _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2553,7 +2553,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace, _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace(e), _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListMemberSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListMemberSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(e), _syncMemberClientDiagnostics, Pipeline, "SyncMemberResource.GetMemberSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

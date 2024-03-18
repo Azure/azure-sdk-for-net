@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Models;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {

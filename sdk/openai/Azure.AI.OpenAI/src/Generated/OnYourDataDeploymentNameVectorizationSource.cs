@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -29,10 +29,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataDeploymentNameVectorizationSource"/>. </summary>
         /// <param name="type"> The type of vectorization source to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deploymentName"> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </param>
-        internal OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType type, string deploymentName) : base(type)
+        internal OnYourDataDeploymentNameVectorizationSource(OnYourDataVectorizationSourceType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string deploymentName) : base(type, serializedAdditionalRawData)
         {
             DeploymentName = deploymentName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataDeploymentNameVectorizationSource"/> for deserialization. </summary>
+        internal OnYourDataDeploymentNameVectorizationSource()
+        {
         }
 
         /// <summary> The embedding model deployment name within the same Azure OpenAI resource. This enables you to use vector search without Azure OpenAI api-key and without Azure OpenAI public network access. </summary>

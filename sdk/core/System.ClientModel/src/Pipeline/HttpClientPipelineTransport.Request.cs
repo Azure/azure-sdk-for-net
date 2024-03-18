@@ -29,44 +29,38 @@ public partial class HttpClientPipelineTransport
         protected internal HttpPipelineRequest()
         {
             _method = HttpMethod.Get.Method;
-            _headers = new PipelineRequestHeaders();
+            _headers = new ArrayBackedRequestHeaders();
         }
 
-        protected override string GetMethodCore()
-            => _method;
-
-        protected override void SetMethodCore(string method)
+        protected override string MethodCore
         {
-            Argument.AssertNotNull(method, nameof(method));
-
-            _method = method;
-        }
-
-        protected override Uri GetUriCore()
-        {
-            if (_uri is null)
+            get => _method;
+            set
             {
-                throw new InvalidOperationException("Uri has not been set on this instance.");
+                Argument.AssertNotNull(value, nameof(value));
+
+                _method = value;
             }
-
-            return _uri;
         }
 
-        protected override void SetUriCore(Uri uri)
+        protected override Uri? UriCore
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            get => _uri;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-            _uri = uri;
+                _uri = value;
+            }
         }
 
-        protected override BinaryContent? GetContentCore()
-            => _content;
+        protected override BinaryContent? ContentCore
+        {
+            get => _content;
+            set => _content = value;
+        }
 
-        protected override void SetContentCore(BinaryContent? content)
-            => _content = content;
-
-        protected override PipelineMessageHeaders GetHeadersCore()
-            => _headers;
+        protected override PipelineRequestHeaders HeadersCore => _headers;
 
         // PATCH value needed for compat with pre-net5.0 TFMs
         private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -82,11 +76,16 @@ public partial class HttpClientPipelineTransport
                 "DELETE" => HttpMethod.Delete,
                 "PATCH" => _patchMethod,
                 _ => new HttpMethod(method),
-            }; ;
+            };
         }
 
         internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
         {
+            if (request.Uri is null)
+            {
+                throw new InvalidOperationException("Uri must be set on message request prior to sending message.");
+            }
+
             HttpMethod method = ToHttpMethod(request.Method);
             Uri uri = request.Uri;
             HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
@@ -98,13 +97,13 @@ public partial class HttpClientPipelineTransport
             httpRequest.Headers.ExpectContinue = false;
 #endif
 
-            if (request.Headers is not PipelineRequestHeaders headers)
+            if (request.Headers is not ArrayBackedRequestHeaders headers)
             {
                 throw new InvalidOperationException($"Invalid type for request.Headers: '{request.Headers?.GetType()}'.");
             }
 
             int i = 0;
-            while (headers.GetNextValue(i++, out string headerName, out object headerValue))
+            while (headers.GetNextValue(i++, out string headerName, out object? headerValue))
             {
                 switch (headerValue)
                 {

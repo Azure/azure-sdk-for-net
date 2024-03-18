@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineOSProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerName))
             {
@@ -66,24 +77,55 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineOSProfile DeserializeVirtualMachineOSProfile(JsonElement element)
+        VirtualMachineOSProfile IJsonModel<VirtualMachineOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineOSProfile(document.RootElement, options);
+        }
+
+        internal static VirtualMachineOSProfile DeserializeVirtualMachineOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> customData = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
-            Optional<bool> allowExtensionOperations = default;
-            Optional<bool> requireGuestProvisionSignal = default;
+            string computerName = default;
+            string adminUsername = default;
+            string adminPassword = default;
+            string customData = default;
+            WindowsConfiguration windowsConfiguration = default;
+            LinuxConfiguration linuxConfiguration = default;
+            IList<VaultSecretGroup> secrets = default;
+            bool? allowExtensionOperations = default;
+            bool? requireGuestProvisionSignal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -112,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"u8))
@@ -121,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secrets"u8))
@@ -133,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item));
+                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
@@ -156,8 +198,54 @@ namespace Azure.ResourceManager.Compute.Models
                     requireGuestProvisionSignal = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineOSProfile(
+                computerName,
+                adminUsername,
+                adminPassword,
+                customData,
+                windowsConfiguration,
+                linuxConfiguration,
+                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                allowExtensionOperations,
+                requireGuestProvisionSignal,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineOSProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineOSProfile IPersistableModel<VirtualMachineOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineOSProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileVolume": return AppPlatformAzureFileVolume.DeserializeAppPlatformAzureFileVolume(element);
+                    case "AzureFileVolume": return AppPlatformAzureFileVolume.DeserializeAppPlatformAzureFileVolume(element, options);
                 }
             }
-            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element);
+            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDiskProperties>.Write(ModelReaderWriterOptions options)

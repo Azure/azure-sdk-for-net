@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             BaseUri = baseUri;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureKeyVault";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/> for deserialization. </summary>
+        internal AzureKeyVaultLinkedService()
+        {
         }
 
         /// <summary> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </summary>

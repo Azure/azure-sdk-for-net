@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsColumn : IUtf8JsonSerializable
+    public partial class OperationalInsightsColumn : IUtf8JsonSerializable, IJsonModel<OperationalInsightsColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsColumn>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,22 +52,63 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultDisplay))
+            {
+                writer.WritePropertyName("isDefaultDisplay"u8);
+                writer.WriteBooleanValue(IsDefaultDisplay.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            {
+                writer.WritePropertyName("isHidden"u8);
+                writer.WriteBooleanValue(IsHidden.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsColumn DeserializeOperationalInsightsColumn(JsonElement element)
+        OperationalInsightsColumn IJsonModel<OperationalInsightsColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsColumn(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsColumn DeserializeOperationalInsightsColumn(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<OperationalInsightsColumnType> type = default;
-            Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isDefaultDisplay = default;
-            Optional<bool> isHidden = default;
+            string name = default;
+            OperationalInsightsColumnType? type = default;
+            OperationalInsightsColumnDataTypeHint? dataTypeHint = default;
+            string displayName = default;
+            string description = default;
+            bool? isDefaultDisplay = default;
+            bool? isHidden = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,8 +162,52 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     isHidden = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsColumn(name.Value, Optional.ToNullable(type), Optional.ToNullable(dataTypeHint), displayName.Value, description.Value, Optional.ToNullable(isDefaultDisplay), Optional.ToNullable(isHidden));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsColumn(
+                name,
+                type,
+                dataTypeHint,
+                displayName,
+                description,
+                isDefaultDisplay,
+                isHidden,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsColumn>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsColumn IPersistableModel<OperationalInsightsColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsColumn(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

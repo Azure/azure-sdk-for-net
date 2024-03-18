@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using System.Collections.Generic;
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -59,6 +58,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
+        public static implicit operator BinaryContent(ModelAsStruct model)
+        {
+            return BinaryContent.Create(model, ModelReaderWriterHelper.WireOptions);
+        }
+
         ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
@@ -67,7 +71,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
@@ -95,6 +99,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
+        }
+
+        public static explicit operator ModelAsStruct(ClientResult result)
+        {
+            if (result is null) throw new ArgumentNullException(nameof(result));
+
+            using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SecurityAlertSupportingEvidence(type.Value, additionalProperties);
+            return new SecurityAlertSupportingEvidence(type, additionalProperties);
         }
 
         BinaryData IPersistableModel<SecurityAlertSupportingEvidence>.Write(ModelReaderWriterOptions options)

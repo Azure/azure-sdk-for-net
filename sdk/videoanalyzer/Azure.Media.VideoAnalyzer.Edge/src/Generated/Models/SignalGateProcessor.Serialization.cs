@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -56,10 +57,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> activationEvaluationWindow = default;
-            Optional<string> activationSignalOffset = default;
-            Optional<string> minimumActivationTime = default;
-            Optional<string> maximumActivationTime = default;
+            string activationEvaluationWindow = default;
+            string activationSignalOffset = default;
+            string minimumActivationTime = default;
+            string maximumActivationTime = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -106,7 +107,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            return new SignalGateProcessor(
+                type,
+                name,
+                inputs,
+                activationEvaluationWindow,
+                activationSignalOffset,
+                minimumActivationTime,
+                maximumActivationTime);
         }
     }
 }

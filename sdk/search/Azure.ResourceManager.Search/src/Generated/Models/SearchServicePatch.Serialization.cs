@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServicePatch : IUtf8JsonSerializable
+    public partial class SearchServicePatch : IUtf8JsonSerializable, IJsonModel<SearchServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SearchServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchServicePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -41,6 +51,26 @@ namespace Azure.ResourceManager.Search.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCount))
@@ -62,6 +92,21 @@ namespace Azure.ResourceManager.Search.Models
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusDetails))
+            {
+                writer.WritePropertyName("statusDetails"u8);
+                writer.WriteStringValue(StatusDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
@@ -90,6 +135,16 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
@@ -102,38 +157,79 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("semanticSearch");
                 }
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            {
+                writer.WritePropertyName("sharedPrivateLinkResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in SharedPrivateLinkResources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchServicePatch DeserializeSearchServicePatch(JsonElement element)
+        SearchServicePatch IJsonModel<SearchServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchServicePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchServicePatch(document.RootElement, options);
+        }
+
+        internal static SearchServicePatch DeserializeSearchServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SearchSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SearchSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> replicaCount = default;
-            Optional<int> partitionCount = default;
-            Optional<SearchServiceHostingMode> hostingMode = default;
-            Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SearchServiceStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<SearchServiceProvisioningState> provisioningState = default;
-            Optional<NetworkRuleSet> networkRuleSet = default;
-            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
-            Optional<bool?> disableLocalAuth = default;
-            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
-            Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<SearchSemanticSearch?> semanticSearch = default;
-            Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
+            SystemData systemData = default;
+            int? replicaCount = default;
+            int? partitionCount = default;
+            SearchServiceHostingMode? hostingMode = default;
+            SearchServicePublicNetworkAccess? publicNetworkAccess = default;
+            SearchServiceStatus? status = default;
+            string statusDetails = default;
+            SearchServiceProvisioningState? provisioningState = default;
+            NetworkRuleSet networkRuleSet = default;
+            SearchEncryptionWithCmk encryptionWithCmk = default;
+            bool? disableLocalAuth = default;
+            SearchAadAuthDataPlaneAuthOptions authOptions = default;
+            IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
+            SearchSemanticSearch? semanticSearch = default;
+            IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -142,7 +238,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    sku = SearchSku.DeserializeSearchSku(property.Value);
+                    sku = SearchSku.DeserializeSearchSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -271,7 +367,7 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 continue;
                             }
-                            networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
+                            networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryptionWithCmk"u8))
@@ -280,7 +376,7 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 continue;
                             }
-                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value);
+                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -299,7 +395,7 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 continue;
                             }
-                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value);
+                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -311,7 +407,7 @@ namespace Azure.ResourceManager.Search.Models
                             List<SearchPrivateEndpointConnectionData> array = new List<SearchPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item));
+                                array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -335,7 +431,7 @@ namespace Azure.ResourceManager.Search.Models
                             List<SharedSearchServicePrivateLinkResourceData> array = new List<SharedSearchServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
+                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -343,8 +439,67 @@ namespace Azure.ResourceManager.Search.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(semanticSearch), Optional.ToList(sharedPrivateLinkResources));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchServicePatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                replicaCount,
+                partitionCount,
+                hostingMode,
+                publicNetworkAccess,
+                status,
+                statusDetails,
+                provisioningState,
+                networkRuleSet,
+                encryptionWithCmk,
+                disableLocalAuth,
+                authOptions,
+                privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
+                semanticSearch,
+                sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchServicePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SearchServicePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchServicePatch IPersistableModel<SearchServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSearchServicePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchServicePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

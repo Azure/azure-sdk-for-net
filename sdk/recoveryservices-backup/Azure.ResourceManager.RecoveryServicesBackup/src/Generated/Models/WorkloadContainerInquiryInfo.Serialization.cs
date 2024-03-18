@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerInquiryInfo : IUtf8JsonSerializable
+    public partial class WorkloadContainerInquiryInfo : IUtf8JsonSerializable, IJsonModel<WorkloadContainerInquiryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadContainerInquiryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkloadContainerInquiryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -36,18 +47,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element)
+        WorkloadContainerInquiryInfo IJsonModel<WorkloadContainerInquiryInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadContainerInquiryInfo(document.RootElement, options);
+        }
+
+        internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            IList<WorkloadInquiryDetails> inquiryDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -61,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inquiryDetails"u8))
@@ -73,13 +115,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item, options));
                     }
                     inquiryDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkloadContainerInquiryInfo(status, errorDetail, inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkloadContainerInquiryInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WorkloadContainerInquiryInfo IPersistableModel<WorkloadContainerInquiryInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerInquiryInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadContainerInquiryInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadContainerInquiryInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadContainerInquiryInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

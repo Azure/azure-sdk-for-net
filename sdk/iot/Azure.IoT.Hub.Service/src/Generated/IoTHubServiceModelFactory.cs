@@ -105,7 +105,20 @@ namespace Azure.IoT.Hub.Service.Models
         /// <returns> A new <see cref="Models.JobResponse"/> instance for mocking. </returns>
         public static JobResponse JobResponse(string jobId = null, string queryCondition = null, DateTimeOffset? createdTime = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, long? maxExecutionTimeInSeconds = null, JobResponseType? type = null, CloudToDeviceMethodRequest cloudToDeviceMethod = null, TwinData updateTwin = null, JobResponseStatus? status = null, string failureReason = null, string statusMessage = null, DeviceJobStatistics deviceJobStatistics = null)
         {
-            return new JobResponse(jobId, queryCondition, createdTime, startTime, endTime, maxExecutionTimeInSeconds, type, cloudToDeviceMethod, updateTwin, status, failureReason, statusMessage, deviceJobStatistics);
+            return new JobResponse(
+                jobId,
+                queryCondition,
+                createdTime,
+                startTime,
+                endTime,
+                maxExecutionTimeInSeconds,
+                type,
+                cloudToDeviceMethod,
+                updateTwin,
+                status,
+                failureReason,
+                statusMessage,
+                deviceJobStatistics);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceJobStatistics"/>. </summary>

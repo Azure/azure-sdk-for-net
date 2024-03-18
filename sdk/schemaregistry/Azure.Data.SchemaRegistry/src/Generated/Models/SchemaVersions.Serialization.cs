@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Data.SchemaRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<int>> schemaVersions = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<int> schemaVersions = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersions"u8))
@@ -43,7 +43,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new SchemaVersions(Optional.ToList(schemaVersions), nextLink.Value);
+            return new SchemaVersions(schemaVersions ?? new ChangeTrackingList<int>(), nextLink);
         }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Operator = @operator;
             Threshold = threshold;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricCriteria"/> for deserialization. </summary>
+        internal MetricCriteria()
+        {
         }
 
         /// <summary> the criteria operator. </summary>

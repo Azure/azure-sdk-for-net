@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -20,9 +22,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageBlobDeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the destination of the deadletter events. </param>
-        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, ResourceIdentifier resourceId, string blobContainerName) : base(endpointType)
+        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, string blobContainerName) : base(endpointType, serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             BlobContainerName = blobContainerName;

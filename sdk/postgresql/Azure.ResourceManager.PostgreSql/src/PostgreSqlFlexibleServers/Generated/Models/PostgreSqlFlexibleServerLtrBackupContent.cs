@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -24,6 +24,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Argument.AssertNotNull(targetDetails, nameof(targetDetails));
 
             TargetDetails = targetDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="targetDetails"> Backup store detail for target server. </param>
+        internal PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings, serializedAdditionalRawData)
+        {
+            TargetDetails = targetDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerLtrBackupContent()
+        {
         }
 
         /// <summary> Backup store detail for target server. </summary>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.AI.Translation.Document;
 
 namespace Azure.AI.Translation.Document.Models
 {

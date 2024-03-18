@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             LinkedServiceReference store = default;
             object secretName = default;
-            Optional<object> secretVersion = default;
+            object secretVersion = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion.Value);
+            return new AzureKeyVaultSecretReference(type, store, secretName, secretVersion);
         }
 
         internal partial class AzureKeyVaultSecretReferenceConverter : JsonConverter<AzureKeyVaultSecretReference>

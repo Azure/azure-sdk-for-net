@@ -27,13 +27,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, uniqueId)
+        internal SharedGalleryImageVersionData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, serializedAdditionalRawData, uniqueId)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;

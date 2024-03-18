@@ -5,27 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NicIPConfigurationResourceSettings : IUtf8JsonSerializable
+    public partial class NicIPConfigurationResourceSettings : IUtf8JsonSerializable, IJsonModel<NicIPConfigurationResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPConfigurationResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NicIPConfigurationResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -67,23 +77,54 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("publicIp"u8);
                 writer.WriteObjectValue(PublicIP);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
+        NicIPConfigurationResourceSettings IJsonModel<NicIPConfigurationResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNicIPConfigurationResourceSettings(document.RootElement, options);
+        }
+
+        internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<bool> primary = default;
-            Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
-            Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
-            Optional<PublicIPReferenceInfo> publicIP = default;
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            bool? primary = default;
+            IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools = default;
+            IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules = default;
+            PublicIPReferenceInfo publicIP = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -93,11 +134,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"u8))
@@ -111,7 +148,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primary"u8))
@@ -132,7 +169,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerBackendAddressPoolReferenceInfo> array = new List<LoadBalancerBackendAddressPoolReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item));
+                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item, options));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -146,7 +183,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerNatRuleReferenceInfo> array = new List<LoadBalancerNatRuleReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item));
+                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item, options));
                     }
                     loadBalancerNatRules = array;
                     continue;
@@ -157,11 +194,56 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value);
+                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NicIPConfigurationResourceSettings(
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                primary,
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>(),
+                loadBalancerNatRules ?? new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>(),
+                publicIP,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NicIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NicIPConfigurationResourceSettings IPersistableModel<NicIPConfigurationResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NicIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNicIPConfigurationResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NicIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NicIPConfigurationResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

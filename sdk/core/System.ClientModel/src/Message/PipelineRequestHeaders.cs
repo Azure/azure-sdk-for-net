@@ -1,140 +1,63 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
-internal class PipelineRequestHeaders : PipelineMessageHeaders
+/// <summary>
+/// Represents the collection of HTTP headers on a <see cref="PipelineRequest"/>.
+/// </summary>
+public abstract class PipelineRequestHeaders : IEnumerable<KeyValuePair<string, string>>
 {
-    private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
+    /// <summary>
+    /// Adds the specified header and its value to the request's header
+    /// collection. If a header with this name is already present in the
+    /// collection, the value will be added to the comma-separated list of
+    /// values associated with the header.
+    /// </summary>
+    /// <param name="name">The name of the header to add.</param>
+    /// <param name="value">The value of the header.</param>
+    public abstract void Add(string name, string value);
 
-    public override bool Remove(string name)
-        => _headers.TryRemove(new IgnoreCaseString(name));
+    /// <summary>
+    /// Sets the specified header and its value in the request's header
+    /// collection. If a header with this name is already present in the
+    /// collection, the header's value will be replaced with the specified value.
+    /// </summary>
+    /// <param name="name">The name of the header to set.</param>
+    /// <param name="value">The value of the header.</param>
+    public abstract void Set(string name, string value);
 
-    public override void Set(string name, string value)
-        => _headers.Set(new IgnoreCaseString(name), value);
+    /// <summary>
+    /// Removes the specified header from the request's header collection.
+    /// </summary>
+    /// <param name="name">The name of the header to remove.</param>
+    /// <returns><c>true</c> if the header was successfully removed; otherwise
+    /// <c>false</c>.</returns>
+    public abstract bool Remove(string name);
 
-    public override void Add(string name, string value)
-    {
-        if (_headers.TryAdd(new IgnoreCaseString(name), value, out object? currentValue))
-        {
-            return;
-        }
+    /// <summary>
+    /// Attempts to retrieve the value associated with the specified header name.
+    /// </summary>
+    /// <param name="name">The name of the header to retrieve.</param>
+    /// <param name="value">The specified header value.</param>
+    /// <returns><c>true</c> if the specified header name and value are stored
+    /// in the collection; otherwise <c>false</c>.</returns>
+    public abstract bool TryGetValue(string name, out string? value);
 
-        switch (currentValue)
-        {
-            case string stringValue:
-                _headers.Set(new IgnoreCaseString(name), new List<string> { stringValue, value });
-                break;
-            case List<string> listValue:
-                listValue.Add(value);
-                break;
-        }
-    }
+    /// <summary>
+    /// Attempts to retrieve the values associated with the specified header name.
+    /// </summary>
+    /// <param name="name">The name of the header to retrieve.</param>
+    /// <param name="values">The specified header values.</param>
+    /// <returns><c>true</c> if the specified header name and values are stored
+    /// in the collection; otherwise <c>false</c>.</returns>
+    public abstract bool TryGetValues(string name, out IEnumerable<string>? values);
 
-    public override bool TryGetValue(string name, out string? value)
-    {
-        if (_headers.TryGetValue(new IgnoreCaseString(name), out object? headerValue))
-        {
-            value = GetHeaderValueString(name, headerValue);
-            return true;
-        }
+    /// <inheritdoc/>
+    public abstract IEnumerator<KeyValuePair<string, string>> GetEnumerator();
 
-        value = default;
-        return false;
-    }
-
-    public override bool TryGetValues(string name, out IEnumerable<string>? values)
-    {
-        if (_headers.TryGetValue(new IgnoreCaseString(name), out object? value))
-        {
-            values = GetHeaderValueEnumerable(name, value);
-            return true;
-        }
-
-        values = default;
-        return false;
-    }
-
-    public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-        => GetHeadersStringValues().GetEnumerator();
-
-    // Internal API provided to take advantage of performance-optimized implementation.
-    internal bool GetNextValue(int index, out string name, out object value)
-    {
-        if (index >= _headers.Count)
-        {
-            name = default!;
-            value = default!;
-            return false;
-        }
-
-        _headers.GetAt(index, out IgnoreCaseString headerName, out object headerValue);
-        name = headerName;
-        value = headerValue;
-        return true;
-    }
-
-    #region Implementation
-    private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
-    {
-        for (int i = 0; i < _headers.Count; i++)
-        {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            string values = GetHeaderValueString(name, value);
-            yield return new KeyValuePair<string, string>(name, values);
-        }
-    }
-
-    private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues()
-    {
-        for (int i = 0; i < _headers.Count; i++)
-        {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            IEnumerable<string> values = GetHeaderValueEnumerable(name, value);
-            yield return new KeyValuePair<string, IEnumerable<string>>(name, values);
-        }
-    }
-
-    private static string GetHeaderValueString(string name, object value)
-        => value switch
-        {
-            string stringValue => stringValue,
-            List<string> listValue => string.Join(",", listValue),
-            _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value?.GetType()}")
-        };
-
-    private static IEnumerable<string> GetHeaderValueEnumerable(string name, object value)
-        => value switch
-        {
-            string stringValue => new[] { stringValue },
-            List<string> listValue => listValue,
-            _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value.GetType()}")
-        };
-
-    private readonly struct IgnoreCaseString : IEquatable<IgnoreCaseString>
-    {
-        private readonly string _value;
-
-        public IgnoreCaseString(string value)
-        {
-            _value = value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(IgnoreCaseString other) => string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
-        public override bool Equals(object? obj) => obj is IgnoreCaseString other && Equals(other);
-        public override int GetHashCode() => _value.GetHashCode();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(IgnoreCaseString left, IgnoreCaseString right) => left.Equals(right);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(IgnoreCaseString left, IgnoreCaseString right) => !left.Equals(right);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator string(IgnoreCaseString ics) => ics._value;
-    }
-    #endregion
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

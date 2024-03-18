@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementTenantSettingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementTenantSettingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementTenantSettingData> array = new List<ApiManagementTenantSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item));
+                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantSettingsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TenantSettingsListResult(value ?? new ChangeTrackingList<ApiManagementTenantSettingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantSettingsListResult>.Write(ModelReaderWriterOptions options)

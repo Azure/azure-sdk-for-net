@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<string> refreshToken = default;
-            Optional<SourceControlTokenType> tokenType = default;
+            string accessToken = default;
+            string refreshToken = default;
+            SourceControlTokenType? tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSecurityTokenProperties(accessToken.Value, refreshToken.Value, Optional.ToNullable(tokenType), serializedAdditionalRawData);
+            return new SourceControlSecurityTokenProperties(accessToken, refreshToken, tokenType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSecurityTokenProperties>.Write(ModelReaderWriterOptions options)

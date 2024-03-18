@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceIPSecurityRestriction : IUtf8JsonSerializable
+    public partial class AppServiceIPSecurityRestriction : IUtf8JsonSerializable, IJsonModel<AppServiceIPSecurityRestriction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceIPSecurityRestriction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceIPSecurityRestriction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddressOrCidr))
             {
@@ -87,26 +98,57 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceIPSecurityRestriction DeserializeAppServiceIPSecurityRestriction(JsonElement element)
+        AppServiceIPSecurityRestriction IJsonModel<AppServiceIPSecurityRestriction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
+        }
+
+        internal static AppServiceIPSecurityRestriction DeserializeAppServiceIPSecurityRestriction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
-            Optional<ResourceIdentifier> vnetSubnetResourceId = default;
-            Optional<int> vnetTrafficTag = default;
-            Optional<int> subnetTrafficTag = default;
-            Optional<string> action = default;
-            Optional<AppServiceIPFilterTag> tag = default;
-            Optional<int> priority = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, IList<string>>> headers = default;
+            string ipAddress = default;
+            string subnetMask = default;
+            ResourceIdentifier vnetSubnetResourceId = default;
+            int? vnetTrafficTag = default;
+            int? subnetTrafficTag = default;
+            string action = default;
+            AppServiceIPFilterTag? tag = default;
+            int? priority = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, IList<string>> headers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -205,8 +247,56 @@ namespace Azure.ResourceManager.AppService.Models
                     headers = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceIPSecurityRestriction(
+                ipAddress,
+                subnetMask,
+                vnetSubnetResourceId,
+                vnetTrafficTag,
+                subnetTrafficTag,
+                action,
+                tag,
+                priority,
+                name,
+                description,
+                headers ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceIPSecurityRestriction IPersistableModel<AppServiceIPSecurityRestriction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceIPSecurityRestriction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

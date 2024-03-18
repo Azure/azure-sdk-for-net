@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteDirectionsBatchItem>> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            IReadOnlyList<RouteDirectionsBatchItem> batchItems = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchResult(summary.Value, Optional.ToList(batchItems));
+            return new RouteDirectionsBatchResult(summary, batchItems ?? new ChangeTrackingList<RouteDirectionsBatchItem>());
         }
     }
 }

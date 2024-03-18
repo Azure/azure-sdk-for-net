@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementCacheData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementCacheData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementCacheData> array = new List<ApiManagementCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementCacheData.DeserializeApiManagementCacheData(item));
+                        array.Add(ApiManagementCacheData.DeserializeApiManagementCacheData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new CacheListResult(value ?? new ChangeTrackingList<ApiManagementCacheData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
-            Optional<string> id = default;
+            string provider = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserIdentityContract(provider.Value, id.Value, serializedAdditionalRawData);
+            return new UserIdentityContract(provider, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserIdentityContract>.Write(ModelReaderWriterOptions options)

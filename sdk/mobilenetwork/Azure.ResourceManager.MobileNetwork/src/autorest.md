@@ -13,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -109,7 +110,7 @@ rename-mapping:
   AttachedDataNetwork: MobileAttachedDataNetwork
   EventHubConfiguration: MobileNetworkEventHubConfiguration
   EventHubConfiguration.id: -|arm-id
-  
+
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

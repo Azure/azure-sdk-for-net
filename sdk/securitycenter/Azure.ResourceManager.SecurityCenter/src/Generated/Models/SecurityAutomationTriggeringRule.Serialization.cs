@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> propertyJPath = default;
-            Optional<AutomationTriggeringRulePropertyType> propertyType = default;
-            Optional<string> expectedValue = default;
-            Optional<AutomationTriggeringRuleOperator> @operator = default;
+            string propertyJPath = default;
+            AutomationTriggeringRulePropertyType? propertyType = default;
+            string expectedValue = default;
+            AutomationTriggeringRuleOperator? @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator), serializedAdditionalRawData);
+            return new SecurityAutomationTriggeringRule(propertyJPath, propertyType, expectedValue, @operator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationTriggeringRule>.Write(ModelReaderWriterOptions options)

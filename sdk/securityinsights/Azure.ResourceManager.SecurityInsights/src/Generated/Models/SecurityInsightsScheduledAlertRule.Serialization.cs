@@ -6,18 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsScheduledAlertRule : IUtf8JsonSerializable
+    public partial class SecurityInsightsScheduledAlertRule : IUtf8JsonSerializable, IJsonModel<SecurityInsightsScheduledAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsScheduledAlertRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsScheduledAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsScheduledAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsScheduledAlertRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -25,6 +35,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -114,6 +144,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedUtc"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
             if (Optional.IsDefined(SuppressionDuration))
             {
                 writer.WritePropertyName("suppressionDuration"u8);
@@ -150,42 +185,73 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteObjectValue(IncidentConfiguration);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsScheduledAlertRule DeserializeSecurityInsightsScheduledAlertRule(JsonElement element)
+        SecurityInsightsScheduledAlertRule IJsonModel<SecurityInsightsScheduledAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsScheduledAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsScheduledAlertRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsScheduledAlertRule(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsScheduledAlertRule DeserializeSecurityInsightsScheduledAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> query = default;
-            Optional<TimeSpan> queryFrequency = default;
-            Optional<TimeSpan> queryPeriod = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Optional<int> triggerThreshold = default;
-            Optional<EventGroupingSettings> eventGroupingSettings = default;
-            Optional<IDictionary<string, string>> customDetails = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
-            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> templateVersion = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<TimeSpan> suppressionDuration = default;
-            Optional<bool> suppressionEnabled = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<SecurityInsightsIncidentConfiguration> incidentConfiguration = default;
+            SystemData systemData = default;
+            string query = default;
+            TimeSpan? queryFrequency = default;
+            TimeSpan? queryPeriod = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default;
+            int? triggerThreshold = default;
+            EventGroupingSettings eventGroupingSettings = default;
+            IDictionary<string, string> customDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
+            SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
+            string alertRuleTemplateName = default;
+            string templateVersion = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            TimeSpan? suppressionDuration = default;
+            bool? suppressionEnabled = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
+            SecurityInsightsIncidentConfiguration incidentConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -291,7 +357,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value);
+                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customDetails"u8))
@@ -317,7 +383,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsAlertRuleEntityMapping> array = new List<SecurityInsightsAlertRuleEntityMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
+                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item, options));
                             }
                             entityMappings = array;
                             continue;
@@ -328,7 +394,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value);
+                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("alertRuleTemplateName"u8))
@@ -421,14 +487,78 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            incidentConfiguration = SecurityInsightsIncidentConfiguration.DeserializeSecurityInsightsIncidentConfiguration(property0.Value);
+                            incidentConfiguration = SecurityInsightsIncidentConfiguration.DeserializeSecurityInsightsIncidentConfiguration(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsScheduledAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value, alertRuleTemplateName.Value, templateVersion.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(suppressionDuration), Optional.ToNullable(suppressionEnabled), Optional.ToList(tactics), Optional.ToList(techniques), incidentConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsScheduledAlertRule(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                eventGroupingSettings,
+                customDetails ?? new ChangeTrackingDictionary<string, string>(),
+                entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
+                alertDetailsOverride,
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                suppressionDuration,
+                suppressionEnabled,
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                incidentConfiguration);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsScheduledAlertRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsScheduledAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsScheduledAlertRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsScheduledAlertRule IPersistableModel<SecurityInsightsScheduledAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsScheduledAlertRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsScheduledAlertRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsScheduledAlertRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsScheduledAlertRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

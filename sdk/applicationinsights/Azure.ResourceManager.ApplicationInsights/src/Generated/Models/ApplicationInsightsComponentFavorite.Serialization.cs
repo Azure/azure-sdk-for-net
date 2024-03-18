@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentFavorite : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentFavorite : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentFavorite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentFavorite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationInsightsComponentFavorite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -31,6 +42,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && Optional.IsDefined(FavoriteId))
+            {
+                writer.WritePropertyName("FavoriteId"u8);
+                writer.WriteStringValue(FavoriteId);
+            }
             if (Optional.IsDefined(FavoriteType))
             {
                 writer.WritePropertyName("FavoriteType"u8);
@@ -40,6 +56,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            {
+                writer.WritePropertyName("TimeModified"u8);
+                writer.WriteStringValue(TimeModified);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,26 +82,62 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsGeneratedFromTemplate"u8);
                 writer.WriteBooleanValue(IsGeneratedFromTemplate.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("UserId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentFavorite DeserializeApplicationInsightsComponentFavorite(JsonElement element)
+        ApplicationInsightsComponentFavorite IJsonModel<ApplicationInsightsComponentFavorite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentFavorite(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentFavorite DeserializeApplicationInsightsComponentFavorite(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> config = default;
-            Optional<string> version = default;
-            Optional<string> favoriteId = default;
-            Optional<FavoriteType> favoriteType = default;
-            Optional<string> sourceType = default;
-            Optional<string> timeModified = default;
-            Optional<IList<string>> tags = default;
-            Optional<string> category = default;
-            Optional<bool> isGeneratedFromTemplate = default;
-            Optional<string> userId = default;
+            string name = default;
+            string config = default;
+            string version = default;
+            string favoriteId = default;
+            FavoriteType? favoriteType = default;
+            string sourceType = default;
+            string timeModified = default;
+            IList<string> tags = default;
+            string category = default;
+            bool? isGeneratedFromTemplate = default;
+            string userId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -155,8 +212,56 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     userId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, Optional.ToList(tags), category.Value, Optional.ToNullable(isGeneratedFromTemplate), userId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentFavorite(
+                name,
+                config,
+                version,
+                favoriteId,
+                favoriteType,
+                sourceType,
+                timeModified,
+                tags ?? new ChangeTrackingList<string>(),
+                category,
+                isGeneratedFromTemplate,
+                userId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentFavorite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationInsightsComponentFavorite IPersistableModel<ApplicationInsightsComponentFavorite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationInsightsComponentFavorite(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentFavorite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -52,8 +52,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
@@ -92,8 +98,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
@@ -308,8 +320,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
@@ -348,8 +366,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
@@ -564,8 +588,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
@@ -604,8 +634,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
@@ -820,8 +856,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
@@ -860,8 +902,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
@@ -1061,7 +1109,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DistributionPolicy.DeserializeDistributionPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DistributionPolicy.DeserializeDistributionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
@@ -1072,7 +1120,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DistributionPolicy.DeserializeDistributionPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DistributionPolicy.DeserializeDistributionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetDistributionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1135,7 +1183,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClassificationPolicy.DeserializeClassificationPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClassificationPolicy.DeserializeClassificationPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
@@ -1146,7 +1194,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClassificationPolicy.DeserializeClassificationPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClassificationPolicy.DeserializeClassificationPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetClassificationPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1209,7 +1257,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExceptionPolicy.DeserializeExceptionPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExceptionPolicy.DeserializeExceptionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
@@ -1220,7 +1268,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExceptionPolicy.DeserializeExceptionPolicy, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExceptionPolicy.DeserializeExceptionPolicy(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetExceptionPolicies", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1283,7 +1331,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterQueue.DeserializeRouterQueue, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterQueue.DeserializeRouterQueue(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing queues. </summary>
@@ -1294,7 +1342,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterQueue.DeserializeRouterQueue, ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterQueue.DeserializeRouterQueue(e), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
         /// <summary>

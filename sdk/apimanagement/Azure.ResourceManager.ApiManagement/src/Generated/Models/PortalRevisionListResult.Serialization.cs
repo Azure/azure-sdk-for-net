@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementPortalRevisionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementPortalRevisionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPortalRevisionData> array = new List<ApiManagementPortalRevisionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(item));
+                        array.Add(ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalRevisionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PortalRevisionListResult(value ?? new ChangeTrackingList<ApiManagementPortalRevisionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalRevisionListResult>.Write(ModelReaderWriterOptions options)

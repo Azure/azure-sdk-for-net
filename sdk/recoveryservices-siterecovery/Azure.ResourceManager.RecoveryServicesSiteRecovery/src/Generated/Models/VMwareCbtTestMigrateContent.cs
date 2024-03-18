@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -31,17 +32,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="networkId"> The test network Id. </param>
         /// <param name="vmNics"> The list of NIC details. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
-        internal VMwareCbtTestMigrateContent(string instanceType, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion) : base(instanceType)
+        internal VMwareCbtTestMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
             VmNics = vmNics;
             OSUpgradeVersion = osUpgradeVersion;
             InstanceType = instanceType ?? "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/> for deserialization. </summary>
+        internal VMwareCbtTestMigrateContent()
+        {
         }
 
         /// <summary> The recovery point Id. </summary>

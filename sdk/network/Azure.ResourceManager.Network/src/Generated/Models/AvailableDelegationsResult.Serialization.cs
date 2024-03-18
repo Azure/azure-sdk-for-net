@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableDelegation>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableDelegation> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableDelegation> array = new List<AvailableDelegation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableDelegation.DeserializeAvailableDelegation(item));
+                        array.Add(AvailableDelegation.DeserializeAvailableDelegation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDelegationsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableDelegationsResult(value ?? new ChangeTrackingList<AvailableDelegation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDelegationsResult>.Write(ModelReaderWriterOptions options)

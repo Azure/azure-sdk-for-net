@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<EndpointDependency>> endpoints = default;
+            string category = default;
+            IReadOnlyList<EndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<EndpointDependency> array = new List<EndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                        array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<EndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

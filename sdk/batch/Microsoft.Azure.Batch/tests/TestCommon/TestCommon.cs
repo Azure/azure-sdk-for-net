@@ -19,9 +19,15 @@
 
             public const string BatchAccountNameEnvironmentSettingName = "MABOM_BatchAccountName";
 
+            public const string BatchTenantIDEnvironmentSettingName = "MABOM_BatchTenantID";
+
             public const string BatchAccountUrlEnvironmentSettingName = "MABOM_BatchAccountEndpoint";
 
             public const string StorageAccountKeyEnvironmentSettingName = "MABOM_StorageKey";
+
+            public const string ClientIDEnvironmentSettingName = "MABOM_ClientID";
+
+            public const string ClientKeyEnvironmentSettingName = "MABOM_ClientKey";
 
             public const string StorageAccountNameEnvironmentSettingName = "MABOM_StorageAccount";
 
@@ -51,11 +57,17 @@
 
             public readonly string BatchManagementUrl = GetEnvironmentVariableOrThrow(BatchManagementUrlEnvironmentSettingName);
 
+            public readonly string ClientKey = GetEnvironmentVariableOrThrow(ClientKeyEnvironmentSettingName);
+
+            public readonly string ClientId = GetEnvironmentVariableOrThrow(ClientIDEnvironmentSettingName);
+
             public readonly string BatchAccountKey = GetEnvironmentVariableOrThrow(BatchAccountKeyEnvironmentSettingName);
 
             public readonly string BatchAccountName = GetEnvironmentVariableOrThrow(BatchAccountNameEnvironmentSettingName);
 
             public readonly string BatchAccountUrl = GetEnvironmentVariableOrThrow(BatchAccountUrlEnvironmentSettingName);
+
+            public readonly string BatchTenantID = GetEnvironmentVariableOrThrow(BatchTenantIDEnvironmentSettingName);
 
             public readonly string StorageAccountKey = GetEnvironmentVariableOrThrow(StorageAccountKeyEnvironmentSettingName);
 

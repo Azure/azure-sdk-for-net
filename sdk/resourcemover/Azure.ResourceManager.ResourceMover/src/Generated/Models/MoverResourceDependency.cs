@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the dependency of the move resource. </summary>
     public partial class MoverResourceDependency
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MoverResourceDependency"/>. </summary>
         internal MoverResourceDependency()
         {
@@ -24,8 +58,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependencyType"> Defines the dependency type. </param>
         /// <param name="manualResolution"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolution"> Defines the properties for automatic resolution. </param>
-        /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
-        internal MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional)
+        /// <param name="isDependencyOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, string isDependencyOptional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResolutionStatus = resolutionStatus;
@@ -33,7 +68,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             DependencyType = dependencyType;
             ManualResolution = manualResolution;
             AutomaticResolution = automaticResolution;
-            IsOptional = isOptional;
+            IsDependencyOptional = isDependencyOptional;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the source ARM ID of the dependent resource. </summary>
@@ -64,6 +100,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         }
 
         /// <summary> Gets or sets a value indicating whether the dependency is optional. </summary>
-        public bool? IsOptional { get; }
+        public string IsDependencyOptional { get; }
     }
 }

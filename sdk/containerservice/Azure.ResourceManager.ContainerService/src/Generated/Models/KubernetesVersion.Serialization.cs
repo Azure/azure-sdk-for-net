@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<KubernetesVersionCapabilities> capabilities = default;
-            Optional<bool> isPreview = default;
-            Optional<IReadOnlyDictionary<string, KubernetesPatchVersion>> patchVersions = default;
+            string version = default;
+            KubernetesVersionCapabilities capabilities = default;
+            bool? isPreview = default;
+            IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value);
+                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     Dictionary<string, KubernetesPatchVersion> dictionary = new Dictionary<string, KubernetesPatchVersion>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value));
+                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersion(version.Value, capabilities.Value, Optional.ToNullable(isPreview), Optional.ToDictionary(patchVersions), serializedAdditionalRawData);
+            return new KubernetesVersion(version, capabilities, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersion>.Write(ModelReaderWriterOptions options)

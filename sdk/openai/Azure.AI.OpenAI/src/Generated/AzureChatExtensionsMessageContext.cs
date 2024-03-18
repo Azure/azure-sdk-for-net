@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -17,30 +17,68 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionsMessageContext
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         internal AzureChatExtensionsMessageContext()
         {
-            Messages = new ChangeTrackingList<ChatResponseMessage>();
+            Citations = new ChangeTrackingList<AzureChatExtensionDataSourceResponseCitation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
-        /// <param name="messages">
-        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        /// <param name="citations">
+        ///   The contextual information associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
-        internal AzureChatExtensionsMessageContext(IReadOnlyList<ChatResponseMessage> messages)
+        /// <param name="intent"> The detected intent from the chat history, used to pass to the next turn to carry over the context. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureChatExtensionsMessageContext(IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> citations, string intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Messages = messages;
+            Citations = citations;
+            Intent = intent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        ///   The contextual information associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </summary>
-        public IReadOnlyList<ChatResponseMessage> Messages { get; }
+        public IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> Citations { get; }
+        /// <summary> The detected intent from the chat history, used to pass to the next turn to carry over the context. </summary>
+        public string Intent { get; }
     }
 }

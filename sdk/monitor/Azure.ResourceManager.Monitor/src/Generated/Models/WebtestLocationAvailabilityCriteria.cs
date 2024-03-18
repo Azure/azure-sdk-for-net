@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -42,6 +43,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ComponentId = componentId;
             FailedLocationCount = failedLocationCount;
             OdataType = odataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/> for deserialization. </summary>
+        internal WebtestLocationAvailabilityCriteria()
+        {
         }
 
         /// <summary> The Application Insights web test Id. </summary>

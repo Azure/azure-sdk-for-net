@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NpbStaticRouteConfiguration : IUtf8JsonSerializable
+    public partial class NpbStaticRouteConfiguration : IUtf8JsonSerializable, IJsonModel<NpbStaticRouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NpbStaticRouteConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NpbStaticRouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -41,18 +52,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NpbStaticRouteConfiguration DeserializeNpbStaticRouteConfiguration(JsonElement element)
+        NpbStaticRouteConfiguration IJsonModel<NpbStaticRouteConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNpbStaticRouteConfiguration(document.RootElement, options);
+        }
+
+        internal static NpbStaticRouteConfiguration DeserializeNpbStaticRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<IList<StaticRouteProperties>> ipv4Routes = default;
-            Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            BfdConfiguration bfdConfiguration = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -61,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipv4Routes"u8))
@@ -73,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -87,13 +129,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv6Routes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NpbStaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NpbStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NpbStaticRouteConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NpbStaticRouteConfiguration IPersistableModel<NpbStaticRouteConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NpbStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNpbStaticRouteConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NpbStaticRouteConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NpbStaticRouteConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
