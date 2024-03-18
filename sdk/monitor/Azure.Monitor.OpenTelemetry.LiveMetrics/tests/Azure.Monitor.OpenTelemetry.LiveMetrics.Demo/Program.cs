@@ -17,6 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private static Random _random = new();
 
+        private const int chunkSizeMB = 1000;
+        private static long totalMemoryAllocated = 0;
+
         public static void Main(string[] args)
         {
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -40,6 +43,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private static void GenerateTelemetry()
         {
+            // this will generate memory pressure
+            byte[] memoryChunk = new byte[chunkSizeMB * 1024 * 1024];
+            totalMemoryAllocated += memoryChunk.Length;
+            Console.WriteLine("Total memory allocated: " + totalMemoryAllocated / 1024 / 1024 + " MB");
+
             // Request
             if (GetRandomBool(percent: 70))
             {
@@ -85,6 +93,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                     }
                 }
             }
+
+            // Release the allocated memory
+            memoryChunk = null;
         }
     }
 }
