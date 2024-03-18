@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using OpenTelemetry.Trace;
-using OpenTelemetry;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -17,10 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private static Random _random = new();
 
-        private const int chunkSizeMB = 1000;
+        private const int chunkSizeMB = 100;
         private static long totalMemoryAllocated = 0;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                             .AddSource(ActivitySourceName)
@@ -32,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             // Loop until a key is pressed
             while (!Console.KeyAvailable)
             {
-                GenerateTelemetry();
+                await GenerateTelemetry();
                 System.Threading.Thread.Sleep(200);
             }
 
@@ -41,12 +42,22 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         private static bool GetRandomBool(int percent) => percent >= _random.Next(0, 100);
 
-        private static void GenerateTelemetry()
+        private static async Task GenerateTelemetry()
         {
-            // this will generate memory pressure
-            byte[] memoryChunk = new byte[chunkSizeMB * 1024 * 1024];
-            totalMemoryAllocated += memoryChunk.Length;
-            Console.WriteLine("Total memory allocated: " + totalMemoryAllocated / 1024 / 1024 + " MB");
+            byte[] memoryChunk;
+            if (GetRandomBool(percent: 50))
+            {
+                // this will generate memory pressure
+                memoryChunk = new byte[chunkSizeMB * 1024 * 1024];
+                totalMemoryAllocated += memoryChunk.Length;
+                Console.WriteLine("Total memory allocated: " + totalMemoryAllocated / 1024 / 1024 + " MB");
+            }
+
+            if (GetRandomBool(percent: 5))
+            {
+                Console.WriteLine("CPU Stress Test");
+                await RunCPUStressTest();
+            }
 
             // Request
             if (GetRandomBool(percent: 70))
@@ -96,6 +107,30 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
             // Release the allocated memory
             memoryChunk = null;
+        }
+
+        private static async Task RunCPUStressTest()
+        {
+            // Get the number of available processors
+            int numProcessors = Environment.ProcessorCount;
+            numProcessors = numProcessors > 1 ? numProcessors - 1 : numProcessors;
+
+            Task[] tasks = new Task[numProcessors];
+
+            // Start each task
+            for (int i = 0; i < numProcessors; i++)
+            {
+                tasks[i] = Task.Run(() =>
+                {
+                    var timeStamp = DateTime.Now.AddSeconds(5);
+                    while (DateTime.Now < timeStamp)
+                    {
+                        // Keep the CPU busy
+                    }
+                });
+            }
+
+            await Task.WhenAll(tasks);
         }
     }
 }
