@@ -50,38 +50,33 @@ CheckDevOpsAccess
 # Function to validate change log
 function ValidateChangeLog($changeLogPath, $versionString)
 {
-    $validationStatus = [PSCustomObject]@{
-        Name = "Change Log Validation"
-        Status = "Success"
+    $ChangeLogStatus = [PSCustomObject]@{
+        IsValid = $false
         Message = ""
     }
 
     try
-    {
-        $ChangeLogStatus = [PSCustomObject]@{
-            IsValid = $false
-            Message = ""
-        }
+    {        
         $changeLogFullPath = Join-Path $RepoRoot $changeLogPath
         Write-Host "Path to change log: [$changeLogFullPath]"        
-        if (Test-Path $changeLogFullPath)
-        {
+        if (Test-Path $changeLogFullPath) {
             Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true -ChangeLogStatus $ChangeLogStatus
-            $validationStatus.Status = if ($ChangeLogStatus.IsValid) { "Success" } else { "Failed" }
-            $validationStatus.Message = $ChangeLogStatus.Message            
         }
         else {
-            $validationStatus.Status = "Failed"
-            $validationStatus.Message = "Change log is not found in [$changeLogPath]. Change log file must be present in package root directory."
+            $ChangeLogStatus.Message = "Change log file is not found in [$changeLogPath]. Change log file must be present in package root directory."
         }
     }
     catch
     {
         Write-Host "Current directory: $(Get-Location)"
-        $validationStatus.Status = "Failed"
-        $validationStatus.Message = $_.Exception.Message
+        $ChangeLogStatus.Message = $_.Exception.Message
     }
-    return $validationStatus
+
+    return [PSCustomObject]@{
+        Name = "Change Log Validation"
+        Status = if ($ChangeLogStatus.IsValid) { "Success" } else { "Failed" }
+        Message = $ChangeLogStatus.Message
+    }
 }
 
 # Function to verify API review status
@@ -254,20 +249,17 @@ Write-Host "Validating package $packageName with version $versionString."
 
 # Change log validation
 $changelogStatus = ValidateChangeLog $changeLogPath $versionString
+Write-Host "Change log status: $(ConvertTo-Json $changelogStatus)"
 
 # API review and package name validation
 $apireviewDetails = VerifyAPIReview $PackageName $pkgInfo.Version $LanguageDisplayName
 
 $pkgValidationDetails= [PSCustomObject]@{
-    Name = $PackageName
-    Version = $pkgInfo.Version
-    ChangeLogValidation = [PSCustomObject]@{
-        Name = "Change Log Validation"
-        Status = "$changelogStatus.Status"
-        Message = "$changelogStatus.Message"
-    }
-    APIReviewValidation = $apireviewDetails.ApiviewApproval
-    PackageNameValidation = $apireviewDetails.PackageNameApproval
+    Name = ${PackageName}
+    Version = ${pkgInfo.Version}
+    ChangeLogValidation = ${changelogStatus}
+    APIReviewValidation = ${apireviewDetails.ApiviewApproval}
+    PackageNameValidation = ${apireviewDetails.PackageNameApproval}
 }
 
 $output = ConvertTo-Json $pkgValidationDetails
