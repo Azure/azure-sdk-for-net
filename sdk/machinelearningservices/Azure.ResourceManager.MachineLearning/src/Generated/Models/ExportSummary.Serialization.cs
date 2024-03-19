@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
                     case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
+                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
                     case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element, options);
                 }
             }
