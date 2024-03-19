@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {

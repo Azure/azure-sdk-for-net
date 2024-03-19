@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Common;
 using System.Collections.Generic;
 using System.Text.Json;
 

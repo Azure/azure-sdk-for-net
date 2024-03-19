@@ -29,6 +29,8 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

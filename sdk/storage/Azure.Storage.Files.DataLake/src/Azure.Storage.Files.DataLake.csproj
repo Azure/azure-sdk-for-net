@@ -34,6 +34,8 @@
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />

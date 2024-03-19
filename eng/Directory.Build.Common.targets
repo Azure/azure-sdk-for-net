@@ -213,7 +213,6 @@
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
@@ -236,11 +235,8 @@
     <Compile Include="$(AzureCoreSharedSources)StringRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)XmlWriterContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->
