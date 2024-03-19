@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         protected AuthenticationEventResponse() { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public string Body { get { throw null; } set { } }
-        internal abstract void Invalidate();
+        internal abstract void BuildJsonElement();
     }
     public abstract partial class CloudEventData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventData
     {
