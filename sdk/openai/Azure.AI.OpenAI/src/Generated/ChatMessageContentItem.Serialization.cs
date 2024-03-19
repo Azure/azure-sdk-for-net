@@ -71,8 +71,8 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "image_url": return ChatMessageImageContentItem.DeserializeChatMessageImageContentItem(element, options);
                     case "text": return ChatMessageTextContentItem.DeserializeChatMessageTextContentItem(element, options);
+                    case "image_url": return ChatMessageImageContentItem.DeserializeChatMessageImageContentItem(element, options);
                 }
             }
             return UnknownChatMessageContentItem.DeserializeUnknownChatMessageContentItem(element, options);
