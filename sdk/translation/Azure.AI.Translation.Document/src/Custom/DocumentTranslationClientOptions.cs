@@ -9,7 +9,7 @@ namespace Azure.AI.Translation.Document
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.
     /// </summary>
-    public class DocumentTranslationClientOptions : ClientOptions
+    public partial class DocumentTranslationClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest service version supported by this client library.
@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }
-
+        /*
         /// <summary>
         /// The versions of the Translator service supported by this client library.
         /// </summary>
@@ -53,7 +53,7 @@ namespace Azure.AI.Translation.Document
             /// </summary>
             V1_0 = 1
         }
-
+        */
         /// <summary>
         /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>

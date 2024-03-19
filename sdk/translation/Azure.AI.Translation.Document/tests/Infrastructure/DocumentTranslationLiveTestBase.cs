@@ -24,6 +24,7 @@ namespace Azure.AI.Translation.Document.Tests
             JsonPathSanitizers.Add("$..targetUrl");
             JsonPathSanitizers.Add("$..glossaryUrl");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
+            IgnoredHeaders.Add("x-ms-blob-public-access");
         }
 
         protected static readonly List<TestDocument> oneTestDocuments = new()
@@ -59,7 +60,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Diagnostics =
                 {
-                    LoggedHeaderNames = { "x-ms-request-id", "X-RequestId" },
+                    LoggedHeaderNames = { "x-ms-request-id", "X-RequestId", "apim-request-id" },
                     IsLoggingContentEnabled = true
                 }
             };
@@ -138,7 +139,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             var containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            containerClient.Create(PublicAccessType.BlobContainer);
+            containerClient.Create();
 
             if (documents != default)
             {
@@ -152,7 +153,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             string containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+            await containerClient.CreateAsync().ConfigureAwait(false);
 
             if (documents != default)
             {

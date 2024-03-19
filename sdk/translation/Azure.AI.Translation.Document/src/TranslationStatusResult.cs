@@ -78,5 +78,25 @@ namespace Azure.AI.Translation.Document
         /// <summary> The Status Summary of the operation. </summary>
         [CodeGenMember("Summary")]
         internal StatusSummary Summary { get; set; }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
+        /// <param name="id"> Id of the operation. </param>
+        /// <param name="createdOn"> Operation created date time. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
+        /// <param name="status"> List of possible statuses for job or document. </param>
+        /// <param name="error">
+        /// This contains an outer error with error code, message, details, target and an
+        /// inner error with more descriptive details.
+        /// </param>
+        /// <param name="summary"> Status Summary. </param>
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary)
+        {
+            Id = id;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            Status = status;
+            _error = error;
+            Summary = summary;
+        }
     }
 }
