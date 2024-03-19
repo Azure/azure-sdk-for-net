@@ -47,6 +47,7 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   try
   {
     $requestUrl = "${url}?language=${lang}&packageName=${packageName}&packageVersion=${packageVersion}"
+    Write-Host "Request to APIView: [${requestUrl}]"
     $response = Invoke-WebRequest $requestUrl -Method 'GET' -Headers $headers
     Write-Host "Response: $($response.StatusCode)"
     Process-ReviewStatusCode -statusCode $response.StatusCode -packageName $packageName -apiApprovalStatus $apiApprovalStatus -packageNameStatus $packageNameStatus
