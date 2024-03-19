@@ -16,8 +16,20 @@
     <Compile Include="$(AzureStorageSharedTestSources)\RandomExtensions.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\DisposingContainer.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared\Storage" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferUploadTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDirectoryCopyTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferUploadDirectoryTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferCopyTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDownloadTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDirectoryDownloadTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestTransferWithTimeout.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
