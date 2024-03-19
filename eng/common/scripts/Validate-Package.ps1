@@ -186,48 +186,6 @@ function CreateUpdatePackageWorkItem($pkgInfo)
     return $true
 }
 
-function UpdateValidationStatus($pkgvalidationDetails)
-{
-    $pkgName = $pkgValidationDetails.Name
-    $versionString = $pkgValidationDetails.Version
-
-    $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
-    $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
-    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $pkgName -version $versionMajorMinor -includeClosed $true -outputCommand $false
-
-    if (!$workItem)
-    {
-        Write-Host"No work item found for package [$pkgName]."
-        return $false
-    }
-
-    $changeLogStatus = $pkgValidationDetails.ChangeLogValidation.Status
-    $changeLogDetails  = $pkgValidationDetails.ChangeLogValidation.Message
-    $apiReviewStatus = $pkgValidationDetails.APIReviewValidation.Status
-    $apiReviewDetails = $pkgValidationDetails.APIReviewValidation.Message
-    $packageNameStatus = $pkgValidationDetails.PackageNameValidation.Status
-    $packageNameDetails = $pkgValidationDetails.PackageNameValidation.Message
-
-    $fields = @()
-    $fields += "`"PackageVersion=${versionString}`""
-    $fields += "`"ChangeLogStatus=${changeLogStatus}`""
-    $fields += "`"ChangeLogValidationDetails=${changeLogDetails}`""
-    $fields += "`"APIReviewStatus=${apiReviewStatus}`""
-    $fields += "`"APIReviewStatusDetails=${apiReviewDetails}`""
-    $fields += "`"PackageNameApprovalStatus=${packageNameStatus}`""
-    $fields += "`"PackageNameApprovalDetails=${packageNameDetails}`""
-    if ($BuildDefinition) {
-        $fields += "`"PipelineDefinition=$BuildDefinition`""
-    }
-    if ($PipelineUrl) {
-        $fields += "`"LatestPipelineRun=$PipelineUrl`""
-    }
-
-    $workItem = UpdateWorkItem -id $workItem.id -fields $fields
-    Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
-    return $true
-}
-
 # Read package property file and identify all packages to process
 Write-Host "Processing package: $PackageName"
 Write-Host "Is Release Build: $IsReleaseBuild"
@@ -277,7 +235,7 @@ $updatedWi = CreateUpdatePackageWorkItem $pkgInfo
 # Update validation status in package work item
 if ($updatedWi) {
     Write-Host "Updating validation status in package work item."
-    $updatedWi = UpdateValidationStatus $pkgValidationDetails        
+    $updatedWi = UpdateValidationStatus $pkgValidationDetails $BuildDefinition $PipelineUrl    
 }
 
 # Fail the build if any validation is not successful for a release build
@@ -287,7 +245,7 @@ Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
 
 if ($IsReleaseBuild)
 {
-    if ($changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved")
+    if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved")
     {        
         Write-Error "At least one of the Validations above failed for package $PackageName with version $versionString."
         exit 1
