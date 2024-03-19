@@ -1378,7 +1378,7 @@ namespace Azure.Storage.Blobs.Specialized
                         contentLength = (content?.Length - content?.Position) ?? 0;
                         range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
                         structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
+                        content = content?.WithNoDispose().WithProgress(progressHandler);
                         content = new StructuredMessageEncodingStream(
                             content,
                             Constants.StructuredMessage.DefaultSegmentContentLength,
@@ -1393,7 +1393,7 @@ namespace Azure.Storage.Blobs.Specialized
                             validationOptions,
                             async,
                             cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
+                        content = content?.WithNoDispose().WithProgress(progressHandler);
                         range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
                     }
 
