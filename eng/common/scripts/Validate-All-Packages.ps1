@@ -35,17 +35,13 @@ function ProcessPackage($PackageName, $ConfigFileDir)
         -PipelineUrl $PipelineUrl `
         -ConfigFileDir $ConfigFileDir `
         -Devops_pat $Devops_pat
-    if ($LASTEXITCODE -ne 0)
-    {
+    if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to validate package $PackageName"
-        return $false
     }
-    return $true
 }
 
 # Check if package config file is present. This file has package version, SDK type etc info.
-if (-not $ConfigFileDir)
-{
+if (-not $ConfigFileDir) {
     $ConfigFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
 }
 foreach ($artifact in $ArtifactList)
