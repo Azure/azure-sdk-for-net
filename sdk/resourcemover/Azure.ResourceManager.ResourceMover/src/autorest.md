@@ -185,6 +185,6 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
-  - remove-operation: MoveCollections_Delete
-    reason: The azure-asyncoperation header will change when polling
+  # - remove-operation: MoveCollections_Delete
+  #   reason: The azure-asyncoperation header will change when polling
 ```
