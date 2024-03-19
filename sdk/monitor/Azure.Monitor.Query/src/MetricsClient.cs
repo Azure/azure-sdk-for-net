@@ -22,6 +22,11 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Creates an instance of <see cref="MetricsClient"/>.
+        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// var client = new MetricsClient(
+        ///     new Uri(&quot;https://metrics.monitor.azure.com/.default&quot;),
+        ///     new DefaultAzureCredential());
+        /// </code>
         /// </summary>
         /// <param name="endpoint">The data plane service endpoint to use. For example, <c>https://metrics.monitor.azure.com/.default</c> for Azure Public Cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
@@ -58,7 +63,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Returns all the Azure Monitor metrics requested for the batch of resources.
         /// </summary>
-        /// <param name="resourceIds">The resource URIs for which the metrics is requested.</param>
+        /// <param name="resourceIds">The resource URIs for which the metrics are requested.</param>
         /// <param name="metricNames">The names of the metrics to query.</param>
         /// <param name="metricNamespace">The namespace of the metrics to query.</param>
         /// <param name="options">The <see cref="MetricsClientOptions"/> to configure the query.</param>
