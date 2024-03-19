@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
+            if (Optional.IsDefined(BackupIntervalHours))
+            {
+                writer.WritePropertyName("backupIntervalHours"u8);
+                writer.WriteNumberValue(BackupIntervalHours.Value);
+            }
             if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             int? backupRetentionDays = default;
+            int? backupIntervalHours = default;
             MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = default;
             DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -94,6 +100,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         continue;
                     }
                     backupRetentionDays = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("backupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupIntervalHours = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("geoRedundantBackup"u8))
@@ -120,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
+            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, backupIntervalHours, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupProperties>.Write(ModelReaderWriterOptions options)
