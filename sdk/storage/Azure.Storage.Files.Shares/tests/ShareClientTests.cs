@@ -499,6 +499,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 await share.DeleteAsync(false);
             }
         }
+
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task CreateAsync_OAuth()
