@@ -2125,7 +2125,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects", false);
@@ -2140,7 +2140,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2158,7 +2158,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2174,7 +2174,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2190,7 +2190,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2220,7 +2220,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2243,7 +2243,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2262,7 +2262,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2279,7 +2279,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2298,7 +2298,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2316,7 +2316,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2336,7 +2336,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2354,7 +2354,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2374,7 +2374,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2392,7 +2392,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2410,7 +2410,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2428,7 +2428,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2445,7 +2445,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2463,7 +2463,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2481,7 +2481,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2500,7 +2500,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2520,7 +2520,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2539,7 +2539,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2559,7 +2559,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2576,7 +2576,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2594,7 +2594,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
@@ -2613,7 +2613,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/deletion-jobs/", false);
@@ -2629,7 +2629,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/languages", false);
@@ -2645,7 +2645,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/prebuilt-entities", false);
@@ -2668,7 +2668,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/training-config-versions", false);
@@ -2684,7 +2684,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2698,7 +2698,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2712,7 +2712,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2726,7 +2726,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2740,7 +2740,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2754,7 +2754,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2768,7 +2768,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -2782,7 +2782,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendRawNextLink(nextLink, false);

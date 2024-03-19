@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:query-knowledgebases", false);
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.QuestionAnswering
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            var uri = new RequestUri();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:query-text", false);
