@@ -14,10 +14,10 @@ namespace Azure.Health.Insights.RadiologyInsights
     internal partial class UnknownRadiologyInsightsInference : RadiologyInsightsInference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRadiologyInsightsInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRadiologyInsightsInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
+        internal UnknownRadiologyInsightsInference(IReadOnlyList<FhirR4Extension> extension, RadiologyInsightsInferenceType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(extension, kind, serializedAdditionalRawData)
         {
         }
 

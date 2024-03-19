@@ -272,8 +272,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
+start = "2022-05-10T18:57:31.2311892Z",
+end = "2022-05-10T18:57:31.2311892Z",
 },
 ["class"] = "inpatient"
 }
@@ -286,7 +286,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -349,7 +349,6 @@ value = "<value>",
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("url").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("comparator").ToString());
@@ -430,6 +429,7 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -600,8 +600,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
+start = "2022-05-10T18:57:31.2311892Z",
+end = "2022-05-10T18:57:31.2311892Z",
 },
 ["class"] = "inpatient"
 }
@@ -614,7 +614,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -677,7 +677,6 @@ value = "<value>",
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("patientId").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("url").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("comparator").ToString());
@@ -758,6 +757,7 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -792,6 +792,83 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
+Id = "<id>",
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+Id = "<id>",
+Extension = {default},
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+Id = "<id>",
+Extension = {default},
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+Id = "<id>",
+Extension = {default},
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+Id = "<id>",
+Extension = {default},
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+Id = "<id>",
+Extension = {default},
+},
+Display = "<display>",
+Id = "<id>",
+Extension = {default},
+},
+Id = "<id>",
+Extension = {default},
+}},
 }},
 Tag = {default},
 },
@@ -803,8 +880,8 @@ Encounters = {new Encounter("<id>")
 {
 Period = new TimePeriod
 {
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
@@ -812,7 +889,7 @@ PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentC
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new DocumentAuthor
 {
 Id = "<id>",
@@ -889,6 +966,83 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
+Id = "<id>",
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+Id = "<id>",
+Extension = {default},
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+Id = "<id>",
+Extension = {default},
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+Id = "<id>",
+Extension = {default},
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+Id = "<id>",
+Extension = {default},
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+Id = "<id>",
+Extension = {default},
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+Id = "<id>",
+Extension = {default},
+},
+Display = "<display>",
+Id = "<id>",
+Extension = {default},
+},
+Id = "<id>",
+Extension = {default},
+}},
 }},
 Tag = {default},
 },
@@ -900,8 +1054,8 @@ Encounters = {new Encounter("<id>")
 {
 Period = new TimePeriod
 {
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Start = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
@@ -909,7 +1063,7 @@ PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentC
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new DocumentAuthor
 {
 Id = "<id>",
