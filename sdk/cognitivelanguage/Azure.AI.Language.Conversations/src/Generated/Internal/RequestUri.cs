@@ -32,12 +32,35 @@ internal class RequestUri
 
     public void Reset(Uri uri)
     {
-        throw new NotImplementedException();
+        if (UseSystemType())
+        {
+            _systemUriBuilder = new(uri);
+        }
+        else
+        {
+            _azureUriBuilder!.Reset(uri);
+        }
     }
 
     public void AppendPath(string value, bool escape)
     {
-        throw new NotImplementedException();
+        if (UseSystemType())
+        {
+            StringBuilder path = new();
+
+            if (escape)
+            {
+                value = Uri.EscapeDataString(value);
+            }
+
+            path.Append(value);
+
+            _systemUriBuilder!.Path += path.ToString();
+        }
+        else
+        {
+            _azureUriBuilder!.AppendPath(value, escape);
+        }
     }
 
     public void AppendPath(Guid value, bool escape)
