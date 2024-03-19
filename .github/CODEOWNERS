@@ -178,6 +178,7 @@
 # ServiceOwners:                                                   @maertendMSFT
 
 # ServiceLabel: %Code Signing
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners                                                    @jaxelr
 
 # PRLabel: %Cognitive - Language
