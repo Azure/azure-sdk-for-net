@@ -83,11 +83,13 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 `DevCenterClient` allows you to list projects and retrieve projects by their name.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-string targetProjectName = null;
-await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
-{
-    targetProjectName = project.Name;
-}
+string devCenterUri = "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com";
+var endpoint = new Uri(devCenterUri);
+var credential = new DefaultAzureCredential();
+var devCenterClient = new DevCenterClient(endpoint, credential);
+
+List<DevCenterProject> projects = await devCenterClient.GetProjectsAsync().ToEnumerableAsync();
+var projectName = projects.FirstOrDefault().Name;
 ```
 
 ### List available Dev Box Pools
@@ -95,11 +97,12 @@ await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
 Interaction with DevBox pools is facilitated through the `DevBoxesClient`. Pools can be listed for a specific project or fetched individually.
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
-string targetPoolName = null;
-await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName))
-{
-    targetPoolName = pool.Name;
-}
+// Create DevBox-es client from existing DevCenter client
+var devBoxesClient = devCenterClient.GetDevBoxesClient();
+
+// Grab a pool
+List<DevBoxPool> pools = await devBoxesClient.GetPoolsAsync(projectName).ToEnumerableAsync();
+var poolName = pools.FirstOrDefault().Name;
 ```
 
 ### Provision a Dev Box
@@ -107,11 +110,12 @@ await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName
 To create a new DevBox, provide the pool name in the content and specify the desired DevBox name. Upon successful execution of this operation, a DevBox should appear in the portal.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var devBox = new DevBox("MyDevBox", targetPoolName);
+var devBoxName = "MyDevBox";
+var devBox = new DevBox(devBoxName, poolName);
 
 Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
-    targetProjectName,
+    projectName,
     "me",
     devBox);
 
@@ -125,9 +129,9 @@ Once a DevBox is provisioned, you can connect to it using an RDP connection stri
 
 ```C# Snippet:Azure_DevCenter_ConnectToDevBox_Scenario
 RemoteConnection remoteConnection = await devBoxesClient.GetRemoteConnectionAsync(
-    targetProjectName,
+    projectName,
     "me",
-    "MyDevBox");
+    devBoxName);
 
 Console.WriteLine($"Connect using web URL {remoteConnection.WebUri}.");
 ```
@@ -139,9 +143,9 @@ Deleting a DevBox is easy. It's much faster operation than creating a new DevBox
 ```C# Snippet:Azure_DevCenter_DeleteDevBox_Scenario
 Operation devBoxDeleteOperation = await devBoxesClient.DeleteDevBoxAsync(
     WaitUntil.Completed,
-    targetProjectName,
+    projectName,
     "me",
-    "MyDevBox");
+    devBoxName);
 await devBoxDeleteOperation.WaitForCompletionResponseAsync();
 Console.WriteLine($"Completed dev box deletion.");
 ```
@@ -151,12 +155,18 @@ Console.WriteLine($"Completed dev box deletion.");
 `DeploymentEnvironmentsClient` can be used to issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
-string catalogName = null;
+// Create deployment environments client from existing DevCenter client
+var environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
 
+//List all catalogs and grab the first one
+//Using foreach, but could also use a List
+string catalogName = default;
 await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
 {
     catalogName = catalog.Name;
+    break;
 }
+Console.WriteLine($"Using catalog {catalogName}");
 ```
 
 ## Get all environment definitions in a project for a catalog
@@ -164,11 +174,14 @@ await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(p
 Environment definitions are a part of the catalog associated with your project. If you don't see the expected environment definitions in the results, please ensure that you have pushed your changes to the catalog repository and synchronized the catalog.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
-string environmentDefinitionName = null;
+//List all environment definition for a catalog and grab the first one
+string environmentDefinitionName = default;
 await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
 {
     environmentDefinitionName = environmentDefinition.Name;
+    break;
 }
+Console.WriteLine($"Using environment definition {environmentDefinitionName}");
 ```
 
 ## Get all environment types in a project
@@ -176,11 +189,14 @@ await foreach (EnvironmentDefinition environmentDefinition in environmentsClient
 Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
-string environmentTypeName = null;
+//List all environment types and grab the first one
+string environmentTypeName = default;
 await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
 {
     environmentTypeName = environmentType.Name;
+    break;
 }
+Console.WriteLine($"Using environment type {environmentTypeName}");
 ```
 
 ## Create an environment
@@ -190,6 +206,7 @@ Issue a request to create an environment using a specific definition item and en
 ```C# Snippet:Azure_DevCenter_CreateEnvironment_Scenario
 var requestEnvironment = new DevCenterEnvironment
 (
+    "DevEnvironment",
     environmentTypeName,
     catalogName,
     environmentDefinitionName
@@ -200,7 +217,6 @@ Operation<DevCenterEnvironment> environmentCreateOperation = await environmentsC
     WaitUntil.Completed,
     projectName,
     "me",
-    "DevEnvironment",
     requestEnvironment);
 
 DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();

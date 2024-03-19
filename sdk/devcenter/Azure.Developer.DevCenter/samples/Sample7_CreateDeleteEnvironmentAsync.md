@@ -1,4 +1,4 @@
-# Azure.Developer.DevCenter samples - Deployment Environments
+# Deployment Environments Operations
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/README.md#getting-started) for details.
 
@@ -7,11 +7,13 @@ To use these samples, you'll first need to set up resources. See [getting starte
 Create a `DevCenterClient` and issue a request to get all projects the signed-in user can access.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
-string targetProjectName = null;
-await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
-{
-    targetProjectName = project.Name;
-}
+string devCenterUri = "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com";
+var endpoint = new Uri(devCenterUri);
+var credential = new DefaultAzureCredential();
+var devCenterClient = new DevCenterClient(endpoint, credential);
+
+List<DevCenterProject> projects = await devCenterClient.GetProjectsAsync().ToEnumerableAsync();
+var projectName = projects.FirstOrDefault().Name;
 ```
 
 ## Get project catalogs
@@ -19,22 +21,31 @@ await foreach (DevCenterProject project in devCenterClient.GetProjectsAsync())
 Create an `EnvironmentsClient` and issue a request to get all catalogs in a project.
 
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
-string catalogName = null;
+// Create deployment environments client from existing DevCenter client
+var environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
 
+//List all catalogs and grab the first one
+//Using foreach, but could also use a List
+string catalogName = default;
 await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
 {
     catalogName = catalog.Name;
+    break;
 }
+Console.WriteLine($"Using catalog {catalogName}");
 ```
 
 ## Get all environment definitions in a project for a catalog
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
-string environmentDefinitionName = null;
+//List all environment definition for a catalog and grab the first one
+string environmentDefinitionName = default;
 await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
 {
     environmentDefinitionName = environmentDefinition.Name;
+    break;
 }
+Console.WriteLine($"Using environment definition {environmentDefinitionName}");
 ```
 
 ## Get all environment types in a project
@@ -42,11 +53,14 @@ await foreach (EnvironmentDefinition environmentDefinition in environmentsClient
 Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
-string environmentTypeName = null;
+//List all environment types and grab the first one
+string environmentTypeName = default;
 await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
 {
     environmentTypeName = environmentType.Name;
+    break;
 }
+Console.WriteLine($"Using environment type {environmentTypeName}");
 ```
 
 ## Create an environment
@@ -56,6 +70,7 @@ Issue a request to create an environment using a specific definition item and en
 ```C# Snippet:Azure_DevCenter_CreateEnvironment_Scenario
 var requestEnvironment = new DevCenterEnvironment
 (
+    "DevEnvironment",
     environmentTypeName,
     catalogName,
     environmentDefinitionName
@@ -66,7 +81,6 @@ Operation<DevCenterEnvironment> environmentCreateOperation = await environmentsC
     WaitUntil.Completed,
     projectName,
     "me",
-    "DevEnvironment",
     requestEnvironment);
 
 DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();

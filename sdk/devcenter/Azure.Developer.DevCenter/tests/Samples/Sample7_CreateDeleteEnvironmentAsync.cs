@@ -28,16 +28,19 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 throw new InvalidOperationException($"No valid project resources found in DevCenter {endpoint}.");
             }
 
-            // Create deployment environments client
-            var environmentsClient = new DeploymentEnvironmentsClient(endpoint, credential);
-
             #region Snippet:Azure_DevCenter_GetCatalogs_Scenario
-            string catalogName = null;
+            // Create deployment environments client from existing DevCenter client
+            var environmentsClient = devCenterClient.GetDeploymentEnvironmentsClient();
 
+            //List all catalogs and grab the first one
+            //Using foreach, but could also use a List
+            string catalogName = default;
             await foreach (DevCenterCatalog catalog in environmentsClient.GetCatalogsAsync(projectName))
             {
                 catalogName = catalog.Name;
+                break;
             }
+            Console.WriteLine($"Using catalog {catalogName}");
             #endregion
 
             if (catalogName is null)
@@ -46,11 +49,14 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             #region Snippet:Azure_DevCenter_GetEnvironmentDefinitionsFromCatalog_Scenario
-            string environmentDefinitionName = null;
+            //List all environment definition for a catalog and grab the first one
+            string environmentDefinitionName = default;
             await foreach (EnvironmentDefinition environmentDefinition in environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(projectName, catalogName))
             {
                 environmentDefinitionName = environmentDefinition.Name;
+                break;
             }
+            Console.WriteLine($"Using environment definition {environmentDefinitionName}");
             #endregion
 
             if (environmentDefinitionName is null)
@@ -59,11 +65,14 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             }
 
             #region Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
-            string environmentTypeName = null;
+            //List all environment types and grab the first one
+            string environmentTypeName = default;
             await foreach (DevCenterEnvironmentType environmentType in environmentsClient.GetEnvironmentTypesAsync(projectName))
             {
                 environmentTypeName = environmentType.Name;
+                break;
             }
+            Console.WriteLine($"Using environment type {environmentTypeName}");
             #endregion
 
             if (environmentTypeName is null)
@@ -74,6 +83,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             #region Snippet:Azure_DevCenter_CreateEnvironment_Scenario
             var requestEnvironment = new DevCenterEnvironment
             (
+                "DevEnvironment",
                 environmentTypeName,
                 catalogName,
                 environmentDefinitionName
@@ -84,7 +94,6 @@ namespace Azure.Developer.DevCenter.Tests.Samples
                 WaitUntil.Completed,
                 projectName,
                 "me",
-                "DevEnvironment",
                 requestEnvironment);
 
             DevCenterEnvironment environment = await environmentCreateOperation.WaitForCompletionAsync();
