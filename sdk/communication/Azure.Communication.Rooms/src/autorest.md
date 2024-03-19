@@ -13,9 +13,18 @@ If any of the new objects needs to be overwritten, add the required changes to t
 ```yaml
 title: Rooms
 model-namespace: false
-require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/16f827b7e3392f4f5bc407a626b292cab29abdf9/specification/communication/data-plane/Rooms/readme.md
+input-file:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3ba20748bbef0fbd1225a0be5c461fdf07db871b/specification/communication/data-plane/Rooms/stable/2024-04-15/communicationservicesrooms.json
 payload-flattening-threshold: 10
 clear-output-folder: true
 generation1-convenience-client: true
+```
+
+``` yaml
+# Add nullable annotations
+directive:
+  - from: swagger-document
+    where: $.definitions.ParticipantProperties
+    transform: >
+      $.properties.role["x-nullable"] = true;
 ```
