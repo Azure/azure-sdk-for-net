@@ -109,6 +109,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Uri Uri { get; }
         /// <summary> The client IP address associated with this request. </summary>
         public IPAddress IPAddress { get; }
+        /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
+        public string BackendResponseCode { get; }
         /// <summary> The HTTP status code returned by the gateway. </summary>
         public int? ResponseCode { get; }
         /// <summary> The size of the response returned by the gateway. </summary>

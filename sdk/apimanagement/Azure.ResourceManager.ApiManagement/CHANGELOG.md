@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by changing the  the way how `BackendResponseCode` is serialized and deserialized.
+
 ### Other Changes
 
 ## 1.1.0 (2023-11-27)
@@ -21,7 +23,6 @@
 ### Bugs Fixed
 
 - Add property `PrivateUriString` instead of `PrivateUri` in ApiRevisionContract to fix Uri deserialization issue.
-- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by adding property `BackendResponseCodeInteger` instead of `BackendResponseCode` in RequestReportRecordContract to fix deserialization issue.
 
 ### Other Changes
 

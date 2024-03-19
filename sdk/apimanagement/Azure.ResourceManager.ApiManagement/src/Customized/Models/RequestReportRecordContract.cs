@@ -3,28 +3,29 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-using System.Net;
-using System.Text.Json;
 using System.ClientModel.Primitives;
-using Azure.Core;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Request Report data. </summary>
-    public partial class RequestReportRecordContract
+    [CodeGenSerialization(nameof(BackendResponseCode), SerializationValueHook = nameof(SerializeNameValue),DeserializationValueHook = nameof(DeserializeBackendResponseCodeValue))]
+    public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
     {
-        /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeBackendResponseCodeValue))]
-        public string BackendResponseCode { get; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SerializeNameValue(Utf8JsonWriter writer)
+        {
+            writer.WriteStringValue(BackendResponseCode);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeBackendResponseCodeValue(JsonProperty property, ref Optional<string> backendResponseCode) // the type here is string since name is required
+        private static void DeserializeBackendResponseCodeValue(JsonProperty property, ref string backendResponseCode)
         {
-            // this is the logic we would like to have for the value deserialization
-            backendResponseCode = property.Value.GetInt32().ToString();
+            if (property.Value.ValueKind != JsonValueKind.Null)
+            {
+                backendResponseCode = property.Value.GetInt32().ToString();
+            }
         }
     }
 }
