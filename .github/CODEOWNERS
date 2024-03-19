@@ -178,7 +178,7 @@
 # ServiceOwners:                                                   @maertendMSFT
 
 # ServiceLabel: %Code Signing
-# ServiceOwners                                                    @jaxelr @dawnwang17 @janielmartell
+# ServiceOwners                                                    @jaxelr
 
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao
