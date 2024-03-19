@@ -12,7 +12,8 @@ Param (
   [string]$BuildDefinition,
   [string]$PipelineUrl,
   [string]$APIViewUri  = "https://apiview.dev/AutoReview/GetReviewStatus",
-  [string]$Devops_pat = $env:DEVOPS_PAT
+  [string]$Devops_pat = $env:DEVOPS_PAT,
+  [bool] $IsReleaseBuild = $false
 )
 
 Set-StrictMode -Version 3

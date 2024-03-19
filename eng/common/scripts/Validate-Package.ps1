@@ -15,7 +15,8 @@ param (
   [string] $BuildDefinition,
   [string] $PipelineUrl,
   [string] $APIViewUri,
-  [string] $Devops_pat = $env:DEVOPS_PAT
+  [string] $Devops_pat = $env:DEVOPS_PAT,
+  [bool] $IsReleaseBuild = $false
 )
 Set-StrictMode -Version 3
 
@@ -47,25 +48,21 @@ if (!$?){
 CheckDevOpsAccess
 
 # Function to validate change log
-function ValidateChangeLog($changeLogPath, $versionString)
+function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
 {
-    $validationStatus = [PSCustomObject]@{
-        Name = "Change Log Validation"
-        Status = "Success"
-        Message = ""
-    }
-
     try
     {
+        $ChangeLogStatus = [PSCustomObject]@{
+            IsValid = $false
+            Message = ""
+        }
         $changeLogFullPath = Join-Path $RepoRoot $changeLogPath
         Write-Host "Path to change log: [$changeLogFullPath]"        
         if (Test-Path $changeLogFullPath)
         {
-            $errOutput = $( $validChangeLog = & Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true ) 2>&1
-            if (!$validChangeLog) {
-                $validationStatus.Status = "Failed"
-                $validationStatus.Message = $errOutput
-            }
+            Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true -ChangeLogStatus $ChangeLogStatus
+            $validationStatus.Status = if ($ChangeLogStatus.IsValid) { "Success" } else { "Failed" }
+            $validationStatus.Message = $ChangeLogStatus.Message 
         }
         else {
             $validationStatus.Status = "Failed"
@@ -77,8 +74,7 @@ function ValidateChangeLog($changeLogPath, $versionString)
         Write-Host "Current directory: $(Get-Location)"
         $validationStatus.Status = "Failed"
         $validationStatus.Message = $_.Exception.Message
-    }    
-    return $validationStatus
+    }
 }
 
 # Function to verify API review status
@@ -97,38 +93,26 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
 
     try
     {
+        $apiStatus = [PSCustomObject]@{
+            IsApproved = $false
+            Details = ""
+        }
+        $packageNameStatus = [PSCustomObject]@{
+            IsApproved = $false
+            Details = ""
+        }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]." 
-        $apireviewStatus =  Check-ApiReviewStatus -PackageName $packageName -Language $language -packageVersion $packageVersion -url $APIViewUri -apiKey $APIKey
-        Write-Host "API Review status: $apireviewStatus"
+        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus $packageNameStatus
 
+        Write-Host "API review approval details: $($apiStatus.Details)"
+        Write-Host "Package name approval details: $($packageNameStatus.Details)"
         #API review approval status
-        if ($apireviewStatus -eq '200')
-        {
-            $APIReviewValidation.Status = "Approved"
-            $APIReviewValidation.Message = "API review is in approved status."
-        }
-        else
-        {
-            $APIReviewValidation.Status = "Pending"
-            $APIReviewValidation.Message = "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved for a stable version release.You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
-        }
+        $APIReviewValidation.Message = $apiStatus.Details
+        $APIReviewValidation.Status = if ($apiStatus.IsApproved) { "Approved" } else { "Pending" }
 
         # Package name approval status
-        if ($apireviewStatus -eq '200' -or $apireviewStatus -eq '201')
-        {
-            $PackageNameValidation.Status = "Approved"
-            $PackageNameValidation.Message = "Package name is in approved status."
-        }
-        elseif ($apireviewStatus -eq '202')
-        {
-            $PackageNameValidation.Status = "Pending"
-            $PackageNameValidation.Message = "Package name [$($packageName)] is not yet approved by an SDK API approver. Package name must be approved to release a beta version if $($packageName) was never released a stable version. You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on package name Approval."
-        }
-        else
-        {
-            $PackageNameValidation.Status = "Failed"
-            $PackageNameValidation.Message = "Package name approval status is not available for package $($packageName)."
-        }
+        $PackageNameValidation.Status = if ($packageNameStatus.IsApproved) { "Approved" } else { "Pending" }
+        $PackageNameValidation.Message = $packageNameStatus.Details
     }
     catch
     {
@@ -191,7 +175,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
         -packageNewLibrary $pkgInfo.IsNewSDK `
         -serviceName "unknown" `
         -packageDisplayName "unknown" `
-        -inRelease $setReleaseState `
+        -inRelease $IsReleaseBuild `
         -devops_pat $Devops_pat
     
     if ($LASTEXITCODE -ne 0)
@@ -246,6 +230,7 @@ function UpdateValidationStatus($pkgvalidationDetails)
 
 # Read package property file and identify all packages to process
 Write-Host "Processing package: $PackageName"
+Write-Host "Is Release Build: $IsReleaseBuild"
 $packagePropertyFile = Join-Path $ConfigFileDir "$PackageName.json"
 $pkgInfo = Get-Content $packagePropertyFile | ConvertFrom-Json
 
@@ -255,21 +240,26 @@ Write-Host "Checking if we need to create or update work item for package $packa
 $isShipped = IsVersionShipped $packageName $versionString
 if ($isShipped) {
     Write-Host "Package work item already exists for version [$versionString] that is marked as shipped. Skipping the update of package work item."
-    exit 1
+    exit 0
 }
 
 Write-Host "Validating package $packageName with version $versionString."
 
 # Change log validation
-$changelogStatus = ValidateChangeLog $changeLogPath $versionString
+$changeLogStatus = [PSCustomObject]@{
+    Name = "Change Log Validation"
+    Status = "Success"
+    Message = ""
+}
+ValidateChangeLog $changeLogPath $versionString $changeLogStatus
 
 # API review and package name validation
-$apireviewDetails = VerifyAPIReview $PackageName $pkgInfo.Version $LanguageDisplayName
+$apireviewDetails = VerifyAPIReview $PackageName $pkgInfo.Version $Language
 
 $pkgValidationDetails= [PSCustomObject]@{
     Name = $PackageName
     Version = $pkgInfo.Version
-    ChangeLogValidation = $changelogStatus
+    ChangeLogValidation = $changeLogStatus
     APIReviewValidation = $apireviewDetails.ApiviewApproval
     PackageNameValidation = $apireviewDetails.PackageNameApproval
 }
@@ -288,4 +278,18 @@ $updatedWi = CreateUpdatePackageWorkItem $pkgInfo
 if ($updatedWi) {
     Write-Host "Updating validation status in package work item."
     $updatedWi = UpdateValidationStatus $pkgValidationDetails        
+}
+
+# Fail the build if any validation is not successful for a release build
+Write-Host "Change log status:" $changelogStatus.Status
+Write-Host "API Review status:" $apireviewDetails.ApiviewApproval.Status
+Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
+
+if ($IsReleaseBuild)
+{
+    if ($changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved")
+    {        
+        Write-Error "At least one of the Validations above failed for package $PackageName with version $versionString."
+        exit 1
+    }
 }
