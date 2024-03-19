@@ -913,12 +913,12 @@ namespace Azure.Storage.DataMovement.Tests
             BlobUploadOptions uploadOptions = new()
             {
                 AccessTier = DefaultAccessTier,
+                // We can't include Content Encoding since we can't record the value.
                 HttpHeaders = new()
                 {
                     CacheControl = DefaultCacheControl,
                     ContentType = DefaultContentType,
                     ContentDisposition = DefaultContentDisposition,
-                    ContentEncoding = DefaultContentEncoding,
                     ContentLanguage = DefaultContentLanguage,
                 },
                 Metadata = metadata,
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     AccessTier = new(DefaultAccessTier),
                     ContentType = new(DefaultContentType),
-                    ContentEncoding = new(DefaultContentEncoding),
+                    ContentEncoding = new(false),
                     ContentDisposition = new(DefaultContentDisposition),
                     ContentLanguage = new(DefaultContentLanguage),
                     CacheControl = new(DefaultCacheControl),
@@ -1172,7 +1172,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
             Assert.AreEqual(DefaultAccessTier.ToString(), destinationProperties.AccessTier);
             Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
-            Assert.AreEqual(DefaultContentEncoding, destinationProperties.ContentEncoding);
             Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
             Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
         }
@@ -1191,10 +1190,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             PageBlobCreateOptions createOptions = new()
             {
+                // We can't include Content Encoding since we can't record the value.
                 HttpHeaders = new()
                 {
                     ContentType = DefaultContentType,
-                    ContentEncoding = DefaultContentEncoding,
                     ContentDisposition = DefaultContentDisposition,
                     ContentLanguage = DefaultContentLanguage,
                     CacheControl = DefaultCacheControl,
@@ -1409,7 +1408,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new()
                 {
                     ContentType = new(DefaultContentType),
-                    ContentEncoding = new(DefaultContentEncoding),
+                    ContentEncoding = new(false),
                     ContentDisposition = new(DefaultContentDisposition),
                     ContentLanguage = new(DefaultContentLanguage),
                     CacheControl = new(DefaultCacheControl),
@@ -1444,7 +1443,6 @@ namespace Azure.Storage.DataMovement.Tests
             BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
             Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
             Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
-            Assert.AreEqual(DefaultContentEncoding, destinationProperties.ContentEncoding);
             Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
             Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
             Assert.AreEqual(DefaultContentType, destinationProperties.ContentType);
@@ -1464,10 +1462,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             AppendBlobCreateOptions createOptions = new()
             {
+                // We can't include Content Encoding since we can't record the value.
                 HttpHeaders = new()
                 {
                     ContentType = DefaultContentType,
-                    ContentEncoding = DefaultContentEncoding,
                     ContentDisposition = DefaultContentDisposition,
                     ContentLanguage = DefaultContentLanguage,
                     CacheControl = DefaultCacheControl,
@@ -1490,14 +1488,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Create source local file for checking, and source blob
             await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
             Metadata metadata = DataProvider.BuildMetadata();
-            Tags tags = DataProvider.BuildTags();
 
             // Act
             // Create blob with properties
             AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
                 testContainer.Container,
                 metadata,
-                tags);
+                default);
 
             // Set preserve properties
             StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
@@ -1682,7 +1679,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new()
                 {
                     ContentType = new(DefaultContentType),
-                    ContentEncoding = new(DefaultContentEncoding),
+                    ContentEncoding = new(false),
                     ContentDisposition = new(DefaultContentDisposition),
                     ContentLanguage = new(DefaultContentLanguage),
                     CacheControl = new(DefaultCacheControl),
@@ -1717,7 +1714,6 @@ namespace Azure.Storage.DataMovement.Tests
             BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
             Assert.That(destinationMetadata, Is.EqualTo(destinationProperties.Metadata));
             Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
-            Assert.AreEqual(DefaultContentEncoding, destinationProperties.ContentEncoding);
             Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
             Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
         }

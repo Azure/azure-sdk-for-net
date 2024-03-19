@@ -244,7 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            string id = options?.BlockId ?? Storage.Shared.StorageExtensions.GenerateBlockId(range.Offset);
             if (!_blocks.TryAdd(range.Offset, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");

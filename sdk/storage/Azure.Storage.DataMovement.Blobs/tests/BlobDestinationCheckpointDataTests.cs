@@ -13,6 +13,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -60,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private void TestAssertSerializedData(BlobDestinationCheckpointData data)
         {
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -122,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             data.PreserveTags = true;
             data.TagsBytes = default;
 
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -135,9 +136,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 expected[DataMovementBlobConstants.DestinationCheckpointData.PreserveTagsIndex] = 1;
                 int tagsOffset = expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex];
                 int tagsLength = expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex];
-                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex] = 0;
-                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex] = 0;
-                // Remove the Content Type
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex+1] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex+2] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsOffsetIndex+3] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex+1] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex+2] = 255;
+                expected[DataMovementBlobConstants.DestinationCheckpointData.TagsLengthIndex+3] = 255;
+                // Remove Tags
                 expected.RemoveRange(tagsOffset, tagsLength);
 
                 // Get serialized data
@@ -156,7 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             data.PreserveAccessTier = true;
             data.AccessTier = default;
 
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -192,14 +199,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Deserialize_File_Version_1()
+        public void Deserialize_File_Version_2()
         {
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 stream.Position = 0;
                 BlobDestinationCheckpointData deserialized = BlobDestinationCheckpointData.Deserialize(stream);
-                VerifySampleValues(deserialized, 1);
+                VerifySampleValues(deserialized, 2);
             }
         }
 
@@ -223,6 +230,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
             Assert.AreEqual(false, data.PreserveTags);
             CollectionAssert.AreEquivalent(DefaultTags.Value, data.Tags.Value);
+        }
+
+        [Test]
+        public void Deserialize_IncorrectSchemaVersion()
+        {
+            int incorrectSchemaVersion = 1;
+            BlobDestinationCheckpointData data = CreatePreserveValues();
+            data.Version = incorrectSchemaVersion;
+
+            using MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex);
+            data.Serialize(dataStream);
+            dataStream.Position = 0;
+            TestHelper.AssertExpectedException(
+                () => BlobDestinationCheckpointData.Deserialize(dataStream),
+                new ArgumentException($"The checkpoint file schema version {incorrectSchemaVersion} is not supported by this version of the SDK."));
         }
     }
 }

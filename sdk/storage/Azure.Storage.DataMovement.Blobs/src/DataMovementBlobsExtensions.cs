@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Emit;
-using System.Threading.Tasks;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -665,7 +662,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
                         ? (string) contentDisposition
                         : default
-                : options?.ContentDisposition?.Value,
+                    : options?.ContentDisposition?.Value,
                 CacheControl = (options?.CacheControl?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
                         ? (string) cacheControl

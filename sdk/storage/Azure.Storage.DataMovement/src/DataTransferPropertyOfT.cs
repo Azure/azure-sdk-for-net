@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructs <see cref="DataTransferProperty"/> to preserves the respective property.
         /// </summary>
-        /// <param name="preserve"></param>
+        /// <param name="preserve">Specifies whether or to preserve the property value from the source.</param>
         public DataTransferProperty(bool preserve) : base(preserve)
         {
             _value = default;

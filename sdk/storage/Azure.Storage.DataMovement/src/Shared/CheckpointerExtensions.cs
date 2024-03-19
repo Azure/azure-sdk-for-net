@@ -158,8 +158,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal static void WriteEmptyLengthOffset(this BinaryWriter writer)
         {
-            writer.Write(0);
-            writer.Write(0);
+            writer.Write(-1);
+            writer.Write(-1);
         }
 
         /// <summary>

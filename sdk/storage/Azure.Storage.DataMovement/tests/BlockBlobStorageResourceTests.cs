@@ -730,7 +730,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.Is<BlobSyncUploadFromUriOptions>(
                     options =>
                         options.CopySourceBlobProperties == default &&
-                        options.AccessTier == default &&
+                        options.AccessTier == DefaultAccessTier &&
                         options.HttpHeaders == default &&
                         options.Metadata == default),
                 It.IsAny<CancellationToken>()),
