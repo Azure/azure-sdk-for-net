@@ -2,6 +2,7 @@
   "name": "azure-sdk-for-net",
   "version": "1.0.0",
   "dependencies": {
+    "@azure-tools/typespec-autorest": "^0.40.0",
     "autorest": "^3.7.1"
   }
 }

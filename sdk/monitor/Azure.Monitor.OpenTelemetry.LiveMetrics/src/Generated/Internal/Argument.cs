@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+namespace LiveMetrics
 {
     internal static class Argument
     {

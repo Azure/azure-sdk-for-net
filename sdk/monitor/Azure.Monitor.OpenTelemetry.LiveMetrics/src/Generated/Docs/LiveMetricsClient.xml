@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="IsSubscribedAsync(string,MonitoringDataPoint,long?,string,string,string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call IsSubscribedAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = await client.IsSubscribedAsync("<ikey>");
+]]></code>
+This sample shows how to call IsSubscribedAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+MonitoringDataPoint monitoringDataPoint = new MonitoringDataPoint(
+"<Version>",
+1234,
+"<Instance>",
+"<RoleName>",
+"<MachineName>",
+"<StreamId>",
+true,
+true)
+{
+    Timestamp = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    TransmissionTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    Metrics = { new MetricPoint("<Name>", 123.45, 1234) },
+    Documents = {new Request
+    {
+        Name = "<Name>",
+        Url = new Uri("http://localhost:3000"),
+        ResponseCode = "<ResponseCode>",
+        Duration = "<Duration>",
+        DocumentStreamIds = {"<DocumentStreamIds>"},
+        Properties = {new KeyValuePairStringString("<key>", "<value>")},
+    }},
+    TopCpuProcesses = { new ProcessCpuData("<ProcessName>", 1234) },
+    CollectionConfigurationErrors = {new CollectionConfigurationError(CollectionConfigurationErrorType.Unknown, "<Message>", "<FullException>", new KeyValuePairStringString[]
+    {
+        default
+    })},
+};
+Response<CollectionConfigurationInfo> response = await client.IsSubscribedAsync("<ikey>", monitoringDataPoint: monitoringDataPoint, transmissionTime: 1234L, machineName: "<machineName>", instanceName: "<instanceName>", streamId: "<streamId>", roleName: "<roleName>", invariantVersion: "<invariantVersion>", configurationEtag: "<configurationEtag>");
+]]></code></example>
+    </member>
+    <member name="IsSubscribed(string,MonitoringDataPoint,long?,string,string,string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call IsSubscribed.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = client.IsSubscribed("<ikey>");
+]]></code>
+This sample shows how to call IsSubscribed with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+MonitoringDataPoint monitoringDataPoint = new MonitoringDataPoint(
+"<Version>",
+1234,
+"<Instance>",
+"<RoleName>",
+"<MachineName>",
+"<StreamId>",
+true,
+true)
+{
+    Timestamp = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    TransmissionTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+    Metrics = { new MetricPoint("<Name>", 123.45, 1234) },
+    Documents = {new Request
+    {
+        Name = "<Name>",
+        Url = new Uri("http://localhost:3000"),
+        ResponseCode = "<ResponseCode>",
+        Duration = "<Duration>",
+        DocumentStreamIds = {"<DocumentStreamIds>"},
+        Properties = {new KeyValuePairStringString("<key>", "<value>")},
+    }},
+    TopCpuProcesses = { new ProcessCpuData("<ProcessName>", 1234) },
+    CollectionConfigurationErrors = {new CollectionConfigurationError(CollectionConfigurationErrorType.Unknown, "<Message>", "<FullException>", new KeyValuePairStringString[]
+    {
+        default
+    })},
+};
+Response<CollectionConfigurationInfo> response = client.IsSubscribed("<ikey>", monitoringDataPoint: monitoringDataPoint, transmissionTime: 1234L, machineName: "<machineName>", instanceName: "<instanceName>", streamId: "<streamId>", roleName: "<roleName>", invariantVersion: "<invariantVersion>", configurationEtag: "<configurationEtag>");
+]]></code></example>
+    </member>
+    <member name="IsSubscribedAsync(string,RequestContent,long?,string,string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call IsSubscribedAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = null;
+Response response = await client.IsSubscribedAsync("<ikey>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+]]></code>
+This sample shows how to call IsSubscribedAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    Version = "<Version>",
+    InvariantVersion = 1234,
+    Instance = "<Instance>",
+    RoleName = "<RoleName>",
+    MachineName = "<MachineName>",
+    StreamId = "<StreamId>",
+    Timestamp = "2022-05-10T14:57:31.2311892-04:00",
+    TransmissionTime = "2022-05-10T14:57:31.2311892-04:00",
+    IsWebApp = true,
+    PerformanceCollectionSupported = true,
+    Metrics = new object[]
+    {
+        new
+        {
+            Name = "<Name>",
+            Value = 123.45,
+            Weight = 1234,
+        }
+    },
+    Documents = new object[]
+    {
+        new
+        {
+            Name = "<Name>",
+            Url = "http://localhost:3000",
+            ResponseCode = "<ResponseCode>",
+            Duration = "<Duration>",
+            DocumentType = "Request",
+            DocumentStreamIds = new object[]
+            {
+                "<DocumentStreamIds>"
+            },
+            Properties = new object[]
+            {
+                new
+                {
+                    key = "<key>",
+                    value = "<value>",
+                }
+            },
+        }
+    },
+    TopCpuProcesses = new object[]
+    {
+        new
+        {
+            ProcessName = "<ProcessName>",
+            CpuPercentage = 1234,
+        }
+    },
+    CollectionConfigurationErrors = new object[]
+    {
+        new
+        {
+            CollectionConfigurationErrorType = "Unknown",
+            Message = "<Message>",
+            FullException = "<FullException>",
+            Data = new object[]
+            {
+                null
+            },
+        }
+    },
+});
+Response response = await client.IsSubscribedAsync("<ikey>", content, transmissionTime: 1234L, machineName: "<machineName>", instanceName: "<instanceName>", streamId: "<streamId>", roleName: "<roleName>", invariantVersion: "<invariantVersion>", configurationEtag: "<configurationEtag>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("InitialQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("MaxQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("QuotaAccrualRatePerSec").ToString());
+]]></code></example>
+    </member>
+    <member name="IsSubscribed(string,RequestContent,long?,string,string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call IsSubscribed and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = null;
+Response response = client.IsSubscribed("<ikey>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+]]></code>
+This sample shows how to call IsSubscribed with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    Version = "<Version>",
+    InvariantVersion = 1234,
+    Instance = "<Instance>",
+    RoleName = "<RoleName>",
+    MachineName = "<MachineName>",
+    StreamId = "<StreamId>",
+    Timestamp = "2022-05-10T14:57:31.2311892-04:00",
+    TransmissionTime = "2022-05-10T14:57:31.2311892-04:00",
+    IsWebApp = true,
+    PerformanceCollectionSupported = true,
+    Metrics = new object[]
+    {
+        new
+        {
+            Name = "<Name>",
+            Value = 123.45,
+            Weight = 1234,
+        }
+    },
+    Documents = new object[]
+    {
+        new
+        {
+            Name = "<Name>",
+            Url = "http://localhost:3000",
+            ResponseCode = "<ResponseCode>",
+            Duration = "<Duration>",
+            DocumentType = "Request",
+            DocumentStreamIds = new object[]
+            {
+                "<DocumentStreamIds>"
+            },
+            Properties = new object[]
+            {
+                new
+                {
+                    key = "<key>",
+                    value = "<value>",
+                }
+            },
+        }
+    },
+    TopCpuProcesses = new object[]
+    {
+        new
+        {
+            ProcessName = "<ProcessName>",
+            CpuPercentage = 1234,
+        }
+    },
+    CollectionConfigurationErrors = new object[]
+    {
+        new
+        {
+            CollectionConfigurationErrorType = "Unknown",
+            Message = "<Message>",
+            FullException = "<FullException>",
+            Data = new object[]
+            {
+                null
+            },
+        }
+    },
+});
+Response response = client.IsSubscribed("<ikey>", content, transmissionTime: 1234L, machineName: "<machineName>", instanceName: "<instanceName>", streamId: "<streamId>", roleName: "<roleName>", invariantVersion: "<invariantVersion>", configurationEtag: "<configurationEtag>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("InitialQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("MaxQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("QuotaAccrualRatePerSec").ToString());
+]]></code></example>
+    </member>
+    <member name="PublishAsync(string,IEnumerable{MonitoringDataPoint},string,long?,CancellationToken)">
+      <example>
+This sample shows how to call PublishAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = await client.PublishAsync("<ikey>");
+]]></code>
+This sample shows how to call PublishAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = await client.PublishAsync("<ikey>", monitoringDataPoints: new MonitoringDataPoint[]
+{
+    new MonitoringDataPoint(
+    "<Version>",
+    1234,
+    "<Instance>",
+    "<RoleName>",
+    "<MachineName>",
+    "<StreamId>",
+    true,
+    true)
+    {
+        Timestamp = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        TransmissionTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        Metrics = {new MetricPoint("<Name>", 123.45, 1234)},
+        Documents = {new Request
+        {
+            Name = "<Name>",
+            Url = new Uri("http://localhost:3000"),
+            ResponseCode = "<ResponseCode>",
+            Duration = "<Duration>",
+            DocumentStreamIds = {"<DocumentStreamIds>"},
+            Properties = {new KeyValuePairStringString("<key>", "<value>")},
+        }},
+        TopCpuProcesses = {new ProcessCpuData("<ProcessName>", 1234)},
+        CollectionConfigurationErrors = {new CollectionConfigurationError(CollectionConfigurationErrorType.Unknown, "<Message>", "<FullException>", new KeyValuePairStringString[]
+        {
+            default
+        })},
+    }
+}, configurationEtag: "<configurationEtag>", transmissionTime: 1234L);
+]]></code></example>
+    </member>
+    <member name="Publish(string,IEnumerable{MonitoringDataPoint},string,long?,CancellationToken)">
+      <example>
+This sample shows how to call Publish.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = client.Publish("<ikey>");
+]]></code>
+This sample shows how to call Publish with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+Response<CollectionConfigurationInfo> response = client.Publish("<ikey>", monitoringDataPoints: new MonitoringDataPoint[]
+{
+    new MonitoringDataPoint(
+    "<Version>",
+    1234,
+    "<Instance>",
+    "<RoleName>",
+    "<MachineName>",
+    "<StreamId>",
+    true,
+    true)
+    {
+        Timestamp = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        TransmissionTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+        Metrics = {new MetricPoint("<Name>", 123.45, 1234)},
+        Documents = {new Request
+        {
+            Name = "<Name>",
+            Url = new Uri("http://localhost:3000"),
+            ResponseCode = "<ResponseCode>",
+            Duration = "<Duration>",
+            DocumentStreamIds = {"<DocumentStreamIds>"},
+            Properties = {new KeyValuePairStringString("<key>", "<value>")},
+        }},
+        TopCpuProcesses = {new ProcessCpuData("<ProcessName>", 1234)},
+        CollectionConfigurationErrors = {new CollectionConfigurationError(CollectionConfigurationErrorType.Unknown, "<Message>", "<FullException>", new KeyValuePairStringString[]
+        {
+            default
+        })},
+    }
+}, configurationEtag: "<configurationEtag>", transmissionTime: 1234L);
+]]></code></example>
+    </member>
+    <member name="PublishAsync(string,RequestContent,string,long?,RequestContext)">
+      <example>
+This sample shows how to call PublishAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = null;
+Response response = await client.PublishAsync("<ikey>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+]]></code>
+This sample shows how to call PublishAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        Version = "<Version>",
+        InvariantVersion = 1234,
+        Instance = "<Instance>",
+        RoleName = "<RoleName>",
+        MachineName = "<MachineName>",
+        StreamId = "<StreamId>",
+        Timestamp = "2022-05-10T14:57:31.2311892-04:00",
+        TransmissionTime = "2022-05-10T14:57:31.2311892-04:00",
+        IsWebApp = true,
+        PerformanceCollectionSupported = true,
+        Metrics = new object[]
+        {
+            new
+            {
+                Name = "<Name>",
+                Value = 123.45,
+                Weight = 1234,
+            }
+        },
+        Documents = new object[]
+        {
+            new
+            {
+                Name = "<Name>",
+                Url = "http://localhost:3000",
+                ResponseCode = "<ResponseCode>",
+                Duration = "<Duration>",
+                DocumentType = "Request",
+                DocumentStreamIds = new object[]
+                {
+                    "<DocumentStreamIds>"
+                },
+                Properties = new object[]
+                {
+                    new
+                    {
+                        key = "<key>",
+                        value = "<value>",
+                    }
+                },
+            }
+        },
+        TopCpuProcesses = new object[]
+        {
+            new
+            {
+                ProcessName = "<ProcessName>",
+                CpuPercentage = 1234,
+            }
+        },
+        CollectionConfigurationErrors = new object[]
+        {
+            new
+            {
+                CollectionConfigurationErrorType = "Unknown",
+                Message = "<Message>",
+                FullException = "<FullException>",
+                Data = new object[]
+                {
+                    null
+                },
+            }
+        },
+    }
+});
+Response response = await client.PublishAsync("<ikey>", content, configurationEtag: "<configurationEtag>", transmissionTime: 1234L);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("InitialQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("MaxQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("QuotaAccrualRatePerSec").ToString());
+]]></code></example>
+    </member>
+    <member name="Publish(string,RequestContent,string,long?,RequestContext)">
+      <example>
+This sample shows how to call Publish and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = null;
+Response response = client.Publish("<ikey>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+]]></code>
+This sample shows how to call Publish with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+LiveMetricsClient client = new LiveMetricsClient(credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        Version = "<Version>",
+        InvariantVersion = 1234,
+        Instance = "<Instance>",
+        RoleName = "<RoleName>",
+        MachineName = "<MachineName>",
+        StreamId = "<StreamId>",
+        Timestamp = "2022-05-10T14:57:31.2311892-04:00",
+        TransmissionTime = "2022-05-10T14:57:31.2311892-04:00",
+        IsWebApp = true,
+        PerformanceCollectionSupported = true,
+        Metrics = new object[]
+        {
+            new
+            {
+                Name = "<Name>",
+                Value = 123.45,
+                Weight = 1234,
+            }
+        },
+        Documents = new object[]
+        {
+            new
+            {
+                Name = "<Name>",
+                Url = "http://localhost:3000",
+                ResponseCode = "<ResponseCode>",
+                Duration = "<Duration>",
+                DocumentType = "Request",
+                DocumentStreamIds = new object[]
+                {
+                    "<DocumentStreamIds>"
+                },
+                Properties = new object[]
+                {
+                    new
+                    {
+                        key = "<key>",
+                        value = "<value>",
+                    }
+                },
+            }
+        },
+        TopCpuProcesses = new object[]
+        {
+            new
+            {
+                ProcessName = "<ProcessName>",
+                CpuPercentage = 1234,
+            }
+        },
+        CollectionConfigurationErrors = new object[]
+        {
+            new
+            {
+                CollectionConfigurationErrorType = "Unknown",
+                Message = "<Message>",
+                FullException = "<FullException>",
+                Data = new object[]
+                {
+                    null
+                },
+            }
+        },
+    }
+});
+Response response = client.Publish("<ikey>", content, configurationEtag: "<configurationEtag>", transmissionTime: 1234L);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ETag").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("FilterGroups")[0].GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Projection").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("Aggregation").ToString());
+Console.WriteLine(result.GetProperty("Metrics")[0].GetProperty("BackEndAggregation").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("Id").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("TelemetryType").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("FieldName").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Predicate").ToString());
+Console.WriteLine(result.GetProperty("DocumentStreams")[0].GetProperty("DocumentFilterGroups")[0].GetProperty("Filters").GetProperty("Filters")[0].GetProperty("Comparand").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("InitialQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("MaxQuota").ToString());
+Console.WriteLine(result.GetProperty("QuotaInfo").GetProperty("QuotaAccrualRatePerSec").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
