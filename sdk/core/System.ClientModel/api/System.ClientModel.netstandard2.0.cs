@@ -12,6 +12,7 @@ namespace System.ClientModel
         protected BinaryContent() { }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent Create(System.Net.Http.HttpContent content) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
@@ -131,6 +132,18 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public sealed partial class MultipartFormDataBinaryContent : System.ClientModel.BinaryContent
+    {
+        public MultipartFormDataBinaryContent() { }
+        public string ContentType { get { throw null; } }
+        public void Add(System.BinaryData content, string name, string? fileName = null) { }
+        public void Add(System.IO.Stream stream, string name, string? fileName = null) { }
+        public void Add(string content, string name, string? fileName = null) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
