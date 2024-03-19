@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     internal class Utf8JsonRequestContent : RequestContent
     {

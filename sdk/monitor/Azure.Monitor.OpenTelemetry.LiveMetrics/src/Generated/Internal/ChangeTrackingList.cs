@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
