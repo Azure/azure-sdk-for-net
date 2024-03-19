@@ -336,7 +336,7 @@ namespace Azure.AI.Language.Conversations
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -353,7 +353,7 @@ namespace Azure.AI.Language.Conversations
             uri.AppendRaw("/language", false);
             uri.AppendPath("/analyze-conversations/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
@@ -375,7 +375,7 @@ namespace Azure.AI.Language.Conversations
             {
                 uri.AppendQuery("showStats", showStats.Value, true);
             }
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -392,7 +392,7 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath(jobId, true);
             uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             return message;
         }

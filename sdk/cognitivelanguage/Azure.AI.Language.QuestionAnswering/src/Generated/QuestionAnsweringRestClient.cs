@@ -50,7 +50,7 @@ namespace Azure.AI.Language.QuestionAnswering
             uri.AppendQuery("projectName", projectName, true);
             uri.AppendQuery("deploymentName", deploymentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.QuestionAnswering
             uri.AppendRaw("/language", false);
             uri.AppendPath("/:query-text", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            request.Uri = uri.ToRequestUriBuilder();
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
