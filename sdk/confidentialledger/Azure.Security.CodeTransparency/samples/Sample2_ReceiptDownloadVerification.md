@@ -13,7 +13,7 @@ To create a new `CodeTransparencyClient` that will interact with the service, wi
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample2_CreateClient
-var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
 ```
 
 ## Download receipt
@@ -25,8 +25,7 @@ The receipt on its own contains only the inclusion proof and the signature. You 
 The easiest way is to download the receipt and the signature together which was stored after the submission. The receipt will be added to the unprotected header of the signature.
 
 ```C# Snippet:CodeTransparencySample2_GetEntryWithEmbeddedReceipt
-var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-Response<BinaryData> response = await client.GetEntryAsync("4.44", true);
+Response<BinaryData> signatureWithReceipt = await client.GetEntryAsync("2.34", true);
 ```
 
 ### Raw receipt
@@ -34,8 +33,7 @@ Response<BinaryData> response = await client.GetEntryAsync("4.44", true);
 If you have the signature as a separate file already then you can download the raw receipt file.
 
 ```C# Snippet:CodeTransparencySample2_GetRawReceipt
-var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-Response<BinaryData> response = await client.GetEntryAsync("4.44");
+Response<BinaryData> receipt = await client.GetEntryReceiptAsync("2.34");
 ```
 
 ## Verify
@@ -49,13 +47,7 @@ The following examples will use a default public key resolver to get the keys fo
 When receipt is embedded in the signature then passing just the signature is enough.
 
 ```C# Snippet:CodeTransparencySample2_VerifyEntryWithEmbeddedReceipt
-byte[] receiptBytes = readFileBytes("sbom.descriptor.2022-12-10.embedded.did.2023-02-13.cose");
-var didDocBytes = readFileBytes("service.2023-03.did.json");
-var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-CcfReceiptVerifier.RunVerification(receiptBytes, null, didRef => {
-    Assert.AreEqual("https://preview-test.scitt.azure.net/.well-known/did.json", didRef.DidDocUrl.ToString());
-    return didDoc;
-});
+CcfReceiptVerifier.RunVerification(signatureWithReceipt.Value.ToArray());
 ```
 
 ### Raw receipt
@@ -63,12 +55,5 @@ CcfReceiptVerifier.RunVerification(receiptBytes, null, didRef => {
 If the receipt is a separate file then it needs to be passed as a second argument next to the signature.
 
 ```C# Snippet:CodeTransparencySample2_VerifyEntryAndReceipt
-byte[] receiptBytes = readFileBytes("artifact.2023-03-03.receipt.did.2023-03-03.cbor");
-byte[] coseSign1Bytes = readFileBytes("artifact.2023-03-03.cose");
-var didDocBytes = readFileBytes("service.2023-02.did.json");
-var didDoc = DidDocument.DeserializeDidDocument(JsonDocument.Parse(didDocBytes).RootElement);
-CcfReceiptVerifier.RunVerification(receiptBytes, coseSign1Bytes, didRef => {
-    Assert.AreEqual("https://127.0.0.1:42399/.well-known/did.json", didRef.DidDocUrl.ToString());
-    return didDoc;
-});
+CcfReceiptVerifier.RunVerification(receipt.Value.ToArray(), signatureBytes);
 ```
