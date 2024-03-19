@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
+            if (Optional.IsDefined(DiffDiskSettings))
+            {
+                writer.WritePropertyName("diffDiskSettings"u8);
+                writer.WriteObjectValue(DiffDiskSettings);
+            }
             if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             CachingType? caching = default;
             bool? writeAcceleratorEnabled = default;
+            DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
@@ -132,6 +138,15 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     writeAcceleratorEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("diffDiskSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))
@@ -193,6 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetUpdateOSDisk(
                 caching,
                 writeAcceleratorEnabled,
+                diffDiskSettings,
                 diskSizeGB,
                 image,
                 vhdContainers ?? new ChangeTrackingList<string>(),
