@@ -15,25 +15,23 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    public partial class MetricPoint : IUtf8JsonSerializable, IJsonModel<MetricPoint>
+    internal partial class KeyValuePairStringString : IUtf8JsonSerializable, IJsonModel<KeyValuePairStringString>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyValuePairStringString>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MetricPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyValuePairStringString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyValuePairStringString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyValuePairStringString)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("Name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("Value"u8);
-            writer.WriteNumberValue(Value);
-            writer.WritePropertyName("Weight"u8);
-            writer.WriteNumberValue(Weight);
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,19 +50,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteEndObject();
         }
 
-        MetricPoint IJsonModel<MetricPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyValuePairStringString IJsonModel<KeyValuePairStringString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyValuePairStringString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyValuePairStringString)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricPoint(document.RootElement, options);
+            return DeserializeKeyValuePairStringString(document.RootElement, options);
         }
 
-        internal static MetricPoint DeserializeMetricPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyValuePairStringString DeserializeKeyValuePairStringString(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -72,26 +70,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            string name = default;
-            double value = default;
-            int weight = default;
+            string key = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Name"u8))
+                if (property.NameEquals("key"u8))
                 {
-                    name = property.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Value"u8))
+                if (property.NameEquals("value"u8))
                 {
-                    value = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("Weight"u8))
-                {
-                    weight = property.Value.GetInt32();
+                    value = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,46 +92,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricPoint(name, value, weight, serializedAdditionalRawData);
+            return new KeyValuePairStringString(key, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MetricPoint>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyValuePairStringString>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyValuePairStringString>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyValuePairStringString)} does not support '{options.Format}' format.");
             }
         }
 
-        MetricPoint IPersistableModel<MetricPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyValuePairStringString IPersistableModel<KeyValuePairStringString>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyValuePairStringString>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMetricPoint(document.RootElement, options);
+                        return DeserializeKeyValuePairStringString(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyValuePairStringString)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MetricPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyValuePairStringString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MetricPoint FromResponse(Response response)
+        internal static KeyValuePairStringString FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMetricPoint(document.RootElement);
+            return DeserializeKeyValuePairStringString(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

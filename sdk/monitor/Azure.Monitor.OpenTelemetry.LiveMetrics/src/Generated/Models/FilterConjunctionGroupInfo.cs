@@ -5,28 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> An AND-connected group of FilterInfo objects. </summary>
-    internal partial class FilterConjunctionGroupInfo
+    public partial class FilterConjunctionGroupInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
-        internal FilterConjunctionGroupInfo()
+        /// <param name="filters"> An array of filters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        internal FilterConjunctionGroupInfo(IEnumerable<FilterInfo> filters)
         {
-            Filters = new ChangeTrackingList<FilterInfo>();
+            Argument.AssertNotNull(filters, nameof(filters));
+
+            Filters = filters.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
-        /// <param name="filters"></param>
-        internal FilterConjunctionGroupInfo(IReadOnlyList<FilterInfo> filters)
+        /// <param name="filters"> An array of filters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterConjunctionGroupInfo(IReadOnlyList<FilterInfo> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the filters. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/> for deserialization. </summary>
+        internal FilterConjunctionGroupInfo()
+        {
+        }
+
+        /// <summary> An array of filters. </summary>
         public IReadOnlyList<FilterInfo> Filters { get; }
     }
 }

@@ -6,24 +6,83 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class ServiceError
+    internal partial class ServiceError : IUtf8JsonSerializable, IJsonModel<ServiceError>
     {
-        internal static ServiceError DeserializeServiceError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("RequestId"u8);
+            writer.WriteStringValue(RequestId);
+            writer.WritePropertyName("ResponseDateTime"u8);
+            writer.WriteStringValue(ResponseDateTime);
+            writer.WritePropertyName("Code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("Message"u8);
+            writer.WriteStringValue(Message);
+            writer.WritePropertyName("Exception"u8);
+            writer.WriteStringValue(Exception);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceError IJsonModel<ServiceError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceError(document.RootElement, options);
+        }
+
+        internal static ServiceError DeserializeServiceError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string requestId = default;
-            DateTimeOffset? responseDateTime = default;
+            string responseDateTime = default;
             string code = default;
             string message = default;
             string exception = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RequestId"u8))
@@ -33,11 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("ResponseDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responseDateTime = property.Value.GetDateTimeOffset("O");
+                    responseDateTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("Code"u8))
@@ -55,8 +110,66 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     exception = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceError(requestId, responseDateTime, code, message, exception);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceError(
+                requestId,
+                responseDateTime,
+                code,
+                message,
+                exception,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ServiceError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceError IPersistableModel<ServiceError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceError(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

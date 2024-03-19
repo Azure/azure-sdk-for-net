@@ -11,8 +11,8 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> CPU consumption datapoint. </summary>
-    public partial class ProcessCpuData
+    /// <summary> Key-value pair of string and string. </summary>
+    internal partial class KeyValuePairStringString
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +46,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/>. </summary>
-        /// <param name="processName"> Process name. </param>
-        /// <param name="cpuPercentage"> CPU consumption percentage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="processName"/> is null. </exception>
-        public ProcessCpuData(string processName, int cpuPercentage)
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairStringString"/>. </summary>
+        /// <param name="key"> Key of the key-value pair. </param>
+        /// <param name="value"> Value of the key-value pair. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public KeyValuePairStringString(string key, string value)
         {
-            Argument.AssertNotNull(processName, nameof(processName));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
-            ProcessName = processName;
-            CpuPercentage = cpuPercentage;
+            Key = key;
+            Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/>. </summary>
-        /// <param name="processName"> Process name. </param>
-        /// <param name="cpuPercentage"> CPU consumption percentage. </param>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairStringString"/>. </summary>
+        /// <param name="key"> Key of the key-value pair. </param>
+        /// <param name="value"> Value of the key-value pair. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessCpuData(string processName, int cpuPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyValuePairStringString(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProcessName = processName;
-            CpuPercentage = cpuPercentage;
+            Key = key;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/> for deserialization. </summary>
-        internal ProcessCpuData()
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairStringString"/> for deserialization. </summary>
+        internal KeyValuePairStringString()
         {
         }
 
-        /// <summary> Process name. </summary>
-        public string ProcessName { get; }
-        /// <summary> CPU consumption percentage. </summary>
-        public int CpuPercentage { get; }
+        /// <summary> Key of the key-value pair. </summary>
+        public string Key { get; }
+        /// <summary> Value of the key-value pair. </summary>
+        public string Value { get; }
     }
 }

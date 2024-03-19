@@ -5,42 +5,141 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class DocumentFilterConjunctionGroupInfo
+    public partial class DocumentFilterConjunctionGroupInfo : IUtf8JsonSerializable, IJsonModel<DocumentFilterConjunctionGroupInfo>
     {
-        internal static DocumentFilterConjunctionGroupInfo DeserializeDocumentFilterConjunctionGroupInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFilterConjunctionGroupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentFilterConjunctionGroupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("TelemetryType"u8);
+            writer.WriteStringValue(TelemetryType.ToString());
+            writer.WritePropertyName("Filters"u8);
+            writer.WriteObjectValue(Filters);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentFilterConjunctionGroupInfo IJsonModel<DocumentFilterConjunctionGroupInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement, options);
+        }
+
+        internal static DocumentFilterConjunctionGroupInfo DeserializeDocumentFilterConjunctionGroupInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DocumentFilterConjunctionGroupInfoTelemetryType? telemetryType = default;
+            TelemetryType telemetryType = default;
             FilterConjunctionGroupInfo filters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TelemetryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    telemetryType = new DocumentFilterConjunctionGroupInfoTelemetryType(property.Value.GetString());
+                    telemetryType = new TelemetryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("Filters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    filters = FilterConjunctionGroupInfo.DeserializeFilterConjunctionGroupInfo(property.Value);
+                    filters = FilterConjunctionGroupInfo.DeserializeFilterConjunctionGroupInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentFilterConjunctionGroupInfo(telemetryType, filters);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DocumentFilterConjunctionGroupInfo(telemetryType, filters, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DocumentFilterConjunctionGroupInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DocumentFilterConjunctionGroupInfo IPersistableModel<DocumentFilterConjunctionGroupInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentFilterConjunctionGroupInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentFilterConjunctionGroupInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

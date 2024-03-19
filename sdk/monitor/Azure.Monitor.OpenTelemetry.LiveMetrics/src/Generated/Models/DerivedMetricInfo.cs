@@ -5,18 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> A metric configuration set by UX to scope the metrics it's interested in. </summary>
-    internal partial class DerivedMetricInfo
+    public partial class DerivedMetricInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
-        internal DerivedMetricInfo()
+        /// <param name="id"> metric configuration identifier. </param>
+        /// <param name="telemetryType"> Telemetry type. </param>
+        /// <param name="filterGroups"> A collection of filters to scope metrics that UX needs. </param>
+        /// <param name="projection"> Telemetry's metric dimension whose value is to be aggregated. Example values: Duration, Count(),... </param>
+        /// <param name="aggregation"> Aggregation type. This is the aggregation done from everything within a single server. </param>
+        /// <param name="backEndAggregation"> Aggregation type. This Aggregation is done across the values for all the servers taken together. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="telemetryType"/>, <paramref name="filterGroups"/> or <paramref name="projection"/> is null. </exception>
+        internal DerivedMetricInfo(string id, string telemetryType, IEnumerable<FilterConjunctionGroupInfo> filterGroups, string projection, AggregationType aggregation, AggregationType backEndAggregation)
         {
-            FilterGroups = new ChangeTrackingList<FilterConjunctionGroupInfo>();
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(telemetryType, nameof(telemetryType));
+            Argument.AssertNotNull(filterGroups, nameof(filterGroups));
+            Argument.AssertNotNull(projection, nameof(projection));
+
+            Id = id;
+            TelemetryType = telemetryType;
+            FilterGroups = filterGroups.ToList();
+            Projection = projection;
+            Aggregation = aggregation;
+            BackEndAggregation = backEndAggregation;
         }
 
         /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
@@ -24,14 +75,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="telemetryType"> Telemetry type. </param>
         /// <param name="filterGroups"> A collection of filters to scope metrics that UX needs. </param>
         /// <param name="projection"> Telemetry's metric dimension whose value is to be aggregated. Example values: Duration, Count(),... </param>
-        /// <param name="aggregation"> Aggregation type. </param>
-        internal DerivedMetricInfo(string id, string telemetryType, IReadOnlyList<FilterConjunctionGroupInfo> filterGroups, string projection, DerivedMetricInfoAggregation? aggregation)
+        /// <param name="aggregation"> Aggregation type. This is the aggregation done from everything within a single server. </param>
+        /// <param name="backEndAggregation"> Aggregation type. This Aggregation is done across the values for all the servers taken together. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DerivedMetricInfo(string id, string telemetryType, IReadOnlyList<FilterConjunctionGroupInfo> filterGroups, string projection, AggregationType aggregation, AggregationType backEndAggregation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             TelemetryType = telemetryType;
             FilterGroups = filterGroups;
             Projection = projection;
             Aggregation = aggregation;
+            BackEndAggregation = backEndAggregation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/> for deserialization. </summary>
+        internal DerivedMetricInfo()
+        {
         }
 
         /// <summary> metric configuration identifier. </summary>
@@ -42,7 +102,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public IReadOnlyList<FilterConjunctionGroupInfo> FilterGroups { get; }
         /// <summary> Telemetry's metric dimension whose value is to be aggregated. Example values: Duration, Count(),... </summary>
         public string Projection { get; }
-        /// <summary> Aggregation type. </summary>
-        public DerivedMetricInfoAggregation? Aggregation { get; }
+        /// <summary> Aggregation type. This is the aggregation done from everything within a single server. </summary>
+        public AggregationType Aggregation { get; }
+        /// <summary> Aggregation type. This Aggregation is done across the values for all the servers taken together. </summary>
+        public AggregationType BackEndAggregation { get; }
     }
 }

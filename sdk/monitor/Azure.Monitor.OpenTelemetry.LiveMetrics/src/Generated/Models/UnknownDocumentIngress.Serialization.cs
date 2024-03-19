@@ -15,24 +15,19 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    internal partial class Event : IUtf8JsonSerializable, IJsonModel<Event>
+    internal partial class UnknownDocumentIngress : IUtf8JsonSerializable, IJsonModel<DocumentIngress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Event>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentIngress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<Event>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DocumentIngress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentIngress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Event)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentIngress)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("Name"u8);
-                writer.WriteStringValue(Name);
-            }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
             if (Optional.IsCollectionDefined(DocumentStreamIds))
@@ -73,19 +68,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteEndObject();
         }
 
-        Event IJsonModel<Event>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DocumentIngress IJsonModel<DocumentIngress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentIngress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Event)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentIngress)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvent(document.RootElement, options);
+            return DeserializeDocumentIngress(document.RootElement, options);
         }
 
-        internal static Event DeserializeEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownDocumentIngress DeserializeUnknownDocumentIngress(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -93,19 +88,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            string name = default;
-            DocumentType documentType = default;
+            DocumentType documentType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IList<string> documentStreamIds = default;
             IList<KeyValuePairStringString> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("DocumentType"u8))
                 {
                     documentType = new DocumentType(property.Value.GetString());
@@ -145,46 +134,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Event(documentType, documentStreamIds ?? new ChangeTrackingList<string>(), properties ?? new ChangeTrackingList<KeyValuePairStringString>(), serializedAdditionalRawData, name);
+            return new UnknownDocumentIngress(documentType, documentStreamIds ?? new ChangeTrackingList<string>(), properties ?? new ChangeTrackingList<KeyValuePairStringString>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Event>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DocumentIngress>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentIngress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Event)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentIngress)} does not support '{options.Format}' format.");
             }
         }
 
-        Event IPersistableModel<Event>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DocumentIngress IPersistableModel<DocumentIngress>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Event>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentIngress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEvent(document.RootElement, options);
+                        return DeserializeDocumentIngress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Event)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentIngress)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Event>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentIngress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new Event FromResponse(Response response)
+        internal static new UnknownDocumentIngress FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEvent(document.RootElement);
+            return DeserializeUnknownDocumentIngress(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
