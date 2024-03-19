@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: DeviceRegistry
 namespace: Azure.ResourceManager.DeviceRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/7b097c7e91a72a8930b94282274158b71e604695/specification/deviceregistry/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9549a0e63c97d766ddadd56c71b4ad04c096dd3f/specification/deviceregistry/resource-manager/readme.md
 #tag: package-preview-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true

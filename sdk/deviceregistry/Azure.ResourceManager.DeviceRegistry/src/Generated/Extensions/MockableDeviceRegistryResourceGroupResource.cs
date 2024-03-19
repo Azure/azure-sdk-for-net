@@ -36,75 +36,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeviceRegistryAssetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceRegistryAssetResources and their operations over a DeviceRegistryAssetResource. </returns>
-        public virtual DeviceRegistryAssetCollection GetDeviceRegistryAssets()
-        {
-            return GetCachedClient(client => new DeviceRegistryAssetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assetName"> Asset name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DeviceRegistryAssetResource>> GetDeviceRegistryAssetAsync(string assetName, CancellationToken cancellationToken = default)
-        {
-            return await GetDeviceRegistryAssets().GetAsync(assetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistryAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assetName"> Asset name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DeviceRegistryAssetResource> GetDeviceRegistryAsset(string assetName, CancellationToken cancellationToken = default)
-        {
-            return GetDeviceRegistryAssets().Get(assetName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DeviceRegistryAssetEndpointProfileResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DeviceRegistryAssetEndpointProfileResources and their operations over a DeviceRegistryAssetEndpointProfileResource. </returns>
         public virtual DeviceRegistryAssetEndpointProfileCollection GetDeviceRegistryAssetEndpointProfiles()
@@ -172,6 +103,75 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         public virtual Response<DeviceRegistryAssetEndpointProfileResource> GetDeviceRegistryAssetEndpointProfile(string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             return GetDeviceRegistryAssetEndpointProfiles().Get(assetEndpointProfileName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeviceRegistryAssetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DeviceRegistryAssetResources and their operations over a DeviceRegistryAssetResource. </returns>
+        public virtual DeviceRegistryAssetCollection GetDeviceRegistryAssets()
+        {
+            return GetCachedClient(client => new DeviceRegistryAssetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Asset
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetName"> Asset name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeviceRegistryAssetResource>> GetDeviceRegistryAssetAsync(string assetName, CancellationToken cancellationToken = default)
+        {
+            return await GetDeviceRegistryAssets().GetAsync(assetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Asset
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryAssetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetName"> Asset name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeviceRegistryAssetResource> GetDeviceRegistryAsset(string assetName, CancellationToken cancellationToken = default)
+        {
+            return GetDeviceRegistryAssets().Get(assetName, cancellationToken);
         }
     }
 }
