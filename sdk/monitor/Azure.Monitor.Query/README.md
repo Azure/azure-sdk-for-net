@@ -60,7 +60,7 @@ var client = new MetricsClient(
     new DefaultAzureCredential());
 ```
 
-### Configure client for Azure sovereign cloud
+#### Configure client for Azure sovereign cloud
 
 By default, `LogsQueryClient` and `MetricsQueryClient` are configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
 
