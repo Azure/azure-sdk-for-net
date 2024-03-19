@@ -230,6 +230,7 @@ namespace Azure.Storage.Test.Shared
             };
         }
 
+#if BlobSDK
         internal static Action<Request> GetRequestStructuredMessageAssertion(
             StructuredMessage.Flags flags,
             Func<Request, bool> isStructuredMessageExpected = default,
@@ -254,6 +255,7 @@ namespace Azure.Storage.Test.Shared
                 Assert.That(request.Headers.TryGetValue("x-ms-structured-content-length", out string structuredContentLength));
             };
         }
+#endif
 
         /// <summary>
         /// Gets an assertion as to whether a transactional checksum appeared on a returned response.
@@ -392,9 +394,13 @@ namespace Azure.Storage.Test.Shared
             };
 
             // make pipeline assertion for checking checksum was present on upload
+#if BlobSDK
             var assertion = algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(algorithm);
+#else
+            var assertion = GetRequestChecksumHeaderAssertion(algorithm);
+#endif
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: assertion);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
@@ -499,8 +505,12 @@ namespace Azure.Storage.Test.Shared
                 AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
 
                 // Assert
+#if BlobSDK
                 AssertWriteChecksumMismatch(operation, algorithm,
                     expectStructuredMessage: algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64);
+#else
+                AssertWriteChecksumMismatch(operation, algorithm);
+#endif
             }
         }
 
@@ -515,9 +525,13 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
 
             // make pipeline assertion for checking checksum was present on upload
+#if BlobSDK
             var assertion = clientAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(clientAlgorithm);
+#else
+            var assertion = GetRequestChecksumHeaderAssertion(clientAlgorithm);
+#endif
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: assertion);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
@@ -557,9 +571,13 @@ namespace Azure.Storage.Test.Shared
             };
 
             // make pipeline assertion for checking checksum was present on upload
+#if BlobSDK
             var assertion = overrideAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(overrideAlgorithm);
+#else
+            var assertion = GetRequestChecksumHeaderAssertion(overrideAlgorithm);
+#endif
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: assertion);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);

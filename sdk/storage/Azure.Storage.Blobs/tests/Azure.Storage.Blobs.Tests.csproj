@@ -6,6 +6,9 @@
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>BlobSDK</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
     <!-- Microsoft and Newtonsoft dependencies for testing clientside encryption backwards compatibility -->
