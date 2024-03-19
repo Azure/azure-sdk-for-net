@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
@@ -14,18 +15,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     {
         // internal HttpResponseMessage HttpResponseMessage { get; set; }
         /// <summary>Invalidates this instance. (Builds the Json payload).</summary>
-        internal abstract void Invalidate();
+        internal abstract void BuildJsonElement();
 
         /// <summary>Gets or sets the body of the event response.</summary>
         [Required]
         public string Body
         {
-            get { return Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result; }
+            get
+            {
+                if (_body == null)
+                {
+                    _body = Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result;
+                }
+                return _body;
+            }
             set
             {
+                _body = value;
                 Content = new StringContent(value, Encoding.UTF8, "application/json");
             }
         }
+
+        private string _body;
 
         /// <summary>Creates an instance of a sub class of EventResponse based on type and assigns the json schema and payload to the newly created instance.</summary>
         /// <param name="type">The type to create.</param>
@@ -107,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             try
             {
                 Helpers.ValidateGraph(this);
-                Invalidate();
+                BuildJsonElement();
             }
             catch (ValidationException exception)
             {

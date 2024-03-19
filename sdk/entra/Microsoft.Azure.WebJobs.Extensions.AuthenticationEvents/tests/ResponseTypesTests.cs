@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(httpResponseMessage.StatusCode, code);
-            Assert.True(DoesPayloadMatch(payload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         private object GetResponseTypeObject(ResponseTypes responseType, StreamWriter streamWriter)
