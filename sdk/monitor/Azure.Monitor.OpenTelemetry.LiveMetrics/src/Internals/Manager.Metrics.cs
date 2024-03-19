@@ -115,6 +115,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </remarks>
         public IEnumerable<Models.MetricPoint> CollectProcessMetrics()
         {
+            _process.Refresh();
+
             yield return new Models.MetricPoint
             {
                 Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
