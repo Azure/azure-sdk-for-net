@@ -2,41 +2,136 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
+using Azure;
+using Azure.Communication.ProgrammableConnectivity;
+using Azure.Core;
+using Azure.Identity;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.ProgrammableConnectivity.Tests
 {
-    public class ProgrammableConnectivityClientTest: RecordedTestBase<ProgrammableConnectivityClientTestEnvironment>
+    public class ProgrammableConnectivityClientTest : RecordedTestBase
     {
-        public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync)
+        private const string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+        private readonly Uri _endpoint = new Uri("https://eastus.prod.apcgatewayapi.azure.com");
+        private TokenCredential _credential;
+
+        public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups") { Regex = @"[A-Za-z0-9-\-]*/resourceGroups" });
+            _credential = new DefaultAzureCredential();
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
+        private ProgrammableConnectivityClient GetClient()
+        {
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            return InstrumentClient(new ProgrammableConnectivityClient(_endpoint, _credential, clientOptions));
+        }
 
         [RecordedTest]
-        public void TestOperation()
+        public void SimSwapVerifyTest()
         {
-            Assert.IsTrue(true);
+            var baseClient = GetClient();
+            var client = baseClient.GetSimSwapClient();
+            var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            {
+                PhoneNumber = "+34665439999",
+                MaxAgeHours = 120,
+            };
+
+            Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
+
+            Assert.IsFalse(response.Value.VerificationResult);
         }
 
-        #region Helpers
-
-        private static BinaryData GetContentFromResponse(Response r)
+        [RecordedTest]
+        public void SimSwapVerifyBadResponseTest()
         {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
+            var baseClient = GetClient();
+            var client = baseClient.GetSimSwapClient();
+            var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            {
+                PhoneNumber = "+34665439999",
+                MaxAgeHours = -10,
+            };
 
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
+            try
+            {
+                Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"Caught exception of type: {ex.GetType()}");
+            }
         }
-        #endregion
+
+        [RecordedTest]
+        public void SimSwapRetrieveTest()
+        {
+            var baseClient = GetClient();
+            var client = baseClient.GetSimSwapClient();
+            var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            {
+                PhoneNumber = "+34665439999",
+            };
+
+            Response<SimSwapRetrievalResult> response = client.Retrieve(ApcGatewayId, content);
+            DateTimeOffset expectedDate = DateTimeOffset.Parse("2023-11-16 14:43:05+00:00", null, System.Globalization.DateTimeStyles.RoundtripKind);
+            Assert.AreEqual(expectedDate, response.Value.Date, "The dates should match.");
+        }
+
+        [RecordedTest]
+        public void LocationVerifyTest()
+        {
+            var baseClient = GetClient();
+            var client = baseClient.GetDeviceLocationClient();
+            var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
+            {
+                PhoneNumber = "+5551980449999",
+            });
+
+            Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, deviceLocationVerificationContent);
+
+            Assert.IsFalse(result.Value.VerificationResult);
+        }
+
+        [RecordedTest]
+        public void NetworkRetrievalTest()
+        {
+            var baseClient = GetClient();
+            var client = baseClient.GetDeviceNetworkClient();
+            var networkIdentifier = new NetworkIdentifier("IPv4", "189.88.1.1");
+
+            Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+            Assert.AreEqual(response.Value.NetworkCode, "Claro_Brazil");
+        }
+
+        [RecordedTest]
+        public void NetworkRetrievalBadIdentifierTest()
+        {
+            var baseClient = GetClient();
+            var client = baseClient.GetDeviceNetworkClient();
+            var networkIdentifier = new NetworkIdentifier("IPv5", "189.88.1.1");
+            try
+            {
+                Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Exception Message: {ex.Message}");
+                Console.WriteLine($"Status Code: {ex.Status}");
+                Console.WriteLine($"Error Code: {ex.ErrorCode}");
+                Assert.AreEqual(400, ex.Status);
+            }
+        }
     }
 }
