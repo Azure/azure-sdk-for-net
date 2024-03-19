@@ -27,11 +27,9 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint.
-        /// <example snippet="Snippet:CreateLogsClient">
-        /// <code language="csharp">
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         /// </code>
-        /// </example>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
