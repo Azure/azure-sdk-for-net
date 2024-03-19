@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     });
 
                     Assert.AreEqual(HttpStatusCode.OK, httpResponseMessage.StatusCode);
-                    Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+                    Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()));
                 });
         }
 
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 }
             });
 
-            Assert.AreEqual(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-            Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.AreEqual(HttpStatusCode.OK, httpResponseMessage.StatusCode);
+            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         /// <summary>Test the request object to verify the correct HttpStatusCode is respond</summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(HttpStatusCode.InternalServerError, httpResponseMessage.StatusCode);
-            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.NullResponsePayload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(httpResponseMessage.StatusCode, expectReturnCode);
-            Assert.True(DoesPayloadMatch(expectedResponse, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(expectedResponse, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
     }
 }

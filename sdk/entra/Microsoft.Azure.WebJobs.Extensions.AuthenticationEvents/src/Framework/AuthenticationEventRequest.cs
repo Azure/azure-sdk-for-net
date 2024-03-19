@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
-                    Unauthorized();
+                    SetResponseUnauthorized();
                 }
             }
             catch (Exception ex)
@@ -86,9 +86,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         }
 
         /// <summary>
-        /// Sets the response statuscode to unauthorized and the reasonphrase and body to empty.
+        /// Sets the response statuscode and reasonphrase to unauthorized.
         /// </summary>
-        private void Unauthorized()
+        private void SetResponseUnauthorized()
         {
             // Set response as unauthorized when token is invalid
             Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;

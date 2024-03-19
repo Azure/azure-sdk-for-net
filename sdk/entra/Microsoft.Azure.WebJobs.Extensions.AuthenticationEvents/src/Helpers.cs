@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Joins the exception messages into a json payload.
         /// </summary>
-        /// <param name="ex">The exception thrown</param>
+        /// <param name="ex">The exception thrown. If the exception message is null, then a generic 'Failed' message is passed.</param>
         /// <returns>A json string containing the error messages</returns>
         internal static string GetFailedResponsePayload(Exception ex)
         {
