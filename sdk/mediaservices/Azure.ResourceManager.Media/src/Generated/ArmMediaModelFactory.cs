@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="input">
         /// The inputs for the Job.
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputs"/> and <see cref="MediaJobInputSequence"/>.
+        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs">

@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The modified collection of tools to enable for the assistant.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="RetrievalToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
         /// </summary>
         public IList<ToolDefinition> Tools { get; }
         /// <summary> The modified list of previously uploaded fileIDs to attach to the assistant. </summary>

@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryHardening": return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element, options);
+                    case "CVE": return CveSummary.DeserializeCveSummary(element, options);
                     case "CryptoCertificate": return CryptoCertificateSummary.DeserializeCryptoCertificateSummary(element, options);
                     case "CryptoKey": return CryptoKeySummary.DeserializeCryptoKeySummary(element, options);
-                    case "CVE": return CveSummary.DeserializeCveSummary(element, options);
                     case "Firmware": return FirmwareSummary.DeserializeFirmwareSummary(element, options);
                 }
             }

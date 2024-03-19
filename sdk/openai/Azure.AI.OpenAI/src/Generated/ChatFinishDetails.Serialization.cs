@@ -71,8 +71,8 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "max_tokens": return MaxTokensFinishDetails.DeserializeMaxTokensFinishDetails(element, options);
                     case "stop": return StopFinishDetails.DeserializeStopFinishDetails(element, options);
+                    case "max_tokens": return MaxTokensFinishDetails.DeserializeMaxTokensFinishDetails(element, options);
                 }
             }
             return UnknownChatFinishDetails.DeserializeUnknownChatFinishDetails(element, options);

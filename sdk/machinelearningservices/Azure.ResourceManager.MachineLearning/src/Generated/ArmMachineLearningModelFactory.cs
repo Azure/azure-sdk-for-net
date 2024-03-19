@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// Compute properties
         /// Please note <see cref="Models.MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
+        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
         public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningComputeProperties properties = null)
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
         /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
+        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningOutputPathAssetReference"/> and <see cref="MachineLearningIdAssetReference"/>.
         /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>

@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepRetrievalToolCall"/>.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepRetrievalToolCall"/> and <see cref="RunStepFunctionToolCall"/>.
         /// </summary>
         public IReadOnlyList<RunStepToolCall> ToolCalls { get; }
     }

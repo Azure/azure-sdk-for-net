@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customDetails">
         /// The Replication provider custom settings.
         /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VmmVmDetails"/> and <see cref="Models.VMwareVmDetails"/>.
+        /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VMwareVmDetails"/> and <see cref="Models.VmmVmDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
         public static SiteRecoveryProtectableItemProperties SiteRecoveryProtectableItemProperties(string friendlyName = null, string protectionStatus = null, ResourceIdentifier replicationProtectedItemId = null, ResourceIdentifier recoveryServicesProviderId = null, IEnumerable<string> protectionReadinessErrors = null, IEnumerable<string> supportedReplicationProviders = null, SiteRecoveryReplicationProviderSettings customDetails = null)

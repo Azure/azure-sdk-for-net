@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("instanceType"u8);
+                writer.WriteStringValue(InstanceType);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

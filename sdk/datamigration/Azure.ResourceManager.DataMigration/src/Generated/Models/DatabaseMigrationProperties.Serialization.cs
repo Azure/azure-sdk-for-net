@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 switch (discriminator.GetString())
                 {
                     case "SqlDb": return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element, options);
-                    case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element, options);
                     case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element, options);
+                    case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element, options);
                 }
             }
             return UnknownDatabaseMigrationProperties.DeserializeUnknownDatabaseMigrationProperties(element, options);
