@@ -2,5 +2,5 @@
 # https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md
 # 
 directory: specification/applicationinsights/ApplicationInsights.LiveMetrics
-commit: 0299d21e0768a51dd8f6f92c8a324288397cc303
+commit: 5dfe00a5d363a30d7434fba9bb99d962e22dcb86
 repo: Azure/azure-rest-api-specs
