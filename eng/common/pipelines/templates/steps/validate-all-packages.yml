@@ -22,7 +22,7 @@ steps:
           -BuildDefinition $(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(System.DefinitionId)
           -PipelineUrl $(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)
           -Devops_pat '$(azuresdk-azure-sdk-devops-release-work-item-pat)'
-          -IsReleaseBuild $(SetAsReleaseBuild)
+          -IsReleaseBuild $$(SetAsReleaseBuild)
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
       displayName: Validate packages and update work items
