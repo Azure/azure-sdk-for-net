@@ -13,9 +13,8 @@ using System.Collections.Generic;
 namespace Azure.Security.CodeTransparency.Receipt
 {
     /// <summary>
-    /// CCF Receipt class which enables encoding, decoding and verification.
-    /// This class encapsulates the representation and the available operations
-    /// of CBOR encoded CCF SCITT receipts.
+    /// CCF Receipt class which enables encoding, decoding and verification of receipts issued from the Code Transparency Service.
+    /// This class encapsulates the representation and the available operations of CBOR encoded CCF SCITT receipts.
     /// </summary>
     public class CcfReceipt
     {
@@ -48,29 +47,27 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// </summary>
         public const string RECEIPT_HEADER_REGISTRATION_TIME = "registration_time";
         /// <summary>
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 9.2.2. Hash Algorithms
-        /// Hash calculates a hash for a given byte slice
-        /// it will use SHA-256 as it is the only one registered
-        /// at the moment.
+        /// SHA-256 hash function.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 9.2.2. Hash Algorithms.
         /// </summary>
         private static readonly SHA256 s_sha256 = SHA256.Create();
 
         /// <summary>
-        /// Not serialized SignProtected part, also referred to as protected headers.
+        /// Not yet decoded SignProtected structure, also referred to as protected headers.
         /// </summary>
         /// <seealso cref="SignProtected"/>
         public byte[] SignProtectedRaw { get; set; }
 
         /// <summary>
-        /// ReceiptContents contains inclusion proof and the signature.
+        /// ReceiptContents contains inclusion proof of the registration in the service and the signature.
         /// </summary>
         public ReceiptContents Contents { get; set; }
 
         /// <summary>
-        /// Deserialize CBOR receipt bytes to CcfReceipt.
+        /// Decode CBOR receipt bytes into CcfReceipt.
         /// </summary>
-        /// <param name="cbor">receipt bytes.</param>
-        /// <returns>Receipt object.</returns>
+        /// <param name="cbor">Receipt bytes.</param>
+        /// <returns>CcfReceipt object.</returns>
         /// <exception cref="Exception"></exception>
         public static CcfReceipt Deserialize(byte[] cbor)
         {
@@ -86,10 +83,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Get the receipt model using the CBOR reader.
+        /// Decode CBOR receipt bytes into CcfReceipt.
         /// </summary>
-        /// <param name="reader">CborReader which will return the receipt object when performed different read operations.</param>
-        /// <returns>Receipt object.</returns>
+        /// <param name="reader">CborReader.</param>
+        /// <returns>CcfReceipt object.</returns>
         /// <exception cref="Exception"></exception>
         public static CcfReceipt Deserialize(CborReader reader)
         {
@@ -142,11 +139,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Deserialize embedded receipt bytes contained in the signature
-        /// header to CcfReceipt.
+        /// Decodes COSE_Sign1 unprotected header value that contains an array of receipts.
         /// </summary>
-        /// <param name="cbor">receipts bytes.</param>
-        /// <returns>Receipt list object.</returns>
+        /// <param name="cbor">receipts encoded into CBOR array.</param>
+        /// <returns>List of CcfReceipt.</returns>
         /// <exception cref="Exception"></exception>
         public static List<CcfReceipt> DeserializeMany(byte[] cbor)
         {
@@ -169,7 +165,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Deserialize the receipt protected headers.
+        /// Decodes the protected headers.
         /// </summary>
         /// <returns>SignProtected headers.</returns>
         public SignProtected GetSignProtected()
@@ -180,8 +176,8 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <summary>
         /// Verify CCF SCITT receipt.
         /// </summary>
-        /// <param name="coseSign1Bytes">Cose Sign1 cbor bytes</param>
-        /// <param name="serviceCert">Service certificate that endorsed the receipt issuer</param>
+        /// <param name="coseSign1Bytes">COSE_Sign1 cbor bytes.</param>
+        /// <param name="serviceCert">Service certificate that endorsed the receipt issuer.</param>
         public void VerifyReceipt(byte[] coseSign1Bytes, X509Certificate2 serviceCert)
         {
             CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(coseSign1Bytes);
@@ -197,10 +193,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Recompute the signed root hash using the Cose envelope and receipt contents.
+        /// Recompute the signed root hash using the COSE_Sign1 envelope and receipt contents.
         /// </summary>
         /// <param name="coseSign1Message">CoseSign1Message message object.</param>
-        /// <returns>Computed root hash byte array</returns>
+        /// <returns>Computed root hash byte array.</returns>
         protected byte[] RecomputeSignedRootHash(CoseSign1Message coseSign1Message)
         {
             byte[] leafBytes = ComputeLeaf(coseSign1Message);
@@ -209,10 +205,10 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Compute leaf values by generating ConterSign bytes
+        /// Compute leaf value with the help of CounterSignStruct bytes.
         /// </summary>
         /// <param name="coseSign1Message">CoseSign1Message message object</param>
-        /// <returns>Computed leaf byte array</returns>
+        /// <returns>Computed leaf bytes.</returns>
         /// <exception cref="Exception"></exception>
         protected byte[] ComputeLeaf(CoseSign1Message coseSign1Message)
         {
@@ -230,10 +226,11 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// VerifySignature verifies the hash of a root node given the protected certificate
-        /// This function is a simplified version of x509.Certificate.CheckSignature but without the forced hashing of the data as it is already hashed
+        /// VerifySignature checks the integrity of the receipt signature against the parsed node certificate.
+        /// Node certificate is also verified against the service certificate.
+        /// This function is a simplified version of x509.Certificate.CheckSignature but without the forced hashing of the data as it is already hashed.
         /// </summary>
-        /// <param name="signedRootHash">computed signedRootHash byte array.</param>
+        /// <param name="signedRootHash">Computed signedRootHash byte array.</param>
         /// <param name="serviceCert">Service certificate.</param>
         /// <param name="signProtected">SignProtected object.</param>
         /// <returns>Success/Failure as bool value.</returns>
@@ -254,8 +251,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Parse the node cert bytes stored in contents and verify its endorsement from
-        /// service cert.
+        /// Get the node certificate from the receipt and verify it against the service certificate before returning.
         /// </summary>
         /// <param name="serviceCert">Service certificate</param>
         /// <param name="signProtected">SignProtected object</param>
@@ -312,7 +308,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Tree node (left or right) and its hash value.
+        /// ProofElement is a representation of a tree node (left or right) in the ledger and its hash value.
         /// </summary>
         public class ProofElement
         {
@@ -341,14 +337,14 @@ namespace Azure.Security.CodeTransparency.Receipt
             public byte[] InternalData { get; set; }
 
             /// <summary>
-            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 5.3. Encoding Signed Envelopes into Tree Leaves
-            /// dataHash - either the HASH of the CBOR-encoded
+            /// DataHash is either the HASH of the CBOR-encoded
             /// Countersign_structure of the signed envelope, using the CBOR
             /// encoding described in Section 6, or a bytestring of size HASH_SIZE
             /// filled with zeroes for auxiliary ledger entries.
+            /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 5.3. Encoding Signed Envelopes into Tree Leaves.
             /// </summary>
-            /// <param name="dataHash">Computed dataHash byte array</param>
-            /// <returns>Leaf byte array</returns>
+            /// <param name="dataHash">Computed dataHash byte array.</param>
+            /// <returns>Leaf byte array.</returns>
             /// <exception cref="Exception"></exception>
             public byte[] LeafBytes(byte[] dataHash)
             {
@@ -365,14 +361,13 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Definition for SignProtected object
-        /// SignProtected is also called protected headers or just protected in other specs.
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4.1  Countersigner Header Parameters
+        /// SignProtected is also called protected headers or just protected in other specifications.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4.1  Countersigner Header Parameters.
         /// </summary>
         public class SignProtected
         {
             /// <summary>
-            /// Stable ledger id, planned to be deprecated in favor of issuer.
+            /// Stable ledger id.
             /// </summary>
             public string ServiceId { get; set; }
             /// <summary>
@@ -393,9 +388,9 @@ namespace Azure.Security.CodeTransparency.Receipt
             public ulong SignedAt { get; set; }
 
             /// <summary>
-            /// Unmarshal Cose Sign Protected bytes to object.
+            /// Decode COSE_Sign1 protected headers.
             /// </summary>
-            /// <param name="signProtectedBytes">Cose sign protected bytes.</param>
+            /// <param name="signProtectedBytes">COSE_Sign1 protected header bytes.</param>
             /// <returns>SignProtected object.</returns>
             /// <exception cref="Exception"></exception>
             public static SignProtected Deserialize(byte[] signProtectedBytes)
@@ -434,8 +429,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Definition for CounterSignStruct object and its properties
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4. COSE_Sign1 Countersigning
+        /// Definition of a CounterSignStruct object
         /// Countersign_structure = [
         ///	  context: "CounterSignatureV2",
         ///	  body_protected: empty_or_serialized_map,
@@ -446,6 +440,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         ///		signature: bstr
         ///	  ]
         /// ]
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4. COSE_Sign1 Countersigning.
         /// </summary>
         public class CounterSignStruct
         {
@@ -454,7 +449,7 @@ namespace Azure.Security.CodeTransparency.Receipt
             /// </summary>
             public string Context { get; set; }
             /// <summary>
-            /// Protected headers from the COSE_Sign1 envelope
+            /// Protected headers from the COSE_Sign1 envelope.
             /// </summary>
             public byte[] BodyProtected { get; set; }
             /// <summary>
@@ -462,7 +457,7 @@ namespace Azure.Security.CodeTransparency.Receipt
             /// </summary>
             public byte[] SignProtected { get; set; }
             /// <summary>
-            /// Additional data but as the spec says it needs to be empty.
+            /// Empty additional data as mentioned in the specification.
             /// </summary>
             public readonly byte[] ExternalAad = new byte[] { };
             /// <summary>
@@ -477,7 +472,7 @@ namespace Azure.Security.CodeTransparency.Receipt
             /// <summary>
             /// Serialize to CBOR.
             /// </summary>
-            /// <returns>CBOR.</returns>
+            /// <returns>CBOR bytes.</returns>
             public byte[] Serialize()
             {
                 CborWriter writer = new(CborConformanceMode.Strict);
@@ -495,11 +490,12 @@ namespace Azure.Security.CodeTransparency.Receipt
             }
 
             /// <summary>
+            /// Build CounterSignStruct used as a source for the countersignature.
             /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 4. COSE_Sign1 Countersigning
             /// </summary>
-            /// <param name="receipt">Receipt object</param>
-            /// <param name="coseSign1Message">CoseSign1Message object</param>
-            /// <returns>CounterSignStruct object</returns>
+            /// <param name="receipt">Receipt object.</param>
+            /// <param name="coseSign1Message">CoseSign1Message object.</param>
+            /// <returns>CounterSignStruct object.</returns>
             public static CounterSignStruct Build(CcfReceipt receipt, CoseSign1Message coseSign1Message)
             {
                 return new()
@@ -514,24 +510,24 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Contains the original signature copied from the Cose envelope.
+        /// Contains the original signature copied from the COSE_Sign1 envelope.
         /// </summary>
         public class OtherCounterSignFields
         {
             /// <summary>
-            /// COSE signature bytes.
+            /// COSE_Sign1 signature bytes.
             /// </summary>
             public byte[] Signature { get; set; }
         }
 
         /// <summary>
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 6.5.5  Verifying certificate chain
-        /// Verify the certificate chain established by the node certificate embedded in the receipt and the fixed service certificate in the TS parameters
+        /// Verify the certificate chain established by the node certificate embedded in the receipt and the fixed service certificate in the service parameters.
+        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 6.5.5  Verifying certificate chain.
         /// </summary>
-        /// <param name="nodeCert">Node certificate</param>
-        /// <param name="parentCert">Service certificate</param>
-        /// <param name="signProtected">SignProtected object</param>
-        /// <returns>Bool value based on cert chain verification</returns>
+        /// <param name="nodeCert">Node certificate.</param>
+        /// <param name="parentCert">Service certificate.</param>
+        /// <param name="signProtected">SignProtected object.</param>
+        /// <returns>Bool value based on cert chain verification.</returns>
         /// <exception cref="Exception"></exception>
         internal static bool VerifyReceiptCertificateChain(X509Certificate2 nodeCert, X509Certificate2 parentCert, SignProtected signProtected)
         {
@@ -574,9 +570,9 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <summary>
         /// Merge two byte arrays.
         /// </summary>
-        /// <param name="first">First byte array</param>
-        /// <param name="second">Second byte array</param>
-        /// <returns>Merged byte array</returns>
+        /// <param name="first">First byte array.</param>
+        /// <param name="second">Second byte array.</param>
+        /// <returns>Merged byte array.</returns>
         internal static byte[] CombineByteArrays(byte[] first, byte[] second)
         {
             byte[] ret = new byte[first.Length + second.Length];
@@ -586,13 +582,13 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Get the subset array from the input array based on startIndex and length
+        /// Get the subset array from the input array based on startIndex and length.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="array">Array from which subset array needed</param>
         /// <param name="startIndex">Start index for the subset array</param>
         /// <param name="length">Length of the subset array from startIndex</param>
-        /// <returns>Subset of array</returns>
+        /// <returns>Subset of array.</returns>
         internal static T[] RangeSubset<T>(T[] array, int startIndex, int length)
         {
             T[] subset = new T[length];
@@ -601,7 +597,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Merge three byte[].
+        /// Merge three byte arrays.
         /// </summary>
         /// <param name="first">First byte array.</param>
         /// <param name="second">Second byte array.</param>

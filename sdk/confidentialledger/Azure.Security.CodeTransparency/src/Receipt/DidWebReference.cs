@@ -136,9 +136,9 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Identify supported JwkAssertionMethod to get the right service certificate
+        /// Identify supported JwkAssertionMethod to get the right service certificate.
         /// </summary>
-        /// <param name="doc">DidDocument object</param>
+        /// <param name="doc">DidDocument object.</param>
         /// <returns>list of supported DidDocumentKey to get the right service certificate.</returns>
         public static List<DidDocumentKey> SupportedAssertionMethods(DidDocument doc)
         {
@@ -152,7 +152,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Get the service certificate from the JwkAssertionMethod object
+        /// Get the service certificate from the JwkAssertionMethod object.
         /// </summary>
         /// <param name="method"></param>
         /// <returns>Service certificate.</returns>

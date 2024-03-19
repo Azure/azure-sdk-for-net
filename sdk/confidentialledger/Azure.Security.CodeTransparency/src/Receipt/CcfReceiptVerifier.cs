@@ -14,7 +14,7 @@ namespace Azure.Security.CodeTransparency.Receipt
     public class CcfReceiptVerifier
     {
         /// <summary>
-        /// Verify the receipt integrity against the Cose signature envelope
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
         /// and check if receipt was endorsed by the service cert.
         /// In the case of receipts being embedded in the signature then verify
         /// all of them.
@@ -65,7 +65,7 @@ namespace Azure.Security.CodeTransparency.Receipt
         }
 
         /// <summary>
-        /// Verify the receipt integrity against the Cose signature envelope
+        /// Verify the receipt integrity against the COSE_Sign1 envelope
         /// and check if receipt was endorsed by the service cert.
         /// In the case of receipts being embedded in the signature then verify
         /// all of them.
