@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.ResourceManager
 {
     /// <summary>
-    /// Provides the options for reading and writing bicep.
+    /// Provides the options for reading and writing Bicep.
     /// </summary>
     [Experimental(nameof(BicepModelReaderWriterOptions))]
     public class BicepModelReaderWriterOptions : ModelReaderWriterOptions
@@ -21,8 +21,8 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// The set of parameter overrides to apply when writing the bicep. The key of the dictionary corresponds to the
-        /// instance being written, and the value is a dictionary of property names to parameter names.
+        /// The set of property overrides to apply when writing the bicep. The key of the dictionary corresponds to the
+        /// instance being written, and the value is a dictionary of property names to property values.
         /// </summary>
         public IDictionary<object, IDictionary<string, string>> PropertyOverrides { get; } = new Dictionary<object, IDictionary<string, string>>();
     }
