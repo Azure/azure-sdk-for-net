@@ -6,10 +6,10 @@ namespace Azure.Developer.DevCenter
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DeploymentEnvironmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.DevCenter.DevCenterClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<Azure.Developer.DevCenter.Models.DevCenterEnvironment> CreateOrUpdateEnvironment(Azure.WaitUntil waitUntil, string projectName, string userId, Azure.Developer.DevCenter.Models.DevCenterEnvironment environment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> CreateOrUpdateEnvironment(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Developer.DevCenter.Models.DevCenterEnvironment> CreateOrUpdateEnvironment(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.Developer.DevCenter.Models.DevCenterEnvironment body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Developer.DevCenter.Models.DevCenterEnvironment>> CreateOrUpdateEnvironmentAsync(Azure.WaitUntil waitUntil, string projectName, string userId, Azure.Developer.DevCenter.Models.DevCenterEnvironment environment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrUpdateEnvironmentAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Developer.DevCenter.Models.DevCenterEnvironment>> CreateOrUpdateEnvironmentAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.Developer.DevCenter.Models.DevCenterEnvironment body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation DeleteEnvironment(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteEnvironmentAsync(Azure.WaitUntil waitUntil, string projectName, string userId, string environmentName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetAllEnvironments(string projectName, Azure.RequestContext context) { throw null; }
@@ -161,7 +161,7 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.DevBoxImageReference ImageReference { get { throw null; } }
         public Azure.Developer.DevCenter.Models.LocalAdministratorStatus? LocalAdministratorStatus { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
         public Azure.Developer.DevCenter.Models.DevBoxOSType? OSType { get { throw null; } }
         public string PoolName { get { throw null; } set { } }
         public Azure.Developer.DevCenter.Models.PowerState? PowerState { get { throw null; } }
@@ -195,8 +195,8 @@ namespace Azure.Developer.DevCenter.Models
         internal DevBoxActionDelayResult() { }
         public Azure.Developer.DevCenter.Models.DevBoxAction Action { get { throw null; } }
         public string ActionName { get { throw null; } }
+        public Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus DelayStatus { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus Result { get { throw null; } }
         Azure.Developer.DevCenter.Models.DevBoxActionDelayResult System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Developer.DevCenter.Models.DevBoxActionDelayResult System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -374,7 +374,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevCenterEnvironment : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>
     {
-        public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName) { }
+        public DevCenterEnvironment(string environmentName, string environmentTypeName, string catalogName, string environmentDefinitionName) { }
         public string CatalogName { get { throw null; } set { } }
         public string EnvironmentDefinitionName { get { throw null; } set { } }
         public string EnvironmentTypeName { get { throw null; } set { } }
@@ -406,7 +406,7 @@ namespace Azure.Developer.DevCenter.Models
     {
         public static Azure.Developer.DevCenter.Models.DevBox DevBox(string name = null, string projectName = null, string poolName = null, Azure.Developer.DevCenter.Models.HibernateSupport? hibernateSupport = default(Azure.Developer.DevCenter.Models.HibernateSupport?), Azure.Developer.DevCenter.Models.DevBoxProvisioningState? provisioningState = default(Azure.Developer.DevCenter.Models.DevBoxProvisioningState?), string actionState = null, Azure.Developer.DevCenter.Models.PowerState? powerState = default(Azure.Developer.DevCenter.Models.PowerState?), System.Guid? uniqueId = default(System.Guid?), Azure.ResponseError error = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Developer.DevCenter.Models.DevBoxOSType? osType = default(Azure.Developer.DevCenter.Models.DevBoxOSType?), System.Guid? userId = default(System.Guid?), Azure.Developer.DevCenter.Models.DevBoxHardwareProfile hardwareProfile = null, Azure.Developer.DevCenter.Models.DevBoxStorageProfile storageProfile = null, Azure.Developer.DevCenter.Models.DevBoxImageReference imageReference = null, System.DateTimeOffset? createdTime = default(System.DateTimeOffset?), Azure.Developer.DevCenter.Models.LocalAdministratorStatus? localAdministratorStatus = default(Azure.Developer.DevCenter.Models.LocalAdministratorStatus?)) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxAction DevBoxAction(string name = null, Azure.Developer.DevCenter.Models.DevBoxActionType actionType = default(Azure.Developer.DevCenter.Models.DevBoxActionType), string sourceId = null, System.DateTimeOffset? suspendedUntil = default(System.DateTimeOffset?), Azure.Developer.DevCenter.Models.DevBoxNextAction nextAction = null) { throw null; }
-        public static Azure.Developer.DevCenter.Models.DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus result = default(Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus), Azure.Developer.DevCenter.Models.DevBoxAction action = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.Developer.DevCenter.Models.DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus delayStatus = default(Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus), Azure.Developer.DevCenter.Models.DevBoxAction action = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxHardwareProfile DevBoxHardwareProfile(Azure.Developer.DevCenter.Models.SkuName? skuName = default(Azure.Developer.DevCenter.Models.SkuName?), int? vcpUs = default(int?), int? memoryGB = default(int?)) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, System.DateTimeOffset? publishedDate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxNextAction DevBoxNextAction(System.DateTimeOffset scheduledTime = default(System.DateTimeOffset)) { throw null; }
