@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -16,16 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProcessName))
-            {
-                writer.WritePropertyName("ProcessName"u8);
-                writer.WriteStringValue(ProcessName);
-            }
-            if (Optional.IsDefined(CpuPercentage))
-            {
-                writer.WritePropertyName("CpuPercentage"u8);
-                writer.WriteNumberValue(CpuPercentage.Value);
-            }
+            writer.WritePropertyName("ProcessName"u8);
+            writer.WriteStringValue(ProcessName);
+            writer.WritePropertyName("CpuPercentage"u8);
+            writer.WriteNumberValue(CpuPercentage);
             writer.WriteEndObject();
         }
     }

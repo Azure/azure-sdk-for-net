@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -30,10 +29,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("DocumentFilterGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DocumentFilterConjunctionGroupInfo> array = new List<DocumentFilterConjunctionGroupInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -43,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentStreamInfo(id, documentFilterGroups ?? new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>());
+            return new DocumentStreamInfo(id, documentFilterGroups);
         }
     }
 }

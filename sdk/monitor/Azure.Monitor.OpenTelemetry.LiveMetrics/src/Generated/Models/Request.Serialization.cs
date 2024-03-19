@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("Url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(ResponseCode))
             {
