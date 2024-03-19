@@ -1,0 +1,3229 @@
+{
+ "$id": "1",
+ "Name": "TextTranslation",
+ "Description": "Text translation is a cloud-based REST API feature of the Translator service that uses neural\nmachine translation technology to enable quick and accurate source-to-target text translation\nin real time across all supported languages.\n\nThe following methods are supported by the Text Translation feature:\n\nLanguages. Returns a list of languages supported by Translate, Transliterate, and Dictionary Lookup operations.\n\nTranslate. Renders single source-language text to multiple target-language texts with a single request.\n\nTransliterate. Converts characters or letters of a source language to the corresponding characters or letters of a target language.\n\nDetect. Returns the source code language code and a boolean variable denoting whether the detected language is supported for text translation and transliteration.\n\nDictionary lookup. Returns equivalent words for the source term in the target language.\n\nDictionary example Returns grammatical structure and context examples for the source term and target term pair.",
+ "ApiVersions": [
+  "3.0"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "TextType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "Plain",
+     "Value": "Plain"
+    },
+    {
+     "$id": "4",
+     "Name": "Html",
+     "Value": "Html"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "Translation text type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "5",
+   "Name": "ProfanityAction",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "6",
+     "Name": "NoAction",
+     "Value": "NoAction"
+    },
+    {
+     "$id": "7",
+     "Name": "Marked",
+     "Value": "Marked"
+    },
+    {
+     "$id": "8",
+     "Name": "Deleted",
+     "Value": "Deleted"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "Translator profanity actions",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "9",
+   "Name": "ProfanityMarker",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "10",
+     "Name": "Asterisk",
+     "Value": "Asterisk"
+    },
+    {
+     "$id": "11",
+     "Name": "Tag",
+     "Value": "Tag"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "Translator profanity markers",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "12",
+   "Kind": "Enum",
+   "Name": "APIVersion",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "13",
+     "Name": "v3_0",
+     "Value": "3.0"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "Text Translation supported versions",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "14",
+   "Kind": "Enum",
+   "Name": "TextTypeKnownValues",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "15",
+     "Name": "Plain",
+     "Value": "Plain"
+    },
+    {
+     "$id": "16",
+     "Name": "Html",
+     "Value": "Html"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "17",
+   "Kind": "Enum",
+   "Name": "ProfanityActionKnownValues",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "18",
+     "Name": "NoAction",
+     "Value": "NoAction"
+    },
+    {
+     "$id": "19",
+     "Name": "Marked",
+     "Value": "Marked"
+    },
+    {
+     "$id": "20",
+     "Name": "Deleted",
+     "Value": "Deleted"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "21",
+   "Kind": "Enum",
+   "Name": "ProfanityMarkerKnownValues",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "22",
+     "Name": "Asterisk",
+     "Value": "Asterisk"
+    },
+    {
+     "$id": "23",
+     "Name": "Tag",
+     "Value": "Tag"
+    }
+   ],
+   "Namespace": "TextTranslation",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "24",
+   "Kind": "Model",
+   "Name": "GetLanguagesResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the languages API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "25",
+     "Name": "translation",
+     "SerializedName": "translation",
+     "Description": "Languages that support translate API.",
+     "Type": {
+      "$id": "26",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "27",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "28",
+       "Kind": "Model",
+       "Name": "TranslationLanguage",
+       "Namespace": "TextTranslation",
+       "Description": "The value of the translation property is a dictionary of (key, value) pairs. Each key is a BCP 47 language tag.\nA key identifies a language for which text can be translated to or translated from.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "29",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Display name of the language in the locale requested via Accept-Language header.",
+         "Type": {
+          "$id": "30",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "31",
+         "Name": "nativeName",
+         "SerializedName": "nativeName",
+         "Description": "Display name of the language in the locale native for this language.",
+         "Type": {
+          "$id": "32",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "33",
+         "Name": "dir",
+         "SerializedName": "dir",
+         "Description": "Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages.",
+         "Type": {
+          "$id": "34",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "35",
+     "Name": "transliteration",
+     "SerializedName": "transliteration",
+     "Description": "Languages that support transliteration API.",
+     "Type": {
+      "$id": "36",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "37",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "38",
+       "Kind": "Model",
+       "Name": "TransliterationLanguage",
+       "Namespace": "TextTranslation",
+       "Description": "The value of the transliteration property is a dictionary of (key, value) pairs. \nEach key is a BCP 47 language tag. A key identifies a language for which text can be converted from one script \nto another script.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "39",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Display name of the language in the locale requested via Accept-Language header.",
+         "Type": {
+          "$id": "40",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "41",
+         "Name": "nativeName",
+         "SerializedName": "nativeName",
+         "Description": "Display name of the language in the locale native for this language.",
+         "Type": {
+          "$id": "42",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "43",
+         "Name": "scripts",
+         "SerializedName": "scripts",
+         "Description": "List of scripts to convert from.",
+         "Type": {
+          "$id": "44",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "45",
+           "Kind": "Model",
+           "Name": "TransliterableScript",
+           "Namespace": "TextTranslation",
+           "Description": "Script definition with list of script into which given script can be translitered.",
+           "IsNullable": false,
+           "Usage": "Output",
+           "BaseModel": {
+            "$id": "46",
+            "Kind": "Model",
+            "Name": "CommonScriptModel",
+            "Namespace": "TextTranslation",
+            "Description": "Common properties of language script",
+            "IsNullable": false,
+            "Usage": "Output",
+            "Properties": [
+             {
+              "$id": "47",
+              "Name": "code",
+              "SerializedName": "code",
+              "Description": "Code identifying the script.",
+              "Type": {
+               "$id": "48",
+               "Kind": "Primitive",
+               "Name": "String",
+               "IsNullable": false
+              },
+              "IsRequired": true,
+              "IsReadOnly": false
+             },
+             {
+              "$id": "49",
+              "Name": "name",
+              "SerializedName": "name",
+              "Description": "Display name of the script in the locale requested via Accept-Language header.",
+              "Type": {
+               "$id": "50",
+               "Kind": "Primitive",
+               "Name": "String",
+               "IsNullable": false
+              },
+              "IsRequired": true,
+              "IsReadOnly": false
+             },
+             {
+              "$id": "51",
+              "Name": "nativeName",
+              "SerializedName": "nativeName",
+              "Description": "Display name of the language in the locale native for the language.",
+              "Type": {
+               "$id": "52",
+               "Kind": "Primitive",
+               "Name": "String",
+               "IsNullable": false
+              },
+              "IsRequired": true,
+              "IsReadOnly": false
+             },
+             {
+              "$id": "53",
+              "Name": "dir",
+              "SerializedName": "dir",
+              "Description": "Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages.",
+              "Type": {
+               "$id": "54",
+               "Kind": "Primitive",
+               "Name": "String",
+               "IsNullable": false
+              },
+              "IsRequired": true,
+              "IsReadOnly": false
+             }
+            ]
+           },
+           "Properties": [
+            {
+             "$id": "55",
+             "Name": "toScripts",
+             "SerializedName": "toScripts",
+             "Description": "List of scripts available to convert text to.",
+             "Type": {
+              "$id": "56",
+              "Kind": "Array",
+              "Name": "Array",
+              "ElementType": {
+               "$ref": "46"
+              },
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "57",
+     "Name": "dictionary",
+     "SerializedName": "dictionary",
+     "Description": "Languages that support dictionary API.",
+     "Type": {
+      "$id": "58",
+      "Kind": "Dictionary",
+      "Name": "Dictionary",
+      "KeyType": {
+       "$id": "59",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "ValueType": {
+       "$id": "60",
+       "Kind": "Model",
+       "Name": "SourceDictionaryLanguage",
+       "Namespace": "TextTranslation",
+       "Description": "Properties ot the source dictionary language",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "61",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Display name of the language in the locale requested via Accept-Language header.",
+         "Type": {
+          "$id": "62",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "63",
+         "Name": "nativeName",
+         "SerializedName": "nativeName",
+         "Description": "Display name of the language in the locale native for this language.",
+         "Type": {
+          "$id": "64",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "65",
+         "Name": "dir",
+         "SerializedName": "dir",
+         "Description": "Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages.",
+         "Type": {
+          "$id": "66",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "67",
+         "Name": "translations",
+         "SerializedName": "translations",
+         "Description": "List of languages with alterative translations and examples for the query expressed in the source language.",
+         "Type": {
+          "$id": "68",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "69",
+           "Kind": "Model",
+           "Name": "TargetDictionaryLanguage",
+           "Namespace": "TextTranslation",
+           "Description": "Properties of the target dictionary language",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "70",
+             "Name": "name",
+             "SerializedName": "name",
+             "Description": "Display name of the language in the locale requested via Accept-Language header.",
+             "Type": {
+              "$id": "71",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "72",
+             "Name": "nativeName",
+             "SerializedName": "nativeName",
+             "Description": "Display name of the language in the locale native for this language.",
+             "Type": {
+              "$id": "73",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "74",
+             "Name": "dir",
+             "SerializedName": "dir",
+             "Description": "Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages.",
+             "Type": {
+              "$id": "75",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "76",
+             "Name": "code",
+             "SerializedName": "code",
+             "Description": "Language code identifying the target language.",
+             "Type": {
+              "$id": "77",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "28"
+  },
+  {
+   "$ref": "38"
+  },
+  {
+   "$ref": "46"
+  },
+  {
+   "$ref": "45"
+  },
+  {
+   "$ref": "60"
+  },
+  {
+   "$ref": "69"
+  },
+  {
+   "$id": "78",
+   "Kind": "Model",
+   "Name": "InputTextItem",
+   "Namespace": "TextTranslation",
+   "Description": "Element containing the text for translation.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "79",
+     "Name": "text",
+     "SerializedName": "text",
+     "Description": "Text to translate.",
+     "Type": {
+      "$id": "80",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "81",
+   "Kind": "Model",
+   "Name": "TranslatedTextItem",
+   "Namespace": "TextTranslation",
+   "Description": "Element containing the translated text",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "82",
+     "Name": "detectedLanguage",
+     "SerializedName": "detectedLanguage",
+     "Description": "The detectedLanguage property is only present in the result object when language auto-detection is requested.",
+     "Type": {
+      "$id": "83",
+      "Kind": "Model",
+      "Name": "DetectedLanguage",
+      "Namespace": "TextTranslation",
+      "Description": "An object describing the detected language.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "84",
+        "Name": "language",
+        "SerializedName": "language",
+        "Description": "A string representing the code of the detected language.",
+        "Type": {
+         "$id": "85",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "86",
+        "Name": "score",
+        "SerializedName": "score",
+        "Description": "A float value indicating the confidence in the result.\nThe score is between zero and one and a low score indicates a low confidence.",
+        "Type": {
+         "$id": "87",
+         "Kind": "Primitive",
+         "Name": "Float32",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "88",
+     "Name": "translations",
+     "SerializedName": "translations",
+     "Description": "An array of translation results. The size of the array matches the number of target \nlanguages specified through the to query parameter.",
+     "Type": {
+      "$id": "89",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "90",
+       "Kind": "Model",
+       "Name": "Translation",
+       "Namespace": "TextTranslation",
+       "Description": "Translation result",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "91",
+         "Name": "to",
+         "SerializedName": "to",
+         "Description": "A string representing the language code of the target language.",
+         "Type": {
+          "$id": "92",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "93",
+         "Name": "text",
+         "SerializedName": "text",
+         "Description": "A string giving the translated text.",
+         "Type": {
+          "$id": "94",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "95",
+         "Name": "transliteration",
+         "SerializedName": "transliteration",
+         "Description": "An object giving the translated text in the script specified by the toScript parameter.",
+         "Type": {
+          "$id": "96",
+          "Kind": "Model",
+          "Name": "TransliteratedText",
+          "Namespace": "TextTranslation",
+          "Description": "Transliterated text element.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "97",
+            "Name": "text",
+            "SerializedName": "text",
+            "Description": "A string which is the result of converting the input string to the output script.",
+            "Type": {
+             "$id": "98",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "99",
+            "Name": "script",
+            "SerializedName": "script",
+            "Description": "A string specifying the script used in the output.",
+            "Type": {
+             "$id": "100",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "101",
+         "Name": "alignment",
+         "SerializedName": "alignment",
+         "Description": "Alignment information.",
+         "Type": {
+          "$id": "102",
+          "Kind": "Model",
+          "Name": "TranslatedTextAlignment",
+          "Namespace": "TextTranslation",
+          "Description": "Alignment information object.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "103",
+            "Name": "proj",
+            "SerializedName": "proj",
+            "Description": "Maps input text to translated text. The alignment information is only provided when the request \nparameter includeAlignment is true. Alignment is returned as a string value of the following \nformat: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]]. \nThe colon separates start and end index, the dash separates the languages, and space separates the words. \nOne word may align with zero, one, or multiple words in the other language, and the aligned words may \nbe non-contiguous. When no alignment information is available, the alignment element will be empty.",
+            "Type": {
+             "$id": "104",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "105",
+         "Name": "sentLen",
+         "SerializedName": "sentLen",
+         "Description": "Sentence boundaries in the input and output texts.",
+         "Type": {
+          "$id": "106",
+          "Kind": "Model",
+          "Name": "SentenceLength",
+          "Namespace": "TextTranslation",
+          "Description": "An object returning sentence boundaries in the input and output texts.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "107",
+            "Name": "srcSentLen",
+            "SerializedName": "srcSentLen",
+            "Description": "An integer array representing the lengths of the sentences in the input text. \nThe length of the array is the number of sentences, and the values are the length of each sentence.",
+            "Type": {
+             "$id": "108",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "109",
+              "Kind": "Primitive",
+              "Name": "Int32",
+              "IsNullable": false
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "110",
+            "Name": "transSentLen",
+            "SerializedName": "transSentLen",
+            "Description": "An integer array representing the lengths of the sentences in the translated text. \nThe length of the array is the number of sentences, and the values are the length of each sentence.",
+            "Type": {
+             "$id": "111",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "112",
+              "Kind": "Primitive",
+              "Name": "Int32",
+              "IsNullable": false
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "113",
+     "Name": "sourceText",
+     "SerializedName": "sourceText",
+     "Description": "Input text in the default script of the source language. sourceText property is present only when \nthe input is expressed in a script that's not the usual script for the language. For example, \nif the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text \nconverted into Arab script.",
+     "Type": {
+      "$id": "114",
+      "Kind": "Model",
+      "Name": "SourceText",
+      "Namespace": "TextTranslation",
+      "Description": "Input text in the default script of the source language. ",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "115",
+        "Name": "text",
+        "SerializedName": "text",
+        "Description": "Input text in the default script of the source language.",
+        "Type": {
+         "$id": "116",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "83"
+  },
+  {
+   "$ref": "90"
+  },
+  {
+   "$ref": "96"
+  },
+  {
+   "$ref": "102"
+  },
+  {
+   "$ref": "106"
+  },
+  {
+   "$ref": "114"
+  },
+  {
+   "$id": "117",
+   "Kind": "Model",
+   "Name": "BreakSentenceItem",
+   "Namespace": "TextTranslation",
+   "Description": "Item containing break sentence result.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "118",
+     "Name": "detectedLanguage",
+     "SerializedName": "detectedLanguage",
+     "Description": "The detectedLanguage property is only present in the result object when language auto-detection is requested.",
+     "Type": {
+      "$ref": "83"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "119",
+     "Name": "sentLen",
+     "SerializedName": "sentLen",
+     "Description": "An integer array representing the lengths of the sentences in the input text.\nThe length of the array is the number of sentences, and the values are the length of each sentence.",
+     "Type": {
+      "$id": "120",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "121",
+       "Kind": "Primitive",
+       "Name": "Int32",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "122",
+   "Kind": "Model",
+   "Name": "DictionaryLookupItem",
+   "Namespace": "TextTranslation",
+   "Description": "Dictionary Lookup Element",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "123",
+     "Name": "normalizedSource",
+     "SerializedName": "normalizedSource",
+     "Description": "A string giving the normalized form of the source term.\nFor example, if the request is \"JOHN\", the normalized form will be \"john\".\nThe content of this field becomes the input to lookup examples.",
+     "Type": {
+      "$id": "124",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "125",
+     "Name": "displaySource",
+     "SerializedName": "displaySource",
+     "Description": "A string giving the source term in a form best suited for end-user display.\nFor example, if the input is \"JOHN\", the display form will reflect the usual\nspelling of the name: \"John\".",
+     "Type": {
+      "$id": "126",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "127",
+     "Name": "translations",
+     "SerializedName": "translations",
+     "Description": "A list of translations for the source term.",
+     "Type": {
+      "$id": "128",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "129",
+       "Kind": "Model",
+       "Name": "DictionaryTranslation",
+       "Namespace": "TextTranslation",
+       "Description": "Translation source term.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "130",
+         "Name": "normalizedTarget",
+         "SerializedName": "normalizedTarget",
+         "Description": "A string giving the normalized form of this term in the target language.\nThis value should be used as input to lookup examples.",
+         "Type": {
+          "$id": "131",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "132",
+         "Name": "displayTarget",
+         "SerializedName": "displayTarget",
+         "Description": "A string giving the term in the target language and in a form best suited\nfor end-user display. Generally, this will only differ from the normalizedTarget\nin terms of capitalization. For example, a proper noun like \"Juan\" will have\nnormalizedTarget = \"juan\" and displayTarget = \"Juan\".",
+         "Type": {
+          "$id": "133",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "134",
+         "Name": "posTag",
+         "SerializedName": "posTag",
+         "Description": "A string associating this term with a part-of-speech tag.",
+         "Type": {
+          "$id": "135",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "136",
+         "Name": "confidence",
+         "SerializedName": "confidence",
+         "Description": "A value between 0.0 and 1.0 which represents the \"confidence\" \n(or perhaps more accurately, \"probability in the training data\") of that translation pair. \nThe sum of confidence scores for one source word may or may not sum to 1.0.",
+         "Type": {
+          "$id": "137",
+          "Kind": "Primitive",
+          "Name": "Float32",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "138",
+         "Name": "prefixWord",
+         "SerializedName": "prefixWord",
+         "Description": "A string giving the word to display as a prefix of the translation. Currently,\nthis is the gendered determiner of nouns, in languages that have gendered determiners.\nFor example, the prefix of the Spanish word \"mosca\" is \"la\", since \"mosca\" is a feminine noun in Spanish. \nThis is only dependent on the translation, and not on the source. \nIf there is no prefix, it will be the empty string.",
+         "Type": {
+          "$id": "139",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "140",
+         "Name": "backTranslations",
+         "SerializedName": "backTranslations",
+         "Description": "A list of \"back translations\" of the target. For example, source words that the target can translate to.\nThe list is guaranteed to contain the source word that was requested (e.g., if the source word being\nlooked up is \"fly\", then it is guaranteed that \"fly\" will be in the backTranslations list).\nHowever, it is not guaranteed to be in the first position, and often will not be.",
+         "Type": {
+          "$id": "141",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "142",
+           "Kind": "Model",
+           "Name": "BackTranslation",
+           "Namespace": "TextTranslation",
+           "Description": "Back Translation",
+           "IsNullable": false,
+           "Usage": "Output",
+           "Properties": [
+            {
+             "$id": "143",
+             "Name": "normalizedText",
+             "SerializedName": "normalizedText",
+             "Description": "A string giving the normalized form of the source term that is a back-translation of the target.\nThis value should be used as input to lookup examples.",
+             "Type": {
+              "$id": "144",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "145",
+             "Name": "displayText",
+             "SerializedName": "displayText",
+             "Description": "A string giving the source term that is a back-translation of the target in a form best\nsuited for end-user display.",
+             "Type": {
+              "$id": "146",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "147",
+             "Name": "numExamples",
+             "SerializedName": "numExamples",
+             "Description": "An integer representing the number of examples that are available for this translation pair.\nActual examples must be retrieved with a separate call to lookup examples. The number is mostly\nintended to facilitate display in a UX. For example, a user interface may add a hyperlink\nto the back-translation if the number of examples is greater than zero and show the back-translation\nas plain text if there are no examples. Note that the actual number of examples returned\nby a call to lookup examples may be less than numExamples, because additional filtering may be\napplied on the fly to remove \"bad\" examples.",
+             "Type": {
+              "$id": "148",
+              "Kind": "Primitive",
+              "Name": "Int32",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "149",
+             "Name": "frequencyCount",
+             "SerializedName": "frequencyCount",
+             "Description": "An integer representing the frequency of this translation pair in the data. The main purpose of this\nfield is to provide a user interface with a means to sort back-translations so the most frequent terms are first.",
+             "Type": {
+              "$id": "150",
+              "Kind": "Primitive",
+              "Name": "Int32",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "129"
+  },
+  {
+   "$ref": "142"
+  },
+  {
+   "$id": "151",
+   "Kind": "Model",
+   "Name": "DictionaryExampleTextItem",
+   "Namespace": "TextTranslation",
+   "Description": "Element containing the text with translation.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "BaseModel": {
+    "$ref": "78"
+   },
+   "Properties": [
+    {
+     "$id": "152",
+     "Name": "translation",
+     "SerializedName": "translation",
+     "Description": "A string specifying the translated text previously returned by the Dictionary lookup operation. \nThis should be the value from the normalizedTarget field in the translations list of the Dictionary \nlookup response. The service will return examples for the specific source-target word-pair.",
+     "Type": {
+      "$id": "153",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "154",
+   "Kind": "Model",
+   "Name": "DictionaryExampleItem",
+   "Namespace": "TextTranslation",
+   "Description": "Dictionary Example element",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "155",
+     "Name": "normalizedSource",
+     "SerializedName": "normalizedSource",
+     "Description": "A string giving the normalized form of the source term. Generally, this should be identical\nto the value of the Text field at the matching list index in the body of the request.",
+     "Type": {
+      "$id": "156",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "157",
+     "Name": "normalizedTarget",
+     "SerializedName": "normalizedTarget",
+     "Description": "A string giving the normalized form of the target term. Generally, this should be identical\nto the value of the Translation field at the matching list index in the body of the request.",
+     "Type": {
+      "$id": "158",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "159",
+     "Name": "examples",
+     "SerializedName": "examples",
+     "Description": "A list of examples for the (source term, target term) pair.",
+     "Type": {
+      "$id": "160",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "161",
+       "Kind": "Model",
+       "Name": "DictionaryExample",
+       "Namespace": "TextTranslation",
+       "Description": "Dictionary Example",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "162",
+         "Name": "sourcePrefix",
+         "SerializedName": "sourcePrefix",
+         "Description": "The string to concatenate before the value of sourceTerm to form a complete example.\nDo not add a space character, since it is already there when it should be.\nThis value may be an empty string.",
+         "Type": {
+          "$id": "163",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "164",
+         "Name": "sourceTerm",
+         "SerializedName": "sourceTerm",
+         "Description": "A string equal to the actual term looked up. The string is added with sourcePrefix\nand sourceSuffix to form the complete example. Its value is separated so it can be\nmarked in a user interface, e.g., by bolding it.",
+         "Type": {
+          "$id": "165",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "166",
+         "Name": "sourceSuffix",
+         "SerializedName": "sourceSuffix",
+         "Description": "The string to concatenate after the value of sourceTerm to form a complete example.\nDo not add a space character, since it is already there when it should be.\nThis value may be an empty string.",
+         "Type": {
+          "$id": "167",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "168",
+         "Name": "targetPrefix",
+         "SerializedName": "targetPrefix",
+         "Description": "A string similar to sourcePrefix but for the target.",
+         "Type": {
+          "$id": "169",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "170",
+         "Name": "targetTerm",
+         "SerializedName": "targetTerm",
+         "Description": "A string similar to sourceTerm but for the target.",
+         "Type": {
+          "$id": "171",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "172",
+         "Name": "targetSuffix",
+         "SerializedName": "targetSuffix",
+         "Description": "A string similar to sourceSuffix but for the target.",
+         "Type": {
+          "$id": "173",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "161"
+  },
+  {
+   "$id": "174",
+   "Kind": "Model",
+   "Name": "ErrorResponse",
+   "Namespace": "TextTranslation",
+   "Description": "Representation of the Error Response from Translator Service.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "175",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error details.",
+     "Type": {
+      "$id": "176",
+      "Kind": "Model",
+      "Name": "ErrorDetails",
+      "Namespace": "TextTranslation",
+      "Description": "Error details as returned by Translator Service.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "177",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "Number identifier of the error.",
+        "Type": {
+         "$id": "178",
+         "Kind": "Primitive",
+         "Name": "Int32",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "179",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "Human readable error description.",
+        "Type": {
+         "$id": "180",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "176"
+  },
+  {
+   "$id": "181",
+   "Kind": "Model",
+   "Name": "GetLanguageParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the language API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "182",
+   "Kind": "Model",
+   "Name": "TranslateParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the translate API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "183",
+   "Kind": "Model",
+   "Name": "TranslationResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the translation API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "184",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "Array of the translated text elements.",
+     "Type": {
+      "$id": "185",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "81"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "186",
+   "Kind": "Model",
+   "Name": "TransliterateParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the transliterate API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "187",
+   "Kind": "Model",
+   "Name": "TransliterateResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the transliteration API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "188",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "Array of transliterated texts",
+     "Type": {
+      "$id": "189",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "96"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "190",
+   "Kind": "Model",
+   "Name": "BreakSentenceParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the break sentence API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "191",
+   "Kind": "Model",
+   "Name": "BreakSentenceResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the Break SEntence API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "192",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "Array of the break sentence elements.",
+     "Type": {
+      "$id": "193",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "117"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "194",
+   "Kind": "Model",
+   "Name": "DictionaryLookupParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the dictionary lookup API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "195",
+   "Kind": "Model",
+   "Name": "DictionaryLookupResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the dictionary lookup API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "196",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "Array of the dictionary lookup elements.",
+     "Type": {
+      "$id": "197",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "122"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "198",
+   "Kind": "Model",
+   "Name": "DictionaryExamplesParameters",
+   "Namespace": "TextTranslation",
+   "Description": "Request parameters for the dictionary examples API.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "199",
+   "Kind": "Model",
+   "Name": "DictionaryExamplesResult",
+   "Namespace": "TextTranslation",
+   "Description": "Response for the dictionary examples API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "200",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "Array of the dictionary examples elements.",
+     "Type": {
+      "$id": "201",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "154"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "202",
+   "Name": "TextTranslationClient",
+   "Description": "Text translation is a cloud-based REST API feature of the Translator service that uses neural\nmachine translation technology to enable quick and accurate source-to-target text translation\nin real time across all supported languages.\n\nThe following methods are supported by the Text Translation feature:\n\nLanguages. Returns a list of languages supported by Translate, Transliterate, and Dictionary Lookup operations.\n\nTranslate. Renders single source-language text to multiple target-language texts with a single request.\n\nTransliterate. Converts characters or letters of a source language to the corresponding characters or letters of a target language.\n\nDetect. Returns the source code language code and a boolean variable denoting whether the detected language is supported for text translation and transliteration.\n\nDictionary lookup. Returns equivalent words for the source term in the target language.\n\nDictionary example Returns grammatical structure and context examples for the source term and target term pair.",
+   "Operations": [
+    {
+     "$id": "203",
+     "Name": "getLanguages",
+     "ResourceName": "TextTranslation",
+     "Summary": "Gets the set of languages currently supported by other operations of the Translator.",
+     "Description": "Gets the set of languages currently supported by other operations of the Translator.",
+     "Parameters": [
+      {
+       "$id": "204",
+       "Name": "Endpoint",
+       "NameInRequest": "Endpoint",
+       "Description": "Supported Text Translation endpoints (protocol and hostname, for example:\n    https://api.cognitive.microsofttranslator.com).",
+       "Type": {
+        "$id": "205",
+        "Kind": "Primitive",
+        "Name": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "206",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "207",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "208",
+       "Name": "scope",
+       "NameInRequest": "scope",
+       "Description": "A comma-separated list of names defining the group of languages to return.\nAllowed group names are: `translation`, `transliteration` and `dictionary`.\nIf no scope is given, then all groups are returned, which is equivalent to passing \n`scope=translation,transliteration,dictionary`. To decide which set of supported languages \nis appropriate for your scenario, see the description of the [response object](#response-body).",
+       "Type": {
+        "$id": "209",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "210",
+       "Name": "acceptLanguage",
+       "NameInRequest": "Accept-Language",
+       "Description": "The language to use for user interface strings. Some of the fields in the response are names of languages or \nnames of regions. Use this parameter to define the language in which these names are returned. \nThe language is specified by providing a well-formed BCP 47 language tag. For instance, use the value `fr` \nto request names in French or use the value `zh-Hant` to request names in Chinese Traditional.\nNames are provided in the English language when a target language is not specified or when localization \nis not available.",
+       "Type": {
+        "$id": "211",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "212",
+       "Name": "ifNoneMatch",
+       "NameInRequest": "If-None-Match",
+       "Description": "Passing the value of the ETag response header in an If-None-Match field will allow the service to optimize the response. \nIf the resource has not been modified, the service will return status code 304 and an empty response body.",
+       "Type": {
+        "$id": "213",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "214",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "215",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "216",
+        "Type": {
+         "$id": "217",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "3.0"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "218",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "219",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "220",
+        "Type": {
+         "$ref": "219"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "221",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "24"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "222",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "223",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "224",
+         "Name": "ETag",
+         "NameInResponse": "etag",
+         "Description": "Current value of the entity tag for the requested groups of supported languages. \nTo make subsequent requests more efficient, the client may send the `ETag` value in an \n`If-None-Match` header field.",
+         "Type": {
+          "$id": "225",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{Endpoint}",
+     "Path": "/languages",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "226",
+     "Name": "translate",
+     "ResourceName": "TextTranslation",
+     "Summary": "Translate Text",
+     "Description": "Translate Text",
+     "Parameters": [
+      {
+       "$ref": "204"
+      },
+      {
+       "$id": "227",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "228",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "229",
+       "Name": "to",
+       "NameInRequest": "to",
+       "Description": "Specifies the language of the output text. The target language must be one of the supported languages included \nin the translation scope. For example, use to=de to translate to German.\nIt's possible to translate to multiple languages simultaneously by repeating the parameter in the query string. \nFor example, use to=de&to=it to translate to German and Italian.",
+       "Type": {
+        "$id": "230",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$id": "231",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": true,
+       "Kind": "Method"
+      },
+      {
+       "$id": "232",
+       "Name": "from",
+       "NameInRequest": "from",
+       "Description": "Specifies the language of the input text. Find which languages are available to translate from by \nlooking up supported languages using the translation scope. If the from parameter isn't specified, \nautomatic language detection is applied to determine the source language.\n\nYou must use the from parameter rather than autodetection when using the dynamic dictionary feature. \nNote: the dynamic dictionary feature is case-sensitive.",
+       "Type": {
+        "$id": "233",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "234",
+       "Name": "textType",
+       "NameInRequest": "textType",
+       "Description": "Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed, \ncomplete element. Possible values are: plain (default) or html.",
+       "Type": {
+        "$ref": "2"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "235",
+       "Name": "category",
+       "NameInRequest": "category",
+       "Description": "A string specifying the category (domain) of the translation. This parameter is used to get translations \nfrom a customized system built with Custom Translator. Add the Category ID from your Custom Translator \nproject details to this parameter to use your deployed customized system. Default value is: general.",
+       "Type": {
+        "$id": "236",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "237",
+       "Name": "profanityAction",
+       "NameInRequest": "profanityAction",
+       "Description": "Specifies how profanities should be treated in translations.\nPossible values are: NoAction (default), Marked or Deleted.",
+       "Type": {
+        "$ref": "5"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "238",
+       "Name": "profanityMarker",
+       "NameInRequest": "profanityMarker",
+       "Description": "Specifies how profanities should be marked in translations.\nPossible values are: Asterisk (default) or Tag. ",
+       "Type": {
+        "$ref": "9"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "239",
+       "Name": "includeAlignment",
+       "NameInRequest": "includeAlignment",
+       "Description": "Specifies whether to include alignment projection from source text to translated text.\nPossible values are: true or false (default).",
+       "Type": {
+        "$id": "240",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "241",
+       "Name": "includeSentenceLength",
+       "NameInRequest": "includeSentenceLength",
+       "Description": "Specifies whether to include sentence boundaries for the input text and the translated text.\nPossible values are: true or false (default).",
+       "Type": {
+        "$id": "242",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "243",
+       "Name": "suggestedFrom",
+       "NameInRequest": "suggestedFrom",
+       "Description": "Specifies a fallback language if the language of the input text can't be identified. \nLanguage autodetection is applied when the from parameter is omitted. If detection fails, \nthe suggestedFrom language will be assumed.",
+       "Type": {
+        "$id": "244",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "245",
+       "Name": "fromScript",
+       "NameInRequest": "fromScript",
+       "Description": "Specifies the script of the input text.",
+       "Type": {
+        "$id": "246",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "247",
+       "Name": "toScript",
+       "NameInRequest": "toScript",
+       "Description": "Specifies the script of the translated text.",
+       "Type": {
+        "$id": "248",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "249",
+       "Name": "allowFallback",
+       "NameInRequest": "allowFallback",
+       "Description": "Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. \nPossible values are: true (default) or false.\n\nallowFallback=false specifies that the translation should only use systems trained for the category specified \nby the request. If a translation for language X to language Y requires chaining through a pivot language E, \nthen all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. \nIf no system is found with the specific category, the request will return a 400 status code. allowFallback=true \nspecifies that the service is allowed to fall back to a general system when a custom system doesn't exist.",
+       "Type": {
+        "$id": "250",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "251",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "252",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "216"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "253",
+       "Name": "requestBody",
+       "NameInRequest": "requestBody",
+       "Description": "Defines the content of the request",
+       "Type": {
+        "$id": "254",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "78"
+        },
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "255",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "256",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "257",
+        "Type": {
+         "$ref": "256"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "258",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "259",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "260",
+        "Type": {
+         "$ref": "259"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "261",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "262",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "81"
+        },
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "263",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "264",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "265",
+         "Name": "x-mt-system",
+         "NameInResponse": "mtSystem",
+         "Description": "Specifies the system type that was used for translation for each 'to' language requested for translation. \nThe value is a comma-separated list of strings. Each string indicates a type:\n\n* Custom - Request includes a custom system and at least one custom system was used during translation.\n* Team - All other requests",
+         "Type": {
+          "$id": "266",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "267",
+         "Name": "x-metered-usage",
+         "NameInResponse": "meteredUsage",
+         "Description": "Specifies consumption (the number of characters for which the user will be charged) for the translation \njob request. For example, if the word \"Hello\" is translated from English (en) to French (fr), \nthis field will return the value '5'.",
+         "Type": {
+          "$id": "268",
+          "Kind": "Primitive",
+          "Name": "Int32",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{Endpoint}",
+     "Path": "/translate",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "269",
+     "Name": "transliterate",
+     "ResourceName": "TextTranslation",
+     "Summary": "Transliterate Text",
+     "Description": "Transliterate Text",
+     "Parameters": [
+      {
+       "$ref": "204"
+      },
+      {
+       "$id": "270",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "271",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "272",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "Specifies the language of the text to convert from one script to another. \nPossible languages are listed in the transliteration scope obtained by querying the service \nfor its supported languages.",
+       "Type": {
+        "$id": "273",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "274",
+       "Name": "fromScript",
+       "NameInRequest": "fromScript",
+       "Description": "Specifies the script used by the input text. Look up supported languages using the transliteration scope,\nto find input scripts available for the selected language.",
+       "Type": {
+        "$id": "275",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "276",
+       "Name": "toScript",
+       "NameInRequest": "toScript",
+       "Description": "Specifies the output script. Look up supported languages using the transliteration scope, to find output \nscripts available for the selected combination of input language and input script.",
+       "Type": {
+        "$id": "277",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "278",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "279",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "216"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "280",
+       "Name": "requestBody",
+       "NameInRequest": "requestBody",
+       "Description": "Defines the content of the request",
+       "Type": {
+        "$id": "281",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "78"
+        },
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "282",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "283",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "284",
+        "Type": {
+         "$ref": "283"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "285",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "286",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "287",
+        "Type": {
+         "$ref": "286"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "288",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "289",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "96"
+        },
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "290",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "291",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{Endpoint}",
+     "Path": "/transliterate",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "292",
+     "Name": "findSentenceBoundaries",
+     "ResourceName": "TextTranslation",
+     "Summary": "Find Sentence Boundaries",
+     "Description": "Find Sentence Boundaries",
+     "Parameters": [
+      {
+       "$ref": "204"
+      },
+      {
+       "$id": "293",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "294",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "295",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "Language tag identifying the language of the input text. \nIf a code isn't specified, automatic language detection will be applied.",
+       "Type": {
+        "$id": "296",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "297",
+       "Name": "script",
+       "NameInRequest": "script",
+       "Description": "Script tag identifying the script used by the input text. \nIf a script isn't specified, the default script of the language will be assumed.",
+       "Type": {
+        "$id": "298",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "299",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "300",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "216"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "301",
+       "Name": "requestBody",
+       "NameInRequest": "requestBody",
+       "Description": "Defines the content of the request",
+       "Type": {
+        "$id": "302",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "78"
+        },
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "303",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "304",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "305",
+        "Type": {
+         "$ref": "304"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "306",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "307",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "308",
+        "Type": {
+         "$ref": "307"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "309",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "310",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "117"
+        },
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "311",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "312",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{Endpoint}",
+     "Path": "/breaksentence",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "313",
+     "Name": "lookupDictionaryEntries",
+     "ResourceName": "TextTranslation",
+     "Summary": "Lookup Dictionary Entries",
+     "Description": "Lookup Dictionary Entries",
+     "Parameters": [
+      {
+       "$ref": "204"
+      },
+      {
+       "$id": "314",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "315",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "316",
+       "Name": "from",
+       "NameInRequest": "from",
+       "Description": "Specifies the language of the input text.\nThe source language must be one of the supported languages included in the dictionary scope.",
+       "Type": {
+        "$id": "317",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "318",
+       "Name": "to",
+       "NameInRequest": "to",
+       "Description": "Specifies the language of the output text.\nThe target language must be one of the supported languages included in the dictionary scope.",
+       "Type": {
+        "$id": "319",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "320",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "321",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "216"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "322",
+       "Name": "requestBody",
+       "NameInRequest": "requestBody",
+       "Description": "Defines the content of the request",
+       "Type": {
+        "$id": "323",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "78"
+        },
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "324",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "325",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "326",
+        "Type": {
+         "$ref": "325"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "327",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "328",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "329",
+        "Type": {
+         "$ref": "328"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "330",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "331",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "122"
+        },
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "332",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "333",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{Endpoint}",
+     "Path": "/dictionary/lookup",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "334",
+     "Name": "lookupDictionaryExamples",
+     "ResourceName": "TextTranslation",
+     "Summary": "Lookup Dictionary Examples",
+     "Description": "Lookup Dictionary Examples",
+     "Parameters": [
+      {
+       "$ref": "204"
+      },
+      {
+       "$id": "335",
+       "Name": "clientTraceId",
+       "NameInRequest": "X-ClientTraceId",
+       "Description": "A client-generated GUID to uniquely identify the request.",
+       "Type": {
+        "$id": "336",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "337",
+       "Name": "from",
+       "NameInRequest": "from",
+       "Description": "Specifies the language of the input text.\nThe source language must be one of the supported languages included in the dictionary scope.",
+       "Type": {
+        "$id": "338",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "339",
+       "Name": "to",
+       "NameInRequest": "to",
+       "Description": "Specifies the language of the output text.\nThe target language must be one of the supported languages included in the dictionary scope.",
+       "Type": {
+        "$id": "340",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "341",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "Mandatory API version parameter",
+       "Type": {
+        "$id": "342",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "216"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "343",
+       "Name": "requestBody",
+       "NameInRequest": "requestBody",
+       "Description": "Defines the content of the request",
+       "Type": {
+        "$id": "344",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "151"
+        },
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "345",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "346",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "347",
+        "Type": {
+         "$ref": "346"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "348",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "349",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "350",
+        "Type": {
+         "$ref": "349"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "351",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "352",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "154"
+        },
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "353",
+         "Name": "X-RequestId",
+         "NameInResponse": "requestId",
+         "Description": "Value generated by the service to identify the request. It is used for troubleshooting purposes.",
+         "Type": {
+          "$id": "354",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{Endpoint}",
+     "Path": "/dictionary/examples",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "355"
+   },
+   "Creatable": true
+  }
+ ]
+}

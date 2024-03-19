@@ -1,0 +1,1504 @@
+{
+ "$id": "1",
+ "Name": "ImageAnalysis",
+ "ApiVersions": [
+  "2023-10-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "Enum",
+   "Name": "VisualFeaturesImpl",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "tags",
+     "Value": "tags",
+     "Description": "Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image."
+    },
+    {
+     "$id": "4",
+     "Name": "caption",
+     "Value": "caption",
+     "Description": "Generate a human-readable caption sentence that describes the content of the image."
+    },
+    {
+     "$id": "5",
+     "Name": "denseCaptions",
+     "Value": "denseCaptions",
+     "Description": "Generate human-readable caption sentences for up to 10 different regions in the image, including one for the whole image."
+    },
+    {
+     "$id": "6",
+     "Name": "objects",
+     "Value": "objects",
+     "Description": "Object detection. This is similar to tags, but focused on detecting physical objects in the image and returning their location."
+    },
+    {
+     "$id": "7",
+     "Name": "read",
+     "Value": "read",
+     "Description": "Extract printed or handwritten text from the image. Also known as Optical Character Recognition (OCR)."
+    },
+    {
+     "$id": "8",
+     "Name": "smartCrops",
+     "Value": "smartCrops",
+     "Description": "Find representative sub-regions of the image for thumbnail generation, at desired aspect ratios, with priority given to detected faces."
+    },
+    {
+     "$id": "9",
+     "Name": "people",
+     "Value": "people",
+     "Description": "Detect people in the image and return their location."
+    }
+   ],
+   "Namespace": "ImageAnalysis",
+   "Accessibility": "internal",
+   "Description": "The visual features supported by the Image Analysis service",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "10",
+   "Kind": "Enum",
+   "Name": "Versions",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "11",
+     "Name": "v2023_10_01",
+     "Value": "2023-10-01"
+    }
+   ],
+   "Namespace": "ImageAnalysis",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "12",
+   "Kind": "Model",
+   "Name": "ImageAnalysisResult",
+   "Namespace": "ImageAnalysis",
+   "Accessibility": "public",
+   "Description": "Represents the outcome of an Image Analysis operation.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "13",
+     "Name": "caption",
+     "SerializedName": "captionResult",
+     "Description": "The generated phrase that describes the content of the analyzed image.",
+     "Type": {
+      "$id": "14",
+      "Kind": "Model",
+      "Name": "CaptionResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Represents a generated phrase that describes the content of the whole image.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "15",
+        "Name": "confidence",
+        "SerializedName": "confidence",
+        "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.\nHigher values indicating higher confidence.",
+        "Type": {
+         "$id": "16",
+         "Kind": "Primitive",
+         "Name": "Float32",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "17",
+        "Name": "text",
+        "SerializedName": "text",
+        "Description": "The text of the caption.",
+        "Type": {
+         "$id": "18",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "19",
+     "Name": "denseCaptions",
+     "SerializedName": "denseCaptionsResult",
+     "Description": "The up to 10 generated phrases, the first describing the content of the whole image,\nand the others describing the content of different regions of the image.",
+     "Type": {
+      "$id": "20",
+      "Kind": "Model",
+      "Name": "DenseCaptionsResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Represents a list of up to 10 image captions for different regions of the image.\nThe first caption always applies to the whole image.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "21",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "The list of image captions.",
+        "Type": {
+         "$id": "22",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "23",
+          "Kind": "Model",
+          "Name": "DenseCaption",
+          "Namespace": "ImageAnalysis",
+          "Accessibility": "public",
+          "Description": "Represents a generated phrase that describes the content of the whole image or a region in the image",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "24",
+            "Name": "confidence",
+            "SerializedName": "confidence",
+            "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this description is accurate.\nHigher values indicating higher confidence.",
+            "Type": {
+             "$id": "25",
+             "Kind": "Primitive",
+             "Name": "Float32",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "26",
+            "Name": "text",
+            "SerializedName": "text",
+            "Description": "The text of the caption.",
+            "Type": {
+             "$id": "27",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "28",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "The image region of which this caption applies.",
+            "Type": {
+             "$id": "29",
+             "Kind": "Model",
+             "Name": "ImageBoundingBox",
+             "Namespace": "ImageAnalysis",
+             "Accessibility": "public",
+             "Description": "A basic rectangle specifying a sub-region of the image.",
+             "IsNullable": false,
+             "Usage": "Output",
+             "Properties": [
+              {
+               "$id": "30",
+               "Name": "x",
+               "SerializedName": "x",
+               "Description": "X-coordinate of the top left point of the area, in pixels.",
+               "Type": {
+                "$id": "31",
+                "Kind": "Primitive",
+                "Name": "Int32",
+                "IsNullable": false
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "32",
+               "Name": "y",
+               "SerializedName": "y",
+               "Description": "Y-coordinate of the top left point of the area, in pixels.",
+               "Type": {
+                "$id": "33",
+                "Kind": "Primitive",
+                "Name": "Int32",
+                "IsNullable": false
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "34",
+               "Name": "width",
+               "SerializedName": "w",
+               "Description": "Width of the area, in pixels.",
+               "Type": {
+                "$id": "35",
+                "Kind": "Primitive",
+                "Name": "Int32",
+                "IsNullable": false
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "36",
+               "Name": "height",
+               "SerializedName": "h",
+               "Description": "Height of the area, in pixels.",
+               "Type": {
+                "$id": "37",
+                "Kind": "Primitive",
+                "Name": "Int32",
+                "IsNullable": false
+               },
+               "IsRequired": true,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "38",
+     "Name": "metadata",
+     "SerializedName": "metadata",
+     "Description": "Metadata associated with the analyzed image.",
+     "Type": {
+      "$id": "39",
+      "Kind": "Model",
+      "Name": "ImageMetadata",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Metadata associated with the analyzed image.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "40",
+        "Name": "height",
+        "SerializedName": "height",
+        "Description": "The height of the image in pixels.",
+        "Type": {
+         "$id": "41",
+         "Kind": "Primitive",
+         "Name": "Int32",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "42",
+        "Name": "width",
+        "SerializedName": "width",
+        "Description": "The width of the image in pixels.",
+        "Type": {
+         "$id": "43",
+         "Kind": "Primitive",
+         "Name": "Int32",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "44",
+     "Name": "modelVersion",
+     "SerializedName": "modelVersion",
+     "Description": "The cloud AI model used for the analysis",
+     "Type": {
+      "$id": "45",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "46",
+     "Name": "objects",
+     "SerializedName": "objectsResult",
+     "Description": "A list of detected physical objects in the analyzed image, and their location.",
+     "Type": {
+      "$id": "47",
+      "Kind": "Model",
+      "Name": "ObjectsResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Represents a list of physical object detected in an image and their location.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "48",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of physical object detected in an image and their location.",
+        "Type": {
+         "$id": "49",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "50",
+          "Kind": "Model",
+          "Name": "DetectedObject",
+          "Namespace": "ImageAnalysis",
+          "Accessibility": "public",
+          "Description": "Represents a physical object detected in an image.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "51",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "A rectangular boundary where the object was detected.",
+            "Type": {
+             "$ref": "29"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "52",
+            "Name": "tags",
+            "SerializedName": "tags",
+            "Description": "A single-item list containing the object information.",
+            "Type": {
+             "$id": "53",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "54",
+              "Kind": "Model",
+              "Name": "DetectedTag",
+              "Namespace": "ImageAnalysis",
+              "Accessibility": "public",
+              "Description": "A content entity observation in the image. A tag can be a physical object, living being, scenery, or action\nthat appear in the image.",
+              "IsNullable": false,
+              "Usage": "Output",
+              "Properties": [
+               {
+                "$id": "55",
+                "Name": "confidence",
+                "SerializedName": "confidence",
+                "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this entity was observed.\nHigher values indicating higher confidence.",
+                "Type": {
+                 "$id": "56",
+                 "Kind": "Primitive",
+                 "Name": "Float32",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "57",
+                "Name": "name",
+                "SerializedName": "name",
+                "Description": "Name of the entity.",
+                "Type": {
+                 "$id": "58",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "59",
+     "Name": "people",
+     "SerializedName": "peopleResult",
+     "Description": "A list of detected people in the analyzed image, and their location.",
+     "Type": {
+      "$id": "60",
+      "Kind": "Model",
+      "Name": "PeopleResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Represents a list of people detected in an image and their location.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "61",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of people detected in an image and their location.",
+        "Type": {
+         "$id": "62",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "63",
+          "Kind": "Model",
+          "Name": "DetectedPerson",
+          "Namespace": "ImageAnalysis",
+          "Accessibility": "public",
+          "Description": "Represents a person detected in an image.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "64",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "A rectangular boundary where the person was detected.",
+            "Type": {
+             "$ref": "29"
+            },
+            "IsRequired": true,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "65",
+            "Name": "confidence",
+            "SerializedName": "confidence",
+            "Description": "A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.\nHigher values indicating higher confidence.",
+            "Type": {
+             "$id": "66",
+             "Kind": "Primitive",
+             "Name": "Float32",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": true
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "67",
+     "Name": "read",
+     "SerializedName": "readResult",
+     "Description": "The extracted printed and hand-written text in the analyze image. Also knows as OCR.",
+     "Type": {
+      "$id": "68",
+      "Kind": "Model",
+      "Name": "ReadResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "The results of a Read (OCR) operation.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "69",
+        "Name": "blocks",
+        "SerializedName": "blocks",
+        "Description": "A list of text blocks in the image. At the moment only one block is returned, containing all the text detected in the image.",
+        "Type": {
+         "$id": "70",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "71",
+          "Kind": "Model",
+          "Name": "DetectedTextBlock",
+          "Namespace": "ImageAnalysis",
+          "Accessibility": "public",
+          "Description": "Represents a single block of detected text in the image.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "72",
+            "Name": "lines",
+            "SerializedName": "lines",
+            "Description": "A list of text lines in this block.",
+            "Type": {
+             "$id": "73",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "74",
+              "Kind": "Model",
+              "Name": "DetectedTextLine",
+              "Namespace": "ImageAnalysis",
+              "Accessibility": "public",
+              "Description": "Represents a single line of text in the image.",
+              "IsNullable": false,
+              "Usage": "Output",
+              "Properties": [
+               {
+                "$id": "75",
+                "Name": "text",
+                "SerializedName": "text",
+                "Description": "Text content of the detected text line.",
+                "Type": {
+                 "$id": "76",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "77",
+                "Name": "boundingPolygon",
+                "SerializedName": "boundingPolygon",
+                "Description": "A bounding polygon around the text line. At the moment only quadrilaterals are supported (represented by 4 image points).",
+                "Type": {
+                 "$id": "78",
+                 "Kind": "Array",
+                 "Name": "Array",
+                 "ElementType": {
+                  "$id": "79",
+                  "Kind": "Model",
+                  "Name": "ImagePoint",
+                  "Namespace": "ImageAnalysis",
+                  "Accessibility": "public",
+                  "Description": "Represents the coordinates of a single pixel in the image.",
+                  "IsNullable": false,
+                  "Usage": "Output",
+                  "Properties": [
+                   {
+                    "$id": "80",
+                    "Name": "x",
+                    "SerializedName": "x",
+                    "Description": "The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image.",
+                    "Type": {
+                     "$id": "81",
+                     "Kind": "Primitive",
+                     "Name": "Int32",
+                     "IsNullable": false
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "82",
+                    "Name": "y",
+                    "SerializedName": "y",
+                    "Description": "The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image.",
+                    "Type": {
+                     "$id": "83",
+                     "Kind": "Primitive",
+                     "Name": "Int32",
+                     "IsNullable": false
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false
+                   }
+                  ]
+                 },
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "84",
+                "Name": "words",
+                "SerializedName": "words",
+                "Description": "A list of words in this line.",
+                "Type": {
+                 "$id": "85",
+                 "Kind": "Array",
+                 "Name": "Array",
+                 "ElementType": {
+                  "$id": "86",
+                  "Kind": "Model",
+                  "Name": "DetectedTextWord",
+                  "Namespace": "ImageAnalysis",
+                  "Accessibility": "public",
+                  "Description": "A word object consisting of a contiguous sequence of characters. For non-space delimited languages,\r\nsuch as Chinese, Japanese, and Korean, each character is represented as its own word.",
+                  "IsNullable": false,
+                  "Usage": "Output",
+                  "Properties": [
+                   {
+                    "$id": "87",
+                    "Name": "text",
+                    "SerializedName": "text",
+                    "Description": "Text content of the word.",
+                    "Type": {
+                     "$id": "88",
+                     "Kind": "Primitive",
+                     "Name": "String",
+                     "IsNullable": false
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "89",
+                    "Name": "boundingPolygon",
+                    "SerializedName": "boundingPolygon",
+                    "Description": "A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points).",
+                    "Type": {
+                     "$id": "90",
+                     "Kind": "Array",
+                     "Name": "Array",
+                     "ElementType": {
+                      "$ref": "79"
+                     },
+                     "IsNullable": false
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "91",
+                    "Name": "confidence",
+                    "SerializedName": "confidence",
+                    "Description": "The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection.",
+                    "Type": {
+                     "$id": "92",
+                     "Kind": "Primitive",
+                     "Name": "Float32",
+                     "IsNullable": false
+                    },
+                    "IsRequired": true,
+                    "IsReadOnly": false
+                   }
+                  ]
+                 },
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "93",
+     "Name": "smartCrops",
+     "SerializedName": "smartCropsResult",
+     "Description": "A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.\nThese regions preserve as much content as possible from the analyzed image, with priority given to detected faces.",
+     "Type": {
+      "$id": "94",
+      "Kind": "Model",
+      "Name": "SmartCropsResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "Smart cropping result. A list of crop regions at the desired as aspect ratios (if provided) that can be used as image thumbnails.\nThese regions preserve as much content as possible from the analyzed image, with priority given to detected faces.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "95",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of crop regions.",
+        "Type": {
+         "$id": "96",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "97",
+          "Kind": "Model",
+          "Name": "CropRegion",
+          "Namespace": "ImageAnalysis",
+          "Accessibility": "public",
+          "Description": "A region at the desired aspect ratio that can be used as image thumbnail.\nThe region preserves as much content as possible from the analyzed image, with priority given to detected faces.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "98",
+            "Name": "aspectRatio",
+            "SerializedName": "aspectRatio",
+            "Description": "The aspect ratio of the crop region.\nAspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.\nThe aspect ratio will be in the range 0.75 to 1.8 (inclusive) if provided by the developer during the analyze call.\nOtherwise, it will be in the range 0.5 to 2.0 (inclusive).",
+            "Type": {
+             "$id": "99",
+             "Kind": "Primitive",
+             "Name": "Float32",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "100",
+            "Name": "boundingBox",
+            "SerializedName": "boundingBox",
+            "Description": "The bounding box of the region.",
+            "Type": {
+             "$ref": "29"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "101",
+     "Name": "tags",
+     "SerializedName": "tagsResult",
+     "Description": "A list of content tags in the analyzed image.",
+     "Type": {
+      "$id": "102",
+      "Kind": "Model",
+      "Name": "TagsResult",
+      "Namespace": "ImageAnalysis",
+      "Accessibility": "public",
+      "Description": "A list of entities observed in the image. Tags can be physical objects, living being, scenery, or actions\nthat appear in the image.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "103",
+        "Name": "values",
+        "SerializedName": "values",
+        "Description": "A list of tags.",
+        "Type": {
+         "$id": "104",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "54"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "14"
+  },
+  {
+   "$ref": "20"
+  },
+  {
+   "$ref": "23"
+  },
+  {
+   "$ref": "29"
+  },
+  {
+   "$ref": "39"
+  },
+  {
+   "$ref": "47"
+  },
+  {
+   "$ref": "50"
+  },
+  {
+   "$ref": "54"
+  },
+  {
+   "$ref": "60"
+  },
+  {
+   "$ref": "63"
+  },
+  {
+   "$ref": "68"
+  },
+  {
+   "$ref": "71"
+  },
+  {
+   "$ref": "74"
+  },
+  {
+   "$ref": "79"
+  },
+  {
+   "$ref": "86"
+  },
+  {
+   "$ref": "94"
+  },
+  {
+   "$ref": "97"
+  },
+  {
+   "$ref": "102"
+  },
+  {
+   "$id": "105",
+   "Kind": "Model",
+   "Name": "ImageUrl",
+   "Namespace": "ImageAnalysis",
+   "Accessibility": "internal",
+   "Description": "An object holding the publicly reachable URL of an image to analyze.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "106",
+     "Name": "url",
+     "SerializedName": "url",
+     "Description": "Publicly reachable URL of an image to analyze.",
+     "Type": {
+      "$id": "107",
+      "Kind": "Primitive",
+      "Name": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "108",
+   "Name": "ImageAnalysisClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "109",
+     "Name": "analyzeFromImageData",
+     "ResourceName": "ImageAnalysis",
+     "Description": "Performs a single Image Analysis operation",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "110",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Azure AI Computer Vision endpoint (protocol and hostname, for example:\nhttps://<resource-name>.cognitiveservices.azure.com).",
+       "Type": {
+        "$id": "111",
+        "Kind": "Primitive",
+        "Name": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "112",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "113",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "114",
+        "Type": {
+         "$id": "115",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "2023-10-01"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "116",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Description": "The format of the HTTP payload.",
+       "Type": {
+        "$id": "117",
+        "Kind": "Literal",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "118",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "application/octet-stream",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "119",
+        "Type": {
+         "$ref": "117"
+        },
+        "Value": "application/octet-stream"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "120",
+       "Name": "visualFeatures",
+       "NameInRequest": "features",
+       "Description": "A list of visual features to analyze.\nSeven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.\nAt least one visual feature must be specified.",
+       "Type": {
+        "$id": "121",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "2"
+        },
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "122",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "The desired language for result generation (a two-letter language code).\nIf this option is not specified, the default value 'en' is used (English).\nSee https://aka.ms/cv-languages for a list of supported languages.",
+       "Type": {
+        "$id": "123",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "124",
+       "Name": "genderNeutralCaption",
+       "NameInRequest": "gender-neutral-caption",
+       "Description": "Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.\nBy default captions may contain gender terms (for example: 'man', 'woman', or 'boy', 'girl'). \nIf you set this to \"true\", those will be replaced with gender-neutral terms (for example: 'person' or 'child').",
+       "Type": {
+        "$id": "125",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "126",
+       "Name": "smartCropsAspectRatios",
+       "NameInRequest": "smartcrops-aspect-ratios",
+       "Description": "A list of aspect ratios to use for smart cropping.\nAspect ratios are calculated by dividing the target crop width in pixels by the height in pixels.\nSupported values are between 0.75 and 1.8 (inclusive).\nIf this parameter is not specified, the service will return one crop region with an aspect\nratio it sees fit between 0.5 and 2.0 (inclusive).",
+       "Type": {
+        "$id": "127",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$id": "128",
+         "Kind": "Primitive",
+         "Name": "Float32",
+         "IsNullable": false
+        },
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "129",
+       "Name": "modelVersion",
+       "NameInRequest": "model-version",
+       "Description": "The version of cloud AI-model used for analysis.\nThe format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where 'YYYY', 'MM', 'DD' are the year, month and day associated with the model.\nThis is not commonly set, as the default always gives the latest AI model with recent improvements.\nIf however you would like to make sure analysis results do not change over time, set this value to a specific model version.",
+       "Type": {
+        "$id": "130",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "131",
+       "Name": "imageContent",
+       "NameInRequest": "imageContent",
+       "Description": "The image to be analyzed",
+       "Type": {
+        "$id": "132",
+        "Kind": "Primitive",
+        "Name": "Bytes",
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "133",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "134",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "135",
+        "Type": {
+         "$ref": "134"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "136",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "12"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{endpoint}/computervision",
+     "Path": "/imageanalysis:analyze",
+     "RequestMediaTypes": [
+      "application/octet-stream"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "137",
+     "Name": "analyzeFromUrl",
+     "ResourceName": "ImageAnalysis",
+     "Description": "Performs a single Image Analysis operation",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "110"
+      },
+      {
+       "$id": "138",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "139",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "114"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "140",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Description": "The format of the HTTP payload.",
+       "Type": {
+        "$id": "141",
+        "Kind": "Literal",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "142",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "application/json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "143",
+        "Type": {
+         "$ref": "141"
+        },
+        "Value": "application/json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "144",
+       "Name": "visualFeatures",
+       "NameInRequest": "features",
+       "Description": "A list of visual features to analyze.\nSeven visual features are supported: Caption, DenseCaptions, Read (OCR), Tags, Objects, SmartCrops, and People.\nAt least one visual feature must be specified.",
+       "Type": {
+        "$id": "145",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$ref": "2"
+        },
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "146",
+       "Name": "language",
+       "NameInRequest": "language",
+       "Description": "The desired language for result generation (a two-letter language code).\nIf this option is not specified, the default value 'en' is used (English).\nSee https://aka.ms/cv-languages for a list of supported languages.",
+       "Type": {
+        "$id": "147",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "148",
+       "Name": "genderNeutralCaption",
+       "NameInRequest": "gender-neutral-caption",
+       "Description": "Boolean flag for enabling gender-neutral captioning for Caption and Dense Captions features.\nBy default captions may contain gender terms (for example: 'man', 'woman', or 'boy', 'girl'). \nIf you set this to \"true\", those will be replaced with gender-neutral terms (for example: 'person' or 'child').",
+       "Type": {
+        "$id": "149",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "150",
+       "Name": "smartCropsAspectRatios",
+       "NameInRequest": "smartcrops-aspect-ratios",
+       "Description": "A list of aspect ratios to use for smart cropping.\nAspect ratios are calculated by dividing the target crop width in pixels by the height in pixels.\nSupported values are between 0.75 and 1.8 (inclusive).\nIf this parameter is not specified, the service will return one crop region with an aspect\nratio it sees fit between 0.5 and 2.0 (inclusive).",
+       "Type": {
+        "$id": "151",
+        "Kind": "Array",
+        "Name": "Array",
+        "ElementType": {
+         "$id": "152",
+         "Kind": "Primitive",
+         "Name": "Float32",
+         "IsNullable": false
+        },
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method",
+       "ArraySerializationDelimiter": ","
+      },
+      {
+       "$id": "153",
+       "Name": "modelVersion",
+       "NameInRequest": "model-version",
+       "Description": "The version of cloud AI-model used for analysis.\nThe format is the following: 'latest' (default value) or 'YYYY-MM-DD' or 'YYYY-MM-DD-preview', where 'YYYY', 'MM', 'DD' are the year, month and day associated with the model.\nThis is not commonly set, as the default always gives the latest AI model with recent improvements.\nIf however you would like to make sure analysis results do not change over time, set this value to a specific model version.",
+       "Type": {
+        "$id": "154",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "155",
+       "Name": "imageContent",
+       "NameInRequest": "imageContent",
+       "Description": "The image to be analyzed",
+       "Type": {
+        "$ref": "105"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "156",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "157",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "158",
+        "Type": {
+         "$ref": "157"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "159",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "12"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/computervision",
+     "Path": "/imageanalysis:analyze",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "160"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "161",
+  "ApiKey": {
+   "$id": "162",
+   "Name": "Ocp-Apim-Subscription-Key"
+  }
+ }
+}
