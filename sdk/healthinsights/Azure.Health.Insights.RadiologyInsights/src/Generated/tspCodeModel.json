@@ -1,0 +1,5491 @@
+{
+ "$id": "1",
+ "Name": "AzureHealthInsights",
+ "Description": "Azure AI Health Insights provides an API that serves insight models, specific for Health & Life Sciences, that perform analysis and provide inferences to be used by a human.",
+ "ApiVersions": [
+  "2023-09-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "Enum",
+   "Name": "PatientSex",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "Female",
+     "Value": "female"
+    },
+    {
+     "$id": "4",
+     "Name": "Male",
+     "Value": "male"
+    },
+    {
+     "$id": "5",
+     "Name": "Unspecified",
+     "Value": "unspecified"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The patient's sex.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "6",
+   "Kind": "Enum",
+   "Name": "EncounterClass",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "7",
+     "Name": "InPatient",
+     "Value": "inpatient",
+     "Description": "A patient encounter where a patient is admitted by a hospital or equivalent facility, assigned to a location where patients generally stay at least overnight and provided with room, board, and continuous nursing service."
+    },
+    {
+     "$id": "8",
+     "Name": "Ambulatory",
+     "Value": "ambulatory",
+     "Description": "The term ambulatory usually implies that the patient has come to the location and is not assigned to a bed. Sometimes referred to as an outpatient encounter."
+    },
+    {
+     "$id": "9",
+     "Name": "Observation",
+     "Value": "observation",
+     "Description": "An encounter where the patient usually will start in different encounter, such as one in the emergency department but then transition to this type of encounter because they require a significant period of treatment and monitoring to determine whether or not their condition warrants an inpatient admission or discharge. "
+    },
+    {
+     "$id": "10",
+     "Name": "Emergency",
+     "Value": "emergency",
+     "Description": "A patient encounter that takes place at a dedicated healthcare service delivery location where the patient receives immediate evaluation and treatment, provided until the patient can be discharged or responsibility for the patient's care is transferred elsewhere (for example, the patient could be admitted as an inpatient or transferred to another facility."
+    },
+    {
+     "$id": "11",
+     "Name": "Virtual",
+     "Value": "virtual",
+     "Description": "A patient encounter where the patient is not physically present for the encounter, such as in a telehealth encounter, phone call, or electronic communication."
+    },
+    {
+     "$id": "12",
+     "Name": "HealthHome",
+     "Value": "healthHome",
+     "Description": "Healthcare encounter that takes place in the residence of the patient or a designee"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Known values codes that can be used to indicate the class of encounter (TODO://Based on FHIR value set--http://....).",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "13",
+   "Kind": "Enum",
+   "Name": "DocumentType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "14",
+     "Name": "Note",
+     "Value": "note"
+    },
+    {
+     "$id": "15",
+     "Name": "FhirBundle",
+     "Value": "fhirBundle"
+    },
+    {
+     "$id": "16",
+     "Name": "Dicom",
+     "Value": "dicom"
+    },
+    {
+     "$id": "17",
+     "Name": "GenomicSequencing",
+     "Value": "genomicSequencing"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "18",
+   "Kind": "Enum",
+   "Name": "ClinicalDocumentType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "19",
+     "Name": "Consultation",
+     "Value": "consultation"
+    },
+    {
+     "$id": "20",
+     "Name": "DischargeSummary",
+     "Value": "dischargeSummary"
+    },
+    {
+     "$id": "21",
+     "Name": "HistoryAndPhysical",
+     "Value": "historyAndPhysical"
+    },
+    {
+     "$id": "22",
+     "Name": "RadiologyReport",
+     "Value": "radiologyReport"
+    },
+    {
+     "$id": "23",
+     "Name": "Procedure",
+     "Value": "procedure"
+    },
+    {
+     "$id": "24",
+     "Name": "Progress",
+     "Value": "progress"
+    },
+    {
+     "$id": "25",
+     "Name": "Laboratory",
+     "Value": "laboratory"
+    },
+    {
+     "$id": "26",
+     "Name": "PathologyReport",
+     "Value": "pathologyReport"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the clinical document.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "27",
+   "Kind": "Enum",
+   "Name": "SpecialtyType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "28",
+     "Name": "Pathology",
+     "Value": "pathology",
+     "Description": "pathology"
+    },
+    {
+     "$id": "29",
+     "Name": "Radiology",
+     "Value": "radiology",
+     "Description": "radiology"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Known values codes that can be used to indicate the type of the Specialty.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "30",
+   "Kind": "Enum",
+   "Name": "DocumentContentSourceType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "31",
+     "Name": "Inline",
+     "Value": "inline",
+     "Description": "The content is given as a string (for instance, text)."
+    },
+    {
+     "$id": "32",
+     "Name": "Reference",
+     "Value": "reference",
+     "Description": "The content is given as a URI."
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The type of the content's source. \nIn case the source type is 'inline', the content is given as a string (for instance, text). \nIn case the source type is 'reference', the content is given as a URI.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "33",
+   "Kind": "Enum",
+   "Name": "RadiologyInsightsInferenceType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "34",
+     "Name": "AgeMismatch",
+     "Value": "ageMismatch",
+     "Description": "Age mismatch inference type"
+    },
+    {
+     "$id": "35",
+     "Name": "LateralityDiscrepancy",
+     "Value": "lateralityDiscrepancy",
+     "Description": "Laterality discrepancy inference type"
+    },
+    {
+     "$id": "36",
+     "Name": "SexMismatch",
+     "Value": "sexMismatch",
+     "Description": "Sex mismatch inference type"
+    },
+    {
+     "$id": "37",
+     "Name": "CompleteOrderDiscrepancy",
+     "Value": "completeOrderDiscrepancy",
+     "Description": "Complete order discrepancy inference type"
+    },
+    {
+     "$id": "38",
+     "Name": "LimitedOrderDiscrepancy",
+     "Value": "limitedOrderDiscrepancy",
+     "Description": "Limited order discrepancy inference type"
+    },
+    {
+     "$id": "39",
+     "Name": "Finding",
+     "Value": "finding",
+     "Description": "Finding inference type"
+    },
+    {
+     "$id": "40",
+     "Name": "CriticalResult",
+     "Value": "criticalResult",
+     "Description": "Critical finding inference type"
+    },
+    {
+     "$id": "41",
+     "Name": "FollowupRecommendation",
+     "Value": "followupRecommendation",
+     "Description": "Recommendation inference type"
+    },
+    {
+     "$id": "42",
+     "Name": "FollowupCommunication",
+     "Value": "followupCommunication",
+     "Description": "Followup Communication inference type"
+    },
+    {
+     "$id": "43",
+     "Name": "RadiologyProcedure",
+     "Value": "radiologyProcedure",
+     "Description": "Radiology Procedure inference type"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "A Radiology Insights inference types.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Input"
+  },
+  {
+   "$id": "44",
+   "Kind": "Enum",
+   "Name": "JobStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "45",
+     "Name": "NotStarted",
+     "Value": "notStarted"
+    },
+    {
+     "$id": "46",
+     "Name": "Running",
+     "Value": "running"
+    },
+    {
+     "$id": "47",
+     "Name": "Succeeded",
+     "Value": "succeeded"
+    },
+    {
+     "$id": "48",
+     "Name": "Failed",
+     "Value": "failed"
+    },
+    {
+     "$id": "49",
+     "Name": "Canceled",
+     "Value": "canceled"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "The status of the processing job.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "50",
+   "Kind": "Enum",
+   "Name": "LateralityDiscrepancyType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "51",
+     "Name": "OrderLateralityMismatch",
+     "Value": "orderLateralityMismatch",
+     "Description": "Mismatch between order and text"
+    },
+    {
+     "$id": "52",
+     "Name": "TextLateralityContradiction",
+     "Value": "textLateralityContradiction",
+     "Description": "Contradiction in text"
+    },
+    {
+     "$id": "53",
+     "Name": "TextLateralityMissing",
+     "Value": "textLateralityMissing",
+     "Description": "Missing laterality in text"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Laterality discrepancy type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "54",
+   "Kind": "Enum",
+   "Name": "ObservationStatusCodeType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "55",
+     "Name": "Registered",
+     "Value": "registered",
+     "Description": "The existence of the observation is registered, but there is no result yet available."
+    },
+    {
+     "$id": "56",
+     "Name": "Preliminary",
+     "Value": "preliminary",
+     "Description": "This is an initial or interim observation: data may be incomplete or unverified."
+    },
+    {
+     "$id": "57",
+     "Name": "Final",
+     "Value": "final",
+     "Description": "The observation is complete and verified by an authorized person."
+    },
+    {
+     "$id": "58",
+     "Name": "Amended",
+     "Value": "amended",
+     "Description": "Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections."
+    },
+    {
+     "$id": "59",
+     "Name": "Corrected",
+     "Value": "corrected",
+     "Description": "Subsequent to being Final, the observation has been modified to correct an error in the test result."
+    },
+    {
+     "$id": "60",
+     "Name": "Cancelled",
+     "Value": "cancelled",
+     "Description": "The observation is unavailable because the measurement was not started or not completed (also sometimes called \"aborted\")."
+    },
+    {
+     "$id": "61",
+     "Name": "EnteredInError",
+     "Value": "entered-in-error",
+     "Description": "The observation has been withdrawn following previous final release."
+    },
+    {
+     "$id": "62",
+     "Name": "Unknown",
+     "Value": "unknown",
+     "Description": "The observation status is unknown.  Note that \"unknown\" is a value of last resort and every attempt should be made to provide a meaningful value other than \"unknown\"."
+    }
+   ],
+   "Namespace": "Fhir.R4",
+   "Description": "Observation Status\nBased on [FHIR ObservationStatus](https://www.hl7.org/fhir/R4/valueset-observation-status.html)",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "63",
+   "Kind": "Enum",
+   "Name": "RecommendationFindingStatusType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "64",
+     "Name": "Present",
+     "Value": "present",
+     "Description": "Present finding status"
+    },
+    {
+     "$id": "65",
+     "Name": "Differential",
+     "Value": "differential",
+     "Description": "Differential finding status"
+    },
+    {
+     "$id": "66",
+     "Name": "RuleOut",
+     "Value": "ruleOut",
+     "Description": "Rule out finding status"
+    },
+    {
+     "$id": "67",
+     "Name": "Conditional",
+     "Value": "conditional",
+     "Description": "Conditional finding status"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Recommendation finding status",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "68",
+   "Kind": "Enum",
+   "Name": "MedicalProfessionalType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "69",
+     "Name": "Unknown",
+     "Value": "unknown",
+     "Description": "Unknown medical professional type"
+    },
+    {
+     "$id": "70",
+     "Name": "Doctor",
+     "Value": "doctor",
+     "Description": "Doctor medical professional type"
+    },
+    {
+     "$id": "71",
+     "Name": "Nurse",
+     "Value": "nurse",
+     "Description": "Nurse medical professional type"
+    },
+    {
+     "$id": "72",
+     "Name": "Midwife",
+     "Value": "midwife",
+     "Description": "Technician medical professional type"
+    },
+    {
+     "$id": "73",
+     "Name": "PhysicianAssistant",
+     "Value": "physicianAssistant",
+     "Description": "Technician medical professional type"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Medical Professional Type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "74",
+   "Kind": "Enum",
+   "Name": "ApiVersion",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "75",
+     "Name": "v2023_09_01_Preview",
+     "Value": "2023-09-01-preview"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "76",
+   "Kind": "Enum",
+   "Name": "InterpretationType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "77",
+     "Name": "Normal",
+     "Value": "normal",
+     "Description": "Normal"
+    },
+    {
+     "$id": "78",
+     "Name": "Abnormal",
+     "Value": "abnormal",
+     "Description": "Abnormal"
+    },
+    {
+     "$id": "79",
+     "Name": "Low",
+     "Value": "low",
+     "Description": "Below normal"
+    },
+    {
+     "$id": "80",
+     "Name": "High",
+     "Value": "high",
+     "Description": "Above normal"
+    },
+    {
+     "$id": "81",
+     "Name": "Better",
+     "Value": "better",
+     "Description": "Better"
+    },
+    {
+     "$id": "82",
+     "Name": "Worse",
+     "Value": "worse",
+     "Description": "Worse"
+    },
+    {
+     "$id": "83",
+     "Name": "Resistant",
+     "Value": "resistant",
+     "Description": "Resistant"
+    },
+    {
+     "$id": "84",
+     "Name": "Susceptible",
+     "Value": "susceptible",
+     "Description": "Susceptible"
+    },
+    {
+     "$id": "85",
+     "Name": "Expected",
+     "Value": "expected",
+     "Description": "As Expected"
+    },
+    {
+     "$id": "86",
+     "Name": "NotExpected",
+     "Value": "notExpected",
+     "Description": "Not as Expected"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "InterpretationType ",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "87",
+   "Kind": "Enum",
+   "Name": "ObservationStatusType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "88",
+     "Name": "Registered",
+     "Value": "registered",
+     "Description": "The existence of the observation is registered, but there is no result yet available."
+    },
+    {
+     "$id": "89",
+     "Name": "Preliminary",
+     "Value": "preliminary",
+     "Description": "This is an initial or interim observation: data may be incomplete or unverified."
+    },
+    {
+     "$id": "90",
+     "Name": "Final",
+     "Value": "final",
+     "Description": "The observation is complete and there are no further actions needed. Additional information such as 'released', 'signed', etc would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data.\nThese act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied."
+    },
+    {
+     "$id": "91",
+     "Name": "Amended",
+     "Value": "amended",
+     "Description": "Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections."
+    },
+    {
+     "$id": "92",
+     "Name": "Corrected",
+     "Value": "corrected",
+     "Description": "Subsequent to being Final, the observation has been modified to correct an error in the test result."
+    },
+    {
+     "$id": "93",
+     "Name": "Cancelled",
+     "Value": "cancelled",
+     "Description": "The observation is unavailable because the measurement was not started or not completed (also sometimes called \"aborted\")."
+    },
+    {
+     "$id": "94",
+     "Name": "EnteredInError",
+     "Value": "enteredInError",
+     "Description": "The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be \"cancelled\" rather than \"entered-in-error\".)"
+    },
+    {
+     "$id": "95",
+     "Name": "Unknown",
+     "Value": "unknown",
+     "Description": "The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for \"other\" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which."
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "ObservationStatusType based on FHIR valueset observation-status\nsee: https://www.hl7.org/fhir/codesystem-observation-status.html",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "96",
+   "Kind": "Enum",
+   "Name": "ConditionDiagnosisSeverityType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "97",
+     "Name": "Severe",
+     "Value": "severe",
+     "Description": "Severe ( http://snomed.info/sct#24484000 ))"
+    },
+    {
+     "$id": "98",
+     "Name": "Moderate",
+     "Value": "moderate",
+     "Description": "Moderate ( http://snomed.info/sct#6736007 ))"
+    },
+    {
+     "$id": "99",
+     "Name": "Mild",
+     "Value": "mild",
+     "Description": "Mild ( http://snomed.info/sct#255604002 ))"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "ConditionDiagnosisSeverityType based on SNOMED CT International edition 31-July 2022\nsee: http://snomed.info/sct",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "100",
+   "Kind": "Enum",
+   "Name": "ConditionCategoryType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "101",
+     "Name": "ProblemListItem",
+     "Value": "problemListItem",
+     "Description": "An item on a problem list that can be managed over time and can be expressed by a practitioner (e.g. physician, nurse), patient or related person."
+    },
+    {
+     "$id": "102",
+     "Name": "EncounterDiagnosis",
+     "Value": "encounterDiagnosis",
+     "Description": "A point in time diagnosis (e.g. from a physician or nurse) in context of an encounter."
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "ConditionCategoryType based on FHIR valueset condition-category",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "103",
+   "Kind": "Enum",
+   "Name": "VerificationStatusType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "104",
+     "Name": "Unconfirmed",
+     "Value": "unconfirmed",
+     "Description": "There is not sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition."
+    },
+    {
+     "$id": "105",
+     "Name": "Provisional",
+     "Value": "provisional",
+     "Description": "This is a tentative diagnosis - still a candidate that is under consideration."
+    },
+    {
+     "$id": "106",
+     "Name": "Differential",
+     "Value": "differential",
+     "Description": "One of a set of potential (and typically mutually exclusive) diagnoses asserted to further guide the diagnostic process and preliminary treatment."
+    },
+    {
+     "$id": "107",
+     "Name": "Confirmed",
+     "Value": "confirmed",
+     "Description": "There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition."
+    },
+    {
+     "$id": "108",
+     "Name": "Refuted",
+     "Value": "refuted",
+     "Description": "This condition has been ruled out by diagnostic and clinical evidence."
+    },
+    {
+     "$id": "109",
+     "Name": "EnteredInError",
+     "Value": "enteredInError",
+     "Description": "The statement was entered in error and is not valid."
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "VerificationStatusType based of FHIR valueset condition-ver-status.\nsee: https://terminology.hl7.org/5.1.0/CodeSystem-condition-ver-status.html",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "110",
+   "Kind": "Enum",
+   "Name": "MeasureUnitType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "111",
+     "Name": "Undefined",
+     "Value": "undefined",
+     "Description": "Undefined measure unit type"
+    },
+    {
+     "$id": "112",
+     "Name": "Rate",
+     "Value": "rate",
+     "Description": "Rate measure unit type"
+    },
+    {
+     "$id": "113",
+     "Name": "Concentration",
+     "Value": "concentration",
+     "Description": "Concentration measure unit type"
+    },
+    {
+     "$id": "114",
+     "Name": "Mass",
+     "Value": "mass",
+     "Description": "Mass measure unit type"
+    },
+    {
+     "$id": "115",
+     "Name": "Time",
+     "Value": "time",
+     "Description": "Time measure unit type"
+    },
+    {
+     "$id": "116",
+     "Name": "Length",
+     "Value": "length",
+     "Description": "Length measure unit type"
+    },
+    {
+     "$id": "117",
+     "Name": "Area",
+     "Value": "area",
+     "Description": "Area measure unit type"
+    },
+    {
+     "$id": "118",
+     "Name": "Volume",
+     "Value": "volume",
+     "Description": "Volume measure unit type"
+    },
+    {
+     "$id": "119",
+     "Name": "Amount",
+     "Value": "amount",
+     "Description": "Amount measure unit type"
+    },
+    {
+     "$id": "120",
+     "Name": "Percentage",
+     "Value": "percentage",
+     "Description": "Percentage measure unit type"
+    },
+    {
+     "$id": "121",
+     "Name": "Pressure",
+     "Value": "pressure",
+     "Description": "Pressure measure unit type"
+    },
+    {
+     "$id": "122",
+     "Name": "Temperature",
+     "Value": "temperature",
+     "Description": "Temperature measure unit type"
+    },
+    {
+     "$id": "123",
+     "Name": "Velocity",
+     "Value": "velocity",
+     "Description": "Velocity measure unit type"
+    },
+    {
+     "$id": "124",
+     "Name": "Angle",
+     "Value": "angle",
+     "Description": "Angle measure unit type"
+    },
+    {
+     "$id": "125",
+     "Name": "Energy",
+     "Value": "energy",
+     "Description": "Energy measure unit type"
+    },
+    {
+     "$id": "126",
+     "Name": "Radioactivity",
+     "Value": "radioactivity",
+     "Description": "Radioactivity measure unit type"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "consider using ClinicalCodeableConcept system: http://unitsofmeasure.org",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "127",
+   "Kind": "Enum",
+   "Name": "LateralityType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "128",
+     "Name": "Left",
+     "Value": "left",
+     "Description": "Left laterality type"
+    },
+    {
+     "$id": "129",
+     "Name": "Right",
+     "Value": "right",
+     "Description": "Right laterality type"
+    },
+    {
+     "$id": "130",
+     "Name": "Bilateral",
+     "Value": "bilateral",
+     "Description": "Right and left laterality type"
+    },
+    {
+     "$id": "131",
+     "Name": "Unilateral",
+     "Value": "unilateral",
+     "Description": "Unilateral laterality type"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "Laterality type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "132",
+   "Kind": "Enum",
+   "Name": "DiseaseCourseType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "133",
+     "Name": "Acute",
+     "Value": "acute",
+     "Description": "Acute"
+    },
+    {
+     "$id": "134",
+     "Name": "Chronic",
+     "Value": "chronic",
+     "Description": "Chronic"
+    },
+    {
+     "$id": "135",
+     "Name": "AcuteOnChronic",
+     "Value": "acuteOnChronic",
+     "Description": "Acute on chronic"
+    },
+    {
+     "$id": "136",
+     "Name": "Intermittent",
+     "Value": "intermittent",
+     "Description": "Intermittent"
+    },
+    {
+     "$id": "137",
+     "Name": "Relapsing",
+     "Value": "relapsing",
+     "Description": "Relapsing"
+    },
+    {
+     "$id": "138",
+     "Name": "Prolonged",
+     "Value": "prolonged",
+     "Description": "Prolonged"
+    },
+    {
+     "$id": "139",
+     "Name": "Paroxysmal",
+     "Value": "paroxysmal",
+     "Description": "Paroxysmal"
+    },
+    {
+     "$id": "140",
+     "Name": "SeasonalCourse",
+     "Value": "seasonalCourse",
+     "Description": "Seasonal course"
+    }
+   ],
+   "Namespace": "AzureHealthInsights",
+   "Description": "DiseaseCourseType value set system url = http://github.com/Azure/HealthInsights/RadiologyInsights/ValueSet/condition-course\nThe below values can be used for binding in DiseaseCourseExtension.valueCodeableConcept",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "141",
+   "Kind": "Model",
+   "Name": "RadiologyInsightsData",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Contains the list of patients, and configuration data.",
+   "IsNullable": false,
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "142",
+     "Name": "patients",
+     "SerializedName": "patients",
+     "Description": "The list of patients, including their clinical information and data.",
+     "Type": {
+      "$id": "143",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "144",
+       "Kind": "Model",
+       "Name": "PatientRecord",
+       "Namespace": "AzureHealthInsights",
+       "Description": "A patient record, including their clinical information and data.",
+       "IsNullable": false,
+       "Usage": "Input",
+       "Properties": [
+        {
+         "$id": "145",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "A given identifier for the patient. Has to be unique across all patients in a single request.",
+         "Type": {
+          "$id": "146",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "147",
+         "Name": "info",
+         "SerializedName": "info",
+         "Description": "Patient structured information, including demographics and known structured clinical information.",
+         "Type": {
+          "$id": "148",
+          "Kind": "Model",
+          "Name": "PatientDetails",
+          "Namespace": "AzureHealthInsights",
+          "Description": "Patient structured information, including demographics and known structured clinical information.",
+          "IsNullable": false,
+          "Usage": "Input",
+          "Properties": [
+           {
+            "$id": "149",
+            "Name": "sex",
+            "SerializedName": "sex",
+            "Description": "The patient's sex.",
+            "Type": {
+             "$ref": "2"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "150",
+            "Name": "birthDate",
+            "SerializedName": "birthDate",
+            "Description": "The patient's date of birth.",
+            "Type": {
+             "$id": "151",
+             "Kind": "Primitive",
+             "Name": "Date",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "152",
+            "Name": "clinicalInfo",
+            "SerializedName": "clinicalInfo",
+            "Description": "Known clinical information for the patient, structured.",
+            "Type": {
+             "$id": "153",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "154",
+              "Kind": "Model",
+              "Name": "Fhir_R4_Resource",
+              "Namespace": "Fhir.R4",
+              "Description": "Resource is the ancestor of DomainResource from which most resources are derived. Bundle, Parameters, and Binary extend Resource directly.\nBased on [FHIR Resource](https://www.hl7.org/fhir/r4/resource.html",
+              "IsNullable": false,
+              "Usage": "RoundTrip",
+              "InheritedDictionaryType": {
+               "$id": "155",
+               "Kind": "Dictionary",
+               "Name": "Dictionary",
+               "KeyType": {
+                "$id": "156",
+                "Kind": "Primitive",
+                "Name": "String",
+                "IsNullable": false
+               },
+               "ValueType": {
+                "$id": "157",
+                "Kind": "Intrinsic",
+                "Name": "unknown",
+                "IsNullable": false
+               },
+               "IsNullable": false
+              },
+              "Properties": [
+               {
+                "$id": "158",
+                "Name": "resourceType",
+                "SerializedName": "resourceType",
+                "Description": "The type of resource",
+                "Type": {
+                 "$id": "159",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "160",
+                "Name": "id",
+                "SerializedName": "id",
+                "Description": "Resource Id",
+                "Type": {
+                 "$id": "161",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "162",
+                "Name": "meta",
+                "SerializedName": "meta",
+                "Description": "Metadata about the resource",
+                "Type": {
+                 "$id": "163",
+                 "Kind": "Model",
+                 "Name": "Fhir_R4_Meta",
+                 "Namespace": "Fhir.R4",
+                 "Description": "Metadata about a resource\nBased on [FHIR Meta](https://www.hl7.org/fhir/R4/resource.html#Meta)",
+                 "IsNullable": false,
+                 "Usage": "RoundTrip",
+                 "Properties": [
+                  {
+                   "$id": "164",
+                   "Name": "versionId",
+                   "SerializedName": "versionId",
+                   "Description": "The version specific identifier, as it appears in the version portion of the URL. This value changes when the resource is created, updated, or deleted.",
+                   "Type": {
+                    "$id": "165",
+                    "Kind": "Primitive",
+                    "Name": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "166",
+                   "Name": "lastUpdated",
+                   "SerializedName": "lastUpdated",
+                   "Description": "When the resource last changed - e.g. when the version changed.",
+                   "Type": {
+                    "$id": "167",
+                    "Kind": "Primitive",
+                    "Name": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "168",
+                   "Name": "source",
+                   "SerializedName": "source",
+                   "Description": "A uri that identifies the source system of the resource. This provides a minimal amount of Provenance information that can be used to track or differentiate the source of information in the resource. The source may identify another FHIR server, document, message, database, etc.",
+                   "Type": {
+                    "$id": "169",
+                    "Kind": "Primitive",
+                    "Name": "String",
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "170",
+                   "Name": "profile",
+                   "SerializedName": "profile",
+                   "Description": "A list of profiles (references to [StructureDefinition](https://www.hl7.org/fhir/structuredefinition.html) resources) that this resource claims to conform to. The URL is a reference to [StructureDefinition.url](https://www.hl7.org/fhir/structuredefinition-definitions.html#StructureDefinition.url).",
+                   "Type": {
+                    "$id": "171",
+                    "Kind": "Array",
+                    "Name": "Array",
+                    "ElementType": {
+                     "$id": "172",
+                     "Kind": "Primitive",
+                     "Name": "String",
+                     "IsNullable": false
+                    },
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "173",
+                   "Name": "security",
+                   "SerializedName": "security",
+                   "Description": "Security labels applied to this resource. These tags connect specific resources to the overall security policy and infrastructure.",
+                   "Type": {
+                    "$id": "174",
+                    "Kind": "Array",
+                    "Name": "Array",
+                    "ElementType": {
+                     "$id": "175",
+                     "Kind": "Model",
+                     "Name": "Fhir_R4_Coding",
+                     "Namespace": "Fhir.R4",
+                     "Description": "A Coding is a representation of a defined concept using a symbol from a defined \"code system\".\nBased on [FHIR Coding](https://www.hl7.org/fhir/R4/datatypes.html#Coding)",
+                     "IsNullable": false,
+                     "Usage": "RoundTrip",
+                     "BaseModel": {
+                      "$id": "176",
+                      "Kind": "Model",
+                      "Name": "Fhir_R4_Element",
+                      "Namespace": "Fhir.R4",
+                      "Description": "The base definition for all elements contained inside a resource.\nBased on [FHIR Element](https://www.hl7.org/fhir/R4/element.html)",
+                      "IsNullable": false,
+                      "Usage": "None",
+                      "Properties": [
+                       {
+                        "$id": "177",
+                        "Name": "id",
+                        "SerializedName": "id",
+                        "Description": "Unique id for inter-element referencing",
+                        "Type": {
+                         "$id": "178",
+                         "Kind": "Primitive",
+                         "Name": "String",
+                         "IsNullable": false
+                        },
+                        "IsRequired": false,
+                        "IsReadOnly": false
+                       },
+                       {
+                        "$id": "179",
+                        "Name": "extension",
+                        "SerializedName": "extension",
+                        "Description": "Additional Content defined by implementations",
+                        "Type": {
+                         "$id": "180",
+                         "Kind": "Array",
+                         "Name": "Array",
+                         "ElementType": {
+                          "$id": "181",
+                          "Kind": "Model",
+                          "Name": "Fhir_R4_Extension",
+                          "Namespace": "Fhir.R4",
+                          "Description": "Base for all elements\nBased on [FHIR Element](https://www.hl7.org/fhir/datatypes.html#Element)",
+                          "IsNullable": false,
+                          "Usage": "RoundTrip",
+                          "BaseModel": {
+                           "$ref": "176"
+                          },
+                          "Properties": [
+                           {
+                            "$id": "182",
+                            "Name": "url",
+                            "SerializedName": "url",
+                            "Description": "Source of the definition for the extension code - a logical name or a URL.",
+                            "Type": {
+                             "$id": "183",
+                             "Kind": "Primitive",
+                             "Name": "String",
+                             "IsNullable": false
+                            },
+                            "IsRequired": true,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "184",
+                            "Name": "valueQuantity",
+                            "SerializedName": "valueQuantity",
+                            "Description": "Value as Quantity",
+                            "Type": {
+                             "$id": "185",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_Quantity",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A measured or measurable amount\nBased on [FHIR Quantity](https://www.hl7.org/fhir/R4/datatypes.html#Quantity)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "186",
+                               "Name": "value",
+                               "SerializedName": "value",
+                               "Description": "Numerical value (with implicit precision)",
+                               "Type": {
+                                "$id": "187",
+                                "Kind": "Primitive",
+                                "Name": "Float64",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "188",
+                               "Name": "comparator",
+                               "SerializedName": "comparator",
+                               "Description": "< | <= | >= | > - how to understand the value",
+                               "Type": {
+                                "$id": "189",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "190",
+                               "Name": "unit",
+                               "SerializedName": "unit",
+                               "Description": "Unit representation",
+                               "Type": {
+                                "$id": "191",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "192",
+                               "Name": "system",
+                               "SerializedName": "system",
+                               "Description": "System that defines coded unit form",
+                               "Type": {
+                                "$id": "193",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "194",
+                               "Name": "code",
+                               "SerializedName": "code",
+                               "Description": "Coded form of the unit",
+                               "Type": {
+                                "$id": "195",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "196",
+                            "Name": "valueCodeableConcept",
+                            "SerializedName": "valueCodeableConcept",
+                            "Description": "Value as CodeableConcept",
+                            "Type": {
+                             "$id": "197",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_CodeableConcept",
+                             "Namespace": "Fhir.R4",
+                             "Description": "Concept - reference to a terminology or just text\nBased on [FHIR CodeableConcept](https://www.hl7.org/fhir/R4/datatypes.html#CodeableConcept)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "198",
+                               "Name": "coding",
+                               "SerializedName": "coding",
+                               "Description": "Code defined by a terminology system",
+                               "Type": {
+                                "$id": "199",
+                                "Kind": "Array",
+                                "Name": "Array",
+                                "ElementType": {
+                                 "$ref": "175"
+                                },
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "200",
+                               "Name": "text",
+                               "SerializedName": "text",
+                               "Description": "Plain text representation of the concept",
+                               "Type": {
+                                "$id": "201",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "202",
+                            "Name": "valueString",
+                            "SerializedName": "valueString",
+                            "Description": "Value as string",
+                            "Type": {
+                             "$id": "203",
+                             "Kind": "Primitive",
+                             "Name": "String",
+                             "IsNullable": false
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "204",
+                            "Name": "valueBoolean",
+                            "SerializedName": "valueBoolean",
+                            "Description": "Value as boolean",
+                            "Type": {
+                             "$id": "205",
+                             "Kind": "Primitive",
+                             "Name": "Boolean",
+                             "IsNullable": false
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "206",
+                            "Name": "valueInteger",
+                            "SerializedName": "valueInteger",
+                            "Description": "Value as integer",
+                            "Type": {
+                             "$id": "207",
+                             "Kind": "Primitive",
+                             "Name": "Int32",
+                             "IsNullable": false
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "208",
+                            "Name": "valueRange",
+                            "SerializedName": "valueRange",
+                            "Description": "Value as Range.",
+                            "Type": {
+                             "$id": "209",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_Range",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A set of ordered Quantities defined by a low and high limit\nBased on [FHIR Range](https://www.hl7.org/fhir/R4/datatypes.html#Range)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "210",
+                               "Name": "low",
+                               "SerializedName": "low",
+                               "Description": "Low limit",
+                               "Type": {
+                                "$ref": "185"
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "211",
+                               "Name": "high",
+                               "SerializedName": "high",
+                               "Description": "High limit",
+                               "Type": {
+                                "$ref": "185"
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "212",
+                            "Name": "valueRatio",
+                            "SerializedName": "valueRatio",
+                            "Description": "Value as Ratio.",
+                            "Type": {
+                             "$id": "213",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_Ratio",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A ratio of two Quantity values - a numerator and a denominator\nBased on [FHIR Ratio](https://www.hl7.org/fhir/R4/datatypes.html#Ratio)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "214",
+                               "Name": "numerator",
+                               "SerializedName": "numerator",
+                               "Description": "Numerator value",
+                               "Type": {
+                                "$ref": "185"
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "215",
+                               "Name": "denominator",
+                               "SerializedName": "denominator",
+                               "Description": "Denominator value",
+                               "Type": {
+                                "$ref": "185"
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "216",
+                            "Name": "valueSampledData",
+                            "SerializedName": "valueSampledData",
+                            "Description": "Value as SampledData.",
+                            "Type": {
+                             "$id": "217",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_SampledData",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A series of measurements taken by a device\nBased on [FHIR SampledData](https://www.hl7.org/fhir/R4/datatypes.html#SampledData)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "218",
+                               "Name": "origin",
+                               "SerializedName": "origin",
+                               "Description": "Zero value and units",
+                               "Type": {
+                                "$ref": "185"
+                               },
+                               "IsRequired": true,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "219",
+                               "Name": "period",
+                               "SerializedName": "period",
+                               "Description": "Number of milliseconds between samples",
+                               "Type": {
+                                "$id": "220",
+                                "Kind": "Primitive",
+                                "Name": "Float64",
+                                "IsNullable": false
+                               },
+                               "IsRequired": true,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "221",
+                               "Name": "factor",
+                               "SerializedName": "factor",
+                               "Description": "Multiply data by this before adding to origin",
+                               "Type": {
+                                "$id": "222",
+                                "Kind": "Primitive",
+                                "Name": "Float64",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "223",
+                               "Name": "lowerLimit",
+                               "SerializedName": "lowerLimit",
+                               "Description": "Lower limit of detection",
+                               "Type": {
+                                "$id": "224",
+                                "Kind": "Primitive",
+                                "Name": "Float64",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "225",
+                               "Name": "upperLimit",
+                               "SerializedName": "upperLimit",
+                               "Description": "Upper limit of detection",
+                               "Type": {
+                                "$id": "226",
+                                "Kind": "Primitive",
+                                "Name": "Float64",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "227",
+                               "Name": "dimensions",
+                               "SerializedName": "dimensions",
+                               "Description": "Number of sample points at each time point",
+                               "Type": {
+                                "$id": "228",
+                                "Kind": "Primitive",
+                                "Name": "Int32",
+                                "IsNullable": false
+                               },
+                               "IsRequired": true,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "229",
+                               "Name": "data",
+                               "SerializedName": "data",
+                               "Description": "Decimal values with spaces, or \"E\" | \"U\" | \"L\"",
+                               "Type": {
+                                "$id": "230",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "231",
+                            "Name": "valueTime",
+                            "SerializedName": "valueTime",
+                            "Description": "Value as time (hh:mm:ss)",
+                            "Type": {
+                             "$id": "232",
+                             "Kind": "Primitive",
+                             "Name": "Time",
+                             "IsNullable": false
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "233",
+                            "Name": "valueDateTime",
+                            "SerializedName": "valueDateTime",
+                            "Description": "Value as dateTime.",
+                            "Type": {
+                             "$id": "234",
+                             "Kind": "Primitive",
+                             "Name": "String",
+                             "IsNullable": false
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "235",
+                            "Name": "valuePeriod",
+                            "SerializedName": "valuePeriod",
+                            "Description": "Value as Period.",
+                            "Type": {
+                             "$id": "236",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_Period",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A time period defined by a start and end date and optionally time\nBased on [FHIR Period](https://www.hl7.org/fhir/R4/datatypes.html#Period)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "237",
+                               "Name": "start",
+                               "SerializedName": "start",
+                               "Description": "Starting time with inclusive boundary",
+                               "Type": {
+                                "$id": "238",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "239",
+                               "Name": "end",
+                               "SerializedName": "end",
+                               "Description": "End time with inclusive boundary, if not ongoing",
+                               "Type": {
+                                "$id": "240",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           },
+                           {
+                            "$id": "241",
+                            "Name": "valueReference",
+                            "SerializedName": "valueReference",
+                            "Description": "Value as reference.",
+                            "Type": {
+                             "$id": "242",
+                             "Kind": "Model",
+                             "Name": "Fhir_R4_Reference",
+                             "Namespace": "Fhir.R4",
+                             "Description": "A reference from one resource to another\nBased on [FHIR Reference](https://www.hl7.org/fhir/R4/references.html)",
+                             "IsNullable": false,
+                             "Usage": "RoundTrip",
+                             "BaseModel": {
+                              "$ref": "176"
+                             },
+                             "Properties": [
+                              {
+                               "$id": "243",
+                               "Name": "reference",
+                               "SerializedName": "reference",
+                               "Description": "Literal reference, Relative, internal or absolute URL",
+                               "Type": {
+                                "$id": "244",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "245",
+                               "Name": "type",
+                               "SerializedName": "type",
+                               "Description": "Type the reference refers to (e.g. \"Patient\")",
+                               "Type": {
+                                "$id": "246",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "247",
+                               "Name": "identifier",
+                               "SerializedName": "identifier",
+                               "Description": "Logical reference, when literal reference is not known",
+                               "Type": {
+                                "$id": "248",
+                                "Kind": "Model",
+                                "Name": "Fhir_R4_Identifier",
+                                "Namespace": "Fhir.R4",
+                                "Description": "An identifier intended for computation\nBased on [FHIR Identifier](https://www.hl7.org/fhir/R4/identifier.html)",
+                                "IsNullable": false,
+                                "Usage": "RoundTrip",
+                                "BaseModel": {
+                                 "$ref": "176"
+                                },
+                                "Properties": [
+                                 {
+                                  "$id": "249",
+                                  "Name": "use",
+                                  "SerializedName": "use",
+                                  "Description": "usual | official | temp | secondary | old (If known)",
+                                  "Type": {
+                                   "$id": "250",
+                                   "Kind": "Primitive",
+                                   "Name": "String",
+                                   "IsNullable": false
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 },
+                                 {
+                                  "$id": "251",
+                                  "Name": "type",
+                                  "SerializedName": "type",
+                                  "Description": "Description of identifier",
+                                  "Type": {
+                                   "$ref": "197"
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 },
+                                 {
+                                  "$id": "252",
+                                  "Name": "system",
+                                  "SerializedName": "system",
+                                  "Description": "The namespace for the identifier value",
+                                  "Type": {
+                                   "$id": "253",
+                                   "Kind": "Primitive",
+                                   "Name": "String",
+                                   "IsNullable": false
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 },
+                                 {
+                                  "$id": "254",
+                                  "Name": "value",
+                                  "SerializedName": "value",
+                                  "Description": "The value that is unique",
+                                  "Type": {
+                                   "$id": "255",
+                                   "Kind": "Primitive",
+                                   "Name": "String",
+                                   "IsNullable": false
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 },
+                                 {
+                                  "$id": "256",
+                                  "Name": "period",
+                                  "SerializedName": "period",
+                                  "Description": "Time period when id is/was valid for use",
+                                  "Type": {
+                                   "$ref": "236"
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 },
+                                 {
+                                  "$id": "257",
+                                  "Name": "assigner",
+                                  "SerializedName": "assigner",
+                                  "Description": "Organization that issued id (may be just text)",
+                                  "Type": {
+                                   "$ref": "242"
+                                  },
+                                  "IsRequired": false,
+                                  "IsReadOnly": false
+                                 }
+                                ]
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              },
+                              {
+                               "$id": "258",
+                               "Name": "display",
+                               "SerializedName": "display",
+                               "Description": "Text alternative for the resource",
+                               "Type": {
+                                "$id": "259",
+                                "Kind": "Primitive",
+                                "Name": "String",
+                                "IsNullable": false
+                               },
+                               "IsRequired": false,
+                               "IsReadOnly": false
+                              }
+                             ]
+                            },
+                            "IsRequired": false,
+                            "IsReadOnly": false
+                           }
+                          ]
+                         },
+                         "IsNullable": false
+                        },
+                        "IsRequired": false,
+                        "IsReadOnly": false
+                       }
+                      ]
+                     },
+                     "Properties": [
+                      {
+                       "$id": "260",
+                       "Name": "system",
+                       "SerializedName": "system",
+                       "Description": "Identity of the terminology system",
+                       "Type": {
+                        "$id": "261",
+                        "Kind": "Primitive",
+                        "Name": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "262",
+                       "Name": "version",
+                       "SerializedName": "version",
+                       "Description": "Version of the system - if relevant",
+                       "Type": {
+                        "$id": "263",
+                        "Kind": "Primitive",
+                        "Name": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "264",
+                       "Name": "code",
+                       "SerializedName": "code",
+                       "Description": "Symbol in syntax defined by the system",
+                       "Type": {
+                        "$id": "265",
+                        "Kind": "Primitive",
+                        "Name": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "266",
+                       "Name": "display",
+                       "SerializedName": "display",
+                       "Description": "Representation defined by the system",
+                       "Type": {
+                        "$id": "267",
+                        "Kind": "Primitive",
+                        "Name": "String",
+                        "IsNullable": false
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      }
+                     ]
+                    },
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "268",
+                   "Name": "tag",
+                   "SerializedName": "tag",
+                   "Description": "Tags applied to this resource. Tags are intended to be used to identify and relate resources to process and workflow, and applications are not required to consider the tags when interpreting the meaning of a resource.",
+                   "Type": {
+                    "$id": "269",
+                    "Kind": "Array",
+                    "Name": "Array",
+                    "ElementType": {
+                     "$ref": "175"
+                    },
+                    "IsNullable": false
+                   },
+                   "IsRequired": false,
+                   "IsReadOnly": false
+                  }
+                 ]
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "270",
+                "Name": "implicitRules",
+                "SerializedName": "implicitRules",
+                "Description": "A set of rules under which this content was created",
+                "Type": {
+                 "$id": "271",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "272",
+                "Name": "language",
+                "SerializedName": "language",
+                "Description": "Language of the resource content",
+                "Type": {
+                 "$id": "273",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "274",
+         "Name": "encounters",
+         "SerializedName": "encounters",
+         "Description": "Patient encounters/visits.",
+         "Type": {
+          "$id": "275",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "276",
+           "Kind": "Model",
+           "Name": "Encounter",
+           "Namespace": "AzureHealthInsights",
+           "Description": "visit/encounter information",
+           "IsNullable": false,
+           "Usage": "Input",
+           "Properties": [
+            {
+             "$id": "277",
+             "Name": "id",
+             "SerializedName": "id",
+             "Description": "The id of the visit.",
+             "Type": {
+              "$id": "278",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "279",
+             "Name": "period",
+             "SerializedName": "period",
+             "Description": "Time period of the visit.\nIn case of admission, use timePeriod.start to indicate the admission time and timePeriod.end to indicate the discharge time.",
+             "Type": {
+              "$id": "280",
+              "Kind": "Model",
+              "Name": "TimePeriod",
+              "Namespace": "AzureHealthInsights",
+              "Description": "A duration of time during which an event is happening",
+              "IsNullable": false,
+              "Usage": "Input",
+              "Properties": [
+               {
+                "$id": "281",
+                "Name": "start",
+                "SerializedName": "start",
+                "Description": "Starting time with inclusive boundary",
+                "Type": {
+                 "$id": "282",
+                 "Kind": "Primitive",
+                 "Name": "DateTime",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "283",
+                "Name": "end",
+                "SerializedName": "end",
+                "Description": "End time with inclusive boundary, if not ongoing",
+                "Type": {
+                 "$id": "284",
+                 "Kind": "Primitive",
+                 "Name": "DateTime",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "285",
+             "Name": "class",
+             "SerializedName": "class",
+             "Description": "The class of the encounter.",
+             "Type": {
+              "$ref": "6"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "286",
+         "Name": "patientDocuments",
+         "SerializedName": "patientDocuments",
+         "Description": "Patient unstructured clinical data, given as documents.",
+         "Type": {
+          "$id": "287",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "288",
+           "Kind": "Model",
+           "Name": "PatientDocument",
+           "Namespace": "AzureHealthInsights",
+           "Description": "A clinical document related to a patient. Document here is in the wide sense - not just a text document (note).",
+           "IsNullable": false,
+           "Usage": "Input",
+           "Properties": [
+            {
+             "$id": "289",
+             "Name": "type",
+             "SerializedName": "type",
+             "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+             "Type": {
+              "$ref": "13"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "290",
+             "Name": "clinicalType",
+             "SerializedName": "clinicalType",
+             "Description": "The type of the clinical document.",
+             "Type": {
+              "$ref": "18"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "291",
+             "Name": "id",
+             "SerializedName": "id",
+             "Description": "A given identifier for the document. Has to be unique across all documents for a single patient.",
+             "Type": {
+              "$id": "292",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "293",
+             "Name": "language",
+             "SerializedName": "language",
+             "Description": "A 2 letter ISO 639-1 representation of the language of the document.",
+             "Type": {
+              "$id": "294",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "295",
+             "Name": "createdDateTime",
+             "SerializedName": "createdDateTime",
+             "Description": "The date and time when the document was created.",
+             "Type": {
+              "$id": "296",
+              "Kind": "Primitive",
+              "Name": "DateTime",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "297",
+             "Name": "authors",
+             "SerializedName": "authors",
+             "Description": "Document author(s)",
+             "Type": {
+              "$id": "298",
+              "Kind": "Array",
+              "Name": "Array",
+              "ElementType": {
+               "$id": "299",
+               "Kind": "Model",
+               "Name": "DocumentAuthor",
+               "Namespace": "AzureHealthInsights",
+               "Description": "Document author",
+               "IsNullable": false,
+               "Usage": "Input",
+               "Properties": [
+                {
+                 "$id": "300",
+                 "Name": "id",
+                 "SerializedName": "id",
+                 "Description": "author id",
+                 "Type": {
+                  "$id": "301",
+                  "Kind": "Primitive",
+                  "Name": "String",
+                  "IsNullable": false
+                 },
+                 "IsRequired": false,
+                 "IsReadOnly": false
+                },
+                {
+                 "$id": "302",
+                 "Name": "fullName",
+                 "SerializedName": "fullName",
+                 "Description": "Text representation of the full name",
+                 "Type": {
+                  "$id": "303",
+                  "Kind": "Primitive",
+                  "Name": "String",
+                  "IsNullable": false
+                 },
+                 "IsRequired": false,
+                 "IsReadOnly": false
+                }
+               ]
+              },
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "304",
+             "Name": "specialtyType",
+             "SerializedName": "specialtyType",
+             "Description": "specialty type the document",
+             "Type": {
+              "$ref": "27"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "305",
+             "Name": "administrativeMetadata",
+             "SerializedName": "administrativeMetadata",
+             "Description": "Administrative metadata for the document.",
+             "Type": {
+              "$id": "306",
+              "Kind": "Model",
+              "Name": "DocumentAdministrativeMetadata",
+              "Namespace": "AzureHealthInsights",
+              "Description": "Document administrative metadata",
+              "IsNullable": false,
+              "Usage": "Input",
+              "Properties": [
+               {
+                "$id": "307",
+                "Name": "orderedProcedures",
+                "SerializedName": "orderedProcedures",
+                "Description": "List of procedure information associated with the document.",
+                "Type": {
+                 "$id": "308",
+                 "Kind": "Array",
+                 "Name": "Array",
+                 "ElementType": {
+                  "$id": "309",
+                  "Kind": "Model",
+                  "Name": "Fhir_R4_Extendible",
+                  "Namespace": "AzureHealthInsights",
+                  "Description": "Procedure information",
+                  "IsNullable": false,
+                  "Usage": "RoundTrip",
+                  "Properties": [
+                   {
+                    "$id": "310",
+                    "Name": "extension",
+                    "SerializedName": "extension",
+                    "Description": "Additional Content defined by implementations",
+                    "Type": {
+                     "$id": "311",
+                     "Kind": "Array",
+                     "Name": "Array",
+                     "ElementType": {
+                      "$ref": "181"
+                     },
+                     "IsNullable": false
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "312",
+                    "Name": "code",
+                    "SerializedName": "code",
+                    "Description": "Procedure code",
+                    "Type": {
+                     "$ref": "197"
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "313",
+                    "Name": "description",
+                    "SerializedName": "description",
+                    "Description": "Procedure description",
+                    "Type": {
+                     "$id": "314",
+                     "Kind": "Primitive",
+                     "Name": "String",
+                     "IsNullable": false
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   }
+                  ]
+                 },
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "315",
+                "Name": "encounterId",
+                "SerializedName": "encounterId",
+                "Description": "Reference to the encounter associated with the document.",
+                "Type": {
+                 "$id": "316",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "317",
+             "Name": "content",
+             "SerializedName": "content",
+             "Description": "The content of the patient document.",
+             "Type": {
+              "$id": "318",
+              "Kind": "Model",
+              "Name": "DocumentContent",
+              "Namespace": "AzureHealthInsights",
+              "Description": "The content of the patient document.",
+              "IsNullable": false,
+              "Usage": "Input",
+              "Properties": [
+               {
+                "$id": "319",
+                "Name": "sourceType",
+                "SerializedName": "sourceType",
+                "Description": "The type of the content's source.\nIn case the source type is 'inline', the content is given as a string (for instance, text).\nIn case the source type is 'reference', the content is given as a URI.",
+                "Type": {
+                 "$ref": "30"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "320",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "The content of the document, given either inline (as a string) or as a reference (URI).",
+                "Type": {
+                 "$id": "321",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "322",
+     "Name": "configuration",
+     "SerializedName": "configuration",
+     "Description": "Configuration affecting the Radiology Insights model's inference.",
+     "Type": {
+      "$id": "323",
+      "Kind": "Model",
+      "Name": "RadiologyInsightsModelConfiguration",
+      "Namespace": "AzureHealthInsights",
+      "Description": "Configuration affecting the Radiology Insights model's inference.",
+      "IsNullable": false,
+      "Usage": "Input",
+      "Properties": [
+       {
+        "$id": "324",
+        "Name": "verbose",
+        "SerializedName": "verbose",
+        "Description": "An indication whether the model should produce verbose output.",
+        "Type": {
+         "$id": "325",
+         "Kind": "Primitive",
+         "Name": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "326",
+        "Name": "includeEvidence",
+        "SerializedName": "includeEvidence",
+        "Description": "An indication whether the model's output should include evidence for the inferences.",
+        "Type": {
+         "$id": "327",
+         "Kind": "Primitive",
+         "Name": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "328",
+        "Name": "inferenceTypes",
+        "SerializedName": "inferenceTypes",
+        "Description": "This is a list of inference types to be inferred for the current request. It could be used if only part of the Radiology Insights inferences are required. If this list is omitted or empty, the model will return all the inference types.",
+        "Type": {
+         "$id": "329",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "33"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "330",
+        "Name": "inferenceOptions",
+        "SerializedName": "inferenceOptions",
+        "Description": "Options regarding follow up recommendation inferences and finding inferences.",
+        "Type": {
+         "$id": "331",
+         "Kind": "Model",
+         "Name": "RadiologyInsightsInferenceOptions",
+         "Namespace": "AzureHealthInsights",
+         "Description": "Options regarding follow up recommendation inferences and finding inferences.",
+         "IsNullable": false,
+         "Usage": "Input",
+         "Properties": [
+          {
+           "$id": "332",
+           "Name": "followupRecommendationOptions",
+           "SerializedName": "followupRecommendationOptions",
+           "Description": "Follow-up recommendation options.",
+           "Type": {
+            "$id": "333",
+            "Kind": "Model",
+            "Name": "FollowupRecommendationOptions",
+            "Namespace": "AzureHealthInsights",
+            "Description": "Follow-up recommendation options.",
+            "IsNullable": false,
+            "Usage": "Input",
+            "Properties": [
+             {
+              "$id": "334",
+              "Name": "includeRecommendationsWithNoSpecifiedModality",
+              "SerializedName": "includeRecommendationsWithNoSpecifiedModality",
+              "Description": "Include/Exclude follow-up recommendations without a specific radiology procedure. Default is false.",
+              "Type": {
+               "$id": "335",
+               "Kind": "Primitive",
+               "Name": "Boolean",
+               "IsNullable": false
+              },
+              "IsRequired": false,
+              "IsReadOnly": false
+             },
+             {
+              "$id": "336",
+              "Name": "includeRecommendationsInReferences",
+              "SerializedName": "includeRecommendationsInReferences",
+              "Description": "Include/Exclude follow-up recommendations in references to a guideline or article. Default is false.",
+              "Type": {
+               "$id": "337",
+               "Kind": "Primitive",
+               "Name": "Boolean",
+               "IsNullable": false
+              },
+              "IsRequired": false,
+              "IsReadOnly": false
+             },
+             {
+              "$id": "338",
+              "Name": "provideFocusedSentenceEvidence",
+              "SerializedName": "provideFocusedSentenceEvidence",
+              "Description": "If this is true, provide one or more sentences as evidence for the recommendation, next to the token evidence. The start and end positions of these sentences will be put in an extension with url 'modality_sentences'. Default is false.",
+              "Type": {
+               "$id": "339",
+               "Kind": "Primitive",
+               "Name": "Boolean",
+               "IsNullable": false
+              },
+              "IsRequired": false,
+              "IsReadOnly": false
+             }
+            ]
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "340",
+           "Name": "findingOptions",
+           "SerializedName": "findingOptions",
+           "Description": "Finding options.",
+           "Type": {
+            "$id": "341",
+            "Kind": "Model",
+            "Name": "FindingOptions",
+            "Namespace": "AzureHealthInsights",
+            "Description": "Finding options.",
+            "IsNullable": false,
+            "Usage": "Input",
+            "Properties": [
+             {
+              "$id": "342",
+              "Name": "provideFocusedSentenceEvidence",
+              "SerializedName": "provideFocusedSentenceEvidence",
+              "Description": "If this is true, provide the sentence that contains the first token of the finding's clinical indicator (i.e. the medical problem), if there is one. This sentence is provided as an extension with url 'ci_sentence', next to the token evidence. Default is false.",
+              "Type": {
+               "$id": "343",
+               "Kind": "Primitive",
+               "Name": "Boolean",
+               "IsNullable": false
+              },
+              "IsRequired": false,
+              "IsReadOnly": false
+             }
+            ]
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "344",
+        "Name": "locale",
+        "SerializedName": "locale",
+        "Description": "Local for the model to use. If not specified, the model will use the default locale.",
+        "Type": {
+         "$id": "345",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "144"
+  },
+  {
+   "$ref": "148"
+  },
+  {
+   "$ref": "154"
+  },
+  {
+   "$ref": "163"
+  },
+  {
+   "$ref": "176"
+  },
+  {
+   "$ref": "181"
+  },
+  {
+   "$ref": "185"
+  },
+  {
+   "$ref": "197"
+  },
+  {
+   "$ref": "175"
+  },
+  {
+   "$ref": "209"
+  },
+  {
+   "$ref": "213"
+  },
+  {
+   "$ref": "217"
+  },
+  {
+   "$ref": "236"
+  },
+  {
+   "$ref": "242"
+  },
+  {
+   "$ref": "248"
+  },
+  {
+   "$ref": "276"
+  },
+  {
+   "$ref": "280"
+  },
+  {
+   "$ref": "288"
+  },
+  {
+   "$ref": "299"
+  },
+  {
+   "$ref": "306"
+  },
+  {
+   "$ref": "309"
+  },
+  {
+   "$ref": "318"
+  },
+  {
+   "$ref": "323"
+  },
+  {
+   "$ref": "331"
+  },
+  {
+   "$ref": "333"
+  },
+  {
+   "$ref": "341"
+  },
+  {
+   "$id": "346",
+   "Kind": "Model",
+   "Name": "HealthInsightsOperationStatusRadiologyInsightsInferenceResultError",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Provides status details for long running operations.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "347",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "The unique ID of the operation.",
+     "Type": {
+      "$id": "348",
+      "Kind": "Primitive",
+      "Name": "Guid",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "349",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The status of the operation",
+     "Type": {
+      "$ref": "44"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "350",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The date and time when the processing job was created.",
+     "Type": {
+      "$id": "351",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "352",
+     "Name": "expirationDateTime",
+     "SerializedName": "expirationDateTime",
+     "Description": "The date and time when the processing job is set to expire.",
+     "Type": {
+      "$id": "353",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "354",
+     "Name": "lastUpdateDateTime",
+     "SerializedName": "lastUpdateDateTime",
+     "Description": "The date and time when the processing job was last updated.",
+     "Type": {
+      "$id": "355",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "356",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error object that describes the error when status is \"Failed\".",
+     "Type": {
+      "$id": "357",
+      "Kind": "Model",
+      "Name": "Error",
+      "Namespace": "Azure.Core.Foundations",
+      "Description": "The error object.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "358",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "One of a server-defined set of error codes.",
+        "Type": {
+         "$id": "359",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "360",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "A human-readable representation of the error.",
+        "Type": {
+         "$id": "361",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "362",
+        "Name": "target",
+        "SerializedName": "target",
+        "Description": "The target of the error.",
+        "Type": {
+         "$id": "363",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "364",
+        "Name": "details",
+        "SerializedName": "details",
+        "Description": "An array of details about specific errors that led to this reported error.",
+        "Type": {
+         "$id": "365",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "357"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "366",
+        "Name": "innererror",
+        "SerializedName": "innererror",
+        "Description": "An object containing more specific information than the current object about the error.",
+        "Type": {
+         "$id": "367",
+         "Kind": "Model",
+         "Name": "InnerError",
+         "Namespace": "Azure.Core.Foundations",
+         "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "368",
+           "Name": "code",
+           "SerializedName": "code",
+           "Description": "One of a server-defined set of error codes.",
+           "Type": {
+            "$id": "369",
+            "Kind": "Primitive",
+            "Name": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "370",
+           "Name": "InnerErrorObject",
+           "SerializedName": "innererror",
+           "Description": "Inner error.",
+           "Type": {
+            "$ref": "367"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "371",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "The result of the operation.",
+     "Type": {
+      "$id": "372",
+      "Kind": "Model",
+      "Name": "RadiologyInsightsInferenceResult",
+      "Namespace": "AzureHealthInsights",
+      "Description": "The inference results for the Radiology Insights request. If field 'status' has value 'succeeded', then field 'result' will contain an instance of RadiologyInsightsInferenceResult.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "373",
+        "Name": "patientResults",
+        "SerializedName": "patientResults",
+        "Description": "Results for the patients given in the request.",
+        "Type": {
+         "$id": "374",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "375",
+          "Kind": "Model",
+          "Name": "RadiologyInsightsPatientResult",
+          "Namespace": "AzureHealthInsights",
+          "Description": "Results of the model's work for a single patient.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "376",
+            "Name": "patientId",
+            "SerializedName": "patientId",
+            "Description": "Identifier given for the patient in the request.",
+            "Type": {
+             "$id": "377",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "378",
+            "Name": "inferences",
+            "SerializedName": "inferences",
+            "Description": "The model's inferences for the given patient.",
+            "Type": {
+             "$id": "379",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "380",
+              "Kind": "Model",
+              "Name": "RadiologyInsightsInference",
+              "Namespace": "AzureHealthInsights",
+              "Description": "An inference made by the Radiology Insights model regarding a patient.\n  - AgeMismatch\n  - SexMismatch\n  - LateralityDiscrepancy\n  - CompleteOrderDiscrepancy\n  - LimitedOrderDiscrepancy\n  - Finding\n  - CriticalResult\n  - FollowupRecommendation\n  - RadiologyProcedure\n  - FollowupCommunication",
+              "IsNullable": false,
+              "DiscriminatorPropertyName": "kind",
+              "Usage": "Output",
+              "Properties": [
+               {
+                "$id": "381",
+                "Name": "kind",
+                "SerializedName": "kind",
+                "Description": "Discriminator",
+                "IsRequired": true,
+                "IsReadOnly": false,
+                "Type": {
+                 "$id": "382",
+                 "Kind": "Primitive",
+                 "Name": "String",
+                 "IsNullable": false
+                },
+                "IsDiscriminator": true
+               },
+               {
+                "$id": "383",
+                "Name": "extension",
+                "SerializedName": "extension",
+                "Description": "Additional Content defined by implementations",
+                "Type": {
+                 "$id": "384",
+                 "Kind": "Array",
+                 "Name": "Array",
+                 "ElementType": {
+                  "$ref": "181"
+                 },
+                 "IsNullable": false
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "385",
+        "Name": "modelVersion",
+        "SerializedName": "modelVersion",
+        "Description": "The version of the model used for inference, expressed as the model date.",
+        "Type": {
+         "$id": "386",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "357"
+  },
+  {
+   "$ref": "367"
+  },
+  {
+   "$ref": "372"
+  },
+  {
+   "$ref": "375"
+  },
+  {
+   "$ref": "380"
+  },
+  {
+   "$id": "387",
+   "Kind": "Model",
+   "Name": "RadiologyInsightsResult",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Response for the Radiology Insights request.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "388",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "The unique ID of the operation.",
+     "Type": {
+      "$id": "389",
+      "Kind": "Primitive",
+      "Name": "Guid",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "390",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The status of the operation",
+     "Type": {
+      "$ref": "44"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "391",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The date and time when the processing job was created.",
+     "Type": {
+      "$id": "392",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "393",
+     "Name": "expirationDateTime",
+     "SerializedName": "expirationDateTime",
+     "Description": "The date and time when the processing job is set to expire.",
+     "Type": {
+      "$id": "394",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "395",
+     "Name": "lastUpdateDateTime",
+     "SerializedName": "lastUpdateDateTime",
+     "Description": "The date and time when the processing job was last updated.",
+     "Type": {
+      "$id": "396",
+      "Kind": "Primitive",
+      "Name": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "397",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error object that describes the error when status is \"Failed\".",
+     "Type": {
+      "$ref": "357"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "398",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "The result of the operation.",
+     "Type": {
+      "$ref": "372"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "399",
+   "Kind": "Model",
+   "Name": "HealthInsightsRetryAfterTrait",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Health Insights retry after trait",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "400",
+     "Name": "retryAfter",
+     "SerializedName": "retryAfter",
+     "Description": "The retry-after header.",
+     "Type": {
+      "$id": "401",
+      "Kind": "Model",
+      "Name": "HealthInsightsRetryAfterTraitRetryAfter",
+      "Namespace": "AzureHealthInsights",
+      "IsNullable": false,
+      "Usage": "None",
+      "Properties": [
+       {
+        "$id": "402",
+        "Name": "response",
+        "SerializedName": "response",
+        "Description": "",
+        "Type": {
+         "$id": "403",
+         "Kind": "Model",
+         "Name": "RetryAfterHeader",
+         "Namespace": "Azure.Core.Foundations",
+         "Description": "The retry-after envelope.",
+         "IsNullable": false,
+         "Usage": "None",
+         "Properties": []
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "401"
+  },
+  {
+   "$ref": "403"
+  },
+  {
+   "$id": "404",
+   "Kind": "Model",
+   "Name": "AgeMismatchInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A notification for age mismatch is displayed when the age mentioned in a document for a specific patient does not match the age specified in the patient information.",
+   "IsNullable": false,
+   "DiscriminatorValue": "ageMismatch",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": []
+  },
+  {
+   "$id": "405",
+   "Kind": "Model",
+   "Name": "SexMismatchInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A notification for a sex mismatch is displayed when the gender, personal pronouns, gender-related body parts, or gender-related procedures mentioned in a patient's clinical document are either inconsistent or do not match the gender specified in the patient information.",
+   "IsNullable": false,
+   "DiscriminatorValue": "sexMismatch",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "406",
+     "Name": "sexIndication",
+     "SerializedName": "sexIndication",
+     "Description": "Sex indication : SNOMED CT code for gender finding.",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "407",
+   "Kind": "Model",
+   "Name": "LateralityDiscrepancyInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A laterality mismatch occurs when there is a discrepancy between the clinical documentation and the ordered procedure (orderLateralityMismatch), a contradiction within the clinical document (textLateralityContradiction), or when no laterality is mentioned (textLateralityMissing).",
+   "IsNullable": false,
+   "DiscriminatorValue": "lateralityDiscrepancy",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "408",
+     "Name": "lateralityIndication",
+     "SerializedName": "lateralityIndication",
+     "Description": "Laterality indication : SNOMED CT code for laterality qualifier value.",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "409",
+     "Name": "discrepancyType",
+     "SerializedName": "discrepancyType",
+     "Description": "Mismatch type : orderLateralityMismatch, textLateralityContradiction, textLateralityMissing.",
+     "Type": {
+      "$ref": "50"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "410",
+   "Kind": "Model",
+   "Name": "CompleteOrderDiscrepancyInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A complete order discrepancy is shown when one or more body parts and/or measurements that should be in the document (because there is a complete order) are not present.",
+   "IsNullable": false,
+   "DiscriminatorValue": "completeOrderDiscrepancy",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "411",
+     "Name": "orderType",
+     "SerializedName": "orderType",
+     "Description": "Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast.",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "412",
+     "Name": "missingBodyParts",
+     "SerializedName": "missingBodyParts",
+     "Description": "List of missing body parts required by a complete order : SNOMED CT codes.",
+     "Type": {
+      "$id": "413",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "414",
+     "Name": "missingBodyPartMeasurements",
+     "SerializedName": "missingBodyPartMeasurements",
+     "Description": "List of missing body parts that require measurement by a complete order : SNOMED CT codes.",
+     "Type": {
+      "$id": "415",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "416",
+   "Kind": "Model",
+   "Name": "LimitedOrderDiscrepancyInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A limited order discrepancy occurs when there is a limited order, but all body parts and measurements that are needed for a complete order are present in the document.",
+   "IsNullable": false,
+   "DiscriminatorValue": "limitedOrderDiscrepancy",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "417",
+     "Name": "orderType",
+     "SerializedName": "orderType",
+     "Description": "Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast.",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "418",
+     "Name": "presentBodyParts",
+     "SerializedName": "presentBodyParts",
+     "Description": "List of body parts found in the document : SNOMED CT codes.",
+     "Type": {
+      "$id": "419",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "420",
+     "Name": "presentBodyPartMeasurements",
+     "SerializedName": "presentBodyPartMeasurements",
+     "Description": "List of body parts that are measured according to the document : SNOMED CT codes.",
+     "Type": {
+      "$id": "421",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "422",
+   "Kind": "Model",
+   "Name": "FindingInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Findings in a radiology report typically describe abnormalities, lesions, or other notable observations related to the anatomy or pathology of the imaged area.",
+   "IsNullable": false,
+   "DiscriminatorValue": "finding",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "423",
+     "Name": "finding",
+     "SerializedName": "finding",
+     "Description": "Finding data : contains extensions, fields and components linked with the finding.",
+     "Type": {
+      "$id": "424",
+      "Kind": "Model",
+      "Name": "Fhir_R4_Observation",
+      "Namespace": "Fhir.R4",
+      "Description": "Detailed information about observations\nBased on [FHIR Observation](https://www.hl7.org/fhir/R4/observation.html)",
+      "IsNullable": false,
+      "DiscriminatorValue": "Observation",
+      "Usage": "RoundTrip",
+      "BaseModel": {
+       "$id": "425",
+       "Kind": "Model",
+       "Name": "Fhir_R4_DomainResource",
+       "Namespace": "Fhir.R4",
+       "Description": "A resource with narrative, extensions, and contained resources\nBased on [FHIR DomainResource](https://www.hl7.org/fhir/domainresource.html)",
+       "IsNullable": false,
+       "DiscriminatorPropertyName": "resourceType",
+       "Usage": "RoundTrip",
+       "BaseModel": {
+        "$ref": "154"
+       },
+       "Properties": [
+        {
+         "$id": "426",
+         "Name": "resourceType",
+         "SerializedName": "resourceType",
+         "Description": "Discriminator",
+         "IsRequired": true,
+         "IsReadOnly": false,
+         "Type": {
+          "$id": "427",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsDiscriminator": true
+        },
+        {
+         "$id": "428",
+         "Name": "text",
+         "SerializedName": "text",
+         "Description": "Text summary of the resource, for human interpretation",
+         "Type": {
+          "$id": "429",
+          "Kind": "Model",
+          "Name": "Fhir_R4_Narrative",
+          "Namespace": "Fhir.R4",
+          "Description": "Any resource that is a [DomainResource](https://www.hl7.org/fhir/domainresource.html) may include a human-readable narrative that contains a summary of the resource and may be used to represent the content of the resource to a human.\nBased on [FHIR Narrative](https://www.hl7.org/fhir/R4/narrative.html#Narrative)",
+          "IsNullable": false,
+          "Usage": "RoundTrip",
+          "BaseModel": {
+           "$ref": "176"
+          },
+          "Properties": [
+           {
+            "$id": "430",
+            "Name": "status",
+            "SerializedName": "status",
+            "Description": "generated, extensions, additional, empty",
+            "Type": {
+             "$id": "431",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "432",
+            "Name": "div",
+            "SerializedName": "div",
+            "Description": "xhtml",
+            "Type": {
+             "$id": "433",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "434",
+         "Name": "contained",
+         "SerializedName": "contained",
+         "Description": "Contained, inline Resources",
+         "Type": {
+          "$id": "435",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$ref": "154"
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "436",
+         "Name": "extension",
+         "SerializedName": "extension",
+         "Description": "Additional Content defined by implementations",
+         "Type": {
+          "$id": "437",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$ref": "181"
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "438",
+         "Name": "modifierExtension",
+         "SerializedName": "modifierExtension",
+         "Description": "Extensions that cannot be ignored",
+         "Type": {
+          "$id": "439",
+          "Kind": "Array",
+          "Name": "Array",
+          "ElementType": {
+           "$ref": "181"
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "Properties": [
+       {
+        "$id": "440",
+        "Name": "identifier",
+        "SerializedName": "identifier",
+        "Description": "Business Identifier for observation",
+        "Type": {
+         "$id": "441",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "248"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "442",
+        "Name": "status",
+        "SerializedName": "status",
+        "Description": "registered | preliminary | final | amended +",
+        "Type": {
+         "$ref": "54"
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "443",
+        "Name": "category",
+        "SerializedName": "category",
+        "Description": "Classification of  type of observation",
+        "Type": {
+         "$id": "444",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "197"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "445",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "Type of observation (code / type)",
+        "Type": {
+         "$ref": "197"
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "446",
+        "Name": "subject",
+        "SerializedName": "subject",
+        "Description": "Who and/or what the observation is about",
+        "Type": {
+         "$ref": "242"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "447",
+        "Name": "encounter",
+        "SerializedName": "encounter",
+        "Description": "Healthcare event during which this observation is made",
+        "Type": {
+         "$ref": "242"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "448",
+        "Name": "effectiveDateTime",
+        "SerializedName": "effectiveDateTime",
+        "Description": "Clinically relevant time/time-period for observation",
+        "Type": {
+         "$id": "449",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "450",
+        "Name": "effectivePeriod",
+        "SerializedName": "effectivePeriod",
+        "Description": "Clinically relevant time/time-period for observation",
+        "Type": {
+         "$ref": "236"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "451",
+        "Name": "effectiveInstant",
+        "SerializedName": "effectiveInstant",
+        "Description": "Clinically relevant time/time-period for observation",
+        "Type": {
+         "$id": "452",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "453",
+        "Name": "issued",
+        "SerializedName": "issued",
+        "Description": "Date/Time this version was made available",
+        "Type": {
+         "$id": "454",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "455",
+        "Name": "valueQuantity",
+        "SerializedName": "valueQuantity",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "185"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "456",
+        "Name": "valueCodeableConcept",
+        "SerializedName": "valueCodeableConcept",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "197"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "457",
+        "Name": "valueString",
+        "SerializedName": "valueString",
+        "Description": "Actual result",
+        "Type": {
+         "$id": "458",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "459",
+        "Name": "valueBoolean",
+        "SerializedName": "valueBoolean",
+        "Description": "Actual result",
+        "Type": {
+         "$id": "460",
+         "Kind": "Primitive",
+         "Name": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "461",
+        "Name": "valueInteger",
+        "SerializedName": "valueInteger",
+        "Description": "Actual result",
+        "Type": {
+         "$id": "462",
+         "Kind": "Primitive",
+         "Name": "Int32",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "463",
+        "Name": "valueRange",
+        "SerializedName": "valueRange",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "209"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "464",
+        "Name": "valueRatio",
+        "SerializedName": "valueRatio",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "213"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "465",
+        "Name": "valueSampledData",
+        "SerializedName": "valueSampledData",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "217"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "466",
+        "Name": "valueTime",
+        "SerializedName": "valueTime",
+        "Description": "Actual result",
+        "Type": {
+         "$id": "467",
+         "Kind": "Primitive",
+         "Name": "Time",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "468",
+        "Name": "valueDateTime",
+        "SerializedName": "valueDateTime",
+        "Description": "Actual result",
+        "Type": {
+         "$id": "469",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "470",
+        "Name": "valuePeriod",
+        "SerializedName": "valuePeriod",
+        "Description": "Actual result",
+        "Type": {
+         "$ref": "236"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "471",
+        "Name": "dataAbsentReason",
+        "SerializedName": "dataAbsentReason",
+        "Description": "Why the result is missing",
+        "Type": {
+         "$ref": "197"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "472",
+        "Name": "interpretation",
+        "SerializedName": "interpretation",
+        "Description": "High, low, normal, etc.",
+        "Type": {
+         "$id": "473",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "197"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "474",
+        "Name": "note",
+        "SerializedName": "note",
+        "Description": "Comments about the observation",
+        "Type": {
+         "$id": "475",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "476",
+          "Kind": "Model",
+          "Name": "Fhir_R4_Annotation",
+          "Namespace": "Fhir.R4",
+          "Description": "A text note which also  contains information about who made the statement and when\nBased on [FHIR Annotation](https://www.hl7.org/fhir/R4/datatypes.html#Annotation)",
+          "IsNullable": false,
+          "Usage": "RoundTrip",
+          "BaseModel": {
+           "$ref": "176"
+          },
+          "Properties": [
+           {
+            "$id": "477",
+            "Name": "authorString",
+            "SerializedName": "authorString",
+            "Description": "Individual responsible for the annotation",
+            "Type": {
+             "$id": "478",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "479",
+            "Name": "time",
+            "SerializedName": "time",
+            "Description": "When the annotation was made",
+            "Type": {
+             "$id": "480",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "481",
+            "Name": "text",
+            "SerializedName": "text",
+            "Description": "The annotation - text content (as markdown)",
+            "Type": {
+             "$id": "482",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "483",
+        "Name": "bodySite",
+        "SerializedName": "bodySite",
+        "Description": "Observed body part",
+        "Type": {
+         "$ref": "197"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "484",
+        "Name": "method",
+        "SerializedName": "method",
+        "Description": "How it was done",
+        "Type": {
+         "$ref": "197"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "485",
+        "Name": "referenceRange",
+        "SerializedName": "referenceRange",
+        "Description": "Provides guide for interpretation",
+        "Type": {
+         "$id": "486",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "487",
+          "Kind": "Model",
+          "Name": "Fhir_R4_ObservationReferenceRange",
+          "Namespace": "Fhir.R4",
+          "Description": "Provides guide for interpretation of component result\nBased on [FHIR Observation.referenceRange](https://www.hl7.org/fhir/R4/observation.html)",
+          "IsNullable": false,
+          "Usage": "RoundTrip",
+          "Properties": [
+           {
+            "$id": "488",
+            "Name": "low",
+            "SerializedName": "low",
+            "Description": "Low Range, if relevant",
+            "Type": {
+             "$ref": "185"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "489",
+            "Name": "high",
+            "SerializedName": "high",
+            "Description": "High Range, if relevant",
+            "Type": {
+             "$ref": "185"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "490",
+            "Name": "type",
+            "SerializedName": "type",
+            "Description": "Reference range qualifier",
+            "Type": {
+             "$ref": "197"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "491",
+            "Name": "appliesTo",
+            "SerializedName": "appliesTo",
+            "Description": "Reference range population",
+            "Type": {
+             "$id": "492",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$ref": "197"
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "493",
+            "Name": "age",
+            "SerializedName": "age",
+            "Description": "Applicable age range, if relevant",
+            "Type": {
+             "$ref": "209"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "494",
+            "Name": "text",
+            "SerializedName": "text",
+            "Description": "Text based reference range in an observation",
+            "Type": {
+             "$id": "495",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "496",
+        "Name": "hasMember",
+        "SerializedName": "hasMember",
+        "Description": "Related resource that belongs to the Observation group",
+        "Type": {
+         "$id": "497",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "242"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "498",
+        "Name": "derivedFrom",
+        "SerializedName": "derivedFrom",
+        "Description": "Related measurements the observation is made from",
+        "Type": {
+         "$id": "499",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "242"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "500",
+        "Name": "component",
+        "SerializedName": "component",
+        "Description": "Component results",
+        "Type": {
+         "$id": "501",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "502",
+          "Kind": "Model",
+          "Name": "Fhir_R4_ObservationComponent",
+          "Namespace": "Fhir.R4",
+          "Description": "Component results\nBased on [FHIR Observation.component](https://www.hl7.org/fhir/R4/observation.html)",
+          "IsNullable": false,
+          "Usage": "RoundTrip",
+          "BaseModel": {
+           "$ref": "176"
+          },
+          "Properties": [
+           {
+            "$id": "503",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "Type of component observation (code / type)",
+            "Type": {
+             "$ref": "197"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "504",
+            "Name": "valueQuantity",
+            "SerializedName": "valueQuantity",
+            "Description": "Value as Quantity",
+            "Type": {
+             "$ref": "185"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "505",
+            "Name": "valueCodeableConcept",
+            "SerializedName": "valueCodeableConcept",
+            "Description": "Value as CodeableConcept",
+            "Type": {
+             "$ref": "197"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "506",
+            "Name": "valueString",
+            "SerializedName": "valueString",
+            "Description": "Value as string",
+            "Type": {
+             "$id": "507",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "508",
+            "Name": "valueBoolean",
+            "SerializedName": "valueBoolean",
+            "Description": "Value as boolean",
+            "Type": {
+             "$id": "509",
+             "Kind": "Primitive",
+             "Name": "Boolean",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "510",
+            "Name": "valueInteger",
+            "SerializedName": "valueInteger",
+            "Description": "Value as integer",
+            "Type": {
+             "$id": "511",
+             "Kind": "Primitive",
+             "Name": "Int32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "512",
+            "Name": "valueRange",
+            "SerializedName": "valueRange",
+            "Description": "Value as Range.",
+            "Type": {
+             "$ref": "209"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "513",
+            "Name": "valueRatio",
+            "SerializedName": "valueRatio",
+            "Description": "Value as Ratio.",
+            "Type": {
+             "$ref": "213"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "514",
+            "Name": "valueSampledData",
+            "SerializedName": "valueSampledData",
+            "Description": "Value as SampledData.",
+            "Type": {
+             "$ref": "217"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "515",
+            "Name": "valueTime",
+            "SerializedName": "valueTime",
+            "Description": "Value as time (hh:mm:ss)",
+            "Type": {
+             "$id": "516",
+             "Kind": "Primitive",
+             "Name": "Time",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "517",
+            "Name": "valueDateTime",
+            "SerializedName": "valueDateTime",
+            "Description": "Value as dateTime.",
+            "Type": {
+             "$id": "518",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "519",
+            "Name": "valuePeriod",
+            "SerializedName": "valuePeriod",
+            "Description": "Value as Period.",
+            "Type": {
+             "$ref": "236"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "520",
+            "Name": "valueReference",
+            "SerializedName": "valueReference",
+            "Description": "Value as reference.",
+            "Type": {
+             "$ref": "242"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "521",
+            "Name": "dataAbsentReason",
+            "SerializedName": "dataAbsentReason",
+            "Description": "Why the component result is missing",
+            "Type": {
+             "$ref": "197"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "522",
+            "Name": "interpretation",
+            "SerializedName": "interpretation",
+            "Description": "High, low, normal, etc.",
+            "Type": {
+             "$id": "523",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$ref": "197"
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "524",
+            "Name": "referenceRange",
+            "SerializedName": "referenceRange",
+            "Description": "Provides guide for interpretation of component result",
+            "Type": {
+             "$id": "525",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$ref": "487"
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "425"
+  },
+  {
+   "$ref": "429"
+  },
+  {
+   "$ref": "424"
+  },
+  {
+   "$ref": "476"
+  },
+  {
+   "$ref": "487"
+  },
+  {
+   "$ref": "502"
+  },
+  {
+   "$id": "526",
+   "Kind": "Model",
+   "Name": "CriticalResultInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Critical results refer to findings of utmost importance that may require timely attention due to their potential impact on patient care.",
+   "IsNullable": false,
+   "DiscriminatorValue": "criticalResult",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "527",
+     "Name": "result",
+     "SerializedName": "result",
+     "Description": "The complete Critical Result, as outlined below, will be reused for the recommendation.",
+     "Type": {
+      "$id": "528",
+      "Kind": "Model",
+      "Name": "CriticalResult",
+      "Namespace": "AzureHealthInsights",
+      "Description": "Critical Result consists of two properties.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "529",
+        "Name": "description",
+        "SerializedName": "description",
+        "Description": "Description : medical problem.",
+        "Type": {
+         "$id": "530",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "531",
+        "Name": "finding",
+        "SerializedName": "finding",
+        "Description": "Finding linked to the critical result.",
+        "Type": {
+         "$ref": "424"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "528"
+  },
+  {
+   "$id": "532",
+   "Kind": "Model",
+   "Name": "RadiologyProcedureInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Radiology procedures are the specific imaging studies or examinations ordered for the patient, extracted from the document information and text.",
+   "IsNullable": false,
+   "DiscriminatorValue": "radiologyProcedure",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "533",
+     "Name": "procedureCodes",
+     "SerializedName": "procedureCodes",
+     "Description": "LOINC codes for the procedure.",
+     "Type": {
+      "$id": "534",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "535",
+     "Name": "imagingProcedures",
+     "SerializedName": "imagingProcedures",
+     "Description": "Imaging procedures.",
+     "Type": {
+      "$id": "536",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "537",
+       "Kind": "Model",
+       "Name": "ImagingProcedure",
+       "Namespace": "AzureHealthInsights",
+       "Description": "Imaging procedure.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "538",
+         "Name": "modality",
+         "SerializedName": "modality",
+         "Description": "Modality : SNOMED CT code.",
+         "Type": {
+          "$ref": "197"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "539",
+         "Name": "anatomy",
+         "SerializedName": "anatomy",
+         "Description": "Anatomy : SNOMED CT code.",
+         "Type": {
+          "$ref": "197"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "540",
+         "Name": "laterality",
+         "SerializedName": "laterality",
+         "Description": "Laterality : SNOMED CT code.",
+         "Type": {
+          "$ref": "197"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "541",
+         "Name": "contrast",
+         "SerializedName": "contrast",
+         "Description": "Contrast : see RadiologyCodeWithTypes (below).",
+         "Type": {
+          "$id": "542",
+          "Kind": "Model",
+          "Name": "RadiologyCodeWithTypes",
+          "Namespace": "AzureHealthInsights",
+          "Description": "Radiology code with types : used in imaging procedure recommendation for contrast and view.",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "543",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "The SNOMED CT code indicates whether imaging was conducted with or without contrast in the case of contrast, and in the case of views, it denotes the number of views.",
+            "Type": {
+             "$ref": "197"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "544",
+            "Name": "types",
+            "SerializedName": "types",
+            "Description": "The collection of types will indicate the contrast substance used in the case of contrast and, in the case of views, it will specify the types of views, such as lateral and frontal, etc.",
+            "Type": {
+             "$id": "545",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$ref": "197"
+             },
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "546",
+         "Name": "view",
+         "SerializedName": "view",
+         "Description": "View : see RadiologyCodeWithTypes (below).",
+         "Type": {
+          "$ref": "542"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "547",
+     "Name": "orderedProcedure",
+     "SerializedName": "orderedProcedure",
+     "Description": "Ordered procedure information from the document information or text.",
+     "Type": {
+      "$ref": "309"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "537"
+  },
+  {
+   "$ref": "542"
+  },
+  {
+   "$id": "548",
+   "Kind": "Model",
+   "Name": "FollowupRecommendationInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Follow-up recommendations offer guidance to healthcare providers on managing and monitoring patients based on the findings of imaging studies.",
+   "IsNullable": false,
+   "DiscriminatorValue": "followupRecommendation",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "549",
+     "Name": "effectiveDateTime",
+     "SerializedName": "effectiveDateTime",
+     "Description": "Date and time are displayed when the procedure is recommended to be done at a specific point in time.",
+     "Type": {
+      "$id": "550",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "551",
+     "Name": "effectivePeriod",
+     "SerializedName": "effectivePeriod",
+     "Description": "The period is shown if a specific period is mentioned, with a start and end date-time.",
+     "Type": {
+      "$ref": "236"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "552",
+     "Name": "findings",
+     "SerializedName": "findings",
+     "Description": "Findings related to the recommendation.",
+     "Type": {
+      "$id": "553",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "309"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "554",
+     "Name": "isConditional",
+     "SerializedName": "isConditional",
+     "Description": "The conditional value indicates whether or not the sentence containing the recommendation includes a conditional statement. Keywords for conditional statements include 'if', 'when', 'unless', and so on.",
+     "Type": {
+      "$id": "555",
+      "Kind": "Primitive",
+      "Name": "Boolean",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "556",
+     "Name": "isOption",
+     "SerializedName": "isOption",
+     "Description": "The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on.",
+     "Type": {
+      "$id": "557",
+      "Kind": "Primitive",
+      "Name": "Boolean",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "558",
+     "Name": "isGuideline",
+     "SerializedName": "isGuideline",
+     "Description": "The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings.",
+     "Type": {
+      "$id": "559",
+      "Kind": "Primitive",
+      "Name": "Boolean",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "560",
+     "Name": "isHedging",
+     "SerializedName": "isHedging",
+     "Description": "Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on.",
+     "Type": {
+      "$id": "561",
+      "Kind": "Primitive",
+      "Name": "Boolean",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "562",
+     "Name": "recommendedProcedure",
+     "SerializedName": "recommendedProcedure",
+     "Description": "The procedure recommendation can be a generic procedure or an imaging procedure.",
+     "Type": {
+      "$id": "563",
+      "Kind": "Model",
+      "Name": "ProcedureRecommendation",
+      "Namespace": "AzureHealthInsights",
+      "Description": "The procedure recommendation can be a generic procedure or an imaging procedure.",
+      "IsNullable": false,
+      "DiscriminatorPropertyName": "kind",
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "564",
+        "Name": "kind",
+        "SerializedName": "kind",
+        "Description": "Discriminator",
+        "IsRequired": true,
+        "IsReadOnly": false,
+        "Type": {
+         "$id": "565",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsDiscriminator": true
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "563"
+  },
+  {
+   "$id": "566",
+   "Kind": "Model",
+   "Name": "GenericProcedureRecommendation",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Generic procedure information.",
+   "IsNullable": false,
+   "DiscriminatorValue": "genericProcedureRecommendation",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "563"
+   },
+   "Properties": [
+    {
+     "$id": "567",
+     "Name": "code",
+     "SerializedName": "code",
+     "Description": "Procedure modality : SNOMED CT code.",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "568",
+     "Name": "description",
+     "SerializedName": "description",
+     "Description": "Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT.",
+     "Type": {
+      "$id": "569",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "570",
+   "Kind": "Model",
+   "Name": "ImagingProcedureRecommendation",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Imaging procedures.",
+   "IsNullable": false,
+   "DiscriminatorValue": "imagingProcedureRecommendation",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "563"
+   },
+   "Properties": [
+    {
+     "$id": "571",
+     "Name": "procedureCodes",
+     "SerializedName": "procedureCodes",
+     "Description": "LOINC codes for the procedure.",
+     "Type": {
+      "$id": "572",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "197"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "573",
+     "Name": "imagingProcedures",
+     "SerializedName": "imagingProcedures",
+     "Description": "Imaging procedures.",
+     "Type": {
+      "$id": "574",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "537"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "575",
+   "Kind": "Model",
+   "Name": "FollowupCommunicationInference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "Follow-up communication involves the exchange of important information, recommendations, or updates between radiologists and other healthcare professionals involved in a patient's care.",
+   "IsNullable": false,
+   "DiscriminatorValue": "followupCommunication",
+   "Usage": "Output",
+   "BaseModel": {
+    "$ref": "380"
+   },
+   "Properties": [
+    {
+     "$id": "576",
+     "Name": "dateTime",
+     "SerializedName": "dateTime",
+     "Description": "Communication date and time.",
+     "Type": {
+      "$id": "577",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "578",
+       "Kind": "Primitive",
+       "Name": "DateTime",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "579",
+     "Name": "recipient",
+     "SerializedName": "recipient",
+     "Description": "Recipient of the communication.",
+     "Type": {
+      "$id": "580",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "68"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "581",
+     "Name": "wasAcknowledged",
+     "SerializedName": "wasAcknowledged",
+     "Description": "Communication was acknowledged.",
+     "Type": {
+      "$id": "582",
+      "Kind": "Primitive",
+      "Name": "Boolean",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "583",
+   "Kind": "Model",
+   "Name": "ConditionStage",
+   "Namespace": "AzureHealthInsights",
+   "Description": "ConditionStage",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "584",
+     "Name": "summary",
+     "SerializedName": "summary",
+     "Description": "  Simple summary (disease specific)\n  see: https://www.hl7.org/fhir/valueset-condition-stage.html",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "585",
+     "Name": "type",
+     "SerializedName": "type",
+     "Description": "Kind of staging\nsee: https://www.hl7.org/fhir/valueset-condition-stage-kind.html",
+     "Type": {
+      "$ref": "197"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "586",
+   "Kind": "Model",
+   "Name": "GeographicLocation",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A location given as a combination of city, state and country/region. It could specify a city, a state or a country/region.\nIn case a city is specified, either state +country/region or country/region (for countries/regions where there are no states) should be added.\nIn case a state is specified (without a city), country/region should be added.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "587",
+     "Name": "city",
+     "SerializedName": "city",
+     "Description": "City name.",
+     "Type": {
+      "$id": "588",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "589",
+     "Name": "state",
+     "SerializedName": "state",
+     "Description": "State name.",
+     "Type": {
+      "$id": "590",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "591",
+     "Name": "countryOrRegion",
+     "SerializedName": "countryOrRegion",
+     "Description": "Country/region name.",
+     "Type": {
+      "$id": "592",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "593",
+   "Kind": "Model",
+   "Name": "ClinicalCodedElement",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A piece of clinical information, expressed as a code in a clinical coding system.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "594",
+     "Name": "system",
+     "SerializedName": "system",
+     "Description": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+     "Type": {
+      "$id": "595",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "596",
+     "Name": "code",
+     "SerializedName": "code",
+     "Description": "The code within the given clinical coding system.",
+     "Type": {
+      "$id": "597",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "598",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The name of this coded concept in the coding system.",
+     "Type": {
+      "$id": "599",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "600",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "A value associated with the code within the given clinical coding system.",
+     "Type": {
+      "$id": "601",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "602",
+   "Kind": "Model",
+   "Name": "Inference",
+   "Namespace": "AzureHealthInsights",
+   "Description": "An inference made by the model regarding a patient.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "603",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The value of the inference, as relevant for the given inference type.",
+     "Type": {
+      "$id": "604",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "605",
+     "Name": "description",
+     "SerializedName": "description",
+     "Description": "The description corresponding to the inference value.",
+     "Type": {
+      "$id": "606",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "607",
+     "Name": "confidenceScore",
+     "SerializedName": "confidenceScore",
+     "Description": "Confidence score for this inference.",
+     "Type": {
+      "$id": "608",
+      "Kind": "Primitive",
+      "Name": "Float32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "609",
+   "Kind": "Model",
+   "Name": "ClinicalNoteEvidence",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A piece of evidence from a clinical note (text document).",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "610",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "The identifier of the document containing the evidence.",
+     "Type": {
+      "$id": "611",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "612",
+     "Name": "text",
+     "SerializedName": "text",
+     "Description": "The actual text span which is evidence for the inference.",
+     "Type": {
+      "$id": "613",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "614",
+     "Name": "offset",
+     "SerializedName": "offset",
+     "Description": "The start index of the evidence text span in the document (0 based).",
+     "Type": {
+      "$id": "615",
+      "Kind": "Primitive",
+      "Name": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "616",
+     "Name": "length",
+     "SerializedName": "length",
+     "Description": "The length of the evidence text span.",
+     "Type": {
+      "$id": "617",
+      "Kind": "Primitive",
+      "Name": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "618",
+   "Kind": "Model",
+   "Name": "InferenceEvidence",
+   "Namespace": "AzureHealthInsights",
+   "Description": "A piece of evidence corresponding to an inference.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "619",
+     "Name": "patientDataEvidence",
+     "SerializedName": "patientDataEvidence",
+     "Description": "A piece of evidence from a clinical note (text document).",
+     "Type": {
+      "$ref": "609"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "620",
+     "Name": "patientInfoEvidence",
+     "SerializedName": "patientInfoEvidence",
+     "Description": "A piece of clinical information, expressed as a code in a clinical coding\nsystem.",
+     "Type": {
+      "$ref": "593"
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "621",
+     "Name": "importance",
+     "SerializedName": "importance",
+     "Description": "A value indicating how important this piece of evidence is for the inference.",
+     "Type": {
+      "$id": "622",
+      "Kind": "Primitive",
+      "Name": "Float32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "623",
+   "Name": "RadiologyInsightsClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "624",
+     "Name": "inferRadiologyInsights",
+     "ResourceName": "RadiologyInsightsClient",
+     "Summary": "Create Radiology Insights job",
+     "Description": "Creates a Radiology Insights job with the given request body.",
+     "Parameters": [
+      {
+       "$id": "625",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+       "Type": {
+        "$id": "626",
+        "Kind": "Primitive",
+        "Name": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "627",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "628",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "629",
+        "Type": {
+         "$id": "630",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "2023-09-01-preview"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "631",
+       "Name": "repeatabilityRequestId",
+       "NameInRequest": "Repeatability-Request-ID",
+       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "632",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "633",
+       "Name": "repeatabilityFirstSent",
+       "NameInRequest": "Repeatability-First-Sent",
+       "Description": "Specifies the date and time at which the request was first created.",
+       "Type": {
+        "$id": "634",
+        "Kind": "Primitive",
+        "Name": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "635",
+       "Name": "RadiologyInsightsData",
+       "NameInRequest": "RadiologyInsightsData",
+       "Description": "Contains the list of patients, and configuration data.",
+       "Type": {
+        "$ref": "141"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "636",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "637",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "638",
+        "Type": {
+         "$ref": "637"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "639",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "640",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "641",
+        "Type": {
+         "$ref": "640"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "642",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "346"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "643",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "644",
+          "Kind": "Primitive",
+          "Name": "Uri",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "645",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "646",
+          "Kind": "Primitive",
+          "Name": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "647",
+         "Name": "Repeatability-Result",
+         "NameInResponse": "repeatabilityResult",
+         "Description": "Indicates whether the repeatable request was accepted or rejected.",
+         "Type": {
+          "$id": "648",
+          "Kind": "Union",
+          "Name": "Union",
+          "UnionItemTypes": [
+           {
+            "$id": "649",
+            "Kind": "Literal",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "650",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "Value": "accepted",
+            "IsNullable": false
+           },
+           {
+            "$id": "651",
+            "Kind": "Literal",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "652",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "Value": "rejected",
+            "IsNullable": false
+           }
+          ],
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/health-insights",
+     "Path": "/radiology-insights/jobs",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "653",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "654",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "387"
+       },
+       "BodyMediaType": "Json"
+      },
+      "ResultPath": "result"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "655"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "656",
+  "ApiKey": {
+   "$id": "657",
+   "Name": "Ocp-Apim-Subscription-Key"
+  }
+ }
+}
