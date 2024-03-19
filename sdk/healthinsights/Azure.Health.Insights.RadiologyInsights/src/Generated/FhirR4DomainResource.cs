@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="contained"> Contained, inline Resources. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
-        internal FhirR4DomainResource(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IList<FhirR4Resource> contained, IList<FhirR4Extension> extension, IList<FhirR4Extension> modifierExtension) : base(resourceType, id, meta, implicitRules, language, additionalProperties)
+        internal FhirR4DomainResource(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IReadOnlyList<FhirR4Resource> contained, IReadOnlyList<FhirR4Extension> extension, IReadOnlyList<FhirR4Extension> modifierExtension) : base(resourceType, id, meta, implicitRules, language, additionalProperties)
         {
             Text = text;
             Contained = contained;
@@ -55,12 +55,12 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Text summary of the resource, for human interpretation. </summary>
-        public FhirR4Narrative Text { get; set; }
+        public FhirR4Narrative Text { get; }
         /// <summary> Contained, inline Resources. </summary>
-        public IList<FhirR4Resource> Contained { get; }
+        public IReadOnlyList<FhirR4Resource> Contained { get; }
         /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
+        public IReadOnlyList<FhirR4Extension> Extension { get; }
         /// <summary> Extensions that cannot be ignored. </summary>
-        public IList<FhirR4Extension> ModifierExtension { get; }
+        public IReadOnlyList<FhirR4Extension> ModifierExtension { get; }
     }
 }

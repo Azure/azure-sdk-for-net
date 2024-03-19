@@ -29,8 +29,6 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -51,6 +49,8 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,11 +90,11 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             LogAnalyticsDataConnectionProperties properties = default;
-            string kind = default;
             string name = default;
             DataConnectionContent? content = default;
             DataConnectionFrequency? frequency = default;
             int? frequencyOffset = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,11 +102,6 @@ namespace Azure.Analytics.Defender.Easm
                 if (property.NameEquals("properties"u8))
                 {
                     properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -141,6 +136,11 @@ namespace Azure.Analytics.Defender.Easm
                     frequencyOffset = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -148,11 +148,11 @@ namespace Azure.Analytics.Defender.Easm
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogAnalyticsDataConnectionPayload(
-                kind,
                 name,
                 content,
                 frequency,
                 frequencyOffset,
+                kind,
                 serializedAdditionalRawData,
                 properties);
         }

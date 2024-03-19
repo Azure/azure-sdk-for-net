@@ -27,8 +27,11 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("modelId"u8);
-            writer.WriteStringValue(ModelId);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("modelId"u8);
+                writer.WriteStringValue(ModelId);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

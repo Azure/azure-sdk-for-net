@@ -27,8 +27,6 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -104,6 +102,8 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -142,7 +142,6 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            string kind = "Unknown";
             string id = default;
             string name = default;
             string displayName = default;
@@ -156,15 +155,11 @@ namespace Azure.Analytics.Defender.Easm
             string discoGroupName = default;
             IReadOnlyList<AuditTrailItem> auditTrail = default;
             string reason = default;
+            string kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -268,6 +263,11 @@ namespace Azure.Analytics.Defender.Easm
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -275,7 +275,6 @@ namespace Azure.Analytics.Defender.Easm
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownAssetResource(
-                kind,
                 id,
                 name,
                 displayName,
@@ -289,6 +288,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail ?? new ChangeTrackingList<AuditTrailItem>(),
                 reason,
+                kind,
                 serializedAdditionalRawData);
         }
 

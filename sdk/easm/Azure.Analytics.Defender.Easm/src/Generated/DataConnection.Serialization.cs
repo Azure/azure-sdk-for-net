@@ -27,8 +27,6 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -84,6 +82,8 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("inactiveMessage"u8);
                 writer.WriteStringValue(InactiveMessage);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

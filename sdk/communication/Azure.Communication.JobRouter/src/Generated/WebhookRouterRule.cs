@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class WebhookRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
-        internal WebhookRouterRule()
+        public WebhookRouterRule()
         {
             Kind = RouterRuleKind.Webhook;
         }
@@ -33,10 +33,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Uri for Authorization Server. </summary>
-        public Uri AuthorizationServerUri { get; }
+        public Uri AuthorizationServerUri { get; set; }
         /// <summary> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </summary>
-        public OAuth2WebhookClientCredential ClientCredential { get; }
+        public OAuth2WebhookClientCredential ClientCredential { get; set; }
         /// <summary> Uri for Contoso's Web Server. </summary>
-        public Uri WebhookUri { get; }
+        public Uri WebhookUri { get; set; }
     }
 }

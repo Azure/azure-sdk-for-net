@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="jobId"/> is null. </exception>
-        internal RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt)
+        public RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt)
         {
             Argument.AssertNotNull(assignmentId, nameof(assignmentId));
             Argument.AssertNotNull(jobId, nameof(jobId));
@@ -83,12 +83,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Id of the assignment. </summary>
-        public string AssignmentId { get; }
+        public string AssignmentId { get; set; }
         /// <summary> Id of the job assigned. </summary>
-        public string JobId { get; }
+        public string JobId { get; set; }
         /// <summary> The amount of capacity this assignment has consumed on the worker. </summary>
-        public int CapacityCost { get; }
+        public int CapacityCost { get; set; }
         /// <summary> The assignment time of the job in UTC. </summary>
-        public DateTimeOffset AssignedAt { get; }
+        public DateTimeOffset AssignedAt { get; set; }
     }
 }

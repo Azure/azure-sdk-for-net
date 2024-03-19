@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="value"> The value that is unique. </param>
         /// <param name="period"> Time period when id is/was valid for use. </param>
         /// <param name="assigner"> Organization that issued id (may be just text). </param>
-        internal FhirR4Identifier(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string use, FhirR4CodeableConcept type, string system, string value, FhirR4Period period, FhirR4Reference assigner) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Identifier(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string use, FhirR4CodeableConcept type, string system, string value, FhirR4Period period, FhirR4Reference assigner) : base(id, extension, serializedAdditionalRawData)
         {
             Use = use;
             Type = type;

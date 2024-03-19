@@ -29,8 +29,6 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("sexIndication"u8);
             writer.WriteObjectValue(SexIndication);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -41,6 +39,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,8 +80,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             FhirR4CodeableConcept sexIndication = default;
-            string kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
+            RadiologyInsightsInferenceType kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,11 +89,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 if (property.NameEquals("sexIndication"u8))
                 {
                     sexIndication = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -110,13 +105,18 @@ namespace Azure.Health.Insights.RadiologyInsights
                     extension = array;
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SexMismatchInference(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData, sexIndication);
+            return new SexMismatchInference(extension ?? new ChangeTrackingList<FhirR4Extension>(), kind, serializedAdditionalRawData, sexIndication);
         }
 
         BinaryData IPersistableModel<SexMismatchInference>.Write(ModelReaderWriterOptions options)

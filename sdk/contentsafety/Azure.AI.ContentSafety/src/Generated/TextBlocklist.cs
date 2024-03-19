@@ -46,13 +46,8 @@ namespace Azure.AI.ContentSafety
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
-        /// <param name="name"> Text blocklist name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TextBlocklist(string name)
+        public TextBlocklist()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
@@ -66,14 +61,9 @@ namespace Azure.AI.ContentSafety
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextBlocklist"/> for deserialization. </summary>
-        internal TextBlocklist()
-        {
-        }
-
         /// <summary> Text blocklist name. </summary>
         public string Name { get; }
         /// <summary> Text blocklist description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(recommendedProcedure, nameof(recommendedProcedure));
 
-            Kind = "followupRecommendation";
+            Kind = RadiologyInsightsInferenceType.FollowupRecommendation;
             Findings = new ChangeTrackingList<FhirR4Extendible>();
             IsConditional = isConditional;
             IsOption = isOption;
@@ -34,8 +34,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="FollowupRecommendationInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="effectiveDateTime"> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </param>
         /// <param name="effectivePeriod"> The period is shown if a specific period is mentioned, with a start and end date-time. </param>
@@ -45,7 +45,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="isGuideline"> The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings. </param>
         /// <param name="isHedging"> Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on. </param>
         /// <param name="recommendedProcedure"> The procedure recommendation can be a generic procedure or an imaging procedure. </param>
-        internal FollowupRecommendationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<FhirR4Extendible> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupRecommendationInference(IReadOnlyList<FhirR4Extension> extension, RadiologyInsightsInferenceType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<FhirR4Extendible> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(extension, kind, serializedAdditionalRawData)
         {
             EffectiveDateTime = effectiveDateTime;
             EffectivePeriod = effectivePeriod;

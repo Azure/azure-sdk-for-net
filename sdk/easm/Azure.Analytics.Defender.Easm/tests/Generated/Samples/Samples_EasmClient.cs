@@ -187,8 +187,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = client.GetAssetResource("<assetId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -202,8 +202,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = await client.GetAssetResourceAsync("<assetId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -239,7 +239,6 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = client.GetAssetResource("<assetId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -257,6 +256,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
             Console.WriteLine(result.GetProperty("reason").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -270,7 +270,6 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = await client.GetAssetResourceAsync("<assetId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -288,6 +287,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
             Console.WriteLine(result.GetProperty("reason").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -389,11 +389,11 @@ namespace Azure.Analytics.Defender.Easm.Samples
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
                 frequencyOffset = 1234,
+                kind = "logAnalytics",
             });
             Response response = client.ValidateDataConnection(content);
 
@@ -420,11 +420,11 @@ namespace Azure.Analytics.Defender.Easm.Samples
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
                 frequencyOffset = 1234,
+                kind = "logAnalytics",
             });
             Response response = await client.ValidateDataConnectionAsync(content);
 
@@ -491,8 +491,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = client.GetDataConnection("<dataConnectionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -506,8 +506,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = await client.GetDataConnectionAsync("<dataConnectionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -543,7 +543,6 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = client.GetDataConnection("<dataConnectionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -555,6 +554,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("active").ToString());
             Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -568,7 +568,6 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = await client.GetDataConnectionAsync("<dataConnectionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -580,6 +579,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("active").ToString());
             Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -620,8 +620,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = client.CreateOrReplaceDataConnection("<dataConnectionName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -640,8 +640,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Response response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -683,16 +683,15 @@ namespace Azure.Analytics.Defender.Easm.Samples
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
                 frequencyOffset = 1234,
+                kind = "logAnalytics",
             });
             Response response = client.CreateOrReplaceDataConnection("<dataConnectionName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -704,6 +703,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("active").ToString());
             Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -721,16 +721,15 @@ namespace Azure.Analytics.Defender.Easm.Samples
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
                 frequencyOffset = 1234,
+                kind = "logAnalytics",
             });
             Response response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -742,6 +741,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("active").ToString());
             Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
@@ -1762,7 +1762,6 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assets").GetProperty("totalElements").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("mark").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("nextLink").ToString());
-            Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("displayName").ToString());
@@ -1780,6 +1779,7 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("reason").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
+            Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
         }
 
         [Test]
@@ -1808,7 +1808,6 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assets").GetProperty("totalElements").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("mark").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("nextLink").ToString());
-            Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("displayName").ToString());
@@ -1826,6 +1825,7 @@ Name = "<name>",
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("reason").ToString());
             Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
+            Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
         }
 
         [Test]
@@ -2569,8 +2569,8 @@ Name = "<name>",
             foreach (BinaryData item in client.GetAssetResources(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2585,8 +2585,8 @@ Name = "<name>",
             await foreach (BinaryData item in client.GetAssetResourcesAsync(null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2627,7 +2627,6 @@ Name = "<name>",
             foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2645,6 +2644,7 @@ Name = "<name>",
                 Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
                 Console.WriteLine(result.GetProperty("reason").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2659,7 +2659,6 @@ Name = "<name>",
             await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2677,6 +2676,7 @@ Name = "<name>",
                 Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
                 Console.WriteLine(result.GetProperty("reason").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2717,8 +2717,8 @@ Name = "<name>",
             foreach (BinaryData item in client.GetDataConnections(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2733,8 +2733,8 @@ Name = "<name>",
             await foreach (BinaryData item in client.GetDataConnectionsAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2775,7 +2775,6 @@ Name = "<name>",
             foreach (BinaryData item in client.GetDataConnections(1234, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2787,6 +2786,7 @@ Name = "<name>",
                 Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
                 Console.WriteLine(result.GetProperty("active").ToString());
                 Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -2801,7 +2801,6 @@ Name = "<name>",
             await foreach (BinaryData item in client.GetDataConnectionsAsync(1234, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -2813,6 +2812,7 @@ Name = "<name>",
                 Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
                 Console.WriteLine(result.GetProperty("active").ToString());
                 Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 

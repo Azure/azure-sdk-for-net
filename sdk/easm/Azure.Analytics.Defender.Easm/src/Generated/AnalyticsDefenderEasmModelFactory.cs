@@ -15,7 +15,6 @@ namespace Azure.Analytics.Defender.Easm
     public static partial class AnalyticsDefenderEasmModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Easm.AssetResource"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -29,14 +28,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="discoGroupName"> The name of the DiscoGroup that brought added this asset to the workspace. </param>
         /// <param name="auditTrail"> The history of how this asset was pulled into the workspace through the discovery process. </param>
         /// <param name="reason"></param>
+        /// <param name="kind"> Discriminator. </param>
         /// <returns> A new <see cref="Easm.AssetResource"/> instance for mocking. </returns>
-        public static AssetResource AssetResource(string kind = null, string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null)
+        public static AssetResource AssetResource(string id = null, string name = null, string displayName = null, Guid? uuid = null, DateTimeOffset? createdDate = null, DateTimeOffset? updatedDate = null, AssetState? state = null, string externalId = null, IEnumerable<string> labels = null, bool? wildcard = null, string discoGroupName = null, IEnumerable<AuditTrailItem> auditTrail = null, string reason = null, string kind = null)
         {
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
             return new UnknownAssetResource(
-                kind,
                 id,
                 name,
                 displayName,
@@ -50,6 +49,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -98,7 +98,6 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DataConnection"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -110,11 +109,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
+        /// <param name="kind"> Discriminator. </param>
         /// <returns> A new <see cref="Easm.DataConnection"/> instance for mocking. </returns>
-        public static DataConnection DataConnection(string kind = null, string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null)
+        public static DataConnection DataConnection(string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null, string kind = null)
         {
             return new UnknownDataConnection(
-                kind,
                 id,
                 name,
                 displayName,
@@ -126,6 +125,7 @@ namespace Azure.Analytics.Defender.Easm
                 userUpdatedAt,
                 active,
                 inactiveMessage,
+                kind,
                 serializedAdditionalRawData: null);
         }
 
@@ -484,17 +484,6 @@ namespace Azure.Analytics.Defender.Easm
                 detailedFromWhoisAt);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
-        /// <param name="firstSeen"></param>
-        /// <param name="lastSeen"></param>
-        /// <param name="count"></param>
-        /// <param name="recent"></param>
-        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
-        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
-        {
-            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedString"/>. </summary>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -515,6 +504,17 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null,
                 value,
                 sources?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
+        /// <param name="firstSeen"></param>
+        /// <param name="lastSeen"></param>
+        /// <param name="count"></param>
+        /// <param name="recent"></param>
+        /// <returns> A new <see cref="Easm.ObservedValue"/> instance for mocking. </returns>
+        public static ObservedValue ObservedValue(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
+        {
+            return new ObservedValue(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SourceDetails"/>. </summary>
@@ -1957,11 +1957,11 @@ namespace Azure.Analytics.Defender.Easm
         public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, LogAnalyticsDataConnectionProperties properties = null)
         {
             return new LogAnalyticsDataConnectionPayload(
-                "logAnalytics",
                 name,
                 content,
                 frequency,
                 frequencyOffset,
+                "logAnalytics",
                 serializedAdditionalRawData: null,
                 properties);
         }
@@ -1976,11 +1976,11 @@ namespace Azure.Analytics.Defender.Easm
         public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, AzureDataExplorerDataConnectionProperties properties = null)
         {
             return new AzureDataExplorerDataConnectionPayload(
-                "azureDataExplorer",
                 name,
                 content,
                 frequency,
                 frequencyOffset,
+                "azureDataExplorer",
                 serializedAdditionalRawData: null,
                 properties);
         }
@@ -2007,7 +2007,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new AsAssetResource(
-                "as",
                 id,
                 name,
                 displayName,
@@ -2021,6 +2020,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "as",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2047,7 +2047,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new ContactAssetResource(
-                "contact",
                 id,
                 name,
                 displayName,
@@ -2061,6 +2060,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "contact",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2087,7 +2087,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new DomainAssetResource(
-                "domain",
                 id,
                 name,
                 displayName,
@@ -2101,6 +2100,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "domain",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2127,7 +2127,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new HostAssetResource(
-                "host",
                 id,
                 name,
                 displayName,
@@ -2141,6 +2140,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "host",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2167,7 +2167,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new IpAddressAssetResource(
-                "ipAddress",
                 id,
                 name,
                 displayName,
@@ -2181,6 +2180,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "ipAddress",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2207,7 +2207,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new IpBlockAssetResource(
-                "ipBlock",
                 id,
                 name,
                 displayName,
@@ -2221,6 +2220,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "ipBlock",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2247,7 +2247,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new PageAssetResource(
-                "page",
                 id,
                 name,
                 displayName,
@@ -2261,6 +2260,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "page",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2287,7 +2287,6 @@ namespace Azure.Analytics.Defender.Easm
             auditTrail ??= new List<AuditTrailItem>();
 
             return new SslCertAssetResource(
-                "sslCert",
                 id,
                 name,
                 displayName,
@@ -2301,6 +2300,7 @@ namespace Azure.Analytics.Defender.Easm
                 discoGroupName,
                 auditTrail?.ToList(),
                 reason,
+                "sslCert",
                 serializedAdditionalRawData: null,
                 asset);
         }
@@ -2322,7 +2322,6 @@ namespace Azure.Analytics.Defender.Easm
         public static LogAnalyticsDataConnection LogAnalyticsDataConnection(string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null, LogAnalyticsDataConnectionProperties properties = null)
         {
             return new LogAnalyticsDataConnection(
-                "logAnalytics",
                 id,
                 name,
                 displayName,
@@ -2334,6 +2333,7 @@ namespace Azure.Analytics.Defender.Easm
                 userUpdatedAt,
                 active,
                 inactiveMessage,
+                "logAnalytics",
                 serializedAdditionalRawData: null,
                 properties);
         }
@@ -2355,7 +2355,6 @@ namespace Azure.Analytics.Defender.Easm
         public static AzureDataExplorerDataConnection AzureDataExplorerDataConnection(string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null, AzureDataExplorerDataConnectionProperties properties = null)
         {
             return new AzureDataExplorerDataConnection(
-                "azureDataExplorer",
                 id,
                 name,
                 displayName,
@@ -2367,6 +2366,7 @@ namespace Azure.Analytics.Defender.Easm
                 userUpdatedAt,
                 active,
                 inactiveMessage,
+                "azureDataExplorer",
                 serializedAdditionalRawData: null,
                 properties);
         }

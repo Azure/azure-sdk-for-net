@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="unit"> Unit representation. </param>
         /// <param name="system"> System that defines coded unit form. </param>
         /// <param name="code"> Coded form of the unit. </param>
-        internal FhirR4Quantity(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value, string comparator, string unit, string system, string code) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Quantity(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value, string comparator, string unit, string system, string code) : base(id, extension, serializedAdditionalRawData)
         {
             Value = value;
             Comparator = comparator;

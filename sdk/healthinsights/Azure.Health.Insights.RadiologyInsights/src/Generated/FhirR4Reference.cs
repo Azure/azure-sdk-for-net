@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="type"> Type the reference refers to (e.g. "Patient"). </param>
         /// <param name="identifier"> Logical reference, when literal reference is not known. </param>
         /// <param name="display"> Text alternative for the resource. </param>
-        internal FhirR4Reference(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string reference, string type, FhirR4Identifier identifier, string display) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Reference(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string reference, string type, FhirR4Identifier identifier, string display) : base(id, extension, serializedAdditionalRawData)
         {
             Reference = reference;
             Type = type;

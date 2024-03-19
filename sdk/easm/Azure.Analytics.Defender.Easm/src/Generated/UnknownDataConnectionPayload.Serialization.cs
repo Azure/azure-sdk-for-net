@@ -27,8 +27,6 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -49,6 +47,8 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,20 +87,15 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            string kind = "Unknown";
             string name = default;
             DataConnectionContent? content = default;
             DataConnectionFrequency? frequency = default;
             int? frequencyOffset = default;
+            string kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -133,6 +128,11 @@ namespace Azure.Analytics.Defender.Easm
                     frequencyOffset = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -140,11 +140,11 @@ namespace Azure.Analytics.Defender.Easm
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownDataConnectionPayload(
-                kind,
                 name,
                 content,
                 frequency,
                 frequencyOffset,
+                kind,
                 serializedAdditionalRawData);
         }
 

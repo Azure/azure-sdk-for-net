@@ -34,8 +34,6 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             writer.WritePropertyName("discrepancyType"u8);
             writer.WriteStringValue(DiscrepancyType.ToString());
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -46,6 +44,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,8 +86,8 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             FhirR4CodeableConcept lateralityIndication = default;
             LateralityDiscrepancyType discrepancyType = default;
-            string kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
+            RadiologyInsightsInferenceType kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,11 +106,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                     discrepancyType = new LateralityDiscrepancyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("extension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -125,13 +120,18 @@ namespace Azure.Health.Insights.RadiologyInsights
                     extension = array;
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LateralityDiscrepancyInference(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData, lateralityIndication, discrepancyType);
+            return new LateralityDiscrepancyInference(extension ?? new ChangeTrackingList<FhirR4Extension>(), kind, serializedAdditionalRawData, lateralityIndication, discrepancyType);
         }
 
         BinaryData IPersistableModel<LateralityDiscrepancyInference>.Write(ModelReaderWriterOptions options)

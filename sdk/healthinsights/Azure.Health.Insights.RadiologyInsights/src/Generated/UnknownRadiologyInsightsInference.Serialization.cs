@@ -27,8 +27,6 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -39,6 +37,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,17 +77,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            string kind = "Unknown";
             IReadOnlyList<FhirR4Extension> extension = default;
+            RadiologyInsightsInferenceType kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("extension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -102,13 +97,18 @@ namespace Azure.Health.Insights.RadiologyInsights
                     extension = array;
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRadiologyInsightsInference(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData);
+            return new UnknownRadiologyInsightsInference(extension ?? new ChangeTrackingList<FhirR4Extension>(), kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RadiologyInsightsInference>.Write(ModelReaderWriterOptions options)

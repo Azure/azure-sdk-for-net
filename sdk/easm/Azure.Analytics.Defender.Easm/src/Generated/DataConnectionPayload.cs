@@ -55,24 +55,22 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataConnectionPayload(string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
             Name = name;
             Content = content;
             Frequency = frequency;
             FrequencyOffset = frequencyOffset;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
         /// <summary> The name of data connection. </summary>
         public string Name { get; set; }
         /// <summary> The type of data the data connection will transfer. </summary>
@@ -81,5 +79,7 @@ namespace Azure.Analytics.Defender.Easm
         public DataConnectionFrequency? Frequency { get; set; }
         /// <summary> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </summary>
         public int? FrequencyOffset { get; set; }
+        /// <summary> Discriminator. </summary>
+        internal string Kind { get; set; }
     }
 }
