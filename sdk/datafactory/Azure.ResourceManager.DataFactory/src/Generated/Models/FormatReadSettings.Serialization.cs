@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element, options);
                     case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element, options);
                     case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element, options);
-                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
                     case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element, options);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element, options);
                 }
             }
             return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element, options);

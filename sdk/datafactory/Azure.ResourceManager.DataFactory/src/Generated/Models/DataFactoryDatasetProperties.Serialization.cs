@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Avro": return AvroDataset.DeserializeAvroDataset(element, options);
                     case "AzureBlob": return AzureBlobDataset.DeserializeAzureBlobDataset(element, options);
                     case "AzureBlobFSFile": return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element, options);
-                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
                     case "AzureDataExplorerTable": return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element, options);
                     case "AzureDataLakeStoreFile": return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element, options);
+                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
                     case "AzureMariaDBTable": return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element, options);
                     case "AzureMySqlTable": return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element, options);
                     case "AzurePostgreSqlTable": return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element, options);

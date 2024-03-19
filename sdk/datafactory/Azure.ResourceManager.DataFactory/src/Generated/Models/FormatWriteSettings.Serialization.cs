@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 switch (discriminator.GetString())
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
-                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);
+                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
                 }
             }
             return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element, options);

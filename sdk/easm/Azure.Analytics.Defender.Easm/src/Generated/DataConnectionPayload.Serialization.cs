@@ -91,8 +91,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "azureDataExplorer": return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
                     case "logAnalytics": return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
+                    case "azureDataExplorer": return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
                 }
             }
             return UnknownDataConnectionPayload.DeserializeUnknownDataConnectionPayload(element, options);
