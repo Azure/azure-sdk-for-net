@@ -303,12 +303,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping)
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping || string.IsNullOrEmpty(resourceGroup))
             {
                 return;
             }
-
-            string resourceGroup = GetVariable("RESOURCE_GROUP");
 
             string subscription = GetVariable("SUBSCRIPTION_ID");
 
