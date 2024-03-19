@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(SharedDataDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedDataDisks))
             {
                 writer.WritePropertyName("sharedDataDisks"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SharedLogDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedLogDisks))
             {
                 writer.WritePropertyName("sharedLogDisks"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SharedTempDBDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedTempDBDisks))
             {
                 writer.WritePropertyName("sharedTempDbDisks"u8);
                 writer.WriteStartArray();
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NumberOfMounts.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfMounts))
             {
                 writer.WritePropertyName("numberOfMounts"u8);
                 writer.WriteNumberValue(NumberOfMounts.Value);
             }
-            if (options.Format != "W" && QuorumWitness != null)
+            if (options.Format != "W" && Optional.IsDefined(QuorumWitness))
             {
                 writer.WritePropertyName("quorumWitness"u8);
                 writer.WriteObjectValue(QuorumWitness);
@@ -107,8 +108,8 @@ namespace Azure.ResourceManager.Migrate.Models
             IReadOnlyList<AzureManagedDiskSkuDto> sharedDataDisks = default;
             IReadOnlyList<AzureManagedDiskSkuDto> sharedLogDisks = default;
             IReadOnlyList<AzureManagedDiskSkuDto> sharedTempDBDisks = default;
-            Optional<int> numberOfMounts = default;
-            Optional<AzureQuorumWitnessDto> quorumWitness = default;
+            int? numberOfMounts = default;
+            AzureQuorumWitnessDto quorumWitness = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,8 +184,8 @@ namespace Azure.ResourceManager.Migrate.Models
                 sharedDataDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
                 sharedLogDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
                 sharedTempDBDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
-                Optional.ToNullable(numberOfMounts),
-                quorumWitness.Value,
+                numberOfMounts,
+                quorumWitness,
                 serializedAdditionalRawData);
         }
 

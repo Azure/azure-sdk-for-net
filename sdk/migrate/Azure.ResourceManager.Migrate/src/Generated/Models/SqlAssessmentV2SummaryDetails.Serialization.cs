@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(SuitabilitySummary is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuitabilitySummary))
             {
                 writer.WritePropertyName("suitabilitySummary"u8);
                 writer.WriteStartObject();
@@ -37,27 +38,27 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && MonthlyComputeCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlyComputeCost))
             {
                 writer.WritePropertyName("monthlyComputeCost"u8);
                 writer.WriteNumberValue(MonthlyComputeCost.Value);
             }
-            if (options.Format != "W" && MonthlyStorageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlyStorageCost))
             {
                 writer.WritePropertyName("monthlyStorageCost"u8);
                 writer.WriteNumberValue(MonthlyStorageCost.Value);
             }
-            if (options.Format != "W" && MonthlyLicenseCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlyLicenseCost))
             {
                 writer.WritePropertyName("monthlyLicenseCost"u8);
                 writer.WriteNumberValue(MonthlyLicenseCost.Value);
             }
-            if (options.Format != "W" && ConfidenceScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (options.Format != "W" && MonthlySecurityCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlySecurityCost))
             {
                 writer.WritePropertyName("monthlySecurityCost"u8);
                 writer.WriteNumberValue(MonthlySecurityCost.Value);
@@ -101,11 +102,11 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             IReadOnlyDictionary<string, int> suitabilitySummary = default;
-            Optional<double> monthlyComputeCost = default;
-            Optional<double> monthlyStorageCost = default;
-            Optional<double> monthlyLicenseCost = default;
-            Optional<double> confidenceScore = default;
-            Optional<double> monthlySecurityCost = default;
+            double? monthlyComputeCost = default;
+            double? monthlyStorageCost = default;
+            double? monthlyLicenseCost = default;
+            double? confidenceScore = default;
+            double? monthlySecurityCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +178,11 @@ namespace Azure.ResourceManager.Migrate.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlAssessmentV2SummaryDetails(
                 suitabilitySummary ?? new ChangeTrackingDictionary<string, int>(),
-                Optional.ToNullable(monthlyComputeCost),
-                Optional.ToNullable(monthlyStorageCost),
-                Optional.ToNullable(monthlyLicenseCost),
-                Optional.ToNullable(confidenceScore),
-                Optional.ToNullable(monthlySecurityCost),
+                monthlyComputeCost,
+                monthlyStorageCost,
+                monthlyLicenseCost,
+                confidenceScore,
+                monthlySecurityCost,
                 serializedAdditionalRawData);
         }
 

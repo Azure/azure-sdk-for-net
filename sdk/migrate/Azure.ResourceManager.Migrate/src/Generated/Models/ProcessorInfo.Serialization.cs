@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (NumberOfSockets.HasValue)
+            if (Optional.IsDefined(NumberOfSockets))
             {
                 writer.WritePropertyName("numberOfSockets"u8);
                 writer.WriteNumberValue(NumberOfSockets.Value);
             }
-            if (NumberOfCoresPerSocket.HasValue)
+            if (Optional.IsDefined(NumberOfCoresPerSocket))
             {
                 writer.WritePropertyName("numberOfCoresPerSocket"u8);
                 writer.WriteNumberValue(NumberOfCoresPerSocket.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> numberOfSockets = default;
-            Optional<int> numberOfCoresPerSocket = default;
+            string name = default;
+            int? numberOfSockets = default;
+            int? numberOfCoresPerSocket = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessorInfo(name.Value, Optional.ToNullable(numberOfSockets), Optional.ToNullable(numberOfCoresPerSocket), serializedAdditionalRawData);
+            return new ProcessorInfo(name, numberOfSockets, numberOfCoresPerSocket, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessorInfo>.Write(ModelReaderWriterOptions options)

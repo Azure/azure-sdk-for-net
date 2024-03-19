@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && GroupStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(GroupStatus))
             {
                 writer.WritePropertyName("groupStatus"u8);
                 writer.WriteStringValue(GroupStatus.Value.ToString());
             }
-            if (options.Format != "W" && MachineCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MachineCount))
             {
                 writer.WritePropertyName("machineCount"u8);
                 writer.WriteNumberValue(MachineCount.Value);
             }
-            if (options.Format != "W" && !(Assessments is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedAssessmentTypes is ChangeTrackingList<AssessmentType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedAssessmentTypes))
             {
                 writer.WritePropertyName("supportedAssessmentTypes"u8);
                 writer.WriteStartArray();
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AreAssessmentsRunning.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AreAssessmentsRunning))
             {
                 writer.WritePropertyName("areAssessmentsRunning"u8);
                 writer.WriteBooleanValue(AreAssessmentsRunning.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (GroupType.HasValue)
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("groupType"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MigrateProvisioningState> provisioningState = default;
-            Optional<MigrateGroupStatus> groupStatus = default;
-            Optional<int> machineCount = default;
+            SystemData systemData = default;
+            MigrateProvisioningState? provisioningState = default;
+            MigrateGroupStatus? groupStatus = default;
+            int? machineCount = default;
             IReadOnlyList<string> assessments = default;
             IList<AssessmentType> supportedAssessmentTypes = default;
-            Optional<bool> areAssessmentsRunning = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<MigrateGroupType> groupType = default;
+            bool? areAssessmentsRunning = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            MigrateGroupType? groupType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,16 +298,16 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(groupStatus),
-                Optional.ToNullable(machineCount),
+                systemData,
+                provisioningState,
+                groupStatus,
+                machineCount,
                 assessments ?? new ChangeTrackingList<string>(),
                 supportedAssessmentTypes ?? new ChangeTrackingList<AssessmentType>(),
-                Optional.ToNullable(areAssessmentsRunning),
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
-                Optional.ToNullable(groupType),
+                areAssessmentsRunning,
+                createdTimestamp,
+                updatedTimestamp,
+                groupType,
                 serializedAdditionalRawData);
         }
 

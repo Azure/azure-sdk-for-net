@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> macAddress = default;
+            string macAddress = default;
             IReadOnlyList<string> ipAddresses = default;
-            Optional<string> displayName = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateNetworkAdapter(macAddress.Value, ipAddresses ?? new ChangeTrackingList<string>(), displayName.Value, serializedAdditionalRawData);
+            return new MigrateNetworkAdapter(macAddress, ipAddresses ?? new ChangeTrackingList<string>(), displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateNetworkAdapter>.Write(ModelReaderWriterOptions options)

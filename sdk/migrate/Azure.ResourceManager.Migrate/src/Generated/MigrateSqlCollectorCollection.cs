@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateSqlCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectorName, MigrateSqlCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateSqlCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string collectorName, MigrateSqlCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual async Task<Response<MigrateSqlCollectorResource>> GetAsync(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual Response<MigrateSqlCollectorResource> Get(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateSqlCollectorResource>> GetIfExistsAsync(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="collectorName"/> is null. </exception>
         public virtual NullableResponse<MigrateSqlCollectorResource> GetIfExists(string collectorName, CancellationToken cancellationToken = default)
         {
-            if (collectorName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorName));
-            }
-            if (collectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorName, nameof(collectorName));
 
             using var scope = _migrateSqlCollectorSqlCollectorOperationsClientDiagnostics.CreateScope("MigrateSqlCollectorCollection.GetIfExists");
             scope.Start();

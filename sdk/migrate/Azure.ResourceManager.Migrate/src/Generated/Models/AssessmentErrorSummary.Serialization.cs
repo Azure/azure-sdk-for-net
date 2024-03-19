@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AssessmentType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType.Value.ToString());
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AssessmentType> assessmentType = default;
-            Optional<int> count = default;
+            AssessmentType? assessmentType = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessmentErrorSummary(Optional.ToNullable(assessmentType), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new AssessmentErrorSummary(assessmentType, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessmentErrorSummary>.Write(ModelReaderWriterOptions options)

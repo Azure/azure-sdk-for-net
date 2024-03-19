@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureSqlServiceTier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlServiceTier))
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (options.Format != "W" && AzureSqlComputeTier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlComputeTier))
             {
                 writer.WritePropertyName("azureSqlComputeTier"u8);
                 writer.WriteStringValue(AzureSqlComputeTier.Value.ToString());
             }
-            if (options.Format != "W" && AzureSqlHardwareGeneration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlHardwareGeneration))
             {
                 writer.WritePropertyName("azureSqlHardwareGeneration"u8);
                 writer.WriteStringValue(AzureSqlHardwareGeneration.Value.ToString());
             }
-            if (options.Format != "W" && StorageMaxSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageMaxSizeInMB))
             {
                 writer.WritePropertyName("storageMaxSizeInMB"u8);
                 writer.WriteNumberValue(StorageMaxSizeInMB.Value);
             }
-            if (options.Format != "W" && PredictedDataSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PredictedDataSizeInMB))
             {
                 writer.WritePropertyName("predictedDataSizeInMB"u8);
                 writer.WriteNumberValue(PredictedDataSizeInMB.Value);
             }
-            if (options.Format != "W" && PredictedLogSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PredictedLogSizeInMB))
             {
                 writer.WritePropertyName("predictedLogSizeInMB"u8);
                 writer.WriteNumberValue(PredictedLogSizeInMB.Value);
             }
-            if (options.Format != "W" && Cores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (options.Format != "W" && AzureSqlTargetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlTargetType))
             {
                 writer.WritePropertyName("azureSqlTargetType"u8);
                 writer.WriteStringValue(AzureSqlTargetType.Value.ToString());
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureSqlServiceTier> azureSqlServiceTier = default;
-            Optional<MigrateComputeTier> azureSqlComputeTier = default;
-            Optional<MigrateHardwareGeneration> azureSqlHardwareGeneration = default;
-            Optional<double> storageMaxSizeInMB = default;
-            Optional<double> predictedDataSizeInMB = default;
-            Optional<double> predictedLogSizeInMB = default;
-            Optional<int> cores = default;
-            Optional<MigrateTargetType> azureSqlTargetType = default;
+            AzureSqlServiceTier? azureSqlServiceTier = default;
+            MigrateComputeTier? azureSqlComputeTier = default;
+            MigrateHardwareGeneration? azureSqlHardwareGeneration = default;
+            double? storageMaxSizeInMB = default;
+            double? predictedDataSizeInMB = default;
+            double? predictedLogSizeInMB = default;
+            int? cores = default;
+            MigrateTargetType? azureSqlTargetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureSqlPaasSkuDto(
-                Optional.ToNullable(azureSqlServiceTier),
-                Optional.ToNullable(azureSqlComputeTier),
-                Optional.ToNullable(azureSqlHardwareGeneration),
-                Optional.ToNullable(storageMaxSizeInMB),
-                Optional.ToNullable(predictedDataSizeInMB),
-                Optional.ToNullable(predictedLogSizeInMB),
-                Optional.ToNullable(cores),
-                Optional.ToNullable(azureSqlTargetType),
+                azureSqlServiceTier,
+                azureSqlComputeTier,
+                azureSqlHardwareGeneration,
+                storageMaxSizeInMB,
+                predictedDataSizeInMB,
+                predictedLogSizeInMB,
+                cores,
+                azureSqlTargetType,
                 serializedAdditionalRawData);
         }
 

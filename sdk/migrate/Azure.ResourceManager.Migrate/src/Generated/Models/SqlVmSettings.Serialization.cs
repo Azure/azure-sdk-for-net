@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (!(InstanceSeries is ChangeTrackingList<AzureVmFamily> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InstanceSeries))
             {
                 writer.WritePropertyName("instanceSeries"u8);
                 writer.WriteStartArray();

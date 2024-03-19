@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (StorageType != null)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (DiskSizeInMB.HasValue)
+            if (Optional.IsDefined(DiskSizeInMB))
             {
                 writer.WritePropertyName("diskSizeInMB"u8);
                 writer.WriteNumberValue(DiskSizeInMB.Value);
             }
-            if (MegabytesPerSecondOfRead.HasValue)
+            if (Optional.IsDefined(MegabytesPerSecondOfRead))
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (MegabytesPerSecondOfWrite.HasValue)
+            if (Optional.IsDefined(MegabytesPerSecondOfWrite))
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (NumberOfReadOperationsPerSecond.HasValue)
+            if (Optional.IsDefined(NumberOfReadOperationsPerSecond))
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (NumberOfWriteOperationsPerSecond.HasValue)
+            if (Optional.IsDefined(NumberOfWriteOperationsPerSecond))
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> storageType = default;
-            Optional<double> diskSizeInMB = default;
-            Optional<double> megabytesPerSecondOfRead = default;
-            Optional<double> megabytesPerSecondOfWrite = default;
-            Optional<double> numberOfReadOperationsPerSecond = default;
-            Optional<double> numberOfWriteOperationsPerSecond = default;
+            string storageType = default;
+            double? diskSizeInMB = default;
+            double? megabytesPerSecondOfRead = default;
+            double? megabytesPerSecondOfWrite = default;
+            double? numberOfReadOperationsPerSecond = default;
+            double? numberOfWriteOperationsPerSecond = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssessedSqlInstanceStorageDetails(
-                storageType.Value,
-                Optional.ToNullable(diskSizeInMB),
-                Optional.ToNullable(megabytesPerSecondOfRead),
-                Optional.ToNullable(megabytesPerSecondOfWrite),
-                Optional.ToNullable(numberOfReadOperationsPerSecond),
-                Optional.ToNullable(numberOfWriteOperationsPerSecond),
+                storageType,
+                diskSizeInMB,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
                 serializedAdditionalRawData);
         }
 

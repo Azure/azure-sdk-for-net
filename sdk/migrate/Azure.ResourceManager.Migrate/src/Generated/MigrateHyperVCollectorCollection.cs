@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateHyperVCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hyperVCollectorName, MigrateHyperVCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateHyperVCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string hyperVCollectorName, MigrateHyperVCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual async Task<Response<MigrateHyperVCollectorResource>> GetAsync(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual Response<MigrateHyperVCollectorResource> Get(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateHyperVCollectorResource>> GetIfExistsAsync(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVCollectorName"/> is null. </exception>
         public virtual NullableResponse<MigrateHyperVCollectorResource> GetIfExists(string hyperVCollectorName, CancellationToken cancellationToken = default)
         {
-            if (hyperVCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVCollectorName));
-            }
-            if (hyperVCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hyperVCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(hyperVCollectorName, nameof(hyperVCollectorName));
 
             using var scope = _migrateHyperVCollectorHyperVCollectorsOperationsClientDiagnostics.CreateScope("MigrateHyperVCollectorCollection.GetIfExists");
             scope.Start();

@@ -43,134 +43,134 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RecommendedAzureSqlTargetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedAzureSqlTargetType))
             {
                 writer.WritePropertyName("recommendedAzureSqlTargetType"u8);
                 writer.WriteStringValue(RecommendedAzureSqlTargetType.Value.ToString());
             }
-            if (options.Format != "W" && RecommendedSuitability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedSuitability))
             {
                 writer.WritePropertyName("recommendedSuitability"u8);
                 writer.WriteStringValue(RecommendedSuitability.Value.ToString());
             }
-            if (options.Format != "W" && BufferCacheSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BufferCacheSizeInMB))
             {
                 writer.WritePropertyName("bufferCacheSizeInMB"u8);
                 writer.WriteNumberValue(BufferCacheSizeInMB.Value);
             }
-            if (options.Format != "W" && ProductSupportStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
                 writer.WriteObjectValue(ProductSupportStatus);
             }
-            if (options.Format != "W" && AzureSqlMISuitabilityDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlMISuitabilityDetails);
             }
-            if (options.Format != "W" && AzureSqlDBSuitabilityDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlDBSuitabilityDetails);
             }
-            if (options.Format != "W" && IsDatabaseHighlyAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDatabaseHighlyAvailable))
             {
                 writer.WritePropertyName("isDatabaseHighlyAvailable"u8);
                 writer.WriteBooleanValue(IsDatabaseHighlyAvailable.Value);
             }
-            if (options.Format != "W" && LinkedAvailabilityGroupOverview != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkedAvailabilityGroupOverview))
             {
                 writer.WritePropertyName("linkedAvailabilityGroupOverview"u8);
                 writer.WriteObjectValue(LinkedAvailabilityGroupOverview);
             }
-            if (options.Format != "W" && MachineArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineArmId))
             {
                 writer.WritePropertyName("machineArmId"u8);
                 writer.WriteStringValue(MachineArmId);
             }
-            if (options.Format != "W" && AssessedSqlInstanceArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessedSqlInstanceArmId))
             {
                 writer.WritePropertyName("assessedSqlInstanceArmId"u8);
                 writer.WriteStringValue(AssessedSqlInstanceArmId);
             }
-            if (options.Format != "W" && MachineName != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && InstanceName != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && DatabaseSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInMB))
             {
                 writer.WritePropertyName("databaseSizeInMB"u8);
                 writer.WriteNumberValue(DatabaseSizeInMB.Value);
             }
-            if (options.Format != "W" && CompatibilityLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && SqlDatabaseSdsArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(SqlDatabaseSdsArmId))
             {
                 writer.WritePropertyName("sqlDatabaseSdsArmId"u8);
                 writer.WriteStringValue(SqlDatabaseSdsArmId);
             }
-            if (options.Format != "W" && PercentageCoresUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentageCoresUtilization))
             {
                 writer.WritePropertyName("percentageCoresUtilization"u8);
                 writer.WriteNumberValue(PercentageCoresUtilization.Value);
             }
-            if (options.Format != "W" && MegabytesPerSecondOfRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfRead))
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (options.Format != "W" && MegabytesPerSecondOfWrite.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfWrite))
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (options.Format != "W" && NumberOfReadOperationsPerSecond.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfReadOperationsPerSecond))
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (options.Format != "W" && NumberOfWriteOperationsPerSecond.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfWriteOperationsPerSecond))
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
             }
-            if (options.Format != "W" && ConfidenceRatingInPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceRatingInPercentage))
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && SizingCriterion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizingCriterion))
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -217,32 +217,32 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MigrateTargetType> recommendedAzureSqlTargetType = default;
-            Optional<RecommendedSuitability> recommendedSuitability = default;
-            Optional<double> bufferCacheSizeInMB = default;
-            Optional<ProductSupportStatus> productSupportStatus = default;
-            Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlMISuitabilityDetails = default;
-            Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlDBSuitabilityDetails = default;
-            Optional<bool> isDatabaseHighlyAvailable = default;
-            Optional<SqlAvailabilityGroupDataOverview> linkedAvailabilityGroupOverview = default;
-            Optional<ResourceIdentifier> machineArmId = default;
-            Optional<ResourceIdentifier> assessedSqlInstanceArmId = default;
-            Optional<string> machineName = default;
-            Optional<string> instanceName = default;
-            Optional<string> databaseName = default;
-            Optional<double> databaseSizeInMB = default;
-            Optional<CompatibilityLevel> compatibilityLevel = default;
-            Optional<ResourceIdentifier> sqlDatabaseSdsArmId = default;
-            Optional<double> percentageCoresUtilization = default;
-            Optional<double> megabytesPerSecondOfRead = default;
-            Optional<double> megabytesPerSecondOfWrite = default;
-            Optional<double> numberOfReadOperationsPerSecond = default;
-            Optional<double> numberOfWriteOperationsPerSecond = default;
-            Optional<double> confidenceRatingInPercentage = default;
-            Optional<AssessmentSizingCriterion> sizingCriterion = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
+            SystemData systemData = default;
+            MigrateTargetType? recommendedAzureSqlTargetType = default;
+            RecommendedSuitability? recommendedSuitability = default;
+            double? bufferCacheSizeInMB = default;
+            ProductSupportStatus productSupportStatus = default;
+            SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = default;
+            SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = default;
+            bool? isDatabaseHighlyAvailable = default;
+            SqlAvailabilityGroupDataOverview linkedAvailabilityGroupOverview = default;
+            ResourceIdentifier machineArmId = default;
+            ResourceIdentifier assessedSqlInstanceArmId = default;
+            string machineName = default;
+            string instanceName = default;
+            string databaseName = default;
+            double? databaseSizeInMB = default;
+            CompatibilityLevel? compatibilityLevel = default;
+            ResourceIdentifier sqlDatabaseSdsArmId = default;
+            double? percentageCoresUtilization = default;
+            double? megabytesPerSecondOfRead = default;
+            double? megabytesPerSecondOfWrite = default;
+            double? numberOfReadOperationsPerSecond = default;
+            double? numberOfWriteOperationsPerSecond = default;
+            double? confidenceRatingInPercentage = default;
+            AssessmentSizingCriterion? sizingCriterion = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -506,32 +506,32 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(recommendedAzureSqlTargetType),
-                Optional.ToNullable(recommendedSuitability),
-                Optional.ToNullable(bufferCacheSizeInMB),
-                productSupportStatus.Value,
-                azureSqlMISuitabilityDetails.Value,
-                azureSqlDBSuitabilityDetails.Value,
-                Optional.ToNullable(isDatabaseHighlyAvailable),
-                linkedAvailabilityGroupOverview.Value,
-                machineArmId.Value,
-                assessedSqlInstanceArmId.Value,
-                machineName.Value,
-                instanceName.Value,
-                databaseName.Value,
-                Optional.ToNullable(databaseSizeInMB),
-                Optional.ToNullable(compatibilityLevel),
-                sqlDatabaseSdsArmId.Value,
-                Optional.ToNullable(percentageCoresUtilization),
-                Optional.ToNullable(megabytesPerSecondOfRead),
-                Optional.ToNullable(megabytesPerSecondOfWrite),
-                Optional.ToNullable(numberOfReadOperationsPerSecond),
-                Optional.ToNullable(numberOfWriteOperationsPerSecond),
-                Optional.ToNullable(confidenceRatingInPercentage),
-                Optional.ToNullable(sizingCriterion),
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
+                systemData,
+                recommendedAzureSqlTargetType,
+                recommendedSuitability,
+                bufferCacheSizeInMB,
+                productSupportStatus,
+                azureSqlMISuitabilityDetails,
+                azureSqlDBSuitabilityDetails,
+                isDatabaseHighlyAvailable,
+                linkedAvailabilityGroupOverview,
+                machineArmId,
+                assessedSqlInstanceArmId,
+                machineName,
+                instanceName,
+                databaseName,
+                databaseSizeInMB,
+                compatibilityLevel,
+                sqlDatabaseSdsArmId,
+                percentageCoresUtilization,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                confidenceRatingInPercentage,
+                sizingCriterion,
+                createdTimestamp,
+                updatedTimestamp,
                 serializedAdditionalRawData);
         }
 

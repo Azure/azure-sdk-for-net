@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (ContextKey != null)
+            if (Optional.IsDefined(ContextKey))
             {
                 writer.WritePropertyName("contextKey"u8);
                 writer.WriteStringValue(ContextKey);
             }
-            if (ContextValue != null)
+            if (Optional.IsDefined(ContextValue))
             {
                 writer.WritePropertyName("contextValue"u8);
                 writer.WriteStringValue(ContextValue);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> contextKey = default;
-            Optional<string> contextValue = default;
+            string contextKey = default;
+            string contextValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationGuidelineContext(contextKey.Value, contextValue.Value, serializedAdditionalRawData);
+            return new MigrationGuidelineContext(contextKey, contextValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationGuidelineContext>.Write(ModelReaderWriterOptions options)

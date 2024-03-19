@@ -43,199 +43,199 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OSLicense.HasValue)
+            if (Optional.IsDefined(OSLicense))
             {
                 writer.WritePropertyName("osLicense"u8);
                 writer.WriteStringValue(OSLicense.Value.ToString());
             }
-            if (EnvironmentType.HasValue)
+            if (Optional.IsDefined(EnvironmentType))
             {
                 writer.WritePropertyName("environmentType"u8);
                 writer.WriteStringValue(EnvironmentType.Value.ToString());
             }
-            if (EntityUptime != null)
+            if (Optional.IsDefined(EntityUptime))
             {
                 writer.WritePropertyName("entityUptime"u8);
                 writer.WriteObjectValue(EntityUptime);
             }
-            if (OptimizationLogic.HasValue)
+            if (Optional.IsDefined(OptimizationLogic))
             {
                 writer.WritePropertyName("optimizationLogic"u8);
                 writer.WriteStringValue(OptimizationLogic.Value.ToString());
             }
-            if (ReservedInstanceForVm.HasValue)
+            if (Optional.IsDefined(ReservedInstanceForVm))
             {
                 writer.WritePropertyName("reservedInstanceForVm"u8);
                 writer.WriteStringValue(ReservedInstanceForVm.Value.ToString());
             }
-            if (AzureOfferCodeForVm.HasValue)
+            if (Optional.IsDefined(AzureOfferCodeForVm))
             {
                 writer.WritePropertyName("azureOfferCodeForVm"u8);
                 writer.WriteStringValue(AzureOfferCodeForVm.Value.ToString());
             }
-            if (EASubscriptionId != null)
+            if (Optional.IsDefined(EASubscriptionId))
             {
                 writer.WritePropertyName("eaSubscriptionId"u8);
                 writer.WriteStringValue(EASubscriptionId);
             }
-            if (AzureSqlManagedInstanceSettings != null)
+            if (Optional.IsDefined(AzureSqlManagedInstanceSettings))
             {
                 writer.WritePropertyName("azureSqlManagedInstanceSettings"u8);
                 writer.WriteObjectValue(AzureSqlManagedInstanceSettings);
             }
-            if (AzureSqlDatabaseSettings != null)
+            if (Optional.IsDefined(AzureSqlDatabaseSettings))
             {
                 writer.WritePropertyName("azureSqlDatabaseSettings"u8);
                 writer.WriteObjectValue(AzureSqlDatabaseSettings);
             }
-            if (AzureSqlVmSettings != null)
+            if (Optional.IsDefined(AzureSqlVmSettings))
             {
                 writer.WritePropertyName("azureSqlVmSettings"u8);
                 writer.WriteObjectValue(AzureSqlVmSettings);
             }
-            if (MultiSubnetIntent.HasValue)
+            if (Optional.IsDefined(MultiSubnetIntent))
             {
                 writer.WritePropertyName("multiSubnetIntent"u8);
                 writer.WriteStringValue(MultiSubnetIntent.Value.ToString());
             }
-            if (AsyncCommitModeIntent.HasValue)
+            if (Optional.IsDefined(AsyncCommitModeIntent))
             {
                 writer.WritePropertyName("asyncCommitModeIntent"u8);
                 writer.WriteStringValue(AsyncCommitModeIntent.Value.ToString());
             }
-            if (IsInternetAccessAvailable.HasValue)
+            if (Optional.IsDefined(IsInternetAccessAvailable))
             {
                 writer.WritePropertyName("isInternetAccessAvailable"u8);
                 writer.WriteBooleanValue(IsInternetAccessAvailable.Value);
             }
-            if (DisasterRecoveryLocation.HasValue)
+            if (Optional.IsDefined(DisasterRecoveryLocation))
             {
                 writer.WritePropertyName("disasterRecoveryLocation"u8);
                 writer.WriteStringValue(DisasterRecoveryLocation.Value);
             }
-            if (EnableHadrAssessment.HasValue)
+            if (Optional.IsDefined(EnableHadrAssessment))
             {
                 writer.WritePropertyName("enableHadrAssessment"u8);
                 writer.WriteBooleanValue(EnableHadrAssessment.Value);
             }
-            if (AzureSecurityOfferingType.HasValue)
+            if (Optional.IsDefined(AzureSecurityOfferingType))
             {
                 writer.WritePropertyName("azureSecurityOfferingType"u8);
                 writer.WriteStringValue(AzureSecurityOfferingType.Value.ToString());
             }
-            if (ReservedInstance.HasValue)
+            if (Optional.IsDefined(ReservedInstance))
             {
                 writer.WritePropertyName("reservedInstance"u8);
                 writer.WriteStringValue(ReservedInstance.Value.ToString());
             }
-            if (SqlServerLicense.HasValue)
+            if (Optional.IsDefined(SqlServerLicense))
             {
                 writer.WritePropertyName("sqlServerLicense"u8);
                 writer.WriteStringValue(SqlServerLicense.Value.ToString());
             }
-            if (GroupType.HasValue)
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("groupType"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (AssessmentType.HasValue)
+            if (Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType.Value.ToString());
             }
-            if (AzureLocation.HasValue)
+            if (Optional.IsDefined(AzureLocation))
             {
                 writer.WritePropertyName("azureLocation"u8);
                 writer.WriteStringValue(AzureLocation.Value);
             }
-            if (AzureOfferCode.HasValue)
+            if (Optional.IsDefined(AzureOfferCode))
             {
                 writer.WritePropertyName("azureOfferCode"u8);
                 writer.WriteStringValue(AzureOfferCode.Value.ToString());
             }
-            if (Currency.HasValue)
+            if (Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency.Value.ToString());
             }
-            if (ScalingFactor.HasValue)
+            if (Optional.IsDefined(ScalingFactor))
             {
                 writer.WritePropertyName("scalingFactor"u8);
                 writer.WriteNumberValue(ScalingFactor.Value);
             }
-            if (Percentile.HasValue)
+            if (Optional.IsDefined(Percentile))
             {
                 writer.WritePropertyName("percentile"u8);
                 writer.WriteStringValue(Percentile.Value.ToString());
             }
-            if (TimeRange.HasValue)
+            if (Optional.IsDefined(TimeRange))
             {
                 writer.WritePropertyName("timeRange"u8);
                 writer.WriteStringValue(TimeRange.Value.ToString());
             }
-            if (PerfDataStartOn.HasValue)
+            if (Optional.IsDefined(PerfDataStartOn))
             {
                 writer.WritePropertyName("perfDataStartTime"u8);
                 writer.WriteStringValue(PerfDataStartOn.Value, "O");
             }
-            if (PerfDataEndOn.HasValue)
+            if (Optional.IsDefined(PerfDataEndOn))
             {
                 writer.WritePropertyName("perfDataEndTime"u8);
                 writer.WriteStringValue(PerfDataEndOn.Value, "O");
             }
-            if (options.Format != "W" && Stage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Stage))
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (DiscountPercentage.HasValue)
+            if (Optional.IsDefined(DiscountPercentage))
             {
                 writer.WritePropertyName("discountPercentage"u8);
                 writer.WriteNumberValue(DiscountPercentage.Value);
             }
-            if (SizingCriterion.HasValue)
+            if (Optional.IsDefined(SizingCriterion))
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
             }
-            if (ConfidenceRatingInPercentage.HasValue)
+            if (Optional.IsDefined(ConfidenceRatingInPercentage))
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && PricesQueriedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PricesQueriedOn))
             {
                 writer.WritePropertyName("pricesTimestamp"u8);
                 writer.WriteStringValue(PricesQueriedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && SchemaVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
@@ -282,45 +282,45 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MigrateProvisioningState> provisioningState = default;
-            Optional<MigrateOSLicense> osLicense = default;
-            Optional<AssessmentEnvironmentType> environmentType = default;
-            Optional<EntityUptime> entityUptime = default;
-            Optional<SqlOptimizationLogic> optimizationLogic = default;
-            Optional<AzureReservedInstance> reservedInstanceForVm = default;
-            Optional<AzureOfferCode> azureOfferCodeForVm = default;
-            Optional<string> eaSubscriptionId = default;
-            Optional<SqlMISettings> azureSqlManagedInstanceSettings = default;
-            Optional<SqlDBSettings> azureSqlDatabaseSettings = default;
-            Optional<SqlVmSettings> azureSqlVmSettings = default;
-            Optional<MultiSubnetIntent> multiSubnetIntent = default;
-            Optional<AsyncCommitModeIntent> asyncCommitModeIntent = default;
-            Optional<bool> isInternetAccessAvailable = default;
-            Optional<AzureLocation> disasterRecoveryLocation = default;
-            Optional<bool> enableHadrAssessment = default;
-            Optional<AzureSecurityOfferingType> azureSecurityOfferingType = default;
-            Optional<AzureReservedInstance> reservedInstance = default;
-            Optional<SqlServerLicense> sqlServerLicense = default;
-            Optional<MigrateGroupType> groupType = default;
-            Optional<AssessmentType> assessmentType = default;
-            Optional<AzureLocation> azureLocation = default;
-            Optional<AzureOfferCode> azureOfferCode = default;
-            Optional<AzureCurrency> currency = default;
-            Optional<double> scalingFactor = default;
-            Optional<PercentileOfUtilization> percentile = default;
-            Optional<AssessmentTimeRange> timeRange = default;
-            Optional<DateTimeOffset> perfDataStartTime = default;
-            Optional<DateTimeOffset> perfDataEndTime = default;
-            Optional<AssessmentStage> stage = default;
-            Optional<double> discountPercentage = default;
-            Optional<AssessmentSizingCriterion> sizingCriterion = default;
-            Optional<double> confidenceRatingInPercentage = default;
-            Optional<DateTimeOffset> pricesTimestamp = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<AssessmentStatus> status = default;
-            Optional<string> schemaVersion = default;
+            SystemData systemData = default;
+            MigrateProvisioningState? provisioningState = default;
+            MigrateOSLicense? osLicense = default;
+            AssessmentEnvironmentType? environmentType = default;
+            EntityUptime entityUptime = default;
+            SqlOptimizationLogic? optimizationLogic = default;
+            AzureReservedInstance? reservedInstanceForVm = default;
+            AzureOfferCode? azureOfferCodeForVm = default;
+            string eaSubscriptionId = default;
+            SqlMISettings azureSqlManagedInstanceSettings = default;
+            SqlDBSettings azureSqlDatabaseSettings = default;
+            SqlVmSettings azureSqlVmSettings = default;
+            MultiSubnetIntent? multiSubnetIntent = default;
+            AsyncCommitModeIntent? asyncCommitModeIntent = default;
+            bool? isInternetAccessAvailable = default;
+            AzureLocation? disasterRecoveryLocation = default;
+            bool? enableHadrAssessment = default;
+            AzureSecurityOfferingType? azureSecurityOfferingType = default;
+            AzureReservedInstance? reservedInstance = default;
+            SqlServerLicense? sqlServerLicense = default;
+            MigrateGroupType? groupType = default;
+            AssessmentType? assessmentType = default;
+            AzureLocation? azureLocation = default;
+            AzureOfferCode? azureOfferCode = default;
+            AzureCurrency? currency = default;
+            double? scalingFactor = default;
+            PercentileOfUtilization? percentile = default;
+            AssessmentTimeRange? timeRange = default;
+            DateTimeOffset? perfDataStartTime = default;
+            DateTimeOffset? perfDataEndTime = default;
+            AssessmentStage? stage = default;
+            double? discountPercentage = default;
+            AssessmentSizingCriterion? sizingCriterion = default;
+            double? confidenceRatingInPercentage = default;
+            DateTimeOffset? pricesTimestamp = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            AssessmentStatus? status = default;
+            string schemaVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -705,45 +705,45 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(osLicense),
-                Optional.ToNullable(environmentType),
-                entityUptime.Value,
-                Optional.ToNullable(optimizationLogic),
-                Optional.ToNullable(reservedInstanceForVm),
-                Optional.ToNullable(azureOfferCodeForVm),
-                eaSubscriptionId.Value,
-                azureSqlManagedInstanceSettings.Value,
-                azureSqlDatabaseSettings.Value,
-                azureSqlVmSettings.Value,
-                Optional.ToNullable(multiSubnetIntent),
-                Optional.ToNullable(asyncCommitModeIntent),
-                Optional.ToNullable(isInternetAccessAvailable),
-                Optional.ToNullable(disasterRecoveryLocation),
-                Optional.ToNullable(enableHadrAssessment),
-                Optional.ToNullable(azureSecurityOfferingType),
-                Optional.ToNullable(reservedInstance),
-                Optional.ToNullable(sqlServerLicense),
-                Optional.ToNullable(groupType),
-                Optional.ToNullable(assessmentType),
-                Optional.ToNullable(azureLocation),
-                Optional.ToNullable(azureOfferCode),
-                Optional.ToNullable(currency),
-                Optional.ToNullable(scalingFactor),
-                Optional.ToNullable(percentile),
-                Optional.ToNullable(timeRange),
-                Optional.ToNullable(perfDataStartTime),
-                Optional.ToNullable(perfDataEndTime),
-                Optional.ToNullable(stage),
-                Optional.ToNullable(discountPercentage),
-                Optional.ToNullable(sizingCriterion),
-                Optional.ToNullable(confidenceRatingInPercentage),
-                Optional.ToNullable(pricesTimestamp),
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
-                Optional.ToNullable(status),
-                schemaVersion.Value,
+                systemData,
+                provisioningState,
+                osLicense,
+                environmentType,
+                entityUptime,
+                optimizationLogic,
+                reservedInstanceForVm,
+                azureOfferCodeForVm,
+                eaSubscriptionId,
+                azureSqlManagedInstanceSettings,
+                azureSqlDatabaseSettings,
+                azureSqlVmSettings,
+                multiSubnetIntent,
+                asyncCommitModeIntent,
+                isInternetAccessAvailable,
+                disasterRecoveryLocation,
+                enableHadrAssessment,
+                azureSecurityOfferingType,
+                reservedInstance,
+                sqlServerLicense,
+                groupType,
+                assessmentType,
+                azureLocation,
+                azureOfferCode,
+                currency,
+                scalingFactor,
+                percentile,
+                timeRange,
+                perfDataStartTime,
+                perfDataEndTime,
+                stage,
+                discountPercentage,
+                sizingCriterion,
+                confidenceRatingInPercentage,
+                pricesTimestamp,
+                createdTimestamp,
+                updatedTimestamp,
+                status,
+                schemaVersion,
                 serializedAdditionalRawData);
         }
 

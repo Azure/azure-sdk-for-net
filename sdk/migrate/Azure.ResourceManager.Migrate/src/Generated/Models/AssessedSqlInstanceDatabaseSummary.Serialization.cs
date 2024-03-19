@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (NumberOfUserDatabases.HasValue)
+            if (Optional.IsDefined(NumberOfUserDatabases))
             {
                 writer.WritePropertyName("numberOfUserDatabases"u8);
                 writer.WriteNumberValue(NumberOfUserDatabases.Value);
             }
-            if (TotalDatabaseSizeInMB.HasValue)
+            if (Optional.IsDefined(TotalDatabaseSizeInMB))
             {
                 writer.WritePropertyName("totalDatabaseSizeInMB"u8);
                 writer.WriteNumberValue(TotalDatabaseSizeInMB.Value);
             }
-            if (LargestDatabaseSizeInMB.HasValue)
+            if (Optional.IsDefined(LargestDatabaseSizeInMB))
             {
                 writer.WritePropertyName("largestDatabaseSizeInMB"u8);
                 writer.WriteNumberValue(LargestDatabaseSizeInMB.Value);
             }
-            if (TotalDiscoveredUserDatabases.HasValue)
+            if (Optional.IsDefined(TotalDiscoveredUserDatabases))
             {
                 writer.WritePropertyName("totalDiscoveredUserDatabases"u8);
                 writer.WriteNumberValue(TotalDiscoveredUserDatabases.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<int> numberOfUserDatabases = default;
-            Optional<double> totalDatabaseSizeInMB = default;
-            Optional<double> largestDatabaseSizeInMB = default;
-            Optional<int> totalDiscoveredUserDatabases = default;
+            int? numberOfUserDatabases = default;
+            double? totalDatabaseSizeInMB = default;
+            double? largestDatabaseSizeInMB = default;
+            int? totalDiscoveredUserDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedSqlInstanceDatabaseSummary(Optional.ToNullable(numberOfUserDatabases), Optional.ToNullable(totalDatabaseSizeInMB), Optional.ToNullable(largestDatabaseSizeInMB), Optional.ToNullable(totalDiscoveredUserDatabases), serializedAdditionalRawData);
+            return new AssessedSqlInstanceDatabaseSummary(numberOfUserDatabases, totalDatabaseSizeInMB, largestDatabaseSizeInMB, totalDiscoveredUserDatabases, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedSqlInstanceDatabaseSummary>.Write(ModelReaderWriterOptions options)

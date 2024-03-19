@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Migrate
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,59 +56,59 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && ServiceEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (AssessmentSolutionId != null)
+            if (Optional.IsDefined(AssessmentSolutionId))
             {
                 writer.WritePropertyName("assessmentSolutionId"u8);
                 writer.WriteStringValue(AssessmentSolutionId);
             }
-            if (ProjectStatus.HasValue)
+            if (Optional.IsDefined(ProjectStatus))
             {
                 writer.WritePropertyName("projectStatus"u8);
                 writer.WriteStringValue(ProjectStatus.Value.ToString());
             }
-            if (CustomerWorkspaceId != null)
+            if (Optional.IsDefined(CustomerWorkspaceId))
             {
                 writer.WritePropertyName("customerWorkspaceId"u8);
                 writer.WriteStringValue(CustomerWorkspaceId);
             }
-            if (CustomerWorkspaceLocation != null)
+            if (Optional.IsDefined(CustomerWorkspaceLocation))
             {
                 writer.WritePropertyName("customerWorkspaceLocation"u8);
                 writer.WriteStringValue(CustomerWorkspaceLocation);
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MigratePrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (CustomerStorageAccountArmId != null)
+            if (Optional.IsDefined(CustomerStorageAccountArmId))
             {
                 writer.WritePropertyName("customerStorageAccountArmId"u8);
                 writer.WriteStringValue(CustomerStorageAccountArmId);
@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MigrateProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<string> assessmentSolutionId = default;
-            Optional<AssessmentProjectStatus> projectStatus = default;
-            Optional<string> customerWorkspaceId = default;
-            Optional<string> customerWorkspaceLocation = default;
-            Optional<string> publicNetworkAccess = default;
+            SystemData systemData = default;
+            MigrateProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            string serviceEndpoint = default;
+            string assessmentSolutionId = default;
+            AssessmentProjectStatus? projectStatus = default;
+            string customerWorkspaceId = default;
+            string customerWorkspaceLocation = default;
+            string publicNetworkAccess = default;
             IReadOnlyList<MigratePrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<ResourceIdentifier> customerStorageAccountArmId = default;
+            ResourceIdentifier customerStorageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -332,20 +332,20 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
-                serviceEndpoint.Value,
-                assessmentSolutionId.Value,
-                Optional.ToNullable(projectStatus),
-                customerWorkspaceId.Value,
-                customerWorkspaceLocation.Value,
-                publicNetworkAccess.Value,
+                provisioningState,
+                createdTimestamp,
+                updatedTimestamp,
+                serviceEndpoint,
+                assessmentSolutionId,
+                projectStatus,
+                customerWorkspaceId,
+                customerWorkspaceLocation,
+                publicNetworkAccess,
                 privateEndpointConnections ?? new ChangeTrackingList<MigratePrivateEndpointConnectionData>(),
-                customerStorageAccountArmId.Value,
+                customerStorageAccountArmId,
                 serializedAdditionalRawData);
         }
 

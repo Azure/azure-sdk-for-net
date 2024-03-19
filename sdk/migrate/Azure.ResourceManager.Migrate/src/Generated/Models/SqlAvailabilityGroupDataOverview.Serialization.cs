@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (AvailabilityGroupId != null)
+            if (Optional.IsDefined(AvailabilityGroupId))
             {
                 writer.WritePropertyName("availabilityGroupId"u8);
                 writer.WriteStringValue(AvailabilityGroupId);
             }
-            if (AvailabilityGroupName != null)
+            if (Optional.IsDefined(AvailabilityGroupName))
             {
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (SqlAvailabilityGroupSdsArmId != null)
+            if (Optional.IsDefined(SqlAvailabilityGroupSdsArmId))
             {
                 writer.WritePropertyName("sqlAvailabilityGroupSdsArmId"u8);
                 writer.WriteStringValue(SqlAvailabilityGroupSdsArmId);
             }
-            if (SqlAvailabilityGroupEntityId != null)
+            if (Optional.IsDefined(SqlAvailabilityGroupEntityId))
             {
                 writer.WritePropertyName("sqlAvailabilityGroupEntityId"u8);
                 writer.WriteStringValue(SqlAvailabilityGroupEntityId);
             }
-            if (SqlAvailabilityReplicaId != null)
+            if (Optional.IsDefined(SqlAvailabilityReplicaId))
             {
                 writer.WritePropertyName("sqlAvailabilityReplicaId"u8);
                 writer.WriteStringValue(SqlAvailabilityReplicaId);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> availabilityGroupId = default;
-            Optional<string> availabilityGroupName = default;
-            Optional<ResourceIdentifier> sqlAvailabilityGroupSdsArmId = default;
-            Optional<string> sqlAvailabilityGroupEntityId = default;
-            Optional<string> sqlAvailabilityReplicaId = default;
+            string availabilityGroupId = default;
+            string availabilityGroupName = default;
+            ResourceIdentifier sqlAvailabilityGroupSdsArmId = default;
+            string sqlAvailabilityGroupEntityId = default;
+            string sqlAvailabilityReplicaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlAvailabilityGroupDataOverview(
-                availabilityGroupId.Value,
-                availabilityGroupName.Value,
-                sqlAvailabilityGroupSdsArmId.Value,
-                sqlAvailabilityGroupEntityId.Value,
-                sqlAvailabilityReplicaId.Value,
+                availabilityGroupId,
+                availabilityGroupName,
+                sqlAvailabilityGroupSdsArmId,
+                sqlAvailabilityGroupEntityId,
+                sqlAvailabilityReplicaId,
                 serializedAdditionalRawData);
         }
 

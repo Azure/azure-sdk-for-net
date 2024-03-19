@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (LastHeartbeatOn.HasValue)
+            if (Optional.IsDefined(LastHeartbeatOn))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (SpnDetails != null)
+            if (Optional.IsDefined(SpnDetails))
             {
                 writer.WritePropertyName("spnDetails"u8);
                 writer.WriteObjectValue(SpnDetails);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<CollectorAgentSpnPropertiesBase> spnDetails = default;
+            string id = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            CollectorAgentSpnPropertiesBase spnDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorAgentPropertiesBase(id.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), spnDetails.Value, serializedAdditionalRawData);
+            return new CollectorAgentPropertiesBase(id, version, lastHeartbeatUtc, spnDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorAgentPropertiesBase>.Write(ModelReaderWriterOptions options)

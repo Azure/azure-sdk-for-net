@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (AzureSqlServiceTier.HasValue)
+            if (Optional.IsDefined(AzureSqlServiceTier))
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (AzureSqlInstanceType.HasValue)
+            if (Optional.IsDefined(AzureSqlInstanceType))
             {
                 writer.WritePropertyName("azureSqlInstanceType"u8);
                 writer.WriteStringValue(AzureSqlInstanceType.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureSqlServiceTier> azureSqlServiceTier = default;
-            Optional<AzureSqlInstanceType> azureSqlInstanceType = default;
+            AzureSqlServiceTier? azureSqlServiceTier = default;
+            AzureSqlInstanceType? azureSqlInstanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMISettings(Optional.ToNullable(azureSqlServiceTier), Optional.ToNullable(azureSqlInstanceType), serializedAdditionalRawData);
+            return new SqlMISettings(azureSqlServiceTier, azureSqlInstanceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMISettings>.Write(ModelReaderWriterOptions options)

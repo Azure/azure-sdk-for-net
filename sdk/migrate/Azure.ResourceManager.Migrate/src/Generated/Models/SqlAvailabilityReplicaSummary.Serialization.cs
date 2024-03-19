@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (NumberOfSynchronousReadReplicas.HasValue)
+            if (Optional.IsDefined(NumberOfSynchronousReadReplicas))
             {
                 writer.WritePropertyName("numberOfSynchronousReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfSynchronousReadReplicas.Value);
             }
-            if (NumberOfSynchronousNonReadReplicas.HasValue)
+            if (Optional.IsDefined(NumberOfSynchronousNonReadReplicas))
             {
                 writer.WritePropertyName("numberOfSynchronousNonReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfSynchronousNonReadReplicas.Value);
             }
-            if (NumberOfAsynchronousReadReplicas.HasValue)
+            if (Optional.IsDefined(NumberOfAsynchronousReadReplicas))
             {
                 writer.WritePropertyName("numberOfAsynchronousReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfAsynchronousReadReplicas.Value);
             }
-            if (NumberOfAsynchronousNonReadReplicas.HasValue)
+            if (Optional.IsDefined(NumberOfAsynchronousNonReadReplicas))
             {
                 writer.WritePropertyName("numberOfAsynchronousNonReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfAsynchronousNonReadReplicas.Value);
             }
-            if (NumberOfPrimaryReplicas.HasValue)
+            if (Optional.IsDefined(NumberOfPrimaryReplicas))
             {
                 writer.WritePropertyName("numberOfPrimaryReplicas"u8);
                 writer.WriteNumberValue(NumberOfPrimaryReplicas.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<int> numberOfSynchronousReadReplicas = default;
-            Optional<int> numberOfSynchronousNonReadReplicas = default;
-            Optional<int> numberOfAsynchronousReadReplicas = default;
-            Optional<int> numberOfAsynchronousNonReadReplicas = default;
-            Optional<int> numberOfPrimaryReplicas = default;
+            int? numberOfSynchronousReadReplicas = default;
+            int? numberOfSynchronousNonReadReplicas = default;
+            int? numberOfAsynchronousReadReplicas = default;
+            int? numberOfAsynchronousNonReadReplicas = default;
+            int? numberOfPrimaryReplicas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlAvailabilityReplicaSummary(
-                Optional.ToNullable(numberOfSynchronousReadReplicas),
-                Optional.ToNullable(numberOfSynchronousNonReadReplicas),
-                Optional.ToNullable(numberOfAsynchronousReadReplicas),
-                Optional.ToNullable(numberOfAsynchronousNonReadReplicas),
-                Optional.ToNullable(numberOfPrimaryReplicas),
+                numberOfSynchronousReadReplicas,
+                numberOfSynchronousNonReadReplicas,
+                numberOfAsynchronousReadReplicas,
+                numberOfAsynchronousNonReadReplicas,
+                numberOfPrimaryReplicas,
                 serializedAdditionalRawData);
         }
 

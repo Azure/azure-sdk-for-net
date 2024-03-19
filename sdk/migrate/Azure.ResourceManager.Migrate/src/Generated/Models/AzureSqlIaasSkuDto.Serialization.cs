@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualMachineSize != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteObjectValue(VirtualMachineSize);
             }
-            if (options.Format != "W" && !(DataDiskSizes is ChangeTrackingList<AzureManagedDiskSkuDto> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataDiskSizes))
             {
                 writer.WritePropertyName("dataDiskSizes"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LogDiskSizes is ChangeTrackingList<AzureManagedDiskSkuDto> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LogDiskSizes))
             {
                 writer.WritePropertyName("logDiskSizes"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AzureSqlTargetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlTargetType))
             {
                 writer.WritePropertyName("azureSqlTargetType"u8);
                 writer.WriteStringValue(AzureSqlTargetType.Value.ToString());
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureVmSkuDto> virtualMachineSize = default;
+            AzureVmSkuDto virtualMachineSize = default;
             IReadOnlyList<AzureManagedDiskSkuDto> dataDiskSizes = default;
             IReadOnlyList<AzureManagedDiskSkuDto> logDiskSizes = default;
-            Optional<MigrateTargetType> azureSqlTargetType = default;
+            MigrateTargetType? azureSqlTargetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureSqlIaasSkuDto(virtualMachineSize.Value, dataDiskSizes ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(), logDiskSizes ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(), Optional.ToNullable(azureSqlTargetType), serializedAdditionalRawData);
+            return new AzureSqlIaasSkuDto(virtualMachineSize, dataDiskSizes ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(), logDiskSizes ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(), azureSqlTargetType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureSqlIaasSkuDto>.Write(ModelReaderWriterOptions options)

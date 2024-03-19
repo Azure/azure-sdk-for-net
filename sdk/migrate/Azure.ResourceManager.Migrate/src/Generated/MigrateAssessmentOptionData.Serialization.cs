@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(VmFamilies is ChangeTrackingList<VmFamilyConfig> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmFamilies))
             {
                 writer.WritePropertyName("vmFamilies"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReservedInstanceVmFamilies is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReservedInstanceVmFamilies))
             {
                 writer.WritePropertyName("reservedInstanceVmFamilies"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReservedInstanceSupportedLocations is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReservedInstanceSupportedLocations))
             {
                 writer.WritePropertyName("reservedInstanceSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReservedInstanceSupportedCurrencies is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReservedInstanceSupportedCurrencies))
             {
                 writer.WritePropertyName("reservedInstanceSupportedCurrencies"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReservedInstanceSupportedOffers is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReservedInstanceSupportedOffers))
             {
                 writer.WritePropertyName("reservedInstanceSupportedOffers"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(UltraDiskVmFamilies is ChangeTrackingList<UltraDiskAssessmentConfig> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UltraDiskVmFamilies))
             {
                 writer.WritePropertyName("ultraDiskVmFamilies"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PremiumDiskVmFamilies is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PremiumDiskVmFamilies))
             {
                 writer.WritePropertyName("premiumDiskVmFamilies"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SavingsPlanVmFamilies is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SavingsPlanVmFamilies))
             {
                 writer.WritePropertyName("savingsPlanVmFamilies"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SavingsPlanSupportedLocations is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SavingsPlanSupportedLocations))
             {
                 writer.WritePropertyName("savingsPlanSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<VmFamilyConfig> vmFamilies = default;
             IReadOnlyList<string> reservedInstanceVmFamilies = default;
             IReadOnlyList<string> reservedInstanceSupportedLocations = default;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 vmFamilies ?? new ChangeTrackingList<VmFamilyConfig>(),
                 reservedInstanceVmFamilies ?? new ChangeTrackingList<string>(),
                 reservedInstanceSupportedLocations ?? new ChangeTrackingList<string>(),

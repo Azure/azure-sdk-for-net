@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (ReasoningId != null)
+            if (Optional.IsDefined(ReasoningId))
             {
                 writer.WritePropertyName("reasoningId"u8);
                 writer.WriteStringValue(ReasoningId);
             }
-            if (ReasoningString != null)
+            if (Optional.IsDefined(ReasoningString))
             {
                 writer.WritePropertyName("reasoningString"u8);
                 writer.WriteStringValue(ReasoningString);
             }
-            if (ReasoningCategory != null)
+            if (Optional.IsDefined(ReasoningCategory))
             {
                 writer.WritePropertyName("reasoningCategory"u8);
                 writer.WriteStringValue(ReasoningCategory);
             }
-            if (options.Format != "W" && !(ContextParameters is ChangeTrackingList<SqlRecommendationReasoningContext> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ContextParameters))
             {
                 writer.WritePropertyName("contextParameters"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> reasoningId = default;
-            Optional<string> reasoningString = default;
-            Optional<string> reasoningCategory = default;
+            string reasoningId = default;
+            string reasoningString = default;
+            string reasoningCategory = default;
             IReadOnlyList<SqlRecommendationReasoningContext> contextParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlRecommendationReasoning(reasoningId.Value, reasoningString.Value, reasoningCategory.Value, contextParameters ?? new ChangeTrackingList<SqlRecommendationReasoningContext>(), serializedAdditionalRawData);
+            return new SqlRecommendationReasoning(reasoningId, reasoningString, reasoningCategory, contextParameters ?? new ChangeTrackingList<SqlRecommendationReasoningContext>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlRecommendationReasoning>.Write(ModelReaderWriterOptions options)

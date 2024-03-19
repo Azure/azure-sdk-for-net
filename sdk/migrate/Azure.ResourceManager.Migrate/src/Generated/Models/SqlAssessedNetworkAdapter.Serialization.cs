@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Suitability.HasValue)
+            if (Optional.IsDefined(Suitability))
             {
                 writer.WritePropertyName("suitability"u8);
                 writer.WriteStringValue(Suitability.Value.ToString());
             }
-            if (SuitabilityDetail.HasValue)
+            if (Optional.IsDefined(SuitabilityDetail))
             {
                 writer.WritePropertyName("suitabilityDetail"u8);
                 writer.WriteStringValue(SuitabilityDetail.Value.ToString());
             }
-            if (SuitabilityExplanation.HasValue)
+            if (Optional.IsDefined(SuitabilityExplanation))
             {
                 writer.WritePropertyName("suitabilityExplanation"u8);
                 writer.WriteStringValue(SuitabilityExplanation.Value.ToString());
             }
-            if (MonthlyBandwidthCosts.HasValue)
+            if (Optional.IsDefined(MonthlyBandwidthCosts))
             {
                 writer.WritePropertyName("monthlyBandwidthCosts"u8);
                 writer.WriteNumberValue(MonthlyBandwidthCosts.Value);
             }
-            if (NetGigabytesTransmittedPerMonth.HasValue)
+            if (Optional.IsDefined(NetGigabytesTransmittedPerMonth))
             {
                 writer.WritePropertyName("netGigabytesTransmittedPerMonth"u8);
                 writer.WriteNumberValue(NetGigabytesTransmittedPerMonth.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (MacAddress != null)
+            if (Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MegabytesPerSecondReceived.HasValue)
+            if (Optional.IsDefined(MegabytesPerSecondReceived))
             {
                 writer.WritePropertyName("megabytesPerSecondReceived"u8);
                 writer.WriteNumberValue(MegabytesPerSecondReceived.Value);
             }
-            if (MegabytesPerSecondTransmitted.HasValue)
+            if (Optional.IsDefined(MegabytesPerSecondTransmitted))
             {
                 writer.WritePropertyName("megabytesPerSecondTransmitted"u8);
                 writer.WriteNumberValue(MegabytesPerSecondTransmitted.Value);
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<MigrateCloudSuitability> suitability = default;
-            Optional<AzureNetworkAdapterSuitabilityDetail> suitabilityDetail = default;
-            Optional<AzureNetworkAdapterSuitabilityExplanation> suitabilityExplanation = default;
-            Optional<double> monthlyBandwidthCosts = default;
-            Optional<double> netGigabytesTransmittedPerMonth = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> macAddress = default;
+            MigrateCloudSuitability? suitability = default;
+            AzureNetworkAdapterSuitabilityDetail? suitabilityDetail = default;
+            AzureNetworkAdapterSuitabilityExplanation? suitabilityExplanation = default;
+            double? monthlyBandwidthCosts = default;
+            double? netGigabytesTransmittedPerMonth = default;
+            string name = default;
+            string displayName = default;
+            string macAddress = default;
             IReadOnlyList<string> ipAddresses = default;
-            Optional<double> megabytesPerSecondReceived = default;
-            Optional<double> megabytesPerSecondTransmitted = default;
+            double? megabytesPerSecondReceived = default;
+            double? megabytesPerSecondTransmitted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,17 +239,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlAssessedNetworkAdapter(
-                Optional.ToNullable(suitability),
-                Optional.ToNullable(suitabilityDetail),
-                Optional.ToNullable(suitabilityExplanation),
-                Optional.ToNullable(monthlyBandwidthCosts),
-                Optional.ToNullable(netGigabytesTransmittedPerMonth),
-                name.Value,
-                displayName.Value,
-                macAddress.Value,
+                suitability,
+                suitabilityDetail,
+                suitabilityExplanation,
+                monthlyBandwidthCosts,
+                netGigabytesTransmittedPerMonth,
+                name,
+                displayName,
+                macAddress,
                 ipAddresses ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(megabytesPerSecondReceived),
-                Optional.ToNullable(megabytesPerSecondTransmitted),
+                megabytesPerSecondReceived,
+                megabytesPerSecondTransmitted,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (ComputeTier.HasValue)
+            if (Optional.IsDefined(ComputeTier))
             {
                 writer.WritePropertyName("computeTier"u8);
                 writer.WriteStringValue(ComputeTier.Value.ToString());
             }
-            if (HardwareGeneration.HasValue)
+            if (Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration.Value.ToString());
             }
-            if (TargetType.HasValue)
+            if (Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (ServiceTier.HasValue)
+            if (Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (!(TargetLocations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetLocations))
             {
                 writer.WritePropertyName("targetLocations"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<MigrateComputeTier> computeTier = default;
-            Optional<MigrateHardwareGeneration> hardwareGeneration = default;
-            Optional<MigrateTargetType> targetType = default;
-            Optional<AzureSqlServiceTier> serviceTier = default;
+            MigrateComputeTier? computeTier = default;
+            MigrateHardwareGeneration? hardwareGeneration = default;
+            MigrateTargetType? targetType = default;
+            AzureSqlServiceTier? serviceTier = default;
             IList<AzureLocation> targetLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,10 +161,10 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlPaaSTargetConfig(
-                Optional.ToNullable(computeTier),
-                Optional.ToNullable(hardwareGeneration),
-                Optional.ToNullable(targetType),
-                Optional.ToNullable(serviceTier),
+                computeTier,
+                hardwareGeneration,
+                targetType,
+                serviceTier,
                 targetLocations ?? new ChangeTrackingList<AzureLocation>(),
                 serializedAdditionalRawData);
         }

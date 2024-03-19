@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<MigrateError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Disks is ChangeTrackingDictionary<string, AvsAssessedDisk> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(NetworkAdapters is ChangeTrackingDictionary<string, AvsAssessedNetworkAdapter> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAdapters))
             {
                 writer.WritePropertyName("networkAdapters"u8);
                 writer.WriteStartObject();
@@ -82,112 +82,112 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && StorageInUseGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageInUseGB))
             {
                 writer.WritePropertyName("storageInUseGB"u8);
                 writer.WriteNumberValue(StorageInUseGB.Value);
             }
-            if (options.Format != "W" && SuitabilityExplanation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuitabilityExplanation))
             {
                 writer.WritePropertyName("suitabilityExplanation"u8);
                 writer.WriteStringValue(SuitabilityExplanation.Value.ToString());
             }
-            if (options.Format != "W" && SuitabilityDetail.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuitabilityDetail))
             {
                 writer.WritePropertyName("suitabilityDetail"u8);
                 writer.WriteStringValue(SuitabilityDetail.Value.ToString());
             }
-            if (options.Format != "W" && TypePropertiesType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (options.Format != "W" && BootType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BootType))
             {
                 writer.WritePropertyName("bootType"u8);
                 writer.WriteStringValue(BootType.Value.ToString());
             }
-            if (options.Format != "W" && OperatingSystemType != null)
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystemType))
             {
                 writer.WritePropertyName("operatingSystemType"u8);
                 writer.WriteStringValue(OperatingSystemType);
             }
-            if (options.Format != "W" && OperatingSystemName != null)
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystemName))
             {
                 writer.WritePropertyName("operatingSystemName"u8);
                 writer.WriteStringValue(OperatingSystemName);
             }
-            if (options.Format != "W" && OperatingSystemVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystemVersion))
             {
                 writer.WritePropertyName("operatingSystemVersion"u8);
                 writer.WriteStringValue(OperatingSystemVersion);
             }
-            if (options.Format != "W" && OperatingSystemArchitecture.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperatingSystemArchitecture))
             {
                 writer.WritePropertyName("operatingSystemArchitecture"u8);
                 writer.WriteStringValue(OperatingSystemArchitecture.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && DatacenterMachineArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(DatacenterMachineArmId))
             {
                 writer.WritePropertyName("datacenterMachineArmId"u8);
                 writer.WriteStringValue(DatacenterMachineArmId);
             }
-            if (options.Format != "W" && DatacenterManagementServerArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(DatacenterManagementServerArmId))
             {
                 writer.WritePropertyName("datacenterManagementServerArmId"u8);
                 writer.WriteStringValue(DatacenterManagementServerArmId);
             }
-            if (options.Format != "W" && DatacenterManagementServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatacenterManagementServerName))
             {
                 writer.WritePropertyName("datacenterManagementServerName"u8);
                 writer.WriteStringValue(DatacenterManagementServerName);
             }
-            if (options.Format != "W" && MegabytesOfMemory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MegabytesOfMemory))
             {
                 writer.WritePropertyName("megabytesOfMemory"u8);
                 writer.WriteNumberValue(MegabytesOfMemory.Value);
             }
-            if (options.Format != "W" && NumberOfCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (options.Format != "W" && ConfidenceRatingInPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceRatingInPercentage))
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && PercentageCoresUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentageCoresUtilization))
             {
                 writer.WritePropertyName("percentageCoresUtilization"u8);
                 writer.WriteNumberValue(PercentageCoresUtilization.Value);
             }
-            if (options.Format != "W" && PercentageMemoryUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentageMemoryUtilization))
             {
                 writer.WritePropertyName("percentageMemoryUtilization"u8);
                 writer.WriteNumberValue(PercentageMemoryUtilization.Value);
             }
-            if (options.Format != "W" && Suitability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Suitability))
             {
                 writer.WritePropertyName("suitability"u8);
                 writer.WriteStringValue(Suitability.Value.ToString());
@@ -234,32 +234,32 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<MigrateError> errors = default;
             IReadOnlyDictionary<string, AvsAssessedDisk> disks = default;
             IReadOnlyDictionary<string, AvsAssessedNetworkAdapter> networkAdapters = default;
-            Optional<double> storageInUseGB = default;
-            Optional<AvsVmSuitabilityExplanation> suitabilityExplanation = default;
-            Optional<AvsVmSuitabilityDetail> suitabilityDetail = default;
-            Optional<AssessedMachineType> type0 = default;
-            Optional<MachineBootType> bootType = default;
-            Optional<string> operatingSystemType = default;
-            Optional<string> operatingSystemName = default;
-            Optional<string> operatingSystemVersion = default;
-            Optional<GuestOperatingSystemArchitecture> operatingSystemArchitecture = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<ResourceIdentifier> datacenterMachineArmId = default;
-            Optional<ResourceIdentifier> datacenterManagementServerArmId = default;
-            Optional<string> datacenterManagementServerName = default;
-            Optional<double> megabytesOfMemory = default;
-            Optional<int> numberOfCores = default;
-            Optional<double> confidenceRatingInPercentage = default;
-            Optional<double> percentageCoresUtilization = default;
-            Optional<double> percentageMemoryUtilization = default;
-            Optional<MigrateCloudSuitability> suitability = default;
+            double? storageInUseGB = default;
+            AvsVmSuitabilityExplanation? suitabilityExplanation = default;
+            AvsVmSuitabilityDetail? suitabilityDetail = default;
+            AssessedMachineType? type0 = default;
+            MachineBootType? bootType = default;
+            string operatingSystemType = default;
+            string operatingSystemName = default;
+            string operatingSystemVersion = default;
+            GuestOperatingSystemArchitecture? operatingSystemArchitecture = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            string displayName = default;
+            string description = default;
+            ResourceIdentifier datacenterMachineArmId = default;
+            ResourceIdentifier datacenterManagementServerArmId = default;
+            string datacenterManagementServerName = default;
+            double? megabytesOfMemory = default;
+            int? numberOfCores = default;
+            double? confidenceRatingInPercentage = default;
+            double? percentageCoresUtilization = default;
+            double? percentageMemoryUtilization = default;
+            MigrateCloudSuitability? suitability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -526,32 +526,32 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 errors ?? new ChangeTrackingList<MigrateError>(),
                 disks ?? new ChangeTrackingDictionary<string, AvsAssessedDisk>(),
                 networkAdapters ?? new ChangeTrackingDictionary<string, AvsAssessedNetworkAdapter>(),
-                Optional.ToNullable(storageInUseGB),
-                Optional.ToNullable(suitabilityExplanation),
-                Optional.ToNullable(suitabilityDetail),
-                Optional.ToNullable(type0),
-                Optional.ToNullable(bootType),
-                operatingSystemType.Value,
-                operatingSystemName.Value,
-                operatingSystemVersion.Value,
-                Optional.ToNullable(operatingSystemArchitecture),
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
-                displayName.Value,
-                description.Value,
-                datacenterMachineArmId.Value,
-                datacenterManagementServerArmId.Value,
-                datacenterManagementServerName.Value,
-                Optional.ToNullable(megabytesOfMemory),
-                Optional.ToNullable(numberOfCores),
-                Optional.ToNullable(confidenceRatingInPercentage),
-                Optional.ToNullable(percentageCoresUtilization),
-                Optional.ToNullable(percentageMemoryUtilization),
-                Optional.ToNullable(suitability),
+                storageInUseGB,
+                suitabilityExplanation,
+                suitabilityDetail,
+                type0,
+                bootType,
+                operatingSystemType,
+                operatingSystemName,
+                operatingSystemVersion,
+                operatingSystemArchitecture,
+                createdTimestamp,
+                updatedTimestamp,
+                displayName,
+                description,
+                datacenterMachineArmId,
+                datacenterManagementServerArmId,
+                datacenterManagementServerName,
+                megabytesOfMemory,
+                numberOfCores,
+                confidenceRatingInPercentage,
+                percentageCoresUtilization,
+                percentageMemoryUtilization,
+                suitability,
                 serializedAdditionalRawData);
         }
 

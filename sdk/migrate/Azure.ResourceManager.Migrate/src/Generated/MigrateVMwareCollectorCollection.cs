@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateVMwareCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmWareCollectorName, MigrateVMwareCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateVMwareCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string vmWareCollectorName, MigrateVMwareCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual async Task<Response<MigrateVMwareCollectorResource>> GetAsync(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual Response<MigrateVMwareCollectorResource> Get(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateVMwareCollectorResource>> GetIfExistsAsync(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="vmWareCollectorName"/> is null. </exception>
         public virtual NullableResponse<MigrateVMwareCollectorResource> GetIfExists(string vmWareCollectorName, CancellationToken cancellationToken = default)
         {
-            if (vmWareCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(vmWareCollectorName));
-            }
-            if (vmWareCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmWareCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(vmWareCollectorName, nameof(vmWareCollectorName));
 
             using var scope = _migrateVMwareCollectorVMwareCollectorsOperationsClientDiagnostics.CreateScope("MigrateVMwareCollectorCollection.GetIfExists");
             scope.Start();

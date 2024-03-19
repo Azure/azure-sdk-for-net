@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateImportCollectorResource>> UpdateAsync(WaitUntil waitUntil, MigrateImportCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateImportCollectorResource> Update(WaitUntil waitUntil, MigrateImportCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorResource.Update");
             scope.Start();

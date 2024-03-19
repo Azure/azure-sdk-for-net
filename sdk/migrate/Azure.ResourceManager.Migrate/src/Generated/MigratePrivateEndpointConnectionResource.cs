@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigratePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, MigratePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migratePrivateEndpointConnectionPrivateEndpointConnectionOperationsClientDiagnostics.CreateScope("MigratePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigratePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, MigratePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migratePrivateEndpointConnectionPrivateEndpointConnectionOperationsClientDiagnostics.CreateScope("MigratePrivateEndpointConnectionResource.Update");
             scope.Start();

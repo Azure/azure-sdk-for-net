@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -41,17 +42,17 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && MegabytesPerSecondReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondReceived))
             {
                 writer.WritePropertyName("megabytesPerSecondReceived"u8);
                 writer.WriteNumberValue(MegabytesPerSecondReceived.Value);
             }
-            if (options.Format != "W" && MegabytesPerSecondTransmitted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondTransmitted))
             {
                 writer.WritePropertyName("megabytesPerSecondTransmitted"u8);
                 writer.WriteNumberValue(MegabytesPerSecondTransmitted.Value);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> macAddress = default;
+            string macAddress = default;
             IReadOnlyList<string> ipAddresses = default;
-            Optional<string> displayName = default;
-            Optional<double> megabytesPerSecondReceived = default;
-            Optional<double> megabytesPerSecondTransmitted = default;
+            string displayName = default;
+            double? megabytesPerSecondReceived = default;
+            double? megabytesPerSecondTransmitted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvsAssessedNetworkAdapter(
-                macAddress.Value,
+                macAddress,
                 ipAddresses ?? new ChangeTrackingList<string>(),
-                displayName.Value,
-                Optional.ToNullable(megabytesPerSecondReceived),
-                Optional.ToNullable(megabytesPerSecondTransmitted),
+                displayName,
+                megabytesPerSecondReceived,
+                megabytesPerSecondTransmitted,
                 serializedAdditionalRawData);
         }
 

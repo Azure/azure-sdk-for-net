@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureVmFamily.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureVmFamily))
             {
                 writer.WritePropertyName("azureVmFamily"u8);
                 writer.WriteStringValue(AzureVmFamily.Value.ToString());
             }
-            if (options.Format != "W" && Cores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (options.Format != "W" && AzureSkuName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureSkuName))
             {
                 writer.WritePropertyName("azureSkuName"u8);
                 writer.WriteStringValue(AzureSkuName.Value.ToString());
             }
-            if (options.Format != "W" && AvailableCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailableCores))
             {
                 writer.WritePropertyName("availableCores"u8);
                 writer.WriteNumberValue(AvailableCores.Value);
             }
-            if (options.Format != "W" && MaxNetworkInterfaces.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNetworkInterfaces))
             {
                 writer.WritePropertyName("maxNetworkInterfaces"u8);
                 writer.WriteNumberValue(MaxNetworkInterfaces.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureVmFamily> azureVmFamily = default;
-            Optional<int> cores = default;
-            Optional<AzureVmSize> azureSkuName = default;
-            Optional<int> availableCores = default;
-            Optional<int> maxNetworkInterfaces = default;
+            AzureVmFamily? azureVmFamily = default;
+            int? cores = default;
+            AzureVmSize? azureSkuName = default;
+            int? availableCores = default;
+            int? maxNetworkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureVmSkuDto(
-                Optional.ToNullable(azureVmFamily),
-                Optional.ToNullable(cores),
-                Optional.ToNullable(azureSkuName),
-                Optional.ToNullable(availableCores),
-                Optional.ToNullable(maxNetworkInterfaces),
+                azureVmFamily,
+                cores,
+                azureSkuName,
+                availableCores,
+                maxNetworkInterfaces,
                 serializedAdditionalRawData);
         }
 

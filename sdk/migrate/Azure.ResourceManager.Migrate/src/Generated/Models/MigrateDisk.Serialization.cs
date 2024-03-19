@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GigabytesAllocated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(GigabytesAllocated))
             {
                 writer.WritePropertyName("gigabytesAllocated"u8);
                 writer.WriteNumberValue(GigabytesAllocated.Value);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<double> gigabytesAllocated = default;
-            Optional<string> displayName = default;
+            double? gigabytesAllocated = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateDisk(Optional.ToNullable(gigabytesAllocated), displayName.Value, serializedAdditionalRawData);
+            return new MigrateDisk(gigabytesAllocated, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateDisk>.Write(ModelReaderWriterOptions options)

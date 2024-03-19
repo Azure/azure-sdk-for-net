@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureSqlSku != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlSku))
             {
                 writer.WritePropertyName("azureSqlSku"u8);
                 writer.WriteObjectValue(AzureSqlSku);
             }
-            if (options.Format != "W" && !(ReplicaAzureSqlSku is ChangeTrackingList<AzureSqlIaasSkuDto> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReplicaAzureSqlSku))
             {
                 writer.WritePropertyName("replicaAzureSqlSku"u8);
                 writer.WriteStartArray();
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SharedResources != null)
+            if (options.Format != "W" && Optional.IsDefined(SharedResources))
             {
                 writer.WritePropertyName("sharedResources"u8);
                 writer.WriteObjectValue(SharedResources);
             }
-            if (options.Format != "W" && MonthlyComputeCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlyComputeCost))
             {
                 writer.WritePropertyName("monthlyComputeCost"u8);
                 writer.WriteNumberValue(MonthlyComputeCost.Value);
             }
-            if (options.Format != "W" && MonthlyStorageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonthlyStorageCost))
             {
                 writer.WritePropertyName("monthlyStorageCost"u8);
                 writer.WriteNumberValue(MonthlyStorageCost.Value);
             }
-            if (!(CostComponents is ChangeTrackingList<CostComponent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CostComponents))
             {
                 writer.WritePropertyName("costComponents"u8);
                 writer.WriteStartArray();
@@ -66,22 +67,22 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SecuritySuitability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SecuritySuitability))
             {
                 writer.WritePropertyName("securitySuitability"u8);
                 writer.WriteStringValue(SecuritySuitability.Value.ToString());
             }
-            if (options.Format != "W" && ShouldProvisionReplicas.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShouldProvisionReplicas))
             {
                 writer.WritePropertyName("shouldProvisionReplicas"u8);
                 writer.WriteBooleanValue(ShouldProvisionReplicas.Value);
             }
-            if (options.Format != "W" && SkuReplicationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkuReplicationMode))
             {
                 writer.WritePropertyName("skuReplicationMode"u8);
                 writer.WriteStringValue(SkuReplicationMode.Value.ToString());
             }
-            if (options.Format != "W" && !(MigrationGuidelines is ChangeTrackingList<SqlMigrationGuideline> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MigrationGuidelines))
             {
                 writer.WritePropertyName("migrationGuidelines"u8);
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RecommendationReasonings is ChangeTrackingList<SqlRecommendationReasoning> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendationReasonings))
             {
                 writer.WritePropertyName("recommendationReasonings"u8);
                 writer.WriteStartArray();
@@ -101,17 +102,17 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && MigrationTargetPlatform.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationTargetPlatform))
             {
                 writer.WritePropertyName("migrationTargetPlatform"u8);
                 writer.WriteStringValue(MigrationTargetPlatform.Value.ToString());
             }
-            if (options.Format != "W" && Suitability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Suitability))
             {
                 writer.WritePropertyName("suitability"u8);
                 writer.WriteStringValue(Suitability.Value.ToString());
             }
-            if (options.Format != "W" && !(MigrationIssues is ChangeTrackingList<SqlAssessmentMigrationIssue> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MigrationIssues))
             {
                 writer.WritePropertyName("migrationIssues"u8);
                 writer.WriteStartArray();
@@ -159,19 +160,19 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureSqlIaasSkuDto> azureSqlSku = default;
+            AzureSqlIaasSkuDto azureSqlSku = default;
             IReadOnlyList<AzureSqlIaasSkuDto> replicaAzureSqlSku = default;
-            Optional<SharedResourcesDto> sharedResources = default;
-            Optional<double> monthlyComputeCost = default;
-            Optional<double> monthlyStorageCost = default;
+            SharedResourcesDto sharedResources = default;
+            double? monthlyComputeCost = default;
+            double? monthlyStorageCost = default;
             IReadOnlyList<CostComponent> costComponents = default;
-            Optional<MigrateCloudSuitability> securitySuitability = default;
-            Optional<bool> shouldProvisionReplicas = default;
-            Optional<SkuReplicationMode> skuReplicationMode = default;
+            MigrateCloudSuitability? securitySuitability = default;
+            bool? shouldProvisionReplicas = default;
+            SkuReplicationMode? skuReplicationMode = default;
             IReadOnlyList<SqlMigrationGuideline> migrationGuidelines = default;
             IReadOnlyList<SqlRecommendationReasoning> recommendationReasonings = default;
-            Optional<MigrateTargetType> migrationTargetPlatform = default;
-            Optional<MigrateCloudSuitability> suitability = default;
+            MigrateTargetType? migrationTargetPlatform = default;
+            MigrateCloudSuitability? suitability = default;
             IReadOnlyList<SqlAssessmentMigrationIssue> migrationIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -335,19 +336,19 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlAssessmentV2IaasSuitabilityDetails(
-                azureSqlSku.Value,
+                azureSqlSku,
                 replicaAzureSqlSku ?? new ChangeTrackingList<AzureSqlIaasSkuDto>(),
-                sharedResources.Value,
-                Optional.ToNullable(monthlyComputeCost),
-                Optional.ToNullable(monthlyStorageCost),
+                sharedResources,
+                monthlyComputeCost,
+                monthlyStorageCost,
                 costComponents ?? new ChangeTrackingList<CostComponent>(),
-                Optional.ToNullable(securitySuitability),
-                Optional.ToNullable(shouldProvisionReplicas),
-                Optional.ToNullable(skuReplicationMode),
+                securitySuitability,
+                shouldProvisionReplicas,
+                skuReplicationMode,
                 migrationGuidelines ?? new ChangeTrackingList<SqlMigrationGuideline>(),
                 recommendationReasonings ?? new ChangeTrackingList<SqlRecommendationReasoning>(),
-                Optional.ToNullable(migrationTargetPlatform),
-                Optional.ToNullable(suitability),
+                migrationTargetPlatform,
+                suitability,
                 migrationIssues ?? new ChangeTrackingList<SqlAssessmentMigrationIssue>(),
                 serializedAdditionalRawData);
         }

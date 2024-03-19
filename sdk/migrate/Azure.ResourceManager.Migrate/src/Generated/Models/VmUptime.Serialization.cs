@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (DaysPerMonth.HasValue)
+            if (Optional.IsDefined(DaysPerMonth))
             {
                 writer.WritePropertyName("daysPerMonth"u8);
                 writer.WriteNumberValue(DaysPerMonth.Value);
             }
-            if (HoursPerDay.HasValue)
+            if (Optional.IsDefined(HoursPerDay))
             {
                 writer.WritePropertyName("hoursPerDay"u8);
                 writer.WriteNumberValue(HoursPerDay.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<int> daysPerMonth = default;
-            Optional<int> hoursPerDay = default;
+            int? daysPerMonth = default;
+            int? hoursPerDay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmUptime(Optional.ToNullable(daysPerMonth), Optional.ToNullable(hoursPerDay), serializedAdditionalRawData);
+            return new VmUptime(daysPerMonth, hoursPerDay, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmUptime>.Write(ModelReaderWriterOptions options)

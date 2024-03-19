@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && QuorumWitnessType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuorumWitnessType))
             {
                 writer.WritePropertyName("quorumWitnessType"u8);
                 writer.WriteStringValue(QuorumWitnessType.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureQuorumWitnessDtoQuorumWitnessType> quorumWitnessType = default;
+            AzureQuorumWitnessDtoQuorumWitnessType? quorumWitnessType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureQuorumWitnessDto(Optional.ToNullable(quorumWitnessType), serializedAdditionalRawData);
+            return new AzureQuorumWitnessDto(quorumWitnessType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureQuorumWitnessDto>.Write(ModelReaderWriterOptions options)

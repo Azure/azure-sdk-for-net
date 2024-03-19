@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AvsNodes is ChangeTrackingList<AvsSkuConfig> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvsNodes))
             {
                 writer.WritePropertyName("avsNodes"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailuresToTolerateAndRaidLevelValues is ChangeTrackingList<FttAndRaidLevel> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailuresToTolerateAndRaidLevelValues))
             {
                 writer.WritePropertyName("failuresToTolerateAndRaidLevelValues"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservedInstanceAvsNodes is ChangeTrackingList<AvsNodeType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservedInstanceAvsNodes))
             {
                 writer.WritePropertyName("reservedInstanceAvsNodes"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservedInstanceSupportedLocations is ChangeTrackingList<AzureLocation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservedInstanceSupportedLocations))
             {
                 writer.WritePropertyName("reservedInstanceSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservedInstanceSupportedCurrencies is ChangeTrackingList<AzureCurrency> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservedInstanceSupportedCurrencies))
             {
                 writer.WritePropertyName("reservedInstanceSupportedCurrencies"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservedInstanceSupportedOffers is ChangeTrackingList<AzureOfferCode> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservedInstanceSupportedOffers))
             {
                 writer.WritePropertyName("reservedInstanceSupportedOffers"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<AvsSkuConfig> avsNodes = default;
             IList<FttAndRaidLevel> failuresToTolerateAndRaidLevelValues = default;
             IList<AvsNodeType> reservedInstanceAvsNodes = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 avsNodes ?? new ChangeTrackingList<AvsSkuConfig>(),
                 failuresToTolerateAndRaidLevelValues ?? new ChangeTrackingList<FttAndRaidLevel>(),
                 reservedInstanceAvsNodes ?? new ChangeTrackingList<AvsNodeType>(),

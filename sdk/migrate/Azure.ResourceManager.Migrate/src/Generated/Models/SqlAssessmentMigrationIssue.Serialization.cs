@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IssueId != null)
+            if (options.Format != "W" && Optional.IsDefined(IssueId))
             {
                 writer.WritePropertyName("issueId"u8);
                 writer.WriteStringValue(IssueId);
             }
-            if (options.Format != "W" && IssueCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IssueCategory))
             {
                 writer.WritePropertyName("issueCategory"u8);
                 writer.WriteStringValue(IssueCategory.Value.ToString());
             }
-            if (options.Format != "W" && !(ImpactedObjects is ChangeTrackingList<ImpactedAssessmentObject> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ImpactedObjects))
             {
                 writer.WritePropertyName("impactedObjects"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> issueId = default;
-            Optional<SqlAssessmentMigrationIssueCategory> issueCategory = default;
+            string issueId = default;
+            SqlAssessmentMigrationIssueCategory? issueCategory = default;
             IReadOnlyList<ImpactedAssessmentObject> impactedObjects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAssessmentMigrationIssue(issueId.Value, Optional.ToNullable(issueCategory), impactedObjects ?? new ChangeTrackingList<ImpactedAssessmentObject>(), serializedAdditionalRawData);
+            return new SqlAssessmentMigrationIssue(issueId, issueCategory, impactedObjects ?? new ChangeTrackingList<ImpactedAssessmentObject>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAssessmentMigrationIssue>.Write(ModelReaderWriterOptions options)

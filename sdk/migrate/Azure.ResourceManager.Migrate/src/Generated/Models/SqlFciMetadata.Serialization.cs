@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (IsMultiSubnet.HasValue)
+            if (Optional.IsDefined(IsMultiSubnet))
             {
                 writer.WritePropertyName("isMultiSubnet"u8);
                 writer.WriteBooleanValue(IsMultiSubnet.Value);
             }
-            if (FciSharedDiskCount.HasValue)
+            if (Optional.IsDefined(FciSharedDiskCount))
             {
                 writer.WritePropertyName("fciSharedDiskCount"u8);
                 writer.WriteNumberValue(FciSharedDiskCount.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<SqlFciMetadataState> state = default;
-            Optional<bool> isMultiSubnet = default;
-            Optional<int> fciSharedDiskCount = default;
+            SqlFciMetadataState? state = default;
+            bool? isMultiSubnet = default;
+            int? fciSharedDiskCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlFciMetadata(Optional.ToNullable(state), Optional.ToNullable(isMultiSubnet), Optional.ToNullable(fciSharedDiskCount), serializedAdditionalRawData);
+            return new SqlFciMetadata(state, isMultiSubnet, fciSharedDiskCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlFciMetadata>.Write(ModelReaderWriterOptions options)

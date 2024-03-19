@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (options.Format != "W" && DiskSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSize))
             {
                 writer.WritePropertyName("diskSize"u8);
                 writer.WriteStringValue(DiskSize.Value.ToString());
             }
-            if (options.Format != "W" && DiskRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskRedundancy))
             {
                 writer.WritePropertyName("diskRedundancy"u8);
                 writer.WriteStringValue(DiskRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && StorageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageCost))
             {
                 writer.WritePropertyName("storageCost"u8);
                 writer.WriteNumberValue(StorageCost.Value);
             }
-            if (options.Format != "W" && RecommendedSizeInGib.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedSizeInGib))
             {
                 writer.WritePropertyName("recommendedSizeInGib"u8);
                 writer.WriteNumberValue(RecommendedSizeInGib.Value);
             }
-            if (options.Format != "W" && RecommendedThroughputInMbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedThroughputInMbps))
             {
                 writer.WritePropertyName("recommendedThroughputInMbps"u8);
                 writer.WriteNumberValue(RecommendedThroughputInMbps.Value);
             }
-            if (options.Format != "W" && RecommendedIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedIops))
             {
                 writer.WritePropertyName("recommendedIops"u8);
                 writer.WriteNumberValue(RecommendedIops.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureManagedDiskSkuDtoDiskType> diskType = default;
-            Optional<AzureDiskSize> diskSize = default;
-            Optional<AzureManagedDiskSkuDtoDiskRedundancy> diskRedundancy = default;
-            Optional<double> storageCost = default;
-            Optional<double> recommendedSizeInGib = default;
-            Optional<double> recommendedThroughputInMbps = default;
-            Optional<double> recommendedIops = default;
+            AzureManagedDiskSkuDtoDiskType? diskType = default;
+            AzureDiskSize? diskSize = default;
+            AzureManagedDiskSkuDtoDiskRedundancy? diskRedundancy = default;
+            double? storageCost = default;
+            double? recommendedSizeInGib = default;
+            double? recommendedThroughputInMbps = default;
+            double? recommendedIops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureManagedDiskSkuDto(
-                Optional.ToNullable(diskType),
-                Optional.ToNullable(diskSize),
-                Optional.ToNullable(diskRedundancy),
-                Optional.ToNullable(storageCost),
-                Optional.ToNullable(recommendedSizeInGib),
-                Optional.ToNullable(recommendedThroughputInMbps),
-                Optional.ToNullable(recommendedIops),
+                diskType,
+                diskSize,
+                diskRedundancy,
+                storageCost,
+                recommendedSizeInGib,
+                recommendedThroughputInMbps,
+                recommendedIops,
                 serializedAdditionalRawData);
         }
 

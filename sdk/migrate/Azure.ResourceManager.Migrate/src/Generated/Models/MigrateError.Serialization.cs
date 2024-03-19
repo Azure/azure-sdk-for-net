@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && RunAsAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (options.Format != "W" && ApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && SummaryMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(SummaryMessage))
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (options.Format != "W" && AgentScenario != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentScenario))
             {
                 writer.WritePropertyName("agentScenario"u8);
                 writer.WriteStringValue(AgentScenario);
             }
-            if (options.Format != "W" && PossibleCauses != null)
+            if (options.Format != "W" && Optional.IsDefined(PossibleCauses))
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (options.Format != "W" && RecommendedAction != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (options.Format != "W" && Severity != null)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && !(MessageParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MessageParameters))
             {
                 writer.WritePropertyName("messageParameters"u8);
                 writer.WriteStartObject();
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && ImpactedAssessmentType != null)
+            if (options.Format != "W" && Optional.IsDefined(ImpactedAssessmentType))
             {
                 writer.WritePropertyName("impactedAssessmentType"u8);
                 writer.WriteStringValue(ImpactedAssessmentType);
@@ -135,19 +136,19 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<int> id = default;
-            Optional<string> code = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> applianceName = default;
-            Optional<string> message = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> agentScenario = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> severity = default;
+            int? id = default;
+            string code = default;
+            string runAsAccountId = default;
+            string applianceName = default;
+            string message = default;
+            string summaryMessage = default;
+            string agentScenario = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string severity = default;
             IReadOnlyDictionary<string, string> messageParameters = default;
-            Optional<DateTimeOffset> updatedTimeStamp = default;
-            Optional<string> impactedAssessmentType = default;
+            DateTimeOffset? updatedTimeStamp = default;
+            string impactedAssessmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,19 +242,19 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateError(
-                Optional.ToNullable(id),
-                code.Value,
-                runAsAccountId.Value,
-                applianceName.Value,
-                message.Value,
-                summaryMessage.Value,
-                agentScenario.Value,
-                possibleCauses.Value,
-                recommendedAction.Value,
-                severity.Value,
+                id,
+                code,
+                runAsAccountId,
+                applianceName,
+                message,
+                summaryMessage,
+                agentScenario,
+                possibleCauses,
+                recommendedAction,
+                severity,
                 messageParameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(updatedTimeStamp),
-                impactedAssessmentType.Value,
+                updatedTimeStamp,
+                impactedAssessmentType,
                 serializedAdditionalRawData);
         }
 

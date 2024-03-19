@@ -43,94 +43,94 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MachineName != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && InstanceName != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (options.Format != "W" && ProductSupportStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
             {
                 writer.WritePropertyName("productSupportStatus"u8);
                 writer.WriteObjectValue(ProductSupportStatus);
             }
-            if (options.Format != "W" && DBCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DBCount))
             {
                 writer.WritePropertyName("dbCount"u8);
                 writer.WriteNumberValue(DBCount.Value);
             }
-            if (options.Format != "W" && DiscoveredDBCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiscoveredDBCount))
             {
                 writer.WritePropertyName("discoveredDBCount"u8);
                 writer.WriteNumberValue(DiscoveredDBCount.Value);
             }
-            if (options.Format != "W" && HasScanOccurred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasScanOccurred))
             {
                 writer.WritePropertyName("hasScanOccurred"u8);
                 writer.WriteBooleanValue(HasScanOccurred.Value);
             }
-            if (options.Format != "W" && RecommendedAzureSqlTargetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedAzureSqlTargetType))
             {
                 writer.WritePropertyName("recommendedAzureSqlTargetType"u8);
                 writer.WriteStringValue(RecommendedAzureSqlTargetType.Value.ToString());
             }
-            if (options.Format != "W" && RecommendedSuitability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedSuitability))
             {
                 writer.WritePropertyName("recommendedSuitability"u8);
                 writer.WriteStringValue(RecommendedSuitability.Value.ToString());
             }
-            if (options.Format != "W" && AzureSqlMISuitabilityDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlMISuitabilityDetails);
             }
-            if (options.Format != "W" && AzureSqlDBSuitabilityDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlDBSuitabilityDetails);
             }
-            if (options.Format != "W" && AzureSqlVmSuitabilityDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSqlVmSuitabilityDetails))
             {
                 writer.WritePropertyName("azureSqlVMSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlVmSuitabilityDetails);
             }
-            if (AssessedSqlEntityArmId != null)
+            if (Optional.IsDefined(AssessedSqlEntityArmId))
             {
                 writer.WritePropertyName("assessedSqlEntityArmId"u8);
                 writer.WriteStringValue(AssessedSqlEntityArmId);
             }
-            if (options.Format != "W" && IsClustered.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsClustered))
             {
                 writer.WritePropertyName("isClustered"u8);
                 writer.WriteBooleanValue(IsClustered.Value);
             }
-            if (options.Format != "W" && IsHighAvailabilityEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHighAvailabilityEnabled))
             {
                 writer.WritePropertyName("isHighAvailabilityEnabled"u8);
                 writer.WriteBooleanValue(IsHighAvailabilityEnabled.Value);
             }
-            if (options.Format != "W" && SqlEdition != null)
+            if (options.Format != "W" && Optional.IsDefined(SqlEdition))
             {
                 writer.WritePropertyName("sqlEdition"u8);
                 writer.WriteStringValue(SqlEdition);
             }
-            if (options.Format != "W" && SqlVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SqlVersion))
             {
                 writer.WritePropertyName("sqlVersion"u8);
                 writer.WriteStringValue(SqlVersion);
             }
-            if (options.Format != "W" && SizingCriterion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizingCriterion))
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
@@ -177,24 +177,24 @@ namespace Azure.ResourceManager.Migrate
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> machineName = default;
-            Optional<string> instanceName = default;
-            Optional<ProductSupportStatus> productSupportStatus = default;
-            Optional<int> dbCount = default;
-            Optional<int> discoveredDBCount = default;
-            Optional<bool> hasScanOccurred = default;
-            Optional<MigrateTargetType> recommendedAzureSqlTargetType = default;
-            Optional<RecommendedSuitability> recommendedSuitability = default;
-            Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlMISuitabilityDetails = default;
-            Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlDBSuitabilityDetails = default;
-            Optional<SqlAssessmentV2IaasSuitabilityDetails> azureSqlVmSuitabilityDetails = default;
-            Optional<ResourceIdentifier> assessedSqlEntityArmId = default;
-            Optional<bool> isClustered = default;
-            Optional<bool> isHighAvailabilityEnabled = default;
-            Optional<string> sqlEdition = default;
-            Optional<string> sqlVersion = default;
-            Optional<AssessmentSizingCriterion> sizingCriterion = default;
+            SystemData systemData = default;
+            string machineName = default;
+            string instanceName = default;
+            ProductSupportStatus productSupportStatus = default;
+            int? dbCount = default;
+            int? discoveredDBCount = default;
+            bool? hasScanOccurred = default;
+            MigrateTargetType? recommendedAzureSqlTargetType = default;
+            RecommendedSuitability? recommendedSuitability = default;
+            SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = default;
+            SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = default;
+            SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = default;
+            ResourceIdentifier assessedSqlEntityArmId = default;
+            bool? isClustered = default;
+            bool? isHighAvailabilityEnabled = default;
+            string sqlEdition = default;
+            string sqlVersion = default;
+            AssessmentSizingCriterion? sizingCriterion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -382,24 +382,24 @@ namespace Azure.ResourceManager.Migrate
                 id,
                 name,
                 type,
-                systemData.Value,
-                machineName.Value,
-                instanceName.Value,
-                productSupportStatus.Value,
-                Optional.ToNullable(dbCount),
-                Optional.ToNullable(discoveredDBCount),
-                Optional.ToNullable(hasScanOccurred),
-                Optional.ToNullable(recommendedAzureSqlTargetType),
-                Optional.ToNullable(recommendedSuitability),
-                azureSqlMISuitabilityDetails.Value,
-                azureSqlDBSuitabilityDetails.Value,
-                azureSqlVmSuitabilityDetails.Value,
-                assessedSqlEntityArmId.Value,
-                Optional.ToNullable(isClustered),
-                Optional.ToNullable(isHighAvailabilityEnabled),
-                sqlEdition.Value,
-                sqlVersion.Value,
-                Optional.ToNullable(sizingCriterion),
+                systemData,
+                machineName,
+                instanceName,
+                productSupportStatus,
+                dbCount,
+                discoveredDBCount,
+                hasScanOccurred,
+                recommendedAzureSqlTargetType,
+                recommendedSuitability,
+                azureSqlMISuitabilityDetails,
+                azureSqlDBSuitabilityDetails,
+                azureSqlVmSuitabilityDetails,
+                assessedSqlEntityArmId,
+                isClustered,
+                isHighAvailabilityEnabled,
+                sqlEdition,
+                sqlVersion,
+                sizingCriterion,
                 serializedAdditionalRawData);
         }
 

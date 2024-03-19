@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (GuidelineId != null)
+            if (Optional.IsDefined(GuidelineId))
             {
                 writer.WritePropertyName("guidelineId"u8);
                 writer.WriteStringValue(GuidelineId);
             }
-            if (MigrationGuidelineCategory.HasValue)
+            if (Optional.IsDefined(MigrationGuidelineCategory))
             {
                 writer.WritePropertyName("migrationGuidelineCategory"u8);
                 writer.WriteStringValue(MigrationGuidelineCategory.Value.ToString());
             }
-            if (options.Format != "W" && !(MigrationGuidelineContext is ChangeTrackingList<MigrationGuidelineContext> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MigrationGuidelineContext))
             {
                 writer.WritePropertyName("migrationGuidelineContext"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<string> guidelineId = default;
-            Optional<SqlMigrationGuidelineCategory> migrationGuidelineCategory = default;
+            string guidelineId = default;
+            SqlMigrationGuidelineCategory? migrationGuidelineCategory = default;
             IReadOnlyList<MigrationGuidelineContext> migrationGuidelineContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMigrationGuideline(guidelineId.Value, Optional.ToNullable(migrationGuidelineCategory), migrationGuidelineContext ?? new ChangeTrackingList<MigrationGuidelineContext>(), serializedAdditionalRawData);
+            return new SqlMigrationGuideline(guidelineId, migrationGuidelineCategory, migrationGuidelineContext ?? new ChangeTrackingList<MigrationGuidelineContext>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMigrationGuideline>.Write(ModelReaderWriterOptions options)

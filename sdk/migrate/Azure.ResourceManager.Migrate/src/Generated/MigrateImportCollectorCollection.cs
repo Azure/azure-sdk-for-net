@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateImportCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string importCollectorName, MigrateImportCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateImportCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string importCollectorName, MigrateImportCollectorData data, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual async Task<Response<MigrateImportCollectorResource>> GetAsync(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual Response<MigrateImportCollectorResource> Get(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateImportCollectorResource>> GetIfExistsAsync(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="importCollectorName"/> is null. </exception>
         public virtual NullableResponse<MigrateImportCollectorResource> GetIfExists(string importCollectorName, CancellationToken cancellationToken = default)
         {
-            if (importCollectorName == null)
-            {
-                throw new ArgumentNullException(nameof(importCollectorName));
-            }
-            if (importCollectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(importCollectorName));
-            }
+            Argument.AssertNotNullOrEmpty(importCollectorName, nameof(importCollectorName));
 
             using var scope = _migrateImportCollectorImportCollectorsOperationsClientDiagnostics.CreateScope("MigrateImportCollectorCollection.GetIfExists");
             scope.Start();

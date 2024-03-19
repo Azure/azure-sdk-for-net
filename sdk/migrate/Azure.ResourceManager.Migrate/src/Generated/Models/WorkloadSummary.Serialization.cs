@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (OracleInstances.HasValue)
+            if (Optional.IsDefined(OracleInstances))
             {
                 writer.WritePropertyName("oracleInstances"u8);
                 writer.WriteNumberValue(OracleInstances.Value);
             }
-            if (SpringApps.HasValue)
+            if (Optional.IsDefined(SpringApps))
             {
                 writer.WritePropertyName("springApps"u8);
                 writer.WriteNumberValue(SpringApps.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<int> oracleInstances = default;
-            Optional<int> springApps = default;
+            int? oracleInstances = default;
+            int? springApps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSummary(Optional.ToNullable(oracleInstances), Optional.ToNullable(springApps), serializedAdditionalRawData);
+            return new WorkloadSummary(oracleInstances, springApps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadSummary>.Write(ModelReaderWriterOptions options)

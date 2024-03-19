@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (AzureSqlServiceTier.HasValue)
+            if (Optional.IsDefined(AzureSqlServiceTier))
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (AzureSqlDataBaseType.HasValue)
+            if (Optional.IsDefined(AzureSqlDataBaseType))
             {
                 writer.WritePropertyName("azureSqlDataBaseType"u8);
                 writer.WriteStringValue(AzureSqlDataBaseType.Value.ToString());
             }
-            if (AzureSqlComputeTier.HasValue)
+            if (Optional.IsDefined(AzureSqlComputeTier))
             {
                 writer.WritePropertyName("azureSqlComputeTier"u8);
                 writer.WriteStringValue(AzureSqlComputeTier.Value.ToString());
             }
-            if (AzureSqlPurchaseModel.HasValue)
+            if (Optional.IsDefined(AzureSqlPurchaseModel))
             {
                 writer.WritePropertyName("azureSqlPurchaseModel"u8);
                 writer.WriteStringValue(AzureSqlPurchaseModel.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<AzureSqlServiceTier> azureSqlServiceTier = default;
-            Optional<AzureSqlDataBaseType> azureSqlDataBaseType = default;
-            Optional<MigrateComputeTier> azureSqlComputeTier = default;
-            Optional<AzureSqlPurchaseModel> azureSqlPurchaseModel = default;
+            AzureSqlServiceTier? azureSqlServiceTier = default;
+            AzureSqlDataBaseType? azureSqlDataBaseType = default;
+            MigrateComputeTier? azureSqlComputeTier = default;
+            AzureSqlPurchaseModel? azureSqlPurchaseModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBSettings(Optional.ToNullable(azureSqlServiceTier), Optional.ToNullable(azureSqlDataBaseType), Optional.ToNullable(azureSqlComputeTier), Optional.ToNullable(azureSqlPurchaseModel), serializedAdditionalRawData);
+            return new SqlDBSettings(azureSqlServiceTier, azureSqlDataBaseType, azureSqlComputeTier, azureSqlPurchaseModel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBSettings>.Write(ModelReaderWriterOptions options)
