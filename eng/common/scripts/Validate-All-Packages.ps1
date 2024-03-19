@@ -25,14 +25,6 @@ function ProcessPackage($PackageName, $ConfigFileDir)
     Write-Host "Package Name: $($PackageName)"
     Write-Host "Config File directory: $($ConfigFileDir)"
 
-    $pkgPropPath = Join-Path -Path $ConfigFileDir "$PackageName.json"
-    if (-Not (Test-Path $pkgPropPath))
-    {
-        Write-Host " Package property file path $($pkgPropPath) is invalid."
-        return $false
-    }
-
-    $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
     &$EngCommonScriptsDir/Validate-Package.ps1 `
         -PackageName $PackageName `
         -ArtifactPath $ArtifactPath `
