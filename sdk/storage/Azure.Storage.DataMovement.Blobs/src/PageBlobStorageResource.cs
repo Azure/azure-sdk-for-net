@@ -180,9 +180,9 @@ namespace Azure.Storage.DataMovement.Blobs
             await BlobClient.CreateAsync(
                 size: completeLength,
                 options: DataMovementBlobsExtensions.GetCreateOptions(
-                        _options,
-                        overwrite,
-                        options?.SourceProperties),
+                    _options,
+                    overwrite,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // There is no synchronous single-call copy API for Append/Page -> Page Blob

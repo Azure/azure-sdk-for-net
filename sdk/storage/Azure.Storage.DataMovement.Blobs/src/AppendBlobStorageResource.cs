@@ -135,12 +135,11 @@ namespace Azure.Storage.DataMovement.Blobs
             long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                AppendBlobCreateOptions createOptions = DataMovementBlobsExtensions.GetCreateOptions(
+                await BlobClient.CreateAsync(
+                    DataMovementBlobsExtensions.GetCreateOptions(
                         _options,
                         overwrite,
-                        options?.SourceProperties);
-                await BlobClient.CreateAsync(
-                    createOptions,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
@@ -226,9 +225,9 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await BlobClient.CreateAsync(
                     DataMovementBlobsExtensions.GetCreateOptions(
-                    _options,
-                    overwrite,
-                    options?.SourceProperties),
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
 
