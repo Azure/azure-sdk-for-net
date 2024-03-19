@@ -100,19 +100,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Writes a boolean plus int32 to represent a nulable int.
-        /// </summary>
-        internal static void Write(
-            this BinaryWriter writer,
-            int? value,
-            ref int currentOffset)
-        {
-            writer.Write(value.HasValue);
-            writer.Write(value ?? 0);
-            currentOffset += (DataMovementConstants.IntSizeInBytes * 2);
-        }
-
-        /// <summary>
         /// Reads a boolean plus int32 as a nullable int.
         /// </summary>
         internal static int? ReadNullableInt32(this BinaryReader reader)
