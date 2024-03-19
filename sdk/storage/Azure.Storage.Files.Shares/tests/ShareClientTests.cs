@@ -906,6 +906,24 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task GetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.IsNotNull(response.Value.LastModified);
+        }
+
+        [RecordedTest]
         public async Task SetMetadataAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
