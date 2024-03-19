@@ -14,15 +14,13 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentModelComposeOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of <see cref="DocumentModelComposeOperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal DocumentModelComposeOperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, resourceLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
+        internal DocumentModelComposeOperationDetails(OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation) : base(status, createdOn, lastUpdatedOn, resourceLocation)
         {
-            Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             Kind = OperationKind.DocumentModelCompose;
