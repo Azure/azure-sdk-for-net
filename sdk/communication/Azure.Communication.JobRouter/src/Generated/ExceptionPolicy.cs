@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
-        internal ExceptionPolicy()
+        public ExceptionPolicy()
         {
             ExceptionRules = new ChangeTrackingList<ExceptionRule>();
         }

@@ -49,7 +49,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        internal RouterJobOffer(string jobId, int capacityCost)
+        public RouterJobOffer(string jobId, int capacityCost)
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
 
@@ -82,12 +82,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Id of an offer. </summary>
         public string OfferId { get; }
         /// <summary> Id of the job. </summary>
-        public string JobId { get; }
+        public string JobId { get; set; }
         /// <summary> The capacity cost consumed by the job offer. </summary>
-        public int CapacityCost { get; }
+        public int CapacityCost { get; set; }
         /// <summary> Timestamp when the offer was created in UTC. </summary>
-        public DateTimeOffset? OfferedAt { get; }
+        public DateTimeOffset? OfferedAt { get; set; }
         /// <summary> Timestamp when the offer will expire in UTC. </summary>
-        public DateTimeOffset? ExpiresAt { get; }
+        public DateTimeOffset? ExpiresAt { get; set; }
     }
 }
